@@ -40,6 +40,18 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        frontend:
+            lazy: true
+            provider: frontend_user_provider
+            form_login:
+                login_path: frontend_login
+                check_path: frontend_login
+                enable_csrf: true
+            logout:
+                path: frontend_logout
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800
         admin:
             pattern: ^/admin(\/|$)
             lazy: true
