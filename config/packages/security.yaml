@@ -7,12 +7,19 @@ security:
 
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Sulu\Bundle\SecurityBundle\Entity\User: bcrypt
+        App\Entity\FrontendUser:
+            algorithm: auto
+
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         sulu:
             id: sulu_security.user_provider
+        # used to reload user from session & other features (e.g. switch_user)
+        frontend_user_provider:
+            entity:
+                class: App\Entity\FrontendUser
+                property: email
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -33,6 +40,18 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        frontend:
+            lazy: true
+            provider: frontend_user_provider
+            form_login:
+                login_path: frontend_login
+                check_path: frontend_login
+                enable_csrf: true
+            logout:
+                path: frontend_logout
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800
         admin:
             pattern: ^/admin(\/|$)
             lazy: true
