@@ -1,0 +1,70 @@
+body {
+    @apply min-h-screen flex flex-col;
+}
+
+main {
+    @apply grow;
+}
+
+/* Feather Icons */
+.feather-16 {
+    @apply w-4 h-4;
+}
+
+.feather-24 {
+    @apply w-6 h-6;
+}
+
+.feather-32 {
+    @apply w-8 h-8;
+}
+
+.feather-40 {
+    @apply w-10 h-10;
+}
+
+/* Carousel Override */
+.cmp-project,
+.cmp-bcr,
+.cmp-carousel {
+    &__nav {
+        &-prev,
+        &-next {
+            @apply cursor-pointer;
+            svg {
+                @apply ml-1 mt-1;
+            }
+        }
+    }
+}
+.cmp-project,
+.cmp-bcr {
+    &__item {
+        &:nth-child(4n) {
+            @apply 2xl:-top-20;
+        }
+        &:nth-child(4n + 1) {
+            @apply 2xl:top-12;
+        }
+        &:nth-child(4n + 2) {
+            @apply 2xl:-top-12;
+        }
+        &:nth-child(4n + 3) {
+            @apply 2xl:-top-4;
+        }
+    }
+}
+
+
+h1.double-color {
+    background: linear-gradient(
+        to bottom,
+        #1F2937 50%,
+        #14B8A6 0%
+    );
+    background-size: 100%;
+    background-position: top left;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}

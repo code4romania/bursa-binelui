@@ -1,0 +1,118 @@
+<header>
+    <div
+        class="border-solid border-b border-l-0 border-r-0 border-t-0 border-gray-300"
+    >
+        <div
+            class="container mx-auto px-bb-container-xs sm:px-bb-container-sm md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl pt-6 pb-5 flex justify-between items-center"
+        >
+            <a href="#" class="cursor-pointer">
+                <img
+                    class="max-w-logo md:max-w-full"
+                    src="images/content/logo.png"
+                    alt="logo"
+                />
+            </a>
+            <div x-data="{}" class="auth ml-auto hidden md:block">
+                <button
+                    type="button"
+                    class="bg-transparent font-inter-5 text-regular text-gray-500 p-2 mr-6"
+                >
+                    Sign in
+                </button>
+                <button
+                    type="button"
+                    class="inline-flex items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                >
+                    Creează cont
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav shadow-menu-shadow">
+        <div
+            x-data="{showMenu : false}"
+            class="container mx-auto px-bb-container sm:px-bb-container-sm md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl"
+        >
+            <button
+                @click="showMenu = !showMenu"
+                class="block md:hidden text-teal-500 p-2 rounded hover:border focus:border focus:bg-gray-100 my-2 mr-5 absolute top-3 right-0"
+                type="button"
+                aria-controls="navbar-main"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                    ></path>
+                </svg>
+            </button>
+            <!-- Nav Links-->
+            <ul
+                class="md:flex text-gray-700 text-base mr-3 origin-top md:gap-x-8 md:py-nav-lg lg:gap-x-16 lg:py-nav-lg"
+                :class="{'block absolute top-14 border-b bg-white w-full p-2': showMenu, 'hidden': !showMenu}"
+                id="navbar-main"
+                x-cloak
+            >
+                <li
+                    class="cursor-pointer flex items-center f"
+                    :class="showMenu && 'py-1'"
+                >
+                    <a class="text-gray-600 font-open-sans-semibold" href="#"
+                        >Despre Bursa Binelui</a
+                    >
+                </li>
+                <li
+                    class="cursor-pointer flex items-center"
+                    :class="showMenu && 'py-1'"
+                >
+                    <a class="text-gray-600 font-open-sans-semibold" href="#"
+                        >Organizatii</a
+                    >
+                </li>
+                <li
+                    class="cursor-pointer flex items-center"
+                    :class="showMenu && 'py-1'"
+                >
+                    <a class="text-gray-600 font-open-sans-semibold" href="#"
+                        >Proiecte</a
+                    >
+                </li>
+                <li
+                    class="cursor-pointer flex items-center"
+                    :class="showMenu && 'py-1'"
+                >
+                    <a class="text-gray-600 font-open-sans-semibold" href="#"
+                        >Articole</a
+                    >
+                </li>
+                <li
+                    class="cursor-pointer flex items-center"
+                    :class="showMenu && 'py-1'"
+                >
+                    <a class="text-gray-600 font-open-sans-semibold" href="#"
+                        >FAQ</a
+                    >
+                </li>
+                <li
+                    class="cursor-pointer flex items-center"
+                    :class="showMenu && 'py-1'"
+                >
+                    <a class="text-gray-600 font-open-sans-semibold" href="#"
+                        >Contact</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

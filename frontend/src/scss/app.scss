@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base style */
+@import 'base/base';
+
+/* Core variables */
+@import 'base/vars';
+
+/* CSS Reset */
+@import 'base/reset';
+
+/* CSS print */
+@import 'base/print';
+
+/* Fonts */
+@import 'base/fonts';
+
+/* Mixins, helpers and functions */
+@import 'base/mixins';
+
+
+/* Browser specific styles */
+@import 'dirty/hacks';
