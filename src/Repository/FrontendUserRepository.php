@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\FrontendUser;
@@ -14,8 +16,8 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  *
  * @method FrontendUser|null find($id, $lockMode = null, $lockVersion = null)
  * @method FrontendUser|null findOneBy(array $criteria, array $orderBy = null)
- * @method FrontendUser[]    findAll()
- * @method FrontendUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method FrontendUser[] findAll()
+ * @method FrontendUser[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FrontendUserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
@@ -48,7 +50,7 @@ class FrontendUserRepository extends ServiceEntityRepository implements Password
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof FrontendUser) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+            throw new UnsupportedUserException(\sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
         $user->setPassword($newHashedPassword);
