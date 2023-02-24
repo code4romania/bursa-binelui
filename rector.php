@@ -33,11 +33,13 @@ return static function (RectorConfig $rectorConfig): void {
         SymfonySetList::SYMFONY_CODE_QUALITY,
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
         SymfonyLevelSetList::UP_TO_SYMFONY_60,
+        SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
     ]);
 
     // doctrine rules
     $rectorConfig->sets([
         DoctrineSetList::DOCTRINE_CODE_QUALITY,
+        DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
     ]);
 
     // phpunit rules

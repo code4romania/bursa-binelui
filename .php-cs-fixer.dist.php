@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
-    ->ignoreVCSIgnored(true)
+    ->exclude(['var', 'lib', 'node_modules'])
     ->notName('bundles.php');
 
 return (new PhpCsFixer\Config())
