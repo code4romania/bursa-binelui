@@ -9,11 +9,12 @@ services:
     environment:
       discovery.type: single-node
       xpack.security.enabled: 'false'
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
 
   redis:
     image: redis:alpine
 
-  builder:
-    build: ./
-    volumes:
-      - '.:/build'
+volumes:
+  db-data:
+  elasticsearch-data:

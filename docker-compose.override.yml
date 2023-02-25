@@ -11,14 +11,10 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=bursa_binelui
-    volumes:
-      - db-data:/var/lib/postgresql/data
     ports:
       - '8084:5432'
 
   elasticsearch:
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
     ports:
       - '9200:9200'
 
@@ -38,6 +34,9 @@ services:
       - '.:/application'
       - './docker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
 
-volumes:
-  db-data:
-  elasticsearch-data:
+  builder:
+    image: node:alpine
+    working_dir: /build/assets/website
+    command: sh -c "npm ci --no-audit --ignore-scripts && npm run watch"
+    volumes:
+      - '.:/build'
