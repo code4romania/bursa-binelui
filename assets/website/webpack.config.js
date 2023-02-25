@@ -71,15 +71,14 @@ Encore
   // enables hashed filenames (e.g. app.abc123.css)
   .enableVersioning(Encore.isProduction())
 
-  // configure Babel
   // .configureBabel((config) => {
-  //     config.plugins.push('@babel/a-babel-plugin');
+  //   config.plugins.push('@babel/plugin-proposal-class-properties');
   // })
 
-  // enables and configure @babel/preset-env polyfills
+  // enables @babel/preset-env polyfills
   // .configureBabelPresetEnv((config) => {
-  //     config.useBuiltIns = 'usage';
-  //     config.corejs = '3.23';
+  //   config.useBuiltIns = 'usage';
+  //   config.corejs = 3;
   // })
 
   // enables Sass/SCSS support

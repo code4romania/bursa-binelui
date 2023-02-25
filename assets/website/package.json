@@ -26,7 +26,8 @@
     "tailwindcss-dotted-background": "^1.0.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.0",
-    "webpack-notifier": "^1.15.0"
+    "webpack-notifier": "^1.15.0",
+    "webpack-merge": "^5.8.0"
   },
   "engines": {
     "node": ">=14"

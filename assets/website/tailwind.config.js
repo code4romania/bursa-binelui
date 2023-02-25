@@ -76,7 +76,7 @@ module.exports = {
                 "carousel-nav-shadow": "0px 2px 10px rgba(0, 0, 0, 0.15)",
                 "button-focus":
                     "0px 1px 2px rgba(0, 0, 0, 0.05), 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #6366F1",
-                "banner-shadow": "0px 2px 10px rgba(0, 0, 0, 0.1)",    
+                "banner-shadow": "0px 2px 10px rgba(0, 0, 0, 0.1)",
             },
             fontFamily: {
                 "open-sans-regular": ["OpenSans", "sans-serif"],
