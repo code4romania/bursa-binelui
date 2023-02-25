@@ -100,7 +100,7 @@ Encore
   // customizations
   .enablePostCssLoader((options) => {
     options.postcssOptions = options.postcssOptions || {};
-    options.postcssOptions.config = path.resolve(__dirname, '.postcssrc.js');
+    options.postcssOptions.config = './postcss.config.js';
   })
 ;
 
