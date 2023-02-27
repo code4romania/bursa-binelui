@@ -46,4 +46,10 @@ return [
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
+    Sulu\Bundle\ArticleBundle\SuluArticleBundle::class => ['all' => true],
+    ONGR\ElasticsearchBundle\ONGRElasticsearchBundle::class => ['all' => true],
+    Task\TaskBundle\TaskBundle::class => ['all' => true],
+    Sulu\Bundle\AutomationBundle\SuluAutomationBundle::class => ['all' => true],
+    Sulu\Bundle\RedirectBundle\SuluRedirectBundle::class => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];

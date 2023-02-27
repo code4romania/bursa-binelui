@@ -1,0 +1,29 @@
+<div
+    class="border-solid border-b border-l-0 border-r-0 border-t-0 border-gray-300"
+>
+    <div
+        class="container mx-auto px-bb-container-xs sm:px-bb-container-sm md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl pt-6 pb-5 flex justify-between items-center"
+    >
+        <a href="{{ sulu_content_root_path() }}" class="cursor-pointer">
+            <img
+                class="max-w-logo md:max-w-full"
+                src="{{ asset('build/website/images/content/logo.png') }}"
+                alt="logo"
+            />
+        </a>
+        <div x-data="{}" class="auth ml-auto hidden md:block">
+            <button
+                type="button"
+                class="bg-transparent font-inter-5 text-regular text-gray-500 p-2 mr-6"
+            >
+                Sign in
+            </button>
+            <button
+                type="button"
+                class="inline-flex items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            >
+                Creează cont
+            </button>
+        </div>
+    </div>
+</div>

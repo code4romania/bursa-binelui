@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Website;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +24,8 @@ class LoginController extends AbstractController
     }
 
     #[Route('/logout', name: 'frontend_logout', methods: ['GET'])]
-    public function logout()
+    public function logout(): Response
     {
-
+        return new Response();
     }
 }

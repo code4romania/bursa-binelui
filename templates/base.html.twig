@@ -15,42 +15,42 @@
     {% endblock %}
 
     {% block style %}{% endblock %}
+    {{ encore_entry_link_tags('app') }}
 </head>
 <body>
-    <header>
-        {% block header %}
-            <nav>
-                <ul>
-                    <li>
-                        <a href="{{ sulu_content_root_path() }}">Homepage</a>
-                    </li>
+<header>
+    {% block header %}
+        {% include 'includes/header.html.twig' %}
+    {% endblock %}
+    {% block nav %}
+        {% include 'includes/nav.html.twig' %}
+    {% endblock %}
+</header>
 
-                    {% for item in sulu_navigation_root_tree('main') %}
-                        <li>
-                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
-                               title="{{ item.title }}">{{ item.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </nav>
-        {% endblock %}
-    </header>
+{# <form action="{{ path('sulu_search.website_search') }}" method="GET"> #}
+{#    <input name="q" type="text" placeholder="Search"/> #}
+{#    <input type="submit" value="Go"/> #}
+{# </form> #}
 
-    <form action="{{ path('sulu_search.website_search') }}" method="GET">
-        <input name="q" type="text" placeholder="Search"/>
-        <input type="submit" value="Go"/>
-    </form>
+<main>
+    <div
+        class="flex flex-1 min-h-full container xs:px-bb-container-sm sm:px-bb-container-sm sm:mx-auto md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl"
+    >{% block content %}{% endblock %}</div>
+</main>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<footer>
+    {% block footer %}
+        {% include 'includes/footer.html.twig' %}
+    {% endblock %}
+</footer>
 
-    <footer>
-        {% block footer %}
-            <p>Copyright {{ 'now'|date('Y') }} SULU</p>
-        {% endblock %}
-    </footer>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
 
-    {% block javascripts %}{% endblock %}
+    <script>
+        window.webComponents = {{ get_components() }};
+        window.webServices = {{ get_services() }};
+    </script>
+{% endblock %}
 </body>
 </html>

@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autoconfigure: true
+
+    Sulu\Twig\Extensions\ComponentExtension: ~
+    Sulu\Twig\Extensions\CountExtension: ~
+    Sulu\Twig\Extensions\IntlExtension: ~
+    Sulu\Twig\Extensions\UrlExtension: ~
+    Sulu\Twig\Extensions\ImageExtension:
+        arguments:
+            $placeholderPath: null
+            $defaultAttributes:
+                loading: 'lazy'
+            $defaultAdditionalTypes:
+                webp: 'image/webp'
+            $aspectRatio: true
+            $imageFormatConfiguration: '%sulu_media.image.formats%'
