@@ -19,6 +19,7 @@ services:
     environment:
       discovery.type: single-node
       xpack.security.enabled: 'false'
+      ES_JAVA_OPTS: "-Xmx256m"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
 
