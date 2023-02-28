@@ -9,9 +9,10 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
   // directory where compiled assets will be stored
-  .setOutputPath('../../public/build/website/')
+  .setOutputPath(process.env.WEBSITE_ASSETS_OUTPUT_PATH || '../../public/build/website/')
   // public path used by the web server to access the output path
   .setPublicPath('/build/website')
+  .setManifestKeyPrefix('build/website')
 
   /*
    * ENTRY CONFIG

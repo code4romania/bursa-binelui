@@ -35,7 +35,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "encore dev --progress",
+    "build": "encore prod --progress",
     "watch": "encore dev --progress --watch",
     "lint:sass": "sass-lint -v -q",
     "lint:js": "eslint --ext .js src/js"
