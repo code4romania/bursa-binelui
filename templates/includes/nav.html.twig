@@ -1,101 +1,101 @@
 <nav
-	class="nav flex-auto md:flex-1 inline-block">
-	<div
-		x-data="{showMenu : false}"
-		class="container 2xl:pl-8">
-		<button
-			@click="showMenu = !showMenu"
-			class="block md:hidden text-teal-500 p-2 rounded hover:border focus:border focus:bg-gray-100 mt-5 mb-2 mr-6 sm:my-2 absolute top-14 sm:top-3 right-0"
-			type="button"
-			aria-controls="navbar-main"
-			aria-expanded="false"
-			aria-label="Toggle navigation">
-			<svg
-				class="w-5 h-5"
-				fill="none"
-				stroke="currentColor"
-				viewbox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M4 6h16M4 12h16M4 18h16"></path>
-			</svg>
-		</button>
-		<!-- Nav Links-->
-		<ul
-			class="md:flex text-gray-500 text-base font-inter-5 mr-3 origin-top md:gap-x-8"
-			:class="{'block absolute top-32 sm:top-16 border-b bg-white w-full py-2 px-4 sm:px-8 left-0': showMenu, 'hidden': !showMenu}"
-			id="navbar-main"
-			x-cloak>
-			<li
-				class="cursor-pointer block items-center relative"
-				:class="showMenu && 'py-1'"
-				x-data="{isOpen:false }"
-				@mouseleave="isOpen = false">
-				<a
-					class="flex hover:text-teal-500 py-5"
-					href="#"
-					@click="isOpen = !isOpen"
-					x-on:click.prevent
-					:class="{'' : isOpen}">Explorează
-					<span
-						class="ml-2 pt-0.5">
+    class="nav flex-auto md:flex-1 inline-block">
+    <div
+        x-data="{showMenu : false}"
+        class="container 2xl:pl-8">
+        <button
+            @click="showMenu = !showMenu"
+            class="block md:hidden text-teal-500 p-2 rounded hover:border focus:border focus:bg-gray-100 mt-5 mb-2 mr-6 sm:my-2 absolute top-14 sm:top-3 right-0"
+            type="button"
+            aria-controls="navbar-main"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+        <!-- Nav Links-->
+        <ul
+            class="md:flex text-gray-500 text-base font-inter-5 mr-3 origin-top md:gap-x-8"
+            :class="{'block absolute top-32 sm:top-16 border-b bg-white w-full py-2 px-4 sm:px-8 left-0': showMenu, 'hidden': !showMenu}"
+            id="navbar-main"
+            x-cloak>
+            <li
+                class="cursor-pointer block items-center relative"
+                :class="showMenu && 'py-1'"
+                x-data="{isOpen:false }"
+                @mouseleave="isOpen = false">
+                <a
+                    class="flex hover:text-teal-500 py-5"
+                    href="#"
+                    @click="isOpen = !isOpen"
+                    x-on:click.prevent
+                    :class="{'' : isOpen}">Explorează
+                    <span
+                        class="ml-2 pt-0.5">
 						<i
-							data-feather="chevron-down"
-							class="feather-16"></i>
+                            data-feather="chevron-down"
+                            class="feather-16"></i>
 					</span>
-				</a>
-				<ul
-					class="bg-white rounded-lg text-gray-900 p-4 md:absolute z-[9999] md:shadow-submenu-shadow md:-left-8 md:p-8"
-					aria-label="submenu"
-					x-show="isOpen"
-					@click.away="isOpen = false">
-					<li
-						class="whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
-						<a
-							href="#"></a>Proiecte
-					</li>
-					<li
-						class="whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
-						<a
-							href="#"></a>Organizatii
-					</li>
-					<li
-						class="whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
-						<a
-							href="#"></a>BCR pentru
-							                                            comunitate
-					</li>
-					<li
-						class=" whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
-						<a
-							href="#"></a>Campionatul de Bine
-					</li>
-				</ul>
-			</li>
-			<li
-				class="cursor-pointer flex items-center"
-				:class="showMenu && 'py-1'">
-				<a
-					class="flex hover:text-teal-500 py-5"
-					href="#">Articole</a>
-			</li>
-			<li
-				class="cursor-pointer flex items-center"
-				:class="showMenu && 'py-1'">
-				<a
-					class="flex hover:text-teal-500 py-5"
-					href="#">Despre</a>
-			</li>
-			<li
-				class="cursor-pointer flex items-center"
-				:class="showMenu && 'py-1'">
-				<a
-					class="flex hover:text-teal-500 py-5"
-					href="#">Contact</a>
-			</li>
-		</ul>
-	</div>
+                </a>
+                <ul
+                    class="bg-white rounded-lg text-gray-900 p-4 md:absolute z-[9999] md:shadow-submenu-shadow md:-left-8 md:p-8"
+                    aria-label="submenu"
+                    x-show="isOpen"
+                    @click.away="isOpen = false">
+                    <li
+                        class="whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
+                        <a
+                            href="#"></a>Proiecte
+                    </li>
+                    <li
+                        class="whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
+                        <a
+                            href="#"></a>Organizatii
+                    </li>
+                    <li
+                        class="whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
+                        <a
+                            href="#"></a>BCR pentru
+                        comunitate
+                    </li>
+                    <li
+                        class=" whitespace-nowrap mb-4 md:mb-8 hover:text-teal-500">
+                        <a
+                            href="#"></a>Campionatul de Bine
+                    </li>
+                </ul>
+            </li>
+            <li
+                class="cursor-pointer flex items-center"
+                :class="showMenu && 'py-1'">
+                <a
+                    class="flex hover:text-teal-500 py-5"
+                    href="#">Articole</a>
+            </li>
+            <li
+                class="cursor-pointer flex items-center"
+                :class="showMenu && 'py-1'">
+                <a
+                    class="flex hover:text-teal-500 py-5"
+                    href="#">Despre</a>
+            </li>
+            <li
+                class="cursor-pointer flex items-center"
+                :class="showMenu && 'py-1'">
+                <a
+                    class="flex hover:text-teal-500 py-5"
+                    href="#">Contact</a>
+            </li>
+        </ul>
+    </div>
 </nav>
