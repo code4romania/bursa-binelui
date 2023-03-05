@@ -1,56 +1,59 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale|split('_')[0] }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html
+	lang="{{ app.request.locale|split('_')[0] }}">
+	<head>
+		<meta
+			charset="utf-8">
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge">
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1">
 
-    {% block meta %}
-        {% include "@SuluWebsite/Extension/seo.html.twig" with {
+		{% block meta %}
+			{% include "@SuluWebsite/Extension/seo.html.twig" with {
             "seo": extension.seo|default([]),
             "content": content|default([]),
             "localizations": localizations|default([]),
             "shadowBaseLocale": shadowBaseLocale|default(),
         } %}
-    {% endblock %}
+		{% endblock %}
 
-    {% block style %}{% endblock %}
-    {{ encore_entry_link_tags('app') }}
-</head>
-<body>
-<header>
-    {% block header %}
-        {% include 'includes/header.html.twig' %}
-    {% endblock %}
-    {% block nav %}
-        {% include 'includes/nav.html.twig' %}
-    {% endblock %}
-</header>
+		{% block style %}{% endblock %}
+		{{ encore_entry_link_tags('app') }}
+	</head>
+	<body>
+		<header>
+			{% block header %}
+				{% include 'includes/header.html.twig' %}
+			{% endblock %}
+		</header>
 
-{# <form action="{{ path('sulu_search.website_search') }}" method="GET"> #}
-{#    <input name="q" type="text" placeholder="Search"/> #}
-{#    <input type="submit" value="Go"/> #}
-{# </form> #}
+		{# <form action="{{ path('sulu_search.website_search') }}" method="GET"> #}
+		{#    <input name="q" type="text" placeholder="Search"/> #}
+		{#    <input type="submit" value="Go"/> #}
+		{# </form> #}
 
-<main>
-    <div
-        class="flex flex-1 min-h-full container xs:px-bb-container-sm sm:px-bb-container-sm sm:mx-auto md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl"
-    >{% block content %}{% endblock %}</div>
-</main>
+			<main>
+				<div
+				class="flex flex-1 min-h-full container xs:px-bb-container-sm sm:px-bb-container-sm sm:mx-auto md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl">{% block content %}{% endblock %}
+				</div>
+			</main>
 
-<footer>
-    {% block footer %}
-        {% include 'includes/footer.html.twig' %}
-    {% endblock %}
-</footer>
+			<footer>
+				{% block footer %}
+					{% include 'includes/footer.html.twig' %}
+				{% endblock %}
+			</footer>
 
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
+			{% block javascripts %}
+				{{ encore_entry_script_tags('app') }}
 
-    <script>
-        window.webComponents = {{ get_components() }};
-        window.webServices = {{ get_services() }};
-    </script>
-{% endblock %}
-</body>
-</html>
+				<script>
+					window.webComponents = {{ get_components() }};
+window.webServices = {{ get_services() }};
+				</script>
+			{% endblock %}
+		</body>
+	</html>
