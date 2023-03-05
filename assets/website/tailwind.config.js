@@ -1,5 +1,8 @@
 module.exports = {
-    content: ["./src/**/*.{hbs,html,scss}"],
+    content: [
+        "./src/**/*.{scss,js}",
+        "../../templates/**/*.html.twig"
+    ],
     theme: {
         patterns: {
             opacities: {
@@ -70,13 +73,15 @@ module.exports = {
                         base: "#F05F44",
                     },
                 },
-            },
+            }, 
             boxShadow: {
                 "menu-shadow": "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                "submenu-shadow": "0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 0px 0px 1px rgba(0, 0, 0, 0.05)",
                 "carousel-nav-shadow": "0px 2px 10px rgba(0, 0, 0, 0.15)",
                 "button-focus":
                     "0px 1px 2px rgba(0, 0, 0, 0.05), 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #6366F1",
-                "banner-shadow": "0px 2px 10px rgba(0, 0, 0, 0.1)",
+                "banner-shadow": "0px 2px 10px rgba(0, 0, 0, 0.1)",    
+                
             },
             fontFamily: {
                 "open-sans-regular": ["OpenSans", "sans-serif"],
