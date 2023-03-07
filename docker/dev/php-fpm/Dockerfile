@@ -1,13 +1,12 @@
-FROM phpdockerio/php:8.1-fpm
-WORKDIR "/application"
+FROM php:8.1-fpm-alpine
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-RUN apt-get update; \
-    apt-get -y --no-install-recommends install \
-        git \
-        php8.1-imagick \
-        php8.1-intl \
-        php8.1-mysql \
-        php8.1-pgsql \
-        php8.1-xdebug; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+RUN install-php-extensions \
+    ctype \
+    imagick \
+    intl \
+    pdo_mysql \
+    xdebug
+
+COPY docker/dev/php-fpm/php.ini /usr/local/etc/php/php.ini
