@@ -28,14 +28,12 @@ FROM node:14-alpine as admin-assets
 
 COPY composer.json /build/composer.json
 COPY assets/admin /build/assets/admin
-COPY templates /build/templates
 COPY --from=vendor /var/www/vendor /build/vendor
 
 WORKDIR /build/assets/admin
 
 RUN npm install
 RUN npm run build
-RUN ls -lah /build/public/build/admin
 
 FROM node:18-alpine as website-assets
 
@@ -43,8 +41,10 @@ WORKDIR /build
 
 ARG WEBSITE_ASSETS_OUTPUT_PATH="/build/output"
 
-COPY assets/website .
-COPY templates .
+COPY assets/website /build/assets/website
+COPY templates /build/templates
+
+WORKDIR /build/assets/website
 
 RUN npm ci --no-audit --ignore-scripts
 RUN npm run build
