@@ -1,8 +1,8 @@
 module.exports = {
   content: [
     "./src/**/*.{scss,js}",
-    "./templates/**/*.html.twig", //build
-    "../../templates/**/*.html.twig" //dev
+    "./../templates/**/*.html.twig", //build
+    "./../../templates/**/*.html.twig" //dev
   ],
   theme: {
     patterns: {
