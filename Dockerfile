@@ -28,6 +28,7 @@ FROM node:14-alpine as admin-assets
 
 COPY composer.json /build/composer.json
 COPY assets/admin /build/assets/admin
+COPY templates /build/templates
 COPY --from=vendor /var/www/vendor /build/vendor
 
 WORKDIR /build/assets/admin
