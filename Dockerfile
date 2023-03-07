@@ -7,8 +7,7 @@ RUN install-php-extensions \
     ctype \
     imagick \
     intl \
-    pdo_mysql \
-    pdo_pgsql
+    pdo_mysql
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp

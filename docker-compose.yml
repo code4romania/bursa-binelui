@@ -10,9 +10,19 @@ services:
       - .env.local
     ports:
       - 80
+    depends_on:
+      - database
+      - elasticsearch
+      - redis
 
   database:
-    image: postgres:alpine
+    image: mysql/mysql-server:${DATABASE_VERSION:-8.0}
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${DATABASE_NAME:-ChangeMe}
+      - MYSQL_USER=${DATABASE_USERNAME:-ChangeMe}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD:-ChangeMe}
 
   elasticsearch:
     image: elasticsearch:7.17.9
