@@ -43,6 +43,7 @@ WORKDIR /build
 ARG WEBSITE_ASSETS_OUTPUT_PATH="/build/output"
 
 COPY assets/website .
+COPY templates .
 
 RUN npm ci --no-audit --ignore-scripts
 RUN npm run build
