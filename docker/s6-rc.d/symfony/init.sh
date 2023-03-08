@@ -49,6 +49,6 @@ MASSIVE_SEARCH_PREFIX=\"${MASSIVE_SEARCH_PREFIX:-massive}\"
 
 composer dump-env prod
 composer auto-scripts
-php bin/console sulu:build dev --destroy --no-interaction
+php bin/console sulu:build dev --no-interaction
 
 chown -R www-data:www-data /var/www
