@@ -38,7 +38,8 @@
         "symfony/security-bundle": "^6.0",
         "symfony/twig-bundle": "^6.0",
         "symfony/web-link": "^6.0",
-        "symfony/webpack-encore-bundle": "^1.16"
+        "symfony/webpack-encore-bundle": "^1.16",
+        "symfonycasts/verify-email-bundle": "^1.13"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.9",
