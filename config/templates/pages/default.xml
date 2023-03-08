@@ -10,15 +10,15 @@
     <cacheLifetime>604800</cacheLifetime>
 
     <meta>
+        <title lang="ro">Default</title>
         <title lang="en">Default</title>
-        <title lang="de">Standard</title>
     </meta>
 
     <properties>
         <property name="title" type="text_line" mandatory="true">
             <meta>
+                <title lang="ro">Title</title>
                 <title lang="en">Title</title>
-                <title lang="de">Titel</title>
             </meta>
             <params>
                 <param name="headline" value="true"/>
@@ -29,8 +29,8 @@
 
         <property name="url" type="resource_locator" mandatory="true">
             <meta>
+                <title lang="ro">Resourcelocator</title>
                 <title lang="en">Resourcelocator</title>
-                <title lang="de">Adresse</title>
             </meta>
 
             <tag name="sulu.rlp"/>
@@ -38,8 +38,8 @@
 
         <property name="article" type="text_editor">
             <meta>
+                <title lang="ro">Article</title>
                 <title lang="en">Article</title>
-                <title lang="de">Artikel</title>
             </meta>
         </property>
     </properties>

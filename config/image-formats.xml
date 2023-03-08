@@ -8,8 +8,8 @@
     <!--
     <format key="300x">
         <meta>
+            <title lang="ro">Example Image</title>
             <title lang="en">Example Image</title>
-            <title lang="de">Beispielbild</title>
         </meta>
 
         <scale x="300"/>

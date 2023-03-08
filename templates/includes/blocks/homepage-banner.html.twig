@@ -1,0 +1,75 @@
+<div
+    class="container mx-auto px-bb-container-xs pt-3 mb-3 sm:pt-6 sm:mb-6 sm:px-bb-container-sm md:pt-12 md:mb-12 md:px-bb-container-md lg:pt-24 lg:mb-24 lg:px-bb-container-lg max-w-screen-2xl flex prose lg:prose-2xl"
+>
+    <div class="w-full 2xl:w-1/2">
+        <h1
+            class="double-color text-center 2xl:text-left font-inter-8"
+        >
+            {{ content.titleFirstLine }}<br>
+            {{ content.titleSecondLine }}
+        </h1>
+        <div
+            class="mt-5 mb-8 lg:mt-10 lg:mb-16 flex justify-center 2xl:block"
+        >
+            <button
+                class="inline-flex items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+            >
+                Donează către un proiect
+            </button>
+            <button
+                class="inline-flex items-center rounded-md border bg-white px-2.5 py-1.5 ml-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-gray-700 font-inter-5 shadow-sm hover:bg-gray-50 hover:shadow-lgfocus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+            >
+                Vezi evolutia faptelor bune
+            </button>
+        </div>
+        <div
+            class="flex justify-center 2xl:justify-between 2xl:w-2/3"
+        >
+            <div class="px-4 md:px-8 2xl:px-0">
+                <h1 class="font-inter-8 text-gray-800 !mb-0">
+                    {{ content.totalProjects }}+
+                </h1>
+                <p class="font-inter-4 text-gray-800 !my-0">
+                    proiecte
+                </p>
+            </div>
+            <div class="px-4 sm:px-8 2xl:px-0">
+                <h1 class="font-inter-8 text-gray-800 !mb-0">
+                    {{ content.totalOrganizations }}+
+                </h1>
+                <p class="font-inter-4 text-gray-800 !my-0">
+                    organizatii
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="hidden 2xl:block 2xl:w-1/2 2xl:relative">
+        <div class="absolute w-64 h-64 left-0 bottom-4">
+            <div
+                class="w-full h-full pattern-dots pattern-teal-500 pattern-bg-transparent pattern-size-6"
+            ></div>
+        </div>
+        <div class="absolute w-64 h-52 left-1/4 -top-24">
+            <div
+                class="w-full h-full pattern-dots pattern-teal-500 pattern-bg-transparent pattern-size-6"
+            ></div>
+        </div>
+        <div class="absolute w-64 h-64 -right-16 -bottom-2">
+            <div
+                class="w-full h-full pattern-dots pattern-teal-700 pattern-bg-transparent pattern-size-6"
+            ></div>
+        </div>
+        <div
+            class="absolute w-56 h-72 bg-teal-100 rounded-md left-[12%] top-4"
+        ></div>
+        <div
+            class="absolute w-72 h-48 bg-teal-100 rounded-md -top-8 -right-6"
+        ></div>
+        <div
+            class="absolute w-52 h-72 bg-teal-100 rounded-md right-14 bottom-8"
+        ></div>
+        <div
+            class="absolute w-24 h-24 bg-teal-500 rounded-md left-[33%] bottom-20"
+        ></div>
+    </div>
+</div>
