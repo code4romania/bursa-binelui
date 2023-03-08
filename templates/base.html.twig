@@ -30,15 +30,8 @@
     {% endblock %}
 </header>
 
-{# <form action="{{ path('sulu_search.website_search') }}" method="GET"> #}
-{#    <input name="q" type="text" placeholder="Search"/> #}
-{#    <input type="submit" value="Go"/> #}
-{# </form> #}
-
 <main>
-    <div
-        class="flex flex-1 min-h-full container xs:px-bb-container-sm sm:px-bb-container-sm sm:mx-auto md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl">{% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
 </main>
 
 <footer>

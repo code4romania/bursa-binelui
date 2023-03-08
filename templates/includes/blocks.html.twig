@@ -1,0 +1,10 @@
+{% if content.blocks|default([])|length %}
+    {% for block in content.blocks %}
+        <div>
+            {% include 'includes/blocks/' ~ block.type ~ '.html.twig' with {
+                content: block,
+                view: view.blocks[loop.index0],
+            } only %}
+        </div>
+    {% endfor %}
+{% endif %}

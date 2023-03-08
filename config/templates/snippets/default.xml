@@ -6,15 +6,15 @@
     <key>default</key>
 
     <meta>
+        <title lang="ro">Default</title>
         <title lang="en">Default</title>
-        <title lang="de">Standard</title>
     </meta>
 
     <properties>
         <property name="title" type="text_line" mandatory="true">
             <meta>
+                <title lang="ro">Title</title>
                 <title lang="en">Title</title>
-                <title lang="de">Titel</title>
             </meta>
 
             <tag name="sulu.node.name"/>
@@ -22,8 +22,8 @@
 
         <property name="description" type="text_editor">
             <meta>
+                <title lang="ro">Description</title>
                 <title lang="en">Description</title>
-                <title lang="de">Beschreibung</title>
             </meta>
         </property>
     </properties>

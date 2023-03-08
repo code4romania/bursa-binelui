@@ -1,0 +1,39 @@
+<properties xmlns="http://schemas.sulu.io/template/template"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <block name="blocks" default-type="homepage-banner">
+        <types>
+            <type name="homepage-banner">
+                <properties>
+                    <property name="titleFirstLine" type="text_line" mandatory="true">
+                        <meta>
+                            <title lang="ro">Title - first line</title>
+                            <title lang="en">Title - first line</title>
+                        </meta>
+                    </property>
+
+                    <property name="titleSecondLine" type="text_line" mandatory="true">
+                        <meta>
+                            <title lang="ro">Title - second line</title>
+                            <title lang="en">Title - second line</title>
+                        </meta>
+                    </property>
+
+                    <property name="totalProjects" type="text_line" mandatory="true">
+                        <meta>
+                            <title lang="ro">Projects</title>
+                            <title lang="en">Projects</title>
+                        </meta>
+                    </property>
+
+                    <property name="totalOrganizations" type="text_line" mandatory="true">
+                        <meta>
+                            <title lang="ro">Organizations</title>
+                            <title lang="en">Organizations</title>
+                        </meta>
+                    </property>
+                </properties>
+            </type>
+        </types>
+    </block>
+</properties>
