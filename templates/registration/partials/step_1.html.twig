@@ -1,0 +1,77 @@
+<div
+    class="flex flex-col"
+    x-show="step === 1"
+    style="display: none"
+>
+    <div class="md:w-[394px]">
+        <div class="flex">
+            <div
+                x-data="{isSelected: '',
+                                        lists: [
+                                        {id: 1, name: 'donator', action: 'Creează cont donator', description: 'Dorești să donezi? Creează acum un cont și începe să faci fapte bune.'},
+                                        {id: 2, name: 'organizatie', action: 'Creează cont organizație', description: 'Vrei ca ONG-ul din care faci parte să apară pe Bursa Binelui? Înscrie organizația acum.'}], selectedListID: ''}"
+            >
+                <template
+                    x-for="list in lists"
+                    :key="list.id"
+                >
+                    <div class="mb-6">
+                        <label
+                            class="flex cursor-pointer p-4 rounded-md border border-solid border-gray-300 bg-white focus:outline-none"
+                            :class="{'border-teal-500' : isSelected === list.id} "
+                        >
+                            <input
+                                @click="isSelected = list.id"
+                                type="radio"
+                                :value="list.id.toString()"
+                                :id="list.name"
+                                :name="list.name"
+                                class="form-radio hidden"
+                                x-model="option"
+                            />
+                            <span
+                                class="flex flex-1 pr-10"
+                            >
+                                                            <span
+                                                                class="flex flex-col prose prose-sm"
+                                                            >
+                                                                <span
+                                                                    class="text-gray-800 font-inter-4"
+                                                                    x-text="list.action"
+                                                                ></span>
+                                                                <span
+                                                                    class="text-gray-400 font-inter-4"
+                                                                    x-text="list.description"
+                                                                ></span>
+                                                            </span>
+                                                        </span>
+
+                            <svg
+                                :class="{'invisible' : !(isSelected === list.id)}"
+                                class="h-5 w-5 text-teal-600 self-center"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </label>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <button
+        type="button"
+        class="w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+        x-on:click="step = 2"
+        x-show="option"
+    >
+        Continuă
+    </button>
+</div>
