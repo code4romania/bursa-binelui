@@ -1,0 +1,717 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div
+        class="flex flex-1 min-h-full container xs:px-bb-container-sm sm:px-bb-container-sm sm:mx-auto md:px-bb-container-md lg:px-bb-container-lg max-w-screen-2xl"
+    >
+        <div
+            class="prose lg:pros-xl xl:prose-2xl mx-auto pt-10 lg:pt-16 lg:pr-10 xl:pr-20"
+        >
+            <div
+                class="cmp-registration-form xl:w-[425px]"
+                x-data="{ step: 1, option: null }"
+            >
+
+                {% include 'registration/partials/start.html.twig' %}
+
+                <form>
+                    <!-- Step: Complete -->
+                    {% include 'registration/partials/complete.html.twig' %}
+
+                    <!-- Step 1 -->
+                    {% include 'registration/partials/step_1.html.twig' %}
+
+                    <!-- Step: 2 Option: 1 -->
+                    <div
+                        x-show="step === 2 && option === '1'"
+                        style="display: none"
+                        class="not-prose flex flex-col"
+                    >
+                        <div class="mb-4">
+                            <label
+                                for="name"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Nume și prenume</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm font-inter-5"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="email"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Email</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                                    aria-describedby="email-description"
+                                />
+                            </div>
+                            <p
+                                class="mt-1 mb-0 text-sm text-gray-400 font-inter-4"
+                                id="email-description"
+                            >
+                                Folosește o adresă dedicată (ex.
+                                administrator@ong.ro)
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="password"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Password</label
+                            >
+                            <div
+                                class="relative mt-1 rounded-md shadow-sm"
+                            >
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    class="block w-full rounded-md border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
+                                    aria-invalid="true"
+                                    aria-describedby="email-error"
+                                />
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+                                >
+                                    <!-- Heroicon name: mini/exclamation-circle -->
+                                    <svg
+                                        class="h-5 w-5 text-red-500"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p
+                                class="mt-2 text-sm text-red-600 font-inter-4"
+                                id="email-error"
+                            >
+                                Your password must be less than 4
+                                characters.
+                            </p>
+                        </div>
+                        <div class="relative flex items-start">
+                            <div class="flex h-5 items-center">
+                                <input
+                                    id="tsc"
+                                    aria-describedby="tsc-description"
+                                    name="tsc"
+                                    type="checkbox"
+                                    class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                                />
+                            </div>
+                            <div class="ml-3 text-sm mb-4">
+                                <label
+                                    for="tsc"
+                                    class="block text-sm font-medium text-gray-700 font-inter-5"
+                                >Sunt de acord cu
+                                    <a href="#"
+                                    >Termenii și condițiile*</a
+                                    ></label
+                                >
+                            </div>
+                        </div>
+                        <div class="relative flex items-start">
+                            <div class="flex h-5 items-center">
+                                <input
+                                    id="newsletter"
+                                    aria-describedby="newsletter-description"
+                                    name="newsletter"
+                                    type="checkbox"
+                                    class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                                />
+                            </div>
+                            <div class="ml-3 text-sm mb-4">
+                                <label
+                                    for="candidates"
+                                    class="block text-sm font-medium text-gray-700 font-inter-5"
+                                >Doresc sa ma abonez la
+                                    newsletter</label
+                                >
+                            </div>
+                        </div>
+                        <div class="flex flex-1 justify-between mt-8">
+                            <button
+                                type="button"
+                                class="whitespace-nowrap w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                                x-on:click="step = 'complete'"
+                                x-show="option"
+                            >
+                                Creează cont
+                            </button>
+
+                            <button
+                                type="button"
+                                class="flex whitespace-nowrap w-min items-center rounded-md border border-solid border-gray-300 bg-white mb-6 px-2.5 py-1.5 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 48 48"
+                                    width="24px"
+                                    height="24px"
+                                    class="mr-2"
+                                >
+                                    <path
+                                        fill="#fbc02d"
+                                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+                                    />
+                                    <path
+                                        fill="#e53935"
+                                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+                                    />
+                                    <path
+                                        fill="#4caf50"
+                                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+                                    />
+                                    <path
+                                        fill="#1565c0"
+                                        d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+                                    />
+                                </svg>
+                                Continuă cu Google
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step: 2 Option: 2 -->
+                    <div
+                        x-show="step === 2 && option === '2'"
+                        style="display: none"
+                        class="not-prose"
+                    >
+                        <!-- Form fields for option 2 -->
+                        <h2
+                            class="text-cyan-900 text-center lg:text-left font-inter-8 mb-4"
+                        >
+                            Date cont
+                        </h2>
+                        <div class="mb-4">
+                            <label
+                                for="name-admin"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Nume și prenume administrator</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    type="text"
+                                    name="name-admin"
+                                    id="name-admin"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm font-inter-5"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="email-org"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Email</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    type="email"
+                                    name="email-org"
+                                    id="email-org"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                                    aria-describedby="email-description"
+                                />
+                            </div>
+                            <p
+                                class="mt-1 mb-0 text-sm text-gray-400 font-inter-4"
+                                id="email-description"
+                            >
+                                Folosește o adresă dedicată (ex.
+                                administrator@ong.ro)
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="password-org"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Password</label
+                            >
+                            <div
+                                class="relative mt-1 rounded-md shadow-sm"
+                            >
+                                <input
+                                    type="password"
+                                    name="password-org"
+                                    id="password-org"
+                                    class="block w-full rounded-md border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
+                                    aria-invalid="true"
+                                    aria-describedby="email-error"
+                                />
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+                                >
+                                    <!-- Heroicon name: mini/exclamation-circle -->
+                                    <svg
+                                        class="h-5 w-5 text-red-500"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p
+                                class="mt-2 text-sm text-red-600 font-inter-4"
+                                id="email-error"
+                            >
+                                Your password must be less than 4
+                                characters.
+                            </p>
+                        </div>
+
+                        <div class="flex justify-between mt-8">
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border-none px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                                x-on:click="step = 1"
+                            >
+                                Înapoi
+                            </button>
+
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                                x-on:click="step = 3"
+                                x-show="option"
+                            >
+                                Continuă
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step: 3 Option: 2 -->
+                    <div
+                        x-show="step === 3 && option === '2'"
+                        style="display: none"
+                        class="not-prose"
+                    >
+                        <h2
+                            class="text-cyan-900 text-center lg:text-left font-inter-8 mb-4"
+                        >
+                            Profil organizație
+                        </h2>
+                        <div class="mb-4">
+                            <label
+                                for="nume-org"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Denumirea organizației</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    id="nume-org"
+                                    name="nume-org"
+                                    type="text"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm font-inter-5"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="id-ord"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >CUI/CIF organizației</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    id="id-ord"
+                                    name="id-ord"
+                                    type="text"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="photo"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Logo-ul organizației</label
+                            >
+                            <div class="mt-1 flex items-center">
+                                        <span
+                                            class="h-12 w-12 overflow-hidden rounded-full bg-gray-100"
+                                        >
+                                            <svg
+                                                class="h-full w-full text-gray-300"
+                                                fill="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                                                />
+                                            </svg>
+                                        </span>
+                                <button
+                                    type="button"
+                                    class="ml-5 my-6 w-min items-center whitespace-nowrap rounded-md border-none px-2.5 py-1.5 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                                >
+                                    Încarcă logo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="about"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Despre organizație</label
+                            >
+                            <div class="mt-1">
+                                        <textarea
+                                            id="about"
+                                            name="about"
+                                            rows="3"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm font-medium text-gray-700 font-inter-5"
+                                        ></textarea>
+                            </div>
+                            <p
+                                class="mt-1 mb-0 text-sm text-gray-400 font-inter-4"
+                            >
+                                Descrierea organizației va face parte
+                                din profilul public al organizației
+                                tale.
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="domains"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Domenii activitate</label
+                            >
+                            <div class="mt-1">
+                                <select
+                                    id="domains"
+                                    name="domains"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm font-medium text-gray-700 font-inter-5"
+                                >
+                                    <option>Educație, Mediu</option>
+                                    <option>Constructii</option>
+                                    <option>
+                                        Farmacie si medicamente
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <button
+                                type="button"
+                                class="w-min items-center whitespace-nowrap rounded-md border-none px-2.5 py-1.5 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                            >
+                                Încarcă fisier
+                            </button>
+                            <p
+                                class="mt-1 mb-0 text-sm text-gray-400 font-inter-4"
+                            >
+                                Adaugă un document care conține statutul
+                                organizației tale, pentru a facilita
+                                verificarea organizației.
+                            </p>
+                        </div>
+
+                        <div class="flex justify-between mt-8">
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border-none px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                                x-on:click="step = 2"
+                            >
+                                Înapoi
+                            </button>
+
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                                x-on:click="step = 4"
+                                x-show="option"
+                            >
+                                Continuă
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step: 4 Option: 2 -->
+                    <div
+                        x-show="step === 4 && option === '2'"
+                        style="display: none"
+                        class="not-prose"
+                    >
+                        <h2
+                            class="text-cyan-900 text-center lg:text-left font-inter-8 mb-4"
+                        >
+                            Date organizație
+                        </h2>
+                        <div class="mb-4">
+                            <label
+                                for="county"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Județ</label
+                            >
+                            <div class="mt-1">
+                                <select
+                                    id="county"
+                                    name="county"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm font-medium text-gray-700 font-inter-5"
+                                >
+                                    <option>Suceava</option>
+                                    <option>Iasi</option>
+                                    <option>Botosani</option>
+                                    <option>Bacau</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="city-org"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Oraș/Localitate</label
+                            >
+                            <div class="mt-1">
+                                <select
+                                    id="city-org"
+                                    name="city-org"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm font-medium text-gray-700 font-inter-5"
+                                >
+                                    <option>Suceava</option>
+                                    <option>Iasi</option>
+                                    <option>Botosani</option>
+                                    <option>Bacau</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="address-org"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Adresă sediu</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    id="address-org"
+                                    name="address-org"
+                                    type="text"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm font-inter-5"
+                                />
+                            </div>
+                            <p
+                                class="mt-1 mb-0 text-sm text-gray-400 font-inter-4"
+                            >
+                                Adresa completă (stradă, număr,
+                                apartament).
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="contact-person"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Persoană de contact</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    id="contact-person"
+                                    name="contact-person"
+                                    type="text"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="phone-contact"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Telefon contact</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    id="phone-contact"
+                                    name="phone-contact"
+                                    type="tel"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="contact-email"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Email contact</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    type="email"
+                                    name="contact-emailg"
+                                    id="contact-email"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="website-org"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >Website-ul organizației</label
+                            >
+                            <div class="mt-1">
+                                <input
+                                    id="website-org"
+                                    name="address-org"
+                                    type="text"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm font-inter-5"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-8">
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border-none px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                                x-on:click="step = 3"
+                            >
+                                Înapoi
+                            </button>
+
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                                x-on:click="step = 5"
+                                x-show="option"
+                            >
+                                Continuă
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step: 5 Option: 2 -->
+                    <div
+                        x-show="step === 5 && option === '2'"
+                        style="display: none"
+                        class="not-prose"
+                    >
+                        <h2
+                            class="text-cyan-900 text-center lg:text-left font-inter-8 mb-4"
+                        >
+                            Voluntariat
+                        </h2>
+                        <p
+                            class="block text-sm font-medium text-gray-700 font-inter-5 mb-4"
+                        >
+                            Voluntariat
+                        </p>
+                        <div class="relative flex items-start">
+                            <div class="flex h-5 items-center">
+                                <input
+                                    id="accept-v"
+                                    name="accept-v"
+                                    type="checkbox"
+                                    class="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                                />
+                            </div>
+                            <div class="ml-3 text-sm mb-4">
+                                <label
+                                    for="accept-v"
+                                    class="block text-sm font-medium text-gray-700 font-inter-5"
+                                >Organizația acceptă
+                                    voluntari?</label
+                                >
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                for="why-v"
+                                class="block text-sm font-medium text-gray-700 font-inter-5"
+                            >De ce să devin voluntar?</label
+                            >
+                            <div class="mt-1">
+                                        <textarea
+                                            id="why-v"
+                                            name="why-v"
+                                            rows="3"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm font-medium text-gray-700 font-inter-5"
+                                        ></textarea>
+                            </div>
+                            <p
+                                class="mt-1 mb-0 text-sm text-gray-400 font-inter-4"
+                            >
+                                Scrie câteva rânduri pentru a motiva
+                                vizitatorii să aplice ca voluntari.
+                            </p>
+                        </div>
+                        <div class="flex justify-between">
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border-none px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-black font-inter-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                                x-on:click="step = 1"
+                            >
+                                Înapoi
+                            </button>
+
+                            <button
+                                type="button"
+                                class="w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                                x-on:click="step = 'complete'"
+                                x-show="option"
+                            >
+                                Continuă
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div
+            class="relative hidden w-0 flex-1 lg:h-[400px] lg:block xl:h-[700px]"
+        >
+            <img
+                class="absolute inset-0 h-full w-full object-cover"
+                src="{{ asset('build/website/images/content/hero-image.png') }}"
+            />
+        </div>
+    </div>
+
+    <script>
+        function app() {
+        }
+    </script>
+
+    {#    {% for flash_error in app.flashes('verify_email_error') %} #}
+    {#        <div class="alert alert-danger" role="alert">{{ flash_error }}</div> #}
+    {#    {% endfor %} #}
+
+    {#    <h1>Register</h1> #}
+
+    {#    {{ form_start(registrationForm) }} #}
+    {#        {{ form_row(registrationForm.email) }} #}
+    {#        {{ form_row(registrationForm.plainPassword, { #}
+    {#            label: 'Password' #}
+    {#        }) }} #}
+    {#        {{ form_row(registrationForm.agreeTerms) }} #}
+
+    {#        <button type="submit" class="btn">Register</button> #}
+    {#    {{ form_end(registrationForm) }} #}
+{% endblock %}

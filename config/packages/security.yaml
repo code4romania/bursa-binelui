@@ -70,7 +70,7 @@ security:
                 check_path: frontend_login
                 enable_csrf: true
             logout:
-                path: frontend_logout
+                path: /logout
                 target: /
             remember_me:
                 secret: '%kernel.secret%'

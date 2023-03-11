@@ -1,0 +1,181 @@
+<h1
+    x-show="step === 'complete'"
+    class="text-cyan-900 text-center lg:text-left font-inter-8 !mb-0"
+    style="display: none"
+>
+    Felicitari!
+</h1>
+
+<div
+    x-show="step === 'complete'"
+    class="my-6 prose prose-sm text-center lg:text-left"
+    style="display: none"
+>
+    <span class="text-gray-600 font-inter-4"
+    >Contul tău a fost creat. Lorem ipsum massa
+        rhoncus, volutpat. Dignissim sed eget risus
+        enim.</span
+    >
+</div>
+
+<div
+    x-show="step === 'complete'"
+    style="display: none"
+>
+    <div class="">
+        <p
+            class="text-gray-500 text-base font-inter-4 mb-5"
+        >
+            De unde ai aflat de Bursa Binelui?
+        </p>
+        <fieldset>
+            <div class="space-y-4">
+                <div
+                    class="relative flex items-start"
+                >
+                    <div
+                        class="flex h-5 items-center"
+                    >
+                        <input
+                            id="answer1"
+                            name="answer"
+                            type="radio"
+                            checked
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:text-teal-500"
+                        />
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label
+                            for="answer1"
+                            class="text-sm font-inter-4 text-gray-700"
+                        >De la o altă
+                            organizație</label
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="relative flex items-start"
+                >
+                    <div
+                        class="flex h-5 items-center"
+                    >
+                        <input
+                            id="answer2"
+                            name="answer"
+                            type="radio"
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label
+                            for="answer2"
+                            class="text-sm font-inter-4 text-gray-700"
+                        >Dintr-un motor de
+                            căutare (ex.
+                            Google)</label
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="relative flex items-start"
+                >
+                    <div
+                        class="flex h-5 items-center"
+                    >
+                        <input
+                            id="answer3"
+                            name="answer"
+                            type="radio"
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label
+                            for="answer3"
+                            class="text-sm font-inter-4 text-gray-700"
+                        >Din social media</label
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="relative flex items-start"
+                >
+                    <div
+                        class="flex h-5 items-center"
+                    >
+                        <input
+                            id="answer4"
+                            name="answer"
+                            type="radio"
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label
+                            for="answer4"
+                            class="text-sm font-inter-4 text-gray-700"
+                        >Din presă (scrisă,
+                            online, radio,
+                            TV)</label
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="relative flex items-start"
+                >
+                    <div
+                        class="flex h-5 items-center"
+                    >
+                        <input
+                            id="answer5"
+                            name="answer"
+                            type="radio"
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label
+                            for="answer5"
+                            class="text-sm font-inter-4 text-gray-700"
+                        >De la un reprezentant
+                            BCR</label
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="relative flex items-start"
+                >
+                    <div
+                        class="flex h-5 items-center"
+                    >
+                        <input
+                            id="answer6"
+                            name="answer"
+                            type="radio"
+                            class="h-4 w-4 border-gray-300 text-teal-600 focus:ring-teal-500"
+                        />
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label
+                            for="answer6"
+                            class="text-sm font-inter-4 text-gray-700"
+                        >Altul</label
+                        >
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <button
+            @click="step = 1"
+            class="mt-8 w-min items-center rounded-md border border-transparent bg-teal-500 px-2.5 py-1.5 mb-6 text-xs m:px-3 sm:py-2 sm:text-sm md:px-6 lg:py-3 md:text-base text-white font-inter-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+        >
+            Trimite
+        </button>
+    </div>
+</div>
