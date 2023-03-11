@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Registration;
 
 use App\Entity\FrontendUser;
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationCompanyFormType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -43,7 +43,7 @@ class RegistrationCompanyFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('companyData', RegistrationCompanyDataType::class);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

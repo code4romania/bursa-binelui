@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Dto\Registration\Company;
 
+use App\Enums\Industry;
 use App\Validator as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class RegisterCompanyDto
+final class InfoDto
 {
-    public const DOMAINS = ['education', 'environment', 'construction', 'pharma'];
 
     #[Assert\NotBlank]
     public string $name;
@@ -22,8 +22,10 @@ final class RegisterCompanyDto
 
     public string $description;
 
-    #[Assert\Choice(choices: RegisterCompanyDto::DOMAINS)]
-    public string $domains;
+    /**
+     * @var Industry[]
+     */
+    public array $domains;
 
     public string $status;
 
