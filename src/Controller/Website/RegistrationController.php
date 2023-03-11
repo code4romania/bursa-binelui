@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Website;
 
 use App\Entity\FrontendUser;
-use App\Form\Registration\UserType;
+use App\Form\Registration\BaseUserType;
 use App\Repository\FrontendUserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
         $user = new FrontendUser();
 //        $contact = new Contact();
 //        $user->setContact($contact);
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(BaseUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

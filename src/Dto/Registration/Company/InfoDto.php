@@ -28,6 +28,4 @@ final class InfoDto
     public array $domains;
 
     public string $status;
-
-    //TODO: finish adding fields
 }
