@@ -18,3 +18,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+build.sh
+connect.sh
+stop.sh
+up.sh
