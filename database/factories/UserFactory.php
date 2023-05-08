@@ -35,4 +35,44 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Make a donor user.
+     */
+    public function donor(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'donor'
+        ]);
+    }
+
+    /**
+     * Make a NGO Admin user.
+     */
+    public function ngoAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'ngo-admin'
+        ]);
+    }
+
+    /**
+     * Make a BB Manager user.
+     */
+    public function bbManager(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'bb-manager'
+        ]);
+    }
+
+    /**
+     * Make a BB Admin user.
+     */
+    public function bbAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'bb-admin'
+        ]);
+    }
 }
