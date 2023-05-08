@@ -1,0 +1,47 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use App\Models\County;
+use App\Models\City;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('counties', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('siruta');
+            $table->string('name');
+        });
+
+        Schema::create('cities', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(County::class)->constrained();
+            $table->tinyInteger('level')->unsigned();
+            $table->tinyInteger('type')->unsigned();
+            $table->foreignIdFor(City::class, 'parent_id')->nullable()->constrained('cities');
+            $table->string('name');
+        });
+
+        Schema::withoutForeignKeyConstraints(function () {
+            DB::unprepared(
+                File::get(database_path('data/siruta.sql'))
+            );
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('cities');
+
+        Schema::dropIfExists('counties');
+    }
+};
