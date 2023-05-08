@@ -1,6 +1,6 @@
 <template>
     <PageLayout>
-         <!-- Inertia page head -->
+        <!-- Inertia page head -->
         <Head title="Dashboard" />
 
         <!-- Dashboard template -->
