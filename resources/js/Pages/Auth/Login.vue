@@ -1,94 +1,123 @@
-<script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
-
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
-};
-</script>
-
 <template>
-    <GuestLayout>
+    <PageLayout>
+        <!-- Inertia page head -->
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+        <!-- Auth template. -->
+        <Auth :content="content">
+            <form class="space-y-4 mt-4" @submit.prevent="submit">
 
-                <TextInput
+                <!-- Email. -->
+                <Input
+                    label="Email"
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
                     v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
+                    :isRequired="true"
+                    hasAutocomplete="username"
+                    :error="form.errors.email"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
+                <!-- Passowrd. -->
+                <Input
+                    label="Password"
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
                     v-model="form.password"
-                    required
-                    autocomplete="current-password"
+                    :isRequired="true"
+                    hasAutocomplete="current-password"
+                    :error="form.errors.password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+                <div class="flex items-center justify-between">
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
+                    <!-- Checkbox -->
+                    <label class="flex items-center">
+                        <Checkbox name="remember" v-model:checked="form.remember" />
+                        <span class="ml-2 text-sm text-gray-700">Remember me</span>
+                    </label>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
-                </Link>
+                    <!-- Reset password -->
+                    <Link
+                        v-if="canResetPassword"
+                        :href="route('password.request')"
+                        class="underline text-sm text-turqoise-500 hover:text-turqoise-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-turqoise-500"
+                    >
+                        Forgot your password?
+                    </Link>
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+                </div>
+
+                <!-- Action -->
+                <div class="mt-6 grid grid-cols-2 gap-4">
+
+                    <!-- Log in button -->
+                    <PrimaryButton
+                        background="turqoise-500"
+                        hover="turqoise-400"
+                        color="white"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                    >
+                        Intră în cont
+                    </PrimaryButton>
+
+
+                    <!-- <SecondaryButton
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                    >
+                        Continuă cu Google
+                    </SecondaryButton> -->
+                </div>
+            </form>
+        </Auth>
+    </PageLayout>
 </template>
+
+<script setup>
+    /** Import from inertia. */
+    import { Head, Link, useForm } from '@inertiajs/vue3';
+
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import Auth from '@/Components/templates/Auth.vue';
+    import Input from '@/Components/form/Input.vue';
+    import Checkbox from '@/Components/form/Checkbox.vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+
+    /** Component props. */
+    defineProps({
+        canResetPassword: { type: Boolean },
+        status: {type: String }
+    });
+
+    /** Page content. */
+    const content = {
+        title: "Intră în cont",
+        description: "Nu ai cont pe Bursa Binelui?",
+        link: {
+            text: "Creează cont nou",
+            href: "#"
+        }
+    }
+
+    /** Form variables. */
+    const form = useForm({
+        email: '',
+        password: '',
+        remember: false,
+    });
+
+    /** Submit action. */
+    const submit = () => {
+        form.post(route('login'), {
+            onFinish: () => form.reset('password'),
+        });
+    };
+</script>
