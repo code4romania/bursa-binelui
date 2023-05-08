@@ -12,8 +12,18 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+
+            colors: {
+                turqoise: {
+                    50:  "#EEF9F9",
+                    100: "#B3DFDC",
+                    200: "#91DFDA",
+                    500: '#53BFBF',
+                    700: '#41A6AC',
+                },
+            }
         },
     },
 
