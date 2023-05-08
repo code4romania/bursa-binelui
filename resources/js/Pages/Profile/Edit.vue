@@ -1,46 +1,39 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DeleteUserForm from './Partials/DeleteUserForm.vue';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import { Head } from '@inertiajs/vue3';
-
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-</script>
-
 <template>
-    <Head title="Profile" />
+    <PageLayout>
+        <Head title="Profile" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                        class="max-w-xl"
-                    />
-                </div>
-
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdatePasswordForm class="max-w-xl" />
-                </div>
-
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <DeleteUserForm class="max-w-xl" />
-                </div>
-            </div>
+        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+            {{ status }}
         </div>
-    </AuthenticatedLayout>
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-12 space-y-6">
+
+            <UpdateProfileInformationForm
+                :must-verify-email="mustVerifyEmail"
+                :status="status"
+                class="max-w-xl"
+            />
+
+            <div class="w-full border-t border-gray-300 my-4"></div>
+
+            <UpdatePasswordForm class="max-w-xl" />
+
+        </div>
+    </PageLayout>
 </template>
+
+<script setup>
+    /** Import from inertia. */
+    import { Head } from '@inertiajs/vue3';
+
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
+    import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
+
+    /** Component props. */
+    defineProps({
+        mustVerifyEmail: { type: Boolean },
+        status: { type: String },
+    });
+</script>

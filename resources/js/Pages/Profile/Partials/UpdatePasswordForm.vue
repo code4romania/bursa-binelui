@@ -1,95 +1,61 @@
-<script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
-
-const passwordInput = ref(null);
-const currentPasswordInput = ref(null);
-
-const form = useForm({
-    current_password: '',
-    password: '',
-    password_confirmation: '',
-});
-
-const updatePassword = () => {
-    form.put(route('password.update'), {
-        preserveScroll: true,
-        onSuccess: () => form.reset(),
-        onError: () => {
-            if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-                passwordInput.value.focus();
-            }
-            if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value.focus();
-            }
-        },
-    });
-};
-</script>
-
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Update Password</h2>
-
-            <p class="mt-1 text-sm text-gray-600">
-                Ensure your account is using a long, random password to stay secure.
-            </p>
+            <h2 class="text-2xl mt-8 font-bold text-gray-900">Schimbă parola</h2>
         </header>
 
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="current_password" value="Current Password" />
+        <form @submit.prevent="updatePassword" class="mt-6 space-y-6 mb-16">
 
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
+            <!-- Current password. -->
+            <Input
+                label="Parola curentă"
+                id="current_password"
+                ref="currentPasswordInput"
+                type="password"
+                v-model="form.current_password"
+                :error="form.errors.current_password"
+            />
 
-                <InputError :message="form.errors.current_password" class="mt-2" />
-            </div>
+            <!-- New password. -->
+            <Input
+                label="Parola nouă"
+                id="new_password"
+                ref="passwordInput"
+                type="password"
+                v-model="form.password"
+                :error="form.errors.password"
+            />
 
-            <div>
-                <InputLabel for="password" value="New Password" />
+            <!-- Confirm password. -->
+            <Input
+                label="Reintroduceți parola nouă"
+                id="password_confirmation"
+                type="password"
+                v-model="form.password_confirmation"
+                :error="form.errors.password_confirmation"
+            />
 
-                <TextInput
-                    id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
+            <!-- Actions. -->
+            <div class="flex items-center justify-end gap-4">
 
-                <InputError :message="form.errors.password" class="mt-2" />
-            </div>
+                <!-- Cancel button -->
+                <SecondaryButton
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Anulează
+                </SecondaryButton>
 
-            <div>
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-
-                <InputError :message="form.errors.password_confirmation" class="mt-2" />
-            </div>
-
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <!-- Save button -->
+                <PrimaryButton
+                    background="turqoise-500"
+                    hover="turqoise-400"
+                    color="white"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Salvează
+                </PrimaryButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
@@ -98,3 +64,45 @@ const updatePassword = () => {
         </form>
     </section>
 </template>
+
+<script setup>
+    /** Import from vue. */
+    import { ref } from 'vue';
+
+    /** Import form inertia. */
+    import { useForm } from '@inertiajs/vue3';
+
+    /** Import components. */
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import Input from '@/Components/form/Input.vue';
+
+    /** Componet variables. */
+    const passwordInput = ref(null);
+    const currentPasswordInput = ref(null);
+
+    /** Form variables. */
+    const form = useForm({
+        current_password: '',
+        password: '',
+        password_confirmation: '',
+    });
+
+    /** Update pasword method. */
+    const updatePassword = () => {
+        form.put(route('password.update'), {
+            preserveScroll: true,
+            onSuccess: () => form.reset(),
+            onError: () => {
+                if (form.errors.password) {
+                    form.reset('password', 'password_confirmation');
+                    passwordInput.value.focus();
+                }
+                if (form.errors.current_password) {
+                    form.reset('current_password');
+                    currentPasswordInput.value.focus();
+                }
+            },
+        });
+    };
+</script>

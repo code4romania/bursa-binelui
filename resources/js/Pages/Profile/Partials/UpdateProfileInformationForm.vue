@@ -1,68 +1,44 @@
-<script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
-
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const user = usePage().props.auth.user;
-
-const form = useForm({
-    name: user.name,
-    email: user.email,
-});
-</script>
-
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
-            </p>
+        <header class="mt-12 flex items-center gap-4">
+            <SvgLoader name="list"/>
+            <h2 class="text-2xl font-bold text-gray-900">Setări cont</h2>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="name" value="Name" />
+        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-11 space-y-6">
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+            <!-- Name -->
+            <Input
+                label="Nume și prenume"
+                id="name"
+                type="text"
+                v-model="form.name"
+                :isRequired="true"
+                :error="form.errors.name"
+            />
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+            <!-- Email -->
+            <Input
+                label="Email"
+                id="email"
+                type="email"
+                v-model="form.email"
+                :isRequired="true"
+                :error="form.errors.email"
+            />
 
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+            <!-- Phone -->
+            <Input
+                label="Telefon"
+                id="phone"
+                type="number"
+                v-model="form.phone"
+                :isRequired="true"
+                :error="form.errors.phone"
+            >
+                <p class="text-gray-500 text-sm pt-1">*Numarul de telefon nu va fi facut public.</p>
+            </Input>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">
@@ -85,8 +61,27 @@ const form = useForm({
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-4">
+
+                <!-- Cancel button -->
+                <SecondaryButton
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Anulează
+                </SecondaryButton>
+
+                <!-- Save button -->
+                <PrimaryButton
+                    background="turqoise-500"
+                    hover="turqoise-400"
+                    color="white"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Salvează
+                </PrimaryButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
@@ -95,3 +90,33 @@ const form = useForm({
         </form>
     </section>
 </template>
+
+<script setup>
+    /** Import from inertia. */
+    import { Link, useForm, usePage } from '@inertiajs/vue3';
+
+    /** Import components. */
+    import Input from '@/Components/form/Input.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+
+    /** Component props. */
+    defineProps({
+        mustVerifyEmail: {
+            type: Boolean,
+        },
+        status: {
+            type: String,
+        },
+    });
+
+    /** Get user. */
+    const user = usePage().props.auth.user;
+
+    /** Form variables. */
+    const form = useForm({
+        name: user.name,
+        email: user.email,
+    });
+</script>
