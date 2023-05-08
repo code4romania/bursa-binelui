@@ -5,7 +5,7 @@
 
                 <!-- Logo -->
                 <Link href="/" class="flex flex-shrink-0 items-center">
-                    <ApplicationLogo class="block h-10 lg:h-full w-auto"/>
+                    <img class="block h-10 lg:h-full w-auto" src="/images/bursa_binelui_logo.png" />
                 </Link>
 
                 <!-- Desktop main links -->
