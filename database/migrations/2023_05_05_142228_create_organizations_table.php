@@ -15,21 +15,21 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('cif');
             $table->string('logo')->nullable();
-            $table->text('description');
+            $table->text('description')->index();
             $table->string('status_document')->nullable();
             $table->foreignIdFor(County::class)->constrained();
             $table->foreignIdFor(City::class)->constrained();
             $table->string('street_address');
-            $table->string('contact_person');
+            $table->string('contact_person')->index();
             $table->string('contact_phone');
             $table->string('contact_email');
-            $table->string('website');
+            $table->string('website')->index();
             $table->boolean('accepts_volunteers')->default(true);
             $table->text('why_volunteer')->nullable();
-            $table->string('activity_domains');
+            $table->text('activity_domains')->index();
             $table->enum('status', ['pending', 'active', 'disabled']);
             $table->timestamps();
             $table->softDeletes();
