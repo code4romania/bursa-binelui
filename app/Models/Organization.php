@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class Organization extends Model
@@ -57,5 +58,37 @@ class Organization extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+
+    /**
+     * Scope a query to include the searched text.
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('status', self::STATUS_ACTIVE);
+    }
+
+
+    /**
+     * Scope a query to include the searched text.
+     */
+    public function scopeSearch(Builder $query, string $searchedText): void
+    {
+        $query->orWhere('name', 'LIKE', '%{$searchedText}%');
+        $query->orWhere('description', 'LIKE', '%{$searchedText}%');
+        $query->orWhere('contact_person', 'LIKE', '%{$searchedText}%');
+        $query->orWhere('website', 'LIKE', '%{$searchedText}%');
+    }
+
+
+    /**
+     * Scope a query to include specified activity domains.
+     */
+    public function scopeActivityDomains(Builder $query, array $activityDomains): void
+    {
+        foreach ($activityDomains as $activityDomain) {
+            $query->orWhere('activity_domains', 'LIKE', '%{$activityDomain}%');
+        }
     }
 }
