@@ -171,7 +171,6 @@
 
     /** Import components. */
     import NavLink from '@/Components/links/NavLink.vue';
-    import ApplicationLogo from '@/Components/ApplicationLogo.vue';
     import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';
     import SelectNoBorder from '@/Components/form/SelectNoBorder.vue';
 
