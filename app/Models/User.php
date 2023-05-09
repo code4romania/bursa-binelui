@@ -6,18 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Laravel\Sanctum\HasApiTokens;
+use App\Traits\HasRole;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    const ROLE_DONOR      = 'donor';
-    const ROLE_NGO_ADMIN  = 'ngo-admin';
-    const ROLE_BB_MANAGER = 'bb-manager';
-    const ROLE_BB_ADMIN   = 'bb-admin';
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasRole;
 
     /**
      * The attributes that are mass assignable.
