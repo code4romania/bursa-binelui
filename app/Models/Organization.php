@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use App\Traits\HasActivityDomain;
+use App\Traits\HasOrganizationStatus;
 use App\Models\User;
 
 class Organization extends Model
 {
     use HasFactory;
-
-    const STATUS_PENDING  ='pending';
-    const STATUS_ACTIVE   = 'active';
-    const STATUS_DISABLED = 'disabled';
+    use HasActivityDomain;
+    use HasOrganizationStatus;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +48,7 @@ class Organization extends Model
      * @var array
      */
     protected $casts = [
+        'activity_domains' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime'
@@ -62,11 +65,29 @@ class Organization extends Model
 
 
     /**
-     * Scope a query to include the searched text.
+     * Get the county of the organization.
      */
-    public function scopeActive(Builder $query): void
+    public function county(): BelongsTo
     {
-        $query->where('status', self::STATUS_ACTIVE);
+        return $this->belongsTo(County::class);
+    }
+
+
+    /**
+     * Get the city of the organization.
+     */
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+
+
+    /**
+     * Scope a query to include the locations.
+     */
+    public function scopeCities(Builder $query, int|array|Collection $cityIds): void
+    {
+        $query->whereIn('city_id', $cityIds);
     }
 
 
@@ -81,14 +102,4 @@ class Organization extends Model
         $query->orWhere('website', 'LIKE', '%{$searchedText}%');
     }
 
-
-    /**
-     * Scope a query to include specified activity domains.
-     */
-    public function scopeActivityDomains(Builder $query, array $activityDomains): void
-    {
-        foreach ($activityDomains as $activityDomain) {
-            $query->orWhere('activity_domains', 'LIKE', '%{$activityDomain}%');
-        }
-    }
 }

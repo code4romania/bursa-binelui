@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Http\Request;
+use App\Enums\OrganizationQuery;
+use App\Enums\OrganizationStatus;
 use App\Models\Organization;
 
 class OrganizationController extends Controller
 {
-    const QUERY_ACTIVITY_DOMAINS = 'ad';
-    const QUERY_LOCATION = 'l';
-    const QUERY_SEARCH = 's';
-
     /**
      * Display a listing of the resource.
      */
@@ -21,19 +19,22 @@ class OrganizationController extends Controller
         $query = Organization::query();
 
         /** Check if we have filters by activity domains. */
-        if ($request->query(self::QUERY_ACTIVITY_DOMAINS)) {
-            $query->activityDomains($request->query(self::QUERY_ACTIVITY_DOMAINS, ''));
+        if ($request->query(OrganizationQuery::activity_domain->value)) {
+            $query->activityDomains($request->query(OrganizationQuery::activity_domain->value, ''));
         }
 
-        /** Check if we have filters by activity domains. */
-        if ($request->query(self::QUERY_SEARCH, '')) {
-            $query->search($request->query(self::QUERY_ACTIVITY_DOMAINS, ''));
+        /** Check if we have filters by cities. */
+        if ($request->query(OrganizationQuery::cities->value, '')) {
+            $query->cities($request->query(OrganizationQuery::cities->value, ''));
         }
 
-        // TODO: Add location;
+        /** Check if we have a search. */
+        if ($request->query(OrganizationQuery::search->value, '')) {
+            $query->search($request->query(OrganizationQuery::search->value, ''));
+        }
 
         /** Apply the active scope. */
-        $query->active();
+        $query->status(OrganizationStatus::active);
 
         return $query->paginate();
     }

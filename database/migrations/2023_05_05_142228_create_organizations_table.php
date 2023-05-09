@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\County;
 use App\Models\City;
+use App\Enums\OrganizationStatus;
 
 return new class extends Migration
 {
@@ -18,19 +19,19 @@ return new class extends Migration
             $table->string('name')->index();
             $table->string('cif');
             $table->string('logo')->nullable();
-            $table->text('description')->index();
+            $table->text('description');
             $table->string('status_document')->nullable();
             $table->foreignIdFor(County::class)->constrained();
             $table->foreignIdFor(City::class)->constrained();
             $table->string('street_address');
-            $table->string('contact_person')->index();
+            $table->string('contact_person');
             $table->string('contact_phone');
             $table->string('contact_email');
-            $table->string('website')->index();
+            $table->string('website')->nullable();
             $table->boolean('accepts_volunteers')->default(true);
             $table->text('why_volunteer')->nullable();
-            $table->text('activity_domains')->index();
-            $table->enum('status', ['pending', 'active', 'disabled']);
+            $table->json('activity_domains');
+            $table->string('status')->default(OrganizationStatus::pending->value);
             $table->timestamps();
             $table->softDeletes();
         });
