@@ -13,7 +13,7 @@
 
                 <!-- Email. -->
                 <Input
-                    label="Email"
+                    :label="$t('email')"
                     id="email"
                     type="email"
                     v-model="form.email"
@@ -24,7 +24,7 @@
 
                 <!-- Passowrd. -->
                 <Input
-                    label="Password"
+                    :label="$t('password')"
                     id="password"
                     type="password"
                     v-model="form.password"
@@ -38,7 +38,7 @@
                     <!-- Checkbox -->
                     <label class="flex items-center">
                         <Checkbox name="remember" v-model:checked="form.remember" />
-                        <span class="ml-2 text-sm text-gray-700">Remember me</span>
+                        <span class="ml-2 text-sm text-gray-700">{{ $t('remember_me') }}</span>
                     </label>
 
                     <!-- Reset password -->
@@ -47,7 +47,7 @@
                         :href="route('password.request')"
                         class="underline text-sm text-turqoise-500 hover:text-turqoise-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-turqoise-500"
                     >
-                        Forgot your password?
+                        {{  $t('password_forgoten') }}
                     </Link>
 
                 </div>
@@ -63,7 +63,7 @@
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                     >
-                        Intră în cont
+                        {{ $t('log_in') }}
                     </PrimaryButton>
 
 
@@ -71,7 +71,7 @@
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                     >
-                        Continuă cu Google
+                        {{ $t('google_log_in') }}
                     </SecondaryButton> -->
                 </div>
             </form>
