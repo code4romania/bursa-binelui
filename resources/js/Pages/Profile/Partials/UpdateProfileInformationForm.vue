@@ -3,14 +3,14 @@
 
         <header class="mt-12 flex items-center gap-4">
             <SvgLoader name="user"/>
-            <h2 class="text-2xl font-bold text-gray-900">Setări cont</h2>
+            <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
         </header>
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-11 space-y-6">
 
             <!-- Name -->
             <Input
-                label="Nume și prenume"
+                :label="$t('name_last_name')"
                 id="name"
                 type="text"
                 v-model="form.name"
@@ -20,7 +20,7 @@
 
             <!-- Email -->
             <Input
-                label="Email"
+                :label="$t('email')"
                 id="email"
                 type="email"
                 v-model="form.email"
@@ -30,26 +30,26 @@
 
             <!-- Phone -->
             <Input
-                label="Telefon"
+                :label="$t('phone')"
                 id="phone"
                 type="number"
                 v-model="form.phone"
                 :isRequired="true"
                 :error="form.errors.phone"
             >
-                <p class="text-gray-500 text-sm pt-1">*Numarul de telefon nu va fi facut public.</p>
+                <p class="text-gray-500 text-sm pt-1">{{ $t('phone_input_info') }}</p>
             </Input>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">
-                    Your email address is unverified.
+                    {{ $t('unverified_email') }}
                     <Link
                         :href="route('verification.send')"
                         method="post"
                         as="button"
                         class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Click here to re-send the verification email.
+                        {{ $t('reverify_email') }}
                     </Link>
                 </p>
 
@@ -57,7 +57,7 @@
                     v-show="status === 'verification-link-sent'"
                     class="mt-2 font-medium text-sm text-green-600"
                 >
-                    A new verification link has been sent to your email address.
+                    {{ $t('verification_email') }}
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Anulează
+                    {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <!-- Save button -->
@@ -80,11 +80,11 @@
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Salvează
+                    {{ $t('save') }}
                 </PrimaryButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">{{ $t('saved') }}</p>
                 </Transition>
             </div>
         </form>

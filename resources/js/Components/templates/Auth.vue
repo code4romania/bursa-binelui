@@ -1,7 +1,7 @@
 <template>
     <div class="flex min-h-full flex-1">
-        <div class="flex flex-1 flex-col px-4 mt-20 sm:px-6 lg:flex-none lg:px-20 xl:px-24 mx-20">
-            <div class="mx-auto w-full max-w-sm lg:w-96 mb-64">
+        <div class="flex flex-1 flex-col px-4 mt-20 sm:px-6 lg:flex-none lg:px-20 xl:px-24 lg:mx-20">
+            <div class="mx-auto w-full mb-64">
 
                 <div>
                     <h1 class="mb-6 text-6xl font-extrabold leading-9 tracking-tight text-cyan-900">{{ content.title }}</h1>

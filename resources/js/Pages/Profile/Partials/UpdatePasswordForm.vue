@@ -1,14 +1,14 @@
 <template>
     <section>
         <header>
-            <h2 class="text-2xl mt-8 font-bold text-gray-900">Schimbă parola</h2>
+            <h2 class="text-2xl mt-8 font-bold text-gray-900">{{ $t('change_password') }}</h2>
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6 mb-16">
 
             <!-- Current password. -->
             <Input
-                label="Parola curentă"
+                :label="$t('current_password')"
                 id="current_password"
                 ref="currentPasswordInput"
                 type="password"
@@ -18,7 +18,7 @@
 
             <!-- New password. -->
             <Input
-                label="Parola nouă"
+                :label="$t('new_password')"
                 id="new_password"
                 ref="passwordInput"
                 type="password"
@@ -28,7 +28,7 @@
 
             <!-- Confirm password. -->
             <Input
-                label="Reintroduceți parola nouă"
+                :label="$t('retype_password')"
                 id="password_confirmation"
                 type="password"
                 v-model="form.password_confirmation"
@@ -43,7 +43,7 @@
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Anulează
+                    {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <!-- Save button -->
@@ -54,11 +54,11 @@
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Salvează
+                    {{ $t('save') }}
                 </PrimaryButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">{{ $t('saved') }}</p>
                 </Transition>
             </div>
         </form>
