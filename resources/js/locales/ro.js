@@ -21,5 +21,8 @@ export default {
     "google_log_in": "Continuă cu Google",
     "password_reset": "Reseteaza parola",
     "no_account": "Nu ai cont pe Bursa Binelui?",
-    "create_account": "Creează cont nou"
+    "create_account": "Creează cont nou",
+    "header_confirm_password": "Confirm Password",
+    "confirm_password_info": "This is a secure area of the application. Please confirm your password before continuing.",
+    "confirm": "Confirma"
 }
