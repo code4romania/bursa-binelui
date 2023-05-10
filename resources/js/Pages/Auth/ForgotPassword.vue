@@ -12,7 +12,7 @@
            <form class="space-y-6 mt-4 lg:mb-28" @submit.prevent="submit">
                 <!-- Email -->
                 <Input
-                    label="Email"
+                    :label="$t('email')"
                     id="email"
                     type="email"
                     v-model="form.email"
@@ -30,7 +30,7 @@
                        :class="{ 'opacity-25': form.processing }"
                        :disabled="form.processing"
                    >
-                       Reseteaza parola
+                       {{ $t('password_reset') }}
                    </PrimaryButton>
                </div>
            </form>

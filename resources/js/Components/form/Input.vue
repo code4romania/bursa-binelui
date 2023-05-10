@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Label -->
-        <label :for="id" :class="[`block text-sm font-medium leading-6 text-${white}`]">
+        <label :for="id" :class="[`block text-sm font-medium leading-6 text-${color}`]">
             <span v-if="label">{{ label }}</span>
             <span v-else><slot /></span>
         </label>
@@ -57,7 +57,7 @@
         placeholder: {
             type: String
         },
-        labelColor:{
+        color:{
             type: String
         }
     });
