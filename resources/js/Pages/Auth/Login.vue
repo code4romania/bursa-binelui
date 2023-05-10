@@ -18,6 +18,7 @@
                     type="email"
                     v-model="form.email"
                     :isRequired="true"
+                    color="gray-700"
                     hasAutocomplete="username"
                     :error="form.errors.email"
                 />
@@ -29,6 +30,7 @@
                     type="password"
                     v-model="form.password"
                     :isRequired="true"
+                    color="gray-700"
                     hasAutocomplete="current-password"
                     :error="form.errors.password"
                 />
