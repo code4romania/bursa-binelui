@@ -56,6 +56,16 @@
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
+    /** Page content. */
+    const content = {
+        title: "Register",
+        description: "Log in",
+        link: {
+            text: "lon in",
+            href: "#"
+        }
+    }
+
     const form = useForm({
         password: '',
     });
