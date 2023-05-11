@@ -179,12 +179,12 @@
         {
             name: 'Proiecte',
             description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
-            href: 'register'
+            href: 'public-projects'
         },
         {
             name: 'Organizatii',
             description: 'Descoperă toate organizațiile înscrise pe Bursa Binelui și alege cauza pe care vrei să o susții.',
-            href: 'password.request'
+            href: 'organizations'
         },
         {
             name: 'BCR pentru comunitate',
