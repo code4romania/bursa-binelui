@@ -33,5 +33,6 @@ export default {
     "empty_filters": "Golește filtre",
     "domains": "Domenii de activitate",
     "county_city": "Oras/Judet",
-    "no_data": "Nu exista date pentru cautarea facuta"
+    "no_data": "Nu exista date pentru cautarea facuta",
+    "find_organization": "Descoperă organizația"
 }
