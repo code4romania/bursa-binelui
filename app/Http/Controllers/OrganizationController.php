@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
 use App\Models\Organization;
+use Inertia\Inertia;
+use App\Enums\ActivityDomain;
 
 class OrganizationController extends Controller
 {
@@ -36,7 +38,21 @@ class OrganizationController extends Controller
         /** Apply the active scope. */
         $query->status(OrganizationStatus::active);
 
-        return $query->paginate();
+        /** Extract existing organizations cities with county. */
+        $cities = $query->with('city.county')->get()->map(function (Organization $organization) {
+            return [
+                'id' => $organization->city_id,
+                'name' => $organization->city->name_with_county
+            ];
+        });
+
+        /** Return inertia page. */
+        return Inertia::render('Public/Organizations', [
+            'activity_domains' => ActivityDomain::cases(),
+            'cities' => $cities,
+            'query' => $query->paginate(),
+            'request' => $request
+        ]);
     }
 
 
