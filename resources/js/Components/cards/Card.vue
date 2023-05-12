@@ -1,9 +1,9 @@
 <template>
-    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-md bg-white shadow-lg">
+    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white shadow">
 
         <div class="flex flex-1 flex-col">
             <div class="relative aspect-h-3 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-52">
-                <img :src="data.imageUrl" alt="" class="h-full w-full object-cover object-center sm:h-full sm:w-full rounded-t-md" />
+                <img :src="data.imageUrl" alt="" class="h-full w-full object-cover object-center sm:h-full sm:w-full rounded-t-lg" />
 
                 <div class="flex flex-wrap gap-2 absolute bottom-3 left-3 z-10">
 
@@ -51,7 +51,25 @@
                     </div>
                 </div>
 
-                <slot />
+                <div class="mt-4">
+                    <SecondaryButton
+                        class="lg:w-1/2"
+                    >
+                        Vizualizează
+                    </SecondaryButton>
+
+                    <SecondaryButton
+                        class="lg:w-1/2"
+                    >
+                        Editeaza
+                    </SecondaryButton>
+                </div>
+
+                <SecondaryButton
+                    class="w-full mt-4"
+                >
+                    Mută în draft
+                </SecondaryButton>
             </div>
         </div>
     </li>

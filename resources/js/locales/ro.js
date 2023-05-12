@@ -65,4 +65,5 @@ export default {
     "you_have_blog": "Dacă ai un site sau un blog, atunci copiază acest",
     "embed_code": "cod de embed",
     "copy_code": "și pune-l într-un articol, pe una din paginile site-ului sau într-un newsletter un widget de donații pentru acest proiect."
+
 }
