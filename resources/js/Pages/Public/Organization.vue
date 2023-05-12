@@ -10,7 +10,7 @@
                     <div class="border-b border-gray-200 bg-white mr-6 py-4">
                         <div class="flex items-center gap-4">
                             <SvgLoader name="global" />
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{ organization.county_id }}, {{ organization.city_id }}</h3>
+                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{ organization.county_name }}, {{ organization.city_name }}</h3>
                         </div>
                     </div>
 
@@ -91,7 +91,7 @@
                                 <SvgLoader class="shrink-0 mt-1" name="home" />
                                 <div>
                                     <h3 class="text-gray-600 font-semibold text-base">{{ $t('ong_address') }}</h3>
-                                    <p class="mt-2 text-gray-500 font-normal text-base">{{ organization.street_address }}, <br> {{ organization.county_id }}, {{ organization.city_id }}</p>
+                                    <p class="mt-2 text-gray-500 font-normal text-base">{{ organization.street_address }}, <br> {{ organization.county_name }}, {{ organization.city_name }}</p>
                                 </div>
                             </div>
 
