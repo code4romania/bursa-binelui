@@ -2,7 +2,7 @@
     <section>
 
         <header class="mt-12 flex items-center gap-4">
-            <SvgLoader name="list"/>
+            <SvgLoader name="user"/>
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
         </header>
 

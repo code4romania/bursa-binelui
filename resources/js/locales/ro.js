@@ -24,5 +24,15 @@ export default {
     "create_account": "Creează cont nou",
     "header_confirm_password": "Confirm Password",
     "confirm_password_info": "This is a secure area of the application. Please confirm your password before continuing.",
-    "confirm": "Confirma"
+    "confirm": "Confirma",
+    "organization_title": "Organizații",
+    "organization": "organizații",
+    "next": "Următoarele",
+    "prev": "Anterior",
+    "search": "Caută",
+    "empty_filters": "Golește filtre",
+    "domains": "Domenii de activitate",
+    "county_city": "Oras/Judet",
+    "no_data": "Nu exista date pentru cautarea facuta",
+    "find_organization": "Descoperă organizația"
 }
