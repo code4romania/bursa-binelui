@@ -79,7 +79,15 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        return $organization;
+        /** Add organization city name. */
+        $organization->city_name = $organization->city->name;
+        /** Add organization county name. */
+        $organization->county_name = $organization->county->name;
+
+        /** Return inertia page. */
+        return Inertia::render('Public/Organization', [
+            'organization' => $organization
+        ]);
     }
 
 
