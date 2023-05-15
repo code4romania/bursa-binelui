@@ -1,15 +1,27 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-        <Head title="Projects" />
+        <Head :title="$t('projects_title')" />
+
+        <!-- Alert -->
+        <Alert
+            class="fixed right-10 top-10 w-96 z-50"
+            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
+            :message="flash.success_message || flash.error_message"
+            @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
+        />
 
         <!-- Dashboard template -->
         <Dashboard>
-           <div class="p-9 xl:max-w-4xl">
-                <div class="flex items-center gap-4">
-                    <SvgLoader name="list"/>
+           <div class="p-9 mb-24 xl:max-w-4xl">
+
+                <!-- Header -->
+                <header class="flex items-center gap-4">
+                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <SvgLoader class="shrink-0" name="list"/>
+                    </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('published_projects') }}</h2>
-                </div>
+                </header>
 
                 <Link
                     :href="route('admin.ong.project.add', 1)"
@@ -28,7 +40,9 @@
 
                 <!-- Draft projects -->
                 <div class="flex items-center mt-20 gap-4">
-                    <SvgLoader name="list"/>
+                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <SvgLoader class="shrink-0" name="list"/>
+                    </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('draft_projects') }}</h2>
                 </div>
 
@@ -51,6 +65,12 @@
     import Dashboard from '@/Components/templates/Dashboard.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
+    import Alert from '@/Components/Alert.vue';
+
+    const flash = {
+        success_message:'',
+        error_message:''
+    }
 
     const publishedProjects = {
         data: [
