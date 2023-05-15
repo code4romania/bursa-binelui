@@ -74,7 +74,7 @@
     const selectedOption = ref(props.modelValue);
 
     /** Initialize emits. */
-    const emit = defineEmits(['update:modelValue']);
+    const emit = defineEmits(['update:modelValue', 'selected']);
 
     /** Option list. */
     const selectOptions = computed(() =>
