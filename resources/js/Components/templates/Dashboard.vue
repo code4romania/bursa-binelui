@@ -36,7 +36,7 @@
     const navigation = [
         { name: 'Organizatia mea', href: 'dashboard', icon: HomeIcon },
         { name: 'Voluntari', href: 'login', icon: UsersIcon, },
-        { name: 'Proiectele mele', href: 'projects', icon: FolderIcon },
+        { name: 'Proiectele mele', href: 'admin.ong.projects', icon: FolderIcon },
         { name: 'Donatii', href: 'login', icon: CalendarIcon },
         { name: 'Tichete', href: 'login', icon: DocumentDuplicateIcon }
     ];

@@ -14,7 +14,7 @@
 
                     <div class="inline-flex items-center gap-x-1 rounded-full bg-red-500 px-3 py-1 text-base text-white">
                         <p class="font-bold">{{ $t('scor') }}</p>
-                        <p class="font-bold">{{ data.score }}</p>
+                        <p class="font-bold">{{ data.scor }}</p>
                     </div>
                 </div>
 
