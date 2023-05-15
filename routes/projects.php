@@ -4,15 +4,15 @@ use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::middleware('guest')->group(function () {
-    Route::get('/proiecte', function () {
-        return Inertia::render('Public/Projects');
-    })->name('projects');
 
-    Route::get('/proiect/{proiect}', function () {
-        return Inertia::render('Public/Project');
-    })->name('project');
-});
+Route::get('/proiecte', function () {
+    return Inertia::render('Public/Projects');
+})->name('projects');
+
+Route::get('/proiect/{proiect}', function () {
+    return Inertia::render('Public/Project');
+})->name('project');
+
 
 
 Route::prefix('ong')->middleware('auth')->group(function () {
