@@ -71,7 +71,7 @@ export default {
     "scor": "Scor",
     "currency": "lei",
     "view": "Vizualizează",
-    "edit": "Editeaza",
+    "edit": "Editează",
     "draft": "Mută în draft",
     "projects_title": "Proiecte",
     "of_projects": "proiecte",
@@ -104,5 +104,8 @@ export default {
     "articles_link_label": "Link articol",
     "external_links_title": "Linkuri externe",
     "external_links_text": "Organizația poate recruta voluntari prin platforma Bursa Binelui. Completează datele de mai jos dacă dorești acest lucru pentru organizația ta.",
-    "preview": "Previzualizează"
+    "preview": "Previzualizează",
+    "edit_project_title": "Editează proiect",
+    "main_image": "Imagine principală",
+    "delete": "Șterge"
 }
