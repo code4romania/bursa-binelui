@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+
+  # Maintain dependencies for Composer
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    versioning-strategy: increase
+    # This option has no impact on security updates, which have a separate,
+    # internal limit of ten open pull requests.
+    open-pull-requests-limit: 0
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    versioning-strategy: increase
+    # This option has no impact on security updates, which have a separate,
+    # internal limit of ten open pull requests.
+    open-pull-requests-limit: 0
