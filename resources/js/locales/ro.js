@@ -64,6 +64,19 @@ export default {
     "your_blog": "Scrie despre proiect pe site-ul tău",
     "you_have_blog": "Dacă ai un site sau un blog, atunci copiază acest",
     "embed_code": "cod de embed",
-    "copy_code": "și pune-l într-un articol, pe una din paginile site-ului sau într-un newsletter un widget de donații pentru acest proiect."
-
+    "copy_code": "și pune-l într-un articol, pe una din paginile site-ului sau într-un newsletter un widget de donații pentru acest proiect.",
+    "published_projects": "Proiecte publicate",
+    "add_project": "Adaugă un proiect",
+    "draft_projects": "Proiecte Draft",
+    "scor": "Scor",
+    "currency": "lei",
+    "view": "Vizualizează",
+    "edit": "Editeaza",
+    "draft": "Mută în draft",
+    "projects_title": "Proiecte",
+    "of_projects": "proiecte",
+    "projects_list": "Lista proiecte",
+    "projects_map": "Hartă proiecte",
+    "status": "Status",
+    "period": "Perioada donatii"
 }
