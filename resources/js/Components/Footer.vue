@@ -1,18 +1,24 @@
 <template>
     <footer class="bg-gray-800" aria-labelledby="footer-heading">
 
+        <!-- Alert -->
+        <Alert
+            class="fixed right-10 top-10 w-96 z-50"
+            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
+            :message="flash.success_message || flash.error_message"
+            @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
+        />
+
+        <!-- Code4 info -->
         <div class="bg-gray-100">
             <div class="mx-auto container max-w-7xl flex items-center gap-x-6 px-6 py-4 sm:pr-3.5 lg:pl-8">
-
                 <SvgLoader name="code4_logo"/>
                 <div class="flex flex-col md:flex-row text-sm font-semibold leading-5 gap-1">
-                    <p class="text-gray-700">O solutie Code for Romania.</p>
-                    <a class="text-blue-500" href="#">Afla mai multe</a>
+                    <p class="text-gray-700">{{ $t('code4_solution') }}</p>
+                    <a class="text-blue-500" href="https://code4.ro/ro">{{ $t('find_more') }}</a>
                 </div>
             </div>
         </div>
-
-        <h2 id="footer-heading" class="sr-only">Footer</h2>
 
         <div class="mx-auto max-w-7xl px-6 pb-8 lg:px-8 mt-10 lg:mt-16">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -21,39 +27,100 @@
                     <div class="md:grid md:grid-cols-2 md:gap-4">
 
                         <div>
-                            <h3 class="text-sm font-semibold leading-5 text-gray-400">LINKURI UTILE</h3>
+                            <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('util_links') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Despre Bursa Binelui</a></li>
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Termeni și condiții</a></li>
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Politica de confidențialitate</a></li>
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Contact</a></li>
+                                <li>
+                                    <Link
+                                        :href="route('about')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('about_link') }}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        :href="route('terms')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('terms_link') }}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        :href="route('policy')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('policy_link') }}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        :href="route('contact')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('contact_link') }}
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                            <h3 class="text-sm font-semibold leading-5 text-gray-400">NAVIGHEAZA</h3>
+                            <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('navigate') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Înregistrează ONG</a></li>
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Devino donator</a></li>
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Organizații</a></li>
-                                <li><a href="login" class="text-sm leading-6 text-gray-400 hover:text-white">Proiecte active</a></li>
+                                <li>
+                                    <Link
+                                        :href="route('login')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('register_ong_link') }}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        :href="route('donor')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('donor_link') }}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        :href="route('organizations')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('organizations_link') }}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        :href="route('projects')"
+                                        class="text-sm leading-6 text-gray-400 hover:text-white"
+                                    >
+                                        {{ $t('projects_link') }}
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-10 xl:mt-0">
-                    <h3 class="text-sm font-semibold leading-5 text-gray-400">ABONEAZA-TE LA NEWSLETTER</h3>
-                    <p class="mt-4 text-sm leading-6 text-gray-400">Cele mai noi informații, proiecte și vești de bine despre organizațiile tale preferate.</p>
+                    <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('news_letter_subscribe_title') }}</h3>
+                    <p class="mt-4 text-sm leading-6 text-gray-400">{{ $t('news_letter_subscribe_text') }}</p>
 
-                    <form class="mt-6 sm:flex items-center sm:max-w-md">
+                    <form
+                        class="mt-6 sm:flex items-center sm:max-w-md"
+                        @submit.prevent="subscribe"
+                    >
                         <Input
-                            id="footer-email"
+                            id="subscribe-email"
                             placeholder="Adresa de email"
                             type="email"
-                            labelColor="white"
+                            color="white"
+                            v-model="form.subscriber_email"
+                            :error="form.errors.subscriber_email"
                         />
 
                         <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
@@ -61,8 +128,10 @@
                                 background="turqoise-500"
                                 hover="turqoise-400"
                                 color="white"
+                                :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing"
                             >
-                                Abonare
+                                {{ $t('subscribe') }}
                             </PrimaryButton>
                         </div>
                     </form>
@@ -91,17 +160,39 @@
                         <SvgLoader name="drible"/>
                     </a>
                 </div>
-                <p class="mt-8 text-sm leading-5 text-gray-400 md:order-1 md:mt-0">&copy; {{ currentYear }} Bursa Binelui by BCR, Toate drepturile rezervate</p>
+                <p class="mt-8 text-sm leading-5 text-gray-400 md:order-1 md:mt-0">&copy; {{ currentYear }} {{ $t('footer_info') }}</p>
             </div>
         </div>
     </footer>
 </template>
 
 <script setup>
+    /** Import from inertia. */
+    import { Link, useForm } from '@inertiajs/vue3';
+
     /** Import componets. */
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
+    import Alert from './Alert.vue';
 
+    const flash = {
+        success_message:'',
+        error_message:''
+    }
+
+    /** Form variables. */
+    const form = useForm({
+        subscriber_email: '',
+    });
+
+    /** Subscribe action. */
+    const subscribe = () => {
+        // form.post(route('need.subscribe.route'), {
+        //     onFinish: () => form.reset('subscribe_email'),
+        // });
+    };
+
+    /** Get current year. */
     const currentYear = new Date().getFullYear();
 </script>
