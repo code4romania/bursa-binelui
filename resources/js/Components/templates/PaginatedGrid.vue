@@ -7,7 +7,10 @@
                 <template v-for="item in list.data" :key="item.id">
 
                     <template v-if="'project' == type">
-                        <ProjectCard :data="item" />
+                        <ProjectCard
+                            :data="item"
+                            :cardType="cardType"
+                        />
                     </template>
 
                     <template v-if="'ong' == type">
@@ -45,6 +48,7 @@
     defineProps({
         type: String,
         list: Object,
-        classes: String
+        classes: String,
+        cardType: String
     });
 </script>
