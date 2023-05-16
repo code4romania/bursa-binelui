@@ -3,12 +3,11 @@
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    Route::get('organizatii', [OrganizationController::class, 'index'])->name('organizations');
+/** Public routes. */
+Route::get('organizatii', [OrganizationController::class, 'index'])->name('organizations');
+Route::get('organizatie/{organization}', [OrganizationController::class, 'show'])->name('organization');
 
-    Route::get('organizatie/{organization}', [OrganizationController::class, 'show'])->name('organization');
-});
-
+/** Admin routes. */
 Route::middleware('auth')->group(function () {
 
 });

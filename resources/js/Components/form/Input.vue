@@ -12,7 +12,7 @@
             :value="modelValue"
             :type="type"
             :autocomplete="hasAutocomplete"
-            :required="isRequired ? 'required' : ''"
+            v-bind="{ required: isRequired }"
             @input="$emit('update:modelValue', $event.target.value)"
             ref="input"
             :placeholder="placeholder"

@@ -30,7 +30,7 @@
 
     /** Component props. */
     const props = defineProps({
-        type: [String, Array],
+        type: [String, Array, Boolean],
         message: String
     });
 

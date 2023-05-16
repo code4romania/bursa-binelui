@@ -35,8 +35,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+/** Website routes. */
+Route::get('/despre', function () { return Inertia::render('Public/Website/About'); })->name('about');
+Route::get('/termenii-si-conditii', function () { return Inertia::render('Public/Website/Terms'); })->name('terms');
+Route::get('/politica-de-confidentialitate', function () { return Inertia::render('Public/Website/Policy'); })->name('policy');
+Route::get('/contact', function () { return Inertia::render('Public/Website/Contact'); })->name('contact');
+Route::get('/donator', function () { return Inertia::render('Public/Donor/Donor'); })->name('donor');
+Route::get('/articles', function () { return Inertia::render('Public/Articles/Articles'); })->name('articles');
+
 require __DIR__.'/auth.php';
 
 require __DIR__.'/organizations.php';
 
 require __DIR__.'/projects.php';
+
+require __DIR__.'/volunteers.php';

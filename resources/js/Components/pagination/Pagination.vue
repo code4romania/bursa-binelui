@@ -27,8 +27,6 @@
             </template>
         </div>
 
-        {{ pagination }}
-
         <!-- Prev -->
         <div class="-mt-px flex w-0 flex-1 justify-end">
             <Link
@@ -54,18 +52,10 @@
 
     /** Component props. */
     const props = defineProps({
-        current_page: {
-            type: String
-        },
-        links: {
-            type: Array
-        },
-        prev: {
-            type: String
-        },
-        next: {
-            type:String
-        }
+        current_page: String,
+        links: Array,
+        prev: String,
+        next: String
     });
 
     /** Forma pagination links. */

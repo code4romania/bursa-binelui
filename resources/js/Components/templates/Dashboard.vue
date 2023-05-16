@@ -7,9 +7,9 @@
                     <li v-for="item in navigation" :key="item.name">
                         <Link
                             :href="route(item.href)"
-                            :class="[route().current(item.href) ? 'text-turqoise-500 bg-turqoise-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
+                            :class="[isActive(item) ? 'text-turqoise-500 bg-turqoise-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
                         >
-                            <component :is="item.icon" :class="[route().current(item.href) ? 'text-turqoise-500' : 'text-gray-600', 'h-6 w-6 shrink-0']" aria-hidden="true" />
+                            <component :is="item.icon" :class="[isActive(item) ? 'text-turqoise-500' : 'text-gray-600', 'h-6 w-6 shrink-0']" aria-hidden="true" />
                            {{ item.name }}
                         </Link>
                     </li>
@@ -34,10 +34,50 @@
 
     /** Sidebar links. */
     const navigation = [
-        { name: 'Organizatia mea', href: 'dashboard', icon: HomeIcon },
-        { name: 'Voluntari', href: 'login', icon: UsersIcon, },
-        { name: 'Proiectele mele', href: 'admin.ong.projects', icon: FolderIcon },
-        { name: 'Donatii', href: 'login', icon: CalendarIcon },
-        { name: 'Tichete', href: 'login', icon: DocumentDuplicateIcon }
+        {
+            name: 'Organizatia mea',
+            href: 'dashboard',
+            subroutes: [],
+            icon: HomeIcon
+        },
+        {
+            name: 'Voluntari',
+            href: 'admin.ong.volunteers',
+            subroutes: [],
+            icon: UsersIcon,
+        },
+        {
+            name: 'Proiectele mele',
+            href: 'admin.ong.projects',
+            subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
+            icon: FolderIcon
+        },
+        {
+            name: 'Donatii',
+            href: 'login',
+            subroutes: [],
+            icon: CalendarIcon
+        },
+        {
+            name: 'Tichete',
+            href: 'login',
+            subroutes: [],
+            icon: DocumentDuplicateIcon
+        }
     ];
+
+    /**
+     * Determines if a navigation item should be active based on the current route.
+     *
+     * @param {Object} item The navigation item to check.
+     *
+     * @returns {Boolean} Whether or not the navigation item should be active.
+     */
+    const isActive = (item) => {
+        if (route().current(item.href)) {
+            return true;
+        }
+
+        return item.subroutes.some(subroute => route().current(subroute));
+    }
 </script>

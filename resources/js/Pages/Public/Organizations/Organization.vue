@@ -4,6 +4,7 @@
         <Head title="Organizatie" />
 
         <div class="bg-white mb-20">
+
             <div class="flex flex-col-reverse lg:flex-row mx-auto w-full lg:max-w-7xl mb-8 px-9">
                 <div class="w-full lg:w-6/12 flex flex-col justify-center xl:pr-6">
 
@@ -134,14 +135,11 @@
             <div class="bg-white px-9">
                 <ul role="list" class="mx-auto max-w-7xl grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
                     <template v-for="(item, index) in projects" :key="index">
-                        <ProjectCard class="-mt-6" :data="item">
-                            <Link
-                                href="route('projects')"
-                                class="block text-center mt-8 text-white bg-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                            >
-                                {{ $t('see_projects') }}
-                            </Link>
-                        </ProjectCard>
+                        <ProjectCard
+                            class="-mt-6"
+                            :data="item"
+                            cardType="client"
+                        />
                     </template>
                 </ul>
             </div>
@@ -253,35 +251,45 @@
     /** Grid list */
     const projects = [
         {
+            id: 1,
+            scor: 3432,
+            troffes: 4,
             name: 'Asociația MediuACUM',
             title: 'Ecologizarea canalului de la marginea Tulcei',
             county: "Alba Iulia",
             activity: "Mediu",
-            currentAmount: "102200",
-            maxAmount: "202200",
-            status:"active",
+            currentAmount: 12200,
+            maxAmount: 202200,
+            status:"published",
+            active: true,
             imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
         },
-
         {
+            id: 2,
+            scor: 3432,
+            troffes: 4,
             name: 'Asociația MediuACUM',
             title: 'Ecologizarea canalului de la marginea Tulcei',
             county: "Alba Iulia",
             activity: "Mediu",
-            currentAmount: "102200",
-            maxAmount: "202200",
-            status:"draft",
+            currentAmount: 12200,
+            maxAmount: 202200,
+            status:"published",
+            active: true,
             imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
         },
-
         {
+            id: 3,
+            scor: 3432,
+            troffes: 4,
             name: 'Asociația MediuACUM',
             title: 'Ecologizarea canalului de la marginea Tulcei',
             county: "Alba Iulia",
             activity: "Mediu",
-            currentAmount: "102200",
-            maxAmount: "202200",
-            status:"active",
+            currentAmount: 12200,
+            maxAmount: 202200,
+            status:"published",
+            active: true,
             imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
         },
     ];

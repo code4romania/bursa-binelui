@@ -34,6 +34,7 @@
                 <!-- Published projects -->
                 <PaginatedGrid
                     type="project"
+                    cardType="admin"
                     :list="publishedProjects"
                     classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2"
                 />
@@ -48,6 +49,7 @@
 
                 <PaginatedGrid
                     type="project"
+                    cardType="admin"
                     :list="draftProjects"
                     classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2"
                 />
@@ -75,36 +77,52 @@
     const publishedProjects = {
         data: [
             {
-                id: '1',
+                id: 1,
                 scor: 3432,
                 troffes: 4,
                 name: 'Asociația MediuACUM',
                 title: 'Ecologizarea canalului de la marginea Tulcei',
                 county: "Alba Iulia",
                 activity: "Mediu",
-                currentAmount: "102200",
-                maxAmount: "202200",
-                status:"active",
+                currentAmount: 202200,
+                maxAmount: 202200,
+                status:"published",
+                active: true,
                 imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
             },
-        ],
+            {
+                id: 2,
+                scor: 3432,
+                troffes: 4,
+                name: 'Asociația MediuACUM',
+                title: 'Ecologizarea canalului de la marginea Tulcei',
+                county: "Alba Iulia",
+                activity: "Mediu",
+                currentAmount: 10000,
+                maxAmount: 202200,
+                status: "published",
+                active: false,
+                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+            }
+        ]
     };
 
     const draftProjects = {
         data: [
-            {
-                id: '1',
+        {
+                id: 1,
                 scor: 3432,
                 troffes: 4,
                 name: 'Asociația MediuACUM',
                 title: 'Ecologizarea canalului de la marginea Tulcei',
                 county: "Alba Iulia",
                 activity: "Mediu",
-                currentAmount: "102200",
-                maxAmount: "202200",
-                status:"active",
+                currentAmount: 102200,
+                maxAmount: 202200,
+                status:"draft",
+                active: true,
                 imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            }
+            },
         ]
     };
 </script>
