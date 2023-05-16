@@ -4,7 +4,7 @@
             @click="open = !open"
             class="block text-sm font-medium text-blue-500"
         >
-            {{ $t('edit') }}
+            {{ text ? text : $t('edit') }}
         </button>
 
         <Teleport to="body">
@@ -35,7 +35,7 @@
                                         </button>
 
                                         <button
-                                            @click="$emit('action', $event.target.value)"
+                                            @click="$emit('action', $event.target.value); open = false"
                                             type="button"
                                             class="inline-flex justify-center rounded-md bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-turqoise-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turqoise-500 sm:col-start-2"
                                         >
@@ -59,6 +59,11 @@
     /** Import plugins. */;
     import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
     import { CheckIcon } from '@heroicons/vue/24/outline';
+
+    /** Component props. */
+    const props = defineProps({
+        text: String,
+    });
 
     /** Local state. */
     const open = ref(false);
