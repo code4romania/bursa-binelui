@@ -4,25 +4,15 @@ use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+/** Public routes. */
+Route::get('/proiecte', function () { return Inertia::render('Public/Projects/Projects'); })->name('projects');
+Route::get('/proiect/{proiect}', function () { return Inertia::render('Public/Projects/Project'); })->name('project');
 
-Route::get('/proiecte', function () {
-    return Inertia::render('Public/Projects');
-})->name('projects');
-
-Route::get('/proiect/{proiect}', function () {
-    return Inertia::render('Public/Project');
-})->name('project');
-
-
-
+/** Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {
     Route::get('proiecte', function () {
         return Inertia::render('AdminOng/Projects/Projects');
     })->name('admin.ong.projects');
-
-    Route::get('proiect/{proiect}', function () {
-        return Inertia::render('AdminOng/Projects/Project');
-    })->name('admin.ong.project.view');
 
     Route::get('add-proiect/{proiect}', function () {
         return Inertia::render('AdminOng/Projects/AddProject');
