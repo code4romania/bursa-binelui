@@ -47,7 +47,7 @@ class OrganizationController extends Controller
         });
 
         /** Return inertia page. */
-        return Inertia::render('Public/Organizations', [
+        return Inertia::render('Public/Organizations/Organizations', [
             'activity_domains' => ActivityDomain::cases(),
             'cities' => $cities,
             'query' => $query->paginate(),
@@ -85,7 +85,7 @@ class OrganizationController extends Controller
         $organization->county_name = $organization->county->name;
 
         /** Return inertia page. */
-        return Inertia::render('Public/Organization', [
+        return Inertia::render('Public/Organizations/Organization', [
             'organization' => $organization
         ]);
     }
