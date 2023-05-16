@@ -179,7 +179,7 @@
         {
             name: 'Proiecte',
             description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
-            href: 'login'
+            href: 'projects'
         },
         {
             name: 'Organizatii',

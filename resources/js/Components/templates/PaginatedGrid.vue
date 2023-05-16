@@ -7,7 +7,7 @@
                 <template v-for="item in list.data" :key="item.id">
 
                     <template v-if="'project' == type">
-                        <Card :data="item" />
+                        <ProjectCard :data="item" />
                     </template>
 
                     <template v-if="'ong' == type">
@@ -18,6 +18,7 @@
 
             <!-- Pagination -->
             <Pagination
+                v-if="list.links && list.next_page_url"
                 :currentPage="list.current_page"
                 :prev="list.prev_page_url"
                 :next="list.next_page_url"
@@ -36,20 +37,14 @@
 
 <script setup>
     /** Import Components. */
-    import Card from '@/Components/cards/OngCard.vue';
+    import ProjectCard from '@/Components/cards/ProjectCard.vue';
     import OngCard from '@/Components/cards/OngCard.vue';
     import Pagination from '@/Components/pagination/Pagination.vue';
 
     /** Component props. */
     defineProps({
-        type: {
-            type: String
-        },
-        list: {
-            type: Object
-        },
-        classes: {
-            type: String
-        }
+        type: String,
+        list: Object,
+        classes: String
     });
 </script>

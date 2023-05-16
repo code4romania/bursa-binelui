@@ -208,7 +208,7 @@
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import ProjectCard from '@/Components/cards/Card.vue'
+    import ProjectCard from '@/Components/cards/ProjectCard.vue'
 
     /** Page props. */
     const props = computed(() => usePage().props);

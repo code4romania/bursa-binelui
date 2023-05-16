@@ -9,12 +9,12 @@
 
                     <div class="inline-flex items-center gap-x-2 rounded-full bg-red-500 px-3 py-1 text-base font-bold text-white">
                         <SvgLoader class="shrink-0" name="troffe" />
-                        4
+                        {{ data.troffes }}
                     </div>
 
                     <div class="inline-flex items-center gap-x-1 rounded-full bg-red-500 px-3 py-1 text-base text-white">
-                        <p class="font-bold">Scor</p>
-                        <p class="font-bold">20324</p>
+                        <p class="font-bold">{{ $t('scor') }}</p>
+                        <p class="font-bold">{{ data.scor }}</p>
                     </div>
                 </div>
 
@@ -42,8 +42,8 @@
                 <div class="mt-5">
 
                     <div class="flex items-center justify-between mb-1 text-xl font-bold">
-                        <p class="text-cyan-900">{{ data.currentAmount }} lei</p>
-                        <p class="text-turqoise-500">{{ data.maxAmount }} lei</p>
+                        <p class="text-cyan-900">{{ data.currentAmount }} {{ $t('currency') }}</p>
+                        <p class="text-turqoise-500">{{ data.maxAmount }} {{ $t('currency') }}</p>
                     </div>
 
                     <div class="w-full bg-gray-200 h-5 dark:bg-gray-700">
@@ -51,24 +51,24 @@
                     </div>
                 </div>
 
-                <div class="mt-4">
-                    <SecondaryButton
-                        class="lg:w-1/2"
+                <div class="mt-4 shadow-sm border border-gray-300 rounded-md flex divide-x divide-gray-300">
+                    <Link
+                        :href="route('admin.ong.project.view', data.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                     >
-                        Vizualizează
-                    </SecondaryButton>
+                        {{ $t('view') }}
+                    </Link>
 
-                    <SecondaryButton
-                        class="lg:w-1/2"
+                    <Link
+                        :href="route('admin.ong.project.edit', data.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                     >
-                        Editeaza
-                    </SecondaryButton>
+                        {{ $t('edit') }}
+                    </Link>
                 </div>
 
-                <SecondaryButton
-                    class="w-full mt-4"
-                >
-                    Mută în draft
+                <SecondaryButton class="w-full mt-4 py-2.5">
+                    {{ $t('draft') }}
                 </SecondaryButton>
             </div>
         </div>
@@ -76,12 +76,15 @@
 </template>
 
 <script setup>
+    /** Import from inertia. */
+    import { Link } from '@inertiajs/vue3';
+
     /** Import components. */
     import SvgLoader from '@/Components/SvgLoader.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
 
    /** Component props. */
-   defineProps({
-        data: { type: Object }
+   const props = defineProps({
+        data: Object
     });
 </script>
