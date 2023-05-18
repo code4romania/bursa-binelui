@@ -214,5 +214,6 @@ export default {
     "send_message_info": "Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.",
     "contact_info": "Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.",
     "send": "Trimite",
-    "message_label": "Mesaj"
+    "message_label": "Mesaj",
+    "confirm_delete_image_text": "Esti sigur ca vrei sa stergi imaginea?"
 }
