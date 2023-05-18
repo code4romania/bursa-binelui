@@ -23,15 +23,10 @@
             type: String,
             required: true,
         },
-        label: {
-            type: String,
-        },
-        placeholder: {
-            type: String
-        },
-        labelColor:{
-            type: String
-        }
+        label: String,
+        placeholder: String,
+        color: String,
+        id: String
     });
 
     /** Component emits. */

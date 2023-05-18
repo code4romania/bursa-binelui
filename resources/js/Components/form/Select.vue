@@ -61,9 +61,9 @@
 
     /** Component props. */
     const props = defineProps({
-        modelValue: Object,
+        modelValue: [String, Object, Array],
         label: String,
-        options: Array,
+        options: [String, Object, Array],
         error: String
     });
 

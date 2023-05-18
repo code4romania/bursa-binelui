@@ -58,15 +58,9 @@
 
     /** Component props. */
     const props = defineProps({
-        modelValue: {
-            type: String,
-        },
-        label: {
-            type: String,
-        },
-        options: {
-            type: Array
-        }
+        modelValue: [String, Object, Array],
+        label: String,
+        options: [String, Object, Array]
     });
 
     /** Query input. */
