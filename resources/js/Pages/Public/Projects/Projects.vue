@@ -8,48 +8,55 @@
             <!-- Header -->
             <header class="flex items-center gap-4">
                 <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                    <SvgLoader class="shrink-0" name="list"/>
+                    <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('projects_title') }}</h2>
             </header>
 
             <!-- Filters -->
-            <div class="lg:my-11">
-                <div class="flex w-full">
-                    <div class="xl:w-8/12 flex items-center gap-6">
+            <div class="my-11">
+                <div class="flex flex-col sm:flex-row w-full">
+                    <div class="w-full flex-col sm:flex-row xl:w-8/12 flex items-center gap-6">
 
                         <!-- Search -->
-                        <SearchFilter
-                            v-model="filter.s"
-                            color="gray-700"
-                            :placeholder="$t('search')"
-                            @keydown.enter="filterProjects"
-                        />
+                        <div class="flex gap-6">
+                            <SearchFilter
+                                id="project-search"
+                                class="w-full"
+                                v-model="filter.s"
+                                color="gray-700"
+                                :placeholder="$t('search')"
+                                @keydown.enter="filterProjects"
+                            />
 
-                        <!-- Search action -->
-                        <SecondaryButton
-                            @click="filterProjects"
-                            class="py-2"
-                        >
-                            {{ $t('search') }}
-                        </SecondaryButton>
+                            <!-- Search action -->
+                            <SecondaryButton
+                                @click="filterProjects"
+                                class="py-2"
+                            >
+                                {{ $t('search') }}
+                            </SecondaryButton>
+                        </div>
 
-                        <!-- Empty filters. -->
-                        <SecondaryButton
-                            v-if="hasValues"
-                            @click="emptyFilters"
-                            class="py-2 flex gap-2 items-center"
-                        >
-                            <SvgLoader name="close" />
-                            {{ $t('empty_filters') }}
-                        </SecondaryButton>
+                        <div class="flex gap-6 w-full mb-6 sm:mb-0">
+                            <!-- Empty filters. -->
+                            <SecondaryButton
+                                v-if="hasValues"
+                                @click="emptyFilters"
+                                class="py-2 flex gap-2 items-center w-1/2 sm:w-auto"
+                            >
+                                <SvgLoader name="close" />
+                                {{ $t('empty_filters') }}
+                            </SecondaryButton>
 
-                        <!-- Sort -->
-                        <Sort />
+
+                            <!-- Sort -->
+                            <Sort class="w-1/2 sm:w-auto" />
+                        </div>
                     </div>
 
                     <!-- Tabs -->
-                    <div class="xl:w-4/12 flex justify-end gap-6">
+                    <div class="xl:w-4/12 flex flex-col sm:flex-row justify-end gap-6">
                         <Link
                             :href="route('projects')"
                             class="flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
@@ -68,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="flex w-full justify-between gap-6 mt-6">
+                <div class="flex flex-col sm:flex-row w-full justify-between gap-6 mt-6">
 
                     <Select
                         class="w-full"
@@ -92,6 +99,7 @@
                         color="gray-700"
                         id="project-name"
                         type="date"
+                        v-model="filter.period"
                     />
                 </div>
             </div>
@@ -110,6 +118,10 @@
 </template>
 
 <script setup>
+    /** Remove this import after backend connection. */
+    import projects from '@/local_json/projects.js';
+
+    /** Import from vue. */
     import { ref } from 'vue';
 
     /** Import from inertia. */
@@ -135,7 +147,8 @@
         ad: '',
         c: '',
         s: '',
-        status:''
+        status:'',
+        period: ''
     });
 
     /** Statuses */
@@ -154,12 +167,6 @@
     /** Empty filters. */
     const emptyFilters = () => {
         router.visit(route('projects'))
-    };
-
-    const projects = {
-        data: [
-
-        ],
     };
 
     const props = {
@@ -289,64 +296,7 @@
         ],
         "query": {
         "current_page": 1,
-        "data":[
-            {
-                id: 1,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 20200,
-                maxAmount: 202200,
-                status:"published",
-                active: true,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            },
-            {
-                id: 2,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 12200,
-                maxAmount: 202200,
-                status:"published",
-                active: true,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            },
-            {
-                id: 3,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 20200,
-                maxAmount: 502200,
-                status:"published",
-                active: true,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            },
-            {
-                id: 4,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 5200,
-                maxAmount: 202200,
-                status:"published",
-                active: true,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            },
-        ],
+        "data": projects,
         "first_page_url": "http://bursabinelui.test/proiecte?page=1",
         "from": 1,
         "last_page": 2,
