@@ -18,7 +18,7 @@
                 <!-- Header -->
                 <header class="flex items-center gap-4">
                     <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0" name="list"/>
+                        <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('published_projects') }}</h2>
                 </header>
@@ -35,14 +35,14 @@
                 <PaginatedGrid
                     type="project"
                     cardType="admin"
-                    :list="publishedProjects"
+                    :list="props.query"
                     classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2"
                 />
 
                 <!-- Draft projects -->
                 <div class="flex items-center mt-20 gap-4">
                     <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0" name="list"/>
+                        <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('draft_projects') }}</h2>
                 </div>
@@ -50,7 +50,7 @@
                 <PaginatedGrid
                     type="project"
                     cardType="admin"
-                    :list="draftProjects"
+                    :list="props.query"
                     classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2"
                 />
            </div>
@@ -59,6 +59,9 @@
 </template>
 
 <script setup>
+    /** Remove this import after backend connection. */
+    import projects from '@/local_json/projects.js';
+
     /** Import from inertia. */
     import { Head, Link } from '@inertiajs/vue3';
 
@@ -74,55 +77,156 @@
         error_message:''
     }
 
-    const publishedProjects = {
-        data: [
-            {
-                id: 1,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 202200,
-                maxAmount: 202200,
-                status:"published",
-                active: true,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            },
-            {
-                id: 2,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 10000,
-                maxAmount: 202200,
-                status: "published",
-                active: false,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            }
-        ]
-    };
-
-    const draftProjects = {
-        data: [
+    const props = {
+        "activity_domains": [
+            "Protecția mediului",
+            "Educație",
+            "Sănătate",
+            "Drepturile omului",
+            "Dezvoltare rurală",
+            "Sprijin dizabilități",
+            "Egalitate de gen",
+            "Reducerea sărăciei",
+            "Integrarea minorităților",
+            "Sprijin tineret",
+            "Asistență vârstnici",
+            "Patrimoniu cultural",
+            "Artă și cultură",
+            "Sport și recreere",
+            "Dezvoltare comunitară",
+            "Prevenire violență domestică",
+            "Ajutor imigranți/refugiați",
+            "Combatere trafic uman",
+            "Bună guvernare",
+            "Protecția animalelor",
+            "Prevenire dependență droguri",
+            "Advocacy politici publice",
+            "Anti-discriminare",
+            "Îmbunătățire infrastructură",
+            "Antreprenoriat social",
+            "Gestionare dezastre",
+            "Drepturile consumatorilor",
+            "Sprijin familie",
+            "Promovare voluntariat",
+            "Asistență juridică",
+            "Protecția vieții private",
+            "Combatere corupție",
+            "Sănătate mintală",
+            "Drepturile animalelor",
+            "Cercetare științifică",
+            "Dezvoltare durabilă",
+            "Securitate alimentară",
+            "Control boli infecțioase",
+            "Sprijin veterani",
+            "Dezvoltare regională/internațională"
+        ],
+        "cities": [
         {
-                id: 1,
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: 102200,
-                maxAmount: 202200,
-                status:"draft",
-                active: true,
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+            "id": 88653,
+            "name": "Bretea Română, Hunedoara"
+        },
+        {
+            "id": 117248,
+            "name": "Periș, Mureș"
+        },
+        {
+            "id": 65057,
+            "name": "Zăbala, Covasna"
+        },
+        {
+            "id": 76335,
+            "name": "Ijdileni, Galați"
+        },
+        {
+            "id": 68002,
+            "name": "Mănești, Dâmbovița"
+        },
+        {
+            "id": 87665,
+            "name": "Oraș Simeria, Hunedoara"
+        },
+        {
+            "id": 110964,
+            "name": "Crivina, Mehedinți"
+        },
+        {
+            "id": 95836,
+            "name": "Mădârjești, Iași"
+        },
+        {
+            "id": 70478,
+            "name": "Răcarii De Sus, Dolj"
+        },
+        {
+            "id": 21793,
+            "name": "Florești, Bacău"
+        },
+        {
+            "id": 160555,
+            "name": "Florești, Tulcea"
+        },
+        {
+            "id": 27855,
+            "name": "Budureasa, Bihor"
+        },
+        {
+            "id": 138191,
+            "name": "Micula Nouă, Satu Mare"
+        },
+        {
+            "id": 141731,
+            "name": "Ip, Sălaj"
+        },
+        {
+            "id": 47710,
+            "name": "Plavățu, Buzău"
+        },
+        {
+            "id": 9351,
+            "name": "Sânleani, Arad"
+        },
+        {
+            "id": 38134,
+            "name": "Cucorăni, Botoșani"
+        },
+        {
+            "id": 91624,
+            "name": "Totești, Hunedoara"
+        },
+        {
+            "id": 168586,
+            "name": "Bârzești, Vâlcea"
+        },
+        {
+            "id": 113126,
+            "name": "Răiculești, Mehedinți"
+        }
+        ],
+        "query": {
+        "current_page": 1,
+        "data": projects,
+        "first_page_url": "http://bursabinelui.test/proiecte?page=1",
+        "from": 1,
+        "last_page": 2,
+        "last_page_url": "http://bursabinelui.test/proiecte?page=2",
+        "links": [
+            {
+            "url": "http://bursabinelui.test/proiecte?page=1",
+            "label": "1",
+            "active": true
             },
-        ]
-    };
+            {
+            "url": "http://bursabinelui.test/proiecte?page=2",
+            "label": "2",
+            "active": false
+            }
+        ],
+        "next_page_url": "http://bursabinelui.test/proiecte?page=2",
+        "path": "http://bursabinelui.test/proiecte",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 15,
+        "total": 20
+        }
+    }
 </script>

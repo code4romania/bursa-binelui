@@ -10,7 +10,7 @@
                 <!-- Header -->
                 <header class="flex items-center gap-4">
                     <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0" name="list"/>
+                        <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('add_project_title') }}</h2>
                 </header>
@@ -249,8 +249,8 @@
         project_scope: '',
         project_beneficiary: '',
         why_to_donate: '',
-        has_comments: true,
-        has_voluntiers: true,
+        has_comments: false,
+        has_voluntiers: false,
         file_group: [],
         project_links: [],
         project_articles: []
