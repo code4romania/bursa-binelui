@@ -3,16 +3,18 @@
         class="flex flex-col col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow"
     >
         <div class="flex flex-col flex-1">
-            <div
-                class="relative bg-gray-200 aspect-h-3 aspect-w-3 sm:aspect-none group-hover:opacity-75 sm:h-52"
+            <Link
+                :href="route('project', data.id)"
+                class="relative bg-gray-200 group-hover:opacity-75 sm:h-52"
             >
+
                 <img
-                    :src="data.imageUrl"
-                    alt=""
+                    :src="data.image_url"
+                    alt="imagine proiect"
                     class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full"
                 />
 
-                <div class="absolute z-40 flex flex-wrap gap-2 bottom-3 left-3">
+                <div class="absolute z-10 flex flex-wrap gap-2 bottom-3 left-3">
                     <div
                         v-if="data.troffes && data.active"
                         class="inline-flex items-center px-3 py-1 text-base font-bold text-white bg-red-500 rounded-full gap-x-2"
@@ -40,42 +42,41 @@
                 <!-- Overlay -->
                 <div
                     v-if="!data.active"
-                    class="absolute top-0 left-0 w-full h-full bg-gray-500 rounded-t-lg z-100 opacity-40"
+                    class="absolute top-0 left-0 w-full h-full bg-gray-500 rounded-t-lg z-40 opacity-40"
                 ></div>
-            </div>
+            </Link>
 
             <div class="p-6">
-                <p class="text-base font-medium text-gray-700">
-                    {{ data.name }}
-                </p>
+                <div class="text-base font-medium text-gray-700 pb-4">{{ data.ong.name }}</div>
 
-                <h3 class="mt-4 text-2xl font-bold text-gray-700">
-                    {{ data.title }}
-                </h3>
-
-                <div
-                    class="flex flex-wrap items-center gap-5 mt-1 text-base font-medium text-gray-700"
+                <Link
+                    :href="route('project', data.id)"
+                    class="mt-4 text-2xl font-bold text-gray-700"
                 >
+                    {{ data.name }}
+                </Link>
+
+                <div class="flex items-center gap-5 mt-1 text-base font-medium text-gray-700">
                     <div v-if="data.county" class="flex items-center gap-1">
                         <SvgLoader class="shrink-0" name="location" />
-                        {{ data.county }}
+                        {{ data.county.name }}
                     </div>
 
-                    <div v-if="data.activity" class="flex items-center gap-1">
+                    <div v-if="data.activity_domains" class="flex items-center gap-1">
                         <SvgLoader class="shrink-0" name="activity" />
-                        {{ data.activity }}
+                        <span class="truncate w-20 lg:w-40">{{ data.activity_domains.join(',') }}</span>
                     </div>
                 </div>
 
-                <div class="mt-5">
+                <div class="mt-8">
                     <div
                         class="flex items-center justify-between mb-1 text-xl font-bold"
                     >
                         <p class="text-cyan-900">
-                            {{ data.currentAmount }} {{ $t("currency") }}
+                            {{ data.current_amount }} {{ $t("currency") }}
                         </p>
                         <p class="text-turqoise-500">
-                            {{ data.maxAmount }} {{ $t("currency") }}
+                            {{ data.max_amount }} {{ $t("currency") }}
                         </p>
                     </div>
 
@@ -125,13 +126,32 @@
                     {{ $t("publish") }}
                 </SecondaryButton>
 
-                <Link
-                    v-if="'client' == cardType"
-                    :href="route('project', data.id)"
-                    class="w-full block rounded-md mt-4 text-center px-3.5 py-2.5 text-sm font-semibold text-white bg-turqoise-500 hover:bg-turqoise-400"
+                <!-- Donate modal -->
+                <DonateModal
+                    v-if="('client' == cardType) && (0 < project_end_date)"
+                    triggerModalClasses="bg-turqoise-500 w-full mt-8 hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    :triggerModalText="$t('donate_btn')"
+                    :data="data"
+                />
+
+                <!-- Donate Error modal -->
+                <Modal
+                    v-if="('client' == cardType) && (0 > project_end_date)"
+                    triggerModalClasses="bg-turqoise-500 w-full mt-8 hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    :triggerModalText="$t('donate_btn')"
+                    id="project-donation-expired"
                 >
-                    {{ $t("donate_btn") }}
-                </Link>
+                    <div class="mt-6 w-full">
+                        <h3 class="text-center text-xl font-semibold text-gray-800">{{ $t('donation_period_ended') }}</h3>
+                        <h3 class="text-center text-xl font-semibold text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
+                        <Link
+                            :href="route('projects')"
+                            class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
+                        >
+                            {{ $t('see_other_projects') }}
+                        </Link>
+                    </div>
+                </Modal>
             </div>
         </div>
     </li>
@@ -146,6 +166,8 @@
     /** Import components. */
     import SvgLoader from "@/Components/SvgLoader.vue";
     import SecondaryButton from "@/Components/buttons/SecondaryButton.vue";
+    import DonateModal from '@/Components/modals/DonateModal.vue';
+    import Modal from '@/Components/modals/Modal.vue';
 
     /** Component props. */
     const props = defineProps({
@@ -153,7 +175,15 @@
         cardType: String,
     });
 
-    const percentage = computed(
-        () => (props.data.currentAmount / props.data.maxAmount) * 100
-    );
+    const percentage = computed(() => (props.data.current_amount / props.data.max_amount) * 100);
+
+    /** Get days till project ends. */
+    const project_end_date = computed(() => {
+        const targetDate = new Date(props.data.period_end);
+        const today = new Date();
+        const timeDiff = targetDate.getTime() - today.getTime();
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+        return daysDiff;
+    })
 </script>
