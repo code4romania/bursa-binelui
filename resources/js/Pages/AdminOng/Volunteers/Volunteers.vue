@@ -197,7 +197,7 @@
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
 
     const flash = {
-        success_message:'Va fi un mesaj de success',
+        success_message:'',
         error_message:''
     }
 
