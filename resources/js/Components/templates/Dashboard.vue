@@ -6,7 +6,7 @@
                 <ul role="list" class="space-y-1">
                     <li v-for="item in navigation" :key="item.name">
                         <Link
-                            :href="route(item.href)"
+                            :href="item.route"
                             :class="[isActive(item) ? 'text-turqoise-500 bg-turqoise-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
                         >
                             <component :is="item.icon" :class="[isActive(item) ? 'text-turqoise-500' : 'text-gray-600', 'h-6 w-6 shrink-0']" aria-hidden="true" />
@@ -36,31 +36,36 @@
     const navigation = [
         {
             name: 'Organizatia mea',
-            href: 'dashboard',
+            href: 'admin.ong.edit',
+            route: route('admin.ong.edit', 1),
             subroutes: [],
             icon: HomeIcon
         },
         {
             name: 'Voluntari',
             href: 'admin.ong.volunteers',
+            route: route('admin.ong.volunteers'),
             subroutes: [],
             icon: UsersIcon,
         },
         {
             name: 'Proiectele mele',
             href: 'admin.ong.projects',
+            route: route('admin.ong.projects'),
             subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
             icon: FolderIcon
         },
         {
             name: 'Donatii',
             href: 'login',
+            route: route('login'),
             subroutes: [],
             icon: CalendarIcon
         },
         {
             name: 'Tichete',
             href: 'login',
+            route: route('login'),
             subroutes: [],
             icon: DocumentDuplicateIcon
         }

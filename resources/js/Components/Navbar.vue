@@ -172,14 +172,20 @@
             </div>
 
             <div class="border-t border-gray-200 pb-3 pt-4">
-                <div class="flex items-center px-4">
-                    <div class="flex-shrink-0">
-                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+
+                <div v-if="$page.props.auth.user" class="flex items-center px-4">
+
+                    <div class="flex items-center gap-4">
+                        <p class="text-base font-medium text-gray-500">{{ $page.props.auth.user.name }}</p>
+                        <img
+                            v-if="$page.props.auth.user.avatar"
+                            class="h-8 w-8 rounded-full"
+                            :src="$page.props.auth.user.avatar"
+                            alt="avatar"
+                        />
+                        <SvgLoader class="shrink-0 object-fit h-8 w-8" name="default_avatar" />
                     </div>
-                    <div class="ml-3">
-                        <div class="text-base font-medium text-gray-800">Tom Cook</div>
-                        <div class="text-sm font-medium text-gray-500">tom@example.com</div>
-                    </div>
+
                     <button type="button" class="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-turqoise-500 focus:ring-offset-2">
                         <span class="sr-only">View notifications</span>
                         <BellIcon class="h-6 w-6" aria-hidden="true" />
@@ -187,9 +193,59 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <DisclosureButton as="a" href="#" class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Your Profile</DisclosureButton>
-                    <DisclosureButton as="a" href="#" class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Settings</DisclosureButton>
-                    <DisclosureButton as="a" href="#" class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Sign out</DisclosureButton>
+                     <!-- Administrate Link -->
+                     <NavLink
+                        v-if="$page.props.auth.user"
+                        class="py-2 px-3 w-full"
+                        :href="route('admin.ong.edit')"
+                        :active="route().current('admin.ong.edit')"
+                    >
+                        {{ $t('administrate_link') }}
+                    </NavLink>
+
+                    <!-- Account settings -->
+                    <NavLink
+                        v-if="$page.props.auth.user"
+                        class="py-2 px-3 w-full"
+                        :href="route('profile.edit')"
+                        :active="route().current('profile.edit')"
+                    >
+                        {{ $t('account_settings') }}
+                    </NavLink>
+
+                    <!-- Log out -->
+                    <NavLink
+                        v-if="$page.props.auth.user"
+                        class="py-2 px-3 w-full"
+                        :href="route('logout')"
+                        method="post"
+                        as="button"
+                    >
+                        {{ $t('log_out_link') }}
+                    </NavLink>
+
+                    <NavLink
+                        class="w-full py-2 px-3"
+                        v-if="!$page.props.auth.user"
+                        :href="route('admin.ong.edit')"
+                        :active="route().current('login')"
+                    >
+                        {{ $t('login_link') }}
+                    </NavLink>
+
+                    <NavLink
+                        class="w-full py-2 px-3"
+                        v-if="!$page.props.auth.user"
+                        :href="route('register')"
+                        :active="route().current('register')"
+                    >
+                        {{ $t('register_link') }}
+                    </NavLink>
+
+                    <SelectNoBorder
+                        class="py-2"
+                        :options="languages"
+                    />
                 </div>
             </div>
         </DisclosurePanel>

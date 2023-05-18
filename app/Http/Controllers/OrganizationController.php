@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrganizationRequest;
-use App\Http\Requests\UpdateOrganizationRequest;
+use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use Illuminate\Http\Request;
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
@@ -96,7 +96,16 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        //
+        /** Add organization city name. */
+        $organization->city_name = $organization->city->name;
+        /** Add organization county name. */
+        $organization->county_name = $organization->county->name;
+
+        /** Return inertia page. */
+        return Inertia::render('AdminOng/Ong/EditOng', [
+            'organization' => $organization,
+            'activity_domains' => ActivityDomain::cases(),
+        ]);
     }
 
 
@@ -105,7 +114,16 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        //
+        try {
+            /** Get all request data. */
+            $modelData = $request->input();
+
+            $organization->update($modelData);
+
+            return redirect()->route('admin.ong.edit', [$organization])->with('success_message', 'Organization updated successfully');
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.ong.edit', [$organization])->with('error_message', 'Organization update failed');
+        }
     }
 
 
