@@ -54,3 +54,7 @@ require __DIR__.'/organizations.php';
 require __DIR__.'/projects.php';
 
 require __DIR__.'/volunteers.php';
+
+require __DIR__.'/tickets.php';
+
+require __DIR__.'/donations.php';
