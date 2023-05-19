@@ -8,7 +8,7 @@ export default {
     "logo": null,
     "donation": 25,
     "period_start": "2023-05-17",
-    "period_end": "2023-05-20",
+    "period_end": "2023-05-15",
     "description": "Quia enim aut possimus dignissimos consequatur iusto. Ea omnis laborum nihil voluptas fugiat. Corrupti molestiae tempore et placeat eius voluptatum nihil qui. Sed nobis quaerat et hic voluptates. Nemo quisquam qui facere odio ad aut vero. Dolorum esse voluptatibus in consequatur nostrum qui. Cum et rerum laborum perferendis nulla vitae. Rerum qui sint odio. Molestiae consequatur explicabo rerum quis. Sunt dolore ad neque corrupti rerum. Unde dolorum dolorem autem.",
     "scope": "Quia enim aut possimus dignissimos consequatur iusto. Ea omnis laborum nihil voluptas fugiat. Corrupti molestiae tempore et placeat eius voluptatum nihil qui. Sed nobis quaerat et hic voluptates. Nemo quisquam qui facere odio ad aut vero. Dolorum esse voluptatibus in consequatur nostrum qui. Cum et rerum laborum perferendis nulla vitae. Rerum qui sint odio. Molestiae consequatur explicabo rerum quis. Sunt dolore ad neque corrupti rerum. Unde dolorum dolorem autem.",
     "beneficiary": "Quia enim aut possimus dignissimos consequatur iusto. Ea omnis laborum nihil voluptas fugiat. Corrupti molestiae tempore et placeat eius voluptatum nihil qui. Sed nobis quaerat et hic voluptates. Nemo quisquam qui facere odio ad aut vero. Dolorum esse voluptatibus in consequatur nostrum qui. Cum et rerum laborum perferendis nulla vitae. Rerum qui sint odio. Molestiae consequatur explicabo rerum quis. Sunt dolore ad neque corrupti rerum. Unde dolorum dolorem autem.",
