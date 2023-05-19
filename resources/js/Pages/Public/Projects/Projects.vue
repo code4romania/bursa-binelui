@@ -3,7 +3,7 @@
         <!-- Inertia page head -->
         <Head :title="$t('projects_title')" />
 
-        <div class="p-9 mx-auto max-w-7xl mb-24">
+        <div class="p-9 mx-auto max-w-7xl mt-4 mb-24">
 
             <!-- Header -->
             <header class="flex items-center gap-4">
