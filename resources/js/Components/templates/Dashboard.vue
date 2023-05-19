@@ -57,16 +57,16 @@
         },
         {
             name: 'Donatii',
-            href: 'login',
-            route: route('login'),
+            href: 'admin.ong.donations',
+            route: route('admin.ong.donations'),
             subroutes: [],
             icon: CalendarIcon
         },
         {
             name: 'Tichete',
-            href: 'login',
-            route: route('login'),
-            subroutes: [],
+            href: 'admin.ong.tickets.open',
+            route: route('admin.ong.tickets.open'),
+            subroutes: ['admin.ong.tickets.open', 'admin.ong.tickets.closed', 'admin.ong.tickets.view'],
             icon: DocumentDuplicateIcon
         }
     ];
