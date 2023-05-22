@@ -3,7 +3,9 @@
         <!-- Inertia page head -->
         <Head :title="$t('gallery')" />
 
+
         <div class="p-9 mt-4 mx-auto max-w-7xl mb-24">
+
 
             <div class="flex items-center gap-4">
                 <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
