@@ -3,7 +3,7 @@
         <!-- Inertia page head -->
         <Head title="Organizatie" />
 
-        <div class="bg-white mb-20">
+        <div class="bg-white mt-4 mb-20">
 
             <!-- Header -->
             <div class="flex flex-col-reverse lg:flex-row mx-auto w-full lg:max-w-7xl mb-8 px-9">

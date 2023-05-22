@@ -4,6 +4,7 @@
         <Head title="Proiect" />
 
         <!-- Header -->
+
         <div class="flex flex-col-reverse lg:flex-row mx-auto w-full lg:max-w-7xl mb-8 mt-2 sm:mt-0 px-9">
             <div class="w-full lg:w-6/12 flex flex-col justify-center">
 

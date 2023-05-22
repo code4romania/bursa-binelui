@@ -3,12 +3,12 @@
         <!-- Inertia page head -->
         <Head :title="$t('organization_title')" />
 
-        <div class="p-9 mx-auto max-w-7xl">
+        <div class="p-9 mt-4 mx-auto max-w-7xl">
 
             <!-- Header -->
             <header class="flex items-center gap-4">
                 <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                    <SvgLoader class="shrink-0" name="brand"/>
+                    <SvgLoader class="shrink-0 fill-turqoise-500" name="brand"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('organization_title') }}</h2>
             </header>
