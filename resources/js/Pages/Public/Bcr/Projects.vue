@@ -101,6 +101,7 @@
             <!-- Published projects -->
             <PaginatedGrid
                 type="project"
+                cardType="client"
                 :list="props.query"
                 classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4"
             />
@@ -109,6 +110,10 @@
 </template>
 
 <script setup>
+    /** Remove this import after backend connection. */
+    import projects from '@/local_json/projects.js';
+
+    /** Import from vue. */
     import { ref } from 'vue';
 
     /** Import from inertia. */
@@ -153,12 +158,6 @@
     /** Empty filters. */
     const emptyFilters = () => {
         router.visit(route('projects'))
-    };
-
-    const projects = {
-        data: [
-
-        ],
     };
 
     const props = {
@@ -288,34 +287,7 @@
         ],
         "query": {
         "current_page": 1,
-        "data":[
-            {
-                id: '1',
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: "102200",
-                maxAmount: "202200",
-                status:"active",
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            },
-            {
-                id: '1',
-                scor: 3432,
-                troffes: 4,
-                name: 'Asociația MediuACUM',
-                title: 'Ecologizarea canalului de la marginea Tulcei',
-                county: "Alba Iulia",
-                activity: "Mediu",
-                currentAmount: "102200",
-                maxAmount: "202200",
-                status:"active",
-                imageUrl:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-            }
-        ],
+        "data": projects,
         "first_page_url": "http://bursabinelui.test/proiecte?page=1",
         "from": 1,
         "last_page": 2,

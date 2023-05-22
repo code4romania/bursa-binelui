@@ -227,7 +227,7 @@
                     <NavLink
                         class="w-full py-2 px-3"
                         v-if="!$page.props.auth.user"
-                        :href="route('admin.ong.edit')"
+                        :href="route('login')"
                         :active="route().current('login')"
                     >
                         {{ $t('login_link') }}
@@ -281,36 +281,31 @@
         {
             name: 'BCR pentru comunitate',
             description: "Descoperă proiectele organizate de BCR.",
-            href: 'organizations'
+            href: 'bcr.projects'
         },
         {
             name: 'Campionatul de Bine',
             description: 'O competiție a faptelor bune. Alătură-te!',
-            href: 'organizations'
+            href: 'championship'
         }
     ];
 
     /** About menu links. */
     const about = [
         {
-            name: 'Proiecte',
-            description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
-            href: 'register'
+            name: 'Despre Bursa Binelui',
+            description: 'Află mai multe despre inițiativa noastră și cum poți să te alături, atât ca organizație, cât și ca donator sau voluntar.',
+            href: 'about'
         },
         {
-            name: 'Organizatii',
-            description: 'Descoperă toate organizațiile înscrise pe Bursa Binelui și alege cauza pe care vrei să o susții.',
-            href: 'register'
+            name: 'Evolutia faptelor bune',
+            description: 'Vezi evoluția faptelor bune pe Bursa Binelui în timp, cu ajutorul unor grafice.',
+            href: 'about'
         },
         {
-            name: 'BCR pentru comunitate',
-            description: "Descoperă proiectele organizate de BCR.",
-            href: 'register'
-        },
-        {
-            name: 'Campionatul de Bine',
-            description: 'O competiție a faptelor bune. Alătură-te!',
-            href: 'register'
+            name: 'Întrebări frecvente',
+            description: 'Ai o neclaritate? Găsește răspunsul aici.',
+            href: 'about'
         }
     ];
 

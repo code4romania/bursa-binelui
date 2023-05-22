@@ -43,7 +43,7 @@
                     class="w-80"
                     :label="$t('domains')"
                     v-model="filter.ad"
-                    :options="activityDomains"
+                    :options="activity_domains"
                     id="activity-domains"
                     ref="activityDomains"
                     @callback="filterOrganizations"
@@ -63,7 +63,7 @@
             <!-- List -->
             <PaginatedGrid
                 type="ong"
-                :list="organizations"
+                :list="query"
                 classes="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
             />
         </div>
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-    import { computed, onMounted, ref } from 'vue';
+    import { ref } from 'vue';
 
     /** Import from inertia. */
     import { Head, usePage, useForm, router } from '@inertiajs/vue3';
@@ -86,14 +86,12 @@
     import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
 
     /** Page props. */
-    const props = computed(() => usePage().props);
-
-    /** Organizations. */
-    const organizations = computed(() => props.value.query ? props.value.query : {});
-
-    const activityDomains = computed(() => props.value.activity_domains ? props.value.activity_domains : []);
-
-    const cities = JSON.parse(JSON.stringify(props.value.cities));
+    const props = defineProps({
+        query: [Array, Object],
+        activity_domains: [Array, Object],
+        cities: [Array, Object],
+        request: [Array, Object]
+    });
 
     /** Active filter state. */
     const hasValues = ref(false);
@@ -123,13 +121,6 @@
 
     /** Empty filters. */
     const emptyFilters = () => {
-        router.visit(route('organizations'))
+        router.visit(route('organizations'));
     };
-
-    const categories = [
-        { id: 1, name: 'Leslie Alexander1' },
-        { id: 2, name: 'Leslie Alexander2' },
-        { id: 3, name: 'Leslie Alexander3' },
-        { id: 4, name: 'Leslie Alexander4' },
-    ];
 </script>
