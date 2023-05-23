@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\City;
 use App\Enums\ActivityDomain;
+use App\Models\City;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Organization>
@@ -35,7 +37,7 @@ class OrganizationFactory extends Factory
             'accepts_volunteers' => fake()->boolean(),
             'why_volunteer' => fake()->text(333),
             'activity_domains' => fake()->randomElements(ActivityDomain::cases(), 3),
-            'status' => fake()->randomElement(['pending', 'active', 'disabled'])
+            'status' => fake()->randomElement(['pending', 'active', 'disabled']),
         ];
     }
 }

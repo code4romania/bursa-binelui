@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Organization;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class OrganizationPolicy
 {
@@ -13,7 +14,7 @@ class OrganizationPolicy
      */
     public function viewAny(User $user): bool
     {
-        /** Anyone can see the list of organizations. */
+        /* Anyone can see the list of organizations. */
         return true;
     }
 
@@ -22,7 +23,7 @@ class OrganizationPolicy
      */
     public function view(User $user, Organization $organization): bool
     {
-        /** Anyone can see the details of an organization. */
+        /* Anyone can see the details of an organization. */
         return true;
     }
 
@@ -31,7 +32,7 @@ class OrganizationPolicy
      */
     public function create(User $user): bool
     {
-        /** No user type/role can create a new organization. */
+        /* No user type/role can create a new organization. */
         return false;
     }
 
@@ -40,7 +41,7 @@ class OrganizationPolicy
      */
     public function update(User $user, Organization $organization): bool
     {
-        /**
+        /*
          * An organization can be updated only by BB Admins, BB Managers
          *  and NGO Admins that belong to the organization.
          */
@@ -60,7 +61,7 @@ class OrganizationPolicy
      */
     public function delete(User $user, Organization $organization): bool
     {
-        /**
+        /*
          * An organization can be deleted only by BB Admins, BB Managers
          *  and NGO Admins that belong to the organization.
          */
@@ -80,7 +81,7 @@ class OrganizationPolicy
      */
     public function restore(User $user, Organization $organization): bool
     {
-        /**
+        /*
          * An organization can be restored only by BB Admins and BB Managers.
          */
         if ((User::ROLE_BB_ADMIN === $user->role) || (User::ROLE_BB_MANAGER === $user->role)) {

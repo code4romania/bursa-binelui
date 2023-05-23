@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -42,7 +44,7 @@ class UserFactory extends Factory
     public function donor(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'donor'
+            'role' => 'donor',
         ]);
     }
 
@@ -52,7 +54,7 @@ class UserFactory extends Factory
     public function ngoAdmin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'ngo-admin'
+            'role' => 'ngo-admin',
         ]);
     }
 
@@ -62,7 +64,7 @@ class UserFactory extends Factory
     public function bbManager(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'bb-manager'
+            'role' => 'bb-manager',
         ]);
     }
 
@@ -72,7 +74,7 @@ class UserFactory extends Factory
     public function bbAdmin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'bb-admin'
+            'role' => 'bb-admin',
         ]);
     }
 }

@@ -9,7 +9,7 @@
             >
 
                 <img
-                    :src="data.image_url"
+                    :src="data.image_url ?? 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
                     alt="imagine proiect"
                     class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full"
                 />
@@ -47,7 +47,7 @@
             </Link>
 
             <div class="p-6">
-                <div class="text-base font-medium text-gray-700 pb-4">{{ data.ong.name }}</div>
+                <div class="text-base font-medium text-gray-700 pb-4">{{ data.organization.name }}</div>
 
                 <Link
                     :href="route('project', data.id)"
@@ -73,10 +73,10 @@
                         class="flex items-center justify-between mb-1 text-xl font-bold"
                     >
                         <p class="text-cyan-900">
-                            {{ data.current_amount }} {{ $t("currency") }}
+                            {{ data.total_donations }} {{ $t("currency") }}
                         </p>
                         <p class="text-turqoise-500">
-                            {{ data.max_amount }} {{ $t("currency") }}
+                            {{ data.target_budget }} {{ $t("currency") }}
                         </p>
                     </div>
 
@@ -84,7 +84,7 @@
                         <div
                             :class="[
                                 `h-5`,
-                                data.currentAmount == data.maxAmount
+                                data.total_donations == data.target_budget
                                     ? 'bg-turqoise-500'
                                     : 'bg-cyan-900',
                             ]"
@@ -175,7 +175,7 @@
         cardType: String,
     });
 
-    const percentage = computed(() => (props.data.current_amount / props.data.max_amount) * 100);
+    const percentage = computed(() => (props.data.total_donations / props.data.target_budget) * 100);
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {

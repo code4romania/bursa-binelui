@@ -30,9 +30,9 @@
                         <!-- Edit project name -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_name_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_name }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.name }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('name')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -43,8 +43,8 @@
                                     color="gray-700"
                                     id="project-name"
                                     type="text"
-                                    v-model="form.project_name"
-                                    :error="form.errors.project_name"
+                                    v-model="form.name"
+                                    :error="form.errors.name"
                                 />
 
                             </EditModal>
@@ -53,9 +53,9 @@
                         <!-- Edit target amount -->
                         <div class="bg-white px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('amount_target_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.amount_target }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.target_budget }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('target_budget')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -65,8 +65,8 @@
                                     color="gray-700"
                                     id="amount-target"
                                     type="number"
-                                    v-model="form.amount_target"
-                                    :error="form.errors.amount_target"
+                                    v-model="form.target_budget"
+                                    :error="form.errors.target_budget"
                                 />
 
                             </EditModal>
@@ -75,9 +75,9 @@
                         <!-- Edit period -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('period') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.date_start }} - {{ form.date_end }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.start }} - {{ form.end }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('start', 'end')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -89,8 +89,8 @@
                                     :label="$t('project_date_start_label')"
                                     color="gray-700"
                                     type="date"
-                                    v-model="form.date_start"
-                                    :error="form.errors.date_start"
+                                    v-model="form.start"
+                                    :error="form.errors.start"
                                 />
 
                                 <!-- Date end -->
@@ -99,8 +99,8 @@
                                     :label="$t('project_date_end_label')"
                                     color="gray-700"
                                     type="date"
-                                    v-model="form.date_end"
-                                    :error="form.errors.date_end"
+                                    v-model="form.end"
+                                    :error="form.errors.end"
                                 />
                             </div>
 
@@ -110,18 +110,18 @@
                         <!-- Edit project category -->
                         <div class="bg-white px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_category_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_category }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.category }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('category')"
                                 class="col-span-1 flex justify-end"
                             >
 
                                 <Select
                                     class="w-full"
                                     :label="$t('project_category_label')"
-                                    :options="project_categories"
-                                    v-model="form.project_category"
-                                    :error="form.errors.project_category"
+                                    :options="props.projectCategories"
+                                    v-model="form.category"
+                                    :error="form.errors.category"
                                 />
 
                             </EditModal>
@@ -133,7 +133,7 @@
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('counties_label') }}</dt>
                             <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.county }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('counties')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -151,9 +151,9 @@
                         <!-- Edit project description -->
                         <div class="bg-white px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_description_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_description }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.description }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('description')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -162,8 +162,8 @@
                                     :label="$t('project_description_label')"
                                     id="about-project"
                                     color="gray-700"
-                                    v-model="form.project_description"
-                                    :error="form.errors.project_description"
+                                    v-model="form.description"
+                                    :error="form.errors.description"
                                 >
                                     <p class="text-sm font-normal text-gray-500">{{ $t('project_description_extra') }}</p>
                                 </Textarea>
@@ -174,9 +174,9 @@
                         <!-- Edit project scope -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_scope_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_scope }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.scope }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('scope')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -185,8 +185,8 @@
                                     :label="$t('project_scope_label')"
                                     id="project-scope"
                                     color="gray-700"
-                                    v-model="form.project_scope"
-                                    :error="form.errors.project_scope"
+                                    v-model="form.scope"
+                                    :error="form.errors.scope"
                                 >
                                     <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
                                 </Textarea>
@@ -197,9 +197,9 @@
                         <!-- Edit project beneficiary -->
                         <div class="bg-white px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_beneficiary_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_beneficiary }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.beneficiaries }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('beneficiaries')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -208,8 +208,8 @@
                                     :label="$t('project_beneficiary_label')"
                                     id="project-beneficiary"
                                     color="gray-700"
-                                    v-model="form.project_beneficiary"
-                                    :error="form.errors.project_beneficiary"
+                                    v-model="form.beneficiaries"
+                                    :error="form.errors.beneficiaries"
                                 >
                                     <p class="text-sm font-normal text-gray-500">{{ $t('project_beneficiary_extra') }}</p>
                                 </Textarea>
@@ -220,9 +220,9 @@
                         <!-- Edit project why to donate -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('why_to_donate') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.why_to_donate }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.reason_to_donate }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('reason_to_donate')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -231,8 +231,8 @@
                                     :label="$t('why_to_donate')"
                                     id="why-to-donate"
                                     color="gray-700"
-                                    v-model="form.why_to_donate"
-                                    :error="form.errors.why_to_donate"
+                                    v-model="form.reason_to_donate"
+                                    :error="form.errors.reason_to_donate"
                                 >
                                     <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
                                 </Textarea>
@@ -254,8 +254,8 @@
                                     :label="$t('why_to_donate')"
                                     id="why-to-donate"
                                     color="gray-700"
-                                    v-model="form.why_to_donate"
-                                    :error="form.errors.why_to_donate"
+                                    v-model="form.reson_to_donate"
+                                    :error="form.errors.reson_to_donate"
                                 >
                                     <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
                                 </Textarea>
@@ -303,7 +303,7 @@
                             <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.image }}</dt>
                             <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_links }}</dt>
                             <EditModal
-                                @action="editField()"
+                                @action="editField('project_links')"
                                 class="col-span-1 flex justify-end"
                             >
 
@@ -389,84 +389,35 @@
     import Input from '@/Components/form/Input.vue';
     import Select from '@/Components/form/Select.vue';
     import Textarea from '@/Components/form/Textarea.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
     import FileGroup from '@/Components/form/FileGroup.vue';
     import Repeater from '@/Components/form/Repeater.vue';
     import InputWithIcon from '@/Components/form/InputWithIcon.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import {onMounted, ref} from "vue";
 
     const flash = {
         success_message:'',
         error_message:''
     }
 
-    /** Initialize inertia from Object. */
-    const form = useForm({
-        project_name: 'Zâmbete sănătoase pentru toți copiii',
-        amount_target: '40000',
-        project_category: 'Protecția mediului',
-        date_start: '22/10/2022',
-        date_end: '10/12/2022',
-        county: 'Alba',
-        project_description: 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesen.',
-        project_scope: 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesen.',
-        project_beneficiary: 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesen.',
-        why_to_donate: 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesen.',
-        has_comments: true,
-        has_voluntiers: true,
-        file_group: [],
-        project_links: [],
-        project_articles: [],
-        image: ''
+    const props = defineProps({
+        project: Object,
+        errors: Object,
+        projectCategories: Array,
+        success_message: String,
+        error_message: String
     });
 
-    const project_categories = [
-        "Protecția mediului",
-        "Educație",
-        "Sănătate",
-        "Drepturile omului",
-        "Dezvoltare rurală",
-        "Sprijin dizabilități",
-        "Egalitate de gen",
-        "Reducerea sărăciei",
-        "Integrarea minorităților",
-        "Sprijin tineret",
-        "Asistență vârstnici",
-        "Patrimoniu cultural",
-        "Artă și cultură",
-        "Sport și recreere",
-        "Dezvoltare comunitară",
-        "Prevenire violență domestică",
-        "Ajutor imigranți/refugiați",
-        "Combatere trafic uman",
-        "Bună guvernare",
-        "Protecția animalelor",
-        "Prevenire dependență droguri",
-        "Advocacy politici publice",
-        "Anti-discriminare",
-        "Îmbunătățire infrastructură",
-        "Antreprenoriat social",
-        "Gestionare dezastre",
-        "Drepturile consumatorilor",
-        "Sprijin familie",
-        "Promovare voluntariat",
-        "Asistență juridică",
-        "Protecția vieții private",
-        "Combatere corupție",
-        "Sănătate mintală",
-        "Drepturile animalelor",
-        "Cercetare științifică",
-        "Dezvoltare durabilă",
-        "Securitate alimentară",
-        "Control boli infecțioase",
-        "Sprijin veterani",
-        "Dezvoltare regională/internațională"
-    ];
+    let project = ref(props.project);
+    let form = useForm(project.value);
 
-    const counties = [];
-
-    const editField = () => {
-        console.log('aaaaaaaaaaaa')
+    const  editField = (field) => {
+        let newForm = useForm({
+            [field]: form[field]
+        })
+        newForm.put(route('admin.ong.project.update', project.value.id))
     }
+
+
 </script>

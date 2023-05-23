@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Organization extends Model
 {
@@ -39,7 +40,7 @@ class Organization extends Model
         'accepts_volunteers',
         'why_volunteer',
         'activity_domains',
-        'status'
+        'status',
     ];
 
     /**
@@ -51,9 +52,13 @@ class Organization extends Model
         'activity_domains' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'deleted_at' => 'datetime'
+        'deleted_at' => 'datetime',
     ];
 
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class);
+    }
 
     /**
      * Get the users or the organization.
@@ -63,7 +68,6 @@ class Organization extends Model
         return $this->hasMany(User::class);
     }
 
-
     /**
      * Get the county of the organization.
      */
@@ -71,7 +75,6 @@ class Organization extends Model
     {
         return $this->belongsTo(County::class);
     }
-
 
     /**
      * Get the city of the organization.
@@ -81,7 +84,6 @@ class Organization extends Model
         return $this->belongsTo(City::class);
     }
 
-
     /**
      * Scope a query to include the locations.
      */
@@ -89,7 +91,6 @@ class Organization extends Model
     {
         $query->whereIn('city_id', $cityIds);
     }
-
 
     /**
      * Scope a query to include the searched text.
@@ -101,5 +102,4 @@ class Organization extends Model
         $query->orWhere('contact_person', 'LIKE', '%{$searchedText}%');
         $query->orWhere('website', 'LIKE', '%{$searchedText}%');
     }
-
 }

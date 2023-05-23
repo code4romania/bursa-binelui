@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/** Tichets routes. */
+/* Tichets routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {
-    Route::get('/donatii', function () { return Inertia::render('AdminOng/Donations/Donations'); })->name('admin.ong.donations');
+    Route::get('/donatii', function () {
+        return Inertia::render('AdminOng/Donations/Donations');
+    })->name('admin.ong.donations');
 });

@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Sanctum\HasApiTokens;
-use App\Traits\HasRole;
 
 class User extends Authenticatable
 {
@@ -27,7 +29,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'organization_id'
+        'organization_id',
     ];
 
     /**
@@ -55,5 +57,10 @@ class User extends Authenticatable
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function currentOrganization(): Organization
+    {
+        return $this->organization()->first();
     }
 }

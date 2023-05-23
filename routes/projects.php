@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\OrganizationController;
+declare(strict_types=1);
+
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/** Public routes. */
-Route::get('/proiecte', function () { return Inertia::render('Public/Projects/Projects'); })->name('projects');
-Route::get('/proiect/{proiect}', function () { return Inertia::render('Public/Projects/Project'); })->name('project');
+/* Public routes. */
+Route::get('/proiecte', function () {
+    return Inertia::render('Public/Projects/Projects');
+})->name('projects');
+Route::get('/proiect/{proiect}', function () {
+    return Inertia::render('Public/Projects/Project');
+})->name('project');
 
-/** Ong routes. */
+/* Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {
-    Route::get('proiecte', function () {
-        return Inertia::render('AdminOng/Projects/Projects');
-    })->name('admin.ong.projects');
+    Route::get('proiecte', [ProjectController::class, 'index'])->name('admin.ong.projects');
 
-    Route::get('add-proiect/{proiect}', function () {
-        return Inertia::render('AdminOng/Projects/AddProject');
-    })->name('admin.ong.project.add');
-
-    Route::get('edit-proiect/{proiect}', function () {
-        return Inertia::render('AdminOng/Projects/EditProject');
-    })->name('admin.ong.project.edit');
+    Route::get('add-proiect', [ProjectController::class, 'create'])->name('admin.ong.project.add');
+    Route::post('add-proiect', [ProjectController::class, 'store'])->name('admin.ong.project.store');
+    Route::get('edit-proiect/{project}', [ProjectController::class, 'edit'])->name('admin.ong.project.edit');
+    Route::put('edit-proiect/{project}', [ProjectController::class, 'update'])->name('admin.ong.project.update');
 });

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Models\City;
+use App\Models\County;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\County;
-use App\Models\City;
 
 return new class extends Migration
 {

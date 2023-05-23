@@ -24,8 +24,8 @@
                             color="gray-700"
                             id="project-name"
                             type="text"
-                            v-model="form.project_name"
-                            :error="form.errors.project_name"
+                            v-model="form.name"
+                            :error="form.errors.name"
                         />
 
                         <!-- Project main image -->
@@ -37,17 +37,17 @@
                             color="gray-700"
                             id="amount-target"
                             type="number"
-                            v-model="form.amount_target"
-                            :error="form.errors.amount_target"
+                            v-model="form.target_budget"
+                            :error="form.errors.target_budget"
                         />
 
                         <!-- Project category -->
                         <Select
                             class="w-full xl:w-1/2"
                             :label="$t('project_category_label')"
-                            :options="project_categories"
-                            v-model="form.project_category"
-                            :error="form.errors.project_category"
+                            :options="projectCategories"
+                            v-model="form.category"
+                            :error="form.errors.category"
                         />
 
                         <!-- Date period. -->
@@ -59,8 +59,8 @@
                                 :label="$t('project_date_start_label')"
                                 color="gray-700"
                                 type="date"
-                                v-model="form.date_start"
-                                :error="form.errors.date_start"
+                                v-model="form.start"
+                                :error="form.errors.start"
                             />
 
                             <!-- Date end -->
@@ -69,17 +69,28 @@
                                 :label="$t('project_date_end_label')"
                                 color="gray-700"
                                 type="date"
-                                v-model="form.date_end"
-                                :error="form.errors.date_end"
+                                v-model="form.end"
+                                :error="form.errors.end"
                             />
                         </div>
+                        <label class="flex items-center">
+                            <Checkbox
+                                name="remember"
+                                v-model:checked="form.is_national"
+                            />
+                            <span class="ml-2 text-sm text-gray-700">{{ $t('is_national') }}</span>
+
+                            <!-- Error -->
+                            <p v-show="form.errors.is_national" class="mt-2 text-sm text-red-600">{{ form.errors.has_voluntiers }}</p>
+                        </label>
 
                         <!-- County -->
                         <Select
                             class="w-full xl:w-1/2"
                             :label="$t('counties_label')"
-                            :options="counties"
-                            v-model="form.county"
+                            :options="countries"
+                            v-model="selectedCountry"
+                            v-if="!form.is_national"
                             :error="form.errors.county"
                         />
 
@@ -89,11 +100,11 @@
                             :label="$t('project_description_label')"
                             id="about-project"
                             color="gray-700"
-                            v-model="form.project_description"
-                            :error="form.errors.project_description"
+                            v-model="form.description"
+                            :error="form.errors.description"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('project_description_extra') }}</p>
                         </Textarea>
+                        <p class="text-sm font-normal text-gray-500">{{ $t('project_description_extra') }}</p>
 
                         <!-- Project scope -->
                         <Textarea
@@ -101,11 +112,11 @@
                             :label="$t('project_scope_label')"
                             id="project-scope"
                             color="gray-700"
-                            v-model="form.project_scope"
-                            :error="form.errors.project_scope"
+                            v-model="form.scope"
+                            :error="form.errors.scope"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
                         </Textarea>
+                        <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
 
                         <!-- Project beneficiary -->
                         <Textarea
@@ -113,11 +124,11 @@
                             :label="$t('project_beneficiary_label')"
                             id="project-beneficiary"
                             color="gray-700"
-                            v-model="form.project_beneficiary"
-                            :error="form.errors.project_beneficiary"
+                            v-model="form.beneficiaries"
+                            :error="form.errors.beneficiaries"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('project_beneficiary_extra') }}</p>
                         </Textarea>
+                        <p class="text-sm font-normal text-gray-500">{{ $t('project_beneficiary_extra') }}</p>
 
                         <!-- Why to donate -->
                         <Textarea
@@ -125,32 +136,32 @@
                             :label="$t('why_to_donate')"
                             id="why-to-donate"
                             color="gray-700"
-                            v-model="form.why_to_donate"
-                            :error="form.errors.why_to_donate"
+                            v-model="form.reason_to_donate"
+                            :error="form.errors.reason_to_donate"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
                         </Textarea>
+                        <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
 
                         <label class="flex items-center">
                             <Checkbox
                                 name="remember"
-                                v-model:checked="form.has_voluntiers"
+                                v-model:checked="form.accepting_volunteers"
                             />
                             <span class="ml-2 text-sm text-gray-700">{{ $t('has_voluntiers_label') }}</span>
 
                             <!-- Error -->
-                            <p v-show="form.errors.has_voluntiers" class="mt-2 text-sm text-red-600">{{ form.errors.has_voluntiers }}</p>
+                            <p v-show="form.errors.accepting_volunteers" class="mt-2 text-sm text-red-600">{{ form.errors.accepting_volunteers }}</p>
                         </label>
 
                         <label class="flex items-center">
                             <Checkbox
                                 name="remember"
-                                v-model:checked="form.has_comments"
+                                v-model:checked="form.accepting_comments"
                             />
                             <span class="ml-2 text-sm text-gray-700">{{ $t('has_comments_label') }}</span>
 
                             <!-- Error -->
-                            <p v-show="form.errors.has_comments" class="mt-2 text-sm text-red-600">{{ form.errors.has_comments }}</p>
+                            <p v-show="form.errors.accepting_comments" class="mt-2 text-sm text-red-600">{{ form.errors.accepting_comments }}</p>
                         </label>
 
                         <!-- File group -->
@@ -206,6 +217,7 @@
                                 background="turqoise-500"
                                 hover="turqoise-400"
                                 color="white"
+                                @click="createProject"
                             >
                                 {{ $t('save') }}
                             </PrimaryButton>
@@ -235,78 +247,39 @@
     import InputWithIcon from '@/Components/form/InputWithIcon.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import {onMounted} from "vue";
 
 
     /** Initialize inertia from Object. */
     const form = useForm({
-        project_name: '',
-        amount_target: '',
-        project_category: '',
-        date_start: '',
-        date_end: '',
+        name: '',
+        target_budget: '',
+        category: '',
+        start: '',
+        end: '',
         county: '',
-        project_description: '',
-        project_scope: '',
-        project_beneficiary: '',
-        why_to_donate: '',
-        has_comments: false,
-        has_voluntiers: false,
+        description: '',
+        scope: '',
+        beneficiaries: '',
+        reason_to_donate: '',
+        is_national: false,
+        accepting_comments: false,
+        accepting_volunteers: false,
         file_group: [],
         project_links: [],
         project_articles: []
     });
+    let selectedCountry = null;
+    const props = defineProps(['projectCategories', 'countries']);
 
-    const project_categories = [
-        "Protecția mediului",
-        "Educație",
-        "Sănătate",
-        "Drepturile omului",
-        "Dezvoltare rurală",
-        "Sprijin dizabilități",
-        "Egalitate de gen",
-        "Reducerea sărăciei",
-        "Integrarea minorităților",
-        "Sprijin tineret",
-        "Asistență vârstnici",
-        "Patrimoniu cultural",
-        "Artă și cultură",
-        "Sport și recreere",
-        "Dezvoltare comunitară",
-        "Prevenire violență domestică",
-        "Ajutor imigranți/refugiați",
-        "Combatere trafic uman",
-        "Bună guvernare",
-        "Protecția animalelor",
-        "Prevenire dependență droguri",
-        "Advocacy politici publice",
-        "Anti-discriminare",
-        "Îmbunătățire infrastructură",
-        "Antreprenoriat social",
-        "Gestionare dezastre",
-        "Drepturile consumatorilor",
-        "Sprijin familie",
-        "Promovare voluntariat",
-        "Asistență juridică",
-        "Protecția vieții private",
-        "Combatere corupție",
-        "Sănătate mintală",
-        "Drepturile animalelor",
-        "Cercetare științifică",
-        "Dezvoltare durabilă",
-        "Securitate alimentară",
-        "Control boli infecțioase",
-        "Sprijin veterani",
-        "Dezvoltare regională/internațională"
-    ];
-
-    const counties = [];
 
     /** Create project. */
     const createProject = () => {
-        // form.post(route('admin.ong.project.store'), {
-        //     preserveScroll: true,
-        //     onSuccess: () => {},
-        //     onError: () => {},
-        // });
+        console.log(form);
+        form.county = selectedCountry.id;
+        form.post(route('admin.ong.project.store'), {
+            preserveScroll: true,
+            onError: () => {},
+        });
     };
 </script>
