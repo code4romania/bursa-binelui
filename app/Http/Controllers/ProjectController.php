@@ -12,7 +12,6 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::publish()->paginate()->withQueryString();
-        dd($projects);
 
         return Inertia::render('Public/Projects/Projects', [
             'query' => $projects,
