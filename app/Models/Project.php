@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasLocation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -50,7 +51,7 @@ class Project extends Model implements HasMedia
 
     protected $appends = ['total_donations', 'cover_image'];
 
-    protected $with = ['media', 'organization'];
+    protected $with = ['media', 'organization', 'donations'];
 
     public function organization(): BelongsTo
     {
@@ -72,10 +73,16 @@ class Project extends Model implements HasMedia
 
     public function getTotalDonationsAttribute(): int
     {
-        return (int) $this->Donations()->sum('amount');
+        return (int) $this->donations->sum('amount');
     }
+
     public function getCoverImageAttribute(): string
     {
         return $this->getFirstMediaUrl('project_files', 'preview') ?? '';
+    }
+
+    public function scopePublish(Builder $query): Builder
+    {
+        return $query->where('status', 'published');
     }
 }

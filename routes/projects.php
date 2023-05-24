@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 /* Public routes. */
-Route::get('/proiecte', function () {
-    return Inertia::render('Public/Projects/Projects');
-})->name('projects');
+Route::get('/proiecte', [\App\Http\Controllers\ProjectController::class, 'index'])->name('projects');
 Route::get('/proiect/{proiect}', function () {
     return Inertia::render('Public/Projects/Project');
 })->name('project');

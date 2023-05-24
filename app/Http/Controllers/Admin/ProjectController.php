@@ -14,17 +14,21 @@ use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with('organization')->where('organization_id', auth()->user()->organization_id)->paginate();
+        $projectStatus = $request->get('project_status', 'published');
+        $projects = Project::with('organization')->where('status', $projectStatus)->where('organization_id', auth()->user()->organization_id)->paginate(16)->withQueryString();
+
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => $projects,
+            'projectStatus' => $projectStatus,
         ]);
     }
 
     public function create()
     {
         $countries = County::get(['name', 'id']);
+
         return Inertia::render('AdminOng/Projects/AddProject', [
             'countries' => $countries,
             'projectCategories' => ProjectCategory::values(),

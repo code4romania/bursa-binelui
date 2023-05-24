@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\County;
 use App\Models\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,8 +18,8 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Organization::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\County::class)->nullable()->constrained()->nullOnDelete();
-            $table->string('status')->default('pending');
+            $table->foreignIdFor(County::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('status')->default('draft');
             $table->boolean('is_national')->default(false);
             $table->string('category');
             $table->string('name');
