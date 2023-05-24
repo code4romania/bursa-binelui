@@ -43,6 +43,8 @@ class StoreRequest extends FormRequest
             'external_links.*' => ['nullable', 'url'],
             'county_id' => ['nullable', 'exists:counties,id'],
             'is_national' => ['required', 'boolean'],
+            'file_group'=> ['required', 'array'],
+            'file_group.*.file'=> ['required', 'file'],
         ];
     }
 }

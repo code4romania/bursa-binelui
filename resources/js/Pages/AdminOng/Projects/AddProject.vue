@@ -276,7 +276,7 @@
     /** Create project. */
     const createProject = () => {
         console.log(form);
-        form.county = selectedCountry.id;
+        form.county = selectedCountry?.id;
         form.post(route('admin.ong.project.store'), {
             preserveScroll: true,
             onError: () => {},

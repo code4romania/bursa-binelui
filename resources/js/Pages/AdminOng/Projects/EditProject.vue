@@ -243,7 +243,7 @@
                         <!-- Edit main image -->
                         <div class="bg-white px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('main_image') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.image }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700"><img :src=" form.cover_image"/></dt>
                             <EditModal
                                 @action="editField()"
                                 class="col-span-1 flex justify-end"
@@ -273,26 +273,28 @@
                                 </div>
 
                                 <!-- File group -->
-                                <FileGroup
-                                    v-model="form.file_group"
-                                />
+                                <div class="flex flex-wrap">
+                                    <div :style="{backgroundImage:'url('+image.preview_url+')'}" style="background-size: contain"
+                                         v-for="(image,index) in form.media"
+                                         class="w-60 h-60 mx-2 my-2 grid grid-cols-2 gap-4 content-end ">
+                                        <DangerButton
+                                            @click="removeImage(index)"
+                                        >{{ $t('remove_image') }}
+                                        </DangerButton>
+                                        <SecondaryButton
+                                            class="col-start-2"
+                                            @click="setCoverImage(index)"
+                                        >{{ $t('set_cover_image') }}
+                                        </SecondaryButton>
+                                    </div>
+                                </div>
                             </dt>
 
                             <EditModal
                                 @action="editField()"
                                 class="col-span-1 flex justify-end"
                             >
-
-                                <Textarea
-                                    class="w-full"
-                                    :label="$t('why_to_donate')"
-                                    id="why-to-donate"
-                                    color="gray-700"
-                                    v-model="form.why_to_donate"
-                                    :error="form.errors.why_to_donate"
-                                >
-                                    <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
-                                </Textarea>
+                                <input model-value="form.media" type="file" multiple @change="onFileChange"/>
 
                             </EditModal>
                         </div>
@@ -395,6 +397,7 @@
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import {onMounted, ref} from "vue";
+    import DangerButton from "@/Components/buttons/DangerButton.vue";
 
     const flash = {
         success_message:'',
@@ -412,6 +415,9 @@
     let project = ref(props.project);
     let form = useForm(project.value);
 
+    onMounted(() => {
+        console.log(project.value)
+    })
     const  editField = (field) => {
         let newForm = useForm({
             [field]: form[field]

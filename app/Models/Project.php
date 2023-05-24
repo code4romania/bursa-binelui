@@ -48,7 +48,7 @@ class Project extends Model implements HasMedia
         'accepting_comments' => 'boolean',
     ];
 
-    protected $appends = ['total_donations'];
+    protected $appends = ['total_donations', 'cover_image'];
 
     protected $with = ['media', 'organization'];
 
@@ -72,6 +72,10 @@ class Project extends Model implements HasMedia
 
     public function getTotalDonationsAttribute(): int
     {
-        return $this->Donations()->sum('amount');
+        return (int) $this->Donations()->sum('amount');
+    }
+    public function getCoverImageAttribute(): string
+    {
+        return $this->getFirstMediaUrl('project_files', 'preview') ?? '';
     }
 }

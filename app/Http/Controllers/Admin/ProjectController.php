@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\ProjectCategory;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
 use App\Models\County;
 use App\Models\Project;
@@ -13,10 +14,9 @@ use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $projects = Project::with('organization')->where('organization_id', auth()->user()->organization_id)->paginate();
-
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => $projects,
         ]);
@@ -25,7 +25,6 @@ class ProjectController extends Controller
     public function create()
     {
         $countries = County::get(['name', 'id']);
-
         return Inertia::render('AdminOng/Projects/AddProject', [
             'countries' => $countries,
             'projectCategories' => ProjectCategory::values(),
@@ -38,7 +37,9 @@ class ProjectController extends Controller
         $data['organization_id'] = auth()->user()->organization_id;
         $data['slug'] = \Str::slug($data['name']);
         $project = Project::create($data);
-        $project->addAllMediaFromRequest();
+        $project->addAllMediaFromRequest()->each(function ($fileAdder) {
+            $fileAdder->toMediaCollection('project_files');
+        });
 
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }

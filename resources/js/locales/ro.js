@@ -238,6 +238,8 @@ export default {
     "message": "Mesaj",
     "add_ticket": "Deschide un tichet nou",
     "is_national": "Este national",
+    "set_cover_image": "Seteaza imaginea de coperta",
+    "remove_image": "Sterge imaginea",
 
 
 }

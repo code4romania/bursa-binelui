@@ -39,20 +39,20 @@
                     classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                 />
 
-                <!-- Draft projects -->
-                <div class="flex items-center mt-20 gap-4">
-                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-900">{{ $t('draft_projects') }}</h2>
-                </div>
+<!--                &lt;!&ndash; Draft projects &ndash;&gt;-->
+<!--                <div class="flex items-center mt-20 gap-4">-->
+<!--                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">-->
+<!--                        <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>-->
+<!--                    </div>-->
+<!--                    <h2 class="text-2xl font-bold text-gray-900">{{ $t('draft_projects') }}</h2>-->
+<!--                </div>-->
 
-                <PaginatedGrid
-                    type="project"
-                    cardType="admin"
-                    :list="props.query"
-                    classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-                />
+<!--                <PaginatedGrid-->
+<!--                    type="project"-->
+<!--                    cardType="admin"-->
+<!--                    :list="props.query"-->
+<!--                    classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"-->
+<!--                />-->
            </div>
         </Dashboard>
     </PageLayout>
