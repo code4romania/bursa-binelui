@@ -8,9 +8,7 @@ use Inertia\Inertia;
 
 /* Public routes. */
 Route::get('/proiecte', [\App\Http\Controllers\ProjectController::class, 'index'])->name('projects');
-Route::get('/proiect/{proiect}', function () {
-    return Inertia::render('Public/Projects/Project');
-})->name('project');
+Route::get('/proiect/{project:slug}',[\App\Http\Controllers\ProjectController::class,'item'])->name('project');
 
 /* Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {

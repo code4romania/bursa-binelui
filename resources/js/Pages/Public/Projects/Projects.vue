@@ -88,7 +88,7 @@
                         class="w-full"
                         :label="$t('county_city')"
                         v-model="filter.c"
-                        :options="props.cities"
+                        :options="props.counties"
                         @callback="filterProjects"
                     />
 
@@ -171,7 +171,10 @@
     const  props =defineProps({
         query: {
             type: Object,
-        }
+        },
+        counties: {
+            type: Array,
+        },
     });
 
     // const props = {

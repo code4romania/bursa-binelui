@@ -51,7 +51,7 @@ class Project extends Model implements HasMedia
 
     protected $appends = ['total_donations', 'cover_image'];
 
-    protected $with = ['media', 'organization', 'donations'];
+    protected $with = ['media', 'organization', 'donations','county'];
 
     public function organization(): BelongsTo
     {
@@ -84,5 +84,10 @@ class Project extends Model implements HasMedia
     public function scopePublish(Builder $query): Builder
     {
         return $query->where('status', 'published');
+    }
+
+    public function county(): BelongsTo
+    {
+        return $this->belongsTo(County::class);
     }
 }

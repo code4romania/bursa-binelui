@@ -16,11 +16,11 @@
                         <p class="text-base font-semibold leading-6 text-gray-900">{{ project.active ? $t('active') : $t('inactive') }}</p>
                     </div>
 
-                    <div v-if="project.activity_domains" class="flex items-center gap-2">
+                    <div v-if="project.category" class="flex items-center gap-2">
                         <div class="bg-turqoise-50 w-9 h-9 rounded-lg flex items-center justify-center">
                             <SvgLoader class="shrink-0 fill-turqoise-50 stroke-turqoise-500" name="badge" />
                         </div>
-                        <p class="text-base font-semibold leading-6 text-gray-900 truncate w-40 lg:w-60">{{ project.activity_domains.join(',') }}</p>
+                        <p class="text-base font-semibold leading-6 text-gray-900 truncate w-40 lg:w-60">{{ project.category}}</p>
                     </div>
                 </div>
 
@@ -30,7 +30,7 @@
 
                     <!-- Donate modal -->
                     <DonateModal
-                        v-if="0 < project_end_date"
+                        v-if="0 < project.end"
                         triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         :data="project"
@@ -38,7 +38,7 @@
 
                     <!-- Donate Error modal -->
                     <Modal
-                        v-if="0 > project_end_date"
+                        v-if="Date() > project.end"
                         triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         id="project-donation-expired"
@@ -57,6 +57,7 @@
 
                     <!-- Volunteer modal -->
                     <VolunteerModal
+                        v-if="project.accepting_volunteers"
                         triggerModalClasses="rounded-md w-full sm:w-auto bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 px-3.5 py-2.5"
                         :triggerModalText="$t('become_volunter')"
                         :data="project"
@@ -89,21 +90,21 @@
                 <div class="mt-8">
                     <div class="flex items-center justify-between mb-1 text-xl font-bold">
                         <p class="text-cyan-900">
-                            {{ project.current_amount }} {{ $t("currency") }}
+                            {{ project.total_donations }} {{ $t("currency") }}
                         </p>
                         <p class="text-turqoise-500">
-                            {{ project.max_amount }} {{ $t("currency") }}
+                            {{ project.target_budget }} {{ $t("currency") }}
                         </p>
                     </div>
 
                     <div class="w-full h-6 bg-gray-300">
                         <div
-                            :class="[`h-6`,project.current_amount == project.max_amount ? 'bg-turqoise-500' : 'bg-cyan-900',]"
+                            :class="[`h-6`,project.total_donations == project.target_budget ? 'bg-turqoise-500' : 'bg-cyan-900',]"
                             :style="`width: ${percentage}%`"
                         ></div>
                     </div>
 
-                    <p class="mt-1 text-xl font-bold text-cyan-900">{{ project.donation }} {{ $t('donations') }}</p>
+                    <p class="mt-1 text-xl font-bold text-cyan-900">{{ project.donations.length }} {{ $t('donations') }}</p>
                 </div>
             </div>
         </div>
@@ -143,7 +144,7 @@
                             <SvgLoader class="shrink-0 fill-turqoise-500 mt-1" name="location" />
                             <div>
                                 <h3 class="text-gray-600 leading-0 font-semibold text-base">{{ $t('range') }}</h3>
-                                <p class="mt-2 text-gray-500 font-normal text-base">{{ project.city_name }}, {{ project.county_name }}</p>
+                                <p class="mt-2 text-gray-500 font-normal text-base"> {{ project.county.name }}</p>
                             </div>
                         </div>
 
@@ -151,8 +152,8 @@
                             <SvgLoader class="shrink-0 fill-turqoise-500 stroke-turqoise-500 mt-1" name="calendar" />
                             <div>
                                 <h3 class="text-gray-600 leading-0 font-semibold text-base">{{ $t('period') }}</h3>
-                                <p class="mt-2 text-gray-500 font-normal text-base">{{ project.period_start }} - {{ project.period_end }}</p>
-                                <p v-if="(5 >= project_end_date) && (0 < project_end_date)" class="text-turqoise-500 text-base font-semibold mt-1">{{ $t('project_ends') }} {{ project_end_date }} {{ $t('days') }}!</p>
+                                <p class="mt-2 text-gray-500 font-normal text-base">{{ project.start }} - {{ project.end }}</p>
+                                <p v-if="(5 >= project.end) && (0 < project.end)" class="text-turqoise-500 text-base font-semibold mt-1">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
                             </div>
                         </div>
 
@@ -175,14 +176,14 @@
                 <div  class="text-gray-500 text-lg" v-html="project.scope"></div>
             </div>
 
-            <div class="mb-10" v-if="project.beneficiary">
+            <div class="mb-10" v-if="project.beneficiaries">
                 <h2 class="text-cyan-900 text-3xl font-bold mb-6">{{ $t('project_beneficiary_label') }}</h2>
-                <div  class="text-gray-500 text-lg" v-html="project.beneficiary"></div>
+                <div  class="text-gray-500 text-lg" v-html="project.beneficiaries"></div>
             </div>
 
-            <div class="mb-10" v-if="project.why_donate">
+            <div class="mb-10" v-if="project.reason_to_donate">
                 <h2 class="text-cyan-900 text-3xl font-bold mb-6">{{ $t('why_to_donate') }}</h2>
-                <div  class="text-gray-500 text-lg" v-html="project.why_donate"></div>
+                <div  class="text-gray-500 text-lg" v-html="project.reason_to_donate"></div>
             </div>
         </div>
 
@@ -251,16 +252,16 @@
         <div class="mx-auto flex flex-col-reverse sm:flex-row items-center w-full sm:max-w-7xl sm:pr-20 py-10 mb-24">
 
             <div class="w-10/12 sm:w-3/12">
-                <img class="mx-auto flex-shrink-0 -mt-36 sm:mt-0 sm:-mr-36 relative z-50 w-full rounded-xl shadow-lg" src="/images/ong.png" alt="" />
+                <img class="mx-auto flex-shrink-0 -mt-36 sm:mt-0 sm:-mr-36 relative z-50 w-full rounded-xl shadow-lg" :src="project.organization.cover_image" alt="" />
             </div>
 
             <div class="bg-turqoise-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20 p-8 py-20 w-11/12 h-full relative z-30 overflow-hidden">
-                <h2 class="relative z-30 text-white text-3xl font-bold mb-6">{{ project.ong.name }}</h2>
-                <div class="relative z-30 text-white text-base" v-html="project.ong.description"></div>
+                <h2 class="relative z-30 text-white text-3xl font-bold mb-6">{{ project.organization.name }}</h2>
+                <div class="relative z-30 text-white text-base" v-html="project.organization.description"></div>
                 <div class="mt-8 relative z-30">
                     <Link
                         class="bg-white block sm:inline text-center text-gray-900 focus-visible:outline-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :href="route('organization', project.ong.id)"
+                        :href="route('organization', project.organization.id)"
                     >
                         {{ $t('find_organization') }}
                     </Link>
@@ -279,11 +280,8 @@
 </template>
 
 <script setup>
-    /** Remove this import after backend connection. */
-    import project from '@/local_json/project.js';
-
     /** Import form vue */
-    import { computed } from 'vue';
+    import {computed, onMounted, ref} from 'vue';
 
     /** Import from inertia. */
     import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
@@ -296,6 +294,20 @@
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
+
+    const props = defineProps({
+        project: {
+            type: Object,
+            required: true,
+        },
+    });
+    onMounted(() => {
+        console.log(project);
+    });
+    const project = ref(props.project);
+
+
+
 
     /** Percentage */
     const percentage = computed( () => (project.current_amount / project.max_amount) * 100 );
