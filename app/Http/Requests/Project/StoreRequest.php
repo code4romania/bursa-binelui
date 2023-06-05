@@ -14,6 +14,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        //TODO: check if user is admin organization or organization member
         return auth()->check();
     }
 
@@ -30,7 +31,7 @@ class StoreRequest extends FormRequest
             'target_budget' => ['required', 'numeric'],
             'start' => ['required', 'date'],
             'end' => ['required', 'date'],
-            'county'=> ['required', Rule::exists('counties', 'id'), Rule::requiredIf($this->is_national === false)],
+            'county'=> [Rule::requiredIf(function(){ return $this->is_national === false;})],
             'description' => ['required', 'string'],
             'scope' => ['required', 'string'],
             'reason_to_donate' => ['required', 'string'],

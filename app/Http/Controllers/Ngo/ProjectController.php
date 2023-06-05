@@ -2,14 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Ngo;
 
 use App\Enums\ProjectCategory;
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
 use App\Models\County;
 use App\Models\Project;
+use App\Models\User;
+use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
+use App\Notifications\Ngo\ProjectCreated;;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -45,6 +50,10 @@ class ProjectController extends Controller
             $fileAdder->toMediaCollection('project_files');
         });
 
+        auth()->user()->notify(new ProjectCreated($project));
+        //TODO move this to a service
+        $adminUsers = User::whereRole(UserRole::bb_admin)->get();
+        Notification::send($adminUsers, new ProjectCreatedAdmin($project));
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }
 

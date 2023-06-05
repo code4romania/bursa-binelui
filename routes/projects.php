@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Ngo\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
