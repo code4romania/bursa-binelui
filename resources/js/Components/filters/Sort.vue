@@ -1,14 +1,14 @@
 <template>
-    <Menu as="div" class="relative inline-block text-left">
+    <Menu as="div" class="relative z-50 inline-block text-left">
         <div>
-            <MenuButton class="inline-flex items-center w-full justify-center gap-x-4 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            <MenuButton class="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm gap-x-4 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                 <SvgLoader name="sort" />
                 {{ $t('sort') }}
             </MenuButton>
         </div>
 
-      <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-        <MenuItems class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <transition enter-active-class="transition duration-100 ease-out" enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
+        <MenuItems class="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
             <div class="py-1">
                 <MenuItem v-slot="{ active }">
