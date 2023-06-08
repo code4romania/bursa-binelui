@@ -42,12 +42,12 @@
                 <!-- Overlay -->
                 <div
                     v-if="!data.active"
-                    class="absolute top-0 left-0 w-full h-full bg-gray-500 rounded-t-lg z-40 opacity-40"
+                    class="absolute top-0 left-0 z-40 w-full h-full bg-gray-500 rounded-t-lg opacity-40"
                 ></div>
             </Link>
 
             <div class="p-6">
-                <div class="text-base font-medium text-gray-700 pb-4">{{ data.organization.name }}</div>
+                <div class="pb-4 text-base font-medium text-gray-700">{{ data.organization.name }}</div>
 
                 <Link
                     :href="route('project', data.id)"
@@ -64,7 +64,7 @@
 
                     <div v-if="data.activity_domains" class="flex items-center gap-1">
                         <SvgLoader class="shrink-0" name="activity" />
-                        <span class="truncate w-20 lg:w-40">{{ data.activity_domains.join(',') }}</span>
+                        <span class="w-20 truncate lg:w-40">{{ data.activity_domains.join(',') }}</span>
                     </div>
                 </div>
 
@@ -80,11 +80,11 @@
                         </p>
                     </div>
 
-                    <div class="w-full h-5 bg-gray-200 dark:bg-gray-700">
+                    <div class="w-full h-5 bg-gray-200">
                         <div
                             :class="[
                                 `h-5`,
-                                data.total_donations == data.target_budget
+                                data.total_donations >= data.target_budget
                                     ? 'bg-turqoise-500'
                                     : 'bg-cyan-900',
                             ]"
@@ -141,9 +141,9 @@
                     :triggerModalText="$t('donate_btn')"
                     id="project-donation-expired"
                 >
-                    <div class="mt-6 w-full">
-                        <h3 class="text-center text-xl font-semibold text-gray-800">{{ $t('donation_period_ended') }}</h3>
-                        <h3 class="text-center text-xl font-semibold text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
+                    <div class="w-full mt-6">
+                        <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
+                        <h3 class="text-xl font-semibold text-center text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
                         <Link
                             :href="route('projects')"
                             class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
@@ -175,7 +175,13 @@
         cardType: String,
     });
 
-    const percentage = computed(() => (props.data.total_donations / props.data.target_budget) * 100);
+    const percentage = computed(() => {
+        if (props.data.total_donations > props.data.target_budget) {
+            return 100;
+        }
+
+        return (props.data.total_donations / props.data.target_budget) * 100;
+    });
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {
