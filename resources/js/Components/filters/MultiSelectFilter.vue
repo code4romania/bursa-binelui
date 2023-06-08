@@ -1,6 +1,6 @@
 <template>
 
-    <Combobox as="div" v-model="selectedOptions" multiple>
+    <Combobox class="z-50" as="div" v-model="selectedOptions" multiple>
         <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
 
@@ -16,12 +16,12 @@
                 </ul>
             </div>
 
-            <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-                <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <ComboboxButton class="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
+                <ChevronUpDownIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>
 
             <ComboboxOptions
-                class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             >
                 <div class="z-20 my-1.5 sticky top-1.5 px-2">
                     <ComboboxInput
@@ -42,7 +42,7 @@
                         </span>
 
                         <span v-if="selected" :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-turqoise-500']">
-                            <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                            <CheckIcon class="w-5 h-5" aria-hidden="true" />
                         </span>
                     </li>
                 </ComboboxOption>

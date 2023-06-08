@@ -21,7 +21,7 @@
 
             <!-- Pagination -->
             <Pagination
-                v-if="list.links && list.next_page_url"
+                v-if="list.links"
                 :currentPage="list.current_page"
                 :prev="list.prev_page_url"
                 :next="list.next_page_url"
@@ -31,7 +31,7 @@
 
         <div
             v-else
-            class="mt-20 mb-9 text-center text-gray-700 font-bold text-xl"
+            class="mt-20 text-xl font-bold text-center text-gray-700 mb-9"
         >
             {{ $t('no_data') }}
         </div>

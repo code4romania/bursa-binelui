@@ -5,99 +5,99 @@
 
         <!-- Auth template. -->
         <Auth :content="content">
-            <form class="space-y-4 mt-4" @submit.prevent="submit">
-                <!-- Name -->
-                <Input
-                    :label="$t('name')"
-                    id="name"
-                    type="name"
-                    v-model="form.name"
-                    :isRequired="true"
-                    color="gray-700"
-                    hasAutocomplete="name"
-                    :error="form.errors.name"
+
+            <!-- Steps -->
+            <form class="mt-6">
+                <component
+                    :is="steps[current]"
+                    :current="steps[current]"
+                    :form="form"
+                    @prev="prev"
+                    @next="next"
+                    @google="google"
                 />
-
-                <!-- Email. -->
-                <Input
-                    :label="$t('email')"
-                    id="email"
-                    type="email"
-                    v-model="form.email"
-                    :isRequired="true"
-                    color="gray-700"
-                    hasAutocomplete="username"
-                    :error="form.errors.email"
-                />
-
-                <!-- Passowrd. -->
-                <Input
-                    :label="$t('password')"
-                    id="password"
-                    type="password"
-                    v-model="form.password"
-                    :isRequired="true"
-                    color="gray-700"
-                    hasAutocomplete="current-password"
-                    :error="form.errors.password"
-                />
-
-                <!-- Confirm Passowrd. -->
-                <Input
-                    :label="$t('password')"
-                    id="password_confirmation"
-                    type="password"
-                    v-model="form.password_confirmation"
-                    :isRequired="true"
-                    color="gray-700"
-                    hasAutocomplete="new-password"
-                    :error="form.errors.password_confirmation"
-                />
-
-                <div class="flex items-center justify-end mt-4">
-                    <Link
-                        :href="route('login')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Register
-                    </PrimaryButton>
-                </div>
             </form>
         </Auth>
     </PageLayout>
 </template>
 
 <script setup>
-    import { Head, Link, useForm } from '@inertiajs/vue3';
+    /** Import form vue. */
+    import { ref, computed } from 'vue';
+
+    /** Import form inertia. */
+    import { Head, useForm } from '@inertiajs/vue3';
+
+    /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Auth from '@/Components/templates/Auth.vue';
-    import Input from '@/Components/form/Input.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import Step1 from '@/Components/registration/Step1.vue';
+    import Step2 from '@/Components/registration/Step2.vue';
+    import Step3 from '@/Components/registration/Step3.vue';
+    import Step4 from '@/Components/registration/Step4.vue';
+    import Step5 from '@/Components/registration/Step5.vue';
+    import Success from '@/Components/registration/Success.vue';
+
+    /** Intialize inertia form object. */
+    const form = useForm({});
+
+    /** Current component. */
+    const current = ref(0);
+
+    /** Registration components steps. */
+    const steps = computed(() => {
+        /** Intial components. */
+        let components = [ Step1, Step2 ];
+
+        /** Check if registration is of type oragnization */
+        if ('ong' === form.type) {
+            components = [ ...components, Step3, Step4, Step5 ];
+        }
+
+        return [ ...new Set([...components, Success]) ];
+    });
 
     /** Page content. */
-    const content = {
-        title: "Register",
-        description: "Log in",
-        link: {
-            text: "lon in",
-            href: "#"
+    const content = computed(() => {
+        if (5 == current.value) {
+            return {
+                title: 'Felicitări!',
+                description: 'Contul tău a fost creat. Lorem ipsum massa rhoncus, volutpat. Dignissim sed eget risus enim.'
+            }
+        }
+
+        return {
+            title: "Creează cont",
+            description: "Ești deja utilizator?",
+            link: {
+                text: "Intră în cont",
+                href: "#"
+            }
+        };
+    });
+
+    /** Previous step. */
+    const prev = (() => (0 < current.value) && current.value--);
+
+    /** Next step. */
+    const next = () => {
+        if (current.value == steps.value.length -1) {
+            submit();
+        } else {
+            current.value++
         }
     }
 
-    const form = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+    /** Login with google. */
+    const google = () => {
+        console.log('google login')
+    }
 
+    /** Create user. */
     const submit = () => {
         form.post(route('register'), {
-            onFinish: () => form.reset('password', 'password_confirmation'),
+            onError: (error) => { console.log(error) },
+            onFinish: () => {}
         });
     };
 </script>
