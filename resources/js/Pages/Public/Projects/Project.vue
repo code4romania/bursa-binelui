@@ -4,11 +4,10 @@
         <Head title="Proiect" />
 
         <!-- Header -->
+        <div class="flex flex-col-reverse w-full mx-auto mt-2 mb-8 lg:flex-row lg:max-w-7xl sm:mt-0 px-9">
+            <div class="flex flex-col justify-center w-full lg:w-6/12">
 
-        <div class="flex flex-col-reverse lg:flex-row mx-auto w-full lg:max-w-7xl mb-8 mt-2 sm:mt-0 px-9">
-            <div class="w-full lg:w-6/12 flex flex-col justify-center">
-
-                <div class="bg-white mr-6 pt-4 flex gap-6">
+                <div class="flex gap-6 pt-4 mr-6 bg-white">
                     <div class="flex items-center gap-2">
                         <div :class="['w-8 h-8 rounded-lg flex items-center justify-center', project.active ? 'bg-red-500' : 'bg-cyan-900']">
                             <SvgLoader :class="['shrink-0 stroke-white', project.active ? 'fill-red-500' : 'fill-cyan-900']" name="thunder" />
@@ -17,16 +16,16 @@
                     </div>
 
                     <div v-if="project.category" class="flex items-center gap-2">
-                        <div class="bg-turqoise-50 w-9 h-9 rounded-lg flex items-center justify-center">
+                        <div class="flex items-center justify-center rounded-lg bg-turqoise-50 w-9 h-9">
                             <SvgLoader class="shrink-0 fill-turqoise-50 stroke-turqoise-500" name="badge" />
                         </div>
-                        <p class="text-base font-semibold leading-6 text-gray-900 truncate w-40 lg:w-60">{{ project.category}}</p>
+                        <p class="w-40 text-base font-semibold leading-6 text-gray-900 truncate lg:w-60">{{ project.category}}</p>
                     </div>
                 </div>
 
-                <h1 v-if="project.name" class="text-6xl font-extrabold text-gray-900 py-12">{{ project.name }}</h1>
+                <h1 v-if="project.name" class="py-12 text-6xl font-extrabold text-gray-900">{{ project.name }}</h1>
 
-                <div class="flex flex-col sm:flex-row w-full gap-4">
+                <div class="flex flex-col w-full gap-4 sm:flex-row">
 
                     <!-- Donate modal -->
                     <DonateModal
@@ -43,9 +42,9 @@
                         :triggerModalText="$t('donate_btn')"
                         id="project-donation-expired"
                     >
-                        <div class="mt-6 w-full">
-                            <h3 class="text-center text-xl font-semibold text-gray-800">{{ $t('donation_period_ended') }}</h3>
-                            <h3 class="text-center text-xl font-semibold text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
+                        <div class="w-full mt-6">
+                            <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
+                            <h3 class="text-xl font-semibold text-center text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
                             <Link
                                 :href="route('projects')"
                                 class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
@@ -65,26 +64,26 @@
                 </div>
             </div>
 
-            <div class="w-full hidden lg:w-6/12 relative p-20 sm:flex items-center justify-center">
+            <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
 
                 <div class="absolute bottom-0 right-0">
                     <SvgLoader class="shrink-0" name="dotted_square" />
                 </div>
 
-                <div class="p-8 bg-white w-fit rounded shadow relative flex items-center">
+                <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
                     <img class="mx-auto" src="/images/project_img.png" alt="" />
                 </div>
             </div>
         </div>
 
         <!-- Target amount -->
-        <div class="bg-gray-100 py-10 mb-20">
-            <div class="mx-auto w-full lg:max-w-7xl px-9">
+        <div class="py-10 mb-20 bg-gray-100">
+            <div class="w-full mx-auto lg:max-w-7xl px-9">
                 <div class="flex items-center gap-4">
-                    <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                    <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
                         <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
                     </div>
-                    <h3 class="text-gray-900 font-bold text-2xl">{{ $t('target_amount') }}</h3>
+                    <h3 class="text-2xl font-bold text-gray-900">{{ $t('target_amount') }}</h3>
                 </div>
 
                 <div class="mt-8">
@@ -109,15 +108,15 @@
             </div>
         </div>
 
-        <div class="bg-white w-full rounded shadow relative flex items-center sm:hidden mb-20">
+        <div class="relative flex items-center w-full mb-20 bg-white rounded shadow sm:hidden">
             <img class="mx-auto" src="/images/project_img.png" alt="" />
         </div>
 
         <!-- Social share -->
-        <div class="flex flex-col lg:flex-row mx-auto max-w-7xl mb-8 px-9">
+        <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
             <div class="w-full lg:w-6/12">
 
-                <h2 class="text-cyan-900 text-3xl font-bold mb-8">{{ $t('share_project') }}</h2>
+                <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
 
                 <SharePage
                     class="mb-20"
@@ -126,34 +125,34 @@
                 />
 
                 <div class="mb-10" v-if="project.description">
-                    <h2 class="text-cyan-900 text-3xl font-bold mb-6">{{ $t('description') }}</h2>
-                    <div  class="text-gray-500 text-lg" v-html="project.description"></div>
+                    <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
+                    <div class="text-lg text-gray-500" v-html="project.description"></div>
                 </div>
             </div>
 
-            <div class="w-full lg:w-6/12 mt-4 lg:mt-0 lg:px-10">
-                <div class="shadow-lg bg-white">
+            <div class="w-full mt-4 lg:w-6/12 lg:mt-0 lg:px-10">
+                <div class="bg-white shadow-lg">
 
-                    <div class="border-b border-gray-200 px-10 pt-10 pb-8">
+                    <div class="px-10 pt-10 pb-8 border-b border-gray-200">
                         <h3 class="text-4xl font-bold leading-6 text-gray-900">{{ $t('project_details') }}</h3>
                     </div>
 
-                    <div class="bg-gray-50 px-10 py-8 space-y-8">
+                    <div class="px-10 py-8 space-y-8 bg-gray-50">
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="shrink-0 fill-turqoise-500 mt-1" name="location" />
+                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500" name="location" />
                             <div>
-                                <h3 class="text-gray-600 leading-0 font-semibold text-base">{{ $t('range') }}</h3>
-                                <p class="mt-2 text-gray-500 font-normal text-base"> {{ project.county.name }}</p>
+                                <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
+                                <p class="mt-2 text-base font-normal text-gray-500"> {{ project.county.name }}</p>
                             </div>
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="shrink-0 fill-turqoise-500 stroke-turqoise-500 mt-1" name="calendar" />
+                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500 stroke-turqoise-500" name="calendar" />
                             <div>
-                                <h3 class="text-gray-600 leading-0 font-semibold text-base">{{ $t('period') }}</h3>
-                                <p class="mt-2 text-gray-500 font-normal text-base">{{ project.start }} - {{ project.end }}</p>
-                                <p v-if="(5 >= project.end) && (0 < project.end)" class="text-turqoise-500 text-base font-semibold mt-1">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
+                                <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
+                                <p class="mt-2 text-base font-normal text-gray-500">{{ project.start }} - {{ project.end }}</p>
+                                <p v-if="(5 >= project.end) && (0 < project.end)" class="mt-1 text-base font-semibold text-turqoise-500">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
                             </div>
                         </div>
 
@@ -169,21 +168,21 @@
         </div>
 
         <!-- Project info -->
-        <div class="mx-auto max-w-7xl mb-8 px-9">
+        <div class="mx-auto mb-8 max-w-7xl px-9">
 
             <div class="mb-10" v-if="project.scope">
-                <h2 class="text-cyan-900 text-3xl font-bold mb-6">{{ $t('project_scope_label') }}</h2>
-                <div  class="text-gray-500 text-lg" v-html="project.scope"></div>
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_scope_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.scope"></div>
             </div>
 
             <div class="mb-10" v-if="project.beneficiaries">
-                <h2 class="text-cyan-900 text-3xl font-bold mb-6">{{ $t('project_beneficiary_label') }}</h2>
-                <div  class="text-gray-500 text-lg" v-html="project.beneficiaries"></div>
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_beneficiary_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.beneficiaries"></div>
             </div>
 
             <div class="mb-10" v-if="project.reason_to_donate">
-                <h2 class="text-cyan-900 text-3xl font-bold mb-6">{{ $t('why_to_donate') }}</h2>
-                <div  class="text-gray-500 text-lg" v-html="project.reason_to_donate"></div>
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('why_to_donate') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.reason_to_donate"></div>
             </div>
         </div>
 
@@ -199,22 +198,22 @@
         />
 
         <!-- Gallery -->
-        <div class="bg-gray-100 mb-24">
-            <div class="mx-auto flex flex-col sm:flex-row w-full gap-8 lg:max-w-7xl px-9 py-10">
+        <div class="mb-24 bg-gray-100">
+            <div class="flex flex-col w-full gap-8 py-10 mx-auto sm:flex-row lg:max-w-7xl px-9">
 
-                <div class="w-full sm:flex flex-col justify-between">
+                <div class="flex-col justify-between w-full sm:flex">
                     <div class="flex items-center gap-4">
-                        <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                        <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
                             <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
                         </div>
-                        <h3 class="text-gray-900 font-bold text-2xl">{{ $t('gallery') }}</h3>
+                        <h3 class="text-2xl font-bold text-gray-900">{{ $t('gallery') }}</h3>
                     </div>
 
-                    <div class="group aspect-w-2 aspect-h-1 overflow-hidden rounded-lg mt-10">
+                    <div class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1">
                         <img src="https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" class="object-cover object-center group-hover:opacity-75" />
                         <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-90 sm:absolute sm:inset-0" />
-                        <div class="flex justify-center items-center p-6 sm:absolute sm:inset-0">
-                            <h3 class="font-semibold text-white text-center flex items-center gap-4">
+                        <div class="flex items-center justify-center p-6 sm:absolute sm:inset-0">
+                            <h3 class="flex items-center gap-4 font-semibold text-center text-white">
                                 <SvgLoader name="play"/>
                                 {{ $t('play_video') }}
                             </h3>
@@ -223,21 +222,21 @@
                 </div>
 
                 <div class="w-full">
-                    <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
-                        <div class="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-3 h-full sm:row-span-2">
+                    <div class="grid grid-cols-1 mt-6 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
+                        <div class="h-full overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-h-3 sm:row-span-2">
                             <img src="https://images.unsplash.com/photo-1523115191856-c203e76215a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="" class="object-cover object-center group-hover:opacity-75" />
                         </div>
 
-                        <div class="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-none sm:relative sm:h-full">
+                        <div class="overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full">
                             <img src="https://images.unsplash.com/photo-1617450365226-9bf28c04e130?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full" />
                         </div>
 
-                        <div class="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-none sm:relative sm:h-full">
+                        <div class="overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full">
                             <img src="https://images.unsplash.com/photo-1535090467336-9501f96eef89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80" alt="" class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full" />
                             <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-90 sm:absolute sm:inset-0" />
-                            <div class="flex justify-center items-center p-6 sm:absolute sm:inset-0">
+                            <div class="flex items-center justify-center p-6 sm:absolute sm:inset-0">
                                 <Link
-                                    class="font-semibold text-white text-center"
+                                    class="font-semibold text-center text-white"
                                     :href="route('gallery', project.id)"
                                 >
                                     {{ $t('see_more') }}
@@ -249,16 +248,16 @@
             </div>
         </div>
 
-        <div class="mx-auto flex flex-col-reverse sm:flex-row items-center w-full sm:max-w-7xl sm:pr-20 py-10 mb-24">
+        <div class="flex flex-col-reverse items-center w-full py-10 mx-auto mb-24 sm:flex-row sm:max-w-7xl sm:pr-20">
 
             <div class="w-10/12 sm:w-3/12">
-                <img class="mx-auto flex-shrink-0 -mt-36 sm:mt-0 sm:-mr-36 relative z-50 w-full rounded-xl shadow-lg" :src="project.organization.cover_image" alt="" />
+                <img class="relative z-50 flex-shrink-0 w-full mx-auto shadow-lg -mt-36 sm:mt-0 sm:-mr-36 rounded-xl" :src="project.organization.cover_image" alt="" />
             </div>
 
-            <div class="bg-turqoise-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20 p-8 py-20 w-11/12 h-full relative z-30 overflow-hidden">
-                <h2 class="relative z-30 text-white text-3xl font-bold mb-6">{{ project.organization.name }}</h2>
-                <div class="relative z-30 text-white text-base" v-html="project.organization.description"></div>
-                <div class="mt-8 relative z-30">
+            <div class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-turqoise-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20">
+                <h2 class="relative z-30 mb-6 text-3xl font-bold text-white">{{ project.organization.name }}</h2>
+                <div class="relative z-30 text-base text-white" v-html="project.organization.description"></div>
+                <div class="relative z-30 mt-8">
                     <Link
                         class="bg-white block sm:inline text-center text-gray-900 focus-visible:outline-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :href="route('organization', project.organization.id)"
@@ -271,7 +270,7 @@
                     <SvgLoader class="shrink-0" name="dotted_square" />
                 </div>
 
-                <div class="absolute -bottom-20 left-0 z-10">
+                <div class="absolute left-0 z-10 -bottom-20">
                     <SvgLoader class="shrink-0" name="dotted_square" />
                 </div>
             </div>

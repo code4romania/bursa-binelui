@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,14 +19,11 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Public/Home');
+// });
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -65,9 +63,6 @@ Route::get('/gallery/{project}', function () {
 Route::get('/bcr/proiecte', function () {
     return Inertia::render('Public/Bcr/Projects');
 })->name('bcr.projects');
-Route::get('/campionatul-de-bine', function () {
-    return Inertia::render('Public/Championship/Championship');
-})->name('championship');
 
 require __DIR__ . '/auth.php';
 
@@ -80,3 +75,5 @@ require __DIR__ . '/volunteers.php';
 require __DIR__ . '/tickets.php';
 
 require __DIR__ . '/donations.php';
+
+require __DIR__ . '/championship.php';

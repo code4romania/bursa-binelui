@@ -3,11 +3,11 @@
         <!-- Inertia page head -->
         <Head :title="$t('projects_title')" />
 
-        <div class="p-9 mx-auto max-w-7xl mt-4 mb-24">
+        <div class="mx-auto mt-4 mb-24 p-9 max-w-7xl">
 
             <!-- Header -->
             <header class="flex items-center gap-4">
-                <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
                     <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('projects_title') }}</h2>
@@ -15,8 +15,8 @@
 
             <!-- Filters -->
             <div class="my-11">
-                <div class="flex flex-col sm:flex-row w-full">
-                    <div class="w-full flex-col sm:flex-row xl:w-8/12 flex items-center gap-6">
+                <div class="flex flex-col w-full sm:flex-row">
+                    <div class="flex flex-col items-center w-full gap-6 sm:flex-row xl:w-8/12">
 
                         <!-- Search -->
                         <div class="flex gap-6">
@@ -38,12 +38,12 @@
                             </SecondaryButton>
                         </div>
 
-                        <div class="flex gap-6 w-full mb-6 sm:mb-0">
+                        <div class="flex w-full gap-6 mb-6 sm:mb-0">
                             <!-- Empty filters. -->
                             <SecondaryButton
                                 v-if="hasValues"
                                 @click="emptyFilters"
-                                class="py-2 flex gap-2 items-center w-1/2 sm:w-auto"
+                                class="flex items-center w-1/2 gap-2 py-2 sm:w-auto"
                             >
                                 <SvgLoader name="close" />
                                 {{ $t('empty_filters') }}
@@ -56,7 +56,7 @@
                     </div>
 
                     <!-- Tabs -->
-                    <div class="xl:w-4/12 flex flex-col sm:flex-row justify-end gap-6">
+                    <div class="flex flex-col justify-end gap-6 xl:w-4/12 sm:flex-row">
                         <Link
                             :href="route('projects')"
                             class="flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
@@ -75,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row w-full justify-between gap-6 mt-6">
+                <div class="flex flex-col justify-between w-full gap-6 mt-6 sm:flex-row">
 
                     <Select
                         class="w-full"
@@ -168,7 +168,7 @@
     const emptyFilters = () => {
         router.visit(route('projects'))
     };
-    const  props =defineProps({
+    const props = defineProps({
         query: {
             type: Object,
         },
