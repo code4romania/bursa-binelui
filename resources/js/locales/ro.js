@@ -99,6 +99,8 @@ export default {
     "video_link_label": "Link video",
     "articles_link_label": "Link articol",
     "external_links_title": "Linkuri externe",
+    "add": "Adaugă",
+    "remove": "Șterge",
     "external_links_text": "Organizația poate recruta voluntari prin platforma Bursa Binelui. Completează datele de mai jos dacă dorești acest lucru pentru organizația ta.",
     "preview": "Previzualizează",
     "edit_project_title": "Editează proiect",
