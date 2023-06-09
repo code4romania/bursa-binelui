@@ -22,6 +22,7 @@
         "@heroicons/vue": "^2.0.17",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "vite-svg-loader": "^4.0.0",
-        "vue-i18n": "^9.2.2"
+        "vue-i18n": "^9.2.2",
+        "vue3-carousel": "^0.3.1"
     }
 }
