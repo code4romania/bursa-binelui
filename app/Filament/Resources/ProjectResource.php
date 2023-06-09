@@ -72,7 +72,12 @@ class ProjectResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('organization.name'),
                 Tables\Columns\TextColumn::make('county.name'),
-                Tables\Columns\IconColumn::make('status')->boolean(),
+                Tables\Columns\IconColumn::make('status')->options([
+                    'heroicon-o-x-circle',
+                    'heroicon-o-pencil' => ProjectStatus::draft->value,
+                    'heroicon-o-clock' => ProjectStatus::disabled->value,
+                    'heroicon-o-check-circle' => ProjectStatus::active->value,
+                ]),
                 Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('start')
