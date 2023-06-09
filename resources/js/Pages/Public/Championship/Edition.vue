@@ -3,126 +3,46 @@
         <!-- Inertia page head -->
         <Head :title="$t('championship_title')" />
 
-        <div class="w-full lg:hidden">
-            <img class="w-full" src="/images/championship.png" alt="" />
-        </div>
-
         <!-- Header -->
-        <div class="flex flex-col-reverse w-full gap-10 mx-auto lg:my-10 lg:flex-row lg:max-w-7xl sm:mt-0 px-9">
-            <div class="relative flex flex-col w-full lg:w-6/12">
+        <div class="relative w-full">
 
-                <h1 class="relative z-50 text-2xl font-extrabold text-gray-900 lg:py-12 lg:text-6xl xl:w-96">{{ $t('championship_title') }}</h1>
-
-                <p class="my-6 text-base text-gray-500 lg:hidden lg:mb-0">{{ $t('competition') }}</p>
-
-                <div class="flex flex-col w-full gap-4 mb-6 lg:mb-0 sm:flex-row">
-
-                    <!-- Register -->
-                    <Modal
-                        v-if="!$page.props.auth.user"
-                        triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :triggerModalText="$t('register_project')"
-                    >
-                        <form class="mt-6 space-y-6" @submit.prevent="submit">
-                            <h3 class="text-lg font-semibold text-center text-gray-900">Intră în contul organizației tale pentru a inscrie un proiect</h3>
-                            <p class="text-base text-center text-gray-500">Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim.</p>
-
-                            <!-- Email. -->
-                            <Input
-                                :label="$t('email')"
-                                id="email"
-                                type="email"
-                                v-model="form.email"
-                                :isRequired="true"
-                                color="gray-700"
-                                hasAutocomplete="username"
-                                :error="form.errors.email"
-                            />
-
-                            <!-- Passowrd. -->
-                            <Input
-                                :label="$t('password')"
-                                id="password"
-                                type="password"
-                                v-model="form.password"
-                                :isRequired="true"
-                                color="gray-700"
-                                hasAutocomplete="current-password"
-                                :error="form.errors.password"
-                            />
-
-                            <!-- Action -->
-                            <div class="space-y-6">
-
-                                <!-- Log in button -->
-                                <PrimaryButton
-                                    background="turqoise-500"
-                                    hover="turqoise-400"
-                                    color="white"
-                                    class="w-full"
-                                    :class="{ 'opacity-25': form.processing }"
-                                    :disabled="form.processing"
-                                >
-                                    {{ $t('log_in') }}
-                                </PrimaryButton>
-
-                                <SecondaryButton
-                                    class="flex items-center w-full justify-center gap-x-2 py-2.5"
-                                    :class="{ 'opacity-25': form.processing }"
-                                    :disabled="form.processing"
-                                >
-                                    <!-- <SvgLoader name="google" class="shrink-0" /> -->
-                                    {{ $t('google_log_in') }}
-                                </SecondaryButton>
-
-                                <Link
-                                    :href="route('register')"
-                                    class="flex justify-center text-base text-gray-900 gap-x-1"
-                                >
-                                    {{ $t('no_account') }} <span class="text-turqoise-500">{{ $t('register') }}</span>
-                                </Link>
-                            </div>
-                        </form>
-
-                    </Modal>
-
-                    <Link
-                        v-else
-                        :href="route('projects')"
-                        class="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                    >
-                        {{ $t('register_project') }}
-                    </Link>
-
-                    <Link
-                        :href="route('projects')"
-                        class="rounded-md bg-white text-center px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
-                    >
-                        {{ $t('see_projects') }}
-                    </Link>
+            <div class="flex flex-col-reverse w-full gap-10 mx-auto lg:flex-row lg:max-w-7xl px-9">
+                <div class="relative flex flex-col w-full mt-10 lg:w-6/12">
+                    <h1 class="relative z-50 text-2xl font-extrabold text-gray-900 lg:text-6xl xl:w-96">{{ $t('championship_title') }}</h1>
+                    <p class="mt-6 text-base text-gray-500 lg:mb-0">{{ $t('competition') }}</p>
                 </div>
 
-                <p class="hidden mt-10 text-base text-gray-500 lg:block">{{ $t('competition') }}</p>
-
-                <div class="absolute hidden md:block -top-24 -left-32">
-                    <SvgLoader class="shrink-0 fill-turqoise-300" name="dotted_square" />
-                </div>
-            </div>
-
-            <div class="relative items-center justify-center hidden w-full lg:px-20 lg:pb-20 lg:w-6/12 sm:flex">
-
-                <div class="absolute bottom-0 right-0 hidden md:block">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="dotted_square" />
-                </div>
-
-                <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
-                    <img class="mx-auto" src="/images/project_img.png" alt="" />
-
-                    <div class="absolute flex items-center justify-center w-32 h-32 rounded-lg bg-gray-50 -bottom-10 -left-10">
-                        <SvgLoader class="shrink-0" name="trofee" />
+                <div class="relative items-center justify-center hidden w-full mt-10 lg:px-20 lg:pb-10 lg:w-6/12 sm:flex">
+                    <div class="relative flex items-center w-full">
+                        <img class="w-full" src="/images/championship.png" alt="" />
                     </div>
                 </div>
             </div>
+
+            <div class="absolute left-0 hidden -top-16 md:block">
+                <SvgLoader class="shrink-0 fill-turqoise-300" name="big_troffe" />
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="mx-auto mb-10 max-w-7xl">
+            <div class="flex items-center gap-x-4">
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
+                    <SvgLoader class="shrink-0 fill-turqoise-500" name="brand"/>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">{{ $t('general_statistics') }}</h2>
+            </div>
+
+            <Table
+                class="w-full mt-6"
+                :columns="['LUNA', 'NUMAR DONATII', 'SUMA DORITA']"
+            >
+                <tr v-for="stat in statistics" :key="stat.id">
+                    <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ stat.month }}</td>
+                    <td class="px-3 py-4 text-sm text-gray-900 whitespace-nowrap">{{ stat.donations }}</td>
+                    <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ stat.amount }}</td>
+                </tr>
+            </Table>
         </div>
 
         <!-- Stats -->
@@ -361,6 +281,7 @@
     import Modal from '@/Components/modals/Modal.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import Select from '@/Components/form/Select.vue';
+    import Table from '@/Components/templates/Table.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 
@@ -371,7 +292,8 @@
         testimonials: Array,
         editions: Array,
         links: Array,
-        articles: Array
+        articles: Array,
+        statistics: Array
     });
 
     /** Active filter state. */
