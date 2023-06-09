@@ -30,7 +30,7 @@
 
                     <!-- Donate modal -->
                     <DonateModal
-                        v-if="0 < project.end"
+                        v-if="project.is_period_active"
                         triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         :data="project"
@@ -38,7 +38,7 @@
 
                     <!-- Donate Error modal -->
                     <Modal
-                        v-if="Date() > project.end"
+                        v-if="project.is_period_active ===false"
                         triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         id="project-donation-expired"
@@ -361,6 +361,7 @@
 
     /** Trigger donate modal from card. */
     const triggerDonate = (() => {
+        console.log(0>project_end_date.value);
         if (0 >= project_end_date.value) {
             document.getElementById('project-donation-expired').click();
             return;

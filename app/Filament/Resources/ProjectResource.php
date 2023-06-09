@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Position;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -27,7 +28,7 @@ class ProjectResource extends Resource
                 Forms\Components\Select::make('organization_id')
                     ->relationship('organization', 'name')
                     ->required(),
-                Forms\Components\Select::make('status')->options(ProjectStatus::options())
+                Forms\Components\Select::make('status')->options(ProjectStatus::options())->disabled()
                     ->required(),
                 Forms\Components\Toggle::make('is_national')
                     ->required(),
@@ -71,29 +72,17 @@ class ProjectResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('organization.name'),
                 Tables\Columns\TextColumn::make('county.name'),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\IconColumn::make('is_national')
-                    ->boolean(),
+                Tables\Columns\IconColumn::make('status')->boolean(),
                 Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('slug'),
-                Tables\Columns\TextColumn::make('target_budget'),
                 Tables\Columns\TextColumn::make('start')
                     ->date(),
                 Tables\Columns\TextColumn::make('end')
                     ->date(),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('scope'),
-                Tables\Columns\TextColumn::make('beneficiaries'),
-                Tables\Columns\TextColumn::make('reason_to_donate'),
-                Tables\Columns\IconColumn::make('accepting_volunteers')
+                Tables\Columns\IconColumn::make('accepting_volunteers')->label('Volunteers')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('accepting_comments')
+                Tables\Columns\IconColumn::make('accepting_comments')->label('Comments')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('videos'),
-                Tables\Columns\TextColumn::make('external_links'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
@@ -101,11 +90,18 @@ class ProjectResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\ViewAction::make()->iconButton(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])->actionsPosition(Position::BeforeCells);
+
+    }
+    protected function getTableActionsPosition(): ?string
+    {
+        return Position::BeforeCells;
     }
 
     public static function getRelations(): array
@@ -119,7 +115,6 @@ class ProjectResource extends Resource
     {
         return [
             'index' => Pages\ListProjects::route('/'),
-            'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
     }
