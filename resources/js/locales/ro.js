@@ -266,5 +266,22 @@ export default {
     "register_volunteer": "Voluntariat",
     "why_volunteer_info": "Scrie câteva rânduri pentru a motiva vizitatorii să aplice ca voluntari.",
     "where_did_you_find": "De unde ai aflat de Bursa Binelui?",
-    'google_login': "Continuă cu Google"
+    'google_login': "Continuă cu Google",
+    "participants": "Participanți",
+    "championship_title": "Campionatul de Bine",
+    "register_projects": "proiecte înscrise",
+    "donors": "donatori",
+    "amount": "mii lei donati",
+    "about_championship": "Despre Campionatul de Bine",
+    "competition": "O competiție pentru atragerea donațiilor individuale. Citește Regulamentul aici.",
+    "testimonials": "Testimoniale",
+    "prev_edtions": "Ediții anterioare",
+    "read_article": "Citește articol",
+    "related_articles": "Articole asociate",
+    "register_project":  "Înscrie un proiect",
+    "register": "Înregistrează-te",
+    "general_statistics": "Statistici generale",
+    "home_title": "Singura platformă online unde donațiile sunt  necomisionate",
+    "projects": 'proiecte',
+    "organizations": "organizații"
 }
