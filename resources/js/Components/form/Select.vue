@@ -1,6 +1,6 @@
 <template>
 
-    <Combobox class="z-50" as="div" v-model="selectedOption" v-bind="{ disabled: isDisabled }">
+    <Combobox class="z-100" as="div" v-model="selectedOption" v-bind="{ disabled: isDisabled }">
         <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
             <ComboboxButton :class="[ isDisabled ? 'bg-gray-200' : 'bg-white', 'w-full rounded-md h-9 border-0  py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-turqoise-500 sm:text-sm sm:leading-6']">
