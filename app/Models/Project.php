@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasLocation;
+use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +50,7 @@ class Project extends Model implements HasMedia
         'accepting_comments' => 'boolean',
     ];
 
-    protected $appends = ['total_donations', 'cover_image'];
+    protected $appends = ['total_donations', 'cover_image', 'active','is_period_active'];
 
     protected $with = ['media', 'organization', 'donations','county'];
 
@@ -83,7 +84,16 @@ class Project extends Model implements HasMedia
 
     public function scopePublish(Builder $query): Builder
     {
-        return $query->where('status', 'published');
+        return $query->where('status', ProjectStatus::active);
+    }
+    public function getActiveAttribute(): bool
+    {
+        return $this->status == ProjectStatus::active->value;
+    }
+
+    public function getIsPeriodActiveAttribute(): bool
+    {
+        return $this->start<=now() && $this->end>=now();
     }
 
     public function county(): BelongsTo

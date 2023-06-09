@@ -50,7 +50,7 @@
                 <div class="pb-4 text-base font-medium text-gray-700">{{ data.organization.name }}</div>
 
                 <Link
-                    :href="route('project', data.id)"
+                    :href="route('project', data.slug)"
                     class="mt-4 text-2xl font-bold text-gray-700"
                 >
                     {{ data.name }}

@@ -21,7 +21,7 @@ class ProjectController extends Controller
     }
     public function item(Project $project)
     {
-//        dd($project);$project
+//        dd($project);
         return Inertia::render('Public/Projects/Project', [
             'project' => $project,
         ]);

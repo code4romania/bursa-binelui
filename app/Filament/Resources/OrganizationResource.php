@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource\Pages;
 use App\Filament\Resources\OrganizationResource\RelationManagers;
 use App\Models\Organization;
@@ -35,9 +36,6 @@ class OrganizationResource extends Resource
                 Forms\Components\TextInput::make('cif')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->maxLength(65535),
                 Forms\Components\TextInput::make('status_document')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('street_address')
@@ -56,15 +54,15 @@ class OrganizationResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('website')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('accepts_volunteers')
+                Forms\Components\TextInput::make('activity_domains')
                     ->required(),
                 Forms\Components\Textarea::make('why_volunteer')
                     ->maxLength(65535),
-                Forms\Components\TextInput::make('activity_domains')
-                    ->required(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Textarea::make('description')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(65535),
+                Forms\Components\Toggle::make('accepts_volunteers')
+                    ->required(),
             ]);
     }
 
@@ -72,13 +70,16 @@ class OrganizationResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('status')->options([
+                    'heroicon-o-x-circle',
+                    'heroicon-o-pencil' => OrganizationStatus::disabled->value,
+                    'heroicon-o-clock' => OrganizationStatus::pending->value,
+                    'heroicon-o-check-circle' => OrganizationStatus::active->value,
+                ]),
                 Tables\Columns\TextColumn::make('county.name'),
                 Tables\Columns\TextColumn::make('city.name'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('cif'),
-                Tables\Columns\TextColumn::make('logo'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('status_document'),
                 Tables\Columns\TextColumn::make('street_address'),
                 Tables\Columns\TextColumn::make('contact_person'),
                 Tables\Columns\TextColumn::make('contact_phone'),
@@ -86,15 +87,7 @@ class OrganizationResource extends Resource
                 Tables\Columns\TextColumn::make('website'),
                 Tables\Columns\IconColumn::make('accepts_volunteers')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('why_volunteer'),
-                Tables\Columns\TextColumn::make('activity_domains'),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
+
             ])
             ->filters([
                 //

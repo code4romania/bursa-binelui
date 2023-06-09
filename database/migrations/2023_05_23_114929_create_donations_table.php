@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Organization::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Project::class)->constrained()->cascadeOnDelete();
             $table->integer('amount');
             $table->timestamps();

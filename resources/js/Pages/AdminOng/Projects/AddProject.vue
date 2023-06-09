@@ -172,7 +172,7 @@
                             v-model="form.file_group"
                         />
 
-                        <div class="w-full border-t border-gray-300 flex" v-for="item in form.project_links">
+                        <div class="w-full border-t border-gray-300 flex" v-for="item in projectLinks">
                             <InputWithIcon
                                 class="w-1/2"
                                 :label="$t('video_link_label')"
@@ -181,14 +181,22 @@
                                 type="text"
                                 v-model="item.url"
                             />
-                            <PrimaryButton
+                            <SecondaryButton
                                 class="ml-4 mt-8"
                                 background="turqoise-500"
                                 hover="turqoise-400"
                                 color="white"
-                                @click="()=>{form.project_links.push({url:''})}">
-                                {{ $t('add_link') }}
-                            </PrimaryButton>
+                                @click="()=>{projectLinks.push({url:''})}">
+                                {{ $t('add') }}
+                            </SecondaryButton>
+                            <DangerButton
+                                class="ml-4 mt-8"
+                                background="red-500"
+                                hover="red-400"
+                                color="white"
+                                @click="()=>{projectLinks.pop()}">
+                                {{ $t('remove')}}
+                            </DangerButton>
                         </div>
 
                         <div class="w-full border-t border-gray-300"></div>
@@ -197,19 +205,32 @@
                             <p class="text-gray-900 leading-5 font-medium text-lg">{{ $t('external_links_title') }}</p>
                             <p class="text-gray-700 leading-5 text-sm">{{ $t('external_links_text') }}</p>
                         </div>
-
-                        <!-- Project articles links -->
-                        <Repeater class="w-full xl:w-1/2">
+                        <div class="w-full border-t border-gray-300 flex" v-for="item in projectArticles">
                             <InputWithIcon
-                                class="w-full"
-                                :label="$t('articles_link_label')"
+                                class="w-1/2"
+                                :label="$t('video_link_label')"
                                 color="gray-700"
                                 icon="htpp://"
                                 type="text"
-                                v-model="form.project_articles"
+                                v-model="item.url"
                             />
-                        </Repeater>
-
+                            <SecondaryButton
+                                class="ml-4 mt-8"
+                                background="turqoise-500"
+                                hover="turqoise-400"
+                                color="white"
+                                @click="()=>{projectArticles.push({url:''})}">
+                                {{ $t('add') }}
+                            </SecondaryButton>
+                            <DangerButton
+                                class="ml-4 mt-8"
+                                background="red-500"
+                                hover="red-400"
+                                color="white"
+                                @click="()=>{projectArticles.pop()}">
+                                {{ $t('remove')}}
+                            </DangerButton>
+                        </div>
 
                         <div class="w-full border-t border-gray-300"></div>
 
@@ -257,7 +278,8 @@ import Repeater from '@/Components/form/Repeater.vue';
 import InputWithIcon from '@/Components/form/InputWithIcon.vue';
 import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-import {onMounted} from "vue";
+import DangerButton from "@/Components/buttons/DangerButton.vue";
+import {ref} from "vue";
 
 
 /** Initialize inertia from Object. */
@@ -277,15 +299,34 @@ const form = useForm({
     accepting_volunteers: false,
     file_group: [],
     project_links: [{url: ''}],
-    project_articles: []
+    project_articles: [{url:''}]
 });
 let selectedCountry = null;
 const props = defineProps(['projectCategories', 'countries']);
+let projectLinks = ref(form.project_links);
+let projectArticles = ref(form.project_articles);
 
+
+function prepareProjectLinks() {
+    console.log(projectLinks);
+    projectLinks = projectLinks.value;
+    form.project_links = projectLinks.filter(item => item.url !== '');
+    form.project_links = form.project_links.map(item => item.url);
+}
+
+function prepareExternalLinks() {
+    projectArticles = projectArticles.value;
+    form.project_articles = projectArticles.filter(item => item.url !== '');
+    form.project_articles = form.project_articles.map(item => item.url);
+}
 
 /** Create project. */
 const createProject = () => {
     form.county = selectedCountry?.id;
+    prepareProjectLinks();
+    prepareExternalLinks();
+    console.log(form);
+    return;
     form.post(route('admin.ong.project.store'), {
         preserveScroll: true,
         onError: () => {
