@@ -30,6 +30,10 @@ module.exports = {
             },
             zIndex: {
                 '100': '1000',
+            },
+
+            maxHeight: {
+                '128': '32rem',
             }
         },
     },
