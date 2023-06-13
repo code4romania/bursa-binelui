@@ -115,50 +115,70 @@
             </div>
         </div>
 
-
-        <div class="w-full mx-auto mt-10 rounded shadow-md lg:max-w-7xl px-9"></div>
-
-            <div class="relative w-full bg-white">
-                <div class="flex items-center justify-between w-full gap-6 mx-auto mt-10 lg:max-w-7xl px-9">
-                    <div class="flex items-center gap-6">
-                        <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">BCR pentru comunitate</h2>
-                        <Link
-                            :href="route('projects')"
-                            class="bg-turqoise-500 text-center z-50 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        >
-                            {{ $t('register_project') }}
-                        </Link>
-                    </div>
-
-                    <div class="flex items-center gap-6">
-                        <div @click="projects.prev()" class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer">
-                            <SvgLoader class="shrink-0 fill-gray-700" name="chevron_left"/>
-                        </div>
-
-                        <div @click="projects.next()" class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer">
-                            <SvgLoader class="shrink-0 fill-gray-700" name="chevron_right"/>
-                        </div>
-                    </div>
+        <div class="w-full bg-turqoise-50 py-9">
+            <div class="w-full mx-auto rounded lg:max-w-7xl px-9">
+                <div class="flex items-center gap-6 mb-9">
+                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">Articole</h2>
+                    <Link
+                        :href="route('projects')"
+                        class="bg-turqoise-500 text-center z-50 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    >
+                        {{ $t('register_project') }}
+                    </Link>
                 </div>
 
-                <carousel
-                    class="relative z-50 w-full"
-                    v-bind="carouselOptions.settings"
-                    :breakpoints="carouselOptions.breakpoints"
-                    ref="projects"
-                >
-                    <slide
-                        v-for="(project, index) in query.data"
-                        :key="index"
-                        class="flex flex-col py-9"
-                    >
-                        <ProjectCard
-                            :class="[0 === index % 2 ? '-mt-9' : 'mt-9']"
-                            :data="project"
-                        />
-                    </slide>
-                </carousel>
+                <ul role="list" class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+                    <ArticleCard
+                        v-for="article in articles"
+                        :key="article.id"
+                        :data="article"
+                        class="relative z-50"
+                    />
+                </ul>
             </div>
+        </div>
+
+        <div class="relative w-full bg-white">
+            <div class="flex items-center justify-between w-full gap-6 mx-auto mt-10 lg:max-w-7xl px-9">
+                <div class="flex items-center gap-6">
+                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">BCR pentru comunitate</h2>
+                    <Link
+                        :href="route('projects')"
+                        class="bg-turqoise-500 text-center z-50 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    >
+                        {{ $t('register_project') }}
+                    </Link>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div @click="projects.prev()" class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer">
+                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_left"/>
+                    </div>
+
+                    <div @click="projects.next()" class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer">
+                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_right"/>
+                    </div>
+                </div>
+            </div>
+
+            <carousel
+                class="relative z-50 w-full"
+                v-bind="carouselOptions.settings"
+                :breakpoints="carouselOptions.breakpoints"
+                ref="projects"
+            >
+                <slide
+                    v-for="(project, index) in query.data"
+                    :key="index"
+                    class="flex flex-col py-9"
+                >
+                    <ProjectCard
+                        :class="[0 === index % 2 ? '-mt-9' : 'mt-9']"
+                        :data="project"
+                    />
+                </slide>
+            </carousel>
+        </div>
     </PageLayout>
 </template>
 
@@ -167,7 +187,7 @@
     import { ref } from 'vue';
 
     /** Import from inertia. */
-    import { Head, Link, useForm, router } from '@inertiajs/vue3';
+    import { Head, Link } from '@inertiajs/vue3';
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';
@@ -177,13 +197,15 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue'
+    import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
     /** Component props. */
     const props = defineProps({
-        query: Object
+        query: Object,
+        articles: Array
     });
 
-    const projects = ref(null)
+    const projects = ref(null);
 
     /** Carousel options. */
     const carouselOptions = ref({
