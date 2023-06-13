@@ -16,6 +16,10 @@
                     <template v-if="'ong' == type">
                         <OngCard :data="item"/>
                     </template>
+
+                    <template v-if="'project-summary' == cardType">
+                        <ProjectSummaryCard :data="item" />
+                    </template>
                 </template>
             </ul>
 
@@ -41,6 +45,7 @@
 <script setup>
     /** Import Components. */
     import ProjectCard from '@/Components/cards/ProjectCard.vue';
+    import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
     import OngCard from '@/Components/cards/OngCard.vue';
     import Pagination from '@/Components/pagination/Pagination.vue';
 
