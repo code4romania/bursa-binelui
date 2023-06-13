@@ -113,7 +113,7 @@
                 </div>
 
                 <SecondaryButton
-                    v-if="'admin' == cardType && 'published' == data.status"
+                    v-if="'admin' == cardType && 'active' == data.status"
                     class="w-full mt-4 py-2.5"
                 >
                     {{ $t("draft") }}
