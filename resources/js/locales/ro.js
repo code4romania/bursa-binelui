@@ -285,5 +285,10 @@ export default {
     "general_statistics": "Statistici generale",
     "home_title": "Singura platformă online unde donațiile sunt  necomisionate",
     "projects": 'proiecte',
-    "organizations": "organizații"
+    "organizations": "organizații",
+    "choose_project": "Alege proiect",
+    "add_new_project": "Adaugă un proiect nou",
+    "championship_success_title": "Felicitări! Ai înscris cu succes proiectul",
+    "championship_success_description": "Înscrierea va fi în scurt timp analizată de un administrator Bursa Binelui. Vei fi anunțat când înscrierea a fost confirmată. Spor la fapte bune!",
+    "championship_rules": "Citește regulament"
 }

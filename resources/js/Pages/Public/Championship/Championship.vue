@@ -19,7 +19,7 @@
 
                     <!-- Register -->
                     <Modal
-                        v-if="!$page.props.auth.user"
+                        v-if="$page.props.auth.user"
                         triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('register_project')"
                     >
@@ -86,13 +86,61 @@
 
                     </Modal>
 
-                    <Link
-                        v-else
-                        :href="route('projects')"
-                        class="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    <!-- Add Project -->
+                    <ChampionshipModal
+                        v-if="!$page.props.auth.user"
                     >
-                        {{ $t('register_project') }}
-                    </Link>
+
+                       <div class="px-9">
+                            <SecondaryButton
+                                class="flex items-center flex-1 gap-x-2 py-2.5 my-10"
+                            >
+                                <SvgLoader name="add" />
+                                {{ $t("add_new_project") }}
+                            </SecondaryButton>
+                       </div>
+
+                        <div v-if="query.data.length" class="grid grid-cols-1 mb-4 overflow-y-auto gap-x-8 gap-y-12 px-9 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-128">
+                            <ProjectSummaryCard
+                                v-for="data in query.data"
+                                :data="data"
+                                @choosed="test"
+                            />
+                        </div>
+                    </ChampionshipModal>
+
+                    <Modal
+                        id="championship-success"
+                        triggerModalClasses="hidden bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        :triggerModalText="$t('register_project')"
+                    >
+                        <div class="flex flex-col items-center w-full my-4 space-y-3">
+                            <SvgLoader name="success" class="fill-green-200" />
+
+                            <h3 class="text-lg font-bold text-gray-500">{{ $t('championship_success_title') }}</h3>
+
+                            <p class="text-lg font-bold text-turqoise-500">{{ name }}</p>
+
+                            <p class="text-sm text-center text-gray-500">{{ $t('championship_success_description') }}</p>
+
+                            <div class="flex items-center w-full gap-4">
+                                <SecondaryButton
+                                    class="flex items-center justify-center mt-6 flex-1 gap-x-2 py-2.5"
+                                    @click="closeSucces"
+                                >
+                                    {{ $t("close") }}
+                                </SecondaryButton>
+
+                                <Link
+                                    href="#"
+                                    class="bg-turqoise-500 flex-1 text-center mt-6 sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                                >
+                                    {{ $t('championship_rules') }}
+                                </Link>
+                            </div>
+
+                        </div>
+                    </Modal>
 
                     <Link
                         :href="route('projects')"
@@ -361,6 +409,8 @@
     import Modal from '@/Components/modals/Modal.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import Select from '@/Components/form/Select.vue';
+    import ChampionshipModal from '@/Components/modals/ChampionshipModal.vue';
+    import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 
@@ -411,6 +461,24 @@
             onFinish: () => form.reset('password'),
         });
     };
+
+    const name = ref('')
+    const test = (project) => {
+        const form =  useForm({...project});
+        name.value = project.name
+
+        // form.post(route('need.subscribe.route'), {
+        //     onSuccess: () => {
+        //         document.getElementById('championship-modal').click()
+        //         document.getElementById('championship-success').click()
+        //     },
+        // });
+
+        document.getElementById('championship-modal').click()
+        document.getElementById('championship-success').click()
+    }
+
+    const closeSucces = (() => document.getElementById('championship-success').click())
 
     const stages = ['Etapa curenta', 'Etapa precendenta'];
 </script>
