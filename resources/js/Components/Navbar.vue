@@ -290,7 +290,7 @@
         },
         {
             name: 'Gale Regionale',
-            description: 'Gale Regionale Bursa Binelui',
+            description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
             href: 'regional'
         }
     ];
