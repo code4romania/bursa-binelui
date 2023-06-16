@@ -287,6 +287,11 @@
             name: 'Campionatul de Bine',
             description: 'O competiție a faptelor bune. Alătură-te!',
             href: 'championship'
+        },
+        {
+            name: 'Gale Regionale',
+            description: 'Gale Regionale Bursa Binelui',
+            href: 'regional'
         }
     ];
 
