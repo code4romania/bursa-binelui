@@ -77,3 +77,5 @@ require __DIR__ . '/tickets.php';
 require __DIR__ . '/donations.php';
 
 require __DIR__ . '/championship.php';
+
+require __DIR__ . '/regional.php';
