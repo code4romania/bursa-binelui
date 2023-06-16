@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\County;
 use App\Models\Project;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class ChampionshipController extends Controller
 {
@@ -92,6 +93,7 @@ class ChampionshipController extends Controller
 
         $projects = Project::publish()->paginate(9)->withQueryString();
         $counties = County::whereHas('projects')->get(['name', 'id']);
+
         return Inertia::render('Public/Championship/Championship', [
             'query' => $projects,
             'counties' => $counties,
@@ -216,5 +218,11 @@ class ChampionshipController extends Controller
             'articles' => $articles,
             'statistics' => $statistics
         ]);
+    }
+
+    public function projects(Request $request)
+    {
+        $offset = ($request->page - 1) * 8;
+        return Project::publish()->offset($offset)->limit(8)->get();
     }
 }
