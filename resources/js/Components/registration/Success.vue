@@ -42,7 +42,7 @@
             hover="turqoise-400"
             color="white"
             type="button"
-            @click="$emit('next', $event.target)"
+            @click="$emit('success', $event.target)"
         >
             {{ $t('send') }}
         </PrimaryButton>

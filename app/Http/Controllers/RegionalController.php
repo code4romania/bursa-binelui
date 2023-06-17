@@ -7,9 +7,8 @@ namespace App\Http\Controllers;
 use App\Models\County;
 use App\Models\Project;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 
-class ChampionshipController extends Controller
+class RegionalController extends Controller
 {
     public function index()
     {
@@ -93,8 +92,7 @@ class ChampionshipController extends Controller
 
         $projects = Project::publish()->paginate(9)->withQueryString();
         $counties = County::whereHas('projects')->get(['name', 'id']);
-
-        return Inertia::render('Public/Championship/Championship', [
+        return Inertia::render('Public/Regional/Regional', [
             'query' => $projects,
             'counties' => $counties,
             'testimonials' => $testimonials,
@@ -209,7 +207,7 @@ class ChampionshipController extends Controller
 
         $projects = Project::publish()->paginate(9)->withQueryString();
         $counties = County::whereHas('projects')->get(['name', 'id']);
-        return Inertia::render('Public/Championship/Edition', [
+        return Inertia::render('Public/Regional/LastEdition', [
             'query' => $projects,
             'counties' => $counties,
             'testimonials' => $testimonials,
@@ -220,9 +218,11 @@ class ChampionshipController extends Controller
         ]);
     }
 
-    public function projects(Request $request)
+    public function project(Project $project)
     {
-        $offset = ($request->page - 1) * 8;
-        return Project::publish()->offset($offset)->limit(8)->get();
+        \Log::info(print_r($project,true));
+        return Inertia::render('Public/Regional/Project', [
+            'project' => $project,
+        ]);
     }
 }

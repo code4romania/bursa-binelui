@@ -15,6 +15,7 @@
                     @prev="prev"
                     @next="next"
                     @google="google"
+                    @success="success"
                 />
             </form>
         </Auth>
@@ -81,8 +82,10 @@
 
     /** Next step. */
     const next = () => {
-        if (current.value == steps.value.length -1) {
-            submit();
+        if ('donor' === form.type && current.value === 1) {
+            submit()
+        } else if ('ong' === form.type && current.value === 4) {
+            submit()
         } else {
             current.value++
         }
@@ -96,8 +99,18 @@
     /** Create user. */
     const submit = () => {
         form.post(route('register'), {
-            onError: (error) => { console.log(error) },
+            onError: (error) => {
+
+            },
+            onSucces: (data) => {
+                current.value = steps.value.length -1
+            },
             onFinish: () => {}
         });
     };
+
+    /** After user is registered update data. */
+    const success = () => {
+        console.log(form.info)
+    }
 </script>

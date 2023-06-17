@@ -20,6 +20,14 @@
                     <template v-if="'project-summary' == cardType">
                         <ProjectSummaryCard :data="item" />
                     </template>
+
+                    <template v-if="'project-regional' == cardType">
+                        <RegionalProject :data="item" />
+                    </template>
+
+                    <template v-if="'project-championship' == cardType">
+                        <ChampionshipProject :data="item" />
+                    </template>
                 </template>
             </ul>
 
@@ -44,10 +52,12 @@
 
 <script setup>
     /** Import Components. */
-    import ProjectCard from '@/Components/cards/ProjectCard.vue';
-    import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
     import OngCard from '@/Components/cards/OngCard.vue';
     import Pagination from '@/Components/pagination/Pagination.vue';
+    import ProjectCard from '@/Components/cards/ProjectCard.vue';
+    import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
+    import RegionalProject from '@/Components/cards/RegionalProject.vue';
+    import ChampionshipProject from '@/Components/cards/ChampionshipProject.vue';
 
     /** Component props. */
     defineProps({

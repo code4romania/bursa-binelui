@@ -9,5 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('campionatul-de-bine', [ChampionshipController::class, 'index'])->name('championship');
 Route::get('editia/{year}', [ChampionshipController::class, 'edition'])->name('edition');
 
+Route::get('projects', [ChampionshipController::class, 'projects'])->name('infinite_projects');
+
 /* Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {});

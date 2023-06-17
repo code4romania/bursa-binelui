@@ -290,5 +290,11 @@ export default {
     "add_new_project": "Adaugă un proiect nou",
     "championship_success_title": "Felicitări! Ai înscris cu succes proiectul",
     "championship_success_description": "Înscrierea va fi în scurt timp analizată de un administrator Bursa Binelui. Vei fi anunțat când înscrierea a fost confirmată. Spor la fapte bune!",
-    "championship_rules": "Citește regulament"
+    "championship_rules": "Citește regulament",
+    "regional_title": "Gale Regionale Bursa Binelui",
+    "regional_rules": "Citește Regulamentul",
+    "here": "aici",
+    "about_regional": "Despre Galele Regionale",
+    "see": "Vizualizează",
+    "bb_regional_title": "Gale Regionale Bursa Binelui"
 }
