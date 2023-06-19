@@ -86,13 +86,13 @@
                         </label>
 
                         <!-- County -->
-                        <Select
+                        <SelectMultiple
                             class="w-full xl:w-1/2"
                             :label="$t('counties_label')"
                             :options="countries"
-                            v-model="selectedCountry"
+                            v-model="selectedCounties"
                             v-if="!form.is_national"
-                            :error="form.errors.county"
+                            :error="form.errors.counties"
                         />
 
                         <!-- Project description -->
@@ -148,7 +148,7 @@
                                 name="remember"
                                 v-model:checked="form.accepting_volunteers"
                             />
-                            <span class="ml-2 text-sm text-gray-700">{{ $t('has_voluntiers_label') }}</span>
+                            <span class="ml-2 text-sm text-gray-700">{{ $t('has_volunteers_label') }}</span>
 
                             <!-- Error -->
                             <p v-show="form.errors.accepting_volunteers" class="mt-2 text-sm text-red-600">
@@ -172,7 +172,7 @@
                             v-model="form.file_group"
                         />
 
-                        <div class="w-full border-t border-gray-300 flex" v-for="item in projectLinks">
+                        <div class="w-full border-t border-gray-300 flex" v-for="(item,index) in projectLinks">
                             <InputWithIcon
                                 class="w-1/2"
                                 :label="$t('video_link_label')"
@@ -181,6 +181,15 @@
                                 type="text"
                                 v-model="item.url"
                             />
+                            <DangerButton
+                                v-if="index > 0"
+                                class="ml-4 mt-8"
+                                background="red-500"
+                                hover="red-400"
+                                color="white"
+                                @click="()=>{projectLinks.pop()}">
+                                {{ $t('remove')}}
+                            </DangerButton>
                             <SecondaryButton
                                 class="ml-4 mt-8"
                                 background="turqoise-500"
@@ -189,14 +198,7 @@
                                 @click="()=>{projectLinks.push({url:''})}">
                                 {{ $t('add') }}
                             </SecondaryButton>
-                            <DangerButton
-                                class="ml-4 mt-8"
-                                background="red-500"
-                                hover="red-400"
-                                color="white"
-                                @click="()=>{projectLinks.pop()}">
-                                {{ $t('remove')}}
-                            </DangerButton>
+
                         </div>
 
                         <div class="w-full border-t border-gray-300"></div>
@@ -205,7 +207,7 @@
                             <p class="text-gray-900 leading-5 font-medium text-lg">{{ $t('external_links_title') }}</p>
                             <p class="text-gray-700 leading-5 text-sm">{{ $t('external_links_text') }}</p>
                         </div>
-                        <div class="w-full border-t border-gray-300 flex" v-for="item in projectArticles">
+                        <div class="w-full border-t border-gray-300 flex" v-for="(item,index) in projectArticles">
                             <InputWithIcon
                                 class="w-1/2"
                                 :label="$t('video_link_label')"
@@ -214,6 +216,15 @@
                                 type="text"
                                 v-model="item.url"
                             />
+                            <DangerButton
+                                v-if="index> 0"
+                                class="ml-4 mt-8"
+                                background="red-500"
+                                hover="red-400"
+                                color="white"
+                                @click="()=>{projectArticles.pop()}">
+                                {{ $t('remove')}}
+                            </DangerButton>
                             <SecondaryButton
                                 class="ml-4 mt-8"
                                 background="turqoise-500"
@@ -222,14 +233,7 @@
                                 @click="()=>{projectArticles.push({url:''})}">
                                 {{ $t('add') }}
                             </SecondaryButton>
-                            <DangerButton
-                                class="ml-4 mt-8"
-                                background="red-500"
-                                hover="red-400"
-                                color="white"
-                                @click="()=>{projectArticles.pop()}">
-                                {{ $t('remove')}}
-                            </DangerButton>
+
                         </div>
 
                         <div class="w-full border-t border-gray-300"></div>
@@ -280,6 +284,7 @@ import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
 import DangerButton from "@/Components/buttons/DangerButton.vue";
 import {ref} from "vue";
+import SelectMultiple from "@/Components/form/SelectMultiple.vue";
 
 
 /** Initialize inertia from Object. */
@@ -289,7 +294,7 @@ const form = useForm({
     category: '',
     start: '',
     end: '',
-    county: '',
+    counties: [],
     description: '',
     scope: '',
     beneficiaries: '',
@@ -301,32 +306,25 @@ const form = useForm({
     project_links: [{url: ''}],
     project_articles: [{url:''}]
 });
-let selectedCountry = null;
+let selectedCounties = [];
 const props = defineProps(['projectCategories', 'countries']);
 let projectLinks = ref(form.project_links);
 let projectArticles = ref(form.project_articles);
 
 
 function prepareProjectLinks() {
-    console.log(projectLinks);
-    projectLinks = projectLinks.value;
-    form.project_links = projectLinks.filter(item => item.url !== '');
-    form.project_links = form.project_links.map(item => item.url);
+    form.project_links = projectLinks.value.filter(item => item.url !== '').map(item => item.url);
 }
-
 function prepareExternalLinks() {
-    projectArticles = projectArticles.value;
-    form.project_articles = projectArticles.filter(item => item.url !== '');
-    form.project_articles = form.project_articles.map(item => item.url);
+    form.project_articles = projectArticles.value.filter(item => item.url !== '').map(item => item.url);
 }
 
 /** Create project. */
 const createProject = () => {
-    form.county = selectedCountry?.id;
+    form.counties = selectedCounties.map(item => item.id);
     prepareProjectLinks();
     prepareExternalLinks();
     console.log(form);
-    return;
     form.post(route('admin.ong.project.store'), {
         preserveScroll: true,
         onError: () => {

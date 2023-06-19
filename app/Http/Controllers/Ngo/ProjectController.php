@@ -46,12 +46,15 @@ class ProjectController extends Controller
         $data['organization_id'] = auth()->user()->organization_id;
         $data['slug'] = \Str::slug($data['name']);
         $project = Project::create($data);
+        if ($request->has('counties'))
+        {
+            $project->counties()->attach($data['counties']);
+        }
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('project_files');
         });
 
         auth()->user()->notify(new ProjectCreated($project));
-        //TODO move this to a service
         $adminUsers = User::whereRole(UserRole::bb_admin)->get();
         Notification::send($adminUsers, new ProjectCreatedAdmin($project));
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
@@ -60,17 +63,21 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $project->load('media');
-        $countries = County::get(['name', 'id']);
+        $counties = County::get(['name', 'id']);
 
         return Inertia::render('AdminOng/Projects/EditProject', [
             'project' => $project,
-            'countries' => $countries,
+            'counties' => $counties,
             'projectCategories' => ProjectCategory::values(),
         ]);
     }
 
     public function update(Request $request, Project $project)
     {
+        if ($request->has('counties'))
+        {
+            $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
+        }
         $project->update($request->all());
     }
 }

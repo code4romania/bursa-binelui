@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -52,7 +53,7 @@ class Project extends Model implements HasMedia
 
     protected $appends = ['total_donations', 'cover_image', 'active','is_period_active'];
 
-    protected $with = ['media', 'organization', 'donations','county'];
+    protected $with = ['media', 'organization', 'donations','counties'];
 
     public function organization(): BelongsTo
     {
@@ -96,8 +97,8 @@ class Project extends Model implements HasMedia
         return $this->start<=now() && $this->end>=now();
     }
 
-    public function county(): BelongsTo
+    public function counties(): BelongsToMany
     {
-        return $this->belongsTo(County::class);
+        return $this->belongsToMany(County::class);
     }
 }

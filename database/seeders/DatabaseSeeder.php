@@ -33,9 +33,13 @@ class DatabaseSeeder extends Seeder
 
             for ($i = 0; $i < self::USER_NGO_ADMIN_NUMBER; $i++) {
                 $organization = Organization::factory()->create();
-
-                User::factory()->ngoAdmin()->for($organization)->create();
-                Project::factory()->for($organization)->has(Donation::factory()->count(3))->count(10)->create();
+                if ($i === 0)
+                {
+                    User::factory(['email' => 'admin@example.com'])->ngoAdmin()->for($organization)->create();
+                }else{
+                    User::factory()->ngoAdmin()->for($organization)->create();
+                }
+                Project::factory()->for($organization)->count(10)->create();
             }
 
             for ($i = 0; $i < self::USER_BB_MANAGER_NUMBER; $i++) {

@@ -131,18 +131,18 @@
                         <!-- Edit project county -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('counties_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.county }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.counties.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
                                 @action="editField('counties')"
                                 class="col-span-1 flex justify-end"
                             >
 
-                                <Select
+                                <SelectMultiple
                                     class="w-full xl:w-1/2"
                                     :label="$t('counties_label')"
                                     :options="counties"
-                                    v-model="form.county"
-                                    :error="form.errors.county"
+                                    v-model="form.counties"
+                                    :error="form.errors.counties"
                                 />
 
                             </EditModal>
@@ -398,6 +398,7 @@
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import {onMounted, ref} from "vue";
     import DangerButton from "@/Components/buttons/DangerButton.vue";
+    import SelectMultiple from "@/Components/form/SelectMultiple.vue";
 
     const flash = {
         success_message:'',
@@ -407,6 +408,7 @@
     const props = defineProps({
         project: Object,
         errors: Object,
+        counties: Array,
         projectCategories: Array,
         success_message: String,
         error_message: String
