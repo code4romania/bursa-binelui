@@ -50,6 +50,8 @@ class Organization extends Model
         'deleted_at' => 'datetime',
     ];
 
+    protected $with = ['counties', 'activityDomains'];
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);

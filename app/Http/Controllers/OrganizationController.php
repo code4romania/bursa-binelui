@@ -92,11 +92,20 @@ class OrganizationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Organization $organization)
+    public function edit()
     {
+        $organization = auth()->user()->organization;
+        $activityDomains = cache()->remember('activityDomains', 60 * 60 * 24, function () {
+            return \App\Models\ActivityDomain::get(['name', 'id']);
+        });
+        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
+            return \App\Models\County::get(['name', 'id']);
+        });
+
         return Inertia::render('AdminOng/Ong/EditOng', [
             'organization' => $organization,
-            'activity_domains' => ActivityDomain::cases(),
+            'activity_domains' => $activityDomains,
+            'counties' => $counties,
         ]);
     }
 
@@ -108,6 +117,9 @@ class OrganizationController extends Controller
         try {
             /** Get all request data. */
             $modelData = $request->input();
+            if ($request->hasFile('activity_domains')) {
+                $organization->activityDomains()->sync($request->input('activity_domains'));
+            }
 
             $organization->update($modelData);
 

@@ -124,12 +124,12 @@
                         <!-- Edit activity domains -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_activity_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.activity_domains.join(', ') }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.activity_domains.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
                                 @action="editField"
                                 class="col-span-1 flex justify-end"
                             >
-                                <Select
+                                <MultiSelectObjectFilter
                                     class="w-full xl:w-1/2"
                                     :label="$t('organization_activity_label')"
                                     :options="activity_domains"
@@ -241,7 +241,7 @@
                         <!-- Edit organizaton email -->
                         <div class="bg-white px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_email_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.email }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.contact_email }}</dt>
                             <EditModal
                                 @action="editField"
                                 class="col-span-1 flex justify-end"
@@ -262,7 +262,7 @@
                         <!-- Edit organizaton phone -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_phone_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.phone }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.contact_phone }}</dt>
                             <EditModal
                                 @action="editField"
                                 class="col-span-1 flex justify-end"
@@ -304,26 +304,19 @@
                         <!-- Edit organizaton address -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_address_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.street_address }}, {{ form.city.name }}, {{ form.county.name }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.street_address }}, {{ form.counties.map(item=>item.name).join(', ')}} </dt>
                             <EditModal
                                 @action="editField"
                                 class="col-span-1 flex justify-end"
                             >
                                 <div class="flex flex-col lg:flex-row gap-4">
-                                    <Select
-                                        class="w-full"
-                                        :label="$t('city_label')"
-                                        :options="activity_domains"
-                                        v-model="form.city"
-                                        :error="form.errors.city"
-                                    />
 
-                                    <Select
+                                    <MultiSelectObjectFilter
                                         class="w-full"
                                         :label="$t('county_label')"
-                                        :options="activity_domains"
-                                        v-model="form.county"
-                                        :error="form.errors.county"
+                                        :options="counties"
+                                        v-model="form.counties"
+                                        :error="form.errors.counties"
                                     />
                                 </div>
 
@@ -411,16 +404,22 @@
     import Checkbox from '@/Components/form/Checkbox.vue';
     import FileInput from '@/Components/form/FileInput.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
+    import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
+    import {onMounted} from "vue";
 
     /** Page props. */
     const props = defineProps({
         organization: Object,
         activity_domains: Array,
+        counties: Array,
         flash: Object
     });
 
     /** Initialize inertia from Object. */
     const form = useForm({ ...props.organization });
+    onMounted(() => {
+        console.log(form);
+    })
 
     const editField = () => {
         form.put(route('admin.ong.update', form.id), {

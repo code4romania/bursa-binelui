@@ -10,8 +10,8 @@ use App\Http\Requests\RegistrationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\User;
-use App\Notifications\Ngo\OrganizationCreated;
 use App\Notifications\Admin\OrganizationCreated as OrganizationCreatedAdmin;
+use App\Notifications\Ngo\OrganizationCreated;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -70,6 +70,9 @@ class RegisteredUserController extends Controller
             auth()->user()->notify(new OrganizationCreated($organization));
             $adminUsers = User::whereRole(UserRole::bb_admin)->get();
             Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
+            $user->organization_id = $organization->id;
+            return redirect(RouteServiceProvider::ONG);
+
         }
 
         return redirect(RouteServiceProvider::HOME);

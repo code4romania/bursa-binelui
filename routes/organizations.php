@@ -11,6 +11,6 @@ Route::get('organizatie/{organization}', [OrganizationController::class, 'show']
 
 /* Admin Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {
-    Route::get('organizatie/{organization}', [OrganizationController::class, 'edit'])->name('admin.ong.edit');
+    Route::get('organizatie', [OrganizationController::class, 'edit'])->name('admin.ong.edit');
     Route::put('organizatie/update/{organization}', [OrganizationController::class, 'update'])->name('admin.ong.update');
 });

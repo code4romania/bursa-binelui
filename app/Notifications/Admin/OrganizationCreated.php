@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Notifications\Admin;
 
 use App\Models\Organization;
-use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
