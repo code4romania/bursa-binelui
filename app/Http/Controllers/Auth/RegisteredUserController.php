@@ -69,17 +69,13 @@ class RegisteredUserController extends Controller
             $organization = Organization::create($ong);
             $organization->activityDomains()->attach($ong['activity_domains_ids']);
             $organization->counties()->attach($ong['counties_ids']);
-            auth()->user()->notify(new OrganizationCreated($organization));
             $adminUsers = User::whereRole(UserRole::bb_admin)->get();
             Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
+            Notification::send($user, new OrganizationCreated($organization));
             $user->organization_id = $organization->id;
             $user->save();
-            // return redirect(RouteServiceProvider::ONG);
-
         }
-
         return Redirect::route('register');
-        // return redirect(RouteServiceProvider::HOME);
     }
 
     public function update(RegistrationRequest $request): RedirectResponse
