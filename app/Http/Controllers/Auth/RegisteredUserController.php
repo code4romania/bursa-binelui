@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisteredUserController extends Controller
 {
@@ -54,28 +55,31 @@ class RegisteredUserController extends Controller
     {
         $data = $request->validated();
         $user = $data['user'];
+
         $user = User::create([
             'name' => $user['name'],
             'email' => $user['email'],
             'password' => Hash::make($user['password']),
         ]);
         event(new Registered($user));
-        Auth::login($user);
+        // Auth::login($user);
 
         if ($data['type'] == 'ong') {
             $ong = $data['ong'];
             $organization = Organization::create($ong);
             $organization->activityDomains()->attach($ong['activity_domains_ids']);
             $organization->counties()->attach($ong['counties_ids']);
-            auth()->user()->notify(new OrganizationCreated($organization));
             $adminUsers = User::whereRole(UserRole::bb_admin)->get();
             Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
+            Notification::send($user, new OrganizationCreated($organization));
             $user->organization_id = $organization->id;
             $user->save();
-            return redirect(RouteServiceProvider::ONG);
-
         }
+        return Redirect::route('register');
+    }
 
-        return redirect(RouteServiceProvider::HOME);
+    public function update(RegistrationRequest $request): RedirectResponse
+    {
+
     }
 }

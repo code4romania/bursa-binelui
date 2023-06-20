@@ -7,11 +7,12 @@
         <Auth :content="content">
 
             <!-- Steps -->
-            <form class="mt-6">
+            <div class="mt-6">
                 <component
                     :is="steps[current]"
                     :current="steps[current]"
                     :form="form"
+                    :social="social"
                     :activity_domains="activity_domains"
                     :counties="counties"
                     @prev="prev"
@@ -19,14 +20,14 @@
                     @google="google"
                     @success="success"
                 />
-            </form>
+            </div>
         </Auth>
     </PageLayout>
 </template>
 
 <script setup>
 /** Import form vue. */
-import {ref, computed, onMounted} from 'vue';
+import {ref, computed, onMounted } from 'vue';
 
 /** Import form inertia. */
 import {Head, useForm} from '@inertiajs/vue3';
@@ -67,6 +68,11 @@ const form = useForm({
     },
     type: '',
 });
+
+const social = useForm({
+    info: ''
+});
+
 const props = defineProps({
     activity_domains: {
         type: Array,
@@ -122,7 +128,7 @@ const next = () => {
         submit()
     } else if ('ong' === form.type && current.value === 4) {
         submit()
-    } else {
+    } else if('' !== form.type) {
         current.value++
     }
 }
@@ -140,18 +146,27 @@ const submit = () => {
     }
     form.post(route('register'), {
         onError: (error) => {
-
+            /** Set active component in case of validation errors. */
+            if (error['user.name'] || error['user.password'] || error['user.email'] || error['user.password_confirmation']) {
+                current.value = 1
+            } else if (error['ong.name'] ||  error['ong.cif'] || error['ong.description'] || error['ong.activity_domains_ids']) {
+                current.value = 2
+            }else if (error['ong.counties_ids'] ||  error['ong.street_address'] || error['ong.contact_person'] || error['ong.contact_phone'] || error['ong.contact_email'] || error['ong.webiste']) {
+                current.value = 3
+            }else if (error['ong.volunteer'] ||  error['ong.cif'] || error['ong.why_volunteer']) {
+                current.value = 4
+            }
         },
         onSuccess: (data) => {
-            // current.value = steps.value.length - 1
-        },
-        onFinish: () => {
+            current.value = steps.value.length - 1
         }
     });
 };
 
 /** After user is registered update data. */
 const success = () => {
-    console.log(form.info)
+    social.put(route('register'), {
+        onError: (error) => {}
+    });
 }
 </script>

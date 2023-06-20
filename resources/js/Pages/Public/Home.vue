@@ -47,10 +47,18 @@
         <div class="relative pb-10 mt-10 overflow-hidden px-9">
             <div class="w-full py-10 mx-auto rounded shadow-md lg:max-w-7xl lg:pl-32 lg:pr-10">
 
-                <div class="lg:max-w-6xl">
-                    <div class="flex items-center w-full border border-gray-300 divide-x-2">
-                        <div class="flex-1">s</div>
-                        <div class="flex-1">b</div>
+                <div class="lg:max-w-5xl">
+                    <div class="flex items-center w-full mb-4">
+                        <div class="relative z-30 flex-1 p-6 border border-gray-300" style="transform: skewX(29deg);transform-origin: top left; overflow: hidden;">
+                            <div class="flex items-center justify-center gap-x-2" style="transform: skewX(-29deg);">
+                                <p>un program</p>
+                                <SvgLoader name="code4_logo"/>
+                            </div>
+                        </div>
+                        <div class="relative z-50 flex items-center justify-center flex-1 p-6 bg-white border border-gray-300 gap-x-2">
+                            <p>un program</p>
+                            <SvgLoader name="code4_logo"/>
+                        </div>
                     </div>
 
 
