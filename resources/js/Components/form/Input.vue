@@ -18,11 +18,11 @@
             :placeholder="placeholder"
         />
 
-        <!-- Error -->
-        <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
-
         <!-- Extra -->
         <slot />
+
+        <!-- Error -->
+        <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
     </div>
 </template>
 
