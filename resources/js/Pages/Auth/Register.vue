@@ -134,13 +134,16 @@ const google = () => {
 
 /** Create user. */
 const submit = () => {
-    console.log(form)
+    if (form.type==='donor')
+    {
+        delete form.ong;
+    }
     form.post(route('register'), {
         onError: (error) => {
 
         },
         onSuccess: (data) => {
-            current.value = steps.value.length - 1
+            // current.value = steps.value.length - 1
         },
         onFinish: () => {
         }

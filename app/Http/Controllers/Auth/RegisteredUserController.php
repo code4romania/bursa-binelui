@@ -71,6 +71,7 @@ class RegisteredUserController extends Controller
             $adminUsers = User::whereRole(UserRole::bb_admin)->get();
             Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
             $user->organization_id = $organization->id;
+            $user->save();
             return redirect(RouteServiceProvider::ONG);
 
         }

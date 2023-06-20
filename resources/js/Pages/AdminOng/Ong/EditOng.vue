@@ -124,7 +124,7 @@
                         <!-- Edit activity domains -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_activity_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.activity_domains.map(item=>item.name).join(', ') }}</dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.activity_domains.join(', ') }}</dt>
                             <EditModal
                                 @action="editField"
                                 class="col-span-1 flex justify-end"
@@ -304,7 +304,7 @@
                         <!-- Edit organizaton address -->
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_address_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.street_address }}, {{ form.counties.map(item=>item.name).join(', ')}} </dt>
+                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.street_address }}, {{ form.counties?.map(item=>item.name).join(', ')}} </dt>
                             <EditModal
                                 @action="editField"
                                 class="col-span-1 flex justify-end"
