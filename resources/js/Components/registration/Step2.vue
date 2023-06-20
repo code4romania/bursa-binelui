@@ -12,7 +12,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="name"
-            :error="form.errors?.user?.name"
+            :error="form.errors['user.name']"
         />
 
         <!-- Email -->
@@ -24,7 +24,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="email"
-            :error="form.errors?.user?.email"
+            :error="form.errors['user.email']"
         />
 
         <Input
@@ -35,7 +35,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="password"
-            :error="form.errors?.user?.password"
+            :error="form.errors['user.password']"
         />
         <Input
             :label="$t('password_confirmation')"
@@ -45,7 +45,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="password"
-            :error="form.errors?.user?.password_confirmation"
+            :error="form.errors['user.password_confirmation']"
         />
 
         <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">

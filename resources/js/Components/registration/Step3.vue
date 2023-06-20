@@ -12,7 +12,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="ong_name"
-            :error="form.errors?.ong?.name"
+            :error="form.errors['ong.name']"
         />
 
         <!-- Ong cif -->
@@ -24,14 +24,14 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="ong_cif"
-            :error="form.errors?.ong?.cif"
+            :error="form.errors['ong.cif']"
         />
 
         <div>
             <label class="block mb-1 text-sm font-medium leading-6 text-gray-700">{{ $t('ong_logo') }}</label>
             <Avatar
                 :label="$t('upload_logo')"
-                @upload="form.ong?.logo"
+                @upload="ongLogo"
                 :form="form"
             />
         </div>
@@ -43,26 +43,30 @@
             id="about-ong"
             color="gray-700"
             v-model="form.ong.description"
-            :error="form.errors?.ong?.description"
+            :error="form.errors['ong.description']"
         >
             <p class="text-xs font-normal text-gray-500">{{ $t('about_ong_description') }}</p>
         </Textarea>
 
         <!-- Activity domains -->
-        <MultiSelectObjectFilter
-            class="w-full"
-            :label="$t('domains')"
-            v-model="form.ong.activity_domains_ids"
-            :options="activity_domains"
-            id="activity-domains"
-            ref="activityDomains"
-        />
+        <div>
+            <MultiSelectObjectFilter
+                class="w-full"
+                :label="$t('domains')"
+                v-model="form.ong.activity_domains_ids"
+                :options="activity_domains"
+                id="activity-domains"
+                ref="activityDomains"
+            />
+            <p v-show="form.errors['ong.activity_domains_ids']" class="mt-2 text-sm text-red-600">{{ form.errors['ong.activity_domains_ids'] }}</p>
+        </div>
 
         <!-- Statut -->
         <div>
             <p class="block mb-1 text-sm font-medium leading-6 text-gray-700">{{ $t('ong_statut') }}</p>
             <ButtonFile
                 :label="$t('upload_file')"
+                @upload="ongStatute"
                 v-model="form.ong.statute"
             />
             <p class="block mt-1 text-xs font-medium leading-6 text-gray-500">{{ $t('file_description') }}</p>
@@ -118,5 +122,6 @@
     })
 
     /** Update form ong logo. */
-    const ongLogo = ((file) => props.form.ong_logo = file)
+    const ongLogo = ((file) => props.form.ong.logo = file);
+    const ongStatute = ((file => props.form.ong.statute = file));
 </script>

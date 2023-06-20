@@ -16,7 +16,7 @@
                         :id="option.value"
                         name="info"
                         type="radio"
-                        v-model="form.info"
+                        v-model="social.info"
                         :value="option.value"
                         class="w-4 h-4 border-gray-300 text-turqoise-500 focus:ring-turqoise-500"
                     />
@@ -58,7 +58,7 @@
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
     const props = defineProps({
-        form: Object
+        social: Object
     });
 
     const other = ref('');
@@ -101,5 +101,5 @@
         }
     }
 
-    const update = (() => props.form.info = other.value);
+    const update = (() => props.social.info = other.value);
 </script>

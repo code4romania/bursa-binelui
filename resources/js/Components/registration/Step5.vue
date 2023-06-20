@@ -12,6 +12,7 @@
             />
             <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('organization_accepts_volunteers_label') }}</span>
         </label>
+        <p v-show="form.errors['ong.volunteer']" class="mt-2 text-sm text-red-600">{{ form.errors['ong.volunteer'] }}</p>
 
        <!-- Descriptions -->
        <Textarea
@@ -20,7 +21,7 @@
             id="organization_why_volunteer_label"
             color="gray-700"
             v-model="form.ong.why_volunteer"
-            :error="form.errors.why_volunteer"
+            :error="form.errors['ong.why_volunteer']"
         >
             <p class="text-xs font-normal text-gray-500">{{ $t('why_volunteer_info') }}</p>
         </Textarea>

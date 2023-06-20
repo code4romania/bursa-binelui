@@ -4,12 +4,15 @@
         <h1 v-if="'ong' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('contact_ong') }}</h1>
 
         <!-- County -->
-        <MultiSelectObjectFilter
-            class="w-full"
-            :label="$t('county')"
-            v-model="form.ong.counties_ids"
-            :options="counties"
-        />
+        <div class="w-full">
+            <MultiSelectObjectFilter
+                class="w-full"
+                :label="$t('county')"
+                v-model="form.ong.counties_ids"
+                :options="counties"
+            />
+            <p v-show="form.errors['ong.counties_ids']" class="mt-2 text-sm text-red-600">{{ form.errors['ong.counties_ids'] }}</p>
+        </div>
 
         <!-- Address -->
         <div>
@@ -21,7 +24,7 @@
                 :isRequired="true"
                 color="gray-700"
                 hasAutocomplete="ong_address"
-                :error="form.errors?.ong?.street_address"
+                :error="form.errors['ong.street_address']"
             />
             <p class="text-xs text-gray-500">{{ $t('complete_address') }}</p>
         </div>
@@ -36,7 +39,7 @@
                 :isRequired="true"
                 color="gray-700"
                 hasAutocomplete="contact_person"
-                :error="form.errors?.ong?.contact_person"
+                :error="form.errors['ong.contact_person']"
             />
             <p class="text-xs text-gray-500">{{ $t('contact_person_info') }}</p>
         </div>
@@ -50,7 +53,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="contact_phone"
-            :error="form.errors?.ong?.contact_phone"
+            :error="form.errors['ong.contact_phone']"
         />
 
          <!-- Contact email -->
@@ -62,7 +65,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="contact_email"
-            :error="form.errors?.ong?.contact_email"
+            :error="form.errors['ong.contact_email']"
         />
 
          <!-- Webisite -->
@@ -74,7 +77,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="organization_website_label"
-            :error="form.errors.webiste"
+            :error="form.errors['ong.webiste']"
         />
 
         <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
@@ -104,14 +107,7 @@
 <script setup>
     /** Import components. */
     import Input from '@/Components/form/Input.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import FileInput from '@/Components/form/FileInput.vue';
-    import ButtonFile from '@/Components/form/ButtonFile.vue';
-    import Avatar from '@/Components/form/Avatar.vue';
-    import MultiSelectFilter from '@/Components/filters/MultiSelectFilter.vue';
-    import Select from '@/Components/form/Select.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
 
     const props = defineProps({
