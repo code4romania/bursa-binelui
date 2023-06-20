@@ -2,25 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Notifications\Admin;
+namespace App\Notifications\Ngo;
 
+use App\Models\Organization;
 use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreated extends Notification
+class OrganizationCreated extends Notification
 {
     use Queueable;
 
-    private Project $project;
+    private Organization $organization;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Project $project)
+    public function __construct(Organization $organization)
     {
-        $this->project = $project;
+        $this->organization = $organization;
     }
 
     /**
@@ -39,9 +40,9 @@ class ProjectCreated extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line(__('mail.admin.project_created.line_1'))
-            ->line(__('mail.admin.project_created.line_2'))
-            ->line(__('mail.admin.project_created.line_3'))
+            ->line(__('mail.ngo.organization_created.line_1'))
+            ->line(__('mail.ngo.organization_created.line_2'))
+            ->line(__('mail.ngo.organization_created.line_3'))
             ->action('Notification Action', url('/'))
             ->line('Thank you for using our application!');
     }

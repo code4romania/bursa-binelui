@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\User;
+use App\Notifications\Ngo\OrganizationCreated;
+use App\Notifications\Admin\OrganizationCreated as OrganizationCreatedAdmin;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -55,16 +59,18 @@ class RegisteredUserController extends Controller
             'email' => $user['email'],
             'password' => Hash::make($user['password']),
         ]);
+        event(new Registered($user));
+        Auth::login($user);
+
         if ($data['type'] == 'ong') {
             $ong = $data['ong'];
             $organization = Organization::create($ong);
             $organization->activityDomains()->attach($ong['activity_domains_ids']);
             $organization->counties()->attach($ong['counties_ids']);
+            auth()->user()->notify(new OrganizationCreated($organization));
+            $adminUsers = User::whereRole(UserRole::bb_admin)->get();
+            Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
         }
-
-        event(new Registered($user));
-
-        Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
