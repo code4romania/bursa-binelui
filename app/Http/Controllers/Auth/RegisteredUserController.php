@@ -15,7 +15,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,13 +29,16 @@ class RegisteredUserController extends Controller
             return ActivityDomain::get(['name', 'id']);
         });
         $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name','id']);
+            return \App\Models\County::get(['name', 'id']);
         });
-        return Inertia::render('Auth/Register',
-        [
-            'activity_domains' => $activityDomains,
-            'counties' => $counties,
-        ]);
+
+        return Inertia::render(
+            'Auth/Register',
+            [
+                'activity_domains' => $activityDomains,
+                'counties' => $counties,
+            ]
+        );
     }
 
     /**

@@ -7,7 +7,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\ActivityDomain as ActivityDomainEnum;
 use App\Models\ActivityDomain;
-use App\Models\Donation;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\User;
@@ -29,7 +28,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if ('production' !== config('app.env', 'production')) {
-
             $activityDomains = ActivityDomainEnum::values();
             $tmpActivityDomains = [];
             foreach ($activityDomains as $domain) {

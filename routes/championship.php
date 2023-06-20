@@ -12,4 +12,5 @@ Route::get('editia/{year}', [ChampionshipController::class, 'edition'])->name('e
 Route::get('projects', [ChampionshipController::class, 'projects'])->name('infinite_projects');
 
 /* Ong routes. */
-Route::prefix('ong')->middleware('auth')->group(function () {});
+Route::prefix('ong')->middleware('auth')->group(function () {
+});

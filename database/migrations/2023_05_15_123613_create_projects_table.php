@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\County;
 use App\Models\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -14,11 +14,13 @@ class ProjectController extends Controller
     {
         $projects = Project::publish()->paginate()->withQueryString();
         $counties = County::whereHas('projects')->get(['name', 'id']);
+
         return Inertia::render('Public/Projects/Projects', [
             'query' => $projects,
             'counties' => $counties,
         ]);
     }
+
     public function item(Project $project)
     {
 //        dd($project);

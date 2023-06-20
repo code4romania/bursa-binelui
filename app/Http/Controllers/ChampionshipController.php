@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Models\County;
 use App\Models\Project;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ChampionshipController extends Controller
 {
@@ -18,46 +18,46 @@ class ChampionshipController extends Controller
                 'content' => '11111 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
                 'name' => 'Judith Black',
                 'job' => 'CEO',
-                'company' => 'Workcation'
+                'company' => 'Workcation',
             ],
             [
                 'content' => '222222222 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
                 'name' => 'Judith Black',
                 'job' => 'CEO',
-                'company' => 'Workcation'
-            ]
+                'company' => 'Workcation',
+            ],
         ];
 
         $links = [
             [
-                'href' => "#",
-                'label' => "Titlu Articol",
-                'source' => "sursa.ro"
+                'href' => '#',
+                'label' => 'Titlu Articol',
+                'source' => 'sursa.ro',
             ],
             [
-                'href' => "#",
-                'label' => "Titlu Articol",
-                'source' => "sursa.ro"
+                'href' => '#',
+                'label' => 'Titlu Articol',
+                'source' => 'sursa.ro',
             ],
             [
-                'href' => "#",
-                'label' => "Titlu Articol",
-                'source' => "sursa.ro"
-            ]
+                'href' => '#',
+                'label' => 'Titlu Articol',
+                'source' => 'sursa.ro',
+            ],
         ];
 
         $editions = [
             [
                 'href' => '1',
-                'name' => 'Campionatul de bine 2020'
+                'name' => 'Campionatul de bine 2020',
             ],
             [
                 'href' => '2',
-                'name' => 'Campionatul de bine 2019'
+                'name' => 'Campionatul de bine 2019',
             ],
             [
                 'href' => '3',
-                'name' => 'Campionatul de bine 2018'
+                'name' => 'Campionatul de bine 2018',
             ],
         ];
 
@@ -69,7 +69,7 @@ class ChampionshipController extends Controller
                 'name' => 'Importanța educației remediare în România în timpul pandemiei',
                 'team' => 'Echipa BCR',
                 'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022'
+                'date' => '15.02.2022',
             ],
             [
                 'id' => 2,
@@ -78,7 +78,7 @@ class ChampionshipController extends Controller
                 'name' => 'Importanța educației remediare în România în timpul pandemiei',
                 'team' => 'Echipa BCR',
                 'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022'
+                'date' => '15.02.2022',
             ],
             [
                 'id' => 3,
@@ -87,7 +87,7 @@ class ChampionshipController extends Controller
                 'name' => 'Importanța educației remediare în România în timpul pandemiei',
                 'team' => 'Echipa BCR',
                 'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022'
+                'date' => '15.02.2022',
             ],
         ];
 
@@ -100,7 +100,7 @@ class ChampionshipController extends Controller
             'testimonials' => $testimonials,
             'links' => $links,
             'editions' => $editions,
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 
@@ -111,46 +111,46 @@ class ChampionshipController extends Controller
                 'content' => '11111 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
                 'name' => 'Judith Black',
                 'job' => 'CEO',
-                'company' => 'Workcation'
+                'company' => 'Workcation',
             ],
             [
                 'content' => '222222222 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
                 'name' => 'Judith Black',
                 'job' => 'CEO',
-                'company' => 'Workcation'
-            ]
+                'company' => 'Workcation',
+            ],
         ];
 
         $links = [
             [
-                'href' => "#",
-                'label' => "Titlu Articol",
-                'source' => "sursa.ro"
+                'href' => '#',
+                'label' => 'Titlu Articol',
+                'source' => 'sursa.ro',
             ],
             [
-                'href' => "#",
-                'label' => "Titlu Articol",
-                'source' => "sursa.ro"
+                'href' => '#',
+                'label' => 'Titlu Articol',
+                'source' => 'sursa.ro',
             ],
             [
-                'href' => "#",
-                'label' => "Titlu Articol",
-                'source' => "sursa.ro"
-            ]
+                'href' => '#',
+                'label' => 'Titlu Articol',
+                'source' => 'sursa.ro',
+            ],
         ];
 
         $editions = [
             [
                 'href' => '1',
-                'name' => 'Campionatul de bine 2020'
+                'name' => 'Campionatul de bine 2020',
             ],
             [
                 'href' => '2',
-                'name' => 'Campionatul de bine 2019'
+                'name' => 'Campionatul de bine 2019',
             ],
             [
                 'href' => '3',
-                'name' => 'Campionatul de bine 2018'
+                'name' => 'Campionatul de bine 2018',
             ],
         ];
 
@@ -162,7 +162,7 @@ class ChampionshipController extends Controller
                 'name' => 'Importanța educației remediare în România în timpul pandemiei',
                 'team' => 'Echipa BCR',
                 'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022'
+                'date' => '15.02.2022',
             ],
             [
                 'id' => 2,
@@ -171,7 +171,7 @@ class ChampionshipController extends Controller
                 'name' => 'Importanța educației remediare în România în timpul pandemiei',
                 'team' => 'Echipa BCR',
                 'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022'
+                'date' => '15.02.2022',
             ],
             [
                 'id' => 3,
@@ -180,7 +180,7 @@ class ChampionshipController extends Controller
                 'name' => 'Importanța educației remediare în România în timpul pandemiei',
                 'team' => 'Echipa BCR',
                 'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022'
+                'date' => '15.02.2022',
             ],
         ];
 
@@ -188,27 +188,28 @@ class ChampionshipController extends Controller
             [
                 'month' => 'Decembrie 2016',
                 'donations' => '2210',
-                'amount' => '188873,00'
+                'amount' => '188873,00',
             ],
             [
                 'month' => 'Decembrie 2016',
                 'donations' => '2210',
-                'amount' => '188873,00'
+                'amount' => '188873,00',
             ],
             [
                 'month' => 'Decembrie 2016',
                 'donations' => '2210',
-                'amount' => '188873,00'
+                'amount' => '188873,00',
             ],
             [
                 'month' => 'Decembrie 2016',
                 'donations' => '2210',
-                'amount' => '188873,00'
-            ]
+                'amount' => '188873,00',
+            ],
         ];
 
         $projects = Project::publish()->paginate(9)->withQueryString();
         $counties = County::whereHas('projects')->get(['name', 'id']);
+
         return Inertia::render('Public/Championship/Edition', [
             'query' => $projects,
             'counties' => $counties,
@@ -216,13 +217,14 @@ class ChampionshipController extends Controller
             'links' => $links,
             'editions' => $editions,
             'articles' => $articles,
-            'statistics' => $statistics
+            'statistics' => $statistics,
         ]);
     }
 
     public function projects(Request $request)
     {
         $offset = ($request->page - 1) * 8;
+
         return Project::publish()->offset($offset)->limit(8)->get();
     }
 }

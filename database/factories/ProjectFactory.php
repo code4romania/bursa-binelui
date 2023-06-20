@@ -20,8 +20,7 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         $name = $this->faker->name;
-        $start =$this->faker->dateTimeBetween('today', 'next Monday +7 days');
-
+        $start = $this->faker->dateTimeBetween('today', 'next Monday +7 days');
 
         return [
             'name' => $name,
@@ -34,7 +33,7 @@ class ProjectFactory extends Factory
             'reason_to_donate' => $this->faker->text,
             'beneficiaries' => $this->faker->text,
             'start' => $start,
-            'end' =>  $this->faker->dateTimeBetween($start, $start->format('Y-m-d H:i:s').' +2 days'),
+            'end' =>  $this->faker->dateTimeBetween($start, $start->format('Y-m-d H:i:s') . ' +2 days'),
             'accepting_volunteers' => $this->faker->boolean,
             'accepting_comments' => $this->faker->boolean,
             'videos' => $this->faker->randomElements(['https://www.youtube.com/watch?v=9bZkp7q19f0', 'https://www.youtube.com/watch?v=2Vv-BfVoq4g', 'https://www.youtube.com/watch?v=JGwWNGJdvx8'], 2),

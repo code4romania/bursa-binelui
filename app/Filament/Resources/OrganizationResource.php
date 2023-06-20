@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource\Pages;
-use App\Filament\Resources\OrganizationResource\RelationManagers;
 use App\Models\Organization;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrganizationResource extends Resource
 {
@@ -27,9 +26,9 @@ class OrganizationResource extends Resource
                 Forms\Components\Select::make('county_id')
                     ->relationship('county', 'name')
                     ->required(),
-//                Forms\Components\Select::make('city_id')
-//                    ->relationship('city', 'name')
-//                    ->required(),
+                //                Forms\Components\Select::make('city_id')
+                //                    ->relationship('city', 'name')
+                //                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),

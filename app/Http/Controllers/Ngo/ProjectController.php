@@ -12,7 +12,7 @@ use App\Models\County;
 use App\Models\Project;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
-use App\Notifications\Ngo\ProjectCreated;;
+use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
@@ -46,8 +46,7 @@ class ProjectController extends Controller
         $data['organization_id'] = auth()->user()->organization_id;
         $data['slug'] = \Str::slug($data['name']);
         $project = Project::create($data);
-        if ($request->has('counties'))
-        {
+        if ($request->has('counties')) {
             $project->counties()->attach($data['counties']);
         }
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
@@ -57,6 +56,7 @@ class ProjectController extends Controller
         auth()->user()->notify(new ProjectCreated($project));
         $adminUsers = User::whereRole(UserRole::bb_admin)->get();
         Notification::send($adminUsers, new ProjectCreatedAdmin($project));
+
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }
 
@@ -74,8 +74,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        if ($request->has('counties'))
-        {
+        if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
         $project->update($request->all());

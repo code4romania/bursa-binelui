@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications\Ngo;
 
 use App\Models\Project;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class ProjectCreated extends Notification
 {
     use Queueable;
-    private  Project $project;
+
+    private Project $project;
 
     /**
      * Create a new notification instance.
@@ -37,11 +39,11 @@ class ProjectCreated extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line(__('mail.ngo.project_created.line_1'))
-                    ->line(__('mail.ngo.project_created.line_2'))
-                    ->line(__('mail.ngo.project_created.line_3'))
-                    ->action('mail.ngo.action_button', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line(__('mail.ngo.project_created.line_1'))
+            ->line(__('mail.ngo.project_created.line_2'))
+            ->line(__('mail.ngo.project_created.line_3'))
+            ->action('mail.ngo.action_button', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**

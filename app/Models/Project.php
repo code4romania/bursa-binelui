@@ -50,9 +50,9 @@ class Project extends Model implements HasMedia
         'accepting_comments' => 'boolean',
     ];
 
-    protected $appends = ['total_donations', 'cover_image', 'active','is_period_active'];
+    protected $appends = ['total_donations', 'cover_image', 'active', 'is_period_active'];
 
-    protected $with = ['media', 'organization', 'donations','counties'];
+    protected $with = ['media', 'organization', 'donations', 'counties'];
 
     public function organization(): BelongsTo
     {
@@ -86,6 +86,7 @@ class Project extends Model implements HasMedia
     {
         return $query->where('status', ProjectStatus::active);
     }
+
     public function getActiveAttribute(): bool
     {
         return $this->status == ProjectStatus::active->value;
@@ -93,7 +94,7 @@ class Project extends Model implements HasMedia
 
     public function getIsPeriodActiveAttribute(): bool
     {
-        return $this->start<=now() && $this->end>=now();
+        return $this->start <= now() && $this->end >= now();
     }
 
     public function counties(): BelongsToMany

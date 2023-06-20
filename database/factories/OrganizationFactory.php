@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\ActivityDomain;
-use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +18,6 @@ class OrganizationFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
             'name' => fake()->company(),
             'cif' => fake()->unixTime(),

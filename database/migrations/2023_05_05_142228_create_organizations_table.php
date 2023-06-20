@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use App\Enums\OrganizationStatus;
-use App\Models\City;
-use App\Models\County;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
