@@ -20,11 +20,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->string('cif');
-            $table->string('logo')->nullable();
             $table->text('description');
-            $table->string('status_document')->nullable();
-            $table->foreignIdFor(County::class)->constrained();
-            $table->foreignIdFor(City::class)->constrained();
             $table->string('street_address');
             $table->string('contact_person');
             $table->string('contact_phone');
@@ -32,7 +28,6 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->boolean('accepts_volunteers')->default(true);
             $table->text('why_volunteer')->nullable();
-            $table->json('activity_domains');
             $table->string('status')->default(OrganizationStatus::pending->value);
             $table->timestamps();
             $table->softDeletes();

@@ -30,7 +30,6 @@ class Project extends Model implements HasMedia
         'category',
         'target_budget',
         'scope',
-        'county_id',
         'reason_to_donate',
         'beneficiaries',
         'start',

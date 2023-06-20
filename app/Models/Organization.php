@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -27,10 +28,7 @@ class Organization extends Model
     protected $fillable = [
         'name',
         'cif',
-        'logo',
         'description',
-        'status_document',
-        'county_id',
         'city_id',
         'street_address',
         'contact_person',
@@ -39,7 +37,6 @@ class Organization extends Model
         'website',
         'accepts_volunteers',
         'why_volunteer',
-        'activity_domains',
         'status',
     ];
 
@@ -49,7 +46,6 @@ class Organization extends Model
      * @var array
      */
     protected $casts = [
-        'activity_domains' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
@@ -68,21 +64,16 @@ class Organization extends Model
         return $this->hasMany(User::class);
     }
 
-    /**
-     * Get the county of the organization.
-     */
-    public function county(): BelongsTo
+    public function counties(): BelongsToMany
     {
-        return $this->belongsTo(County::class);
+        return $this->belongsToMany(County::class);
     }
 
-    /**
-     * Get the city of the organization.
-     */
-    public function city(): BelongsTo
+    public function activityDomains(): BelongsToMany
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsToMany(ActivityDomain::class);
     }
+
 
     /**
      * Scope a query to include the locations.

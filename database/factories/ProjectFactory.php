@@ -20,7 +20,6 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         $name = $this->faker->name;
-        $county = $this->faker->randomElement(\App\Models\County::all());
         $start =$this->faker->dateTimeBetween('today', 'next Monday +7 days');
 
 
@@ -28,7 +27,6 @@ class ProjectFactory extends Factory
             'name' => $name,
             'slug' => \Str::slug($name),
             'category' => $this->faker->randomElement(ProjectCategory::values()),
-            'county_id' =>$county->id,
             'description' => $this->faker->text,
             'status'=> $this->faker->randomElement(['draft', 'published']),
             'target_budget' => $this->faker->numberBetween(1000, 100000),

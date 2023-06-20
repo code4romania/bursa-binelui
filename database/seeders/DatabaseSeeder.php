@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\ActivityDomain as ActivityDomainEnum;
+use App\Models\ActivityDomain;
 use App\Models\Donation;
 use App\Models\Organization;
 use App\Models\Project;
@@ -27,16 +29,22 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if ('production' !== config('app.env', 'production')) {
+
+            $activityDomains = ActivityDomainEnum::values();
+            $tmpActivityDomains = [];
+            foreach ($activityDomains as $domain) {
+                $tmpActivityDomains[] = ['name' => $domain, 'slug' => \Str::slug($domain)];
+            }
+            ActivityDomain::insert($tmpActivityDomains);
             for ($i = 0; $i < self::USER_DONOR_NUMBER; $i++) {
                 User::factory()->donor()->create();
             }
 
             for ($i = 0; $i < self::USER_NGO_ADMIN_NUMBER; $i++) {
                 $organization = Organization::factory()->create();
-                if ($i === 0)
-                {
+                if ($i === 0) {
                     User::factory(['email' => 'admin@example.com'])->ngoAdmin()->for($organization)->create();
-                }else{
+                } else {
                     User::factory()->ngoAdmin()->for($organization)->create();
                 }
                 Project::factory()->for($organization)->count(10)->create();

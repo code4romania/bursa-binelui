@@ -2,6 +2,7 @@ export default {
     "change_password": "Schimbă parola",
     "current_password": "Parola curentă",
     "password": "Parola",
+    "password_confirmation": "Confirma parola",
     "new_password": "Parola nouă",
     "retype_password": "Reintroduceți parola nouă",
     "name_last_name": "Nume și prenume",

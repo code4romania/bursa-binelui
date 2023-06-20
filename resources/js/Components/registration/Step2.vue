@@ -8,11 +8,11 @@
             :label="'ong' == form.type ? $t('name_last_name_ong') : $t('name_last_name')"
             id="name"
             type="text"
-            v-model="form.name"
+            v-model="form.user.name"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="name"
-            :error="form.errors.name"
+            :error="form.errors?.user?.name"
         />
 
         <!-- Email -->
@@ -20,23 +20,32 @@
             :label="$t('email')"
             id="email"
             type="email"
-            v-model="form.email"
+            v-model="form.user.email"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="email"
-            :error="form.errors.email"
+            :error="form.errors?.user?.email"
         />
 
-        <!-- Name -->
         <Input
             :label="$t('password')"
             id="password"
             type="password"
-            v-model="form.password"
+            v-model="form.user.password"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="password"
-            :error="form.errors.password"
+            :error="form.errors?.user?.password"
+        />
+        <Input
+            :label="$t('password_confirmation')"
+            id="password_confirmation"
+            type="password"
+            v-model="form.user.password_confirmation"
+            :isRequired="true"
+            color="gray-700"
+            hasAutocomplete="password"
+            :error="form.errors?.user?.password_confirmation"
         />
 
         <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">

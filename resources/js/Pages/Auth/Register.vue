@@ -1,7 +1,7 @@
 <template>
-     <PageLayout>
+    <PageLayout>
         <!-- Inertia page head -->
-        <Head title="Register" />
+        <Head title="Register"/>
 
         <!-- Auth template. -->
         <Auth :content="content">
@@ -12,6 +12,8 @@
                     :is="steps[current]"
                     :current="steps[current]"
                     :form="form"
+                    :activity_domains="activity_domains"
+                    :counties="counties"
                     @prev="prev"
                     @next="next"
                     @google="google"
@@ -23,94 +25,130 @@
 </template>
 
 <script setup>
-    /** Import form vue. */
-    import { ref, computed } from 'vue';
+/** Import form vue. */
+import {ref, computed, onMounted} from 'vue';
 
-    /** Import form inertia. */
-    import { Head, useForm } from '@inertiajs/vue3';
+/** Import form inertia. */
+import {Head, useForm} from '@inertiajs/vue3';
 
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Auth from '@/Components/templates/Auth.vue';
-    import Step1 from '@/Components/registration/Step1.vue';
-    import Step2 from '@/Components/registration/Step2.vue';
-    import Step3 from '@/Components/registration/Step3.vue';
-    import Step4 from '@/Components/registration/Step4.vue';
-    import Step5 from '@/Components/registration/Step5.vue';
-    import Success from '@/Components/registration/Success.vue';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Auth from '@/Components/templates/Auth.vue';
+import Step1 from '@/Components/registration/Step1.vue';
+import Step2 from '@/Components/registration/Step2.vue';
+import Step3 from '@/Components/registration/Step3.vue';
+import Step4 from '@/Components/registration/Step4.vue';
+import Step5 from '@/Components/registration/Step5.vue';
+import Success from '@/Components/registration/Success.vue';
 
-    /** Intialize inertia form object. */
-    const form = useForm({});
+/** Intialize inertia form object. */
+const form = useForm({
+    user: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    },
+    ong: {
+        name: '',
+        description: '',
+        street_address: '',
+        cif: '',
+        contact_email: '',
+        contact_phone: '',
+        contact_person: '',
+        activity_domains_ids: '',
+        counties_ids: '',
+        volunteer:false,
+        why_volunteer: '',
+        logo: '',
+        statute: '',
 
-    /** Current component. */
-    const current = ref(0);
+    },
+    type: '',
+});
+const props = defineProps({
+    activity_domains: {
+        type: Array,
+        default: () => []
+    },
+    counties: {
+        type: Array,
+        default: () => []
+    },
+});
 
-    /** Registration components steps. */
-    const steps = computed(() => {
-        /** Intial components. */
-        let components = [ Step1, Step2 ];
+/** Current component. */
+const current = ref(0);
 
-        /** Check if registration is of type oragnization */
-        if ('ong' === form.type) {
-            components = [ ...components, Step3, Step4, Step5 ];
-        }
+/** Registration components steps. */
+const steps = computed(() => {
+    /** Intial components. */
+    let components = [Step1, Step2];
 
-        return [ ...new Set([...components, Success]) ];
-    });
+    /** Check if registration is of type oragnization */
+    if ('ong' === form.type) {
+        components = [...components, Step3, Step4, Step5];
+    }
 
-    /** Page content. */
-    const content = computed(() => {
-        if (5 == current.value) {
-            return {
-                title: 'Felicitări!',
-                description: 'Contul tău a fost creat. Lorem ipsum massa rhoncus, volutpat. Dignissim sed eget risus enim.'
-            }
-        }
+    return [...new Set([...components, Success])];
+});
 
+/** Page content. */
+const content = computed(() => {
+    if (5 == current.value) {
         return {
-            title: "Creează cont",
-            description: "Ești deja utilizator?",
-            link: {
-                text: "Intră în cont",
-                href: "#"
-            }
-        };
-    });
-
-    /** Previous step. */
-    const prev = (() => (0 < current.value) && current.value--);
-
-    /** Next step. */
-    const next = () => {
-        if ('donor' === form.type && current.value === 1) {
-            submit()
-        } else if ('ong' === form.type && current.value === 4) {
-            submit()
-        } else {
-            current.value++
+            title: 'Felicitări!',
+            description: 'Contul tău a fost creat. Lorem ipsum massa rhoncus, volutpat. Dignissim sed eget risus enim.'
         }
     }
 
-    /** Login with google. */
-    const google = () => {
-        console.log('google login')
-    }
-
-    /** Create user. */
-    const submit = () => {
-        form.post(route('register'), {
-            onError: (error) => {
-
-            },
-            onSucces: (data) => {
-                current.value = steps.value.length -1
-            },
-            onFinish: () => {}
-        });
+    return {
+        title: "Creează cont",
+        description: "Ești deja utilizator?",
+        link: {
+            text: "Intră în cont",
+            href: "#"
+        }
     };
+});
 
-    /** After user is registered update data. */
-    const success = () => {
-        console.log(form.info)
+/** Previous step. */
+const prev = (() => (0 < current.value) && current.value--);
+
+/** Next step. */
+const next = () => {
+    if ('donor' === form.type && current.value === 1) {
+        submit()
+    } else if ('ong' === form.type && current.value === 4) {
+        submit()
+    } else {
+        current.value++
     }
+}
+
+/** Login with Google. */
+const google = () => {
+    console.log('google login')
+}
+
+/** Create user. */
+const submit = () => {
+    console.log(form)
+    form.post(route('register'), {
+        onError: (error) => {
+
+        },
+        onSuccess: (data) => {
+            current.value = steps.value.length - 1
+        },
+        onFinish: () => {
+        }
+    });
+};
+
+/** After user is registered update data. */
+const success = () => {
+    console.log(form.info)
+}
 </script>

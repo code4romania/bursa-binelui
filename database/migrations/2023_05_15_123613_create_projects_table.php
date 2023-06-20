@@ -18,7 +18,6 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Organization::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(County::class)->nullable()->constrained()->nullOnDelete();
             $table->string('status')->default('draft');
             $table->boolean('is_national')->default(false);
             $table->string('category');

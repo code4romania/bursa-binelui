@@ -4,19 +4,11 @@
         <h1 v-if="'ong' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('contact_ong') }}</h1>
 
         <!-- County -->
-        <Select
+        <MultiSelectObjectFilter
             class="w-full"
             :label="$t('county')"
-            v-model="form.county"
+            v-model="form.ong.counties_ids"
             :options="counties"
-        />
-
-        <!-- City -->
-        <Select
-            class="w-full"
-            :label="$t('city')"
-            v-model="form.city"
-            :options="cities"
         />
 
         <!-- Address -->
@@ -25,11 +17,11 @@
                 :label="$t('ong_address')"
                 id="ong_address"
                 type="text"
-                v-model="form.ong_address"
+                v-model="form.ong.street_address"
                 :isRequired="true"
                 color="gray-700"
                 hasAutocomplete="ong_address"
-                :error="form.errors.ong_address"
+                :error="form.errors?.ong?.street_address"
             />
             <p class="text-xs text-gray-500">{{ $t('complete_address') }}</p>
         </div>
@@ -40,11 +32,11 @@
                 :label="$t('contact_person')"
                 id="contact_person"
                 type="text"
-                v-model="form.contact_person"
+                v-model="form.ong.contact_person"
                 :isRequired="true"
                 color="gray-700"
                 hasAutocomplete="contact_person"
-                :error="form.errors.contact_person"
+                :error="form.errors?.ong?.contact_person"
             />
             <p class="text-xs text-gray-500">{{ $t('contact_person_info') }}</p>
         </div>
@@ -54,11 +46,11 @@
             :label="$t('contact_phone')"
             id="contact_phone"
             type="number"
-            v-model="form.contact_phone"
+            v-model="form.ong.contact_phone"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="contact_phone"
-            :error="form.errors.contact_phone"
+            :error="form.errors?.ong?.contact_phone"
         />
 
          <!-- Contact email -->
@@ -66,11 +58,11 @@
             :label="$t('contact_email')"
             id="contact_email"
             type="email"
-            v-model="form.contact_email"
+            v-model="form.ong.contact_email"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="contact_email"
-            :error="form.errors.contact_email"
+            :error="form.errors?.ong?.contact_email"
         />
 
          <!-- Webisite -->
@@ -78,7 +70,7 @@
             :label="$t('organization_website_label')"
             id="organization_website_label"
             type="text"
-            v-model="form.website"
+            v-model="form.ong.website"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="organization_website_label"
@@ -120,8 +112,10 @@
     import Select from '@/Components/form/Select.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
 
     const props = defineProps({
-        form: Object
+        form: Object,
+        counties: Array,
     })
 </script>

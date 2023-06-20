@@ -8,12 +8,9 @@
         <label class="flex items-center">
             <Checkbox
                 name="confirm"
-                v-model:checked="form.volunteer"
+                v-model:checked="form.ong.volunteer"
             />
             <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('organization_accepts_volunteers_label') }}</span>
-
-            <!-- Error -->
-            <p v-show="form.errors.confirm" class="mt-2 text-sm text-red-600">{{ form.errors.volunteer }}</p>
         </label>
 
        <!-- Descriptions -->
@@ -22,7 +19,7 @@
             :label="$t('organization_why_volunteer_label')"
             id="organization_why_volunteer_label"
             color="gray-700"
-            v-model="form.why_volunteer"
+            v-model="form.ong.why_volunteer"
             :error="form.errors.why_volunteer"
         >
             <p class="text-xs font-normal text-gray-500">{{ $t('why_volunteer_info') }}</p>

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Concerns\ArrayableEnum;
+
 enum ActivityDomain: string
 {
+    use ArrayableEnum;
     case environmental_protection = 'Protecția mediului';
     case education = 'Educație';
     case healthcare = 'Sănătate';
