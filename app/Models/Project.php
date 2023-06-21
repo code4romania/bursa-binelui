@@ -97,6 +97,8 @@ class Project extends Model implements HasMedia
         return $this->start <= now() && $this->end >= now();
     }
 
+
+
     public function counties(): BelongsToMany
     {
         return $this->belongsToMany(County::class);

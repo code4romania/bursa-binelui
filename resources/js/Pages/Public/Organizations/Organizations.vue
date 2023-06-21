@@ -39,7 +39,7 @@
             </div>
 
             <div class="flex w-full gap-6 mt-6">
-                <MultiSelectFilter
+                <MultiSelectObjectFilter
                     class="w-80"
                     :label="$t('domains')"
                     v-model="filter.ad"

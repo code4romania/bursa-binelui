@@ -13,7 +13,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::publish()->paginate()->withQueryString();
-        $counties = County::whereHas('projects')->get(['name', 'id']);
+        $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Projects/Projects', [
             'query' => $projects,
@@ -23,7 +23,6 @@ class ProjectController extends Controller
 
     public function item(Project $project)
     {
-//        dd($project);
         return Inertia::render('Public/Projects/Project', [
             'project' => $project,
         ]);

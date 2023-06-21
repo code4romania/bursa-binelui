@@ -28,7 +28,6 @@ class Organization extends Model
         'name',
         'cif',
         'description',
-        'city_id',
         'street_address',
         'contact_person',
         'contact_phone',
@@ -73,14 +72,6 @@ class Organization extends Model
     public function activityDomains(): BelongsToMany
     {
         return $this->belongsToMany(ActivityDomain::class);
-    }
-
-    /**
-     * Scope a query to include the locations.
-     */
-    public function scopeCities(Builder $query, int|array|Collection $cityIds): void
-    {
-        $query->whereIn('city_id', $cityIds);
     }
 
     /**
