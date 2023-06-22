@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Enums\EuPlatescStatus;
 use App\Models\County;
 use App\Models\Project;
+use App\Models\Volunteer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -63,5 +64,29 @@ class ProjectController extends Controller
         ]);
 
         return redirect()->route('donation.make', $donation->uuid);
+    }
+
+    public function volunteer(Project $project, Request $request)
+    {
+        $request->validate([
+            'terms' => 'required|accepted',
+            'email' => 'required|email',
+            'name' => 'required',
+            'phone' => 'required',
+        ]);
+        try {
+            [$lastName, $firstName] = explode(' ', $request->name);
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages(['name' => __('invalid_name')]);
+        }
+
+        Volunteer::create([
+            'user_id' => auth()->user()->id ?? null,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ])->projects()->attach($project->id);
+        return redirect()->back()->with('success', __('success_volunteer'));
     }
 }

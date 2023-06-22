@@ -58,7 +58,7 @@
                                                     :label="$t('email')"
                                                     color="gray-700"
                                                     id="email"
-                                                    type="text"
+                                                    type="email"
                                                     v-model="guestForm.email"
                                                     :error="guestForm.errors.email"
                                                 />
