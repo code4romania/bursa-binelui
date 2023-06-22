@@ -30,6 +30,7 @@ class ProjectController extends Controller
             'project' => $project,
         ]);
     }
+
     public function donation(Project $project, Request $request)
     {
         $request->validate([
@@ -40,8 +41,8 @@ class ProjectController extends Controller
         ]);
         try {
             [$lastName, $firstName] = explode(' ', $request->name);
-        }catch (\Exception $e){
-           throw ValidationException::withMessages(['name' => __('invalid_name')]);
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages(['name' => __('invalid_name')]);
         }
 
         $donation = $project->donations()->create([

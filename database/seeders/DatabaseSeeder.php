@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             }
 
             for ($i = 0; $i < self::USER_NGO_ADMIN_NUMBER; $i++) {
-                $organization = Organization::factory(['eu_platesc_merchant_id'=>config('services.eu_platesc.merchant_id'),'eu_platesc_private_key'=>config('services.eu_platesc.private_key')])->create();
+                $organization = Organization::factory(['eu_platesc_merchant_id'=>config('services.eu_platesc.merchant_id'), 'eu_platesc_private_key'=>config('services.eu_platesc.private_key')])->create();
                 if ($i === 0) {
                     User::factory(['email' => 'admin@example.com'])->ngoAdmin()->for($organization)->create();
                 } else {

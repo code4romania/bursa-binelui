@@ -34,7 +34,7 @@ class OrganizationController extends Controller
         /* Apply the active scope. */
         $query->status(OrganizationStatus::active);
 
-        /** Extract existing organizations cities with county. */
+        /* Extract existing organizations cities with county. */
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organizations', [
             'activity_domains' => ActivityDomain::all(),

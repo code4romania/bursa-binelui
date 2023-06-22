@@ -28,6 +28,7 @@ class Donation extends Model
         'updated_without_correct_e_pid',
     ];
     use HasFactory;
+
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
