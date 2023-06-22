@@ -54,9 +54,7 @@ Route::get('/donator', function () {
 Route::get('/multumim', function () {
     return Inertia::render('Public/Donor/ThankYou');
 })->name('thanks');
-Route::get('/articles', function () {
-    return Inertia::render('Public/Articles/Articles');
-})->name('articles');
+
 Route::get('/gallery/{project}', function () {
     return Inertia::render('Public/Projects/Gallery');
 })->name('gallery');
@@ -79,3 +77,5 @@ require __DIR__ . '/donations.php';
 require __DIR__ . '/championship.php';
 
 require __DIR__ . '/regional.php';
+
+require __DIR__ . '/articles.php';
