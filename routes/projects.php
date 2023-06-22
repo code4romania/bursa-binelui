@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 /* Public routes. */
 Route::get('/proiecte', [\App\Http\Controllers\ProjectController::class, 'index'])->name('projects');
 Route::get('/proiect/{project:slug}', [\App\Http\Controllers\ProjectController::class, 'item'])->name('project');
+Route::post('/proiect/{project:slug}/donatie', [\App\Http\Controllers\ProjectController::class, 'donation'])->name('project.donation');
+Route::post('/proiect/{project:slug}/voluntar', [\App\Http\Controllers\ProjectController::class, 'volunteer'])->name('project.volunteer');
 
 /* Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {

@@ -34,8 +34,7 @@
                                                 <p class="text-sm text-gray-500 my-4">{{ $t('voluntier_form_intro') }}</p>
                                                 <p v-if="$page.props.auth.user" class="text-sm text-gray-500 my-4">{{ $t('logged_as') }} {{ $page.props.auth.user.name }} ({{ $page.props.auth.user.email }})</p>
                                             </div>
-
-                                            <form class="space-y-4" @submit.prevent="volunteerForm">
+                                            <form class="space-y-4" @submit.prevent="volunteerForm" >
 
                                                 <!-- Name -->
                                                 <Input
@@ -56,7 +55,7 @@
                                                     :label="$t('email')"
                                                     color="gray-700"
                                                     id="email"
-                                                    type="text"
+                                                    type="email"
                                                     v-model="guestForm.email"
                                                     :error="guestForm.errors.email"
                                                 />
@@ -94,15 +93,18 @@
                                                 >
                                                     <Checkbox
                                                         name="confirm"
-                                                        v-model:checked="guestForm.confirm"
+                                                        v-model:checked="guestForm.terms"
                                                     />
                                                     <span class="ml-2 text-sm text-gray-700 mr-1">{{ $t('i_agree') }}</span>
                                                     <Link :href="route('terms')" class="text-sm text-turqoise-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
 
                                                     <!-- Error -->
-                                                    <p v-show="guestForm.errors.confirm" class="mt-2 text-sm text-red-600">{{ guestForm.errors.confirm }}</p>
+                                                    <p v-show="guestForm.errors.terms" class="mt-2 text-sm text-red-600">{{ guestForm.errors.terms }}</p>
                                                 </label>
 
+                                                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert" v-show="successSubmit">
+                                                    <span class="font-medium">{{$t('volunteer_form_success')}}</span>
+                                                </div>
                                                 <!-- Actions -->
                                                 <div class="pt-6 w-full">
                                                     <PrimaryButton
@@ -111,7 +113,7 @@
                                                         color="white"
                                                         class="w-full"
                                                     >
-                                                        {{ $t('proceed_to_payment') }}
+                                                        {{ $t('register_to_volunteer') }}
                                                     </PrimaryButton>
 
                                                     <div v-if="!$page.props.auth.user">
@@ -124,7 +126,7 @@
                                                             {{ $t('login_bb') }}
                                                         </Link>
 
-                                                        <p class="text-sm text-gray-900 text-center pt-2 font-medium">{{ $t('donate_for_reward') }}</p>
+                                                        <p class="text-sm text-gray-900 text-center pt-2 font-medium">{{ $t('join_easy') }}</p>
                                                     </div>
                                                 </div>
                                             </form>
@@ -189,7 +191,7 @@
         name: '',
         email: '',
         phone: '',
-        confirm: false,
+        terms: false,
     });
 
     /** Initialize inertia from Object. */
@@ -209,6 +211,8 @@
         return false;
     })
 
+    let successSubmit = ref(false);
+
     /** Volunteer action */
     const volunteerForm = () => {
         /** Check if project is active. */
@@ -220,10 +224,17 @@
         }
 
         /** Trigger volunteer post method. */
-        if(usePage().props.auth.user) {
-            // guestForm.post(route('ruta', data.id), {
-            //     onFinish: () => form.reset(),
-            // });
+        if(!usePage().props.auth.user) {
+            guestForm.post(route('project.volunteer', props.data.slug), {
+                onFinish: () => form.reset(),
+                onSuccess: () => {
+                    successSubmit.value = true;
+                },
+                onError: () => {
+                  console.log('error');
+
+                }
+            });
         } else {
             // authForm.post(route('ruta', data.id), {
             //     onFinish: () => form.reset(),

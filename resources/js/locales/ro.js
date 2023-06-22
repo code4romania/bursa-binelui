@@ -56,6 +56,7 @@ export default {
     "donate": "Donează chiar acum",
     "help_them": "și ajută-i să implementeze sau",
     "register_to_volunteer": "înscrie-te să voluntariezi",
+    "volunteer_form_success": "Mulțumim pentru înscriere! Vei fi contactat de către organizație în cel mai scurt timp.",
     "for_ong": "pentru această organizaţie.",
     "your_blog": "Scrie despre proiect pe site-ul tău",
     "you_have_blog": "Dacă ai un site sau un blog, atunci copiază acest",

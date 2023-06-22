@@ -12,16 +12,15 @@ use App\Models\Organization;
 use App\Models\User;
 use App\Notifications\Admin\OrganizationCreated as OrganizationCreatedAdmin;
 use App\Notifications\Ngo\OrganizationCreated;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Redirect;
 
 class RegisteredUserController extends Controller
 {
@@ -75,11 +74,11 @@ class RegisteredUserController extends Controller
             $user->organization_id = $organization->id;
             $user->save();
         }
+
         return Redirect::route('register');
     }
 
     public function update(RegistrationRequest $request): RedirectResponse
     {
-
     }
 }

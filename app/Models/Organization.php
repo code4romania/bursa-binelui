@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 class Organization extends Model
 {
@@ -49,11 +48,11 @@ class Organization extends Model
         'deleted_at' => 'datetime',
     ];
 
-    protected $with = ['counties', 'activityDomains'];
+    protected $with = ['counties', 'activityDomains', 'projects'];
 
     public function projects(): HasMany
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class)->without('organization');
     }
 
     /**

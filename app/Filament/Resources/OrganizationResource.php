@@ -24,11 +24,9 @@ class OrganizationResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('county_id')
-                    ->relationship('county', 'name')
+                    ->relationship('counties', 'name')
+                    ->multiple()
                     ->required(),
-                //                Forms\Components\Select::make('city_id')
-                //                    ->relationship('city', 'name')
-                //                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -62,6 +60,12 @@ class OrganizationResource extends Resource
                     ->maxLength(65535),
                 Forms\Components\Toggle::make('accepts_volunteers')
                     ->required(),
+                Forms\Components\TextInput::make('eu_platesc_merchant_id')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('eu_platesc_private_key')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -75,8 +79,6 @@ class OrganizationResource extends Resource
                     'heroicon-o-clock' => OrganizationStatus::pending->value,
                     'heroicon-o-check-circle' => OrganizationStatus::active->value,
                 ]),
-                Tables\Columns\TextColumn::make('county.name'),
-                Tables\Columns\TextColumn::make('city.name'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('cif'),
                 Tables\Columns\TextColumn::make('street_address'),

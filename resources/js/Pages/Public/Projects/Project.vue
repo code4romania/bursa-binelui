@@ -143,7 +143,7 @@
                             <SvgLoader class="mt-1 shrink-0 fill-turqoise-500" name="location" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
-                                <p class="mt-2 text-base font-normal text-gray-500"> {{ project.county.name }}</p>
+                                <p class="mt-2 text-base font-normal text-gray-500"> {{ project.counties.join(',') }}</p>
                             </div>
                         </div>
 
