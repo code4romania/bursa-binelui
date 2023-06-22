@@ -295,5 +295,9 @@ export default {
     "here": "aici",
     "about_regional": "Despre Galele Regionale",
     "see": "Vizualizează",
-    "bb_regional_title": "Gale Regionale Bursa Binelui"
+    "bb_regional_title": "Gale Regionale Bursa Binelui",
+    "read_article": "Citește articol",
+    "other_articles": "Articole din domeniul",
+    "other_categories": "Alte categorii",
+    "share_article": "Distribuie acest articol pe"
 }
