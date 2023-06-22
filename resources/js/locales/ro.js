@@ -299,5 +299,8 @@ export default {
     "read_article": "Citește articol",
     "other_articles": "Articole din domeniul",
     "other_categories": "Alte categorii",
-    "share_article": "Distribuie acest articol pe"
+    "share_article": "Distribuie acest articol pe",
+    "parteners": "Parteneri",
+    "faqs_title": "Intrebări frecvente",
+    "contact_us": "Contactează-ne"
 }
