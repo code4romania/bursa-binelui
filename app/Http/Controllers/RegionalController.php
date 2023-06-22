@@ -12,38 +12,6 @@ class RegionalController extends Controller
 {
     public function index()
     {
-        $testimonials = [
-            [
-                'content' => '11111 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
-                'name' => 'Judith Black',
-                'job' => 'CEO',
-                'company' => 'Workcation',
-            ],
-            [
-                'content' => '222222222 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
-                'name' => 'Judith Black',
-                'job' => 'CEO',
-                'company' => 'Workcation',
-            ],
-        ];
-
-        $links = [
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-        ];
 
         $editions = [
             [
@@ -90,54 +58,53 @@ class RegionalController extends Controller
             ],
         ];
 
+        $registration = [
+            'start' => '2023-06-01',
+            'end' => '2023-07-20'
+        ];
+
+        $parteners = [
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png'
+        ];
+
+        $faqs = [
+            [
+                'title' => 'Title 1',
+                'content' => 'Content 1'
+            ],
+            [
+                'title' => 'Title 2',
+                'content' => 'Content 2'
+            ],
+            [
+                'title' => 'Title 3',
+                'content' => 'Content 3'
+            ],
+            [
+                'title' => 'Title 4',
+                'content' => 'Content 4'
+            ]
+        ];
+
         $projects = Project::publish()->paginate(9)->withQueryString();
-        $counties = County::whereHas('projects')->get(['name', 'id']);
 
         return Inertia::render('Public/Regional/Regional', [
             'query' => $projects,
-            'counties' => $counties,
-            'testimonials' => $testimonials,
-            'links' => $links,
             'editions' => $editions,
             'articles' => $articles,
+            'parteners' => $parteners,
+            'registration' => $registration,
+            'faqs' => $faqs
         ]);
     }
 
     public function edition()
     {
-        $testimonials = [
-            [
-                'content' => '11111 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
-                'name' => 'Judith Black',
-                'job' => 'CEO',
-                'company' => 'Workcation',
-            ],
-            [
-                'content' => '222222222 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
-                'name' => 'Judith Black',
-                'job' => 'CEO',
-                'company' => 'Workcation',
-            ],
-        ];
-
-        $links = [
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-        ];
-
         $editions = [
             [
                 'href' => '1',
@@ -183,40 +150,47 @@ class RegionalController extends Controller
             ],
         ];
 
-        $statistics = [
+        $registration = [
+            'start' => '2023-06-01',
+            'end' => '2023-07-20'
+        ];
+
+        $parteners = [
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png',
+            '/images/project_img.png'
+        ];
+
+        $faqs = [
             [
-                'month' => 'Decembrie 2016',
-                'donations' => '2210',
-                'amount' => '188873,00',
+                'title' => 'Title 1',
+                'content' => 'Content 1'
             ],
             [
-                'month' => 'Decembrie 2016',
-                'donations' => '2210',
-                'amount' => '188873,00',
+                'title' => 'Title 2',
+                'content' => 'Content 2'
             ],
             [
-                'month' => 'Decembrie 2016',
-                'donations' => '2210',
-                'amount' => '188873,00',
+                'title' => 'Title 3',
+                'content' => 'Content 3'
             ],
             [
-                'month' => 'Decembrie 2016',
-                'donations' => '2210',
-                'amount' => '188873,00',
-            ],
+                'title' => 'Title 4',
+                'content' => 'Content 4'
+            ]
         ];
 
         $projects = Project::publish()->paginate(9)->withQueryString();
-        $counties = County::whereHas('projects')->get(['name', 'id']);
-
         return Inertia::render('Public/Regional/LastEdition', [
             'query' => $projects,
-            'counties' => $counties,
-            'testimonials' => $testimonials,
-            'links' => $links,
             'editions' => $editions,
             'articles' => $articles,
-            'statistics' => $statistics,
+            'parteners' => $parteners,
+            'registration' => $registration,
+            'faqs' => $faqs
         ]);
     }
 

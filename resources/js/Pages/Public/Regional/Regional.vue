@@ -177,13 +177,10 @@
             </div>
         </div>
 
-        <!-- Stats -->
+        <!-- Countdown -->
         <div class="w-full bg-turqoise-500">
             <div class="flex flex-col items-center justify-center max-w-5xl gap-6 mx-auto mb-10 p-9 md:flex-row">
-                <div class="text-center">
-                    <h3 class="text-6xl font-bold text-white">243</h3>
-                    <p class="text-2xl font-bold text-white">{{ $t('register_projects') }}</p>
-                </div>
+                <Countdown :dates="registration" />
             </div>
         </div>
 
@@ -193,114 +190,16 @@
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
-        <!-- Projects -->
-        <div class="mx-auto mb-10 p-9 max-w-7xl">
-
-            <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
-            </div>
-
-            <div class="flex flex-col items-center justify-between gap-6 lg:flex-row">
-
-                <div class="flex flex-col items-center w-full gap-6 my-10 sm:flex-row xl:w-8/12">
-                    <!-- Search -->
-                    <div class="flex gap-6">
-                        <SearchFilter
-                            id="project-search"
-                            class="w-full lg:w-96"
-                            v-model="filter.s"
-                            color="gray-700"
-                            :placeholder="$t('search')"
-                            @keydown.enter="filterProjects"
-                        />
-
-                        <!-- Search action -->
-                        <SecondaryButton
-                            @click="filterProjects"
-                            class="py-2"
-                        >
-                            {{ $t('search') }}
-                        </SecondaryButton>
-                    </div>
-
-                    <div class="flex w-full gap-6 mb-6 sm:mb-0">
-                        <!-- Empty filters. -->
-                        <SecondaryButton
-                            v-if="hasValues"
-                            @click="emptyFilters"
-                            class="flex items-center w-1/2 gap-2 py-2 sm:w-auto"
-                        >
-                            <SvgLoader name="close" />
-                            {{ $t('empty_filters') }}
-                        </SecondaryButton>
-
-                        <!-- Sort -->
-                        <Sort
-                            class="w-1/2 sm:w-auto"
-                        />
-                    </div>
-                </div>
-
-                <Select
-                    class="z-50 w-48"
-                    v-model="filter.stage"
-                    :options="stages"
-                />
-            </div>
-
-            <h2 class="text-2xl font-bold text-gray-900">{{ query.total }} {{ $t('of_projects') }}</h2>
-
-            <!-- Published projects -->
-            <PaginatedGrid
-                cardType="project-regional"
-                :list="query"
-                classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4"
-            />
-        </div>
-
-        <!-- Testimonials -->
-        <div class="w-full bg-cyan-900">
-            <div class="flex items-center mx-auto max-w-7xl p-9 gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-white" name="quote"/>
-                </div>
-                <h2 class="text-2xl font-bold text-white">{{ $t('testimonials') }}</h2>
-            </div>
-        </div>
-
-        <!-- Carousel -->
-        <div class="relative overflow-hidden bg-gray-50">
-            <div class="flex items-center max-w-5xl mx-auto mt-12 mb-8 p-9 gap-x-4">
-                <carousel
-                    class="w-full"
-                    :items-to-show="1"
-                    :autoplay="4000"
-                    :pauseAutoplayOnHover="true"
-                    :wrapAround="true"
-                    :transition="300"
+        <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
+            <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
+            <Faqs :data="faqs" />
+            <div class="mt-10">
+                <Link
+                    :href="route('contact')"
+                    class="bg-turqoise-500 flex-1 text-center  sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
-                    <slide
-                        v-for="(testimonial, index) in testimonials"
-                        :key="index"
-                        class="flex flex-col"
-                    >
-                        <p class="text-2xl font-medium text-gray-900">
-                            &ldquo;{{ testimonial.content }}&rdquo;
-                        </p>
-
-                        <p class="mt-6">
-                            <span class="text-base font-medium text-gray-900 ">{{ testimonial.name }} / </span>
-                            <span class="text-base font-medium text-gray-500 ">{{ testimonial.job }}, {{ testimonial.company }}</span>
-                        </p>
-                    </slide>
-                </carousel>
-            </div>
-
-            <div class="absolute hidden md:block -bottom-32 -left-16">
-                <SvgLoader class="shrink-0 fill-gray-200" name="dotted_square" />
+                    {{ $t('contact_us') }}
+                </Link>
             </div>
         </div>
 
@@ -332,29 +231,33 @@
             </div>
         </div>
 
-        <!-- External links -->
-        <div class="mx-auto max-w-7xl p-9 gap-x-4">
-            <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="links"/>
+        <!-- Parteners -->
+        <div class="relative mb-10 overflow-hidden pb-9">
+
+            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+                <div class="flex items-center gap-4 mx-auto max-w-7xl">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">{{ $t('parteners') }}</h3>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
             </div>
 
-            <div class="border-l-8 border-turqoise-500">
-                <div
-                    v-for="(link, index) in links"
-                    :key="index"
-                    class="ml-4"
-                >
-                    <a
-                        class="text-base font-medium text-blue-500"
-                        :href="link.href"
-                        target="_blank"
+            <div class=" px-9">
+                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto lg:-mt-12 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+
+                    <li
+                        v-for="(partener, index) in parteners"
+                        :key="index"
+                        class="relative z-50 flex flex-col col-span-1 p-10 bg-white rounded-lg shadow-md"
                     >
-                        <span class="underline">{{ link.label }}</span> <span class="text-gray-900">- {{ link.source }}</span>
-                    </a>
-                </div>
+                        <img :src="partener">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="absolute top-0 right-0 z-10 hidden lg:block">
+                <SvgLoader class="shrink-0" name="squer_half_color" />
             </div>
         </div>
 
@@ -388,24 +291,18 @@
     /** Import from inertia. */
     import { Head, Link, useForm, router } from '@inertiajs/vue3';
 
-    /** Import plugins */
-    import 'vue3-carousel/dist/carousel.css';
-    import { Carousel, Slide } from 'vue3-carousel';
-
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
-    import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
-    import Sort from '@/Components/filters/Sort.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
-    import Select from '@/Components/form/Select.vue';
     import ChampionshipModal from '@/Components/modals/ChampionshipModal.vue';
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
+    import Countdown from '@/Components/timers/Countdown.vue';
+    import Faqs from '@/Components/faqs/Faqs.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 
@@ -415,8 +312,10 @@
         championship: Object,
         testimonials: Array,
         editions: Array,
-        links: Array,
-        articles: Array
+        articles: Array,
+        registration: Object,
+        parteners: Array,
+        faqs: Array
     });
 
     /** Active filter state. */
