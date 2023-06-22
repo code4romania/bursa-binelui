@@ -31,8 +31,6 @@ class ProjectResource extends Resource
                     ->required(),
                 Forms\Components\Toggle::make('is_national')
                     ->required(),
-                Forms\Components\Select::make('county_id')
-                    ->relationship('county', 'name'),
                 Forms\Components\TextInput::make('category')
                     ->required()
                     ->maxLength(255),
@@ -70,7 +68,6 @@ class ProjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('organization.name'),
-                Tables\Columns\TextColumn::make('county.name'),
                 Tables\Columns\IconColumn::make('status')->options([
                     'heroicon-o-x-circle',
                     'heroicon-o-pencil' => ProjectStatus::draft->value,

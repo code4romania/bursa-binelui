@@ -9,7 +9,7 @@
 
                 <div class="relative flex flex-col items-center pb-10 my-10 md:flex-row gap-x-6">
                     <Link
-                        :href="route('projects')"
+                        :href="route('admin.ong.project.add')"
                         class="bg-turqoise-500 text-center z-50 flex-1 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                         {{ $t('register_project') }}

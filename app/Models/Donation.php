@@ -10,8 +10,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Donation extends Model
 {
+    protected $fillable = [
+        'uuid',
+        'user_id',
+        'organization_id',
+        'project_id',
+        'amount',
+        'charge_amount',
+        'first_name',
+        'last_name',
+        'email',
+        'status',
+        'card_status',
+        'card_holder_status_message',
+        'approval_date',
+        'charge_date',
+        'updated_without_correct_e_pid',
+    ];
     use HasFactory;
-
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

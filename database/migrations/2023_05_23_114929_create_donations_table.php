@@ -15,10 +15,21 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained();
             $table->foreignIdFor(\App\Models\Organization::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Project::class)->constrained()->cascadeOnDelete();
-            $table->integer('amount');
+            $table->uuid('uuid');
+            $table->float('amount');
+            $table->float('charge_amount');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('status');
+            $table->string('card_status')->nullable();
+            $table->string('card_holder_status_message')->nullable();
+            $table->timestamp('approval_date')->nullable();
+            $table->timestamp('charge_date')->nullable();
+            $table->boolean('updated_without_correct_e_pid');
             $table->timestamps();
         });
     }

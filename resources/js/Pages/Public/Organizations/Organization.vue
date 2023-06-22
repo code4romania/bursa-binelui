@@ -14,7 +14,7 @@
                             <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
                                 <SvgLoader class="shrink-0 fill-turqoise-500 stroke-turqoise-500" name="global" />
                             </div>
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{ organization.county_name }}, {{ organization.city_name }}</h3>
+                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{organization.counties.join(', ')}}</h3>
                         </div>
                     </div>
 
@@ -128,7 +128,7 @@
 
             <div class="bg-white px-9">
                 <ul role="list" class="mx-auto max-w-7xl grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-                    <template v-for="(item, index) in projects" :key="index">
+                    <template v-for="(item, index) in organization.projects" :key="index">
                         <ProjectCard
                             class="-mt-6"
                             :data="item"
@@ -174,10 +174,15 @@
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import SharePage from '@/Components/SharePage.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+    import {onMounted} from "vue";
 
     /** Page props. */
     const props = defineProps({
         organization: [Array, Object]
+    });
+
+    onMounted(() => {
+        console.log(props.organization);
     });
 
     /**

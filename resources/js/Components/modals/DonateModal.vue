@@ -96,13 +96,13 @@
                                                 >
                                                     <Checkbox
                                                         name="confirm"
-                                                        v-model:checked="guestForm.confirm"
+                                                        v-model:checked="guestForm.terms"
                                                     />
                                                     <span class="ml-2 text-sm text-gray-700 mr-1">{{ $t('i_agree') }}</span>
                                                     <Link :href="route('terms')" class="text-sm text-turqoise-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
 
                                                     <!-- Error -->
-                                                    <p v-show="guestForm.errors.confirm" class="mt-2 text-sm text-red-600">{{ guestForm.errors.confirm }}</p>
+                                                    <p v-show="guestForm.errors.terms" class="mt-2 text-sm text-red-600">{{ guestForm.errors.terms }}</p>
                                                 </label>
 
                                                 <!-- Actions -->
@@ -174,7 +174,7 @@
         name: '',
         email: '',
         amount: '',
-        confirm: false,
+        terms: false,
     });
 
     /** Initialize inertia from Object. */
@@ -184,11 +184,15 @@
 
     /** Donate action */
     const donate = () => {
+        console.log(guestForm);
+
         /** Trigger donate post method. */
-        if(usePage().props.auth.user) {
-            // guestForm.post(route('ruta', data.id), {
-            //     onFinish: () => form.reset(),
-            // });
+        if(!usePage().props.auth.user) {
+            guestForm.post(route('project.donation', props.data.slug), {
+                onSuccess: () => open.value = false,
+                onError: (errors) => {console.log('error',errors)},
+                onFinish: () => guestForm.reset()
+            });
         } else {
             // authForm.post(route('ruta', data.id), {
             //     onFinish: () => form.reset(),

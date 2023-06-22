@@ -49,11 +49,11 @@ class Organization extends Model
         'deleted_at' => 'datetime',
     ];
 
-    protected $with = ['counties', 'activityDomains'];
+    protected $with = ['counties', 'activityDomains', 'projects'];
 
     public function projects(): HasMany
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class)->without('organization');
     }
 
     /**

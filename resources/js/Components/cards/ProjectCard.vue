@@ -47,7 +47,7 @@
             </Link>
 
             <div class="p-6">
-                <div class="pb-4 text-base font-medium text-gray-700">{{ data.organization.name }}</div>
+                <div class="pb-4 text-base font-medium text-gray-700">{{ data.organization?.name }}</div>
 
                 <Link
                     :href="route('project', data.slug)"
@@ -158,7 +158,7 @@
 </template>
 
 <script setup>
-    import { computed } from "vue";
+import {computed, onMounted} from "vue";
 
     /** Import from inertia. */
     import { Link } from "@inertiajs/vue3";
@@ -173,6 +173,10 @@
     const props = defineProps({
         data: Object,
         cardType: String,
+    });
+
+    onMounted(() => {
+        console.log(props.data);
     });
 
     const percentage = computed(() => {
