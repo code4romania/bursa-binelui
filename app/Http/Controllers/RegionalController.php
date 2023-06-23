@@ -93,13 +93,16 @@ class RegionalController extends Controller
 
         $projects = Project::publish()->paginate(9)->withQueryString();
 
+        $countries = County::get(['name', 'id']);
+
         return Inertia::render('Public/Regional/Regional', [
             'query' => $projects,
             'editions' => $editions,
             'articles' => $articles,
             'parteners' => $parteners,
             'registration' => $registration,
-            'faqs' => $faqs
+            'faqs' => $faqs,
+            'countries' => $countries
         ]);
     }
 
@@ -196,10 +199,112 @@ class RegionalController extends Controller
 
     public function project(Project $project)
     {
-        \Log::info(print_r($project, true));
+        $gallery = [
+            [
+                'src' => 'https://youtu.be/f-t2nWVauSE',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => 'https://youtu.be/f-t2nWVauSE',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => 'https://youtu.be/f-t2nWVauSE',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => 'https://youtu.be/f-t2nWVauSE',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => 'https://youtu.be/f-t2nWVauSE',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'video'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+            [
+                'src' => '/images/project_img.png',
+                'type' => 'image'
+            ],
+        ];
 
         return Inertia::render('Public/Regional/Project', [
             'project' => $project,
+            'gallery' => $gallery
         ]);
     }
 }

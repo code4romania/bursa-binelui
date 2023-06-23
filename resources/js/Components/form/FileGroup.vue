@@ -3,13 +3,13 @@
         <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">{{
                 $t('photo_gallery')
             }}</label>
-        <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6  text-center">
+        <div class="flex justify-center p-6 px-6 mt-2 border border-dashed rounded-lg border-gray-900/25">
             <div class="text-center">
-                <PhotoIcon class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true"/>
+                <PhotoIcon class="w-12 h-12 mx-auto text-gray-300" aria-hidden="true"/>
 
-                <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                <div class="flex justify-center mt-4 text-sm leading-6 text-center text-gray-600">
                     <label for="file-upload"
-                           class="relative cursor-pointer rounded-md bg-white font-semibold text-turqoise-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-turqoise-600 focus-within:ring-offset-2 hover:text-turqoise-500 text-center">
+                           class="relative font-semibold text-center bg-white rounded-md cursor-pointer text-turqoise-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-turqoise-600 focus-within:ring-offset-2 hover:text-turqoise-500">
                         <span>{{ $t('load_image') }}</span>
                         <input
                             id="file-upload"
@@ -33,7 +33,7 @@
         <div class="flex flex-wrap">
             <div :style="{backgroundImage:'url('+files[index]+')'}" style="background-size: contain"
                  v-for="(url,index) in modelValue"
-                 class="w-60 h-60 mx-2 my-2 grid grid-cols-2 gap-4 content-end ">
+                 class="grid content-end grid-cols-2 gap-4 mx-2 my-2 w-60 h-60 ">
                 <DangerButton
                     @click="removeImage(index)"
                 >{{ $t('remove_image') }}
