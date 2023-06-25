@@ -18,6 +18,10 @@ return new class extends Migration
             $table->text('description')->nullable()->default(null);
             $table->date('start_date')->nullable()->default(null);
             $table->date('end_date')->nullable()->default(null);
+            $table->date('registration_start_date')->nullable()->default(null);
+            $table->date('registration_end_date')->nullable()->default(null);
+            $table->boolean('is_current')->default(false);
+            $table->boolean('needs_approval')->default(false);
             $table->timestamps();
         });
     }

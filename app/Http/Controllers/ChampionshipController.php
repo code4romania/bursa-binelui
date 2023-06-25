@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Championship;
 use App\Models\County;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -14,13 +15,14 @@ class ChampionshipController extends Controller
     public function index()
     {
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
-        $counties = County::get(['name', 'id']);
-        $testimonials=[];
-        $links=[];
-        $editions=[];
-        $articles=[];
 
+        $championship = Championship::current()->first();
+        $projects = $championship->activeStage()->projects()->get()->map(fn ($project) => $project->project);
+        $counties = County::get(['name', 'id']);
+        $testimonials=$championship->testimonials;
+        $stages = $championship->stages;
+        $articles= $championship->articles;
+        $links =[];
 
 
         return Inertia::render('Public/Championship/Championship', [
@@ -28,7 +30,7 @@ class ChampionshipController extends Controller
             'counties' => $counties,
             'testimonials' => $testimonials,
             'links' => $links,
-            'editions' => $editions,
+            'editions' => $stages,
             'articles' => $articles,
         ]);
     }

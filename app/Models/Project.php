@@ -106,4 +106,14 @@ class Project extends Model implements HasMedia
     {
         return $this->hasMany(Volunteer::class);
     }
+
+    public function stages(): BelongsToMany
+    {
+        return $this->belongsToMany(ChampionshipStage::class);
+    }
+
+    public function championships()
+    {
+        return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
+    }
 }

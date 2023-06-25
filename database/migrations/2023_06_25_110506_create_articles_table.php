@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\ArticleCategory::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Championship::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description');
+            $table->string('author');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\ActivityDomain as ActivityDomainEnum;
 use App\Models\ActivityDomain;
+use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\User;
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             $activityDomains = ActivityDomainEnum::values();
             $tmpActivityDomains = [];
             User::factory(['email' => 'bb-admin@example.com'])->bbAdmin()->create();
+            Championship::factory()->count(3)->create();
             foreach ($activityDomains as $domain) {
                 $tmpActivityDomains[] = ['name' => $domain, 'slug' => \Str::slug($domain)];
             }
