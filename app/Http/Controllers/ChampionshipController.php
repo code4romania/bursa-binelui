@@ -15,10 +15,8 @@ class ChampionshipController extends Controller
 {
     public function index()
     {
-
-
         $championship = Championship::current()->first();
-        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn($project)=>$project->project);
+        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn ($project) =>$project->project);
         $projectAmount = $championship->activeStage()->projects()->sum('amount_of_donation');
         $projectDonationsNumber = $championship->activeStage()->projects()->sum('number_of_donation');
         $counties = County::get(['name', 'id']);
@@ -26,7 +24,6 @@ class ChampionshipController extends Controller
         $stages = $championship->stages;
         $articles = $championship->articles;
         $links = [];
-
 
         return Inertia::render('Public/Championship/Championship', [
             'projects' => $projects,
@@ -162,7 +159,6 @@ class ChampionshipController extends Controller
     {
         $offset = ($request->page - 1) * 8;
 
-
         return auth()->user()?->organization
             ->projects()
 //            ->notInChampionship($request->championship_id)
@@ -172,8 +168,7 @@ class ChampionshipController extends Controller
 
     public function subscribeProject(Request $request)
     {
-        if (auth()->check())
-        {
+        if (auth()->check()) {
             $request->validate([
                 'project_id' => 'required|exists:projects,id',
                 'championship_id' => 'required|exists:championships,id',
@@ -186,7 +181,8 @@ class ChampionshipController extends Controller
                     'championship_stage_id' => $request->stage_id,
                 ]
             );
-           return response()->json(['message' => 'success']);
+
+            return response()->json(['message' => 'success']);
         }
 
         return response()->json(['message' => 'error']);

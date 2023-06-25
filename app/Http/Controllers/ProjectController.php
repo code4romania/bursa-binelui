@@ -16,12 +16,11 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-
         $projects = Project::publish();
         /* Check if we have filters by activity domains. */
         if ($request->query('c')) {
             $projects->whereHas('counties', function ($query) use ($request) {
-                $query->whereIn('counties.id', $request->query('c'));;
+                $query->whereIn('counties.id', $request->query('c'));
             });
         }
         if ($request->query('status')) {
@@ -32,9 +31,8 @@ class ProjectController extends Controller
             $projects->where('start', '>=', $request->query('start_date'));
         }
 
-
         if ($request->query('end_date')) {
-            $projects->where('end', '<=',$request->query('end_date'));
+            $projects->where('end', '<=', $request->query('end_date'));
         }
 
         $counties = County::get(['name', 'id']);
@@ -107,6 +105,7 @@ class ProjectController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
         ])->projects()->attach($project->id);
+
         return redirect()->back()->with('success', __('success_volunteer'));
     }
 }

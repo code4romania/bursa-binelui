@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -17,6 +19,7 @@ class ChampionshipFactory extends Factory
     public function definition(): array
     {
         $start = $this->faker->dateTimeBetween('today', 'next Monday +7 days');
+
         return [
             'name' => $this->faker->name,
             'is_current' => $this->faker->boolean,

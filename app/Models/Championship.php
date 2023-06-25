@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +25,7 @@ class Championship extends Model
     ];
 
     protected $appends = [
-      'active_stage',
+        'active_stage',
     ];
 
     public function stages(): HasMany
@@ -32,7 +34,7 @@ class Championship extends Model
     }
 
     /**
-     * @param $query
+     * @param        $query
      * @return mixed
      */
     public function scopeCurrent($query): mixed

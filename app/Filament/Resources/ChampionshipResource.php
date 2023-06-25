@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChampionshipResource\Pages;
-use App\Filament\Resources\ChampionshipResource\RelationManagers;
 use App\Filament\Resources\ChampionshipResource\RelationManagers\ArticlesRelationManager;
 use App\Filament\Resources\ChampionshipResource\RelationManagers\ProjectsRelationManager;
 use App\Filament\Resources\ChampionshipResource\RelationManagers\StagesRelationManager;
@@ -14,21 +15,22 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ChampionshipResource extends Resource
 {
     protected static ?string $model = Championship::class;
 
     protected static ?string $navigationGroup = 'Campionatul de bine';
+
     protected static ?int $navigationSort = 12;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?string $label = 'Listă ediți';
+
     protected static ?string $pluralLabel = 'Listă ediții';
-    protected static ?string $navigationLabel ='Ediții anterioare';
+
+    protected static ?string $navigationLabel = 'Ediții anterioare';
 
     public static function form(Form $form): Form
     {
@@ -55,21 +57,21 @@ class ChampionshipResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Denumire ediție'),
-//                Tables\Columns\TextColumn::make('description'),
+                //                Tables\Columns\TextColumn::make('description'),
 
                 Tables\Columns\TextColumn::make('start_date')->label('Dată început')
                     ->date(),
                 Tables\Columns\TextColumn::make('end_date')->label('Dată final')
                     ->date(),
-//
-//                Tables\Columns\IconColumn::make('is_current')
-//                    ->boolean(),
-//                Tables\Columns\IconColumn::make('needs_approval')
-//                    ->boolean(),
-//                Tables\Columns\TextColumn::make('created_at')
-//                    ->dateTime(),
-//                Tables\Columns\TextColumn::make('updated_at')
-//                    ->dateTime(),
+                //
+                //                Tables\Columns\IconColumn::make('is_current')
+                //                    ->boolean(),
+                //                Tables\Columns\IconColumn::make('needs_approval')
+                //                    ->boolean(),
+                //                Tables\Columns\TextColumn::make('created_at')
+                //                    ->dateTime(),
+                //                Tables\Columns\TextColumn::make('updated_at')
+                //                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -91,10 +93,9 @@ class ChampionshipResource extends Resource
             StagesRelationManager::class,
             ProjectsRelationManager::class,
             TestimonialsRelationManager::class,
-            ArticlesRelationManager::class
+            ArticlesRelationManager::class,
         ];
     }
-
 
     public static function getPages(): array
     {
@@ -104,5 +105,4 @@ class ChampionshipResource extends Resource
             'edit' => Pages\EditChampionship::route('/{record}/edit'),
         ];
     }
-
 }

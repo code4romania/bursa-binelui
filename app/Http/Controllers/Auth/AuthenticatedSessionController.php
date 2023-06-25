@@ -37,11 +37,12 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $redirect = RouteServiceProvider::ONG;
-        match ($request->get('from','')) {
+        match ($request->get('from', '')) {
             'championship-page' => $redirect = RouteServiceProvider::CHAMPIONSHIP,
             'ong' => $redirect = RouteServiceProvider::ONG,
             default => $redirect = RouteServiceProvider::HOME,
         };
+
         return redirect()->intended($redirect);
     }
 

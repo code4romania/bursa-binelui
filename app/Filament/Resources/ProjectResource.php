@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Enums\OrganizationStatus;
 use App\Enums\ProjectCategory;
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource\Pages;
@@ -25,6 +24,7 @@ class ProjectResource extends Resource
     protected static ?string $model = Project::class;
 
     protected static ?string $navigationGroup = 'Administrează';
+
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -119,18 +119,18 @@ class ProjectResource extends Resource
                             Forms\Components\DatePicker::make('created_at')->label(__('project.filters.created_from'))->columnSpan(1),
                             Forms\Components\DatePicker::make('created_at')->label(__('project.filters.created_until')),
                         ]),
-                    ])->columnSpan(2)
-//                    ->query(function (Builder $query, array $data): Builder {
-//                        return $query
-//                            ->when(
-//                                $data['created_at'],
-//                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-//                            )
-//                            ->when(
-//                                $data['created_at'],
-//                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-//                            );
-//                    })
+                    ])->columnSpan(2),
+                //                    ->query(function (Builder $query, array $data): Builder {
+                //                        return $query
+                //                            ->when(
+                //                                $data['created_at'],
+                //                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                //                            )
+                //                            ->when(
+                //                                $data['created_at'],
+                //                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                //                            );
+                //                    })
             ])
             ->filtersLayout(Layout::AboveContent)
             ->actions([

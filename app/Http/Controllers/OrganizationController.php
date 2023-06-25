@@ -26,13 +26,13 @@ class OrganizationController extends Controller
         /* Check if we have filters by activity domains. */
         if ($request->query(OrganizationQuery::activity_domain->value)) {
             $query->whereHas('activityDomains', function ($query) use ($request) {
-                $query->whereIn('activity_domains.id', $request->query(OrganizationQuery::activity_domain->value));;
+                $query->whereIn('activity_domains.id', $request->query(OrganizationQuery::activity_domain->value));
             });
         }
 
         if ($request->query(OrganizationQuery::counties->value)) {
             $query->whereHas('counties', function ($query) use ($request) {
-                $query->whereIn('counties.id', $request->query(OrganizationQuery::counties->value));;
+                $query->whereIn('counties.id', $request->query(OrganizationQuery::counties->value));
             });
         }
         /* Check if we have a search. */
@@ -55,8 +55,7 @@ class OrganizationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public
-    function create()
+    public function create()
     {
         //
     }
@@ -64,8 +63,7 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public
-    function store(StoreOrganizationRequest $request)
+    public function store(StoreOrganizationRequest $request)
     {
         //
     }
@@ -73,8 +71,7 @@ class OrganizationController extends Controller
     /**
      * Display the specified resource.
      */
-    public
-    function show(Organization $organization)
+    public function show(Organization $organization)
     {
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organization', [
@@ -85,8 +82,7 @@ class OrganizationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public
-    function edit()
+    public function edit()
     {
         $organization = auth()->user()->organization;
         $activityDomains = cache()->remember('activityDomains', 60 * 60 * 24, function () {
@@ -106,8 +102,7 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public
-    function update(UpdateOrganizationRequest $request, Organization $organization)
+    public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         try {
             /** Get all request data. */
@@ -115,6 +110,7 @@ class OrganizationController extends Controller
             if ($request->hasFile('activity_domains')) {
                 $organization->activityDomains()->sync($request->input('activity_domains'));
             }
+            $organization->addMediaFromBase64($request->input('cover_image'))->toMediaCollection('organizationFiles');
 
             $organization->update($modelData);
 
@@ -127,9 +123,15 @@ class OrganizationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public
-    function destroy(Organization $organization)
+    public function destroy(Organization $organization)
     {
         //
+    }
+
+    public function removeCoverImage(Request $request)
+    {
+        $organization = auth()->user()->organization;
+        $organization->clearMediaCollection('organizationFiles');
+        return redirect()->back();
     }
 }

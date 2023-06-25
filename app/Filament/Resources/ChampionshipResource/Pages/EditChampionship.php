@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ChampionshipResource\Pages;
 
 use App\Filament\Resources\ChampionshipResource;
@@ -16,6 +18,7 @@ class EditChampionship extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
     public function hasCombinedRelationManagerTabsWithForm(): bool
     {
         return true;

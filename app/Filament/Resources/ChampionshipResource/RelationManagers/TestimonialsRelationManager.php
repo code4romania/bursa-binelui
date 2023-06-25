@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ChampionshipResource\RelationManagers;
 
 use Filament\Forms;
@@ -7,8 +9,6 @@ use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TestimonialsRelationManager extends RelationManager
 {
@@ -48,5 +48,5 @@ class TestimonialsRelationManager extends RelationManager
                 Tables\Actions\DissociateBulkAction::make(),
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

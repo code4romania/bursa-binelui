@@ -24,8 +24,11 @@ class OrganizationResource extends Resource
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationLabel = 'Organizații';
+
     protected static ?string $label = 'Organizație';
+
     protected static ?string $pluralLabel = 'Organizații';
+
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
@@ -99,7 +102,7 @@ class OrganizationResource extends Resource
                 SelectFilter::make('status')
                     ->multiple()
                     ->options(OrganizationStatus::options())
-                    ->label(__('Status organizație'))
+                    ->label(__('Status organizație')),
             ])
             ->filtersLayout(Layout::AboveContent)
             ->actions([

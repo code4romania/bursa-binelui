@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Championship;
@@ -26,7 +28,6 @@ class ChampionshipObserver
             'start_date' => $championship->start_date,
         ]);
     }
-
 
     public function updating(Championship $championship): void
     {

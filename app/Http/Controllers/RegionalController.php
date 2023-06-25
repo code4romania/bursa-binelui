@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\County;
 use App\Models\Project;
 use Inertia\Inertia;
 
@@ -12,7 +11,6 @@ class RegionalController extends Controller
 {
     public function index()
     {
-
         $editions = [
             [
                 'href' => '1',
@@ -60,7 +58,7 @@ class RegionalController extends Controller
 
         $registration = [
             'start' => '2023-06-01',
-            'end' => '2023-07-20'
+            'end' => '2023-07-20',
         ];
 
         $parteners = [
@@ -69,26 +67,26 @@ class RegionalController extends Controller
             '/images/project_img.png',
             '/images/project_img.png',
             '/images/project_img.png',
-            '/images/project_img.png'
+            '/images/project_img.png',
         ];
 
         $faqs = [
             [
                 'title' => 'Title 1',
-                'content' => 'Content 1'
+                'content' => 'Content 1',
             ],
             [
                 'title' => 'Title 2',
-                'content' => 'Content 2'
+                'content' => 'Content 2',
             ],
             [
                 'title' => 'Title 3',
-                'content' => 'Content 3'
+                'content' => 'Content 3',
             ],
             [
                 'title' => 'Title 4',
-                'content' => 'Content 4'
-            ]
+                'content' => 'Content 4',
+            ],
         ];
 
         $projects = Project::publish()->paginate(9)->withQueryString();
@@ -99,7 +97,7 @@ class RegionalController extends Controller
             'articles' => $articles,
             'parteners' => $parteners,
             'registration' => $registration,
-            'faqs' => $faqs
+            'faqs' => $faqs,
         ]);
     }
 
@@ -152,7 +150,7 @@ class RegionalController extends Controller
 
         $registration = [
             'start' => '2023-06-01',
-            'end' => '2023-07-20'
+            'end' => '2023-07-20',
         ];
 
         $parteners = [
@@ -161,36 +159,37 @@ class RegionalController extends Controller
             '/images/project_img.png',
             '/images/project_img.png',
             '/images/project_img.png',
-            '/images/project_img.png'
+            '/images/project_img.png',
         ];
 
         $faqs = [
             [
                 'title' => 'Title 1',
-                'content' => 'Content 1'
+                'content' => 'Content 1',
             ],
             [
                 'title' => 'Title 2',
-                'content' => 'Content 2'
+                'content' => 'Content 2',
             ],
             [
                 'title' => 'Title 3',
-                'content' => 'Content 3'
+                'content' => 'Content 3',
             ],
             [
                 'title' => 'Title 4',
-                'content' => 'Content 4'
-            ]
+                'content' => 'Content 4',
+            ],
         ];
 
         $projects = Project::publish()->paginate(9)->withQueryString();
+
         return Inertia::render('Public/Regional/LastEdition', [
             'query' => $projects,
             'editions' => $editions,
             'articles' => $articles,
             'parteners' => $parteners,
             'registration' => $registration,
-            'faqs' => $faqs
+            'faqs' => $faqs,
         ]);
     }
 
