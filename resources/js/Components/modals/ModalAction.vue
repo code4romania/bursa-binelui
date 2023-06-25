@@ -77,7 +77,7 @@
         triggerModalClasses: String,
         title: String,
         body: String,
-        deleteRoute: String,
+        actionRoute: String,
         id: [String, Number],
         data: [Object, Array]
     });
@@ -86,21 +86,19 @@
     const open = ref(false);
 
     /** Delete action. */
-    const deleteData = () => {
+    const action = () => {
         /** Initialize inertia from Object. */
-        // const form = useForm({ ...props.data });
-
-        // form.delete(props.deleteRoute, {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         open.value = false
-        //     },
-        //     onError: () => {
-        //         open.value = true
-        //     },
-        //     onFinish: () => {
-        //         open.value = false
-        //     }
-        // });
+        const form = useForm({});
+        form.delete(props.actionRoute, {
+            onSuccess: () => {
+                open.value = false
+            },
+            onError: () => {
+                open.value = true
+            },
+            onFinish: () => {
+                open.value = false
+            }
+        });
     };
 </script>
