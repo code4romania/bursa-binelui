@@ -21,16 +21,24 @@ class OrganizationController extends Controller
     public function index(Request $request)
     {
         $query = Organization::query();
+//        dd($request->query(OrganizationQuery::activity_domain->value, ''));
 
-//        /* Check if we have filters by activity domains. */
-//        if ($request->query(OrganizationQuery::activity_domain->value)) {
-//            $query->activityDomains($request->query(OrganizationQuery::activity_domain->value, ''));
-//        }
+        /* Check if we have filters by activity domains. */
+        if ($request->query(OrganizationQuery::activity_domain->value)) {
+            $query->whereHas('activityDomains', function ($query) use ($request) {
+                $query->whereIn('activity_domains.id', $request->query(OrganizationQuery::activity_domain->value));;
+            });
+        }
+
+        if ($request->query(OrganizationQuery::counties->value)) {
+            $query->whereHas('counties', function ($query) use ($request) {
+                $query->whereIn('counties.id', $request->query(OrganizationQuery::counties->value));;
+            });
+        }
         /* Check if we have a search. */
         if ($request->query(OrganizationQuery::search->value, '')) {
             $query->search($request->query(OrganizationQuery::search->value, ''));
         }
-
         /* Apply the active scope. */
         $query->status(OrganizationStatus::active);
 
@@ -38,6 +46,7 @@ class OrganizationController extends Controller
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organizations', [
             'activity_domains' => ActivityDomain::all(),
+            'counties' => \App\Models\County::all(),
             'query' => $query->paginate(),
             'request' => $request,
         ]);
@@ -46,7 +55,8 @@ class OrganizationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public
+    function create()
     {
         //
     }
@@ -54,7 +64,8 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrganizationRequest $request)
+    public
+    function store(StoreOrganizationRequest $request)
     {
         //
     }
@@ -62,7 +73,8 @@ class OrganizationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Organization $organization)
+    public
+    function show(Organization $organization)
     {
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organization', [
@@ -73,7 +85,8 @@ class OrganizationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public
+    function edit()
     {
         $organization = auth()->user()->organization;
         $activityDomains = cache()->remember('activityDomains', 60 * 60 * 24, function () {
@@ -93,7 +106,8 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrganizationRequest $request, Organization $organization)
+    public
+    function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         try {
             /** Get all request data. */
@@ -113,7 +127,8 @@ class OrganizationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Organization $organization)
+    public
+    function destroy(Organization $organization)
     {
         //
     }

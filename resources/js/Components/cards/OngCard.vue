@@ -8,9 +8,10 @@
             <div class="mt-1 flex items-center flex-wrap gap-5 text-base text-gray-800 font-medium mb-6">
                 <div v-if="data.activity_domains" class="flex gap-1 items-center">
                     <SvgLoader class="shrink-0" name="activity" />
-                    <p class="line-clamp-1">{{ data.activity_domains.join(', ') }}</p>
+                    <p class="line-clamp-1">{{ data.activity_domains?.map(item=>item.name).join(', ') }}</p>
                 </div>
             </div>
+
 
             <Link
                 :href="route('organization', data.id)"

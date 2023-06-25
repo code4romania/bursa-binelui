@@ -39,7 +39,16 @@ class ProjectResource extends Resource
                 Forms\Components\Select::make('status')->options(ProjectStatus::options())->disabled()
                     ->required(),
                 Forms\Components\Toggle::make('is_national')
+                    ->reactive()
                     ->required(),
+                Forms\Components\Select::make('county_id')
+                    ->relationship('counties', 'name')
+                    ->multiple()
+                    ->required()
+                    ->preload()
+                    ->hidden(function (callable $get) {
+                        return $get('is_national') === true;
+                    }),
                 Forms\Components\TextInput::make('category')
                     ->required()
                     ->maxLength(255),

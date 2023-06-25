@@ -53,7 +53,7 @@
                     class="w-80"
                     :label="$t('county_city')"
                     v-model="filter.c"
-                    :options="cities"
+                    :options="counties"
                     id="counties"
                     ref="counties"
                     @callback="filterOrganizations"
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 
     /** Import from inertia. */
     import { Head, usePage, useForm, router } from '@inertiajs/vue3';
@@ -89,9 +89,13 @@
     const props = defineProps({
         query: [Array, Object],
         activity_domains: [Array, Object],
-        cities: [Array, Object],
+        counties: [Array, Object],
         request: [Array, Object]
     });
+
+    onMounted(() => {
+     console.log(props.counties)
+    })
 
     /** Active filter state. */
     const hasValues = ref(false);

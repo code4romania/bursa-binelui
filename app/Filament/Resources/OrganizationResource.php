@@ -60,7 +60,9 @@ class OrganizationResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('website')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('activity_domains')
+                Forms\Components\Select::make('activity_domains')
+                    ->multiple()
+                    ->relationship('activityDomains', 'name')
                     ->required(),
                 Forms\Components\Textarea::make('why_volunteer')
                     ->maxLength(65535),

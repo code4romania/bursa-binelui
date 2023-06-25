@@ -14,13 +14,33 @@ use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::publish()->paginate()->withQueryString();
+
+        $projects = Project::publish();
+        /* Check if we have filters by activity domains. */
+        if ($request->query('c')) {
+            $projects->whereHas('counties', function ($query) use ($request) {
+                $query->whereIn('counties.id', $request->query('c'));;
+            });
+        }
+        if ($request->query('status')) {
+            $projects->whereIn('status', $request->query('status'));
+        }
+//        $projects->dd();
+        if ($request->query('start_date')) {
+            $projects->where('start', '>=', $request->query('start_date'));
+        }
+
+
+        if ($request->query('end_date')) {
+            $projects->where('end', '<=',$request->query('end_date'));
+        }
+
         $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Projects/Projects', [
-            'query' => $projects,
+            'query' => $projects->paginate()->withQueryString(),
             'counties' => $counties,
         ]);
     }

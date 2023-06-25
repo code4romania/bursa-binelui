@@ -84,7 +84,7 @@ class Project extends Model implements HasMedia
 
     public function scopePublish(Builder $query): Builder
     {
-        return $query->where('status', ProjectStatus::active);
+        return $query->whereIn('status', [ProjectStatus::active->value, ProjectStatus::disabled->value]);
     }
 
     public function getActiveAttribute(): bool

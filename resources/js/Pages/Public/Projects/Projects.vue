@@ -77,11 +77,12 @@
 
                 <div class="flex flex-col justify-between w-full gap-6 mt-6 sm:flex-row">
 
-                    <Select
+                    <MultiSelectFilter
                         class="w-full"
                         :label="$t('status')"
                         v-model="filter.status"
                         :options="statuses"
+                        @callback="filterProjects"
                     />
 
                     <MultiSelectObjectFilter
@@ -95,11 +96,22 @@
                     <!-- Date -->
                     <Input
                         class="w-full"
-                        :label="$t('period')"
+                        :label="$t('start_date')"
                         color="gray-700"
                         id="project-name"
                         type="date"
-                        v-model="filter.period"
+                        v-model="filter.start_date"
+                        @change="filterProjects"
+                    />
+                    <!-- Date -->
+                    <Input
+                        class="w-full"
+                        :label="$t('end_date')"
+                        color="gray-700"
+                        id="project-name"
+                        type="date"
+                        v-model="filter.end_date"
+                        @change="filterProjects"
                     />
                 </div>
             </div>
@@ -122,7 +134,7 @@
     import projects from '@/local_json/projects.js';
 
     /** Import from vue. */
-    import { ref } from 'vue';
+    import {ref, watch} from 'vue';
 
     /** Import from inertia. */
     import { Head, Link, router } from '@inertiajs/vue3';
@@ -138,17 +150,17 @@
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
+    import MultiSelectFilter from "@/Components/filters/MultiSelectFilter.vue";
 
     /** Active filter state. */
     const hasValues = ref(false);
 
     /** Filter values. */
     const filter = ref({
-        ad: '',
-        c: '',
-        s: '',
-        status:'',
-        period: ''
+        counties: [],
+        status:null,
+        start_date: null,
+        end_date: null,
     });
 
     /** Statuses */
@@ -157,11 +169,18 @@
 
     /** Filter projects. */
     const filterProjects = () => {
-        if (Object.values(filter.value).every(value => value === null)) {
-            hasValues.value = false
-        } else {
-            hasValues.value = true
-        }
+        router.visit(route('projects'), {
+            method: 'get',
+            data: filter.value,
+            preserveState: true,
+            onSuccess: (data) => {
+                if (Object.values(data.props.request).every(value => value === null)) {
+                    hasValues.value = false
+                } else {
+                    hasValues.value = true
+                }
+            }
+        })
     };
 
     /** Empty filters. */
@@ -176,157 +195,7 @@
             type: Array,
         },
     });
-
-    // const props = {
-    //     "activity_domains": [
-    //         "Protecția mediului",
-    //         "Educație",
-    //         "Sănătate",
-    //         "Drepturile omului",
-    //         "Dezvoltare rurală",
-    //         "Sprijin dizabilități",
-    //         "Egalitate de gen",
-    //         "Reducerea sărăciei",
-    //         "Integrarea minorităților",
-    //         "Sprijin tineret",
-    //         "Asistență vârstnici",
-    //         "Patrimoniu cultural",
-    //         "Artă și cultură",
-    //         "Sport și recreere",
-    //         "Dezvoltare comunitară",
-    //         "Prevenire violență domestică",
-    //         "Ajutor imigranți/refugiați",
-    //         "Combatere trafic uman",
-    //         "Bună guvernare",
-    //         "Protecția animalelor",
-    //         "Prevenire dependență droguri",
-    //         "Advocacy politici publice",
-    //         "Anti-discriminare",
-    //         "Îmbunătățire infrastructură",
-    //         "Antreprenoriat social",
-    //         "Gestionare dezastre",
-    //         "Drepturile consumatorilor",
-    //         "Sprijin familie",
-    //         "Promovare voluntariat",
-    //         "Asistență juridică",
-    //         "Protecția vieții private",
-    //         "Combatere corupție",
-    //         "Sănătate mintală",
-    //         "Drepturile animalelor",
-    //         "Cercetare științifică",
-    //         "Dezvoltare durabilă",
-    //         "Securitate alimentară",
-    //         "Control boli infecțioase",
-    //         "Sprijin veterani",
-    //         "Dezvoltare regională/internațională"
-    //     ],
-    //     "cities": [
-    //     {
-    //         "id": 88653,
-    //         "name": "Bretea Română, Hunedoara"
-    //     },
-    //     {
-    //         "id": 117248,
-    //         "name": "Periș, Mureș"
-    //     },
-    //     {
-    //         "id": 65057,
-    //         "name": "Zăbala, Covasna"
-    //     },
-    //     {
-    //         "id": 76335,
-    //         "name": "Ijdileni, Galați"
-    //     },
-    //     {
-    //         "id": 68002,
-    //         "name": "Mănești, Dâmbovița"
-    //     },
-    //     {
-    //         "id": 87665,
-    //         "name": "Oraș Simeria, Hunedoara"
-    //     },
-    //     {
-    //         "id": 110964,
-    //         "name": "Crivina, Mehedinți"
-    //     },
-    //     {
-    //         "id": 95836,
-    //         "name": "Mădârjești, Iași"
-    //     },
-    //     {
-    //         "id": 70478,
-    //         "name": "Răcarii De Sus, Dolj"
-    //     },
-    //     {
-    //         "id": 21793,
-    //         "name": "Florești, Bacău"
-    //     },
-    //     {
-    //         "id": 160555,
-    //         "name": "Florești, Tulcea"
-    //     },
-    //     {
-    //         "id": 27855,
-    //         "name": "Budureasa, Bihor"
-    //     },
-    //     {
-    //         "id": 138191,
-    //         "name": "Micula Nouă, Satu Mare"
-    //     },
-    //     {
-    //         "id": 141731,
-    //         "name": "Ip, Sălaj"
-    //     },
-    //     {
-    //         "id": 47710,
-    //         "name": "Plavățu, Buzău"
-    //     },
-    //     {
-    //         "id": 9351,
-    //         "name": "Sânleani, Arad"
-    //     },
-    //     {
-    //         "id": 38134,
-    //         "name": "Cucorăni, Botoșani"
-    //     },
-    //     {
-    //         "id": 91624,
-    //         "name": "Totești, Hunedoara"
-    //     },
-    //     {
-    //         "id": 168586,
-    //         "name": "Bârzești, Vâlcea"
-    //     },
-    //     {
-    //         "id": 113126,
-    //         "name": "Răiculești, Mehedinți"
-    //     }
-    //     ],
-    //     "query": {
-    //     "current_page": 1,
-    //     "data": projects,
-    //     "first_page_url": "http://bursabinelui.test/proiecte?page=1",
-    //     "from": 1,
-    //     "last_page": 2,
-    //     "last_page_url": "http://bursabinelui.test/proiecte?page=2",
-    //     "links": [
-    //         {
-    //         "url": "http://bursabinelui.test/proiecte?page=1",
-    //         "label": "1",
-    //         "active": true
-    //         },
-    //         {
-    //         "url": "http://bursabinelui.test/proiecte?page=2",
-    //         "label": "2",
-    //         "active": false
-    //         }
-    //     ],
-    //     "next_page_url": "http://bursabinelui.test/proiecte?page=2",
-    //     "path": "http://bursabinelui.test/proiecte",
-    //     "per_page": 15,
-    //     "prev_page_url": null,
-    //     "to": 15,
-    //     "total": 20
-    //     }
-    // }
+    watch(filter, () => {
+        filterProjects();
+    })
 </script>

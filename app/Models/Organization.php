@@ -78,9 +78,9 @@ class Organization extends Model
      */
     public function scopeSearch(Builder $query, string $searchedText): void
     {
-        $query->orWhere('name', 'LIKE', '%{$searchedText}%');
-        $query->orWhere('description', 'LIKE', '%{$searchedText}%');
-        $query->orWhere('contact_person', 'LIKE', '%{$searchedText}%');
-        $query->orWhere('website', 'LIKE', '%{$searchedText}%');
+        $query->orWhere('name', 'LIKE',"%{$searchedText}%");
+        $query->orWhere('description', 'LIKE', "%{$searchedText}%");
+        $query->orWhere('contact_person', 'LIKE', "%{$searchedText}%");
+        $query->orWhere('website', 'LIKE', "%{$searchedText}%");
     }
 }
