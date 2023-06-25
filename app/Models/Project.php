@@ -67,7 +67,7 @@ class Project extends Model implements HasMedia
             ->nonQueued();
     }
 
-    public function Donations(): HasMany
+    public function donations(): HasMany
     {
         return $this->hasMany(Donation::class);
     }
@@ -116,4 +116,6 @@ class Project extends Model implements HasMedia
     {
         return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
     }
+
+
 }

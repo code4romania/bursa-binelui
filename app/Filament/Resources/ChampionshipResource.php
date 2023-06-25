@@ -21,7 +21,14 @@ class ChampionshipResource extends Resource
 {
     protected static ?string $model = Championship::class;
 
+    protected static ?string $navigationGroup = 'Campionatul de bine';
+    protected static ?int $navigationSort = 12;
+
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $label = 'Listă ediți';
+    protected static ?string $pluralLabel = 'Listă ediții';
+    protected static ?string $navigationLabel ='Ediții anterioare';
 
     public static function form(Form $form): Form
     {
@@ -47,30 +54,31 @@ class ChampionshipResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('start_date')
+                Tables\Columns\TextColumn::make('name')->label('Denumire ediție'),
+//                Tables\Columns\TextColumn::make('description'),
+
+                Tables\Columns\TextColumn::make('start_date')->label('Dată început')
                     ->date(),
-                Tables\Columns\TextColumn::make('end_date')
+                Tables\Columns\TextColumn::make('end_date')->label('Dată final')
                     ->date(),
-                Tables\Columns\TextColumn::make('registration_start_date')
-                    ->date(),
-                Tables\Columns\TextColumn::make('registration_end_date')
-                    ->date(),
-                Tables\Columns\IconColumn::make('is_current')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('needs_approval')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+//
+//                Tables\Columns\IconColumn::make('is_current')
+//                    ->boolean(),
+//                Tables\Columns\IconColumn::make('needs_approval')
+//                    ->boolean(),
+//                Tables\Columns\TextColumn::make('created_at')
+//                    ->dateTime(),
+//                Tables\Columns\TextColumn::make('updated_at')
+//                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editează'),
+                Tables\Actions\ViewAction::make()->label('Vizualizează'),
+                //TODO Custome actions for stages, projects, testimonials, articles
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -86,6 +94,7 @@ class ChampionshipResource extends Resource
             ArticlesRelationManager::class
         ];
     }
+
 
     public static function getPages(): array
     {

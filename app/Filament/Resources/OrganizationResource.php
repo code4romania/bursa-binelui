@@ -12,11 +12,20 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Filters\Layout;
+use Filament\Tables\Filters\SelectFilter;
 
 class OrganizationResource extends Resource
 {
     protected static ?string $model = Organization::class;
 
+    protected static ?string $navigationGroup = 'Administrează';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Organizații';
+    protected static ?string $label = 'Organizație';
+    protected static ?string $pluralLabel = 'Organizații';
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
@@ -80,21 +89,30 @@ class OrganizationResource extends Resource
                     'heroicon-o-check-circle' => OrganizationStatus::active->value,
                 ]),
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('cif'),
-                Tables\Columns\TextColumn::make('street_address'),
-                Tables\Columns\TextColumn::make('contact_person'),
-                Tables\Columns\TextColumn::make('contact_phone'),
-                Tables\Columns\TextColumn::make('contact_email'),
-                Tables\Columns\TextColumn::make('website'),
-                Tables\Columns\IconColumn::make('accepts_volunteers')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime(),
 
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->multiple()
+                    ->options(OrganizationStatus::options())
+                    ->label(__('Status organizație'))
             ])
+            ->filtersLayout(Layout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make(__('organization.actions.approve'))
+                    ->action(function () {
+                    })
+                    ->icon('heroicon-o-check-circle')
+                    ->requiresConfirmation(),
+                Tables\Actions\Action::make(__('organization.actions.reject'))
+                    ->action(function () {
+                    })
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

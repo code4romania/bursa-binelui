@@ -296,11 +296,17 @@ export default {
     "about_regional": "Despre Galele Regionale",
     "see": "Vizualizează",
     "bb_regional_title": "Gale Regionale Bursa Binelui",
-    "read_article": "Citește articol",
     "other_articles": "Articole din domeniul",
     "other_categories": "Alte categorii",
     "share_article": "Distribuie acest articol pe",
     "parteners": "Parteneri",
     "faqs_title": "Intrebări frecvente",
-    "contact_us": "Contactează-ne"
+    "contact_us": "Contactează-ne",
+    "organization_arr":{
+        'status': {
+            'pending': 'În așteptare',
+            'active': 'Activ',
+            'disabled': 'Inactiv',
+        }
+    }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\OrganizationStatus;
+use App\Enums\ProjectCategory;
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Models\Project;
@@ -13,10 +15,17 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Actions\Position;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Query\Builder;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
+
+    protected static ?string $navigationGroup = 'Administrează';
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -67,37 +76,71 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('organization.name'),
                 Tables\Columns\IconColumn::make('status')->options([
                     'heroicon-o-x-circle',
                     'heroicon-o-pencil' => ProjectStatus::draft->value,
                     'heroicon-o-clock' => ProjectStatus::disabled->value,
                     'heroicon-o-check-circle' => ProjectStatus::active->value,
                 ]),
-                Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('start')
-                    ->date(),
-                Tables\Columns\TextColumn::make('end')
-                    ->date(),
-                Tables\Columns\IconColumn::make('accepting_volunteers')->label('Volunteers')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('accepting_comments')->label('Comments')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('category'),
+                Tables\Columns\TextColumn::make('target_budget'),
+                Tables\Columns\TextColumn::make('created_at')->date(),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->multiple()
+                    ->options(ProjectStatus::options())
+                    ->label(__('project.filters.status')),
+                SelectFilter::make('organization')
+                    ->multiple()
+                    ->relationship('organization', 'name')
+                    ->label(__('project.filters.organization')),
+                SelectFilter::make('category')
+                    ->multiple()
+                    ->options(ProjectCategory::options())
+                    ->label(__('project.filters.category')),
+                SelectFilter::make('counties')
+                    ->multiple()
+                    ->relationship('counties', 'name')
+                    ->label(__('project.filters.counties')),
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\Grid::make()->schema([
+                            Forms\Components\DatePicker::make('created_at')->label(__('project.filters.created_from'))->columnSpan(1),
+                            Forms\Components\DatePicker::make('created_at')->label(__('project.filters.created_until')),
+                        ]),
+                    ])->columnSpan(2)
+//                    ->query(function (Builder $query, array $data): Builder {
+//                        return $query
+//                            ->when(
+//                                $data['created_at'],
+//                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+//                            )
+//                            ->when(
+//                                $data['created_at'],
+//                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+//                            );
+//                    })
             ])
+            ->filtersLayout(Layout::AboveContent)
             ->actions([
-                Tables\Actions\EditAction::make()->iconButton(),
-                Tables\Actions\ViewAction::make()->iconButton(),
-
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make(__('project.actions.approve'))
+                    ->action(function () {
+                    })
+                    ->icon('heroicon-o-check-circle')
+                    ->requiresConfirmation(),
+                Tables\Actions\Action::make(__('project.actions.reject'))
+                    ->action(function () {
+                    })
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ])->actionsPosition(Position::BeforeCells);
+            ]);
     }
 
     protected function getTableActionsPosition(): ?string

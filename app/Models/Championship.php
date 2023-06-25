@@ -22,6 +22,10 @@ class Championship extends Model
         'registration_end_date',
     ];
 
+    protected $appends = [
+      'active_stage',
+    ];
+
     public function stages(): HasMany
     {
         return $this->hasMany(ChampionshipStage::class);
@@ -39,6 +43,11 @@ class Championship extends Model
     public function activeStage(): ChampionshipStage | null
     {
         return $this->stages()->where('is_current', true)->first();
+    }
+
+    public function getActiveStageAttribute(): ChampionshipStage | null
+    {
+        return $this->activeStage();
     }
 
     public function projects(): HasManyThrough
