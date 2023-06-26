@@ -27,6 +27,6 @@
 
     /** Active link classes. */
     const classes = computed(() =>
-        props.active ? 'text-turqoise-500 hover:text-turqoise-400' : 'text-gray-500 hover:text-turqoise-500'
+        props.active ? 'text-primary-500 hover:text-primary-400' : 'text-gray-500 hover:text-primary-500'
     );
 </script>

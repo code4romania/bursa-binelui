@@ -7,8 +7,8 @@
 
         >
             <div v-if="0===index" class="flex gap-4 h-1/4">
-                <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
-                    <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
+                <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
+                    <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900">{{ $t('gallery') }}</h3>
             </div>
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div v-if="openGallery" class="fixed top-0 left-0 w-full h-full z-101 bg-turqoise-500">
+    <div v-if="openGallery" class="fixed top-0 left-0 w-full h-full z-101 bg-primary-500">
         <carousel
             class="mx-auto max-w-7xl"
             :items-to-show="1"

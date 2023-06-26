@@ -17,7 +17,7 @@
 
                 <!-- Header -->
                 <header class="flex items-center gap-4">
-                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
                         <SvgLoader class="shrink-0" name="money"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('donations') }}</h2>

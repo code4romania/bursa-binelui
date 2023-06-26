@@ -16,8 +16,8 @@
                     </div>
 
                     <div v-if="project.category" class="flex items-center gap-2">
-                        <div class="flex items-center justify-center rounded-lg bg-turqoise-50 w-9 h-9">
-                            <SvgLoader class="shrink-0 fill-turqoise-50 stroke-turqoise-500" name="badge" />
+                        <div class="flex items-center justify-center rounded-lg bg-primary-50 w-9 h-9">
+                            <SvgLoader class="shrink-0 fill-primary-50 stroke-primary-500" name="badge" />
                         </div>
                         <p class="w-40 text-base font-semibold leading-6 text-gray-900 truncate lg:w-60">{{ project.category}}</p>
                     </div>
@@ -33,7 +33,7 @@
             <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
 
                 <div class="absolute bottom-0 right-0">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="dotted_square" />
+                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
                 </div>
 
                 <div class="relative flex items-center w-fit">
@@ -74,7 +74,7 @@
                     <div class="px-10 py-8 space-y-8 bg-gray-50">
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500" name="location" />
+                            <SvgLoader class="mt-1 shrink-0 fill-primary-500" name="location" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500"> {{ project?.county?.name }}</p>
@@ -82,16 +82,16 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500 stroke-turqoise-500" name="calendar" />
+                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">{{ project.start }} - {{ project.end }}</p>
-                                <p v-if="(5 >= project.end) && (0 < project.end)" class="mt-1 text-base font-semibold text-turqoise-500">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
+                                <p v-if="(5 >= project.end) && (0 < project.end)" class="mt-1 text-base font-semibold text-primary-500">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
                             </div>
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500 stroke-turqoise-500" name="person" />
+                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="person" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('contact_person') }}</h3>
                                 <p v-if="project?.contact?.name" class="mt-2 text-base font-normal text-gray-500">{{ project.contact.name }}</p>
@@ -103,7 +103,7 @@
 
                         <!-- Donate modal -->
                         <DonateModal
-                            triggerModalClasses="bg-turqoise-500 w-full hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                            triggerModalClasses="bg-primary-500 w-full hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                             :triggerModalText="$t('donate_btn')"
                             :data="project"
                         />
@@ -188,7 +188,7 @@
                 <img class="relative z-50 flex-shrink-0 w-full mx-auto shadow-lg -mt-36 sm:mt-0 sm:-mr-36 rounded-xl" :src="project.organization.cover_image" alt="" />
             </div>
 
-            <div class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-turqoise-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20">
+            <div class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-primary-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20">
                 <h2 class="relative z-30 mb-6 text-3xl font-bold text-white">{{ project.organization.name }}</h2>
                 <div class="relative z-30 text-base text-white" v-html="project.organization.description"></div>
                 <div class="relative z-30 mt-8">

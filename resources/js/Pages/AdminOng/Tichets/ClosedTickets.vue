@@ -17,22 +17,22 @@
                 <div class="flex flex-wrap mb-10">
                     <Link
                         :href="route('admin.ong.tickets.open')"
-                        :class="['py-2.5 px-3.5 text-sm font-semibold', route().current('admin.ong.tickets.open') ? 'bg-turqoise-500 text-white' : 'bg-turqoise-50 text-turqoise-500']"
+                        :class="['py-2.5 px-3.5 text-sm font-semibold', route().current('admin.ong.tickets.open') ? 'bg-primary-500 text-white' : 'bg-primary-50 text-primary-500']"
                     >
                         {{ $t('open_tickets') }}
                     </Link>
 
                     <Link
                         :href="route('admin.ong.tickets.closed')"
-                        :class="['py-2.5 px-3.5 text-sm font-semibold', route().current('admin.ong.tickets.closed') ? 'bg-turqoise-500 text-white' : 'bg-turqoise-50 text-turqoise-500']"
+                        :class="['py-2.5 px-3.5 text-sm font-semibold', route().current('admin.ong.tickets.closed') ? 'bg-primary-500 text-white' : 'bg-primary-50 text-primary-500']"
                     >
                         {{ $t('closed_tickets') }}
                     </Link>
                 </div>
 
                 <header class="flex items-center gap-4">
-                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0 fill-turqoise-500" name="checked"/>
+                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <SvgLoader class="shrink-0 fill-primary-500" name="checked"/>
                     </div>
                     <h1 class="text-2xl font-bold text-gray-900">{{ $t('closed_tickets') }}</h1>
                 </header>

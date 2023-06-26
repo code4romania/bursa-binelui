@@ -15,8 +15,8 @@
         <Dashboard>
            <div class="p-9 mb-24 w-full">
                 <header class="flex items-center gap-4">
-                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0 fill-turqoise-500" name="annotation"/>
+                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <SvgLoader class="shrink-0 fill-primary-500" name="annotation"/>
                     </div>
                     <h1 class="text-2xl font-bold text-gray-900">{{ ticket.subject }}</h1>
                 </header>

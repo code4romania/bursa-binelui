@@ -7,7 +7,7 @@
 
             <!-- Header -->
             <header class="flex items-center gap-4">
-                <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
                     <SvgLoader class="shrink-0" name="list"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('projects_title') }}</h2>
@@ -52,7 +52,7 @@
                     <div class="xl:w-4/12 flex justify-end gap-6">
                         <Link
                             :href="route('projects')"
-                            class="flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
+                            class="flex items-center gap-x-4 bg-primary-500 hover:bg-primary-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
                         >
                             <SvgLoader class="shrink-0" name="grid"/>
                             {{ $t('projects_list') }}

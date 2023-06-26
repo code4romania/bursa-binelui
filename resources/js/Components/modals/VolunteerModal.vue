@@ -30,7 +30,7 @@
                                         <div class="mt-6 w-full">
                                             <div>
                                                 <h3 class="text-center text-xl font-semibold text-gray-800">{{ $t('register_as_volunteer') }}</h3>
-                                                <h3 v-if="data.name" class="text-center text-xl font-semibold text-turqoise-500">{{ data.name }}</h3>
+                                                <h3 v-if="data.name" class="text-center text-xl font-semibold text-primary-500">{{ data.name }}</h3>
                                                 <p class="text-sm text-gray-500 my-4">{{ $t('voluntier_form_intro') }}</p>
                                                 <p v-if="$page.props.auth.user" class="text-sm text-gray-500 my-4">{{ $t('logged_as') }} {{ $page.props.auth.user.name }} ({{ $page.props.auth.user.email }})</p>
                                             </div>
@@ -96,7 +96,7 @@
                                                         v-model:checked="guestForm.terms"
                                                     />
                                                     <span class="ml-2 text-sm text-gray-700 mr-1">{{ $t('i_agree') }}</span>
-                                                    <Link :href="route('terms')" class="text-sm text-turqoise-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
+                                                    <Link :href="route('terms')" class="text-sm text-primary-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
 
                                                     <!-- Error -->
                                                     <p v-show="guestForm.errors.terms" class="mt-2 text-sm text-red-600">{{ guestForm.errors.terms }}</p>
@@ -147,10 +147,10 @@
         >
             <div class="mt-6 w-full">
                 <h3 class="text-center text-xl font-semibold text-gray-800">{{ $t('donation_period_ended') }}</h3>
-                <h3 class="text-center text-xl font-semibold text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
+                <h3 class="text-center text-xl font-semibold text-primary-500">{{ $t('donate_to_other_projects') }}</h3>
                 <Link
                     :href="route('projects')"
-                    class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
+                    class="rounded-md block mt-6 text-center bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
                 >
                     {{ $t('see_other_projects') }}
                 </Link>

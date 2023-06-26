@@ -1,13 +1,13 @@
 <template>
     <div>
         <div v-if="'soon' === show" class="space-y-6 text-center">
-            <p class="text-2xl font-bold text-turqoise-50">Vom deschide procesul de înscriere proiecte</p>
+            <p class="text-2xl font-bold text-primary-50">Vom deschide procesul de înscriere proiecte</p>
             <h2 class="text-6xl font-bold text-white">în curând!</h2>
-            <p class="text-2xl font-bold text-turqoise-50">Vă mulțumim pentru răbdare!</p>
+            <p class="text-2xl font-bold text-primary-50">Vă mulțumim pentru răbdare!</p>
         </div>
 
         <div v-if="'now' === show" class="space-y-6 text-center">
-            <p class="text-2xl font-bold text-turqoise-50">Au mai rămas</p>
+            <p class="text-2xl font-bold text-primary-50">Au mai rămas</p>
             <div class="grid grid-cols-3 gap-6">
                 <div class="text-center text-white">
                     <p class="text-6xl font-bold">{{ countdown.days }}</p>
@@ -22,11 +22,11 @@
                     <p class="text-2xl font-bold">min</p>
                 </div>
             </div>
-            <p class="text-2xl font-bold text-turqoise-50">până la termenul de depunere</p>
+            <p class="text-2xl font-bold text-primary-50">până la termenul de depunere</p>
         </div>
 
         <div v-if="'ended' === show" class="space-y-6 text-center">
-            <p class="text-2xl font-bold text-turqoise-50">Perioada de înscriere a luat sfârșit. Gala va avea loc pe</p>
+            <p class="text-2xl font-bold text-primary-50">Perioada de înscriere a luat sfârșit. Gala va avea loc pe</p>
             <h2 class="text-6xl font-bold text-white">{{ dates.end }}</h2>
         </div>
     </div>
