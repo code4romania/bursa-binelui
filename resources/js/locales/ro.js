@@ -296,7 +296,6 @@ export default {
     "about_regional": "Despre Galele Regionale",
     "see": "Vizualizează",
     "bb_regional_title": "Gale Regionale Bursa Binelui",
-    "read_article": "Citește articol",
     "other_articles": "Articole din domeniul",
     "other_categories": "Alte categorii",
     "share_article": "Distribuie acest articol pe",
@@ -326,4 +325,8 @@ export default {
     "regional_contact_phone": "Număr telefon persoană de contact (fără prefix)",
     "regional_contact_email": "Adresă de e-mail persoană de contact",
     "regional_projects": 'Proiecte Regionale'
+    'volunteers_rejected': 'Voluntari respinși',
+    'volunteers_approved': 'Voluntarii mei',
+    'volunteers_pending': 'Voluntari în așteptare',
+
 }

@@ -21,16 +21,24 @@ class OrganizationController extends Controller
     public function index(Request $request)
     {
         $query = Organization::query();
+//        dd($request->query(OrganizationQuery::activity_domain->value, ''));
 
-//        /* Check if we have filters by activity domains. */
-//        if ($request->query(OrganizationQuery::activity_domain->value)) {
-//            $query->activityDomains($request->query(OrganizationQuery::activity_domain->value, ''));
-//        }
+        /* Check if we have filters by activity domains. */
+        if ($request->query(OrganizationQuery::activity_domain->value)) {
+            $query->whereHas('activityDomains', function ($query) use ($request) {
+                $query->whereIn('activity_domains.id', $request->query(OrganizationQuery::activity_domain->value));
+            });
+        }
+
+        if ($request->query(OrganizationQuery::counties->value)) {
+            $query->whereHas('counties', function ($query) use ($request) {
+                $query->whereIn('counties.id', $request->query(OrganizationQuery::counties->value));
+            });
+        }
         /* Check if we have a search. */
         if ($request->query(OrganizationQuery::search->value, '')) {
             $query->search($request->query(OrganizationQuery::search->value, ''));
         }
-
         /* Apply the active scope. */
         $query->status(OrganizationStatus::active);
 
@@ -38,6 +46,7 @@ class OrganizationController extends Controller
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organizations', [
             'activity_domains' => ActivityDomain::all(),
+            'counties' => \App\Models\County::all(),
             'query' => $query->paginate(),
             'request' => $request,
         ]);
@@ -101,6 +110,7 @@ class OrganizationController extends Controller
             if ($request->hasFile('activity_domains')) {
                 $organization->activityDomains()->sync($request->input('activity_domains'));
             }
+            $organization->addMediaFromBase64($request->input('cover_image'))->toMediaCollection('organizationFiles');
 
             $organization->update($modelData);
 
@@ -116,5 +126,12 @@ class OrganizationController extends Controller
     public function destroy(Organization $organization)
     {
         //
+    }
+
+    public function removeCoverImage(Request $request)
+    {
+        $organization = auth()->user()->organization;
+        $organization->clearMediaCollection('organizationFiles');
+        return redirect()->back();
     }
 }

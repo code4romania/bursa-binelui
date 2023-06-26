@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Championship;
+use App\Models\ChampionshipStageProject;
 use App\Models\County;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -13,93 +15,25 @@ class ChampionshipController extends Controller
 {
     public function index()
     {
-        $testimonials = [
-            [
-                'content' => '11111 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
-                'name' => 'Judith Black',
-                'job' => 'CEO',
-                'company' => 'Workcation',
-            ],
-            [
-                'content' => '222222222 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.',
-                'name' => 'Judith Black',
-                'job' => 'CEO',
-                'company' => 'Workcation',
-            ],
-        ];
-
-        $links = [
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-            [
-                'href' => '#',
-                'label' => 'Titlu Articol',
-                'source' => 'sursa.ro',
-            ],
-        ];
-
-        $editions = [
-            [
-                'href' => '1',
-                'name' => 'Campionatul de bine 2020',
-            ],
-            [
-                'href' => '2',
-                'name' => 'Campionatul de bine 2019',
-            ],
-            [
-                'href' => '3',
-                'name' => 'Campionatul de bine 2018',
-            ],
-        ];
-
-        $articles = [
-            [
-                'id' => 1,
-                'img' => '/images/project_img.png',
-                'author' => 'Ion Popescu',
-                'name' => 'Importanța educației remediare în România în timpul pandemiei',
-                'team' => 'Echipa BCR',
-                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022',
-            ],
-            [
-                'id' => 2,
-                'img' => '/images/project_img.png',
-                'author' => 'Ion Popescu',
-                'name' => 'Importanța educației remediare în România în timpul pandemiei',
-                'team' => 'Echipa BCR',
-                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022',
-            ],
-            [
-                'id' => 3,
-                'img' => '/images/project_img.png',
-                'author' => 'Ion Popescu',
-                'name' => 'Importanța educației remediare în România în timpul pandemiei',
-                'team' => 'Echipa BCR',
-                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022',
-            ],
-        ];
-
-        $projects = Project::publish()->paginate(9)->withQueryString();
-        $counties = County::whereHas('projects')->get(['name', 'id']);
+        $championship = Championship::current()->first();
+        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn ($project) =>$project->project);
+        $projectAmount = $championship->activeStage()->projects()->sum('amount_of_donation');
+        $projectDonationsNumber = $championship->activeStage()->projects()->sum('number_of_donation');
+        $counties = County::get(['name', 'id']);
+        $testimonials = $championship->testimonials;
+        $stages = $championship->stages;
+        $articles = $championship->articles;
+        $links = [];
 
         return Inertia::render('Public/Championship/Championship', [
-            'query' => $projects,
+            'projects' => $projects,
+            'projectAmount' => $projectAmount,
+            'projectDonationsNumber' => $projectDonationsNumber,
             'counties' => $counties,
             'testimonials' => $testimonials,
+            'championship' => $championship,
             'links' => $links,
-            'editions' => $editions,
+            'editions' => $stages,
             'articles' => $articles,
         ]);
     }
@@ -208,7 +142,7 @@ class ChampionshipController extends Controller
         ];
 
         $projects = Project::publish()->paginate(9)->withQueryString();
-        $counties = County::whereHas('projects')->get(['name', 'id']);
+        $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Championship/Edition', [
             'query' => $projects,
@@ -225,6 +159,32 @@ class ChampionshipController extends Controller
     {
         $offset = ($request->page - 1) * 8;
 
-        return Project::publish()->offset($offset)->limit(8)->get();
+        return auth()->user()?->organization
+            ->projects()
+//            ->notInChampionship($request->championship_id)
+            ->publish()
+            ->offset($offset)->limit(8)->get();
+    }
+
+    public function subscribeProject(Request $request)
+    {
+        if (auth()->check()) {
+            $request->validate([
+                'project_id' => 'required|exists:projects,id',
+                'championship_id' => 'required|exists:championships,id',
+                'stage_id' => 'required|exists:championship_stages,id',
+            ]);
+            ChampionshipStageProject::create(
+                [
+                    'project_id' => $request->project_id,
+                    'championship_id' => $request->championship_id,
+                    'championship_stage_id' => $request->stage_id,
+                ]
+            );
+
+            return response()->json(['message' => 'success']);
+        }
+
+        return response()->json(['message' => 'error']);
     }
 }

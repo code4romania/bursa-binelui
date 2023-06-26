@@ -23,6 +23,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public const ONG = '/ong/organizatie';
 
+    public const CHAMPIONSHIP = '/campionatul-de-bine';
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */

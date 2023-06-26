@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +20,11 @@ class Volunteer extends Model
         'email',
         'phone',
         'status',
+    ];
+
+    protected $casts = [
+        'status' => 'string',
+        'created_at' => 'date:Y-m-d',
     ];
 
     public function user(): BelongsTo

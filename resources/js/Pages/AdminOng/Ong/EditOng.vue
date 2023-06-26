@@ -70,7 +70,7 @@
                         <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
                             <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_logo_label') }}</dt>
                             <dt class="col-span-12 md:col-span-6 text-base flex items-center gap-6 font-medium leading-6 text-gray-700">
-                                <img class="h-32 w-32 flex-shrink-0" src="/images/ong.png" alt="" />
+                                <img class="h-32 w-32 flex-shrink-0" :src="form.cover_image" alt="" />
 
                                 <div>
                                     <EditModal
@@ -82,6 +82,7 @@
                                             :label="$t('organization_logo_label')"
                                             color="gray-700"
                                             id="organization-image"
+                                            @change="handleFileChange"
                                             type="file"
                                         />
 
@@ -94,7 +95,7 @@
                                         :actionModalText="$t('delete')"
                                         :title="$t('confirm')"
                                         :body="`${$t('confirm_delete_image_text')}`"
-                                        actionRoute="route('admin.client.destroy', person.user.id)"
+                                        :actionRoute="route('organization.remove_cover_image', form.id)"
                                         :data="form"
                                     />
                                 </div>
@@ -422,10 +423,21 @@
     })
 
     const editField = () => {
+        console.log(form);
         form.put(route('admin.ong.update', form.id), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
         });
+    }
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (() => form.cover_image = reader.result);
+            reader.readAsDataURL(file);
+        }
+        form.cover_image = file;
     }
 </script>

@@ -17,4 +17,9 @@ enum ProjectCategory: string
     case Health = 'health';
     case Social = 'social';
     case Sport = 'sport';
+
+    protected function translationKeyPrefix(): ?string
+    {
+        return 'project.categories';
+    }
 }

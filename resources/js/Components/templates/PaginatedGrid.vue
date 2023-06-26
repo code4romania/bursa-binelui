@@ -2,7 +2,7 @@
     <div>
         <slot />
 
-        <template v-if="list.data.length">
+        <template v-if="list.data?.length">
             <ul :class="[`${classes}`]" role="list">
                 <template v-for="item in list.data" :key="item.id">
 
@@ -60,10 +60,11 @@
     import ChampionshipProject from '@/Components/cards/ChampionshipProject.vue';
 
     /** Component props. */
-    defineProps({
+   const props= defineProps({
         type: String,
         list: Object,
         classes: String,
         cardType: String
     });
+    console.log(props.list);
 </script>

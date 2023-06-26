@@ -77,11 +77,12 @@
 
                 <div class="flex flex-col justify-between w-full gap-6 mt-6 sm:flex-row">
 
-                    <Select
+                    <MultiSelectFilter
                         class="w-full"
                         :label="$t('status')"
                         v-model="filter.status"
                         :options="statuses"
+                        @callback="filterProjects"
                     />
 
                     <MultiSelectObjectFilter
@@ -95,11 +96,22 @@
                     <!-- Date -->
                     <Input
                         class="w-full"
-                        :label="$t('period')"
+                        :label="$t('start_date')"
                         color="gray-700"
                         id="project-name"
                         type="date"
-                        v-model="filter.period"
+                        v-model="filter.start_date"
+                        @change="filterProjects"
+                    />
+                    <!-- Date -->
+                    <Input
+                        class="w-full"
+                        :label="$t('end_date')"
+                        color="gray-700"
+                        id="project-name"
+                        type="date"
+                        v-model="filter.end_date"
+                        @change="filterProjects"
                     />
                 </div>
             </div>
@@ -119,7 +131,7 @@
 
 <script setup>
     /** Import from vue. */
-    import { ref } from 'vue';
+    import {ref, watch} from 'vue';
 
     /** Import from inertia. */
     import { Head, Link, router } from '@inertiajs/vue3';
@@ -135,17 +147,17 @@
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
+    import MultiSelectFilter from "@/Components/filters/MultiSelectFilter.vue";
 
     /** Active filter state. */
     const hasValues = ref(false);
 
     /** Filter values. */
     const filter = ref({
-        ad: '',
-        c: '',
-        s: '',
-        status:'',
-        period: ''
+        counties: [],
+        status:null,
+        start_date: null,
+        end_date: null,
     });
 
     /** Statuses */
@@ -154,11 +166,18 @@
 
     /** Filter projects. */
     const filterProjects = () => {
-        if (Object.values(filter.value).every(value => value === null)) {
-            hasValues.value = false
-        } else {
-            hasValues.value = true
-        }
+        router.visit(route('projects'), {
+            method: 'get',
+            data: filter.value,
+            preserveState: true,
+            onSuccess: (data) => {
+                if (Object.values(data.props.request).every(value => value === null)) {
+                    hasValues.value = false
+                } else {
+                    hasValues.value = true
+                }
+            }
+        })
     };
 
     /** Empty filters. */
@@ -173,4 +192,7 @@
             type: Array,
         },
     });
+    watch(filter, () => {
+        filterProjects();
+    })
 </script>

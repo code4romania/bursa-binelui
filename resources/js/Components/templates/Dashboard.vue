@@ -57,8 +57,9 @@ import {
     HomeIcon,
     UsersIcon,
     FolderOpenIcon,
-    FolderMinusIcon
+    FolderMinusIcon, UserMinusIcon, UserPlusIcon,UserGroupIcon
 } from '@heroicons/vue/24/outline';
+
 
 /** Sidebar links. */
 const navigation = [
@@ -73,7 +74,30 @@ const navigation = [
         name: 'Voluntari',
         href: 'admin.ong.volunteers',
         route: route('admin.ong.volunteers'),
-        subroutes: [],
+        subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
+        subMenu: [
+            {
+                name: 'volunteers_approved',
+                href: 'admin.ong.volunteers',
+                route: route('admin.ong.volunteers', {'status': 'approved'}),
+                icon: UserGroupIcon,
+                subroutes: [],
+            },
+            {
+                name: 'volunteers_pending',
+                href: 'admin.ong.volunteers',
+                route: route('admin.ong.volunteers', {'status': 'pending'}),
+                subroutes: [],
+                icon: UserPlusIcon
+            },
+            {
+                name: 'volunteers_rejected',
+                href: 'admin.ong.volunteers',
+                route: route('admin.ong.volunteers', {'status': 'rejected'}),
+                subroutes: [],
+                icon: UserMinusIcon
+            }
+        ],
         icon: UsersIcon,
     },
     {

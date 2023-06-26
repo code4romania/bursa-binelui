@@ -7,9 +7,11 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\ActivityDomain as ActivityDomainEnum;
 use App\Models\ActivityDomain;
+use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Volunteer;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -31,6 +33,7 @@ class DatabaseSeeder extends Seeder
             $activityDomains = ActivityDomainEnum::values();
             $tmpActivityDomains = [];
             User::factory(['email' => 'bb-admin@example.com'])->bbAdmin()->create();
+            Championship::factory()->count(3)->create();
             foreach ($activityDomains as $domain) {
                 $tmpActivityDomains[] = ['name' => $domain, 'slug' => \Str::slug($domain)];
             }
@@ -46,7 +49,11 @@ class DatabaseSeeder extends Seeder
                 } else {
                     User::factory()->ngoAdmin()->for($organization)->create();
                 }
-                Project::factory()->for($organization)->count(10)->create();
+                $project = Project::factory()->for($organization)->count(10)->create();
+                $project->each(function ($project) {
+                    $project->volunteers()->attach(Volunteer::factory()->count(10)->create());
+                });
+
             }
 
             for ($i = 0; $i < self::USER_BB_MANAGER_NUMBER; $i++) {

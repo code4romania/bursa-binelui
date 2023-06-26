@@ -67,7 +67,7 @@ class Project extends Model implements HasMedia
             ->nonQueued();
     }
 
-    public function Donations(): HasMany
+    public function donations(): HasMany
     {
         return $this->hasMany(Donation::class);
     }
@@ -84,7 +84,7 @@ class Project extends Model implements HasMedia
 
     public function scopePublish(Builder $query): Builder
     {
-        return $query->where('status', ProjectStatus::active);
+        return $query->whereIn('status', [ProjectStatus::active->value, ProjectStatus::disabled->value]);
     }
 
     public function getActiveAttribute(): bool
@@ -102,8 +102,18 @@ class Project extends Model implements HasMedia
         return $this->belongsToMany(County::class);
     }
 
-    public function volunteers(): HasMany
+    public function volunteers(): BelongsToMany
     {
-        return $this->hasMany(Volunteer::class);
+        return $this->belongsToMany(Volunteer::class);
+    }
+
+    public function stages(): BelongsToMany
+    {
+        return $this->belongsToMany(ChampionshipStage::class);
+    }
+
+    public function championships()
+    {
+        return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
     }
 }

@@ -20,7 +20,7 @@
                 <div class="flex flex-col w-full gap-4 mb-6 lg:mb-0 sm:flex-row">
 
                     <!-- Register -->
-                    <Modal v-if="$page.props.auth.user"
+                    <Modal v-if="!$page.props.auth.user"
                         triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('register_project')">
                         <form class="mt-6 space-y-6" @submit.prevent="submit">
@@ -62,7 +62,7 @@
                     </Modal>
 
                     <!-- Add Project -->
-                    <ChampionshipModal v-if="!$page.props.auth.user" @click.once="infiniteScroll">
+                    <ChampionshipModal v-if="$page.props.auth.user" @click.once="infiniteScroll">
 
                         <div class="px-9">
                             <SecondaryButton class="flex items-center flex-1 gap-x-2 py-2.5 my-10">
@@ -140,15 +140,15 @@
         <div class="w-full bg-turqoise-500">
             <div class="flex flex-col items-center justify-between max-w-5xl gap-6 mx-auto mb-10 p-9 md:flex-row">
                 <div class="text-center">
-                    <h3 class="text-6xl font-bold text-white">243</h3>
+                    <h3 class="text-6xl font-bold text-white">{{projects.total}}</h3>
                     <p class="text-2xl font-bold text-white">{{ $t('register_projects') }}</p>
                 </div>
                 <div class="text-center">
-                    <h3 class="text-6xl font-bold text-white">243</h3>
+                    <h3 class="text-6xl font-bold text-white">{{projectDonationsNumber}}</h3>
                     <p class="text-2xl font-bold text-white">{{ $t('donors') }}</p>
                 </div>
                 <div class="text-center">
-                    <h3 class="text-6xl font-bold text-white">243</h3>
+                    <h3 class="text-6xl font-bold text-white">{{ projectAmount }}</h3>
                     <p class="text-2xl font-bold text-white">{{ $t('amount') }}</p>
                 </div>
             </div>
@@ -200,10 +200,10 @@
                 <Select class="z-50 w-48" v-model="filter.stage" :options="stages" />
             </div>
 
-            <h2 class="text-2xl font-bold text-gray-900">{{ query.total }} {{ $t('of_projects') }}</h2>
+            <h2 class="text-2xl font-bold text-gray-900">{{ projects.total }} {{ $t('of_projects') }}</h2>
 
             <!-- Published projects -->
-            <PaginatedGrid type="project" cardType="client" :list="query"
+            <PaginatedGrid type="project" cardType="client" :list="projects"
                 classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4" />
         </div>
 
@@ -295,7 +295,7 @@
             </div>
 
             <div class="flex flex-col gap-y-4">
-                <Link v-for="(edition, index) in editions" :key="index" :href="route('edition', edition.href)"
+                <Link v-for="(edition, index) in editions" :key="index"   >
                     class="text-xl font-bold text-blue-500">
                 {{ edition.name }}
                 </Link>
@@ -306,7 +306,7 @@
 
 <script setup>
     /** Import from vue */
-    import { ref } from 'vue';
+    import {onMounted, ref} from 'vue';
 
     /** Import from inertia. */
     import { Head, Link, useForm, router } from '@inertiajs/vue3';
@@ -334,7 +334,10 @@
 
     /** Component props. */
     const props = defineProps({
-        query: Object,
+        projects: Object,
+        projectAmount: Number,
+        projectDonationsNumber: Number,
+        ongProjects: Array,
         championship: Object,
         testimonials: Array,
         editions: Array,
@@ -351,6 +354,10 @@
         stage: 'Etapa curenta',
         sort: '',
         s: '',
+    });
+
+    onMounted(() => {
+     console.log(props);
     });
 
     /** Filter projects. */
@@ -372,10 +379,12 @@
         email: '',
         password: '',
         remember: false,
+        from: 'championship-page',
     });
 
     /** Submit action. */
     const submit = () => {
+
         form.post(route('login'), {
             onFinish: () => form.reset('password'),
         });
@@ -383,18 +392,24 @@
 
     const name = ref('')
     const test = (project) => {
-        const form = useForm({ ...project });
+        const form = useForm({
+            championship_id: props.championship.id,
+            project_id: project.id,
+            stage_id : props.championship.active_stage.id,
+        });
+
         name.value = project.name
 
-        // form.post(route('need.subscribe.route'), {
-        //     onSuccess: () => {
-        //         document.getElementById('championship-modal').click()
-        //         document.getElementById('championship-success').click()
-        //     },
-        // });
-
-        document.getElementById('championship-modal').click()
-        document.getElementById('championship-success').click()
+        axios.post(route('championship.subscribe.project'), form.data()).then(
+            (response) => {
+                console.log(response)
+                document.getElementById('championship-modal').click()
+                document.getElementById('championship-success').click()
+            },
+            (error) => {
+                console.log(error)
+            }
+        );
     }
 
     const closeSucces = (() => document.getElementById('championship-success').click())
