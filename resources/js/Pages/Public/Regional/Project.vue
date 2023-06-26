@@ -4,10 +4,10 @@
         <Head title="Proiect" />
 
         <!-- Header -->
-        <div class="flex flex-col-reverse w-full mx-auto mt-2 mb-8 lg:flex-row lg:max-w-7xl sm:mt-0 px-9">
-            <div class="flex flex-col justify-center w-full lg:w-6/12">
+        <div class="flex flex-col-reverse w-full mx-auto mb-10 px-9 lg:flex-row lg:items-start lg:justify-start max-w-7xl">
+            <div class="w-full lg:mt-16 lg:w-6/12">
 
-                <div class="flex gap-6 pt-4 mr-6 bg-white">
+                <div class="flex gap-6 pt-4 mb-8 mr-6 bg-white">
                     <div class="flex items-center gap-2">
                         <div :class="['w-8 h-8 rounded-lg flex items-center justify-center', project.active ? 'bg-red-500' : 'bg-cyan-900']">
                             <SvgLoader :class="['shrink-0 stroke-white', project.active ? 'fill-red-500' : 'fill-cyan-900']" name="thunder" />
@@ -23,87 +23,21 @@
                     </div>
                 </div>
 
-                <h1 v-if="project.name" class="py-12 text-6xl font-extrabold text-gray-900">{{ project.name }}</h1>
+                <h1 v-if="project.name" class="text-6xl font-extrabold text-left text-gray-900">{{ project.name }}</h1>
 
-                <div class="flex flex-col w-full gap-4 sm:flex-row">
-
-                    <!-- Donate modal -->
-                    <DonateModal
-                        v-if="project.is_period_active"
-                        triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :triggerModalText="$t('donate_btn')"
-                        :data="project"
-                    />
-
-                    <!-- Donate Error modal -->
-                    <Modal
-                        v-if="project.is_period_active ===false"
-                        triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :triggerModalText="$t('donate_btn')"
-                        id="project-donation-expired"
-                    >
-                        <div class="w-full mt-6">
-                            <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
-                            <h3 class="text-xl font-semibold text-center text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
-                            <Link
-                                :href="route('projects')"
-                                class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
-                            >
-                                {{ $t('see_other_projects') }}
-                            </Link>
-                        </div>
-                    </Modal>
-
-                    <!-- Volunteer modal -->
-                    <VolunteerModal
-                        v-if="project.accepting_volunteers"
-                        triggerModalClasses="rounded-md w-full sm:w-auto bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 px-3.5 py-2.5"
-                        :triggerModalText="$t('become_volunter')"
-                        :data="project"
-                    />
+                <div class="flex items-center justify-start w-full mt-4 text-2xl font-bold text-cyan-900">
+                    {{ project.organization.name}}
                 </div>
             </div>
 
             <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
 
                 <div class="absolute bottom-0 right-0">
-                    <SvgLoader class="shrink-0" name="dotted_square" />
+                    <SvgLoader class="shrink-0 fill-turqoise-500" name="dotted_square" />
                 </div>
 
-                <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
-                    <img class="mx-auto" src="/images/project_img.png" alt="" />
-                </div>
-            </div>
-        </div>
-
-        <!-- Target amount -->
-        <div class="py-10 mb-20 bg-gray-100">
-            <div class="w-full mx-auto lg:max-w-7xl px-9">
-                <div class="flex items-center gap-4">
-                    <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
-                        <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900">{{ $t('target_amount') }}</h3>
-                </div>
-
-                <div class="mt-8">
-                    <div class="flex items-center justify-between mb-1 text-xl font-bold">
-                        <p class="text-cyan-900">
-                            {{ project.total_donations }} {{ $t("currency") }}
-                        </p>
-                        <p class="text-turqoise-500">
-                            {{ project.target_budget }} {{ $t("currency") }}
-                        </p>
-                    </div>
-
-                    <div class="w-full h-6 bg-gray-300">
-                        <div
-                            :class="[`h-6`,project.total_donations == project.target_budget ? 'bg-turqoise-500' : 'bg-cyan-900',]"
-                            :style="`width: ${percentage}%`"
-                        ></div>
-                    </div>
-
-                    <p class="mt-1 text-xl font-bold text-cyan-900">{{ project.donations.length }} {{ $t('donations') }}</p>
+                <div class="relative flex items-center w-fit">
+                    <img class="mx-auto rounded-md shadow" :src="project.cover_image!=='' ?project.cover_image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"/>
                 </div>
             </div>
         </div>
@@ -125,7 +59,7 @@
                 />
 
                 <div class="mb-10" v-if="project.description">
-                    <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
+                    <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_description_label') }}</h2>
                     <div class="text-lg text-gray-500" v-html="project.description"></div>
                 </div>
             </div>
@@ -143,7 +77,7 @@
                             <SvgLoader class="mt-1 shrink-0 fill-turqoise-500" name="location" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
-                                <p class="mt-2 text-base font-normal text-gray-500"> {{ project.county.name }}</p>
+                                <p class="mt-2 text-base font-normal text-gray-500"> {{ project?.county?.name }}</p>
                             </div>
                         </div>
 
@@ -153,6 +87,17 @@
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">{{ project.start }} - {{ project.end }}</p>
                                 <p v-if="(5 >= project.end) && (0 < project.end)" class="mt-1 text-base font-semibold text-turqoise-500">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-start gap-x-4">
+                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500 stroke-turqoise-500" name="person" />
+                            <div>
+                                <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('contact_person') }}</h3>
+                                <p v-if="project?.contact?.name" class="mt-2 text-base font-normal text-gray-500">{{ project.contact.name }}</p>
+                                <p v-if="project?.contact?.job" class="mt-2 text-base font-normal text-gray-500">{{ project.contact.job }}</p>
+                                <p v-if="project?.contact?.phone" class="mt-2 text-base font-normal text-gray-500">{{ project.contact.phone }}</p>
+                                <p v-if="project?.contact?.email" class="mt-2 text-base font-normal text-gray-500">{{ project.contact.email }}</p>
                             </div>
                         </div>
 
@@ -170,19 +115,49 @@
         <!-- Project info -->
         <div class="mx-auto mb-8 max-w-7xl px-9">
 
-            <div class="mb-10" v-if="project.scope">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_scope_label') }}</h2>
-                <div  class="text-lg text-gray-500" v-html="project.scope"></div>
+            <div class="mb-10" v-if="project.needs">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_needs_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.needs"></div>
             </div>
 
-            <div class="mb-10" v-if="project.beneficiaries">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_beneficiary_label') }}</h2>
-                <div  class="text-lg text-gray-500" v-html="project.beneficiaries"></div>
+            <div class="mb-10" v-if="project.solution">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_solution_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.solution"></div>
             </div>
 
-            <div class="mb-10" v-if="project.reason_to_donate">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('why_to_donate') }}</h2>
-                <div  class="text-lg text-gray-500" v-html="project.reason_to_donate"></div>
+            <div class="mb-10" v-if="project.stats">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_project_stats_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.stats"></div>
+            </div>
+
+            <div class="mb-10" v-if="project.results">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_results_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.results"></div>
+            </div>
+
+            <div class="mb-10" v-if="project.proud">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_proud_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.proud"></div>
+            </div>
+
+            <div class="mb-10" v-if="project.parteners">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('parteners') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.parteners"></div>
+            </div>
+
+            <div class="mb-10" v-if="project.budget">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_budget_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.budget"></div>
+            </div>
+
+            <div class="mb-10" v-if="project.participants">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_participants_no_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.participants"></div>
+            </div>
+
+            <div class="mb-10" v-if="project.project_organization">
+                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_organization_label') }}</h2>
+                <div  class="text-lg text-gray-500" v-html="project.project_organization"></div>
             </div>
         </div>
 
@@ -198,53 +173,12 @@
         />
 
         <!-- Gallery -->
-        <div class="mb-24 bg-gray-100">
-            <div class="flex flex-col w-full gap-8 py-10 mx-auto sm:flex-row lg:max-w-7xl px-9">
-
-                <div class="flex-col justify-between w-full sm:flex">
-                    <div class="flex items-center gap-4">
-                        <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
-                            <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900">{{ $t('gallery') }}</h3>
-                    </div>
-
-                    <div class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1">
-                        <img src="https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" class="object-cover object-center group-hover:opacity-75" />
-                        <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-90 sm:absolute sm:inset-0" />
-                        <div class="flex items-center justify-center p-6 sm:absolute sm:inset-0">
-                            <h3 class="flex items-center gap-4 font-semibold text-center text-white">
-                                <SvgLoader name="play"/>
-                                {{ $t('play_video') }}
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full">
-                    <div class="grid grid-cols-1 mt-6 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
-                        <div class="h-full overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-h-3 sm:row-span-2">
-                            <img src="https://images.unsplash.com/photo-1523115191856-c203e76215a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="" class="object-cover object-center group-hover:opacity-75" />
-                        </div>
-
-                        <div class="overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full">
-                            <img src="https://images.unsplash.com/photo-1617450365226-9bf28c04e130?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full" />
-                        </div>
-
-                        <div class="overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full">
-                            <img src="https://images.unsplash.com/photo-1535090467336-9501f96eef89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80" alt="" class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full" />
-                            <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-90 sm:absolute sm:inset-0" />
-                            <div class="flex items-center justify-center p-6 sm:absolute sm:inset-0">
-                                <Link
-                                    class="font-semibold text-center text-white"
-                                    :href="route('gallery', project.id)"
-                                >
-                                    {{ $t('see_more') }}
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="w-full bg-gray-100">
+            <div class="mx-auto max-w-7xl">
+                <Gallery
+                    v-if="gallery.length"
+                    :gallery="gallery"
+                />
             </div>
         </div>
 
@@ -266,12 +200,12 @@
                     </Link>
                 </div>
 
-                <div class="absolute top-0 right-0 z-10 hidden sm:block">
-                    <SvgLoader class="shrink-0" name="dotted_square" />
+                <div class="absolute right-0 z-10 hidden overflow-hidden -top-32 sm:block">
+                    <SvgLoader class="shrink-0 fill-gray-300" name="dotted_square" />
                 </div>
 
-                <div class="absolute left-0 z-10 -bottom-20">
-                    <SvgLoader class="shrink-0" name="dotted_square" />
+                <div class="absolute z-10 overflow-hidden -left-10 -bottom-24">
+                    <SvgLoader class="shrink-0 fill-gray-300" name="dotted_square" />
                 </div>
             </div>
         </div>
@@ -288,38 +222,22 @@
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Modal from '@/Components/modals/Modal.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
-    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
+    import Gallery from '@/Components/gallery/Gallery.vue';
 
     const props = defineProps({
         project: {
             type: Object,
             required: true,
         },
+        gallery: Array
     });
     onMounted(() => {
         console.log(project);
     });
     const project = ref(props.project);
-
-
-
-
-    /** Percentage */
-    const percentage = computed( () => (project.current_amount / project.max_amount) * 100 );
-
-    /** Get days till project ends. */
-    const project_end_date = computed(() => {
-        const targetDate = new Date(project.period_end);
-        const today = new Date();
-        const timeDiff = targetDate.getTime() - today.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-        return daysDiff;
-    })
 
     /**
      * Copy embed code.
@@ -355,8 +273,15 @@
         }
     }
 
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = (() => { document.getElementById('volunteer-active-modal').click(); });
+    /** Get days till project ends. */
+    const project_end_date = computed(() => {
+        const targetDate = new Date(project.period_end);
+        const today = new Date();
+        const timeDiff = targetDate.getTime() - today.getTime();
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+        return daysDiff;
+    })
 
     /** Trigger donate modal from card. */
     const triggerDonate = (() => {

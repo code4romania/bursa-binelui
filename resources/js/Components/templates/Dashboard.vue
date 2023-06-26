@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <div class="overflow-y-auto border-r border-gray-200 bg-white lg:w-72 mt-1 p-4">
+        <div class="p-4 mt-1 overflow-y-auto bg-white border-r border-gray-200 lg:w-72">
             <p class="mb-5 text-base font-medium text-gray-500">Administrează</p>
             <nav>
                 <ul role="list" class="space-y-1">
@@ -117,6 +117,13 @@ const navigation = [
                 name: 'draft_projects',
                 href: 'admin.ong.projects.draft',
                 route: route('admin.ong.projects', {'project_status': 'draft'}),
+                subroutes: [],
+                icon: FolderMinusIcon
+            },
+            {
+                name: 'regional_projects',
+                href: 'admin.ong.regional.project.add',
+                route: route('admin.ong.regional.project.add'),
                 subroutes: [],
                 icon: FolderMinusIcon
             }

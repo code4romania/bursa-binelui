@@ -40,6 +40,36 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function createRegional()
+    {
+        $countries = County::get(['name', 'id']);
+
+        return Inertia::render('AdminOng/Projects/AddRegionalProject', [
+            'countries' => $countries,
+            'projectCategories' => ProjectCategory::values(),
+        ]);
+    }
+
+    public function storeRegional(StoreRequest $request)
+    {
+        $data = $request->validated();
+        $data['organization_id'] = auth()->user()->organization_id;
+        $data['slug'] = \Str::slug($data['name']);
+        $project = Project::create($data);
+        if ($request->has('counties')) {
+            $project->counties()->attach($data['counties']);
+        }
+        $project->addAllMediaFromRequest()->each(function ($fileAdder) {
+            $fileAdder->toMediaCollection('project_files');
+        });
+
+        auth()->user()->notify(new ProjectCreated($project));
+        $adminUsers = User::whereRole(UserRole::bb_admin)->get();
+        Notification::send($adminUsers, new ProjectCreatedAdmin($project));
+
+        return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
+    }
+
     public function store(StoreRequest $request)
     {
         $data = $request->validated();

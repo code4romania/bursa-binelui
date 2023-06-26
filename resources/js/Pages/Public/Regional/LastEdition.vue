@@ -37,6 +37,75 @@
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
+        <!-- Projects -->
+        <div class="mx-auto mb-10 p-9 max-w-7xl">
+
+            <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
+                    <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
+            </div>
+
+            <div class="flex flex-col items-center justify-between gap-6 lg:flex-row">
+
+                <div class="flex flex-col items-center w-full gap-6 my-10 sm:flex-row xl:w-8/12">
+                    <!-- Search -->
+                    <div class="flex gap-6">
+                        <SearchFilter
+                            id="project-search"
+                            class="w-full lg:w-96"
+                            v-model="filter.s"
+                            color="gray-700"
+                            :placeholder="$t('search')"
+                            @keydown.enter="filterProjects"
+                        />
+
+                        <!-- Search action -->
+                        <SecondaryButton
+                            @click="filterProjects"
+                            class="py-2"
+                        >
+                            {{ $t('search') }}
+                        </SecondaryButton>
+                    </div>
+
+                    <div class="flex w-full gap-6 mb-6 sm:mb-0">
+                        <!-- Empty filters. -->
+                        <SecondaryButton
+                            v-if="hasValues"
+                            @click="emptyFilters"
+                            class="flex items-center w-1/2 gap-2 py-2 sm:w-auto"
+                        >
+                            <SvgLoader name="close" />
+                            {{ $t('empty_filters') }}
+                        </SecondaryButton>
+
+                        <!-- Sort -->
+                        <Sort
+                            class="w-1/2 sm:w-auto"
+                        />
+                    </div>
+                </div>
+
+                <MultiSelectObjectFilter
+                    class="z-50 w-60"
+                    v-model="filter.c"
+                    :options="countries"
+                    @callback="filterProjects"
+                />
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900">{{ query.total }} {{ $t('of_projects') }}</h2>
+
+            <!-- Published projects -->
+            <PaginatedGrid
+                cardType="project-regional"
+                :list="query"
+                classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4"
+            />
+            </div>
+
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
             <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
             <Faqs :data="faqs" />
@@ -141,9 +210,19 @@
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
+    import Input from '@/Components/form/Input.vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import Modal from '@/Components/modals/Modal.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
+    import ChampionshipModal from '@/Components/modals/ChampionshipModal.vue';
+    import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
     import Countdown from '@/Components/timers/Countdown.vue';
     import Faqs from '@/Components/faqs/Faqs.vue';
+    import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
+    import Sort from '@/Components/filters/Sort.vue';
+    import SearchFilter from '@/Components/filters/SearchFilter.vue';
+    import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 
@@ -156,6 +235,66 @@
         articles: Array,
         registration: Object,
         parteners: Array,
-        faqs: Array
+        faqs: Array,
+        countries: Array
     });
+
+    /** Active filter state. */
+    const hasValues = ref(false);
+
+    /** Filter values. */
+    const filter = ref({
+        stage: 'Etapa curenta',
+        sort: '',
+        s: '',
+        c: ''
+    });
+
+    /** Filter projects. */
+    const filterProjects = () => {
+        if (Object.values(filter.value).every(value => value === null)) {
+            hasValues.value = false
+        } else {
+            hasValues.value = true
+        }
+    };
+
+    /** Empty filters. */
+    const emptyFilters = () => {
+        router.visit(route('championship'))
+    };
+
+     /** Form variables. */
+     const form = useForm({
+        email: '',
+        password: '',
+        remember: false,
+    });
+
+    /** Submit action. */
+    const submit = () => {
+        form.post(route('login'), {
+            onFinish: () => form.reset('password'),
+        });
+    };
+
+    const name = ref('')
+    const test = (project) => {
+        const form =  useForm({...project});
+        name.value = project.name
+
+        // form.post(route('need.subscribe.route'), {
+        //     onSuccess: () => {
+        //         document.getElementById('championship-modal').click()
+        //         document.getElementById('championship-success').click()
+        //     },
+        // });
+
+        document.getElementById('championship-modal').click()
+        document.getElementById('championship-success').click()
+    }
+
+    const closeSucces = (() => document.getElementById('championship-success').click())
+
+    const stages = ['Etapa curenta', 'Etapa precendenta'];
 </script>

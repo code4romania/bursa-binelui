@@ -19,4 +19,6 @@ Route::prefix('ong')->middleware('auth')->group(function () {
     Route::post('add-proiect', [ProjectController::class, 'store'])->name('admin.ong.project.store');
     Route::get('edit-proiect/{project}', [ProjectController::class, 'edit'])->name('admin.ong.project.edit');
     Route::put('edit-proiect/{project}', [ProjectController::class, 'update'])->name('admin.ong.project.update');
+
+    Route::get('add-proiect-regional', [ProjectController::class, 'createRegional'])->name('admin.ong.regional.project.add');
 });
