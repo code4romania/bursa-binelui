@@ -12,12 +12,21 @@ class VolunteerController extends Controller
     public function index(Request $request, $status = '')
     {
 
-        $volunteers = Volunteer::whereHas('projects', function ($query) {
-            $query->whereIn('projects.id', auth()->user()->organization->projects->pluck('id'));
-        })->with('projects');
-        if (in_array($status, ['pending', 'approved', 'rejected'])) {
-            $volunteers->where('status', $status);
+        if (auth()->user()->organization == null) {
+            return redirect()->route('admin.ong.dashboard');
         }
+        if (auth()->user()->organization->projects->count() == 0) {
+         $volunteers = Volunteer::where('id',0)->paginate();
+        }
+        else{
+            $volunteers = Volunteer::whereHas('projects', function ($query) {
+                $query->whereIn('projects.id', auth()->user()->organization->projects->pluck('id'));
+            })->with('projects');
+            if (in_array($status, ['pending', 'approved', 'rejected'])) {
+                $volunteers->where('status', $status);
+            }
+        }
+
 
         return Inertia::render('AdminOng/Volunteers/Volunteers',
             [

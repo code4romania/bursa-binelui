@@ -41,7 +41,7 @@ class ChampionshipResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->maxLength(65535)->columnSpanFull(),
-                Forms\Components\DatePicker::make('registration_start_date')->after(now())->required(),
+                Forms\Components\DatePicker::make('registration_start_date')->after(now()->toString())->required(),
                 Forms\Components\DatePicker::make('registration_end_date')->after('registration_start_date')->required(),
                 Forms\Components\DatePicker::make('start_date')->after('registration_end_date')->required(),
                 Forms\Components\DatePicker::make('end_date')->after('start_date')->required(),
