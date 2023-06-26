@@ -1,7 +1,7 @@
 <template>
     <li class="col-span-1 flex flex-col rounded-lg bg-white shadow-md">
         <div class="flex flex-1 flex-col p-6">
-            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="/images/ong.png" alt="" />
+            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" :src="data.cover_image ? data.cover_image: '/images/ong.png'" alt="" />
 
             <h3 class="mt-4 text-2xl font-bold text-gray-700 line-clamp-2">{{ data.name }}</h3>
 
