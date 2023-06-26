@@ -10,7 +10,7 @@
                 <div class="relative flex flex-col items-center pb-10 my-10 md:flex-row gap-x-6">
                     <Link
                         :href="route('admin.ong.project.add')"
-                        class="bg-turqoise-500 text-center z-50 flex-1 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        class="bg-primary-500 text-center z-50 flex-1 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                         {{ $t('register_project') }}
                     </Link>
@@ -23,7 +23,7 @@
                     </Link>
 
                     <div class="absolute top-0 hidden -left-16 md:block">
-                        <SvgLoader class="shrink-0 fill-turqoise-300" name="small_dotted_square" />
+                        <SvgLoader class="shrink-0 fill-primary-300" name="small_dotted_square" />
                     </div>
                 </div>
 
@@ -64,13 +64,13 @@
 
                     <div class="inline-flex flex-col">
                         <h3 class="inline px-6 py-2 text-2xl font-bold text-white bg-red-500 w-fit">ONG-URILE DE PE BURSA BINELUI</h3>
-                        <h3 class="inline px-6 py-2 text-xl font-bold text-white w-fit bg-turqoise-500">Se pot programa la CiviTech 911. Afla cum aici...</h3>
+                        <h3 class="inline px-6 py-2 text-xl font-bold text-white w-fit bg-primary-500">Se pot programa la CiviTech 911. Afla cum aici...</h3>
                     </div>
                 </div>
             </div>
 
             <div class="absolute bottom-0 right-0 hidden md:block">
-                <SvgLoader class="shrink-0 fill-turqoise-300" name="dotted_square" />
+                <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
             </div>
         </div>
 
@@ -118,18 +118,18 @@
 
             <div class="relative w-full mx-auto lg:max-w-7xl">
                 <div class="absolute bottom-0 hidden md:block left-60">
-                    <SvgLoader class="shrink-0 fill-turqoise-300" name="dotted_square" />
+                    <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
                 </div>
             </div>
         </div>
 
-        <div class="w-full bg-turqoise-50 py-9">
+        <div class="w-full bg-primary-50 py-9">
             <div class="w-full mx-auto rounded lg:max-w-7xl px-9">
                 <div class="flex items-center gap-6 mb-9">
                     <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">Articole</h2>
                     <Link
                         :href="route('projects')"
-                        class="bg-turqoise-500 text-center z-50 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        class="bg-primary-500 text-center z-50 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                         {{ $t('register_project') }}
                     </Link>
@@ -152,7 +152,7 @@
                     <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">BCR pentru comunitate</h2>
                     <Link
                         :href="route('projects')"
-                        class="bg-turqoise-500 text-center z-50 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        class="bg-primary-500 text-center z-50 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                         {{ $t('register_project') }}
                     </Link>

@@ -1,9 +1,9 @@
 <template>
     <div class="relative">
-        <div class="bg-turqoise-500 pt-12 pb-20 mt-16 px-9 lg:px-0">
+        <div class="bg-primary-500 pt-12 pb-20 mt-16 px-9 lg:px-0">
             <div class="mx-auto max-w-7xl flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-turqoise-100">
-                    <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-primary-100">
+                    <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                 </div>
                 <h3 class="text-white font-bold text-2xl">{{ $t('how_can_you_help') }}</h3>
             </div>

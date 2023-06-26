@@ -20,12 +20,12 @@
             </div>
 
             <div class="absolute left-0 hidden -top-16 md:block">
-                <SvgLoader class="shrink-0 fill-turqoise-300" name="location_extra" />
+                <SvgLoader class="shrink-0 fill-primary-300" name="location_extra" />
             </div>
         </div>
 
         <!-- Countdown -->
-        <div class="w-full bg-turqoise-500">
+        <div class="w-full bg-primary-500">
             <div class="flex flex-col items-center justify-center max-w-5xl gap-6 mx-auto mb-10 p-9 md:flex-row">
                 <Countdown :dates="registration" />
             </div>
@@ -41,8 +41,8 @@
         <div class="mx-auto mb-10 p-9 max-w-7xl">
 
             <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
             </div>
@@ -112,7 +112,7 @@
             <div class="mt-10">
                 <Link
                     :href="route('contact')"
-                    class="bg-turqoise-500 flex-1 text-center  sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    class="bg-primary-500 flex-1 text-center  sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                     {{ $t('contact_us') }}
                 </Link>
@@ -122,10 +122,10 @@
         <!-- Articles -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
                 </div>
@@ -150,10 +150,10 @@
         <!-- Parteners -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('parteners') }}</h3>
                 </div>
@@ -180,8 +180,8 @@
         <!-- Prev editions -->
         <div class="mx-auto mb-20 max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="clock"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="clock"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('prev_edtions') }}</h2>
             </div>

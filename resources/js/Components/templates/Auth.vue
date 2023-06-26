@@ -8,7 +8,7 @@
 
                     <p class="mt-6 text-sm leading-6 text-gray-600">
                         <span v-if="content.hasOwnProperty('description')">{{ content.description }}</span>
-                        <a v-if="content.hasOwnProperty('link')" :href="content.link.href" class="text-turqoise-500 hover:text-turqoise-400">{{ content.link.text }}</a>
+                        <a v-if="content.hasOwnProperty('link')" :href="content.link.href" class="text-primary-500 hover:text-primary-400">{{ content.link.text }}</a>
                     </p>
 
                 </div>

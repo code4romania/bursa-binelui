@@ -13,10 +13,10 @@
         </a>
 
         <div class="relative">
-            <div class="h-8 w-8 rounded-full border border-turqoise-500 flex items-center justify-center">
+            <div class="h-8 w-8 rounded-full border border-primary-500 flex items-center justify-center">
                 <SvgLoader @click="copyEmbed" class="shrink-0 fill-white" name="code" />
             </div>
-            <span v-if="copied" class="inline-flex absolute -top-2 -right-14 items-center rounded-full bg-turqoise-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-turqoise-500">
+            <span v-if="copied" class="inline-flex absolute -top-2 -right-14 items-center rounded-full bg-primary-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-primary-500">
                 {{ $t('copied') }}
             </span>
         </div>

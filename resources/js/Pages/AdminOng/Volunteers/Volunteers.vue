@@ -17,7 +17,7 @@
 
                 <!-- Header -->
                 <DropdownLinkVue class="flex items-center gap-4">
-                    <div class="bg-turqoise-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
                         <SvgLoader class="shrink-0"  name="add_white" v-if="status==='pending'"/>
                         <SvgLoader class="shrink-0" name="block" v-else-if="status==='rejected'"/>
                         <SvgLoader class="shrink-0 fill-white" name="heart_white" v-else/>

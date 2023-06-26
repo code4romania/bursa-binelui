@@ -47,7 +47,7 @@
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
-                        class="underline text-sm text-turqoise-500 hover:text-turqoise-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-turqoise-500"
+                        class="underline text-sm text-primary-500 hover:text-primary-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                         {{  $t('password_forgoten') }}
                     </Link>

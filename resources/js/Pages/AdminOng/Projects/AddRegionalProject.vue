@@ -9,8 +9,8 @@
 
                 <!-- Header -->
                 <header class="flex items-center gap-4">
-                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                        <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                        <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('add_project_title') }}</h2>
                 </header>

@@ -11,8 +11,8 @@
 
                     <div class="border-b border-gray-200 bg-white mr-6 py-4">
                         <div class="flex items-center gap-4">
-                            <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
-                                <SvgLoader class="shrink-0 fill-turqoise-500 stroke-turqoise-500" name="global" />
+                            <div class="bg-primary-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                                <SvgLoader class="shrink-0 fill-primary-500 stroke-primary-500" name="global" />
                             </div>
                             <h3 class="text-base font-semibold leading-6 text-gray-900">{{organization.counties.join(', ')}}</h3>
                         </div>
@@ -23,7 +23,7 @@
                     <div class="flex items-center gap-4">
                         <Link
                             :href="route('projects')"
-                            class="text-center inline text-white bg-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
+                            class="text-center inline text-white bg-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
                         >
                             {{ $t('see_projects') }}
                         </Link>
@@ -107,7 +107,7 @@
                             <a
                                 v-if="organization.website"
                                 :href="organization.website"
-                                class="block text-center text-white bg-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                                class="block text-center text-white bg-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                             >
                                 {{ $t('see_website') }}
                             </a>
@@ -119,8 +119,8 @@
             <!-- Projects -->
             <div class="bg-gray-50 px-9">
                 <div class="mx-auto max-w-7xl flex items-center gap-4 py-12">
-                    <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0 fill-turqoise-500 stroke-turqoise-500" name="brand_icon" />
+                    <div class="bg-primary-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                        <SvgLoader class="shrink-0 fill-primary-500 stroke-primary-500" name="brand_icon" />
                     </div>
                     <h3 class="text-gray-900 font-bold text-2xl">{{ $t('ong_projects') }}</h3>
                 </div>

@@ -10,8 +10,8 @@
             >
                 <div
                     :class="[
-                        checked ? 'ring-inset ring-1 ring-turqoise-500' : 'ring-inset ring-1 ring-gray-300',
-                        active ? 'ring-inset ring-1 ring-turqoise-500' : 'ring-inset ring-1 ring-gray-300',
+                        checked ? 'ring-inset ring-1 ring-primary-500' : 'ring-inset ring-1 ring-gray-300',
+                        active ? 'ring-inset ring-1 ring-primary-500' : 'ring-inset ring-1 ring-gray-300',
                         'flex items-center justify-between gap-x-4 cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
                     ]"
                 >
