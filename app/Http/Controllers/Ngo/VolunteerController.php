@@ -13,7 +13,7 @@ class VolunteerController extends Controller
     {
 
         if (auth()->user()->organization == null) {
-            return redirect()->route('admin.ong.dashboard');
+            return redirect()->route('admin.ong.edit');
         }
         if (auth()->user()->organization->projects->count() == 0) {
          $volunteers = Volunteer::where('id',0)->paginate();
