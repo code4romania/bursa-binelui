@@ -59,8 +59,9 @@
                                 :cancelModalText="$t('cancel')"
                                 :actionModalText="$t('accept')"
                                 :title="$t('confirm')"
-                                :body="`${$t('confirm_accept_text')} ${person.user?.name}`"
-                                actionRoute="route('admin.client.destroy', person.user.id)"
+                                :body="`${$t('confirm_accept_text')} ${person.user?.name ? person.user.name : person.first_name+' '+person.last_name}`"
+                                :actionRoute="route('admin.ong.volunteers.approve', person.id)"
+                                :actionType="'approve'"
                                 :data="volunteers.data"
                             />
 
@@ -70,8 +71,10 @@
                                 :cancelModalText="$t('cancel')"
                                 :actionModalText="$t('reject')"
                                 :title="$t('confirm')"
-                                :body="`${$t('confirm_reject_text')} ${person.user?.name}`"
-                                actionRoute="route('admin.client.destroy', person.user.id)"
+                                :body="`${$t('confirm_reject_text')} ${person.user?.name ? person.user.name : person.first_name+' '+person.last_name}`"
+                                :actionRoute="route('admin.ong.volunteers.reject', person.id)"
+                                :actionType="'reject'"
+
                                 :data="volunteers.data"
                             />
                         </td >
@@ -82,20 +85,22 @@
                                 :cancelModalText="$t('cancel')"
                                 :actionModalText="$t('delete')"
                                 :title="$t('confirm')"
-                                :body="`${$t('confirm_delete_text')} ${person.user?.name}`"
-                                actionRoute="route('admin.client.destroy', person.user.id)"
-                                :data="volunteers.data"
+                                :body="`${$t('confirm_delete_text')} ${person.user?.name ? person.user.name : person.first_name+' '+person.last_name}`"
+                                :actionRoute="route('admin.ong.volunteers.delete', person.id)"
+                                :actionType="'deleteVolunteer'"
+                                :data="person.projects"
                             />
                         </td>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex items-center flex-col" v-else>
                             <ModalAction
                                 triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
-                                :triggerModalText="$t('delete')"
+                                :triggerModalText="$t('reject')"
                                 :cancelModalText="$t('cancel')"
-                                :actionModalText="$t('delete')"
+                                :actionModalText="$t('reject')"
                                 :title="$t('confirm')"
-                                :body="`${$t('confirm_delete_text')} ${person.user?.name} `"
-                                actionRoute="route('admin.client.destroy', person.user.id)"
+                                :body="`${$t('confirm_reject_text')} ${person.user?.name ? person.user.name : person.first_name+' '+person.last_name}`"
+                                :actionRoute="route('admin.ong.volunteers.reject', person.id)"
+                                :actionType="'reject'"
                                 :data="volunteers.data"
                             />
                         </td>
