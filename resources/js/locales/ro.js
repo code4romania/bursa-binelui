@@ -324,7 +324,7 @@ export default {
     "regional_contact_job": "Funcția persoanei de contact în organizație",
     "regional_contact_phone": "Număr telefon persoană de contact (fără prefix)",
     "regional_contact_email": "Adresă de e-mail persoană de contact",
-    "regional_projects": 'Proiecte Regionale'
+    "regional_projects": 'Proiecte Regionale',
     'volunteers_rejected': 'Voluntari respinși',
     'volunteers_approved': 'Voluntarii mei',
     'volunteers_pending': 'Voluntari în așteptare',
