@@ -302,11 +302,7 @@ export default {
     "parteners": "Parteneri",
     "faqs_title": "Intrebări frecvente",
     "contact_us": "Contactează-ne",
-    "organization_arr":{
-        'status': {
-            'pending': 'În așteptare',
-            'active': 'Activ',
-            'disabled': 'Inactiv',
-        }
-    }
+    'volunteers_rejected': 'Voluntari respinși',
+    'volunteers_approved': 'Voluntarii mei',
+    'volunteers_pending': 'Voluntari în așteptare',
 }

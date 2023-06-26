@@ -73,7 +73,30 @@ const navigation = [
         name: 'Voluntari',
         href: 'admin.ong.volunteers',
         route: route('admin.ong.volunteers'),
-        subroutes: [],
+        subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
+        subMenu: [
+            {
+                name: 'volunteers_approved',
+                href: 'admin.ong.volunteers',
+                route: route('admin.ong.volunteers', {'status': 'approved'}),
+                icon: UsersIcon,
+                subroutes: [],
+            },
+            {
+                name: 'volunteers_pending',
+                href: 'admin.ong.volunteers',
+                route: route('admin.ong.volunteers', {'status': 'pending'}),
+                subroutes: [],
+                icon: UsersIcon
+            },
+            {
+                name: 'volunteers_rejected',
+                href: 'admin.ong.volunteers',
+                route: route('admin.ong.volunteers', {'status': 'rejected'}),
+                subroutes: [],
+                icon: UsersIcon
+            }
+        ],
         icon: UsersIcon,
     },
     {

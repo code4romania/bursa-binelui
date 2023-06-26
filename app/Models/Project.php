@@ -102,9 +102,9 @@ class Project extends Model implements HasMedia
         return $this->belongsToMany(County::class);
     }
 
-    public function volunteers(): HasMany
+    public function volunteers(): BelongsToMany
     {
-        return $this->hasMany(Volunteer::class);
+        return $this->belongsToMany(Volunteer::class);
     }
 
     public function stages(): BelongsToMany

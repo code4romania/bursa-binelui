@@ -22,6 +22,11 @@ class Volunteer extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => 'string',
+        'created_at' => 'date:Y-m-d',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
