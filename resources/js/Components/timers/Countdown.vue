@@ -29,6 +29,11 @@
             <p class="text-2xl font-bold text-turqoise-50">Perioada de înscriere a luat sfârșit. Gala va avea loc pe</p>
             <h2 class="text-6xl font-bold text-white">{{ dates.end }}</h2>
         </div>
+
+        <div v-if="'winners' === show" class="space-y-6 text-center">
+            <p class="text-2xl font-bold text-turqoise-50">Gala s-a incheiat! Vezi mai jos</p>
+            <h2 class="text-6xl font-bold text-white">Proiectele Castigatoare</h2>
+        </div>
     </div>
 </template>
 
@@ -51,6 +56,8 @@ const show = computed(() => {
         return 'ended';
     } else if ((current >= start) && (current <= end)) {
         return 'now';
+    } else {
+        return 'winners';
     }
 });
 
