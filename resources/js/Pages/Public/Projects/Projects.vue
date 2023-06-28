@@ -57,25 +57,35 @@
 
                     <!-- Tabs -->
                     <div class="flex flex-col justify-end gap-6 xl:w-4/12 sm:flex-row">
-                        <Link
+                        <button
+                            @click="viewType='list';filter.c=null"
                             :href="route('projects')"
-                            class="flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
+                            :class="[
+                                'list' === viewType ?
+                                'flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm' :
+                                'flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5'
+                            ]"
                         >
                             <SvgLoader class="shrink-0" name="grid"/>
                             {{ $t('projects_list') }}
-                        </Link>
+                        </button>
 
-                        <Link
+                        <button
+                            @click="viewType='map';filter.c=null"
                             :href="route('projects')"
-                            class="flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
+                            :class="[
+                                'map' === viewType ?
+                                'flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm' :
+                                'flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5'
+                            ]"
                         >
                             <SvgLoader class="shrink-0" name="location"/>
                             {{ $t('projects_map') }}
-                        </Link>
+                        </button>
                     </div>
                 </div>
 
-                <div class="flex flex-col justify-between w-full gap-6 mt-6 sm:flex-row">
+                <div v-if="'list' === viewType" class="flex flex-col justify-between w-full gap-6 mt-6 sm:flex-row">
 
                     <MultiSelectFilter
                         class="w-full"
@@ -116,6 +126,13 @@
                 </div>
             </div>
 
+            <Map
+                v-if="'map' === viewType"
+                :data="projectsForMap"
+                @countySelected="filter.c = $event"
+                class="mb-6"
+            />
+
             <h2 class="text-2xl font-bold text-gray-900">{{ props.query.total }} {{ $t('of_projects') }}</h2>
 
             <!-- Published projects -->
@@ -125,6 +142,7 @@
                 :list="props.query"
                 classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4"
             />
+
         </div>
     </PageLayout>
 </template>
@@ -148,6 +166,7 @@
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
     import MultiSelectFilter from "@/Components/filters/MultiSelectFilter.vue";
+    import Map from '@/Components/maps/Map.vue'
 
     /** Active filter state. */
     const hasValues = ref(false);
@@ -160,9 +179,26 @@
         end_date: null,
     });
 
+    const projectsForMap = [
+        {
+            id: 1,
+            name: 'Craiova',
+            projects: 3,
+            coordinates: { lat: 44.3304, lng: 23.7949 },
+        },
+        {
+            id: 2,
+            name: 'Bucuresti',
+            projects: 30,
+            coordinates: { lat: 44.4268, lng: 26.1025 },
+        },
+    ];
+
     /** Statuses */
     const statuses = ['Active', 'Inactive'];
     const cities = [{}];
+
+    const viewType = ref('list');
 
     /** Filter projects. */
     const filterProjects = () => {
@@ -171,7 +207,9 @@
             data: filter.value,
             preserveState: true,
             onSuccess: (data) => {
-                if (Object.values(data.props.request).every(value => value === null)) {
+                console.log(filter.value)
+
+                if (Object.values(filter.value).every(value => (value === null) || (value.length === 0))) {
                     hasValues.value = false
                 } else {
                     hasValues.value = true
@@ -194,5 +232,5 @@
     });
     watch(filter, () => {
         filterProjects();
-    })
+    },{deep:true})
 </script>
