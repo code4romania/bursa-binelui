@@ -1,7 +1,7 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-        <Head :title="$t('thank_you')" />
+        <Head :title="$t('article_title')" />
 
         <div class="mx-auto mb-10 max-w-7xl">
             <div class="aspect-w-16 aspect-h-9">
