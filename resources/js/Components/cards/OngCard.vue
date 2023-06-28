@@ -15,7 +15,7 @@
 
             <Link
                 :href="route('organization', data.id)"
-                class="text-center mt-auto bg-turqoise-500 hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                class="text-center mt-auto bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
                 {{ $t('find_organization') }}
             </Link>

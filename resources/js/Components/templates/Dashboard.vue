@@ -8,23 +8,23 @@
 
                         <Link
                             :href="item.route"
-                            :class="[isActive(item) ? 'text-turqoise-500 bg-turqoise-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
+                            :class="[isActive(item) ? 'text-primary-500 bg-primary-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
                         >
                             <component :is="item.icon"
-                                       :class="[isActive(item) ? 'text-turqoise-500' : 'text-gray-600', 'h-6 w-6 shrink-0']"
+                                       :class="[isActive(item) ? 'text-primary-500' : 'text-gray-600', 'h-6 w-6 shrink-0']"
                                        aria-hidden="true"/>
                             {{ item.name }}
                         </Link>
                         <ul role="list" class="space-y-1" v-if="item.subMenu?.length>0"
-                            :class="[isActive(item) ? 'text-turqoise-500 bg-turqoise-50 rounded-md' : 'text-gray-600', 'group flex flex-wrap gap-x-3 p-2 text-sm leading-6 font-medium']"
+                            :class="[isActive(item) ? 'text-primary-500 bg-primary-50 rounded-md' : 'text-gray-600', 'group flex flex-wrap gap-x-3 p-2 text-sm leading-6 font-medium']"
                         >
                             <li v-for="subItem in item.subMenu" class="mr-3" :key="subItem.name">
                                 <Link
                                     :href="subItem.route"
-                                    :class="[isActive(subItem) ? 'text-turqoise-500 bg-turqoise-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
+                                    :class="[isActive(subItem) ? 'text-primary-500 bg-primary-50 rounded-md' : 'text-gray-600', 'group flex gap-x-3 p-2 text-sm leading-6 font-medium']"
                                 >
                                     <component :is="subItem.icon"
-                                               :class="[isActive(subItem) ? 'text-turqoise-500' : 'text-gray-600', 'h-6 w-6 shrink-0']"
+                                               :class="[isActive(subItem) ? 'text-primary-500' : 'text-gray-600', 'h-6 w-6 shrink-0']"
                                                aria-hidden="true"/>
                                     {{ $t(subItem.name) }}
                                 </Link>

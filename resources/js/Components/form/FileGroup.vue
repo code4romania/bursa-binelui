@@ -9,7 +9,7 @@
 
                 <div class="flex justify-center mt-4 text-sm leading-6 text-center text-gray-600">
                     <label for="file-upload"
-                           class="relative font-semibold text-center bg-white rounded-md cursor-pointer text-turqoise-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-turqoise-600 focus-within:ring-offset-2 hover:text-turqoise-500">
+                           class="relative font-semibold text-center bg-white rounded-md cursor-pointer text-primary-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 hover:text-primary-500">
                         <span>{{ $t('load_image') }}</span>
                         <input
                             id="file-upload"

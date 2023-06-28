@@ -9,8 +9,8 @@
                 <div class="w-full sm:w-6/12">
 
                     <div class="flex items-center gap-4">
-                        <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
-                            <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
+                        <div class="bg-primary-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                            <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
                         </div>
                         <h1 class="text-gray-900 font-bold text-2xl">{{ $t('thank_you') }}</h1>
                     </div>
@@ -20,7 +20,7 @@
                     <div class="mt-8">
                         <Link
                             :href="route('register')"
-                            class="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                            class="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         >
                             {{ $t('create_account') }}
                         </Link>

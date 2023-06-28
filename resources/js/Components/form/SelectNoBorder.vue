@@ -19,9 +19,9 @@
                         :value="option"
                         v-slot="{ active, selected }"
                     >
-                        <li :class="[active ? 'bg-turqoise-500 text-white' : '', 'relative cursor-default select-none py-2 pl-3 pr-9']">
+                        <li :class="[active ? 'bg-primary-500 text-white' : '', 'relative cursor-default select-none py-2 pl-3 pr-9']">
                             <div class="flex items-center">
-                                <span :class="[selected ? 'text-turqoise-500 hover:text-white' : '', 'ml-3 block']">
+                                <span :class="[selected ? 'text-primary-500 hover:text-white' : '', 'ml-3 block']">
                                     {{ option.name }}
                                 </span>
                             </div>

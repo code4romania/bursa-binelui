@@ -20,7 +20,7 @@
                     <!-- Register -->
                     <Modal
                         v-if="$page.props.auth.user"
-                        triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('register_project')"
                     >
                         <form class="mt-6 space-y-6" @submit.prevent="submit">
@@ -56,8 +56,8 @@
 
                                 <!-- Log in button -->
                                 <PrimaryButton
-                                    background="turqoise-500"
-                                    hover="turqoise-400"
+                                    background="primary-500"
+                                    hover="primary-400"
                                     color="white"
                                     class="w-full"
                                     :class="{ 'opacity-25': form.processing }"
@@ -79,7 +79,7 @@
                                     :href="route('register')"
                                     class="flex justify-center text-base text-gray-900 gap-x-1"
                                 >
-                                    {{ $t('no_account') }} <span class="text-turqoise-500">{{ $t('register') }}</span>
+                                    {{ $t('no_account') }} <span class="text-primary-500">{{ $t('register') }}</span>
                                 </Link>
                             </div>
                         </form>
@@ -111,7 +111,7 @@
 
                     <Modal
                         id="championship-success"
-                        triggerModalClasses="hidden bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        triggerModalClasses="hidden bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('register_project')"
                     >
                         <div class="flex flex-col items-center w-full my-4 space-y-3">
@@ -119,7 +119,7 @@
 
                             <h3 class="text-lg font-bold text-gray-500">{{ $t('championship_success_title') }}</h3>
 
-                            <p class="text-lg font-bold text-turqoise-500">{{ name }}</p>
+                            <p class="text-lg font-bold text-primary-500">{{ name }}</p>
 
                             <p class="text-sm text-center text-gray-500">{{ $t('championship_success_description') }}</p>
 
@@ -133,7 +133,7 @@
 
                                 <Link
                                     href="#"
-                                    class="bg-turqoise-500 flex-1 text-center mt-6 sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                                    class="bg-primary-500 flex-1 text-center mt-6 sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                                 >
                                     {{ $t('championship_rules') }}
                                 </Link>
@@ -157,14 +157,14 @@
 
 
                 <div class="absolute hidden md:block -top-24 -left-32">
-                    <SvgLoader class="shrink-0 fill-turqoise-300" name="dotted_square" />
+                    <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
                 </div>
             </div>
 
             <div class="relative items-center justify-center hidden w-full lg:px-20 lg:pb-20 lg:w-6/12 sm:flex">
 
                 <div class="absolute bottom-0 right-0 hidden md:block">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="dotted_square" />
+                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
                 </div>
 
                 <div class="relative flex items-center bg-white rounded shadow w-fit">
@@ -186,10 +186,10 @@
         <!-- Curent year -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">2022 - 2023</h3>
                 </div>
@@ -214,10 +214,10 @@
         <!-- Last year -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">2021 - 2022</h3>
                 </div>

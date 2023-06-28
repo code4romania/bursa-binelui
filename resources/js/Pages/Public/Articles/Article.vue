@@ -12,7 +12,7 @@
                 />
             </div>
 
-            <div class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-turqoise-500 bg-turqoise-50 gap-x-1">
+            <div class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
                 {{ article.category }}
             </div>
 
@@ -48,10 +48,10 @@
 
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
                 </div>

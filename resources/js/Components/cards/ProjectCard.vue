@@ -33,7 +33,7 @@
 
                     <div
                         v-if="!data.active"
-                        class="inline-flex items-center px-3 py-1 text-base text-white rounded-full gap-x-1 bg-turqoise-500"
+                        class="inline-flex items-center px-3 py-1 text-base text-white rounded-full gap-x-1 bg-primary-500"
                     >
                         <p class="font-bold">{{ $t("project_closed") }}</p>
                     </div>
@@ -75,7 +75,7 @@
                         <p class="text-cyan-900">
                             {{ data.total_donations }} {{ $t("currency") }}
                         </p>
-                        <p class="text-turqoise-500">
+                        <p class="text-primary-500">
                             {{ data.target_budget }} {{ $t("currency") }}
                         </p>
                     </div>
@@ -85,7 +85,7 @@
                             :class="[
                                 `h-5`,
                                 data.total_donations >= data.target_budget
-                                    ? 'bg-turqoise-500'
+                                    ? 'bg-primary-500'
                                     : 'bg-cyan-900',
                             ]"
                             :style="`width: ${percentage}%`"
@@ -121,7 +121,7 @@
 
                 <SecondaryButton
                     v-if="'admin' == cardType && 'draft' == data.status"
-                    class="w-full mt-4 py-2.5 text-turqoise-500 ring-1 ring-inset ring-turqoise-500 hover:bg-turqoise-400"
+                    class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
                 >
                     {{ $t("publish") }}
                 </SecondaryButton>
@@ -129,7 +129,7 @@
                 <!-- Donate modal -->
                 <DonateModal
                     v-if="('client' == cardType) && (0 < project_end_date)"
-                    triggerModalClasses="bg-turqoise-500 w-full mt-8 hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    triggerModalClasses="bg-primary-500 w-full mt-8 hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     :triggerModalText="$t('donate_btn')"
                     :data="data"
                 />
@@ -137,16 +137,16 @@
                 <!-- Donate Error modal -->
                 <Modal
                     v-if="('client' == cardType) && (0 > project_end_date)"
-                    triggerModalClasses="bg-turqoise-500 w-full mt-8 hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    triggerModalClasses="bg-primary-500 w-full mt-8 hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     :triggerModalText="$t('donate_btn')"
                     id="project-donation-expired"
                 >
                     <div class="w-full mt-6">
                         <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
-                        <h3 class="text-xl font-semibold text-center text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
+                        <h3 class="text-xl font-semibold text-center text-primary-500">{{ $t('donate_to_other_projects') }}</h3>
                         <Link
                             :href="route('projects')"
-                            class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
+                            class="rounded-md block mt-6 text-center bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
                         >
                             {{ $t('see_other_projects') }}
                         </Link>

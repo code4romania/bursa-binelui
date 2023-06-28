@@ -16,8 +16,8 @@
                     </div>
 
                     <div v-if="project.category" class="flex items-center gap-2">
-                        <div class="flex items-center justify-center rounded-lg bg-turqoise-50 w-9 h-9">
-                            <SvgLoader class="shrink-0 fill-turqoise-50 stroke-turqoise-500" name="badge" />
+                        <div class="flex items-center justify-center rounded-lg bg-primary-50 w-9 h-9">
+                            <SvgLoader class="shrink-0 fill-primary-50 stroke-primary-500" name="badge" />
                         </div>
                         <p class="w-40 text-base font-semibold leading-6 text-gray-900 truncate lg:w-60">{{ project.category}}</p>
                     </div>
@@ -30,7 +30,7 @@
                     <!-- Donate modal -->
                     <DonateModal
                         v-if="project.is_period_active"
-                        triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         :data="project"
                     />
@@ -38,16 +38,16 @@
                     <!-- Donate Error modal -->
                     <Modal
                         v-if="project.is_period_active ===false"
-                        triggerModalClasses="bg-turqoise-500 w-full sm:w-auto hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         id="project-donation-expired"
                     >
                         <div class="w-full mt-6">
                             <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
-                            <h3 class="text-xl font-semibold text-center text-turqoise-500">{{ $t('donate_to_other_projects') }}</h3>
+                            <h3 class="text-xl font-semibold text-center text-primary-500">{{ $t('donate_to_other_projects') }}</h3>
                             <Link
                                 :href="route('projects')"
-                                class="rounded-md block mt-6 text-center bg-turqoise-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
+                                class="rounded-md block mt-6 text-center bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
                             >
                                 {{ $t('see_other_projects') }}
                             </Link>
@@ -80,8 +80,8 @@
         <div class="py-10 mb-20 bg-gray-100">
             <div class="w-full mx-auto lg:max-w-7xl px-9">
                 <div class="flex items-center gap-4">
-                    <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
-                        <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
+                    <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
+                        <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900">{{ $t('target_amount') }}</h3>
                 </div>
@@ -91,14 +91,14 @@
                         <p class="text-cyan-900">
                             {{ project.total_donations }} {{ $t("currency") }}
                         </p>
-                        <p class="text-turqoise-500">
+                        <p class="text-primary-500">
                             {{ project.target_budget }} {{ $t("currency") }}
                         </p>
                     </div>
 
                     <div class="w-full h-6 bg-gray-300">
                         <div
-                            :class="[`h-6`,project.total_donations == project.target_budget ? 'bg-turqoise-500' : 'bg-cyan-900',]"
+                            :class="[`h-6`,project.total_donations == project.target_budget ? 'bg-primary-500' : 'bg-cyan-900',]"
                             :style="`width: ${percentage}%`"
                         ></div>
                     </div>
@@ -140,7 +140,7 @@
                     <div class="px-10 py-8 space-y-8 bg-gray-50">
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500" name="location" />
+                            <SvgLoader class="mt-1 shrink-0 fill-primary-500" name="location" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500"> {{ project.counties.join(',') }}</p>
@@ -148,17 +148,17 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-turqoise-500 stroke-turqoise-500" name="calendar" />
+                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">{{ project.start }} - {{ project.end }}</p>
-                                <p v-if="(5 >= project.end) && (0 < project.end)" class="mt-1 text-base font-semibold text-turqoise-500">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
+                                <p v-if="(5 >= project.end) && (0 < project.end)" class="mt-1 text-base font-semibold text-primary-500">{{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!</p>
                             </div>
                         </div>
 
                         <!-- Donate modal -->
                         <DonateModal
-                            triggerModalClasses="bg-turqoise-500 w-full hover:bg-turqoise-400 text-white focus-visible:outline-turqoise-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                            triggerModalClasses="bg-primary-500 w-full hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                             :triggerModalText="$t('donate_btn')"
                             :data="project"
                         />
@@ -203,8 +203,8 @@
 
                 <div class="flex-col justify-between w-full sm:flex">
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center justify-center rounded-lg bg-turqoise-500 w-9 h-9">
-                            <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
+                        <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
+                            <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900">{{ $t('gallery') }}</h3>
                     </div>
@@ -254,7 +254,7 @@
                 <img class="relative z-50 flex-shrink-0 w-full mx-auto shadow-lg -mt-36 sm:mt-0 sm:-mr-36 rounded-xl" :src="project.organization.cover_image" alt="" />
             </div>
 
-            <div class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-turqoise-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20">
+            <div class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-primary-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20">
                 <h2 class="relative z-30 mb-6 text-3xl font-bold text-white">{{ project.organization.name }}</h2>
                 <div class="relative z-30 text-base text-white" v-html="project.organization.description"></div>
                 <div class="relative z-30 mt-8">

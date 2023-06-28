@@ -66,7 +66,7 @@
                     </a>
 
                     <div class="space-y-2">
-                        <p class="text-base text-turqoise-500 font-semibold">Los Angeles</p>
+                        <p class="text-base text-primary-500 font-semibold">Los Angeles</p>
                         <p class="text-gray-500 font-medium text-sm">4556 Brendan Ferry</p>
                         <p class="text-gray-500 font-medium text-sm">Los Angeles, CA 90210</p>
                     </div>

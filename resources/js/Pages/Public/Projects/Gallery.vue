@@ -8,8 +8,8 @@
 
 
             <div class="flex items-center gap-4">
-                <div class="bg-turqoise-500 w-9 h-9 rounded-lg flex items-center justify-center">
-                    <SvgLoader class="fill-turqoise-500 shrink-0" name="brand_icon" />
+                <div class="bg-primary-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                    <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
                 </div>
                 <h1 class="text-gray-900 font-bold text-2xl">{{ $t('gallery') }}</h1>
             </div>

@@ -8,6 +8,7 @@ use App\Models\Championship;
 use Filament\Facades\Filament;
 use Filament\Navigation\NavigationItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,8 +30,16 @@ class AppServiceProvider extends ServiceProvider
             Model::preventLazyLoading($shouldBeEnabled);
             Model::preventAccessingMissingAttributes($shouldBeEnabled);
         });
+
         Championship::observe(\App\Observers\ChampionshipObserver::class);
+
         Filament::serving(function () {
+            Filament::registerViteTheme('resources/css/app.css');
+
+            Filament::registerScripts([
+                app(Vite::class)('resources/js/app.js'),
+            ]);
+
             Filament::registerNavigationItems([
                 NavigationItem::make('Participanți')
                     ->url('#', shouldOpenInNewTab: true)

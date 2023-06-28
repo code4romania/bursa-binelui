@@ -7,8 +7,8 @@
 
             <!-- Header -->
             <header class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('projects_title') }}</h2>
             </header>
@@ -62,7 +62,7 @@
                             :href="route('projects')"
                             :class="[
                                 'list' === viewType ?
-                                'flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm' :
+                                'flex items-center gap-x-4 bg-primary-500 hover:bg-primary-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm' :
                                 'flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5'
                             ]"
                         >
@@ -75,7 +75,7 @@
                             :href="route('projects')"
                             :class="[
                                 'map' === viewType ?
-                                'flex items-center gap-x-4 bg-turqoise-500 hover:bg-turqoise-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm' :
+                                'flex items-center gap-x-4 bg-primary-500 hover:bg-primary-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm' :
                                 'flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5'
                             ]"
                         >

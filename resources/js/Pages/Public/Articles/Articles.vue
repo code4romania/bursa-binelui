@@ -9,7 +9,7 @@
                     <div class="w-full lg:w-6/12">
 
                         <div class="flex justify-start w-full mb-6">
-                            <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-turqoise-500 bg-turqoise-50 gap-x-1">
+                            <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
                                 {{ article.category }}
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                         <div class="flex flex-col w-full gap-4 mt-10 sm:flex-row">
                             <Link
                                 :href="route('article', article.id)"
-                                class="rounded-md px-3.5 py-2.5 text-sm text-white font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-turqoise-500"
+                                class="rounded-md px-3.5 py-2.5 text-sm text-white font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500"
                             >
                                 {{ $t('read_article') }}
                             </Link>
@@ -34,7 +34,7 @@
                     <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
 
                         <div class="absolute bottom-0 right-0">
-                            <SvgLoader class="shrink-0 fill-turqoise-500" name="dotted_square" />
+                            <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
                         </div>
 
                         <div class="relative flex items-center w-fit">
@@ -49,7 +49,7 @@
 
                     <div v-if="filter?.category" class="flex items-center mb-4 gap-x-4">
                         <h2 class="text-3xl font-bold text-cyan-900">{{ $t('other_articles') }}</h2>
-                        <div class="inline-flex items-center px-3 py-1 text-base text-white rounded-full bg-turqoise-500 gap-x-1">
+                        <div class="inline-flex items-center px-3 py-1 text-base text-white rounded-full bg-primary-500 gap-x-1">
                             {{ filter.category }}
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                                     />
 
                                     <div class="absolute z-10 bottom-3 left-3">
-                                        <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full shadow cursor-pointer text-turqoise-500 bg-turqoise-50 gap-x-1">
+                                        <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full shadow cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
                                             {{ article.category }}
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                     <p class="text-gray-500 ">{{ article.created_at }}</p>
                                     <Link
                                         :href="route('article', article.id)"
-                                        class="flex items-center font-semibold text-turqoise-500 gap-x-2"
+                                        class="flex items-center font-semibold text-primary-500 gap-x-2"
                                     >
                                         {{ $t('read_article') }}
                                         <SvgLoader name="arrow_right" class="shrink-0"/>
@@ -122,7 +122,7 @@
                             <div
                                 v-for="(category, index) in categories"
                                 :key="index"
-                                class="inline-flex items-center px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-turqoise-500 bg-turqoise-50 gap-x-1"
+                                class="inline-flex items-center px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
                                 @click="filterArticles(category)"
                             >
                                 {{ category }}
@@ -135,9 +135,9 @@
                         <div
                             v-for="(article, index) in query.data"
                             :key="index"
-                            class="w-full p-6 mb-6 space-y-6 border-l-8 rounded shadow border-turqoise-500"
+                            class="w-full p-6 mb-6 space-y-6 border-l-8 rounded shadow border-primary-500"
                         >
-                            <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-turqoise-500 bg-turqoise-50 gap-x-1">
+                            <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
                                 {{ article.category }}
                             </div>
 
@@ -152,7 +152,7 @@
                                 <p class="text-gray-500 ">{{ article.created_at }}</p>
                                 <Link
                                     :href="route('article', article.id)"
-                                    class="flex items-center font-semibold text-turqoise-500 gap-x-2"
+                                    class="flex items-center font-semibold text-primary-500 gap-x-2"
                                 >
                                     {{ $t('read_article') }}
                                     <SvgLoader name="arrow_right" class="shrink-0"/>

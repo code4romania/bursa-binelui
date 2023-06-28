@@ -56,7 +56,7 @@
                     <Link
                         v-if="!$page.props.auth.user"
                         :href="route('register')"
-                        class="relative inline-flex items-center gap-x-1.5 rounded-md bg-turqoise-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-turqoise-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turqoise-500"
+                        class="relative inline-flex items-center gap-x-1.5 rounded-md bg-primary-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
                     >
                         {{ $t('register_link') }}
                     </Link>
@@ -65,7 +65,7 @@
                     <button
                         v-if="$page.props.auth.user"
                         type="button"
-                        class="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-turqoise-500 focus:ring-offset-2">
+                        class="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                         <BellIcon class="w-6 h-6" aria-hidden="true" />
                     </button>
 
@@ -129,7 +129,7 @@
 
                 <div class="flex items-center -mr-2 lg:hidden">
                     <!-- Mobile menu button -->
-                    <DisclosureButton class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-turqoise-500">
+                    <DisclosureButton class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
                         <Bars3Icon v-if="!open" class="block w-6 h-6" aria-hidden="true" />
                         <XMarkIcon v-else class="block w-6 h-6" aria-hidden="true" />
                     </DisclosureButton>
@@ -150,7 +150,7 @@
 
                 <!-- Articles link -->
                 <Link
-                    :class="['p-3 flex items-center text-base font-medium leading-5', route().current('articles') ? 'text-turqoise-500 bg-turqoise-50' : 'text-gray-500']"
+                    :class="['p-3 flex items-center text-base font-medium leading-5', route().current('articles') ? 'text-primary-500 bg-primary-50' : 'text-gray-500']"
                     :href="route('articles')"
                 >
                     {{ $t('articles_link') }}
@@ -164,7 +164,7 @@
 
                 <!-- Contact link -->
                 <Link
-                    :class="['p-3 flex items-center text-base font-medium leading-5', route().current('contact') ? 'text-turqoise-500 bg-turqoise-50' : 'text-gray-500']"
+                    :class="['p-3 flex items-center text-base font-medium leading-5', route().current('contact') ? 'text-primary-500 bg-primary-50' : 'text-gray-500']"
                     :href="route('contact')"
                 >
                     {{ $t('contact_link') }}
@@ -186,7 +186,7 @@
                         <SvgLoader class="w-8 h-8 shrink-0 object-fit" name="default_avatar" />
                     </div>
 
-                    <button type="button" class="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-turqoise-500 focus:ring-offset-2">
+                    <button type="button" class="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                         <span class="sr-only">View notifications</span>
                         <BellIcon class="w-6 h-6" aria-hidden="true" />
                     </button>

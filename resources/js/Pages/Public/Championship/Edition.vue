@@ -20,15 +20,15 @@
             </div>
 
             <div class="absolute left-0 hidden -top-16 md:block">
-                <SvgLoader class="shrink-0 fill-turqoise-300" name="big_troffe" />
+                <SvgLoader class="shrink-0 fill-primary-300" name="big_troffe" />
             </div>
         </div>
 
         <!-- Statistics -->
         <div class="mx-auto mb-10 max-w-7xl">
             <div class="flex items-center gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="brand"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="brand"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('general_statistics') }}</h2>
             </div>
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Stats -->
-        <div class="w-full bg-turqoise-500">
+        <div class="w-full bg-primary-500">
             <div class="flex flex-col items-center justify-between max-w-5xl gap-6 mx-auto mb-10 p-9 md:flex-row">
                 <div class="text-center">
                     <h3 class="text-6xl font-bold text-white">243</h3>
@@ -73,8 +73,8 @@
         <div class="mx-auto mb-10 p-9 max-w-7xl">
 
             <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="list"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
             </div>
@@ -141,7 +141,7 @@
         <!-- Testimonials -->
         <div class="w-full bg-cyan-900">
             <div class="flex items-center mx-auto max-w-7xl p-9 gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                     <SvgLoader class="shrink-0 fill-white" name="quote"/>
                 </div>
                 <h2 class="text-2xl font-bold text-white">{{ $t('testimonials') }}</h2>
@@ -184,10 +184,10 @@
         <!-- Articles -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-turqoise-500 px-9 lg:px-0">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-turqoise-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-turqoise-100" name="sound" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
                 </div>
@@ -212,13 +212,13 @@
         <!-- External links -->
         <div class="mx-auto max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="links"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="links"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
             </div>
 
-            <div class="border-l-8 border-turqoise-500">
+            <div class="border-l-8 border-primary-500">
                 <div
                     v-for="(link, index) in links"
                     :key="index"
@@ -238,8 +238,8 @@
         <!-- Prev editions -->
         <div class="mx-auto mb-20 max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-turqoise-500">
-                    <SvgLoader class="shrink-0 fill-turqoise-500" name="clock"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0 fill-primary-500" name="clock"/>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('prev_edtions') }}</h2>
             </div>

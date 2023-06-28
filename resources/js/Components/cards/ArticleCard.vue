@@ -19,10 +19,10 @@
                     <p class="text-sm text-gray-500">{{ data.date }}</p>
                     <Link
                         href=""
-                        class="flex items-center text-sm font-semibold gap-x-2 text-turqoise-500"
+                        class="flex items-center text-sm font-semibold gap-x-2 text-primary-500"
                     >
                         {{ $t('read_article') }}
-                        <SvgLoader name="arrow_right" class="fill-turqoise-500 shrink-0" />
+                        <SvgLoader name="arrow_right" class="fill-primary-500 shrink-0" />
                     </Link>
                 </div>
             </div>

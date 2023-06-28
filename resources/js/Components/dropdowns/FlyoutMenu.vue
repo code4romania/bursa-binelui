@@ -4,7 +4,7 @@
             :class="
                 [
                     'flex w-full lg:w-auto justify-between p-3 lg:p-0 lg:inline-flex items-center text-base font-medium leading-5',
-                    `${setActive(route().current()) ? 'bg-turqoise-50 lg:bg-transparent text-turqoise-500 lg:hover:text-turqoise-400' : 'text-gray-500 lg:hover:text-turqoise-500'}`
+                    `${setActive(route().current()) ? 'bg-primary-50 lg:bg-transparent text-primary-500 lg:hover:text-primary-400' : 'text-gray-500 lg:hover:text-primary-500'}`
                 ]"
             >
             {{ name }}

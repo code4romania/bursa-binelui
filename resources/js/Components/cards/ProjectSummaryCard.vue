@@ -1,6 +1,6 @@
 <template>
     <li
-        class="flex flex-col col-span-1 pb-4 bg-white border-b border-turqoise-500"
+        class="flex flex-col col-span-1 pb-4 bg-white border-b border-primary-500"
     >
         <div class="flex flex-col flex-1 space-y-4">
 
