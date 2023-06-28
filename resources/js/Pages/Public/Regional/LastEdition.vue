@@ -25,7 +25,7 @@
         </div>
 
         <!-- Countdown -->
-        <div class="w-full bg-primary-500">
+        <div :class="['winners' === status ? 'bg-red-500' : 'bg-primary-500' ,'w-full']">
             <div class="flex flex-col items-center justify-center max-w-5xl gap-6 mx-auto mb-10 p-9 md:flex-row">
                 <Countdown :dates="registration" />
             </div>

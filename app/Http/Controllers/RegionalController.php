@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\County;
 use App\Models\Project;
 use Inertia\Inertia;
 
@@ -26,33 +27,42 @@ class RegionalController extends Controller
             ],
         ];
 
-        $articles = [
+        $regions = [
             [
                 'id' => 1,
-                'img' => '/images/project_img.png',
-                'author' => 'Ion Popescu',
-                'name' => 'Importanța educației remediare în România în timpul pandemiei',
-                'team' => 'Echipa BCR',
-                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022',
+                'cover_image' => '/images/project_img.png',
+                'status' => 'registration',
+                'name' => 'Galele Regionale Muntenia',
             ],
             [
                 'id' => 2,
-                'img' => '/images/project_img.png',
-                'author' => 'Ion Popescu',
-                'name' => 'Importanța educației remediare în România în timpul pandemiei',
-                'team' => 'Echipa BCR',
-                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022',
+                'cover_image' => '/images/project_img.png',
+                'status' => 'finished',
+                'name' => 'Galele Regionale Muntenia',
             ],
             [
                 'id' => 3,
-                'img' => '/images/project_img.png',
-                'author' => 'Ion Popescu',
-                'name' => 'Importanța educației remediare în România în timpul pandemiei',
-                'team' => 'Echipa BCR',
-                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
-                'date' => '15.02.2022',
+                'cover_image' => '/images/project_img.png',
+                'status' => 'winners',
+                'name' => 'Galele Regionale Muntenia',
+            ],
+            [
+                'id' => 4,
+                'cover_image' => '/images/project_img.png',
+                'status' => 'registration',
+                'name' => 'Galele Regionale Muntenia',
+            ],
+            [
+                'id' => 5,
+                'cover_image' => '/images/project_img.png',
+                'status' => 'finished',
+                'name' => 'Galele Regionale Muntenia',
+            ],
+            [
+                'id' => 6,
+                'cover_image' => '/images/project_img.png',
+                'status' => 'winners',
+                'name' => 'Galele Regionale Muntenia',
             ],
         ];
 
@@ -96,7 +106,7 @@ class RegionalController extends Controller
         return Inertia::render('Public/Regional/Regional', [
             'query' => $projects,
             'editions' => $editions,
-            'articles' => $articles,
+            'regions' => $regions,
             'parteners' => $parteners,
             'registration' => $registration,
             'faqs' => $faqs,
@@ -109,15 +119,15 @@ class RegionalController extends Controller
         $editions = [
             [
                 'href' => '1',
-                'name' => 'Campionatul de bine 2020',
+                'name' => 'Gale Regionale 2020',
             ],
             [
                 'href' => '2',
-                'name' => 'Campionatul de bine 2019',
+                'name' => 'Gale Regionale 2021',
             ],
             [
                 'href' => '3',
-                'name' => 'Campionatul de bine 2018',
+                'name' => 'Gale Regionale 2022',
             ],
         ];
 

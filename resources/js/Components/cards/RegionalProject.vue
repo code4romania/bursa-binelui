@@ -4,7 +4,7 @@
     >
         <div class="flex flex-col flex-1">
             <Link
-                :href="route('regional.project', data.slug)"
+                :href="route('regional.project', data.id)"
                 class="relative bg-gray-200 group-hover:opacity-75 sm:h-52"
             >
 

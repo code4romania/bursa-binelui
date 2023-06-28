@@ -1,7 +1,7 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-        <Head :title="$t('thank_you')" />
+        <Head :title="$t('articles_title')" />
 
         <div class="mx-auto mb-10 max-w-7xl">
             <carousel v-if="query?.data?.length" class="w-full" :items-to-show="1" :autoplay="4000" :pauseAutoplayOnHover="true" :wrapAround="true" :transition="300">

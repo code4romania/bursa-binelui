@@ -328,5 +328,9 @@ export default {
     'volunteers_rejected': 'Voluntari respinși',
     'volunteers_approved': 'Voluntarii mei',
     'volunteers_pending': 'Voluntari în așteptare',
-
+    "regional_registration": "Etapa inscrieri proiecte",
+    "regional_winners": "Etapa desemnare castigatori",
+    "regional_finished": "Editie incheiata",
+    "articles_title": "Articole",
+    "article_title": "Articol"
 }

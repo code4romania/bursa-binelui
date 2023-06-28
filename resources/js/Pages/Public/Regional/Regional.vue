@@ -56,8 +56,8 @@
 
                                 <!-- Log in button -->
                                 <PrimaryButton
-                                    background="turqoise-500"
-                                    hover="turqoise-400"
+                                    background="primary-500"
+                                    hover="primary-400"
                                     color="white"
                                     class="w-full"
                                     :class="{ 'opacity-25': form.processing }"
@@ -177,103 +177,13 @@
             </div>
         </div>
 
-        <!-- Countdown -->
-        <div class="w-full bg-primary-500">
-            <div class="flex flex-col items-center justify-center max-w-5xl gap-6 mx-auto mb-10 p-9 md:flex-row">
-                <Countdown :dates="registration" />
-            </div>
-        </div>
-
         <!-- About -->
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
             <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('about_regional') }}</h3>
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
-        <!-- Projects -->
-        <div class="mx-auto mb-10 p-9 max-w-7xl">
-
-            <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
-            </div>
-
-            <div class="flex flex-col items-center justify-between gap-6 lg:flex-row">
-
-                <div class="flex flex-col items-center w-full gap-6 my-10 sm:flex-row xl:w-8/12">
-                    <!-- Search -->
-                    <div class="flex gap-6">
-                        <SearchFilter
-                            id="project-search"
-                            class="w-full lg:w-96"
-                            v-model="filter.s"
-                            color="gray-700"
-                            :placeholder="$t('search')"
-                            @keydown.enter="filterProjects"
-                        />
-
-                        <!-- Search action -->
-                        <SecondaryButton
-                            @click="filterProjects"
-                            class="py-2"
-                        >
-                            {{ $t('search') }}
-                        </SecondaryButton>
-                    </div>
-
-                    <div class="flex w-full gap-6 mb-6 sm:mb-0">
-                        <!-- Empty filters. -->
-                        <SecondaryButton
-                            v-if="hasValues"
-                            @click="emptyFilters"
-                            class="flex items-center w-1/2 gap-2 py-2 sm:w-auto"
-                        >
-                            <SvgLoader name="close" />
-                            {{ $t('empty_filters') }}
-                        </SecondaryButton>
-
-                        <!-- Sort -->
-                        <Sort
-                            class="w-1/2 sm:w-auto"
-                        />
-                    </div>
-                </div>
-
-                <MultiSelectObjectFilter
-                    class="z-50 w-60"
-                    v-model="filter.c"
-                    :options="countries"
-                    @callback="filterProjects"
-                />
-            </div>
-
-            <h2 class="text-2xl font-bold text-gray-900">{{ query.total }} {{ $t('of_projects') }}</h2>
-
-            <!-- Published projects -->
-            <PaginatedGrid
-                cardType="project-regional"
-                :list="query"
-                classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4"
-            />
-        </div>
-
-        <!-- Faqs -->
-        <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
-            <Faqs :data="faqs" />
-            <div class="mt-10">
-                <Link
-                    :href="route('contact')"
-                    class="bg-primary-500 flex-1 text-center  sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                    {{ $t('contact_us') }}
-                </Link>
-            </div>
-        </div>
-
-        <!-- Articles -->
+        <!-- Curent year -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
@@ -281,17 +191,17 @@
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
                         <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
-                    <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
+                    <h3 class="text-2xl font-bold text-white">2022 - 2023</h3>
                 </div>
             </div>
 
-            <div class="bg-white px-9">
-                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-                    <ArticleCard
-                        v-for="article in articles"
-                        :key="article.id"
-                        :data="article"
-                        class="relative z-50 lg:-mt-12"
+            <div class="px-9 lg:-mt-12">
+                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+                    <EditionCard
+                        v-for="edition in regions"
+                        :key="edition.id"
+                        :data="edition"
+                        class="relative z-50 "
                     />
                 </ul>
             </div>
@@ -301,7 +211,7 @@
             </div>
         </div>
 
-        <!-- Parteners -->
+        <!-- Last year -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
@@ -309,46 +219,23 @@
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
                         <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
-                    <h3 class="text-2xl font-bold text-white">{{ $t('parteners') }}</h3>
+                    <h3 class="text-2xl font-bold text-white">2021 - 2022</h3>
                 </div>
             </div>
 
-            <div class=" px-9">
-                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto lg:-mt-12 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-
-                    <li
-                        v-for="(partener, index) in parteners"
-                        :key="index"
-                        class="relative z-50 flex flex-col col-span-1 p-10 bg-white rounded-lg shadow-md"
-                    >
-                        <img :src="partener">
-                    </li>
+            <div class="px-9 lg:-mt-12">
+                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+                    <EditionCard
+                        v-for="edition in regions"
+                        :key="edition.id"
+                        :data="edition"
+                        class="relative z-50 "
+                    />
                 </ul>
             </div>
 
             <div class="absolute top-0 right-0 z-10 hidden lg:block">
                 <SvgLoader class="shrink-0" name="squer_half_color" />
-            </div>
-        </div>
-
-        <!-- Prev editions -->
-        <div class="mx-auto mb-20 max-w-7xl p-9 gap-x-4">
-            <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="clock"/>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ $t('prev_edtions') }}</h2>
-            </div>
-
-            <div class="flex flex-col gap-y-4">
-                <Link
-                    v-for="(edition, index) in editions"
-                    :key="index"
-                    :href="route('lastedition', edition.href)"
-                    class="text-xl font-bold text-blue-500"
-                >
-                    {{ edition.name }}
-                </Link>
             </div>
         </div>
     </PageLayout>
@@ -371,12 +258,7 @@
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import ChampionshipModal from '@/Components/modals/ChampionshipModal.vue';
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
-    import Countdown from '@/Components/timers/Countdown.vue';
-    import Faqs from '@/Components/faqs/Faqs.vue';
-    import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
-    import Sort from '@/Components/filters/Sort.vue';
-    import SearchFilter from '@/Components/filters/SearchFilter.vue';
-    import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
+    import EditionCard from '@/Components/cards/Edition.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 
@@ -384,13 +266,12 @@
     const props = defineProps({
         query: Object,
         championship: Object,
-        testimonials: Array,
         editions: Array,
-        articles: Array,
         registration: Object,
         parteners: Array,
         faqs: Array,
-        countries: Array
+        countries: Array,
+        regions: Array
     });
 
     /** Active filter state. */
