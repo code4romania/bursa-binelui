@@ -13,7 +13,7 @@
 
                 <h3 class="text-2xl font-bold text-gray-700 line-clamp-2">{{ data.name }}</h3>
 
-                <p class="text-base text-gray-500">{{ data.content }}</p>
+                <div class="text-base text-gray-500" v-html="data.content"></div>
 
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-gray-500">{{ data.date }}</p>

@@ -176,7 +176,7 @@ import {computed, onMounted} from "vue";
     });
 
     onMounted(() => {
-        console.log(props.data);
+
     });
 
     const percentage = computed(() => {
