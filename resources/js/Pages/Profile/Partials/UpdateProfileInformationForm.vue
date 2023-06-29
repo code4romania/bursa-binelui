@@ -2,7 +2,7 @@
     <section>
 
         <header class="mt-12 flex items-center gap-4">
-            <SvgLoader name="user"/>
+            <SvgLoader name="user" class="fill-white"/>
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
         </header>
 
@@ -74,8 +74,8 @@
 
                 <!-- Save button -->
                 <PrimaryButton
-                    background="turqoise-500"
-                    hover="turqoise-400"
+                    background="primary-500"
+                    hover="primary-400"
                     color="white"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
@@ -100,6 +100,7 @@
     import SvgLoader from '@/Components/SvgLoader.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import {onMounted} from "vue";
 
     /** Component props. */
     defineProps({
@@ -118,5 +119,10 @@
     const form = useForm({
         name: user.name,
         email: user.email,
+        phone: user.phone,
     });
+
+onMounted(() => {
+    console.log('mounted')
+});
 </script>

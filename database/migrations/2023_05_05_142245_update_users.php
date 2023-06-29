@@ -16,6 +16,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', ['donor', 'ngo-admin', 'bb-manager', 'bb-admin']);
+            $table->string('phone')->nullable();
+            $table->string('source_of_information')->nullable();
             $table->foreignIdFor(Organization::class)->nullable()->constrained();
         });
     }
