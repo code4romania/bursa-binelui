@@ -190,8 +190,8 @@
                                         </SecondaryButton>
 
                                         <PrimaryButton
-                                            background="turqoise-500"
-                                            hover="turqoise-400"
+                                            background="primary-500"
+                                            hover="primary-400"
                                             color="white"
                                             class="w-auto"
                                         >

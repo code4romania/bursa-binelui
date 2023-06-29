@@ -60,8 +60,8 @@
 
             <PrimaryButton
                 class="mt-6"
-                background="turqoise-500"
-                hover="turqoise-400"
+                background="primary-500"
+                hover="primary-400"
                 color="white"
                 type="button"
                 @click="$emit('next', $event.target)"
@@ -73,8 +73,8 @@
         <div v-if="'donor' == form.type" :class="['flex items-center gap-x-4 justify-between mt-6']">
             <PrimaryButton
                 class="flex-1"
-                background="turqoise-500"
-                hover="turqoise-400"
+                background="primary-500"
+                hover="primary-400"
                 color="white"
                 @click="$emit('next', $event.target)"
             >

@@ -42,7 +42,7 @@
                             <div class="space-y-6">
 
                                 <!-- Log in button -->
-                                <PrimaryButton background="turqoise-500" hover="turqoise-400" color="white" class="w-full"
+                                <PrimaryButton background="primary-500" hover="primary-400" color="white" class="w-full"
                                     :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                                     {{ $t('log_in') }}
                                 </PrimaryButton>

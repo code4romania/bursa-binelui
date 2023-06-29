@@ -24,8 +24,8 @@
                 <!-- Action -->
                <div class="grid grid-cols-1">
                    <PrimaryButton
-                       background="turqoise-500"
-                       hover="turqoise-400"
+                       background="primary-500"
+                       hover="primary-400"
                        color="white"
                        :class="{ 'opacity-25': form.processing }"
                        :disabled="form.processing"

@@ -192,8 +192,8 @@
                             </DangerButton>
                             <SecondaryButton
                                 class="ml-4 mt-8"
-                                background="turqoise-500"
-                                hover="turqoise-400"
+                                background="primary-500"
+                                hover="primary-400"
                                 color="white"
                                 @click="()=>{projectLinks.push({url:''})}">
                                 {{ $t('add') }}
@@ -227,8 +227,8 @@
                             </DangerButton>
                             <SecondaryButton
                                 class="ml-4 mt-8"
-                                background="turqoise-500"
-                                hover="turqoise-400"
+                                background="primary-500"
+                                hover="primary-400"
                                 color="white"
                                 @click="()=>{projectArticles.push({url:''})}">
                                 {{ $t('add') }}
@@ -249,8 +249,8 @@
                             </SecondaryButton>
 
                             <PrimaryButton
-                                background="turqoise-500"
-                                hover="turqoise-400"
+                                background="primary-500"
+                                hover="primary-400"
                                 color="white"
                                 @click="createProject"
                             >

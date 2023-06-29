@@ -2,8 +2,8 @@
     <div>
         <PrimaryButton
             id="championship-modal"
-            background="turqoise-500"
-            hover="turqoise-400"
+            background="primary-500"
+            hover="primary-400"
             color="white"
             class="w-full"
             @click="show = !show"

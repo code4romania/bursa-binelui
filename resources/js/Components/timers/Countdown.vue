@@ -31,7 +31,7 @@
         </div>
 
         <div v-if="'winners' === show" class="space-y-6 text-center">
-            <p class="text-2xl font-bold text-turqoise-50">Gala s-a incheiat! Vezi mai jos</p>
+            <p class="text-2xl font-bold text-primary-50">Gala s-a incheiat! Vezi mai jos</p>
             <h2 class="text-6xl font-bold text-white">Proiectele Castigatoare</h2>
         </div>
     </div>

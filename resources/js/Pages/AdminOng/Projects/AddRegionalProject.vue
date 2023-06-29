@@ -251,8 +251,8 @@
                             <SecondaryButton
                                 v-if="projectLinks.length <= 5"
                                 class="mt-8 ml-4"
-                                background="turqoise-500"
-                                hover="turqoise-400"
+                                background="primary-500"
+                                hover="primary-400"
                                 color="white"
                                 @click="()=>{projectLinks.push({url:''})}">
                                 {{ $t('add') }}
@@ -330,8 +330,8 @@
                             </SecondaryButton>
 
                             <PrimaryButton
-                                background="turqoise-500"
-                                hover="turqoise-400"
+                                background="primary-500"
+                                hover="primary-400"
                                 color="white"
                                 @click="createProject"
                             >

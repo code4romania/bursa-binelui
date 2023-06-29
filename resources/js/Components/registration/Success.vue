@@ -38,8 +38,8 @@
 
         <PrimaryButton
             class="mt-6"
-            background="turqoise-500"
-            hover="turqoise-400"
+            background="primary-500"
+            hover="primary-400"
             color="white"
             type="button"
             @click="$emit('success', $event.target)"

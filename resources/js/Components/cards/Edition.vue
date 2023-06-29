@@ -32,10 +32,10 @@
 
                 <Link
                     :href="route('lastedition', data.id)"
-                    class="flex items-center p-6 text-sm font-semibold gap-x-2 text-turqoise-500"
+                    class="flex items-center p-6 text-sm font-semibold gap-x-2 text-primary-500"
                 >
                     {{ $t('see')  }}
-                    <SvgLoader name="arrow_right" class="fill-turqoise-500 shrink-0" />
+                    <SvgLoader name="arrow_right" class="fill-primary-500 shrink-0" />
                 </Link>
 
         </div>
