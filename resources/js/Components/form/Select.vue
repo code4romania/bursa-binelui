@@ -8,7 +8,7 @@
                     class="flex gap-x-1"
                 >
                     <li v-if="selectedOption">
-                        {{ selectedOption.name ? selectedOption.name : selectedOption }}
+                        {{ computedName(selectedOption) }}
                     </li>
                 </ul>
             </ComboboxButton>
@@ -34,8 +34,8 @@
                     v-slot="{ active, selected }"
                 >
                     <li :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-primary-500 text-white' : 'text-gray-900']">
-                        <span :class="['block truncate', selected && 'font-semibold']">
-                            {{ option.name ? option.name : option }}
+                        <span :class="['block truncate', selected && 'font-semibold']" >
+                            {{ computedName(option)}}
                         </span>
 
                         <span v-if="selected" :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-primary-500']">
@@ -53,11 +53,12 @@
 
 <script setup>
     /** Import form vue. */
-    import { computed, ref, watch } from 'vue';
+    import {  computed, ref, watch } from 'vue';
 
     /** Import plugins. */
     import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid';
     import { Combobox, ComboboxButton, ComboboxInput, ComboboxLabel, ComboboxOption, ComboboxOptions } from '@headlessui/vue';
+    import {useI18n} from "vue-i18n";
 
     /** Component props. */
     const props = defineProps({
@@ -68,8 +69,13 @@
         isDisabled: {
             type: Boolean,
             disabled: false
+        },
+        useTranslation: {
+            type: Boolean,
+            default: false
         }
     });
+    const { t } = useI18n();
 
     /** Query input. */
     const query = ref('');
@@ -86,6 +92,15 @@
             return option.name.toLowerCase().includes(query.value.toLowerCase())
         })
     );
+
+    const computedName = (option) => {
+       let name = option.name ? option.name : option
+
+        if (props.useTranslation) {
+            return  t(name);
+        }
+        return name;
+    }
 
     /** Watch changes in selected options. */
     watch(selectedOption, (newVal, oldVal) => {

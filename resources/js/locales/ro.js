@@ -332,5 +332,13 @@ export default {
     "regional_winners": "Etapa desemnare castigatori",
     "regional_finished": "Editie incheiata",
     "articles_title": "Articole",
-    "article_title": "Articol"
+    "article_title": "Articol",
+    "social-entrepreneurship": "Antreprenoriat social",
+    "human-rights": "Drepturile omului",
+    "education": "Educație",
+    "health": "Sănătate",
+    "environment": "Mediu",
+    "social": "Social",
+    "animal-protection": "Protecția animalelor",
+    "sport": "Sport",
 }

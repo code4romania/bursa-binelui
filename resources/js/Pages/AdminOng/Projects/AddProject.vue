@@ -46,6 +46,7 @@
                             class="w-full xl:w-1/2"
                             :label="$t('project_category_label')"
                             :options="projectCategories"
+                            use-translation="true"
                             v-model="form.category"
                             :error="form.errors.category"
                         />
