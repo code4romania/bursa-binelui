@@ -23,7 +23,9 @@
         "@headlessui/vue": "^1.7.13",
         "@heroicons/vue": "^2.0.17",
         "@tailwindcss/aspect-ratio": "^0.4.2",
+        "chart.js": "^4.3.0",
         "vite-svg-loader": "^4.0.0",
+        "vue-chartjs": "^5.2.0",
         "vue-i18n": "^9.2.2",
         "vue3-carousel": "^0.3.1"
     }

@@ -62,6 +62,7 @@ Route::get('/bcr/proiecte', function () {
     return Inertia::render('Public/Bcr/Projects');
 })->name('bcr.projects');
 
+
 require __DIR__ . '/auth.php';
 
 require __DIR__ . '/organizations.php';
@@ -79,3 +80,7 @@ require __DIR__ . '/championship.php';
 require __DIR__ . '/regional.php';
 
 require __DIR__ . '/articles.php';
+
+require __DIR__ . '/donor.php';
+
+require __DIR__ . '/evolution.php';
