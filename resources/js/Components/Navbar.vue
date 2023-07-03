@@ -94,10 +94,19 @@
                                 <!-- Administrate Link -->
                                 <NavLink
                                     class="w-full px-3 py-2"
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
+                                    :href="'donor' === $page.props.auth.user.role ? route('donor.index') : route('dashboard')"
+                                    :active="'donor' === $page.props.auth.user.role ? route().current('donor.index') : route().current('dashboard')"
                                 >
-                                    {{ $t('administrate_link') }}
+                                    {{ 'donor' === $page.props.auth.user.role ? $t('dashbord') : $t('administrate_link') }}
+                                </NavLink>
+
+                                <NavLink
+                                    v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
+                                    class="w-full px-3 py-2"
+                                    :href="route('donor.donations')"
+                                    :active="route().current('donor.donations')"
+                                >
+                                    {{ $t('my_donations') }}
                                 </NavLink>
 
                                 <!-- Account settings -->
@@ -197,10 +206,19 @@
                      <NavLink
                         v-if="$page.props.auth.user"
                         class="w-full px-3 py-2"
-                        :href="route('admin.ong.edit')"
-                        :active="route().current('admin.ong.edit')"
+                        :href="'donor' === $page.props.auth.user.role ? route('donor.index') : route('dashboard')"
+                        :active="'donor' === $page.props.auth.user.role ? route().current('donor.index') : route().current('dashboard')"
                     >
-                        {{ $t('administrate_link') }}
+                        {{ 'donor' === $page.props.auth.user.role ? $t('dashbord') : $t('administrate_link') }}
+                    </NavLink>
+
+                    <NavLink
+                        v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
+                        class="w-full px-3 py-2"
+                        :href="route('donor.donations')"
+                        :active="route().current('donor.donations')"
+                    >
+                        {{ $t('my_donations') }}
                     </NavLink>
 
                     <!-- Account settings -->
