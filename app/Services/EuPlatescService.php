@@ -53,12 +53,12 @@ class EuPlatescService
 
     private function euPlatescHash($data): string
     {
-        $str = null;
+        $str = '';
         foreach ($data as $d) {
-            if ($d === null || \strlen($d) == 0) {
+            if ($d === null || \strlen((string) $d) == 0) {
                 $str .= '-';
             } else {
-                $str .= \strlen($d) . $d;
+                $str .= \strlen((string) $d) . $d;
             }
         }
 
