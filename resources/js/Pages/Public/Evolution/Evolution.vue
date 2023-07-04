@@ -8,8 +8,21 @@
                 :amount="amount"
                 :donations_number="donations_number"
                 :donations_amount="donations_amount"
+                :table_data="table_data"
             />
 
+            <ProjectsChart
+                :projects="projects"
+                :projects_number="projects_number"
+                :counties="counties"
+                :domains="domains"
+                :table_data="table_data"
+            />
+
+            <AppChart
+                :projects="projects"
+                :projects_number="projects_number"
+            />
         </div>
     </PageLayout>
 </template>
@@ -25,6 +38,11 @@ const props = defineProps({
     donations: Number,
     amount: Number,
     donations_number: Array,
-    donations_amount: Array
+    donations_amount: Array,
+    projects: Number,
+    projects_number: Array,
+    counties: Array,
+    domains: Array,
+    table_data: Array
 });
 </script>

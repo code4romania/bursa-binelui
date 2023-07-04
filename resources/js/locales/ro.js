@@ -371,5 +371,9 @@ export default {
     "donation_amount": "Suma donatii",
     "evolution": "Evolutie",
     "donations": "donatii",
-    "currency": "RON"
+    "currency": "RON",
+    "registered_projects": "proiecte inscrise",
+    "projects_per_domain": "Proiecte per domenii",
+    "good_deeds": "Indicele Faptelor Bune",
+    "good_deeds_evolution": "Evoluția Indicelui de Fapte Bune "
 }
