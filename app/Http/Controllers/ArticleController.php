@@ -38,11 +38,11 @@ class ArticleController extends Controller
     {
         $article->load('category');
         $gallery = $article->getMedia('gallery');
-
+//dd($article->relatedArticles()->get());
         return Inertia::render('Public/Articles/Article', [
             'article' => $article,
             'gallery' => $gallery,
-            'related' => $article->relatedArticles()->get()
+            'related' => $article->relatedArticles()->get(),
         ]);
     }
 }
