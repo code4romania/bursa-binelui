@@ -59,7 +59,6 @@
             </PrimaryButton>
 
             <PrimaryButton
-                class="mt-6"
                 background="primary-500"
                 hover="primary-400"
                 color="white"
@@ -70,9 +69,9 @@
             </PrimaryButton>
         </div>
 
-        <div v-if="'donor' == form.type" :class="['flex items-center gap-x-4 justify-between mt-6']">
+        <div v-if="'donor' == form.type" :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']">
             <PrimaryButton
-                class="flex-1"
+                class="flex-1 w-full"
                 background="primary-500"
                 hover="primary-400"
                 color="white"
@@ -82,7 +81,7 @@
             </PrimaryButton>
 
             <SecondaryButton
-                class="flex items-center flex-1 gap-x-2 py-2.5"
+                class="w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"
                 @click="$emit('google', $event.target)"
             >
                 <SvgLoader name="google" />

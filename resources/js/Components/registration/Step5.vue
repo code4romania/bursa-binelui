@@ -37,7 +37,6 @@
             </PrimaryButton>
 
             <PrimaryButton
-                class="mt-6"
                 background="primary-500"
                 hover="primary-400"
                 color="white"
