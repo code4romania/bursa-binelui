@@ -1,10 +1,10 @@
 <template>
     <section>
         <header>
-            <h2 class="text-2xl mt-8 font-bold text-gray-900">{{ $t('change_password') }}</h2>
+            <h2 class="mt-8 text-2xl font-bold text-gray-900">{{ $t('change_password') }}</h2>
         </header>
 
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6 mb-16">
+        <form @submit.prevent="updatePassword" class="mt-6 mb-16 space-y-6">
 
             <!-- Current password. -->
             <Input
@@ -40,6 +40,7 @@
 
                 <!-- Cancel button -->
                 <SecondaryButton
+                    class="py-2.5"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >

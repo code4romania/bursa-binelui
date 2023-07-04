@@ -5,11 +5,11 @@
 
         <!-- Dashboard template -->
         <Dashboard>
-            <div class="p-9 mb-24 w-full">
+            <div class="w-full mb-24 p-9">
 
                 <!-- Header -->
                 <header class="flex items-center gap-4">
-                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                         <SvgLoader class="shrink-0" name="menu"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('edit_project_title') }}</h2>
@@ -17,7 +17,7 @@
 
                 <!-- Alert -->
                 <!-- <Alert
-                    class="fixed right-10 top-10 w-96 z-50"
+                    class="fixed z-50 right-10 top-10 w-96"
                     :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
                     :message="flash.success_message || flash.error_message"
                     @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
@@ -27,12 +27,12 @@
                     <dl class="divide-y divide-gray-100">
 
                         <!-- Edit organization name -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_name_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.name }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_name_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.name }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -48,12 +48,12 @@
                         </div>
 
                         <!-- Edit organization cif -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('cif_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.cif }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('cif_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.cif }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <FileInput
                                     class="w-full"
@@ -67,10 +67,10 @@
                         </div>
 
                         <!-- Edit organization image -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_logo_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base flex items-center gap-6 font-medium leading-6 text-gray-700">
-                                <img class="h-32 w-32 flex-shrink-0" :src="form.cover_image" alt="" />
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_logo_label') }}</dt>
+                            <dt class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-6">
+                                <img class="flex-shrink-0 w-32 h-32" :src="form.cover_image" alt="" />
 
                                 <div>
                                     <EditModal
@@ -103,12 +103,12 @@
                         </div>
 
                         <!-- Edit organization description -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_description_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.description }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_description_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.description }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Textarea
                                         class="w-full"
@@ -123,15 +123,16 @@
                         </div>
 
                         <!-- Edit activity domains -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_activity_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.activity_domains?.map(item=>item.name).join(', ') }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_activity_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.activity_domains?.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
+
                                 <MultiSelectObjectFilter
-                                    class="w-full xl:w-1/2"
+                                    class="w-full"
                                     :label="$t('organization_activity_label')"
                                     :options="activity_domains"
                                     v-model="form.activity_domains"
@@ -142,12 +143,12 @@
                         </div>
 
                         <!-- Edit activity domains -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('status_document_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.status_document }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('status_document_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.status_document }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -164,18 +165,18 @@
                     </dl>
                 </div>
 
-                <h2 class="text-2xl my-9 font-bold text-gray-900">{{ $t('volunteer') }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('volunteer') }}</h2>
 
                 <div class="border border-gray-100">
                     <dl class="divide-y divide-gray-100">
 
                         <!-- Edit accepts voluntiers -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_accepts_volunteers_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.accepts_volunteers ? $t('yes') : $t('no') }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_accepts_volunteers_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.accepts_volunteers ? $t('yes') : $t('no') }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <label class="flex items-center">
                                     <Checkbox
@@ -192,12 +193,12 @@
                         </div>
 
                         <!-- Edit why volunteer -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_why_volunteer_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.why_volunteer }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_why_volunteer_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.why_volunteer }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Textarea
                                     class="w-full"
@@ -213,18 +214,18 @@
                     </dl>
                 </div>
 
-                <h2 class="text-2xl my-9 font-bold text-gray-900">{{ $t('organization_contact') }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('organization_contact') }}</h2>
 
                 <div class="border border-gray-100">
                     <dl class="divide-y divide-gray-100">
 
                         <!-- Edit organizaton website -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_website_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.website }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_website_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.website }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -240,12 +241,12 @@
                         </div>
 
                         <!-- Edit organizaton email -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_email_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.contact_email }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_email_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.contact_email }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -261,12 +262,12 @@
                         </div>
 
                         <!-- Edit organizaton phone -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_phone_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.contact_phone }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_phone_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.contact_phone }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -282,12 +283,12 @@
                         </div>
 
                         <!-- Edit organizaton contact person -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_contact_person_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.contact_person }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_contact_person_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.contact_person }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -303,17 +304,17 @@
                         </div>
 
                         <!-- Edit organizaton address -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('organization_address_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.street_address }}, {{ form.counties?.map(item=>item.name).join(', ')}} </dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_address_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.street_address }}, {{ form.counties?.map(item=>item.name).join(', ')}} </dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
-                                <div class="flex flex-col lg:flex-row gap-4">
+                                <div class="flex flex-col gap-4 lg:flex-row">
 
                                     <MultiSelectObjectFilter
-                                        class="w-full"
+                                        class="w-full z-101"
                                         :label="$t('county_label')"
                                         :options="counties"
                                         v-model="form.counties"
@@ -336,18 +337,18 @@
                     </dl>
                 </div>
 
-                <h2 class="text-2xl my-9 font-bold text-gray-900">{{ $t('i_pay_title') }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('i_pay_title') }}</h2>
 
                 <div class="border border-gray-100">
                     <dl class="divide-y divide-gray-100">
 
                         <!-- Edit merchant id -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('merchant_id') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.status }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('merchant_id') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.status }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"
@@ -363,12 +364,12 @@
                         </div>
 
                         <!-- Edit key -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('key_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.status }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('key_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.status }}</dt>
                             <EditModal
                                 @action="editField"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <Input
                                     class="w-full"

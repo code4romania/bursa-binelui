@@ -41,10 +41,12 @@ class HomeController extends Controller
             ],
         ];
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
+        $bcr_projects = Project::publish()->paginate(9)->withQueryString();
+        $donate_projects = Project::publish()->paginate(9)->withQueryString();
 
         return Inertia::render('Public/Home', [
-            'query' => $projects,
+            'bcr_projects' => $bcr_projects,
+            'donate_projects' => $donate_projects,
             'articles' => $articles,
         ]);
     }

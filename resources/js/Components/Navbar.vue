@@ -323,7 +323,7 @@
         {
             name: 'Evolutia faptelor bune',
             description: 'Vezi evoluția faptelor bune pe Bursa Binelui în timp, cu ajutorul unor grafice.',
-            href: 'about'
+            href: 'evolution'
         },
         {
             name: 'Întrebări frecvente',

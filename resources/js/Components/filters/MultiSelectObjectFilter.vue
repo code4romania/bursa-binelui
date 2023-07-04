@@ -1,14 +1,10 @@
 <template>
-
     <Combobox class="z-50" as="div" v-model="selectedOptions" multiple>
         <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
 
-            <div class="w-full rounded-md h-9 border-0 bg-white py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6">
-                <ul
-                    class="flex gap-x-1"
-                    v-if="selectedOptions.length > 0"
-                >
+            <div class="h-9 rounded-md border-0 bg-white py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6">
+                <ul class="flex flex-wrap gap-1" v-if="selectedOptions.length > 0">
                     <li v-for="option in selectedOptions" :key="option.id">
                         {{ option.name }}
                     </li>
@@ -20,7 +16,7 @@
             </ComboboxButton>
 
             <ComboboxOptions
-                class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                class="absolute w-full py-1 mt-1 overflow-y-auto text-base bg-white rounded-md shadow-lg z-102 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             >
                 <div class="z-20 my-1.5 sticky top-1.5 px-2">
                     <ComboboxInput

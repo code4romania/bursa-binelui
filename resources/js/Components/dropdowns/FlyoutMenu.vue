@@ -3,31 +3,34 @@
         <PopoverButton
             :class="
                 [
-                    'flex w-full lg:w-auto justify-between p-3 lg:p-0 lg:inline-flex items-center text-base font-medium leading-5',
+                    'flex w-full lg:w-auto justify-between p-3 lg:p-0 lg:inline-flex items-center text-base font-medium leading-5 focus:outline-none',
                     `${setActive(route().current()) ? 'bg-primary-50 lg:bg-transparent text-primary-500 lg:hover:text-primary-400' : 'text-gray-500 lg:hover:text-primary-500'}`
                 ]"
             >
             {{ name }}
-            <ChevronDownIcon class="h-5 w-5" aria-hidden="true" />
+            <ChevronDownIcon class="w-5 h-5" aria-hidden="true" />
         </PopoverButton>
 
         <transition
-            enter-active-class="transition ease-out duration-200"
-            enter-from-class="opacity-0 translate-y-1"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition ease-in duration-150"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 translate-y-1"
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="translate-y-1 opacity-0"
+            enter-to-class="translate-y-0 opacity-100"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="translate-y-0 opacity-100"
+            leave-to-class="translate-y-1 opacity-0"
         >
-            <PopoverPanel class="absolute left-1/2 z-50 lg:mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                <div class="w-screen max-w-sm flex-auto rounded-3xl bg-white p-4 text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+            <PopoverPanel class="absolute z-50 flex w-screen px-4 -translate-x-1/2 left-1/2 lg:mt-5 max-w-max">
+                <div class="flex-auto w-screen max-w-sm p-4 text-sm leading-6 bg-white shadow-lg rounded-3xl ring-1 ring-gray-900/5">
 
-                    <div v-for="link in links" :key="link.name" class="relative rounded-lg p-4 hover:bg-gray-50">
-                        <NavLink :href="route(`${link.href}`)" :active="route().current(`${link.href}`)">
-                            {{ link.name }}
+                    <div v-for="link in links" :key="link.name" class="relative p-4 rounded-lg hover:bg-gray-50">
+                        <NavLink
+                            :href="route(`${link.href}`)"
+                            :active="route().current(`${link.href}`)"
+                            class="flex-col items-start justify-start"
+                        >
+                            <p class="w-full text-left">{{ link.name }}</p>
+                            <p v-if="link.description" :class="[`mt-2 text-gray-500 text-sm`]">{{ link.description }}</p>
                         </NavLink>
-
-                        <p v-if="link.description" :class="[`mt-1 text-gray-600`]">{{ link.description }}</p>
                     </div>
                 </div>
             </PopoverPanel>

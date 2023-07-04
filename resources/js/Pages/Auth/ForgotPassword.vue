@@ -3,13 +3,13 @@
         <!-- Inertia page head -->
        <Head title="Forgot Password" />
 
-       <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+       <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
            {{ status }}
        </div>
 
        <!-- Auth template. -->
        <Auth :content="content">
-           <form class="space-y-6 mt-4 lg:mb-28" @submit.prevent="submit">
+           <form class="mt-4 space-y-6 lg:mb-28" @submit.prevent="submit">
                 <!-- Email -->
                 <Input
                     :label="$t('email')"
@@ -59,7 +59,7 @@
        description: "Nu ai cont pe Bursa Binelui?",
        link: {
            text: "Creează cont nou",
-           href: "#"
+           href: "register"
        }
    }
 

@@ -3,13 +3,13 @@
         <!-- Inertia page head -->
         <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
         <!-- Auth template. -->
         <Auth :content="content">
-            <form class="space-y-4 mt-4" @submit.prevent="submit">
+            <form class="mt-4 space-y-4" @submit.prevent="submit">
 
                 <!-- Email. -->
                 <Input
@@ -47,7 +47,7 @@
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
-                        class="underline text-sm text-primary-500 hover:text-primary-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                        class="text-sm underline rounded-md text-primary-500 hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                         {{  $t('password_forgoten') }}
                     </Link>
@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- Action -->
-                <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 mt-6">
 
                     <!-- Log in button -->
                     <PrimaryButton
@@ -105,7 +105,7 @@
         description: "Nu ai cont pe Bursa Binelui?",
         link: {
             text: "Creează cont nou",
-            href: "#"
+            href: "register"
         }
     }
 

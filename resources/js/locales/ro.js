@@ -91,8 +91,8 @@ export default {
     "project_beneficiary_extra": "Descrie beneficiarii proiectului/comunitatea căreia i se adresează, incluzând timpul și numărul acestora. Nu depăși 500 caractere",
     "why_to_donate": "De ce să donez?",
     "why_to_donate_extra": "Precizează nevoile sesizate în rândul beneficiarilor/comunității în care va fi implementat proiectul.",
-    "has_comments_label": "Proiectul acceptă comentarii?",
-    "has_volunteers_label": "Proiectul acceptă volunarii?",
+    "has_comments_label": "Proiectul acceptă comentari?",
+    "has_volunteers_label": "Proiectul acceptă voluntari?",
     "photo_gallery": "Galerie foto",
     "load_image": "Încarcă o imagine",
     "drag_image": "sau trage o imagine în acest chenar",
@@ -371,5 +371,13 @@ export default {
     "donation_amount": "Suma donatii",
     "evolution": "Evolutie",
     "donations": "donatii",
-    "currency": "RON"
+    "currency": "RON",
+    "registered_projects": "proiecte inscrise",
+    "projects_per_domain": "Proiecte per domenii",
+    "good_deeds": "Indicele Faptelor Bune",
+    "good_deeds_evolution": "Evoluția Indicelui de Fapte Bune ",
+    "currency": "RON",
+    "bcr_for_community": "BCR pentru comunitate",
+    "articles": "Articole",
+    "donate_for_good": "Donează pentru fapte bune"
 }
