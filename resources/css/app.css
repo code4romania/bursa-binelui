@@ -1,4 +1,2 @@
+@import '../../vendor/filament/filament/resources/css/app.css';
 @import "./typography.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

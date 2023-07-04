@@ -375,5 +375,6 @@ export default {
     "registered_projects": "proiecte inscrise",
     "projects_per_domain": "Proiecte per domenii",
     "good_deeds": "Indicele Faptelor Bune",
-    "good_deeds_evolution": "Evoluția Indicelui de Fapte Bune "
+    "good_deeds_evolution": "Evoluția Indicelui de Fapte Bune ",
+    "currency": "RON"
 }
