@@ -23,7 +23,7 @@ class StagesRelationManager extends RelationManager
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('start_date')->after(now())->required(),
+                Forms\Components\DatePicker::make('start_date')->after('today')->required(),
                 Forms\Components\DatePicker::make('end_date')->after('start_date')->required(),
                 Forms\Components\Toggle::make('is_current')
                     ->nullable(),

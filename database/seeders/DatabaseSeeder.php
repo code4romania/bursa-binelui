@@ -7,11 +7,13 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\ActivityDomain as ActivityDomainEnum;
 use App\Models\ActivityDomain;
+use App\Models\Article;
 use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Volunteer;
+use Database\Factories\ArticleFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -62,6 +64,12 @@ class DatabaseSeeder extends Seeder
 
             for ($i = 0; $i < self::USER_BB_ADMIN_NUMBER; $i++) {
                 User::factory()->bbAdmin()->create();
+            }
+
+            $articleCategories = ['Social', 'Educație', 'Sănătate', 'Cultură', 'Mediu', 'Sport', 'Animale', 'Altele'];
+            foreach ($articleCategories as $category) {
+                \App\Models\ArticleCategory::factory(['name' => $category, 'slug' => \Str::slug($category)])
+                    ->has(Article::factory()->count(4))->create();
             }
         }
     }

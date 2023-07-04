@@ -6,14 +6,14 @@
         <div class="mx-auto mb-10 max-w-7xl">
             <div class="aspect-w-16 aspect-h-9">
                 <img
-                    :src="article.image!=='' ?article.image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
+                    :src="article.cover_image!=='' ?article.cover_image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
                     alt="imagine proiect"
                     class="object-cover w-full h-full"
                 />
             </div>
 
             <div class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
-                {{ article.category }}
+                {{ article.category.name }}
             </div>
 
             <h1 v-if="article.title" class="mt-6 text-6xl font-extrabold text-left text-gray-900">{{ article.title }}</h1>
@@ -38,8 +38,7 @@
                 />
                 <div class="flex items-center justify-between pt-6 pb-10 border-t border-gray-300">
                     <div class="flex items-center justify-start w-full text-gray-500 f">
-                        <p>{{ article.author }}&nbsp;|&nbsp;</p>
-                        <p>{{ article.ong }}</p>
+                        <p>{{ article.author }}</p>
                     </div>
                     <p class="text-gray-500">{{ article.created_at }}</p>
                 </div>
@@ -59,9 +58,7 @@
 
             <div class="bg-white px-9">
                 <ul role="list" class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-                    <ArticleCard :data="article" class="relative z-50 lg:-mt-12" />
-                    <ArticleCard :data="article" class="relative z-50 lg:-mt-12" />
-                    <ArticleCard :data="article" class="relative z-50 lg:-mt-12" />
+                    <ArticleCard :data="article" class="relative z-50 lg:-mt-12" v-for="article in related" />
                 </ul>
             </div>
 
@@ -86,6 +83,7 @@ import SharePage from '@/Components/SharePage.vue';
 
 const props = defineProps({
     article: Object,
-    gallery: Array
+    gallery: Array,
+    related: Array,
 });
 </script>

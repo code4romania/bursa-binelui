@@ -165,7 +165,7 @@ const submit = () => {
 
 /** After user is registered update data. */
 const success = () => {
-    social.put(route('register'), {
+    social.put(route('profile.update'), {
         onError: (error) => {}
     });
 }

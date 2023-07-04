@@ -2,7 +2,7 @@
     <li class="flex flex-col col-span-1 bg-white rounded-lg shadow-md">
         <div class="flex flex-col flex-1">
             <Link href="#" class="relative sm:h-52">
-                <img class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full" :src="data.img" alt="aticle image" />
+                <img class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full" :src="data.cover_image" alt="aticle image" />
             </Link>
 
             <div class="p-4 space-y-6">
@@ -41,4 +41,5 @@
    defineProps({
         data: { type: Object }
     });
+
 </script>

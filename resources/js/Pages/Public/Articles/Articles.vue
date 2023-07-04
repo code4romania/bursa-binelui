@@ -10,20 +10,19 @@
 
                         <div class="flex justify-start w-full mb-6">
                             <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
-                                {{ article.category }}
+                                {{ article.category.name }}
                             </div>
                         </div>
 
                         <h1 v-if="article.title" class="text-6xl font-extrabold text-left text-gray-900">{{ article.title }}</h1>
 
                         <div class="flex items-center justify-start w-full mt-4 text-2xl font-bold text-cyan-900">
-                            <p class="">{{ article.author }}&nbsp;|&nbsp;</p>
-                            <p class="">{{ article.ong }}</p>
+                            <p class="">{{ article.author }}</p>
                         </div>
 
                         <div class="flex flex-col w-full gap-4 mt-10 sm:flex-row">
                             <Link
-                                :href="route('article', article.id)"
+                                :href="route('article', article.slug)"
                                 class="rounded-md px-3.5 py-2.5 text-sm text-white font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500"
                             >
                                 {{ $t('read_article') }}
@@ -38,7 +37,7 @@
                         </div>
 
                         <div class="relative flex items-center w-fit">
-                            <img class="mx-auto rounded-md shadow" :src="article.image" alt="" />
+                            <img class="mx-auto rounded-md shadow" :src="article.cover_image" alt="" />
                         </div>
                     </div>
                 </slide>
@@ -64,21 +63,21 @@
                             ]"
                         >
                             <Link
-                                :href="route('article', article.id)"
+                                :href="route('article', article.slug)"
                                 :class="[
                                     'relative group-hover:opacity-75 '
                                 ]"
                             >
                                 <div>
                                     <img
-                                        :src="article.image!=='' ?article.image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
+                                        :src="article.cover_image!=='' ?article.cover_image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
                                         alt="imagine proiect"
                                         class="w-full rounded-t-lg"
                                     />
 
                                     <div class="absolute z-10 bottom-3 left-3">
                                         <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full shadow cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
-                                            {{ article.category }}
+                                            {{ article.category.name }}
                                         </div>
                                     </div>
                                 </div>
@@ -87,14 +86,14 @@
                             <div class="h-full px-6 py-6 space-y-6">
                                 <p class="text-sm text-gray-500">{{ article.author }}</p>
                                 <div>
-                                    <Link :href="route('article', article.id)" class="text-lg font-bold text-gray-900">{{ article.title }}</Link>
+                                    <Link :href="route('article', article.slug)" class="text-lg font-bold text-gray-900">{{ article.title }}</Link>
                                 </div>
                                 <div class="text-sm text-gray-500" v-html="article.content"></div>
 
                                 <div class="flex items-center justify-between mt-auto text-sm">
                                     <p class="text-gray-500 ">{{ article.created_at }}</p>
                                     <Link
-                                        :href="route('article', article.id)"
+                                        :href="route('article', article.slug)"
                                         class="flex items-center font-semibold text-primary-500 gap-x-2"
                                     >
                                         {{ $t('read_article') }}
@@ -125,7 +124,7 @@
                                 class="inline-flex items-center px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
                                 @click="filterArticles(category)"
                             >
-                                {{ category }}
+                                {{ category.name }}
                             </div>
                         </div>
                     </div>
@@ -138,12 +137,12 @@
                             class="w-full p-6 mb-6 space-y-6 border-l-8 rounded shadow border-primary-500"
                         >
                             <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
-                                {{ article.category }}
+                                {{ article.category.name }}
                             </div>
 
                             <div class="flex items-center justify-start w-full mt-4 text-sm text-gray-500">
-                                <p class="">{{ article.author }}&nbsp;|&nbsp;</p>
-                                <p class="">{{ article.ong }}</p>
+                                <p class="">{{ article.author }}</p>
+
                             </div>
 
                             <h3 class="text-lg font-bold text-gray-900">{{ article.title }}</h3>
@@ -190,7 +189,8 @@ const props = defineProps({
 const filter = ref({ category : null });
 
 const filterArticles = (value) => {
-    filter.value.category = value;
+    filter.value.category = value.slug;
+    console.log(filter.value);
 
     router.visit(route('articles'), {
         method: 'get',
