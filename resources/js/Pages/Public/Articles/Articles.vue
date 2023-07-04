@@ -8,7 +8,7 @@
                 <slide v-for="(article, index) in query.data" :key="index" class="flex flex-col-reverse w-full px-9 lg:flex-row lg:items-start lg:justify-start">
                     <div class="w-full lg:w-6/12">
 
-                        <div class="flex justify-start w-full mb-6">
+                        <div class="flex justify-start w-full pt-4 mb-6">
                             <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
                                 {{ article.category.name }}
                             </div>

@@ -9,7 +9,7 @@
                 class="relative sm:h-52"
             >
                 <img
-                    :src="data.cover_image!=='' ?data.cover_image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
+                    :src="data.cover_image!=='' ?data.cover_image: '/images/no_image.jpg'"
                     alt="imagine proiect"
                     class="object-cover object-center w-full h-full rounded-lg shadow sm:h-full sm:w-full"
                 />
