@@ -376,5 +376,8 @@ export default {
     "projects_per_domain": "Proiecte per domenii",
     "good_deeds": "Indicele Faptelor Bune",
     "good_deeds_evolution": "Evoluția Indicelui de Fapte Bune ",
-    "currency": "RON"
+    "currency": "RON",
+    "bcr_for_community": "BCR pentru comunitate",
+    "articles": "Articole",
+    "donate_for_good": "Donează pentru fapte bune"
 }

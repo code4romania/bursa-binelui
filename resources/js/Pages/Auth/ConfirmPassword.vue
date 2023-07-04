@@ -3,7 +3,7 @@
         <!-- Inertia page head -->
         <Head :title="$t('header_confirm_password')" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
@@ -13,7 +13,7 @@
                 {{ $t('confirm_password_info') }}
             </div>
 
-            <form class="space-y-4 mt-4" @submit.prevent="submit">
+            <form class="mt-4 space-y-4" @submit.prevent="submit">
 
                 <!-- Passowrd. -->
                 <Input
@@ -29,7 +29,7 @@
 
 
                 <!-- Action -->
-                <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4 mt-6">
 
                     <!-- Log in button -->
                     <PrimaryButton
@@ -61,8 +61,8 @@
         title: "Register",
         description: "Log in",
         link: {
-            text: "lon in",
-            href: "#"
+            text: "log in",
+            href: "login"
         }
     }
 

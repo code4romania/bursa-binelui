@@ -44,8 +44,8 @@
             </div>
         </header>
 
-        <div class="relative pb-10 mt-10 overflow-hidden px-9">
-            <div class="w-full py-10 mx-auto rounded shadow-md lg:max-w-7xl lg:pl-32 lg:pr-10">
+        <div class="relative z-30 pb-10 mt-10 overflow-hidden px-9">
+            <div class="relative z-30 w-full py-10 mx-auto rounded shadow-md lg:max-w-7xl lg:pl-32 lg:pr-10">
 
                 <div class="lg:max-w-5xl">
                     <div class="flex items-center w-full mb-4">
@@ -67,17 +67,21 @@
                         <h3 class="inline px-6 py-2 text-xl font-bold text-white w-fit bg-primary-500">Se pot programa la CiviTech 911. Afla cum aici...</h3>
                     </div>
                 </div>
+
+                <div class="absolute z-10 hidden bottom-10 -left-20 md:block">
+                    <SvgLoader class="z-10 shrink-0 fill-primary-300" name="small_dotted"/>
+                </div>
             </div>
 
-            <div class="absolute bottom-0 right-0 hidden md:block">
-                <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
+            <div class="absolute bottom-0 right-0 z-10 hidden md:block">
+                <SvgLoader class="z-10 shrink-0 fill-primary-300" name="dotted_square" />
             </div>
         </div>
 
-        <div class="flex items-center justify-between w-full gap-6 mx-auto mt-10 lg:max-w-7xl px-9">
+        <div v-if="donate_projects" class="flex items-center justify-between w-full gap-6 mx-auto mt-10 lg:max-w-7xl px-9">
 
            <div class="flex items-center gap-6">
-                <h2 class="text-2xl font-bold text-red-500 lg:text-5xl">Donează pentru fapte bune</h2>
+                <h2 class="text-2xl font-bold text-red-500 lg:text-5xl">{{ $t('donate_for_good') }}</h2>
                 <Link
                     :href="route('projects')"
                     class="bg-red-500 text-center z-50 w-full sm:w-auto hover:bg-red-400 text-white focus-visible:outline-red-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -97,7 +101,7 @@
            </div>
         </div>
 
-        <div class="relative w-full">
+        <div v-if="donate_projects" class="relative w-full">
             <carousel
                 class="relative z-50 w-full"
                 v-bind="carouselOptions.settings"
@@ -105,7 +109,7 @@
                 ref="projects"
             >
                 <slide
-                    v-for="(project, index) in query.data"
+                    v-for="(project, index) in donate_projects.data"
                     :key="index"
                     class="flex flex-col py-9"
                 >
@@ -123,10 +127,10 @@
             </div>
         </div>
 
-        <div class="w-full bg-primary-50 py-9">
+        <div v-if="articles.length" class="w-full bg-primary-50 py-9">
             <div class="w-full mx-auto rounded lg:max-w-7xl px-9">
                 <div class="flex items-center gap-6 mb-9">
-                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">Articole</h2>
+                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">{{ $t('articles') }}</h2>
                     <Link
                         :href="route('projects')"
                         class="bg-primary-500 text-center z-50 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -146,10 +150,11 @@
             </div>
         </div>
 
-        <div class="relative w-full bg-white">
+        <!-- Bcr projects -->
+        <div v-if="bcr_projects" class="relative w-full bg-white">
             <div class="flex items-center justify-between w-full gap-6 mx-auto mt-10 lg:max-w-7xl px-9">
                 <div class="flex items-center gap-6">
-                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">BCR pentru comunitate</h2>
+                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">{{ $t('bcr_for_community') }}</h2>
                     <Link
                         :href="route('projects')"
                         class="bg-primary-500 text-center z-50 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -176,7 +181,7 @@
                 ref="projects"
             >
                 <slide
-                    v-for="(project, index) in query.data"
+                    v-for="(project, index) in bcr_projects.data"
                     :key="index"
                     class="flex flex-col py-9"
                 >
@@ -210,6 +215,8 @@
     /** Component props. */
     const props = defineProps({
         query: Object,
+        bcr_projects: Object,
+        donate_projects: Object,
         articles: Array
     });
 

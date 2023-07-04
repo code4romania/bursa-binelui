@@ -106,10 +106,11 @@
                         </div>
                     </Modal>
 
-                    <Link :href="route('projects')"
+                    <button
+                        @click="scrollTo('#projects')"
                         class="rounded-md bg-white text-center px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5">
-                    {{ $t('see_projects') }}
-                    </Link>
+                        {{ $t('see_projects') }}
+                    </button>
                 </div>
 
                 <p class="hidden mt-10 text-base text-gray-500 lg:block">{{ $t('competition') }}</p>
@@ -161,7 +162,7 @@
         </div>
 
         <!-- Projects -->
-        <div class="mx-auto mb-10 p-9 max-w-7xl">
+        <div id="projects" class="mx-auto mb-10 p-9 max-w-7xl">
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
@@ -244,8 +245,8 @@
         <!-- Articles -->
         <div class="relative mb-10 overflow-hidden pb-9">
 
-            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
-                <div class="flex items-center gap-4 mx-auto max-w-7xl">
+            <div class="pt-12 pb-20 bg-primary-500">
+                <div class="flex items-center gap-4 mx-auto px-9 max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
                         <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
                     </div>
@@ -446,6 +447,13 @@
         if (!hasReachedEnd.value && triggerFetch) {
             infiniteScroll()
             hasReachedEnd.value = true;
+        }
+    }
+
+    const scrollTo = (section) => {
+        const element = document.querySelector(section);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
         }
     }
 </script>

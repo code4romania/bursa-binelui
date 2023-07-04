@@ -114,7 +114,7 @@ const content = computed(() => {
         description: "Ești deja utilizator?",
         link: {
             text: "Intră în cont",
-            href: "#"
+            href: "login"
         }
     };
 });
