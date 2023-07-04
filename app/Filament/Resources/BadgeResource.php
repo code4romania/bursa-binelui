@@ -6,6 +6,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BadgeResource\Pages;
 use App\Models\Badge;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -25,7 +27,13 @@ class BadgeResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->required()->label(__('badge.name'))->maxLength(255),
+                SpatieMediaLibraryFileUpload::make('cover')
+                    ->collection('cover')
+                    ->label(__('badge.cover_image'))
+                    ->required()
+                    ->acceptedFileTypes(['image/*'])
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -33,7 +41,9 @@ class BadgeResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //

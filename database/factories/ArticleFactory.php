@@ -13,8 +13,14 @@ class ArticleFactory extends Factory
 
     public function definition(): array
     {
+        $title = $this->faker->sentence;
         return [
-
+            'title' => $title,
+            'slug' => \Str::slug($title),
+            'content' => $this->faker->paragraph,
+            'is_active' => $this->faker->boolean,
+            'author' => $this->faker->name,
+            'article_category_id' => ArticleCategoryFactory::new(),
         ];
     }
 }
