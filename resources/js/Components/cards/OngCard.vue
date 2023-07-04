@@ -1,14 +1,17 @@
 <template>
-    <li class="col-span-1 flex flex-col rounded-lg bg-white shadow-md">
-        <div class="flex flex-1 flex-col p-6">
-            <img class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" :src="data.cover_image ? data.cover_image: '/images/ong.png'" alt="" />
+    <li class="flex flex-col col-span-1 bg-white rounded-lg shadow-md">
+        <div class="flex flex-col flex-1 p-6">
+            <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="data.cover_image ? data.cover_image: '/images/ong.png'" alt="" />
 
             <h3 class="mt-4 text-2xl font-bold text-gray-700 line-clamp-2">{{ data.name }}</h3>
 
-            <div class="mt-1 flex items-center flex-wrap gap-5 text-base text-gray-800 font-medium mb-6">
-                <div v-if="data.activity_domains" class="flex gap-1 items-center">
+            <div class="flex flex-wrap items-center gap-5 mt-1 mb-6 text-base font-medium text-gray-800">
+                <div v-if="0 < data.activity_domains?.length" class="flex items-center gap-1">
                     <SvgLoader class="shrink-0" name="activity" />
-                    <p class="line-clamp-1">{{ data.activity_domains?.map(item=>item.name).join(', ') }}</p>
+                    <!-- <p class="line-clamp-1">{{ data.activity_domains?.map(item=>item.name).join(', ') }}</p> -->
+                    <div class="flex gap-1.5 flex-wrap">
+                        <p v-for="(domain, index) in data.activity_domains">{{ domain.name }}</p>
+                    </div>
                 </div>
             </div>
 

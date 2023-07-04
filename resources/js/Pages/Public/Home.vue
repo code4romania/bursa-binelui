@@ -111,10 +111,10 @@
                 <slide
                     v-for="(project, index) in donate_projects.data"
                     :key="index"
-                    class="flex flex-col py-9"
+                    class="flex flex-col -mr-4 py-9"
                 >
                     <ProjectCard
-                        :class="[0 === index % 2 ? '-mt-9' : 'mt-9']"
+                        :class="['mx-4', 0 === index % 2 ? '-mt-9' : 'mt-9']"
                         :data="project"
                     />
                 </slide>
@@ -222,22 +222,51 @@
 
     const projects = ref(null);
 
-    /** Carousel options. */
     const carouselOptions = ref({
         settings: {
-        itemsToShow: 1,
-        snapAlign: 'start',
+            itemsToShow: 1,
+            snapAlign: 'start',
         },
         breakpoints: {
             700: {
-                itemsToShow: 3.5,
+                itemsToShow: 2,
+                snapAlign: 'start',
+            },
+            850: {
+                itemsToShow: 2.5,
                 snapAlign: 'start',
             },
             1024: {
-                itemsToShow: 5.5,
+                itemsToShow:3,
                 snapAlign: 'start',
-                wrapAround: true
+                wrapAround: false,
+            },
+            1200: {
+                itemsToShow:3.5,
+                snapAlign: 'start',
+                wrapAround: false,
+            },
+            1440: {
+                itemsToShow:4.5,
+                snapAlign: 'start',
+                wrapAround: false,
+            },
+            1700: {
+                itemsToShow:5.5,
+                snapAlign: 'start',
+                wrapAround: false,
             }
-        }
+        },
     });
 </script>
+
+<style>
+.carousel-container {
+  display: flex;
+  gap: 20px;
+}
+
+.carousel-slide {
+  margin-right: 20px;
+}
+</style>
