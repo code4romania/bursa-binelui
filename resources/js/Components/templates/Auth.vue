@@ -4,11 +4,11 @@
             <div class="w-full mx-auto mb-64">
 
                 <div>
-                    <h1 v-if="content.hasOwnProperty('title')" class="text-6xl font-extrabold leading-9 tracking-tight text-cyan-900">{{ content.title }}</h1>
+                    <h1 v-if="content.hasOwnProperty('title')" class="text-6xl font-extrabold tracking-tight text-cyan-900">{{ content.title }}</h1>
 
                     <p class="mt-6 text-sm leading-6 text-gray-600">
-                        <span v-if="content.hasOwnProperty('description')">{{ content.description }}</span>
-                        <a v-if="content.hasOwnProperty('link')" :href="content.link.href" class="text-primary-500 hover:text-primary-400">{{ content.link.text }}</a>
+                        <span v-if="content.hasOwnProperty('description')">{{ content.description }}&nbsp;</span>
+                        <Link v-if="content.hasOwnProperty('link')" :href="route(content.link.href)" class="text-primary-500 hover:text-primary-400">{{ content.link.text }}</Link>
                     </p>
 
                 </div>
@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+    import {Link} from '@inertiajs/vue3';
     /** Component props. */
     defineProps({
         content: { type: Object }

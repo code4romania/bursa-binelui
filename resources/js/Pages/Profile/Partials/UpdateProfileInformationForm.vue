@@ -1,12 +1,12 @@
 <template>
     <section>
 
-        <header class="mt-12 flex items-center gap-4">
+        <header class="flex items-center gap-4 mt-12">
             <SvgLoader name="user" class="fill-white"/>
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-11 space-y-6">
+        <form @submit.prevent="form.patch(route('profile.update'))" class="space-y-6 mt-11">
 
             <!-- Name -->
             <Input
@@ -37,17 +37,17 @@
                 :isRequired="true"
                 :error="form.errors.phone"
             >
-                <p class="text-gray-500 text-sm pt-1">{{ $t('phone_input_info') }}</p>
+                <p class="pt-1 text-sm text-gray-500">{{ $t('phone_input_info') }}</p>
             </Input>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="text-sm mt-2 text-gray-800">
+                <p class="mt-2 text-sm text-gray-800">
                     {{ $t('unverified_email') }}
                     <Link
                         :href="route('verification.send')"
                         method="post"
                         as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         {{ $t('reverify_email') }}
                     </Link>
@@ -55,7 +55,7 @@
 
                 <div
                     v-show="status === 'verification-link-sent'"
-                    class="mt-2 font-medium text-sm text-green-600"
+                    class="mt-2 text-sm font-medium text-green-600"
                 >
                     {{ $t('verification_email') }}
                 </div>
@@ -66,6 +66,7 @@
 
                 <!-- Cancel button -->
                 <SecondaryButton
+                    class="py-2.5"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >

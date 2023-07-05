@@ -14,7 +14,7 @@
 
         <div
             v-if="show"
-            class="fixed top-0 left-0 right-0 w-full h-full bg-gray-500 bg-opacity-75 z-100"
+            class="fixed top-0 left-0 right-0 w-full h-full bg-gray-500 bg-opacity-75 z-101"
         >
             <div class="relative w-full mx-auto mt-16 bg-white lg:mt-24 lg:flex-row lg:max-w-7xl py-9">
                 <h3 class="text-2xl font-bold text-gray-900 px-9">{{ $t('choose_project') }}</h3>

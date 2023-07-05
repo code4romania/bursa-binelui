@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,192 +15,34 @@ class ArticleController extends Controller
     {
         // $query = Article::query();
 
-        $categories = ['SOCIAL', 'EDUCATIE', 'MEDIU', 'LOREM', 'LOREM IPSUM'];
+        $categories = ArticleCategory::whereHas('articles', function ($query) {
+            $query->where('is_active', true);
+        })->get();
 
-        $query = [
-            'current_page' => 1,
-            'data' => [
-                [
-                    'id' => 1,
-                    'title' => 'Importanța educației remediale în România în timpul pandemiei',
-                    'content' => '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.</p>',
-                    'author' => 'Ion Popescu',
-                    'ong' => 'Asociatia Pentru Tine',
-                    'image' => '/images/project_img.png',
-                    'category' => 'SOCIAL',
-                    'created_at' => '15.02.2022',
-                ],
-                [
-                    'id' => 2,
-                    'title' => 'Importanța educației remediale în România în timpul pandemiei',
-                    'content' => '<a href="google.com">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.</a>',
-                    'author' => 'Ion Popescu',
-                    'ong' => 'Asociatia Pentru Tine',
-                    'image' => '/images/project_img.png',
-                    'category' => 'SOCIAL',
-                    'created_at' => '15.02.2022',
-                ],
-                [
-                    'id' => 3,
-                    'title' => 'Importanța educației remediale în România în timpul pandemiei',
-                    'content' => '<div><ul><li>unu</li><li>doi</li></ul><img src=""></div>',
-                    'author' => 'Ion Popescu',
-                    'ong' => 'Asociatia Pentru Tine',
-                    'image' => '/images/project_img.png',
-                    'category' => 'SOCIAL',
-                    'created_at' => '15.02.2022',
-                ],
-            ],
-            'first_page_url' => 'http://bursabinelui.test/articole?page=1',
-            'from' => 1,
-            'last_page' => 2,
-            'last_page_url'=> 'http://bursabinelui.test/articole?page=2',
-            'links' => [
-                [
-                    'url' => 'http://bursabinelui.test/articole?page=1',
-                    'label' => '1',
-                    'active' => true,
-                ],
-                [
-                    'url'=> 'http://bursabinelui.test/articole?page=2',
-                    'label'=> '2',
-                    'active'=> false,
-                ],
-            ],
-            'next_page_url'=> 'http://bursabinelui.test/articole?page=1',
-            'path'=> 'http://bursabinelui.test/articole',
-            'per_page' =>15,
-            'prev_page_url' => null,
-            'to' => 15,
-            'total' => 20,
-
-        ];
+        $articles = Article::active()->with('category');
+        if ($request->get('category')) {
+            $category = $categories->search(function (ArticleCategory $item) use  ($request) {
+                return $item['slug'] == $request->get('category');
+            });
+            $articles = $articles->where('article_category_id', $category);
+        }
+        $articles = $articles->paginate(10);
 
         return Inertia::render('Public/Articles/Articles', [
             'categories' => $categories,
-            'query' => $query,
+            'query' => $articles,
         ]);
     }
 
     public function article(Article $article)
     {
-        $article = [
-            'id' => 1,
-            'title' => 'Importanța educației remediale în România în timpul pandemiei',
-            'content' => '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.</p>',
-            'author' => 'Ion Popescu',
-            'ong' => 'Asociatia Pentru Tine',
-            'image' => '/images/project_img.png',
-            'category' => 'SOCIAL',
-            'created_at' => '15.02.2022',
-        ];
-
-        $gallery = [
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-        ];
-
+        $article->load('category');
+        $gallery = $article->getMedia('gallery');
+//dd($article->relatedArticles()->get());
         return Inertia::render('Public/Articles/Article', [
             'article' => $article,
             'gallery' => $gallery,
+            'related' => $article->relatedArticles()->get(),
         ]);
     }
 }

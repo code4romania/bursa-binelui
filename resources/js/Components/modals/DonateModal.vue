@@ -10,29 +10,29 @@
 
         <Teleport to="body">
             <TransitionRoot as="template" :show="open">
-                <Dialog as="div" class="relative z-50" @close="open = false">
+                <Dialog as="div" class="relative z-101" @close="open = false">
                     <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
                     </TransitionChild>
 
                     <div class="fixed inset-0 z-50 overflow-y-auto">
-                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
                             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                                <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                                    <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
-                                        <button type="button" class="rounded-md bg-white text-gray-400 hover:text-gray-500" @click="open = false">
+                                <DialogPanel class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                                    <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                                        <button type="button" class="text-gray-400 bg-white rounded-md hover:text-gray-500" @click="open = false">
                                             <span class="sr-only">Close</span>
-                                            <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                                            <XMarkIcon class="w-6 h-6" aria-hidden="true" />
                                         </button>
                                     </div>
                                     <div class="sm:flex sm:items-start">
 
-                                        <div class="mt-6 w-full">
+                                        <div class="w-full mt-6">
                                             <div>
-                                                <h3 class="text-center text-xl font-semibold text-gray-800">{{ $t('donate_to_project') }}</h3>
-                                                <h3 v-if="data.name" class="text-center text-xl font-semibold text-primary-500">{{ data.name }}</h3>
-                                                <p class="text-sm text-gray-500 my-4">{{ $t('donate_form_intro') }}</p>
-                                                <p v-if="$page.props.auth.user" class="text-sm text-gray-500 my-4">{{ $t('logged_as') }} {{ $page.props.auth.user.name }} ({{ $page.props.auth.user.email }})</p>
+                                                <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donate_to_project') }}</h3>
+                                                <h3 v-if="data.name" class="text-xl font-semibold text-center text-primary-500">{{ data.name }}</h3>
+                                                <p class="my-4 text-sm text-gray-500">{{ $t('donate_form_intro') }}</p>
+                                                <p v-if="$page.props.auth.user" class="my-4 text-sm text-gray-500">{{ $t('logged_as') }} {{ $page.props.auth.user.name }} ({{ $page.props.auth.user.email }})</p>
                                             </div>
 
                                             {{ }}
@@ -98,7 +98,7 @@
                                                         name="confirm"
                                                         v-model:checked="guestForm.terms"
                                                     />
-                                                    <span class="ml-2 text-sm text-gray-700 mr-1">{{ $t('i_agree') }}</span>
+                                                    <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('i_agree') }}</span>
                                                     <Link :href="route('terms')" class="text-sm text-primary-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
 
                                                     <!-- Error -->
@@ -106,7 +106,7 @@
                                                 </label>
 
                                                 <!-- Actions -->
-                                                <div class="pt-6 w-full">
+                                                <div class="w-full pt-6">
                                                     <PrimaryButton
                                                         background="primary-500"
                                                         hover="primary-400"
@@ -117,7 +117,7 @@
                                                     </PrimaryButton>
 
                                                     <div v-if="!$page.props.auth.user">
-                                                        <p class="text-sm text-gray-900 text-center py-1 font-medium">{{ $t('or') }}</p>
+                                                        <p class="py-1 text-sm font-medium text-center text-gray-900">{{ $t('or') }}</p>
 
                                                         <Link
                                                             :href="route('login')"
@@ -126,7 +126,7 @@
                                                             {{ $t('login_bb') }}
                                                         </Link>
 
-                                                        <p class="text-sm text-gray-900 text-center pt-2 font-medium">{{ $t('donate_for_reward') }}</p>
+                                                        <p class="pt-2 text-sm font-medium text-center text-gray-900">{{ $t('donate_for_reward') }}</p>
                                                     </div>
                                                 </div>
                                             </form>

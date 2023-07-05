@@ -67,7 +67,7 @@
             <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
 
                 <div class="absolute bottom-0 right-0">
-                    <SvgLoader class="shrink-0" name="dotted_square" />
+                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
                 </div>
 
                 <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
@@ -98,7 +98,7 @@
 
                     <div class="w-full h-6 bg-gray-300">
                         <div
-                            :class="[`h-6`,project.total_donations == project.target_budget ? 'bg-primary-500' : 'bg-cyan-900',]"
+                            :class="[`h-6`, project.total_donations == project.target_budget ? 'bg-primary-500' : 'bg-cyan-900',]"
                             :style="`width: ${percentage}%`"
                         ></div>
                     </div>
@@ -309,7 +309,13 @@
 
 
     /** Percentage */
-    const percentage = computed( () => (project.current_amount / project.max_amount) * 100 );
+    const percentage= computed(() => {
+        if (props.project.total_donations > props.project.target_budget) {
+            return 100;
+        }
+
+        return (props.project.total_donations / props.project.target_budget) * 100;
+    });
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {

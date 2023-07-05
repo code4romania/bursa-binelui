@@ -114,7 +114,7 @@ const content = computed(() => {
         description: "Ești deja utilizator?",
         link: {
             text: "Intră în cont",
-            href: "#"
+            href: "login"
         }
     };
 });
@@ -165,7 +165,7 @@ const submit = () => {
 
 /** After user is registered update data. */
 const success = () => {
-    social.put(route('register'), {
+    social.put(route('profile.update'), {
         onError: (error) => {}
     });
 }
