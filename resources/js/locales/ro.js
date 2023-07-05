@@ -380,4 +380,5 @@ export default {
     "bcr_for_community": "BCR pentru comunitate",
     "articles": "Articole",
     "donate_for_good": "Donează pentru fapte bune"
+    
 }
