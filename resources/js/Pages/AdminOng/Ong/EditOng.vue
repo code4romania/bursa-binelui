@@ -29,9 +29,10 @@
                         <!-- Edit organization name -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_name_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.name }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.name }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.name = clonedOrganization.name"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -50,9 +51,10 @@
                         <!-- Edit organization cif -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('cif_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.cif }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.cif }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.cif = clonedOrganization.cif"
                                 class="flex justify-end col-span-1"
                             >
                                 <FileInput
@@ -70,7 +72,7 @@
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_logo_label') }}</dt>
                             <dt class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                <img class="flex-shrink-0 w-32 h-32" :src="form.cover_image" alt="" />
+                                <img class="flex-shrink-0 w-32 h-32" :src="clonedOrganization.cover_image" alt="" />
 
                                 <div>
                                     <EditModal
@@ -105,9 +107,10 @@
                         <!-- Edit organization description -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_description_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.description }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.description }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.description = clonedOrganization.description"
                                 class="flex justify-end col-span-1"
                             >
                                 <Textarea
@@ -125,9 +128,10 @@
                         <!-- Edit activity domains -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_activity_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.activity_domains?.map(item=>item.name).join(', ') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.activity_domains?.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.activity_domains = clonedOrganization.activity_domains"
                                 class="flex justify-end col-span-1"
                             >
 
@@ -145,9 +149,10 @@
                         <!-- Edit activity domains -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('status_document_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.status_document }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.status_document }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.status_document = clonedOrganization.status_document"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -173,9 +178,10 @@
                         <!-- Edit accepts voluntiers -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_accepts_volunteers_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.accepts_volunteers ? $t('yes') : $t('no') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.accepts_volunteers ? $t('yes') : $t('no') }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.accepts_volunteers = clonedOrganization.accepts_volunteers"
                                 class="flex justify-end col-span-1"
                             >
                                 <label class="flex items-center">
@@ -195,9 +201,10 @@
                         <!-- Edit why volunteer -->
                         <div class="grid grid-cols-12 gap-6 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_why_volunteer_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.why_volunteer }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.why_volunteer }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.why_volunteer = clonedOrganization.why_volunteer"
                                 class="flex justify-end col-span-1"
                             >
                                 <Textarea
@@ -222,9 +229,10 @@
                         <!-- Edit organizaton website -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_website_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.website }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.website }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.website = clonedOrganization.website"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -243,9 +251,10 @@
                         <!-- Edit organizaton email -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_email_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.contact_email }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.contact_email }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.email = clonedOrganization.contact_email"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -264,9 +273,10 @@
                         <!-- Edit organizaton phone -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_phone_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.contact_phone }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.contact_phone }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.phone = clonedOrganization.contact_phone"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -285,9 +295,10 @@
                         <!-- Edit organizaton contact person -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_contact_person_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.contact_person }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.contact_person }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.contact_person = clonedOrganization.contact_person"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -306,9 +317,10 @@
                         <!-- Edit organizaton address -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_address_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.street_address }}, {{ form.counties?.map(item=>item.name).join(', ')}} </dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.street_address }}, {{ clonedOrganization.counties?.map(item=>item.name).join(', ')}} </dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.counties = clonedOrganization.counties; form.street_address = clonedOrganization.street_address"
                                 class="flex justify-end col-span-1"
                             >
                                 <div class="flex flex-col gap-4 lg:flex-row">
@@ -345,9 +357,10 @@
                         <!-- Edit merchant id -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('merchant_id') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.status }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.status }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.status = clonedOrganization.status"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -366,9 +379,10 @@
                         <!-- Edit key -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('key_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.status }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.status }}</dt>
                             <EditModal
                                 @action="editField"
+                                @cancel="form.status = clonedOrganization.status"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -391,8 +405,9 @@
 </template>
 
 <script setup>
+    import { ref } from 'vue'
     /** Import from inertia. */
-    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+    import { Head, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -419,6 +434,7 @@
 
     /** Initialize inertia from Object. */
     const form = useForm({ ...props.organization });
+    const clonedOrganization = ({...props.organization})
 
     const editField = () => {
         console.log(form);
@@ -438,8 +454,4 @@
         }
         form.cover_image = file;
     }
-
-    // onMounted(() => {
-    //     console.log(form);
-    // })
 </script>

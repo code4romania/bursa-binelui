@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="flex items-center justify-end gap-6 mt-5 sm:mt-6">
 
-                                        <button type="button" class="mt-3 inline-flex justify-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0" @click="open = false">
+                                        <button @click="$emit('cancel', $event.target.value); open = false" type="button" class="mt-3 inline-flex justify-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">
                                             {{ $t('cancel') }}
                                         </button>
 
@@ -69,5 +69,5 @@
     const open = ref(false);
 
     /** Initialize emits. */
-    const emit = defineEmits(['action']);
+    const emit = defineEmits(['action', 'cancel']);
 </script>
