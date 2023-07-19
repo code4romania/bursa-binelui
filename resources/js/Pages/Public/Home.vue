@@ -45,9 +45,8 @@
             </div>
         </header>
 
-        <div class="relative z-30 pb-10 mt-10 overflow-hidden px-9">
-            <div class="relative z-30 w-full py-10 mx-auto rounded shadow-md lg:max-w-7xl lg:pl-32 lg:pr-10">
-
+        <div class="relative z-50 pb-10 mt-10 overflow-hidden px-9">
+            <div class="relative z-50 w-full py-10 mx-auto rounded shadow-md lg:max-w-7xl lg:pl-32 lg:pr-10">
                 <div class="lg:max-w-5xl">
                     <div class="flex items-center w-full mb-4">
                         <div class="relative z-30 flex-1 p-6 border border-gray-300" style="transform: skewX(29deg); transform-origin: top left; overflow: hidden;">
@@ -68,8 +67,8 @@
                     </div>
                 </div>
 
-                <div class="absolute z-10 hidden bottom-10 -left-20 md:block">
-                    <SvgLoader class="z-10 shrink-0 fill-primary-300" name="small_dotted"/>
+                <div class="absolute left-0 hidden -ml-20 bottom-10 md:block">
+                    <SvgLoader class="shrink-0 fill-primary-300" name="small_dotted"/>
                 </div>
             </div>
 
@@ -103,7 +102,7 @@
 
         <div v-if="donate_projects" class="relative w-full">
             <carousel
-                class="relative z-50 flex w-full"
+                class="relative z-50 w-full"
                 v-bind="carouselOptions.settings"
                 :breakpoints="carouselOptions.breakpoints"
                 ref="donate_projects_carousel"
@@ -111,10 +110,11 @@
                 <slide
                     v-for="(project, index) in donate_projects.data"
                     :key="index"
-                    class="flex flex-col -mr-4 py-9"
+                    class="flex flex-col w-full rounded-lg py-9"
                 >
                     <ProjectCard
-                        :class="['mx-4', 0 === index % 2 ? '-mt-9' : 'mt-9']"
+                        cardType="client"
+                        :class="['w-full rounded-lg', getCardClass(index)]"
                         :data="project"
                     />
                 </slide>
@@ -177,7 +177,7 @@
                 class="relative z-50 w-full"
                 v-bind="carouselOptions.settings"
                 :breakpoints="carouselOptions.breakpoints"
-                ref="projects"
+                ref="bcr_projects_carousel"
             >
                 <slide
                     v-for="(project, index) in bcr_projects.data"
@@ -240,22 +240,22 @@
             1024: {
                 itemsToShow:3,
                 snapAlign: 'start',
-                wrapAround: false,
+                wrapAround: true,
             },
             1200: {
                 itemsToShow:3.5,
                 snapAlign: 'start',
-                wrapAround: false,
+                wrapAround: true,
             },
             1440: {
                 itemsToShow:4.5,
                 snapAlign: 'start',
-                wrapAround: false,
+                wrapAround: true,
             },
             1700: {
                 itemsToShow:5.5,
                 snapAlign: 'start',
-                wrapAround: false,
+                wrapAround: true,
             }
         },
     });
@@ -263,14 +263,11 @@
     const carouselPattern = ['md:mt-16', 'md:-mt-16', 'md:mt-0'];
     const getCardClass = ((index) => carouselPattern[index % carouselPattern.length]);
 </script>
-
 <style>
-.carousel-container {
-  display: flex;
-  gap: 20px;
-}
-
-.carousel-slide {
-  margin-right: 20px;
-}
+    @media only screen and (min-width: 768px) {
+        .carousel__track{
+            display: flex;
+            gap: 24px;
+        }
+    }
 </style>
