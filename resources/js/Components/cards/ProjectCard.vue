@@ -5,7 +5,7 @@
         <div class="flex flex-col flex-1">
             <Link
                 :href="route('project', data.slug)"
-                class="relative bg-gray-200 group-hover:opacity-75 sm:h-52"
+                class="relative bg-gray-200 rounded-t-lg group-hover:opacity-75 sm:h-52"
             >
 
                 <img
@@ -189,7 +189,7 @@ import {computed, onMounted} from "vue";
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {
-        const targetDate = new Date(props.data.period_end);
+        const targetDate = new Date(props.data.end);
         const today = new Date();
         const timeDiff = targetDate.getTime() - today.getTime();
         const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));

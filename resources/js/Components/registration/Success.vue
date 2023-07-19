@@ -16,7 +16,7 @@
                         :id="option.value"
                         name="info"
                         type="radio"
-                        v-model="social.info"
+                        v-model="social.source_of_information"
                         :value="option.value"
                         class="w-4 h-4 border-gray-300 text-primary-500 focus:ring-primary-500"
                     />
@@ -100,5 +100,5 @@
         }
     }
 
-    const update = (() => props.social.info = other.value);
+    const update = (() => props.social.source_of_information = other.value);
 </script>

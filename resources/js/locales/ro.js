@@ -282,7 +282,7 @@ export default {
     "register_project":  "Înscrie un proiect",
     "register": "Înregistrează-te",
     "general_statistics": "Statistici generale",
-    "home_title": "Singura platformă online unde donațiile sunt  necomisionate",
+    "home_title": "Singura platformă online unde donațiile sunt necomisionate",
     "projects": 'proiecte',
     "organizations": "organizații",
     "choose_project": "Alege proiect",
@@ -379,5 +379,10 @@ export default {
     "currency": "RON",
     "bcr_for_community": "BCR pentru comunitate",
     "articles": "Articole",
-    "donate_for_good": "Donează pentru fapte bune"
+    "donate_for_good": "Donează pentru fapte bune",
+    "donate_to_a_project": "Donează către un proiect",
+    "see_evolution": "Vezi evolutia faptelor bune",
+    "find_projects": "Descoperă proiecte",
+    "see_all_articles": "Vezi toate articolele",
+    "see_bcr_projects": "Vezi proiectele BCR"
 }

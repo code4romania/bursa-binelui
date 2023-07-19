@@ -61,7 +61,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($user['password']),
         ]);
         event(new Registered($user));
-        // Auth::login($user);
 
         if ($data['type'] == 'ong') {
             $ong = $data['ong'];
@@ -75,10 +74,15 @@ class RegisteredUserController extends Controller
             $user->save();
         }
 
-        return Redirect::route('register');
+        \Log::info(print_r($user, true));
+        // $request->session()->flash('user', 'sdaaaaaaaaaa');
+        // return Redirect::route('register');
+        // return redirect()->route('register')->with('user', 'sdaaaaaaaaaa');
+        return Redirect::back()->with('user', 'Registration successful');
     }
 
     public function update(RegistrationRequest $request): RedirectResponse
     {
+        \Log::info($request);
     }
 }
