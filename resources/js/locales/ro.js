@@ -384,7 +384,6 @@ export default {
     "see_evolution": "Vezi evolutia faptelor bune",
     "find_projects": "Descoperă proiecte",
     "see_all_articles": "Vezi toate articolele",
-    "see_bcr_projects": "Vezi proiectele BCR"
+    "see_bcr_projects": "Vezi proiectele BCR",
     "donate_for_good": "Donează pentru fapte bune"
-
 }
