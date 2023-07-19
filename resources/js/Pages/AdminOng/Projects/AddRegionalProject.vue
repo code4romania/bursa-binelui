@@ -235,7 +235,7 @@
                                 class="w-1/2"
                                 :label="$t('regional_link_label')"
                                 color="gray-700"
-                                icon="htpp://"
+                                icon="https://"
                                 type="text"
                                 v-model="item.url"
                             />

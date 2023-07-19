@@ -18,8 +18,8 @@
                 <!-- Alert -->
                 <!-- <Alert
                     class="fixed z-50 right-10 top-10 w-96"
-                    :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-                    :message="flash.success_message || flash.error_message"
+                    :type="flash?.error_message ? 'error' : flash?.success_message ? 'success' : false"
+                    :message="flash?.success_message || flash?.error_message"
                     @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
                 /> -->
 
@@ -193,7 +193,7 @@
                         </div>
 
                         <!-- Edit why volunteer -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                        <div class="grid grid-cols-12 gap-6 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_why_volunteer_label') }}</dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.why_volunteer }}</dt>
                             <EditModal
@@ -392,7 +392,7 @@
 
 <script setup>
     /** Import from inertia. */
-    import { Head, Link, useForm } from '@inertiajs/vue3';
+    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -419,9 +419,6 @@
 
     /** Initialize inertia from Object. */
     const form = useForm({ ...props.organization });
-    onMounted(() => {
-        console.log(form);
-    })
 
     const editField = () => {
         console.log(form);
@@ -441,4 +438,8 @@
         }
         form.cover_image = file;
     }
+
+    // onMounted(() => {
+    //     console.log(form);
+    // })
 </script>

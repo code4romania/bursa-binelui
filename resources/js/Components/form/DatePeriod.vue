@@ -51,11 +51,11 @@
                 <template v-for="(date, index) in calendar" :key="index">
                     <div
                         v-if="date"
-                        class="p-2 text-center cursor-pointer hover:bg-fuchsia-500 hover:text-white hover:rounded-md hover:shadow-md"
+                        class="p-2 text-center cursor-pointer hover:bg-primary-500 hover:text-white hover:rounded-md hover:shadow-md"
                         :class="{
                             'bg-red-500 text-white rounded-md shadow-md': isDateInRange(date),
                             'text-gray-400': isPrevMonth(date) || isNextMonth(date),
-                            'text-red-500': isCurrentDate(date)
+                            'text-primary-500': isCurrentDate(date)
                         }"
                         @click="selectDate(date)"
                     >

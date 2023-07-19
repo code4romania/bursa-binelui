@@ -158,7 +158,7 @@ export default {
     "volunteer": "Voluntariat",
     "organization_accepts_volunteers_label": "Organizația acceptă voluntari?",
     "yes": "Da",
-    "organization_why_volunteer_label": "De ce să devin voluntar?",
+    "organization_why_volunteer_label": "De ce să devin voluntar? Scrie câteva rânduri pentru a motiva vizitatorii să aplice ca voluntari",
     "organization_contact": "Contact organizatie",
     "organization_website_label": "Website organizație",
     "organization_phone_label": "Telefon contact organizație (public)",

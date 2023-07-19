@@ -5,18 +5,18 @@
 
         <!-- Dashboard template -->
         <Dashboard>
-            <div class="p-9 mb-24 w-full">
+            <div class="w-full mb-24 p-9">
 
                 <!-- Header -->
                 <header class="flex items-center gap-4">
-                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                         <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('add_project_title') }}</h2>
                 </header>
 
                 <form @submit.prevent="createProject">
-                    <div class="w-full max-w-7xl space-y-6 mt-9">
+                    <div class="w-full space-y-6 max-w-7xl mt-9">
                         <!-- Project name -->
                         <Input
                             class="w-full xl:w-1/2"
@@ -173,18 +173,18 @@
                             v-model="form.file_group"
                         />
 
-                        <div class="w-full border-t border-gray-300 flex" v-for="(item,index) in projectLinks">
+                        <div class="flex w-full border-t border-gray-300" v-for="(item,index) in projectLinks">
                             <InputWithIcon
                                 class="w-1/2"
                                 :label="$t('video_link_label')"
                                 color="gray-700"
-                                icon="htpp://"
+                                icon="https://"
                                 type="text"
                                 v-model="item.url"
                             />
                             <DangerButton
                                 v-if="index > 0"
-                                class="ml-4 mt-8"
+                                class="mt-8 ml-4"
                                 background="red-500"
                                 hover="red-400"
                                 color="white"
@@ -192,7 +192,7 @@
                                 {{ $t('remove')}}
                             </DangerButton>
                             <SecondaryButton
-                                class="ml-4 mt-8"
+                                class="mt-8 ml-4"
                                 background="primary-500"
                                 hover="primary-400"
                                 color="white"
@@ -205,21 +205,21 @@
                         <div class="w-full border-t border-gray-300"></div>
 
                         <div>
-                            <p class="text-gray-900 leading-5 font-medium text-lg">{{ $t('external_links_title') }}</p>
-                            <p class="text-gray-700 leading-5 text-sm">{{ $t('external_links_text') }}</p>
+                            <p class="text-lg font-medium leading-5 text-gray-900">{{ $t('external_links_title') }}</p>
+                            <p class="text-sm leading-5 text-gray-700">{{ $t('external_links_text') }}</p>
                         </div>
-                        <div class="w-full border-t border-gray-300 flex" v-for="(item,index) in projectArticles">
+                        <div class="flex w-full border-t border-gray-300" v-for="(item,index) in projectArticles">
                             <InputWithIcon
                                 class="w-1/2"
                                 :label="$t('video_link_label')"
                                 color="gray-700"
-                                icon="htpp://"
+                                icon="https://"
                                 type="text"
                                 v-model="item.url"
                             />
                             <DangerButton
                                 v-if="index> 0"
-                                class="ml-4 mt-8"
+                                class="mt-8 ml-4"
                                 background="red-500"
                                 hover="red-400"
                                 color="white"
@@ -227,7 +227,7 @@
                                 {{ $t('remove')}}
                             </DangerButton>
                             <SecondaryButton
-                                class="ml-4 mt-8"
+                                class="mt-8 ml-4"
                                 background="primary-500"
                                 hover="primary-400"
                                 color="white"
