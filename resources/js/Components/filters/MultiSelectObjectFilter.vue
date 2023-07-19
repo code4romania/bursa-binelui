@@ -3,7 +3,8 @@
         <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
 
-            <div class="h-9 rounded-md border-0 bg-white py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6">
+            <div class="w-full flex rounded-md h-9 border-0 bg-white py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6">
+                <p v-if="selectedOptions.length > 0">({{selectedOptions.length}})</p>
                 <ul class="flex flex-wrap gap-1" v-if="selectedOptions.length > 0">
                     <li v-for="option in selectedOptions" :key="option.id">
                         {{ option.name }}
@@ -61,10 +62,13 @@
     /** Query input. */
     const query = ref('');
 
-    /** Selected options. */
-    const selectedOptions = ref([]);
+    // /** Selected options. */
+    // const selectedOptions = ref([]);
 
-    const emit = defineEmits(['update:modelValue']);
+    /** Selected options. */
+    const localOptions = ref([]);
+
+    const emit = defineEmits(['update:modelValue', 'callback']);
 
     /** Option list. */
     const selectOptions = computed(() =>
@@ -73,12 +77,17 @@
         })
     );
 
-    /** Watch changes in selected options. */
-    watch(selectedOptions, () => {
-        let ids = selectedOptions.value.map(item => item.id)
-        emit('update:modelValue', ids);
-        emit('callback', ids)
-    })
+    const selectedOptions = computed({
+        get() {
+            return localOptions.value;
+        },
+        set(value) {
+            localOptions.value = value
+            let ids = localOptions.value.map(item => item.id)
+            emit('update:modelValue', ids);
+            emit('callback', ids)
+        },
+    });
 </script>
 
 <style scoped>
@@ -86,5 +95,8 @@
         flex-wrap: nowrap;
         overflow-x: auto;
         white-space: nowrap;
+    }
+    ul::-webkit-scrollbar {
+        display: none;
     }
 </style>

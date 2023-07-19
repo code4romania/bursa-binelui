@@ -1,5 +1,5 @@
 <template>
-    <Menu as="div" class="relative z-50 inline-block text-left">
+    <Menu as="div" class="relative inline-block text-left z-101">
         <div>
             <MenuButton class="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm gap-x-4 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                 <SvgLoader name="sort" />

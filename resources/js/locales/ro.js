@@ -385,5 +385,7 @@ export default {
     "find_projects": "Descoperă proiecte",
     "see_all_articles": "Vezi toate articolele",
     "see_bcr_projects": "Vezi proiectele BCR",
-    "donate_for_good": "Donează pentru fapte bune"
+    "donate_for_good": "Donează pentru fapte bune",
+    "project_categories": "Proiecte din categoria",
+    "donation_period": "Perioada donatii"
 }
