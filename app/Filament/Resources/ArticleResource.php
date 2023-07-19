@@ -43,7 +43,7 @@ class ArticleResource extends Resource
                     ->label(__('article.title'))
                     ->required()
                     ->maxLength(255),
-                Select::make('category_id')
+                Select::make('article_category_id')
                     ->relationship('category', 'name')
                     ->required()
                     ->label(__('article.category')),
