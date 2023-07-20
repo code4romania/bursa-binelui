@@ -179,6 +179,7 @@
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_accepts_volunteers_label') }}</dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.accepts_volunteers ? $t('yes') : $t('no') }}</dt>
+
                             <EditModal
                                 @action="editField"
                                 @cancel="form.accepts_volunteers = clonedOrganization.accepts_volunteers"
@@ -254,7 +255,7 @@
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.contact_email }}</dt>
                             <EditModal
                                 @action="editField"
-                                @cancel="form.email = clonedOrganization.contact_email"
+                                @cancel="form.contact_email = clonedOrganization.contact_email"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -263,8 +264,8 @@
                                     color="gray-700"
                                     id="email"
                                     type="email"
-                                    v-model="form.email"
-                                    :error="form.errors.email"
+                                    v-model="form.contact_email"
+                                    :error="form.errors.contact_email"
                                 />
 
                             </EditModal>
@@ -276,7 +277,7 @@
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ clonedOrganization.contact_phone }}</dt>
                             <EditModal
                                 @action="editField"
-                                @cancel="form.phone = clonedOrganization.contact_phone"
+                                @cancel="form.contact_phone = clonedOrganization.contact_phone"
                                 class="flex justify-end col-span-1"
                             >
                                 <Input
@@ -284,9 +285,9 @@
                                     :label="$t('organization_phone_label')"
                                     color="gray-700"
                                     id="phone"
-                                    type="number"
-                                    v-model="form.phone"
-                                    :error="form.errors.phone"
+                                    type="text"
+                                    v-model="form.contact_phone"
+                                    :error="form.errors.contact_phone"
                                 />
 
                             </EditModal>
@@ -325,11 +326,20 @@
                             >
                                 <div class="flex flex-col gap-4 lg:flex-row">
 
-                                    <MultiSelectObjectFilter
+                                    <!-- <MultiSelectObjectFilter
                                         class="w-full z-101"
                                         :label="$t('county_label')"
                                         :options="counties"
                                         v-model="form.counties"
+                                        :error="form.errors.counties"
+                                    /> -->
+
+                                    <SelectMultiple
+                                        class="w-full z-101 xl:w-1/2"
+                                        :label="$t('counties_label')"
+                                        :options="counties"
+                                        v-model="form.counties"
+                                        v-if="!form.is_national"
                                         :error="form.errors.counties"
                                     />
                                 </div>
@@ -422,7 +432,7 @@
     import FileInput from '@/Components/form/FileInput.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
     import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
-    import {onMounted} from "vue";
+    import SelectMultiple from "@/Components/form/SelectMultiple.vue";
 
     /** Page props. */
     const props = defineProps({
@@ -434,10 +444,11 @@
 
     /** Initialize inertia from Object. */
     const form = useForm({ ...props.organization });
-    const clonedOrganization = ({...props.organization})
+    const clonedOrganization = ({...props.organization});
+
+    console.log(form)
 
     const editField = () => {
-        console.log(form);
         form.put(route('admin.ong.update', form.id), {
             preserveScroll: true,
             onSuccess: () => {},
