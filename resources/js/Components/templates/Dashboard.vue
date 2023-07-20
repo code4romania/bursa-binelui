@@ -114,22 +114,22 @@ const navigation = [
         subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
         subMenu: [
             {
-                name: 'admin.ong.volunteers',
+                name: 'volunteers_approved',
                 href: route('admin.ong.volunteers', {'status': 'approved'}),
                 route: route('admin.ong.volunteers', {'status': 'approved'}),
                 icon: UserGroupIcon,
                 subroutes: [],
             },
             {
-                name: 'admin.ong.volunteers',
-                href: route('admin.ong.volunteers', {'status': 'approved'}),
+                name: 'volunteers_pending',
+                href: route('admin.ong.volunteers', {'status': 'pending'}),
                 route: route('admin.ong.volunteers', {'status': 'pending'}),
                 subroutes: [],
                 icon: UserPlusIcon
             },
             {
-                name: 'admin.ong.volunteers',
-                href: route('admin.ong.volunteers', {'status': 'approved'}),
+                name: 'volunteers_rejected',
+                href: route('admin.ong.volunteers', {'status': 'rejected'}),
                 route: route('admin.ong.volunteers', {'status': 'rejected'}),
                 subroutes: [],
                 icon: UserMinusIcon

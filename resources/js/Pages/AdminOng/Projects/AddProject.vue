@@ -42,12 +42,14 @@
                         />
 
                         <!-- Project category -->
-                        <Select
+                        <SelectMultiple
                             class="w-full xl:w-1/2"
                             :label="$t('project_category_label')"
-                            :options="projectCategories"
                             use-translation="true"
+                            :options="projectCategories"
                             v-model="form.category"
+                            type="singleValue"
+                            v-if="!form.is_national"
                             :error="form.errors.category"
                         />
 
@@ -91,6 +93,7 @@
                             class="w-full xl:w-1/2"
                             :label="$t('counties_label')"
                             :options="countries"
+                            type="object"
                             v-model="selectedCounties"
                             v-if="!form.is_national"
                             :error="form.errors.counties"
@@ -292,7 +295,7 @@ import SelectMultiple from "@/Components/form/SelectMultiple.vue";
 const form = useForm({
     name: '',
     target_budget: '',
-    category: '',
+    category: [],
     start: '',
     end: '',
     counties: [],
