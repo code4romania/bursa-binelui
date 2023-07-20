@@ -12,7 +12,7 @@
                     <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                         <SvgLoader class="shrink-0" name="menu"/>
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-900">{{ $t('edit_project_title') }}</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">{{ $t('ong_description') }}</h2>
                 </header>
 
                 <!-- Alert -->

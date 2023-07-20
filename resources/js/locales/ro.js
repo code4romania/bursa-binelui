@@ -387,5 +387,6 @@ export default {
     "see_bcr_projects": "Vezi proiectele BCR",
     "donate_for_good": "Donează pentru fapte bune",
     "project_categories": "Proiecte din categoria",
-    "donation_period": "Perioada donatii"
+    "donation_period": "Perioada donatii",
+    "ong_description": "Descriere organizație"
 }
