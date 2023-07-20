@@ -1,39 +1,58 @@
 <template>
-    <div>
-        <!-- Label -->
-        <label :for="id" :class="[`block text-sm font-medium leading-6 text-${color}`]">
-            <span v-if="label">{{ label }}</span>
-            <span v-else><slot /></span>
+    <div class="flex items-center gap-x-4">
+        <label
+            :for="id"
+            :class="['relative inline-flex text-gray-700 bg-white ring-inset ring-1 ring-gray-300 items-center justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md']">
+            <span>{{ label }}</span>
+            <input
+                :id="id"
+                type="file"
+                @change="handleFileChange"
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
         </label>
 
-        <!-- Input -->
-        <input
-            class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
-            :value="modelValue"
-            type="file"
-            @input="$emit('update:modelValue', $event.target.value)"
-        />
+        <img v-if="preview" :src="preview" alt="File Preview" class="object-cover w-24 h-24" />
+        <SvgLoader v-else name="avatar" class="w-24 h-24" />
 
-        <!-- Error -->
-        <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
-
-        <!-- Extra -->
-        <slot />
+        <pre>{{ form }}</pre>
     </div>
 </template>
 
 <script setup>
+    /** Import from vue. */
+    import { ref } from 'vue';
+
+    /** Import Components. */
+    import SvgLoader from '@/Components/SvgLoader.vue';
+
     /** Component props. */
     const props = defineProps({
-        modelValue: {
-            type: String,
-            required: true,
-        },
         label: String,
-        color: String,
-        error: String,
+        id: String,
+        form: Object
     });
 
+    /** Image preview. */
+    const preview = ref('');
+
     /** Component emits. */
-    defineEmits(['update:modelValue']);
+    const emit = defineEmits(['upload']);
+
+    /** Handle file change. */
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (() => preview.value = reader.result);
+            reader.readAsDataURL(file);
+        } else {
+            // If no file is selected, clear the previewUrl value
+            preview.value = '';
+        }
+
+        /** Emit file. */
+        emit('upload', file);
+    }
 </script>

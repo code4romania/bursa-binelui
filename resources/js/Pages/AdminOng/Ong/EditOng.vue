@@ -57,10 +57,12 @@
                                 @cancel="form.cif = clonedOrganization.cif"
                                 class="flex justify-end col-span-1"
                             >
-                                <FileInput
+                                <Input
                                     class="w-full"
                                     :label="$t('cif_label')"
                                     color="gray-700"
+                                    id="organizationcif"
+                                    type="text"
                                     v-model="form.cif"
                                     :error="form.errors.cif"
                                 />
@@ -79,15 +81,11 @@
                                         @action="editField"
                                         :text="$t('change_image_label')"
                                     >
-                                        <Input
-                                            class="w-full"
-                                            :label="$t('organization_logo_label')"
-                                            color="gray-700"
-                                            id="organization-image"
-                                            @change="handleFileChange"
-                                            type="file"
+                                        <FileInput
+                                            :label="$t('upload_logo')"
+                                            @upload="handleFileChange"
+                                            :form="form.cover_image"
                                         />
-
                                     </EditModal>
 
                                     <ModalAction
@@ -134,10 +132,10 @@
                                 @cancel="form.activity_domains = clonedOrganization.activity_domains"
                                 class="flex justify-end col-span-1"
                             >
-
-                                <MultiSelectObjectFilter
-                                    class="w-full"
+                                <SelectMultiple
+                                    class="w-full z-101"
                                     :label="$t('organization_activity_label')"
+                                    type="singleValue"
                                     :options="activity_domains"
                                     v-model="form.activity_domains"
                                     :error="form.errors.activity_domains"
@@ -324,20 +322,13 @@
                                 @cancel="form.counties = clonedOrganization.counties; form.street_address = clonedOrganization.street_address"
                                 class="flex justify-end col-span-1"
                             >
+
                                 <div class="flex flex-col gap-4 lg:flex-row">
-
-                                    <!-- <MultiSelectObjectFilter
-                                        class="w-full z-101"
-                                        :label="$t('county_label')"
-                                        :options="counties"
-                                        v-model="form.counties"
-                                        :error="form.errors.counties"
-                                    /> -->
-
                                     <SelectMultiple
-                                        class="w-full z-101 xl:w-1/2"
+                                        class="w-full z-101"
                                         :label="$t('counties_label')"
                                         :options="counties"
+                                        type="object"
                                         v-model="form.counties"
                                         v-if="!form.is_national"
                                         :error="form.errors.counties"
@@ -426,12 +417,10 @@
     import Alert from '@/Components/Alert.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import Checkbox from '@/Components/form/Checkbox.vue';
     import FileInput from '@/Components/form/FileInput.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
-    import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
     import SelectMultiple from "@/Components/form/SelectMultiple.vue";
 
     /** Page props. */
@@ -446,8 +435,6 @@
     const form = useForm({ ...props.organization });
     const clonedOrganization = ({...props.organization});
 
-    console.log(form)
-
     const editField = () => {
         form.put(route('admin.ong.update', form.id), {
             preserveScroll: true,
@@ -455,14 +442,8 @@
             onError: () => {},
         });
     }
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (() => form.cover_image = reader.result);
-            reader.readAsDataURL(file);
-        }
+    const handleFileChange = (file) => {
         form.cover_image = file;
     }
 </script>
