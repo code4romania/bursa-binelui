@@ -5,7 +5,7 @@
 
         <!-- Alert -->
         <Alert
-            class="fixed right-10 top-10 w-96 z-50"
+            class="fixed z-50 right-10 top-10 w-96"
             :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
             :message="flash.success_message || flash.error_message"
             @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
@@ -13,11 +13,11 @@
 
         <!-- Dashboard template -->
         <Dashboard>
-           <div class="p-9 mb-24 w-full">
+           <div class="w-full mb-24 p-9">
 
                 <!-- Header -->
                 <header class="flex items-center gap-4">
-                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                         <SvgLoader class="shrink-0" name="menu"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('edit_project_title') }}</h2>
@@ -28,12 +28,12 @@
                     <dl class="divide-y divide-gray-100">
 
                         <!-- Edit project name -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_name_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.name }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_name_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.name }}</dt>
                             <EditModal
                                 @action="editField('name')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <!-- Project name -->
@@ -51,12 +51,12 @@
                         </div>
 
                         <!-- Edit target amount -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('amount_target_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.target_budget }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('amount_target_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.target_budget }}</dt>
                             <EditModal
                                 @action="editField('target_budget')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Input
@@ -73,15 +73,15 @@
                         </div>
 
                         <!-- Edit period -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('period') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.start }} - {{ form.end }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('period') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.start }} - {{ form.end }}</dt>
                             <EditModal
                                 @action="editField('start', 'end')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
-                            <div class="flex gap-6 w-full">
+                            <div class="flex w-full gap-6">
 
                                 <!-- Date start -->
                                 <Input
@@ -108,12 +108,12 @@
                         </div>
 
                         <!-- Edit project category -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_category_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.category }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_category_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.category }}</dt>
                             <EditModal
                                 @action="editField('category')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Select
@@ -129,12 +129,12 @@
 
 
                         <!-- Edit project county -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('counties_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.counties.map(item=>item.name).join(', ') }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('counties_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.counties.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
                                 @action="editField('counties')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <SelectMultiple
@@ -149,12 +149,12 @@
                         </div>
 
                         <!-- Edit project description -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_description_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.description }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_description_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.description }}</dt>
                             <EditModal
                                 @action="editField('description')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Textarea
@@ -172,12 +172,12 @@
                         </div>
 
                         <!-- Edit project scope -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_scope_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.scope }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_scope_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.scope }}</dt>
                             <EditModal
                                 @action="editField('scope')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Textarea
@@ -195,12 +195,12 @@
                         </div>
 
                         <!-- Edit project beneficiary -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('project_beneficiary_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.beneficiaries }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_beneficiary_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.beneficiaries }}</dt>
                             <EditModal
                                 @action="editField('beneficiaries')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Textarea
@@ -218,12 +218,12 @@
                         </div>
 
                         <!-- Edit project why to donate -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('why_to_donate') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.reason_to_donate }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('why_to_donate') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.reason_to_donate }}</dt>
                             <EditModal
                                 @action="editField('reason_to_donate')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Textarea
@@ -241,12 +241,12 @@
                         </div>
 
                         <!-- Edit main image -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('main_image') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700"><img :src=" form.cover_image"/></dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('main_image') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"><img :src=" form.cover_image"/></dt>
                             <EditModal
                                 @action="editField()"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Textarea
@@ -264,9 +264,9 @@
                         </div>
 
                         <!-- Edit Photo gallery -->
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('photo_gallery') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('photo_gallery') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
 
                                 <div>
                                     Images
@@ -276,7 +276,7 @@
                                 <div class="flex flex-wrap">
                                     <div :style="{backgroundImage:'url('+image.preview_url+')'}" style="background-size: contain"
                                          v-for="(image,index) in form.media"
-                                         class="w-60 h-60 mx-2 my-2 grid grid-cols-2 gap-4 content-end ">
+                                         class="grid content-end grid-cols-2 gap-4 mx-2 my-2 w-60 h-60 ">
                                         <DangerButton
                                             @click="removeImage(index)"
                                         >{{ $t('remove_image') }}
@@ -292,7 +292,7 @@
 
                             <EditModal
                                 @action="editField()"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
                                 <input model-value="form.media" type="file" multiple @change="onFileChange"/>
 
@@ -300,13 +300,13 @@
                         </div>
 
                         <!-- Edit video links -->
-                        <div class="bg-white px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-5 text-base font-medium leading-6 text-gray-700">{{ $t('video_link_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.image }}</dt>
-                            <dt class="col-span-12 md:col-span-6 text-base font-medium leading-6 text-gray-700">{{ form.project_links }}</dt>
+                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('video_link_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.image }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.project_links }}</dt>
                             <EditModal
                                 @action="editField('project_links')"
-                                class="col-span-1 flex justify-end"
+                                class="flex justify-end col-span-1"
                             >
 
                                 <Repeater class="w-full xl:w-1/2">
@@ -314,7 +314,7 @@
                                         class="w-full"
                                         :label="$t('video_link_label')"
                                         color="gray-700"
-                                        icon="htpp://"
+                                        icon="https://"
                                         type="text"
                                         v-model="form.project_links"
                                     />
@@ -326,7 +326,7 @@
                 </div>
 
                 <div class="flex items-center gap-4 mt-9">
-                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                         <SvgLoader class="shrink-0 fill-primary-500" name="book"/>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
@@ -341,7 +341,7 @@
                         class="w-full"
                         :label="$t('articles_link_label')"
                         color="gray-700"
-                        icon="htpp://"
+                        icon="https://"
                         type="text"
                         v-model="form.project_articles"
                     />
@@ -350,10 +350,10 @@
 
                 <div class="mt-6 border-t border-gray-100">
                     <dl class="divide-y divide-gray-100">
-                        <div class="bg-gray-100 px-4 py-6 grid grid-cols-12">
-                            <dt class="col-span-12 md:col-span-4 text-base font-medium leading-6 text-gray-700">{{ $t('articles_link_label') }}</dt>
-                            <dt class="col-span-12 md:col-span-4 text-base font-medium leading-6 text-gray-700">{{ form.project_articles }}</dt>
-                            <dt class="col-span-12 md:col-span-4 flex items-center justify-end gap-6 text-base font-medium leading-6 text-gray-700">
+                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">{{ $t('articles_link_label') }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">{{ form.project_articles }}</dt>
+                            <dt class="flex items-center justify-end col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-4">
                                 <button class="block text-sm font-medium text-blue-500">{{ $t('delete') }}</button>
 
                                 <EditModal
@@ -363,7 +363,7 @@
                                         class="w-full"
                                         :label="$t('articles_link_label')"
                                         color="gray-700"
-                                        icon="htpp://"
+                                        icon="https://"
                                         type="text"
                                         v-model="form.project_articles"
                                     />

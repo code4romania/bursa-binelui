@@ -93,4 +93,7 @@
         overflow-x: auto;
         white-space: nowrap;
     }
+    ul::-webkit-scrollbar {
+        display: none;
+    }
 </style>

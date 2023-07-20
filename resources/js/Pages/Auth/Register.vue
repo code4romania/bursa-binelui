@@ -27,10 +27,10 @@
 
 <script setup>
 /** Import form vue. */
-import {ref, computed, onMounted } from 'vue';
+import {ref, computed} from 'vue';
 
 /** Import form inertia. */
-import {Head, useForm} from '@inertiajs/vue3';
+import {Head, useForm,usePage} from '@inertiajs/vue3';
 
 /** Import components. */
 import PageLayout from '@/Layouts/PageLayout.vue';
@@ -70,7 +70,7 @@ const form = useForm({
 });
 
 const social = useForm({
-    info: ''
+    source_of_information: ''
 });
 
 const props = defineProps({
@@ -82,6 +82,8 @@ const props = defineProps({
         type: Array,
         default: () => []
     },
+    user: Object,
+    flash:Object
 });
 
 /** Current component. */
@@ -165,8 +167,6 @@ const submit = () => {
 
 /** After user is registered update data. */
 const success = () => {
-    social.put(route('profile.update'), {
-        onError: (error) => {}
-    });
+    social.patch(route('up'));
 }
 </script>

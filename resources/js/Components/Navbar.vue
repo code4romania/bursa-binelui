@@ -328,7 +328,7 @@
         {
             name: 'Întrebări frecvente',
             description: 'Ai o neclaritate? Găsește răspunsul aici.',
-            href: 'about'
+            href: 'faqs'
         }
     ];
 

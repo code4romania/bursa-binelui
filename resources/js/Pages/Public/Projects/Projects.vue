@@ -85,10 +85,10 @@
                     </div>
                 </div>
 
-                <div v-if="'list' === viewType" class="flex flex-col justify-between w-full gap-6 mt-6 sm:flex-row">
+                <div v-if="'list' === viewType" class="grid grid-cols-12 gap-6 mt-6">
 
                     <MultiSelectFilter
-                        class="w-full"
+                        class="col-span-12 md:col-span-6 lg:col-span-3"
                         :label="$t('status')"
                         v-model="filter.status"
                         :options="statuses"
@@ -96,32 +96,26 @@
                     />
 
                     <MultiSelectObjectFilter
-                        class="w-full"
+                        class="col-span-12 md:col-span-6 lg:col-span-3"
                         :label="$t('county_city')"
                         v-model="filter.c"
                         :options="props.counties"
                         @callback="filterProjects"
                     />
 
-                    <!-- Date -->
-                    <Input
-                        class="w-full"
-                        :label="$t('start_date')"
-                        color="gray-700"
-                        id="project-name"
-                        type="date"
-                        v-model="filter.start_date"
-                        @change="filterProjects"
+                    <MultiSelectFilter
+                        class="col-span-12 md:col-span-6 lg:col-span-3"
+                        :label="$t('project_categories')"
+                        v-model="filter.categories"
+                        :options="domains"
+                        @callback="filterProjects"
                     />
-                    <!-- Date -->
-                    <Input
-                        class="w-full"
-                        :label="$t('end_date')"
-                        color="gray-700"
-                        id="project-name"
-                        type="date"
-                        v-model="filter.end_date"
-                        @change="filterProjects"
+
+                    <DatePeriod
+                        :label="$t('donation_period')"
+                        class="col-span-12 md:col-span-6 lg:col-span-3"
+                        id="dateperiod"
+                        v-model="filter.date"
                     />
                 </div>
             </div>
@@ -149,7 +143,7 @@
 
 <script setup>
     /** Import from vue. */
-    import {ref, watch} from 'vue';
+    import {ref, watch,computed} from 'vue';
 
     /** Import from inertia. */
     import { Head, Link, router } from '@inertiajs/vue3';
@@ -167,6 +161,7 @@
     import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
     import MultiSelectFilter from "@/Components/filters/MultiSelectFilter.vue";
     import Map from '@/Components/maps/Map.vue'
+    import DatePeriod from '@/Components/form/DatePeriod.vue'
 
     /** Active filter state. */
     const hasValues = ref(false);
@@ -175,8 +170,8 @@
     const filter = ref({
         counties: [],
         status:null,
-        start_date: null,
-        end_date: null,
+        categories: [],
+        date: ''
     });
 
     const projectsForMap = [
@@ -222,6 +217,7 @@
     const emptyFilters = () => {
         router.visit(route('projects'))
     };
+
     const props = defineProps({
         query: {
             type: Object,
@@ -229,7 +225,13 @@
         counties: {
             type: Array,
         },
+        categories: {
+            type: Array
+        }
     });
+
+    const domains = computed(() => props.categories.map((category) => category.name));
+
     watch(filter, () => {
         filterProjects();
     },{deep:true})

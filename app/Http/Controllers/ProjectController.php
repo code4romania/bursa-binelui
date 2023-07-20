@@ -8,6 +8,7 @@ use App\Enums\EuPlatescStatus;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\Volunteer;
+use App\Models\ActivityDomain;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -26,20 +27,32 @@ class ProjectController extends Controller
         if ($request->query('status')) {
             $projects->whereIn('status', $request->query('status'));
         }
-//        $projects->dd();
-        if ($request->query('start_date')) {
-            $projects->where('start', '>=', $request->query('start_date'));
+
+        if ($request->query('category')) {
+            $projects->whereIn('category', $request->query('category'));
         }
 
-        if ($request->query('end_date')) {
-            $projects->where('end', '<=', $request->query('end_date'));
+        /** For this wee need to sent to front the small start and biggest end */
+        if ($request->query('date')) {
+            $date = explode('-', $request->query('date'));
+            $projects->where('start', '>=', str_replace('.', '-', $date[0]));
+            $projects->where('end', '<=', str_replace('.', '-', $date[1]));
         }
+
+        // if ($request->query('start_date')) {
+        //     $projects->where('start', '>=', $request->query('start_date'));
+        // }
+
+        // if ($request->query('end_date')) {
+        //     $projects->where('end', '<=', $request->query('end_date'));
+        // }
 
         $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Projects/Projects', [
             'query' => $projects->paginate()->withQueryString(),
             'counties' => $counties,
+            'categories' =>  ActivityDomain::all()
         ]);
     }
 

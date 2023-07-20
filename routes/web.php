@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminBBTemporary;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,10 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::patch('/up', [ProfileController::class, 'up'])->name('up');
+
 /* Website routes. */
-Route::get('/despre', function () {
-    return Inertia::render('Public/Website/About');
-})->name('about');
+Route::get('/despre', [AdminBBTemporary::class, 'about'])->name('about');
+Route::get('/intrebari-frecvente', [AdminBBTemporary::class, 'faqs'])->name('faqs');
+
 Route::get('/termenii-si-conditii', function () {
     return Inertia::render('Public/Website/Terms');
 })->name('terms');
