@@ -51,6 +51,7 @@ class Organization extends Model implements HasMedia
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'accepts_volunteers' => 'boolean'
     ];
 
     protected $with = ['counties', 'activityDomains', 'projects', 'media'];
