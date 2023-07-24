@@ -1,25 +1,17 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-        <Head title="Register"/>
+
+        <Head title="Register" />
 
         <!-- Auth template. -->
         <Auth :content="content">
 
             <!-- Steps -->
             <div class="mt-6">
-                <component
-                    :is="steps[current]"
-                    :current="steps[current]"
-                    :form="form"
-                    :social="social"
-                    :activity_domains="activity_domains"
-                    :counties="counties"
-                    @prev="prev"
-                    @next="next"
-                    @google="google"
-                    @success="success"
-                />
+                <component :is="steps[current]" :current="steps[current]" :form="form" :social="social"
+                    :activity_domains="activity_domains" :counties="counties" @prev="prev" @next="next" @google="google"
+                    @success="success" />
             </div>
         </Auth>
     </PageLayout>
@@ -27,10 +19,10 @@
 
 <script setup>
 /** Import form vue. */
-import {ref, computed} from 'vue';
+import { ref, computed } from 'vue';
 
 /** Import form inertia. */
-import {Head, useForm,usePage} from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 
 /** Import components. */
 import PageLayout from '@/Layouts/PageLayout.vue';
@@ -60,7 +52,7 @@ const form = useForm({
         contact_person: '',
         activity_domains_ids: '',
         counties_ids: '',
-        volunteer:false,
+        volunteer: false,
         why_volunteer: '',
         logo: '',
         statute: '',
@@ -83,11 +75,13 @@ const props = defineProps({
         default: () => []
     },
     user: Object,
-    flash:Object
+    flash: Object
 });
 
 /** Current component. */
 const current = ref(0);
+
+const usrid = ref(null)
 
 /** Registration components steps. */
 const steps = computed(() => {
@@ -104,10 +98,10 @@ const steps = computed(() => {
 
 /** Page content. */
 const content = computed(() => {
-    if (5 == current.value) {
+    if (steps.value.length - 1 == current.value) {
         return {
             title: 'Felicitări!',
-            description: 'Contul tău a fost creat. Lorem ipsum massa rhoncus, volutpat. Dignissim sed eget risus enim.'
+            description: 'Contul tău a fost creat. Te poți loga folosind butonul ”Intră în cont” din meniul principal.'
         }
     }
 
@@ -130,7 +124,7 @@ const next = () => {
         submit()
     } else if ('ong' === form.type && current.value === 4) {
         submit()
-    } else if('' !== form.type) {
+    } else if ('' !== form.type) {
         current.value++
     }
 }
@@ -142,8 +136,7 @@ const google = () => {
 
 /** Create user. */
 const submit = () => {
-    if (form.type==='donor')
-    {
+    if (form.type === 'donor') {
         delete form.ong;
     }
     form.post(route('register'), {
@@ -151,22 +144,28 @@ const submit = () => {
             /** Set active component in case of validation errors. */
             if (error['user.name'] || error['user.password'] || error['user.email'] || error['user.password_confirmation']) {
                 current.value = 1
-            } else if (error['ong.name'] ||  error['ong.cif'] || error['ong.description'] || error['ong.activity_domains_ids']) {
+            } else if (error['ong.name'] || error['ong.cif'] || error['ong.description'] || error['ong.activity_domains_ids']) {
                 current.value = 2
-            }else if (error['ong.counties_ids'] ||  error['ong.street_address'] || error['ong.contact_person'] || error['ong.contact_phone'] || error['ong.contact_email'] || error['ong.webiste']) {
+            } else if (error['ong.counties_ids'] || error['ong.street_address'] || error['ong.contact_person'] || error['ong.contact_phone'] || error['ong.contact_email'] || error['ong.webiste']) {
                 current.value = 3
-            }else if (error['ong.volunteer'] ||  error['ong.cif'] || error['ong.why_volunteer']) {
+            } else if (error['ong.volunteer'] || error['ong.cif'] || error['ong.why_volunteer']) {
                 current.value = 4
             }
         },
         onSuccess: (data) => {
             current.value = steps.value.length - 1
+            if (data?.props?.flash?.success_message?.usrid) {
+                usrid.value = data.props.flash.success_message.usrid
+            }
         }
     });
 };
 
 /** After user is registered update data. */
 const success = () => {
-    social.patch(route('up'));
+
+    if (usrid.value) {
+        social.patch(route('user.update', { id: usrid.value }));
+    }
 }
 </script>

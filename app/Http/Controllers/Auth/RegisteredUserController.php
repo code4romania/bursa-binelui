@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
             'Auth/Register',
             [
                 'activity_domains' => $activityDomains,
-                'counties' => $counties,
+                'counties' => $counties
             ]
         );
     }
@@ -52,37 +52,49 @@ class RegisteredUserController extends Controller
      */
     public function store(RegistrationRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        $user = $data['user'];
+        try {
 
-        $user = User::create([
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'password' => Hash::make($user['password']),
-        ]);
-        event(new Registered($user));
+            $data = $request->validated();
+            $user = $data['user'];
 
-        if ($data['type'] == 'ong') {
-            $ong = $data['ong'];
-            $organization = Organization::create($ong);
-            $organization->activityDomains()->attach($ong['activity_domains_ids']);
-            $organization->counties()->attach($ong['counties_ids']);
-            $adminUsers = User::whereRole(UserRole::bb_admin)->get();
-            Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
-            Notification::send($user, new OrganizationCreated($organization));
-            $user->organization_id = $organization->id;
-            $user->save();
+            $user = User::create([
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'password' => Hash::make($user['password']),
+            ]);
+            event(new Registered($user));
+
+            if ($data['type'] == 'ong') {
+                $ong = $data['ong'];
+                $organization = Organization::create($ong);
+                $organization->activityDomains()->attach($ong['activity_domains_ids']);
+                $organization->counties()->attach($ong['counties_ids']);
+                $adminUsers = User::whereRole(UserRole::bb_admin)->get();
+                Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
+                Notification::send($user, new OrganizationCreated($organization));
+                $user->organization_id = $organization->id;
+                $user->save();
+            }
+            return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
+
+        } catch(\Throwable $th) {
+            return redirect()->back()->with('error_message', 'Contul nu a fost creat');
         }
-
-        \Log::info(print_r($user, true));
-        // $request->session()->flash('user', 'sdaaaaaaaaaa');
-        // return Redirect::route('register');
-        // return redirect()->route('register')->with('user', 'sdaaaaaaaaaa');
-        return Redirect::back()->with('user', 'Registration successful');
     }
 
-    public function update(RegistrationRequest $request): RedirectResponse
+    public function update(Request $request, $userId): RedirectResponse
     {
-        \Log::info($request);
+        try {
+            $user = User::find($userId);
+            $user->source_of_information = $request->input('source_of_information');
+
+            $user->save();
+
+            // return redirect()->route('login')->with('success', 'Contul tau este pregatit');
+            return redirect()->back()->with('error_message', 'Contul tau este pregatit');
+
+        } catch(\Throwable $th) {
+            return redirect()->back()->with('error_message', 'Something went wrong');
+        }
     }
 }

@@ -41,6 +41,7 @@
             hover="primary-400"
             color="white"
             type="button"
+            class="mt-6"
             @click="$emit('success', $event.target)"
         >
             {{ $t('send') }}

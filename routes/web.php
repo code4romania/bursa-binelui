@@ -36,8 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::patch('/up', [ProfileController::class, 'up'])->name('up');
-
 /* Website routes. */
 Route::get('/despre', [AdminBBTemporary::class, 'about'])->name('about');
 Route::get('/intrebari-frecvente', [AdminBBTemporary::class, 'faqs'])->name('faqs');
