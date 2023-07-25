@@ -388,5 +388,6 @@ export default {
     "donate_for_good": "Donează pentru fapte bune",
     "project_categories": "Proiecte din categoria",
     "donation_period": "Perioada donatii",
-    "ong_description": "Descriere organizație"
+    "ong_description": "Descriere organizație",
+    "need_help": "Ai nevoie de ajutor în plus?"
 }
