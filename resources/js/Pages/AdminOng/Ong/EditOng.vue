@@ -436,6 +436,8 @@
     const clonedOrganization = ({...props.organization});
 
     const editField = () => {
+        console.log(form)
+
         form.put(route('admin.ong.update', form.id), {
             preserveScroll: true,
             onSuccess: () => {},
@@ -445,5 +447,7 @@
 
     const handleFileChange = (file) => {
         form.cover_image = file;
+
+        console.log(file)
     }
 </script>

@@ -3,14 +3,14 @@
         <!-- Inertia page head -->
         <Head :title="$t('contact')" />
 
-        <div class="my-14 relative">
-            <div class="flex flex-col sm:flex-row gap-20 mx-auto max-w-5xl">
+        <div class="relative px-6 my-14 lg:px-0">
+            <div class="flex flex-col max-w-5xl gap-20 mx-auto sm:flex-row">
 
-                <div class="w-full sm:w-6/12 space-y-4">
-                    <h1 class="text-cyan-900 text-3xl font-bold">{{ $t('send_message') }}</h1>
-                    <p class="text-gray-500 font-medium text-sm">{{ $t('send_message_info') }}</p>
+                <div class="w-full space-y-4 sm:w-6/12">
+                    <h1 class="text-3xl font-bold text-cyan-900">{{ $t('send_message') }}</h1>
+                    <p class="text-sm font-medium text-gray-500">{{ $t('send_message_info') }}</p>
 
-                    <form @submit.prevent="contact" class="mt-2 space-y-6 pb-20">
+                    <form @submit.prevent="contact" class="pb-20 mt-2 space-y-6">
                         <!-- Name -->
                         <Input
                             class="w-full"
@@ -25,7 +25,7 @@
                         <!-- Email -->
                         <Input
                             class="w-full"
-                            :label="$t('project_name_label')"
+                            :label="$t('email')"
                             color="gray-700"
                             id="email"
                             type="email"
@@ -56,28 +56,28 @@
                     </form>
                 </div>
 
-                <div class="w-full sm:w-6/12 space-y-4">
-                    <h1 class="text-cyan-900 text-3xl font-bold">{{ $t('contact') }}</h1>
-                    <p class="text-gray-500 font-medium text-sm">{{ $t('contact_info') }}</p>
+                <div class="w-full space-y-4 sm:w-6/12">
+                    <h1 class="text-3xl font-bold text-cyan-900">{{ $t('contact') }}</h1>
+                    <p class="text-sm font-medium text-gray-500">{{ $t('contact_info') }}</p>
 
-                    <a href="mail:to" class="flex items-center gap-2 py-6 text-sm text-gray-500">
+                    <a href="mail:to=support@example.com" class="flex items-center gap-2 py-6 text-sm text-gray-500">
                         <SvgLoader class="shrink-0" name="email" />
                         support@example.com
                     </a>
 
                     <div class="space-y-2">
-                        <p class="text-base text-primary-500 font-semibold">Los Angeles</p>
-                        <p class="text-gray-500 font-medium text-sm">4556 Brendan Ferry</p>
-                        <p class="text-gray-500 font-medium text-sm">Los Angeles, CA 90210</p>
+                        <p class="text-base font-semibold text-primary-500">Los Angeles</p>
+                        <p class="text-sm font-medium text-gray-500">4556 Brendan Ferry</p>
+                        <p class="text-sm font-medium text-gray-500">Los Angeles, CA 90210</p>
                     </div>
                 </div>
             </div>
 
-            <div class="hidden lg:block absolute bottom-0 left-0">
+            <div class="absolute bottom-0 left-0 hidden lg:block">
                 <SvgLoader class="shrink-0" name="pattern" />
             </div>
 
-            <div class="hidden lg:block absolute top-0 right-0">
+            <div class="absolute top-0 right-0 hidden lg:block">
                 <SvgLoader class="shrink-0" name="pattern" />
             </div>
         </div>
@@ -103,8 +103,6 @@
 
     /** Submit action. */
     const contact = () => {
-        // form.post(route('route'), {
-        //     onFinish: () => form.reset('password'),
-        // });
+        // form.post(route('route'), {});
     };
 </script>
