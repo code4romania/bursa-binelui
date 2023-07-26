@@ -16,6 +16,10 @@
             @input="$emit('update:modelValue', $event.target.value)"
             ref="input"
             :placeholder="placeholder"
+            :pattern="pattern"
+            :min="min"
+            :max="max"
+            :maxlength="maxlength"
         />
 
         <!-- Extra -->
@@ -58,6 +62,22 @@
         },
         color:{
             type: String
+        },
+        pattern: {
+            type: String,
+            default: null
+        },
+        min: {
+            type: Number,
+            default: null
+        },
+        max: {
+            type: Number,
+            default: null
+        },
+        maxlength: {
+            type: Number,
+            default: null
         }
     });
 
@@ -77,3 +97,11 @@
     /** Expose. */
     defineExpose({ focus: () => input.value.focus() });
 </script>
+
+<style scoped>
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>

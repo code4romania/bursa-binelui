@@ -33,9 +33,12 @@
                 :label="$t('phone')"
                 id="phone"
                 type="number"
+                pattern="[0-9]{10}"
                 v-model="form.phone"
                 :isRequired="true"
                 :error="form.errors.phone"
+                :min="0"
+                :maxlength="10"
             >
                 <p class="pt-1 text-sm text-gray-500">{{ $t('phone_input_info') }}</p>
             </Input>
@@ -101,7 +104,6 @@
     import SvgLoader from '@/Components/SvgLoader.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import {onMounted} from "vue";
 
     /** Component props. */
     defineProps({
@@ -122,8 +124,4 @@
         email: user.email,
         phone: user.phone,
     });
-
-onMounted(() => {
-    console.log('mounted')
-});
 </script>
