@@ -3,9 +3,12 @@
         <!-- Inertia page head -->
         <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
-        </div>
+        <Alert
+            v-if="status"
+            class="fixed right-10 top-10 w-96 z-103"
+            type="success"
+            :message="status"
+        />
 
         <!-- Auth template. -->
         <Auth :content="content">
@@ -95,6 +98,7 @@
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
+    import Alert from '@/Components/Alert.vue';
 
     /** Component props. */
     defineProps({
