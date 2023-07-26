@@ -1,11 +1,14 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-       <Head title="Forgot Password" />
+       <Head :title="$t('password_reset')" />
 
-       <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-           {{ status }}
-       </div>
+       <Alert
+            v-if="status"
+            class="fixed right-10 top-10 w-96 z-103"
+            type="success"
+            :message="status"
+        />
 
        <!-- Auth template. -->
        <Auth :content="content">
@@ -17,7 +20,6 @@
                     type="email"
                     v-model="form.email"
                     :isRequired="true"
-                    hasAutocomplete="username"
                     :error="form.errors.email"
                 />
 
@@ -47,6 +49,7 @@
    import Auth from '@/Components/templates/Auth.vue';
    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
    import Input from '@/Components/form/Input.vue';
+   import Alert from '@/Components/Alert.vue';
 
     /** Component props. */
    defineProps({
@@ -70,6 +73,13 @@
 
    /** Submit action. */
    const submit = () => {
-       form.post(route('password.email'));
+        form.post(route('password.email'), {
+            onError: (error) => {
+                form.reset('email')
+            },
+            onSuccess: () => {
+                form.reset('email')
+            },
+        });
    };
 </script>
