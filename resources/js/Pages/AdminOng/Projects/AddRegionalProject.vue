@@ -44,7 +44,7 @@
                          <SelectMultiple
                             class="w-full xl:w-1/2"
                             :label="$t('counties_label')"
-                            :options="countries"
+                            :options="counties"
                             v-model="selectedCounties"
                             :error="form.errors.counties"
                         />
@@ -70,11 +70,12 @@
                         />
 
                         <!-- Project category -->
-                        <Select
+                        <SelectMultiple
                             class="w-full xl:w-1/2"
                             :label="$t('project_category_label')"
                             :options="projectCategories"
                             v-model="form.category"
+                            type="singleValue"
                             :error="form.errors.category"
                         />
 
@@ -160,6 +161,7 @@
                         <Radio
                             :label="$t('regional_parteners_label')"
                             :options="[{'label': 'Da', 'value': 'yes'}, {'label': 'Nu', 'value': 'no'}]"
+                            name="parteners"
                             v-model="form.parteners"
                             :error="form.errors.parteners"
                         />
@@ -192,6 +194,7 @@
                         <Radio
                             :label="$t('regional_arie_label')"
                             :options="arias"
+                            name="locations"
                             v-model="form.aria"
                             :error="form.errors.aria"
                         />
@@ -372,7 +375,7 @@ import Radio from '@/Components/form/Radio.vue';
 const form = useForm({
     name: '',
     description: '',
-    category: '',
+    category: [],
     start: '',
     end: '',
     counties: [],
@@ -399,8 +402,9 @@ const form = useForm({
         email: ''
     }
 });
+
 let selectedCounties = [];
-const props = defineProps(['projectCategories', 'countries']);
+const props = defineProps(['projectCategories', 'counties']);
 let projectLinks = ref(form.project_links);
 
 const arias = [
@@ -425,11 +429,15 @@ function prepareProjectLinks() {
 /** Create project. */
 const createProject = () => {
     form.counties = selectedCounties.map(item => item.id);
+
+    if(0 < form.category.length) {
+        form.category = form.category.map(item => item.id);
+    }
+
     prepareProjectLinks();
     form.post(route('admin.ong.project.storeRegional'), {
         preserveScroll: true,
-        onError: () => {
-        },
+        onError: () => {},
     });
 };
 </script>

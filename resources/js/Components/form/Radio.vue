@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label class="text-sm font-semibold text-gray-700">{{ label }}</label>
+        <label v-if="label" class="text-sm font-semibold text-gray-700">{{ label }}</label>
         <fieldset class="mt-4">
             <div class="space-y-4">
                 <div
@@ -10,9 +10,10 @@
                 >
                     <input
                         :id="option.value"
-                        name="test"
+                        :name="name"
                         type="radio"
                         :value="option.value"
+                        @input="$emit('update:modelValue', option.value)"
                         class="w-4 h-4 border-gray-300 text-primary-500 focus:ring-primary-500"
                     />
                     <label :for="option.value" class="block ml-3 text-sm font-medium leading-6 text-gray-900">{{ option.label }}</label>
@@ -28,6 +29,9 @@
 <script setup>
     const props = defineProps({
         options: Array,
-        error: String
+        error: String,
+        name: String,
+        modelValue: String,
+        label:String
     });
 </script>

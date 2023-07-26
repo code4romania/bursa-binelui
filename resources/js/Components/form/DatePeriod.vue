@@ -94,15 +94,19 @@
 
     /** Selected Range */
     const selectedDateRange = ref({
-        start: new Date(),
-        end: new Date(),
+        start: null,
+        end: null,
     });
 
     /** Format date range. */
     const formattedDateRange = computed(() => {
-        const startDate = selectedDateRange.value.start ? formatDate(selectedDateRange.value.start) : '';
-        const endDate = selectedDateRange.value.end ? formatDate(selectedDateRange.value.end) : '';
-        return `${startDate} - ${endDate}`;
+       if (selectedDateRange.value.start && selectedDateRange.value.end) {
+            const startDate = selectedDateRange.value.start ? formatDate(selectedDateRange.value.start) : '';
+            const endDate = selectedDateRange.value.end ? formatDate(selectedDateRange.value.end) : '';
+            return `${startDate} - ${endDate}`;
+       }
+
+       return null
     });
 
     const open = ref(false);
@@ -112,7 +116,6 @@
     const selectedYear = ref(new Date().getFullYear());
 
     const calendar = computed(() => {
-        if (selectedDateRange.value.start && selectedDateRange.value.end) {
             const year = selectedYear.value;
             const month = selectedMonth.value;
 
@@ -140,9 +143,6 @@
             }
 
             return calendar;
-        } else {
-            return [];
-        }
     });
 
     function formatDate(date) {
