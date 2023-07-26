@@ -50,8 +50,8 @@ const form = useForm({
         contact_email: '',
         contact_phone: '',
         contact_person: '',
-        activity_domains_ids: '',
-        counties_ids: '',
+        activity_domains_ids: [],
+        counties_ids: [],
         volunteer: false,
         why_volunteer: '',
         logo: '',
@@ -139,6 +139,12 @@ const submit = () => {
     if (form.type === 'donor') {
         delete form.ong;
     }
+
+    if(form.type = 'ong') {
+        form.ong.activity_domains_ids = form.ong.activity_domains_ids.map(domain => domain.id)
+        form.ong.counties_ids = form.ong.counties_ids.map(county => county.id)
+    }
+
     form.post(route('register'), {
         onError: (error) => {
             /** Set active component in case of validation errors. */
@@ -150,6 +156,17 @@ const submit = () => {
                 current.value = 3
             } else if (error['ong.volunteer'] || error['ong.cif'] || error['ong.why_volunteer']) {
                 current.value = 4
+            }
+
+            /** Repopulate array as objects. */
+            if(form.type = 'ong') {
+                if (0 < form.ong.activity_domains_ids.length) {
+                    form.ong.activity_domains_ids = props.activity_domains.filter(domain => form.ong.activity_domains_ids.includes(domain.id));
+                }
+
+                if (0 < form.ong.counties_ids.length) {
+                    form.ong.counties_ids = props.counties.filter(county => form.ong.counties_ids.includes(county.id));
+                }
             }
         },
         onSuccess: (data) => {

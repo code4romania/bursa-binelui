@@ -65,6 +65,7 @@
                         background="primary-500"
                         hover="primary-400"
                         color="white"
+                        class="col-span-2 md:col-span-1"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                     >
@@ -72,12 +73,13 @@
                     </PrimaryButton>
 
 
-                    <!-- <SecondaryButton
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
+                    <SecondaryButton
+                        class="col-span-2 md:col-span-1 w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"
+                        @click="googleLogin"
                     >
-                        {{ $t('google_log_in') }}
-                    </SecondaryButton> -->
+                        <SvgLoader name="google" />
+                        {{ $t("google_login") }}
+                    </SecondaryButton>
                 </div>
             </form>
         </Auth>
@@ -95,6 +97,7 @@
     import Checkbox from '@/Components/form/Checkbox.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
     import Alert from '@/Components/Alert.vue';
 
     /** Component props. */
@@ -126,4 +129,11 @@
             onFinish: () => form.reset('password'),
         });
     };
+
+    /** Goolge login */
+    const googleLogin = () => {
+        /** TODO
+         * Method for login with google
+         */
+    }
 </script>

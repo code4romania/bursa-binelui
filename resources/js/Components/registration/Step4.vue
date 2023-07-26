@@ -5,13 +5,14 @@
 
         <!-- County -->
         <div class="w-full">
-            <MultiSelectObjectFilter
-                class="w-full"
+            <SelectMultiple
+                class="w-full z-101"
                 :label="$t('county')"
+                type="object"
                 v-model="form.ong.counties_ids"
                 :options="counties"
+                :error="form.errors['ong.counties_ids']"
             />
-            <p v-show="form.errors['ong.counties_ids']" class="mt-2 text-sm text-red-600">{{ form.errors['ong.counties_ids'] }}</p>
         </div>
 
         <!-- Address -->
@@ -107,7 +108,7 @@
     /** Import components. */
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
+    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
 
     const props = defineProps({
         form: Object,
