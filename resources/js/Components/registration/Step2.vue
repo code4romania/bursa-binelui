@@ -37,6 +37,7 @@
             hasAutocomplete="password"
             :error="form.errors['user.password']"
         />
+
         <Input
             :label="$t('password_confirmation')"
             id="password_confirmation"
@@ -47,6 +48,27 @@
             hasAutocomplete="password"
             :error="form.errors['user.password_confirmation']"
         />
+
+        <!-- Terms -->
+        <label v-if="'donor' == form.type" class="flex items-center space-x-2">
+            <Checkbox name="terms" v-model:checked="form.terms" />
+            <div class="flex items-center space-x-2 text-sm">
+                <span class="text-gray-700">{{ $t('i_agree') }}</span>
+                <Link
+                    :href="route('terms')"
+                    class="text-primary-500"
+                >
+                    {{ $t('terms_link') }}
+                </Link>
+                <span class="text-red-500">*</span>
+                </div>
+        </label>
+
+        <!-- Subscribe -->
+        <label v-if="'donor' == form.type" class="flex items-center space-x-2">
+            <Checkbox name="subscribe" v-model:checked="form.subscribe" />
+            <span class="text-sm text-gray-700">{{ $t('register_subscribe') }}</span>
+        </label>
 
         <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <PrimaryButton
@@ -92,11 +114,15 @@
 </template>
 
 <script setup>
+    /** Import from inertia. */
+    import { Link } from '@inertiajs/vue3';
+
     /** Import components. */
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
+    import Checkbox from '@/Components/form/Checkbox.vue';
 
     const props = defineProps({
         form: Object,

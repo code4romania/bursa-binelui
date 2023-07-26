@@ -19,12 +19,13 @@
 
 <script setup>
     /** Import form vue. */
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
 
     /** Component props. */
     const props = defineProps({
         label: String,
         id: String,
+        recivedFile: [Object, String]
     });
 
     /** Image preview. */
@@ -46,4 +47,11 @@
         /** Emit file. */
         emit('upload', file);
     }
+
+    onMounted(() => {
+        if (!props.recivedFile) {
+            return
+        }
+        name.value = props.recivedFile.name.slice(0, 20)
+    })
 </script>

@@ -33,6 +33,7 @@
                 :label="$t('upload_logo')"
                 @upload="ongLogo"
                 :form="form"
+                :recivedFile="form.ong.logo"
             />
         </div>
 
@@ -50,15 +51,14 @@
 
         <!-- Activity domains -->
         <div>
-            <MultiSelectObjectFilter
-                class="w-full"
+            <SelectMultiple
+                class="w-full z-101"
                 :label="$t('domains')"
-                v-model="form.ong.activity_domains_ids"
+                type="object"
                 :options="activity_domains"
-                id="activity-domains"
-                ref="activityDomains"
+                v-model="form.ong.activity_domains_ids"
+                :error="form.errors['ong.activity_domains_ids']"
             />
-            <p v-show="form.errors['ong.activity_domains_ids']" class="mt-2 text-sm text-red-600">{{ form.errors['ong.activity_domains_ids'] }}</p>
         </div>
 
         <!-- Statut -->
@@ -68,6 +68,7 @@
                 :label="$t('upload_file')"
                 @upload="ongStatute"
                 v-model="form.ong.statute"
+                :recivedFile="form.ong.statute"
             />
             <p class="block mt-1 text-xs font-medium leading-6 text-gray-500">{{ $t('file_description') }}</p>
         </div>
@@ -97,15 +98,15 @@
 </template>
 
 <script setup>
+    import { onMounted } from "vue";
+
     /** Import components. */
     import Input from '@/Components/form/Input.vue';
     import Avatar from '@/Components/form/Avatar.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import ButtonFile from '@/Components/form/ButtonFile.vue';
-    import MultiSelectFilter from '@/Components/filters/MultiSelectFilter.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import {onMounted} from "vue";
-    import MultiSelectObjectFilter from "@/Components/filters/MultiSelectObjectFilter.vue";
+    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
 
     /** Component props. */
     const props = defineProps({
@@ -115,10 +116,6 @@
             default: () => []
         },
     });
-    onMounted(() => {
-        console.log(props.form)
-        console.log(props.activity_domains);
-    })
 
     /** Update form ong logo. */
     const ongLogo = ((file) => props.form.ong.logo = file);
