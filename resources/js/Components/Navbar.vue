@@ -195,13 +195,13 @@
 
                     <div class="flex items-center gap-4">
                         <p class="text-base font-medium text-gray-500">{{ $page.props.auth.user.name }}</p>
-                        <img
+                        <!-- <img
                             v-if="$page.props.auth.user.avatar"
-                            class="w-8 h-8 rounded-full"
+                            class="w-4 h-4 rounded-full"
                             :src="$page.props.auth.user.avatar"
                             alt="avatar"
                         />
-                        <SvgLoader class="w-8 h-8 shrink-0 object-fit" name="default_avatar" />
+                        <SvgLoader class="w-4 h-4" name="default_avatar" /> -->
                     </div>
 
                     <button type="button" class="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
