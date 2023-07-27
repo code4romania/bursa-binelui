@@ -1,14 +1,14 @@
 <template>
-    <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
+    <nav class="flex items-center justify-between px-4 border-t border-gray-200 sm:px-0">
 
         <!-- Next -->
-        <div class="-mt-px flex w-0 flex-1">
+        <div class="flex flex-1 w-0 -mt-px">
             <Link
                 v-if="prev"
                 :href="prev"
-                class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:border-gray-300 hover:text-gray-700"
             >
-                <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                <ArrowLongLeftIcon class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true" />
                 {{ $t('prev') }}
             </Link>
         </div>
@@ -28,14 +28,14 @@
         </div>
 
         <!-- Prev -->
-        <div class="-mt-px flex w-0 flex-1 justify-end">
+        <div class="flex justify-end flex-1 w-0 -mt-px">
             <Link
                 v-if="next"
                 :href="next"
-                class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:border-gray-300 hover:text-gray-700"
             >
                 {{ $t('next') }}
-                <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                <ArrowLongRightIcon class="w-5 h-5 ml-3 text-gray-400" aria-hidden="true" />
             </Link>
         </div>
     </nav>
@@ -62,8 +62,13 @@
     const paginationLinks = computed(() => {
         const links = props.links;
 
-        links.shift();
-        links.pop();
+        if('&laquo; Previous' === links[0].label) {
+            links.shift();
+        }
+
+        if('Next &raquo;' == links[links.length - 1].label) {
+            links.pop();
+        }
 
         return links;
     })

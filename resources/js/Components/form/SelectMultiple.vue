@@ -49,7 +49,6 @@
             {{ option.name ? option.name : option }}
             <XCircleIcon class="w-4 h-4 ml-2 text-white" aria-hidden="true"/>
         </div>
-
         <!-- Error -->
         <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
     </Combobox>

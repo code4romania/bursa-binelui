@@ -1,11 +1,11 @@
 <template>
     <div class="space-y-6">
 
-        <h1 v-if="'ong' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('account_details') }}</h1>
+        <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('account_details') }}</h1>
 
         <!-- Name -->
         <Input
-            :label="'ong' == form.type ? $t('name_last_name_ong') : $t('name_last_name')"
+            :label="'ngo-admin' == form.type ? $t('name_last_name_ong') : $t('name_last_name')"
             id="name"
             type="text"
             v-model="form.user.name"
@@ -70,7 +70,7 @@
             <span class="text-sm text-gray-700">{{ $t('register_subscribe') }}</span>
         </label>
 
-        <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
+        <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <PrimaryButton
                 background="white"
                 hover="white"
@@ -99,7 +99,7 @@
                 color="white"
                 @click="$emit('next', $event.target)"
             >
-                {{ 'Step1' == current.__name ? $t('continue') : $t('register_link') }}
+                {{ $t('register_link') }}
             </PrimaryButton>
 
             <SecondaryButton

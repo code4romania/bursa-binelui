@@ -3,7 +3,12 @@
         <div class="flex flex-col flex-1 p-6">
             <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="data.cover_image ? data.cover_image: '/images/ong.png'" alt="" />
 
-            <h3 class="mt-4 text-2xl font-bold text-gray-700 line-clamp-2">{{ data.name }}</h3>
+            <Link
+                :href="route('organization', data.id)"
+                class="mt-4 text-2xl font-bold text-gray-700 line-clamp-2"
+            >
+                {{ data.name }}
+            </Link>
 
             <div class="flex flex-wrap items-center gap-5 mt-1 mb-6 text-base font-medium text-gray-800">
                 <div v-if="0 < data.activity_domains?.length" class="flex items-center gap-1">
@@ -32,7 +37,6 @@
 
     /** Import components. */
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
    /** Component props. */
    defineProps({

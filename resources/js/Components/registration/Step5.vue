@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-6">
 
-        <h1 v-if="'ong' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('register_volunteer') }}</h1>
+        <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('register_volunteer') }}</h1>
 
         <p class="text-sm text-gray-700">{{ $t('register_volunteer') }}</p>
 
@@ -26,7 +26,7 @@
             <p class="text-xs font-normal text-gray-500">{{ $t('why_volunteer_info') }}</p>
         </Textarea>
 
-        <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
+        <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <PrimaryButton
                 background="white"
                 hover="white"

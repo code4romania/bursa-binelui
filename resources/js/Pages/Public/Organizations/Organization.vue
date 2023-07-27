@@ -3,22 +3,22 @@
         <!-- Inertia page head -->
         <Head title="Organizatie" />
 
-        <div class="bg-white mt-4 mb-20">
+        <div class="mt-4 mb-20 bg-white">
 
             <!-- Header -->
-            <div class="flex flex-col-reverse lg:flex-row mx-auto w-full lg:max-w-7xl mb-8 px-9">
-                <div class="w-full lg:w-6/12 flex flex-col justify-center xl:pr-6">
+            <div class="flex flex-col-reverse w-full mx-auto mb-8 lg:flex-row lg:max-w-7xl px-9">
+                <div class="flex flex-col justify-center w-full lg:w-6/12 xl:pr-6">
 
-                    <div class="border-b border-gray-200 bg-white mr-6 py-4">
+                    <div class="py-4 mr-6 bg-white border-b border-gray-200">
                         <div class="flex items-center gap-4">
-                            <div class="bg-primary-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                            <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
                                 <SvgLoader class="shrink-0 fill-primary-500 stroke-primary-500" name="global" />
                             </div>
                             <h3 class="text-base font-semibold leading-6 text-gray-900">{{organization.counties.join(', ')}}</h3>
                         </div>
                     </div>
 
-                    <h1 class="text-6xl font-extrabold text-gray-900 py-12">{{ organization.name }}</h1>
+                    <h1 class="py-12 text-6xl font-extrabold text-gray-900">{{ organization.name }}</h1>
 
                     <div class="flex items-center gap-4">
                         <Link
@@ -37,23 +37,23 @@
                     </div>
                 </div>
 
-                <div class="w-full lg:w-6/12 relative p-20 flex items-center justify-center">
+                <div class="relative flex items-center justify-center w-full p-20 lg:w-6/12">
 
-                    <div class="w-full h-full absolute top-0 left-0">
+                    <div class="absolute top-0 left-0 w-full h-full">
                         <img class="w-full h-full" src="/images/ong_bg.png" alt="" />
                     </div>
 
-                    <div class="p-8 bg-white w-fit rounded shadow relative flex items-center">
+                    <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
                         <img class="mx-auto" src="/images/ong.png" alt="" />
                     </div>
                 </div>
             </div>
 
             <!-- Soacial share -->
-            <div class="flex flex-col lg:flex-row mx-auto max-w-7xl mb-8 px-9">
+            <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
                 <div class="w-full lg:w-6/12">
 
-                    <h2 class="text-cyan-900 text-3xl font-bold mb-8">{{ $t('share_page') }}</h2>
+                    <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_page') }}</h2>
                     <SharePage
                         class="mb-20"
                         :id="organization.id"
@@ -61,46 +61,46 @@
                     />
 
                     <div v-if="organization.activity_domains">
-                        <h2 class="text-cyan-900 text-3xl font-bold mb-8">{{ $t('activity_domains') }}</h2>
-                        <div class="text-gray-500 text-lg mb-12" v-html="organization.activity_domains.join(', ')"></div>
+                        <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('activity_domains') }}</h2>
+                        <div class="mb-12 text-lg text-gray-500" v-html="organization.activity_domains.join(', ')"></div>
                     </div>
 
                     <div v-if="organization.description">
-                        <h2 class="text-cyan-900 text-3xl font-bold mb-8">{{ $t('description') }}</h2>
-                        <div  class="text-gray-500 text-lg" v-html="organization.description"></div>
+                        <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
+                        <div  class="text-lg text-gray-500" v-html="organization.description"></div>
                     </div>
                 </div>
 
-                <div class="w-full lg:w-6/12 mt-4 lg:mt-0 lg:px-10">
-                    <div class="shadow-lg bg-white">
+                <div class="w-full mt-4 lg:w-6/12 lg:mt-0 lg:px-10">
+                    <div class="bg-white shadow-lg">
 
-                        <div class="border-b border-gray-200 px-10 pt-10 pb-8">
+                        <div class="px-10 pt-10 pb-8 border-b border-gray-200">
                             <h3 class="text-4xl font-bold leading-6 text-gray-900">{{ $t('ong_contact') }}</h3>
                         </div>
 
-                        <div class="bg-gray-50 px-10 py-8 space-y-8">
+                        <div class="px-10 py-8 space-y-8 bg-gray-50">
 
                             <div v-if="organization.contact_person" class="flex justify-start gap-x-4">
-                                <SvgLoader class="shrink-0 mt-1" name="home" />
+                                <SvgLoader class="mt-1 shrink-0" name="home" />
                                 <div>
-                                    <h3 class="text-gray-600 font-semibold text-base">{{ $t('ong_address') }}</h3>
-                                    <p class="mt-2 text-gray-500 font-normal text-base">{{ organization.street_address }}, <br> {{ organization.county_name }}, {{ organization.city_name }}</p>
+                                    <h3 class="text-base font-semibold text-gray-600">{{ $t('ong_address') }}</h3>
+                                    <p class="mt-2 text-base font-normal text-gray-500">{{ organization.street_address }}, <br> {{ organization.county_name }}, {{ organization.city_name }}</p>
                                 </div>
                             </div>
 
                             <div v-if="organization.contact_person" class="flex justify-start gap-x-4">
-                                <SvgLoader class="shrink-0 mt-1" name="email" />
+                                <SvgLoader class="mt-1 shrink-0" name="email" />
                                 <div>
-                                    <h3 class="text-gray-600 font-semibold text-base">{{ $t('email') }}</h3>
-                                    <p class="mt-2 text-gray-500 font-normal text-base">{{ organization.contact_email }}</p>
+                                    <h3 class="text-base font-semibold text-gray-600">{{ $t('email') }}</h3>
+                                    <p class="mt-2 text-base font-normal text-gray-500">{{ organization.contact_email }}</p>
                                 </div>
                             </div>
 
                             <div v-if="organization.contact_person" class="flex justify-start gap-x-4">
-                                <SvgLoader class="shrink-0 mt-1" name="person" />
+                                <SvgLoader class="mt-1 shrink-0" name="person" />
                                 <div>
-                                    <h3 class="text-gray-600 leading-0 font-semibold text-base">{{ $t('contact_person') }}</h3>
-                                    <p class="mt-2 text-gray-500 font-normal text-base">{{ organization.contact_person }}</p>
+                                    <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('contact_person') }}</h3>
+                                    <p class="mt-2 text-base font-normal text-gray-500">{{ organization.contact_person }}</p>
                                 </div>
                             </div>
 
@@ -118,16 +118,16 @@
 
             <!-- Projects -->
             <div class="bg-gray-50 px-9">
-                <div class="mx-auto max-w-7xl flex items-center gap-4 py-12">
-                    <div class="bg-primary-500 w-9 h-9 rounded-lg flex items-center justify-center">
+                <div class="flex items-center gap-4 py-12 mx-auto max-w-7xl">
+                    <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
                         <SvgLoader class="shrink-0 fill-primary-500 stroke-primary-500" name="brand_icon" />
                     </div>
-                    <h3 class="text-gray-900 font-bold text-2xl">{{ $t('ong_projects') }}</h3>
+                    <h3 class="text-2xl font-bold text-gray-900">{{ $t('ong_projects') }}</h3>
                 </div>
             </div>
 
             <div class="bg-white px-9">
-                <ul role="list" class="mx-auto max-w-7xl grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
                     <template v-for="(item, index) in organization.projects" :key="index">
                         <ProjectCard
                             class="-mt-6"
@@ -160,11 +160,8 @@
 </template>
 
 <script setup>
-    /** Remove this import after backend connection. */
-    import projects from '@/local_json/projects.js';
-
     /** Import from inertia. */
-    import { Head, Link, usePage } from '@inertiajs/vue3';
+    import { Head, Link } from '@inertiajs/vue3';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -174,15 +171,10 @@
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import SharePage from '@/Components/SharePage.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
-    import {onMounted} from "vue";
 
     /** Page props. */
     const props = defineProps({
         organization: [Array, Object]
-    });
-
-    onMounted(() => {
-        console.log(props.organization);
     });
 
     /**
