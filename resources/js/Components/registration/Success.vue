@@ -26,7 +26,7 @@
                 <!-- Other -->
                 <Input
                     @input="update"
-                    v-show="show"
+                    v-show="show && social.source_of_information"
                     id="other"
                     type="text"
                     v-model="other"
