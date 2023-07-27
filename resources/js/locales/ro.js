@@ -91,7 +91,7 @@ export default {
     "project_beneficiary_extra": "Descrie beneficiarii proiectului/comunitatea căreia i se adresează, incluzând timpul și numărul acestora. Nu depăși 500 caractere",
     "why_to_donate": "De ce să donez?",
     "why_to_donate_extra": "Precizează nevoile sesizate în rândul beneficiarilor/comunității în care va fi implementat proiectul.",
-    "has_comments_label": "Proiectul acceptă comentari?",
+    "has_comments_label": "Proiectul acceptă comentarii?",
     "has_volunteers_label": "Proiectul acceptă voluntari?",
     "photo_gallery": "Galerie foto",
     "load_image": "Încarcă o imagine",

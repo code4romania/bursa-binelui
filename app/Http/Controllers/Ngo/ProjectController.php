@@ -16,6 +16,7 @@ use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
+use App\Models\ActivityDomain;
 
 class ProjectController extends Controller
 {
@@ -32,21 +33,34 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $countries = County::get(['name', 'id']);
+        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
+            return \App\Models\County::get(['name', 'id']);
+        });
+
+        $projectCategories = cache()->remember('activityDomains', 60 * 60 * 24, function () {
+            return ActivityDomain::get(['name', 'id']);
+        });
 
         return Inertia::render('AdminOng/Projects/AddProject', [
-            'countries' => $countries,
-            'projectCategories' => ProjectCategory::values(),
+            'counties' => $counties,
+            'projectCategories' => $projectCategories,
         ]);
     }
 
     public function createRegional()
     {
-        $countries = County::get(['name', 'id']);
+        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
+            return \App\Models\County::get(['name', 'id']);
+        });
+
+        $projectCategories = cache()->remember('activityDomains', 60 * 60 * 24, function () {
+            return ActivityDomain::get(['name', 'id']);
+        });
+
 
         return Inertia::render('AdminOng/Projects/AddRegionalProject', [
-            'countries' => $countries,
-            'projectCategories' => ProjectCategory::values(),
+            'counties' => $counties,
+            'projectCategories' => $projectCategories,
         ]);
     }
 

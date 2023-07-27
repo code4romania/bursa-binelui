@@ -9,10 +9,10 @@
 
                 <div class="flex gap-6 pt-4 mr-6 bg-white">
                     <div class="flex items-center gap-2">
-                        <div :class="['w-8 h-8 rounded-lg flex items-center justify-center', project.active ? 'bg-red-500' : 'bg-cyan-900']">
-                            <SvgLoader :class="['shrink-0 stroke-white', project.active ? 'fill-red-500' : 'fill-cyan-900']" name="thunder" />
+                        <div :class="['w-8 h-8 rounded-lg flex items-center justify-center', project.is_period_active ? 'bg-red-500' : 'bg-cyan-900']">
+                            <SvgLoader :class="['shrink-0 stroke-white', project.is_period_active ? 'fill-red-500' : 'fill-cyan-900']" name="thunder" />
                         </div>
-                        <p class="text-base font-semibold leading-6 text-gray-900">{{ project.active ? $t('active') : $t('inactive') }}</p>
+                        <p class="text-base font-semibold leading-6 text-gray-900">{{ project.is_period_active ? $t('active') : $t('inactive') }}</p>
                     </div>
 
                     <div v-if="project.category" class="flex items-center gap-2">

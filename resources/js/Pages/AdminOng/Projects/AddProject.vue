@@ -49,7 +49,6 @@
                             :options="projectCategories"
                             v-model="form.category"
                             type="singleValue"
-                            v-if="!form.is_national"
                             :error="form.errors.category"
                         />
 
@@ -92,7 +91,7 @@
                         <SelectMultiple
                             class="w-full xl:w-1/2"
                             :label="$t('counties_label')"
-                            :options="countries"
+                            :options="counties"
                             type="object"
                             v-model="selectedCounties"
                             v-if="!form.is_national"
@@ -311,7 +310,7 @@ const form = useForm({
     project_articles: [{url:''}]
 });
 let selectedCounties = [];
-const props = defineProps(['projectCategories', 'countries']);
+const props = defineProps(['projectCategories', 'counties']);
 let projectLinks = ref(form.project_links);
 let projectArticles = ref(form.project_articles);
 
@@ -326,13 +325,16 @@ function prepareExternalLinks() {
 /** Create project. */
 const createProject = () => {
     form.counties = selectedCounties.map(item => item.id);
+
+    if(0 < form.category.length) {
+        form.category = form.category.map(item => item.id);
+    }
+
     prepareProjectLinks();
     prepareExternalLinks();
-    console.log(form);
     form.post(route('admin.ong.project.store'), {
         preserveScroll: true,
-        onError: () => {
-        },
+        onError: () => {},
     });
 };
 </script>
