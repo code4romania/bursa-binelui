@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-6">
 
-        <h1 v-if="'ong' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('contact_ong') }}</h1>
+        <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('contact_ong') }}</h1>
 
         <!-- County -->
         <div class="w-full">
@@ -81,7 +81,7 @@
             :error="form.errors['ong.webiste']"
         />
 
-        <div v-if="'ong' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
+        <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <PrimaryButton
                 background="white"
                 hover="white"

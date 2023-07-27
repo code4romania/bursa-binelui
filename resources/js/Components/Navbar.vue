@@ -93,11 +93,20 @@
                             <MenuItems class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <!-- Administrate Link -->
                                 <NavLink
+                                    v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
                                     class="w-full px-3 py-2"
-                                    :href="'donor' === $page.props.auth.user.role ? route('donor.index') : route('dashboard')"
-                                    :active="'donor' === $page.props.auth.user.role ? route().current('donor.index') : route().current('dashboard')"
+                                    :href="route('donor.index')"
+                                    :active="route().current('donor.index')"
                                 >
-                                    {{ 'donor' === $page.props.auth.user.role ? $t('dashbord') : $t('administrate_link') }}
+                                    {{ $t('dashbord') }}
+                                </NavLink>
+                                <NavLink
+                                    v-if="$page.props.auth.user && 'ngo-admin' === $page.props.auth.user.role"
+                                    class="w-full px-3 py-2"
+                                    :href="route('dashboard')"
+                                    :active="route().current('dashboard')"
+                                >
+                                    {{ $t('administrate_link') }}
                                 </NavLink>
 
                                 <NavLink
@@ -202,14 +211,22 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                     <!-- Administrate Link -->
-                     <NavLink
-                        v-if="$page.props.auth.user"
+                    <!-- Administrate Link -->
+                    <NavLink
+                        v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
                         class="w-full px-3 py-2"
-                        :href="'donor' === $page.props.auth.user.role ? route('donor.index') : route('dashboard')"
-                        :active="'donor' === $page.props.auth.user.role ? route().current('donor.index') : route().current('dashboard')"
+                        :href="route('donor.index')"
+                        :active="route().current('donor.index')"
                     >
-                        {{ 'donor' === $page.props.auth.user.role ? $t('dashbord') : $t('administrate_link') }}
+                        {{ $t('dashbord') }}
+                    </NavLink>
+                    <NavLink
+                        v-if="$page.props.auth.user && 'ngo-admin' === $page.props.auth.user.role"
+                        class="w-full px-3 py-2"
+                        :href="route('dashboard')"
+                        :active="route().current('dashboard')"
+                    >
+                        {{ $t('administrate_link') }}
                     </NavLink>
 
                     <NavLink

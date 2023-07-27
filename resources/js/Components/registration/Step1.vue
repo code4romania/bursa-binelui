@@ -41,7 +41,7 @@
         },
         {
             label: 'Creează cont organizație',
-            value: 'ong',
+            value: 'ngo-admin',
             description: 'Vrei ca ONG-ul din care faci parte să apară pe Bursa Binelui? Înscrie organizația acum.'
         },
     ]);

@@ -11,6 +11,5 @@ use Illuminate\Support\Facades\Route;
 //     Route::get('donatii', [DonorController::class, 'index'])->name('admin.donor.donations');
 // });
 
-
-Route::get('donor-dashboard', [DonorController::class, 'index'])->name('donor.index');
 Route::get('donatiile-mele', [DonorController::class, 'donations'])->name('donor.donations');
+Route::get('donor-dashboard', [DonorController::class, 'index'])->name('donor.index');

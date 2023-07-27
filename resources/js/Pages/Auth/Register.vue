@@ -6,12 +6,20 @@
 
         <!-- Auth template. -->
         <Auth :content="content">
-
             <!-- Steps -->
             <div class="mt-6">
-                <component :is="steps[current]" :current="steps[current]" :form="form" :social="social"
-                    :activity_domains="activity_domains" :counties="counties" @prev="prev" @next="next" @google="google"
-                    @success="success" />
+                <component
+                    :is="steps[current]"
+                    :current="steps[current]"
+                    :form="form"
+                    :social="social"
+                    :activity_domains="activity_domains"
+                    :counties="counties"
+                    @prev="prev"
+                    @next="next"
+                    @google="google"
+                    @success="success"
+                />
             </div>
         </Auth>
     </PageLayout>
@@ -22,7 +30,7 @@
 import { ref, computed } from 'vue';
 
 /** Import form inertia. */
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 
 /** Import components. */
 import PageLayout from '@/Layouts/PageLayout.vue';
@@ -74,7 +82,6 @@ const props = defineProps({
         type: Array,
         default: () => []
     },
-    user: Object,
     flash: Object
 });
 
@@ -89,7 +96,7 @@ const steps = computed(() => {
     let components = [Step1, Step2];
 
     /** Check if registration is of type oragnization */
-    if ('ong' === form.type) {
+    if ('ngo-admin' === form.type) {
         components = [...components, Step3, Step4, Step5];
     }
 
@@ -122,7 +129,7 @@ const prev = (() => (0 < current.value) && current.value--);
 const next = () => {
     if ('donor' === form.type && current.value === 1) {
         submit()
-    } else if ('ong' === form.type && current.value === 4) {
+    } else if ('ngo-admin' === form.type && current.value === 4) {
         submit()
     } else if ('' !== form.type) {
         current.value++
@@ -140,7 +147,9 @@ const submit = () => {
         delete form.ong;
     }
 
-    if(form.type = 'ong') {
+    console.log(form.type)
+
+    if(form.type === 'ngo-admin') {
         form.ong.activity_domains_ids = form.ong.activity_domains_ids.map(domain => domain.id)
         form.ong.counties_ids = form.ong.counties_ids.map(county => county.id)
     }
@@ -159,7 +168,7 @@ const submit = () => {
             }
 
             /** Repopulate array as objects. */
-            if(form.type = 'ong') {
+            if(form.type === 'ngo-admin') {
                 if (0 < form.ong.activity_domains_ids.length) {
                     form.ong.activity_domains_ids = props.activity_domains.filter(domain => form.ong.activity_domains_ids.includes(domain.id));
                 }
@@ -170,7 +179,9 @@ const submit = () => {
             }
         },
         onSuccess: (data) => {
+            console.log(data)
             current.value = steps.value.length - 1
+            console.log(current.value)
             if (data?.props?.flash?.success_message?.usrid) {
                 usrid.value = data.props.flash.success_message.usrid
             }

@@ -61,11 +61,12 @@ class RegisteredUserController extends Controller
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
+                'role' => $data['type']
             ]);
             event(new Registered($user));
 
-            if ($data['type'] == 'ong') {
-                $ong = $data['ong'];
+            if ($data['type'] == 'ngo-admin') {
+                $ong = $data['ngo-admin'];
                 $organization = Organization::create($ong);
                 $organization->activityDomains()->attach($ong['activity_domains_ids']);
                 $organization->counties()->attach($ong['counties_ids']);
