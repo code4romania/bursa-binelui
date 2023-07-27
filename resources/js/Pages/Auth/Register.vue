@@ -185,7 +185,9 @@ const submit = () => {
             }
         },
         onSuccess: (data) => {
+            console.log(data)
             current.value = steps.value.length - 1
+            console.log(current.value)
             if (data?.props?.flash?.success_message?.usrid) {
                 usrid.value = data.props.flash.success_message.usrid
             }
