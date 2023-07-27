@@ -92,7 +92,7 @@ class RegisteredUserController extends Controller
             $user->save();
 
             // return redirect()->route('login')->with('success', 'Contul tau este pregatit');
-            return redirect()->back()->with('error_message', 'Contul tau este pregatit');
+            return redirect()->back()->with('success_message', 'Multumim pentru feedback');
 
         } catch(\Throwable $th) {
             return redirect()->back()->with('error_message', 'Something went wrong');

@@ -1,8 +1,15 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-
         <Head title="Register" />
+
+       <!-- Alert -->
+       <Alert
+            class="fixed z-103 right-10 top-10 w-96"
+            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
+            :message="flash.success_message || flash.error_message"
+            @emptyFlash="Object.assign(props.flash, { success_message:'', error_message:'' });"
+        />
 
         <!-- Auth template. -->
         <Auth :content="content">
@@ -41,6 +48,7 @@ import Step3 from '@/Components/registration/Step3.vue';
 import Step4 from '@/Components/registration/Step4.vue';
 import Step5 from '@/Components/registration/Step5.vue';
 import Success from '@/Components/registration/Success.vue';
+import Alert from '@/Components/Alert.vue';
 
 /** Intialize inertia form object. */
 const form = useForm({
@@ -147,8 +155,6 @@ const submit = () => {
         delete form.ong;
     }
 
-    console.log(form.type)
-
     if(form.type === 'ngo-admin') {
         form.ong.activity_domains_ids = form.ong.activity_domains_ids.map(domain => domain.id)
         form.ong.counties_ids = form.ong.counties_ids.map(county => county.id)
@@ -179,9 +185,7 @@ const submit = () => {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
             current.value = steps.value.length - 1
-            console.log(current.value)
             if (data?.props?.flash?.success_message?.usrid) {
                 usrid.value = data.props.flash.success_message.usrid
             }
@@ -193,7 +197,11 @@ const submit = () => {
 const success = () => {
 
     if (usrid.value) {
-        social.patch(route('user.update', { id: usrid.value }));
+        social.patch(route('user.update', { id: usrid.value }), {
+            onSuccess: (data) => {
+                social.source_of_information = ''
+            }
+        });
     }
 }
 </script>
