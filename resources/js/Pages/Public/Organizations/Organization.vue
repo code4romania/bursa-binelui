@@ -56,8 +56,7 @@
                     <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_page') }}</h2>
                     <SharePage
                         class="mb-20"
-                        :id="organization.id"
-                        pageRoute="organization"
+                        :pageRoute="route('organization', organization.id)"
                     />
 
                     <div v-if="organization.activity_domains">
@@ -141,12 +140,11 @@
             <!-- How can you help -->
             <HowCanYouHelp
                 class="mb-20"
-                :id="organization.id"
-                pageRoute="organization"
+                :pageRoute="route('organization', organization.id)"
                 @donate="triggerDonate"
                 @volunteer="triggerVolunteer"
                 @copyCode="copyEmbed"
-
+                :acceptsVolunteers="organization.accepting_volunteers"
             />
         </div>
 

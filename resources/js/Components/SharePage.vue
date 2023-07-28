@@ -1,22 +1,22 @@
 <template>
     <div class="flex items-center gap-6 mb-12">
-        <a :href="`https://www.facebook.com/sharer/sharer.php?u=${route(pageRoute, id)}`" target="_blank" rel="noopener">
+        <a :href="`https://www.facebook.com/sharer/sharer.php?u=${pageRoute}`" target="_blank" rel="noopener">
             <SvgLoader class="shrink-0" name="facebook_colored" />
         </a>
 
-        <a :href="`https://www.linkedin.com/sharing/share-offsite/?url=${route(pageRoute, id)}`" target="_blank" rel="noopener">
+        <a :href="`https://www.linkedin.com/sharing/share-offsite/?url=${pageRoute}`" target="_blank" rel="noopener">
             <SvgLoader class="shrink-0" name="linkedin_colored" />
         </a>
 
-        <a :href="`https://api.whatsapp.com/send?text=${route(pageRoute, id)}`" data-action="share/whatsapp/share"   target="_blank" rel="noopener">
+        <a :href="`https://api.whatsapp.com/send?text=${pageRoute}`" data-action="share/whatsapp/share"   target="_blank" rel="noopener">
             <SvgLoader class="shrink-0" name="whatsapp_colored" />
         </a>
 
         <div class="relative">
-            <div class="h-8 w-8 rounded-full border border-primary-500 flex items-center justify-center">
+            <div class="flex items-center justify-center w-8 h-8 border rounded-full border-primary-500">
                 <SvgLoader @click="copyEmbed" class="shrink-0 fill-white" name="code" />
             </div>
-            <span v-if="copied" class="inline-flex absolute -top-2 -right-14 items-center rounded-full bg-primary-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-primary-500">
+            <span v-if="copied" class="absolute inline-flex items-center px-2 py-1 text-xs font-medium text-white rounded-full -top-2 -right-14 bg-primary-500 ring-1 ring-inset ring-primary-500">
                 {{ $t('copied') }}
             </span>
         </div>
@@ -31,7 +31,6 @@
 
     /** Component props. */
     const props = defineProps({
-        id: [Number, String],
         pageRoute: String
     });
 

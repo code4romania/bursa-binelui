@@ -88,11 +88,11 @@
 
         <HowCanYouHelp
             class="mb-20"
-            :id="project.id"
-            pageRoute="organization"
+            :pageRoute="route('project', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
+            :acceptsVolunteers="project.accepting_volunteers"
         />
 
         <!-- Donate modal -->

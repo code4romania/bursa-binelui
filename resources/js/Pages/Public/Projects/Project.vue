@@ -37,7 +37,7 @@
 
                     <!-- Donate Error modal -->
                     <Modal
-                        v-if="project.is_period_active ===false"
+                        v-if="project.is_period_active === false"
                         triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         id="project-donation-expired"
@@ -120,8 +120,7 @@
 
                 <SharePage
                     class="mb-20"
-                    id="1"
-                    pageRoute="project"
+                    :pageRoute="route('project', project.slug)"
                 />
 
                 <div class="mb-10" v-if="project.description">
@@ -189,11 +188,11 @@
         <!-- How can you help -->
         <HowCanYouHelp
             class="mb-20"
-            id="1"
-            pageRoute="project"
+            :pageRoute="route('project', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
+            :acceptsVolunteers="project.accepting_volunteers"
 
         />
 
@@ -318,14 +317,14 @@
     });
 
     /** Get days till project ends. */
-    const project_end_date = computed(() => {
-        const targetDate = new Date(project.period_end);
-        const today = new Date();
-        const timeDiff = targetDate.getTime() - today.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // const project_end_date = computed(() => {
+    //     const targetDate = new Date(project.period_end);
+    //     const today = new Date();
+    //     const timeDiff = targetDate.getTime() - today.getTime();
+    //     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        return daysDiff;
-    })
+    //     return daysDiff;
+    // })
 
     /**
      * Copy embed code.
@@ -362,12 +361,11 @@
     }
 
     /** Trigger volunteer modal from card. */
-    const triggerVolunteer = (() => { document.getElementById('volunteer-active-modal').click(); });
+    const triggerVolunteer = (() => { document.getElementById('volunteer-active-modal').click() });
 
     /** Trigger donate modal from card. */
     const triggerDonate = (() => {
-        console.log(0>project_end_date.value);
-        if (0 >= project_end_date.value) {
+        if (false === props.project.is_period_active) {
             document.getElementById('project-donation-expired').click();
             return;
         }
