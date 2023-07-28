@@ -54,8 +54,7 @@
 
                 <SharePage
                     class="mb-20"
-                    id="1"
-                    pageRoute="project"
+                    :pageRoute="route('project', project.slug)"
                 />
 
                 <div class="mb-10" v-if="project.description">
@@ -164,11 +163,11 @@
         <!-- How can you help -->
         <HowCanYouHelp
             class="mb-20"
-            id="1"
-            pageRoute="project"
+            :pageRoute="route('project', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
+            :acceptsVolunteers="project.accepting_volunteers"
 
         />
 
@@ -274,18 +273,17 @@
     }
 
     /** Get days till project ends. */
-    const project_end_date = computed(() => {
-        const targetDate = new Date(project.period_end);
-        const today = new Date();
-        const timeDiff = targetDate.getTime() - today.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // const project_end_date = computed(() => {
+    //     const targetDate = new Date(project.period_end);
+    //     const today = new Date();
+    //     const timeDiff = targetDate.getTime() - today.getTime();
+    //     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        return daysDiff;
-    })
+    //     return daysDiff;
+    // })
 
     /** Trigger donate modal from card. */
     const triggerDonate = (() => {
-        console.log(0>project_end_date.value);
         if (0 >= project_end_date.value) {
             document.getElementById('project-donation-expired').click();
             return;

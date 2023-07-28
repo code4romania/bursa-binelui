@@ -22,8 +22,7 @@
                 <h2 class="text-2xl font-bold text-cyan-900">{{ $t('share_article') }}</h2>
                 <SharePage
                     class="mt-4"
-                    :id="article.id"
-                    pageRoute="article"
+                    :pageRoute="route('article', article.id)"
                 />
             </div>
 

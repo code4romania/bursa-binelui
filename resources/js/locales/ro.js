@@ -195,7 +195,7 @@ export default {
     "volunteer_btn": "Înscrie-te ca voluntar",
     "do_good_deeds": "și continuă să faci fapte bune!",
     "donation_period_ended": "Oops! Perioada pentru donații pentru acest proiect s-a încheiat.",
-    "donate_to_other_projects": "Donează către alte proiecte ale proiecte ale organizației",
+    "donate_to_other_projects": "Donează către alte proiecte ale organizației",
     "see_other_projects": "Vezi alte proiecte",
     "logged_as": "Ești autentificat cu contul de utilizator",
     "how_can_you_help": "Cum poți ajuta",
