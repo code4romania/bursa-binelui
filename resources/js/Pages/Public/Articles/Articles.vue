@@ -190,7 +190,6 @@ const filter = ref({ category : null });
 
 const filterArticles = (value) => {
     filter.value.category = value.slug;
-    console.log(filter.value);
 
     router.visit(route('articles'), {
         method: 'get',

@@ -44,8 +44,8 @@
                                                     color="gray-700"
                                                     id="name"
                                                     type="text"
-                                                    v-model="guestForm.name"
-                                                    :error="guestForm.errors.name"
+                                                    v-model="form.name"
+                                                    :error="form.errors.name"
                                                 />
 
                                                 <!-- Email -->
@@ -56,8 +56,8 @@
                                                     color="gray-700"
                                                     id="email"
                                                     type="email"
-                                                    v-model="guestForm.email"
-                                                    :error="guestForm.errors.email"
+                                                    v-model="form.email"
+                                                    :error="form.errors.email"
                                                 />
 
                                                <!-- Phone -->
@@ -68,9 +68,9 @@
                                                     placeholder=""
                                                     color="gray-700"
                                                     id="phone"
-                                                    type="phone"
-                                                    v-model="guestForm.phone"
-                                                    :error="guestForm.errors.phone"
+                                                    type="number"
+                                                    v-model="form.phone"
+                                                    :error="form.errors.phone"
                                                 />
 
                                                 <!-- Phone -->
@@ -81,9 +81,9 @@
                                                     placeholder=""
                                                     color="gray-700"
                                                     id="phone"
-                                                    type="phone"
-                                                    v-model="authForm.phone"
-                                                    :error="authForm.errors.phone"
+                                                    type="number"
+                                                    v-model="form.phone"
+                                                    :error="form.errors.phone"
                                                 />
 
                                                 <!-- Confirm -->
@@ -93,13 +93,13 @@
                                                 >
                                                     <Checkbox
                                                         name="confirm"
-                                                        v-model:checked="guestForm.terms"
+                                                        v-model:checked="form.terms"
                                                     />
                                                     <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('i_agree') }}</span>
                                                     <Link :href="route('terms')" class="text-sm text-primary-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
 
                                                     <!-- Error -->
-                                                    <p v-show="guestForm.errors.terms" class="mt-2 text-sm text-red-600">{{ guestForm.errors.terms }}</p>
+                                                    <p v-show="form.errors.terms" class="mt-2 text-sm text-red-600">{{ form.errors.terms }}</p>
                                                 </label>
 
                                                 <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert" v-show="successSubmit">
@@ -113,7 +113,7 @@
                                                         color="white"
                                                         class="w-full"
                                                     >
-                                                        {{ $t('register_to_volunteer') }}
+                                                        {{ $t('register_as_volunteer') }}
                                                     </PrimaryButton>
 
                                                     <div v-if="!$page.props.auth.user">
@@ -180,23 +180,19 @@
     const props = defineProps({
         triggerModalText: String,
         triggerModalClasses: String,
-        data: [Object, Array, String, Number]
+        data: [Object, Array, String, Number],
+        postUrl: String
     });
 
     /** Local data. */
     const open = ref(false);
 
     /** Initialize inertia from Object. */
-    const guestForm = useForm({
+    const form = useForm({
         name: '',
         email: '',
         phone: '',
         terms: false,
-    });
-
-    /** Initialize inertia from Object. */
-    const authForm = useForm({
-        phone: ''
     });
 
     /** Trigger modal */
@@ -223,22 +219,22 @@
             return;
         }
 
-        /** Trigger volunteer post method. */
-        if(!usePage().props.auth.user) {
-            guestForm.post(route('project.volunteer', props.data.slug), {
-                onFinish: () => form.reset(),
-                onSuccess: () => {
-                    successSubmit.value = true;
-                },
-                onError: () => {
-                  console.log('error');
 
-                }
-            });
-        } else {
-            // authForm.post(route('ruta', data.id), {
-            //     onFinish: () => form.reset(),
-            // });
+        let user = (usePage().props?.auth && usePage().props?.auth?.user) ? usePage().props.auth.user : null
+
+        if (user) {
+            form.name = `${usePage().props.auth.user.name} `
+            form.email = usePage().props.auth.user.email
+            form.terms = true
         }
+        form.post(props.postUrl, {
+            onSuccess: () => {
+                successSubmit.value = true;
+
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        });
     };
 </script>

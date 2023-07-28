@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_volunteer', function (Blueprint $table) {
+        Schema::create('organization_volunteer', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Project::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Organization::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Volunteer::class)->constrained()->cascadeOnDelete();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_volunteer');
+        Schema::dropIfExists('organization_volunteer');
     }
 };

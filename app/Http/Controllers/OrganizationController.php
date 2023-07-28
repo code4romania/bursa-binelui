@@ -10,7 +10,9 @@ use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
+use App\Models\Volunteer;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class OrganizationController extends Controller
@@ -21,7 +23,6 @@ class OrganizationController extends Controller
     public function index(Request $request)
     {
         $query = Organization::query();
-//        dd($request->query(OrganizationQuery::activity_domain->value, ''));
 
         /* Check if we have filters by activity domains. */
         if ($request->query(OrganizationQuery::activity_domain->value)) {
@@ -133,5 +134,40 @@ class OrganizationController extends Controller
         $organization = auth()->user()->organization;
         $organization->clearMediaCollection('organizationFiles');
         return redirect()->back();
+    }
+
+    public function volunteer(Organization $organization, Request $request)
+    {
+        $request->validate([
+            'terms' => 'required|accepted',
+            'email' => 'required|email',
+            'name' => 'required',
+            'phone' => 'required',
+        ]);
+        try {
+            $name = explode(' ', $request->name);
+
+            if (is_array($name) && !empty($name)) {
+                $lastName = $name[0] ? $name[0] : '';
+                $firstName = (1 < count($name)) ? implode(' ', array_slice($name, 1)) : '';
+            }
+        } catch (\Exception $e) {
+            throw ValidationException::withMessages(['name' => __('invalid_name')]);
+        }
+
+        Volunteer::create([
+            'user_id' => auth()->user()->id ?? null,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ])->organizations()->attach($organization->id);
+
+        /**
+         * TODO: Corner case user volunteers is redirect to VolunteerThankYou page
+         *  with organization but if refreshes the page some data in thank you page is lost
+         *  Posibly implementation duplicate ThankYou page and and send parameter of organization
+         */
+        return redirect()->route('volunteer.thanks')->with(['data' => $organization]);
     }
 }

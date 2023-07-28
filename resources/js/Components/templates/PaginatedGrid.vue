@@ -66,5 +66,4 @@
         classes: String,
         cardType: String
     });
-    console.log(props.list);
 </script>
