@@ -1,5 +1,6 @@
 <template>
-    <Combobox class="z-100" as="div" v-model="selectedOption" v-bind="{ disabled: isDisabled }">
+    <Combobox class="z-100" as="div" v-bind="{ disabled: isDisabled }">
+
         <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
             <ComboboxButton
@@ -11,7 +12,7 @@
             </ComboboxButton>
 
             <ComboboxOptions
-                class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg z-100 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             >
                 <div class="z-100 my-1.5 sticky top-1.5 px-2 bg-white">
                     <input
@@ -27,14 +28,14 @@
                 >
                     <li
                         @click="toggleOptions(option)"
-                        :class="['relative cursor-default select-none py-2 pl-3 pr-9',('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.includes(option)) ? 'bg-primary-500 text-white' : 'text-gray-900']"
+                        :class="['relative cursor-default select-none py-2 pl-3 pr-9',('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.some((opt) => opt.id === option.id)) ? 'bg-primary-500 text-white' : 'text-gray-900']"
                     >
-                        <span :class="['block truncate', ('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.includes(option)) && 'font-semibold']">
+                        <span :class="['block truncate', ('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.some((opt) => opt.id === option.id)) && 'font-semibold']">
                             {{ option.name ? option.name : option }}
                         </span>
 
-                        <span v-if="('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.includes(option))"
-                              :class="['absolute inset-y-0 right-0 flex items-center pr-4', ('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.includes(option)) ? 'text-white' : 'text-primary-500']">
+                        <span v-if="('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.some((opt) => opt.id === option.id))"
+                              :class="['absolute inset-y-0 right-0 flex items-center pr-4', ('singleValue' === type && tmpSelectedOptions.includes(option)) || ('object' === type && tmpSelectedOptions.some((opt) => opt.id === option.id)) ? 'text-white' : 'text-primary-500']">
                             <CheckIcon class="w-5 h-5" aria-hidden="true"/>
                         </span>
                     </li>
@@ -56,7 +57,7 @@
 
 <script setup>
 /** Import form vue. */
-import {computed, ref, watch} from 'vue';
+import {computed, ref } from 'vue';
 
 /** Import plugins. */
 import {CheckIcon, ChevronUpDownIcon, XCircleIcon} from '@heroicons/vue/20/solid';
@@ -84,10 +85,8 @@ const query = ref('');
 /** Selected options. */
 let tmpSelectedOptions = ref(props.modelValue);
 
-let selectedOption = ref(props.modelValue);
-
 /** Initialize emits. */
-const emit = defineEmits(['update:modelValue', 'selected']);
+const emit = defineEmits(['update:modelValue', 'callback', 'selected']);
 
 function removeElement(opt) {
     if ('singleValue' === props.type) {
@@ -96,7 +95,8 @@ function removeElement(opt) {
         tmpSelectedOptions.value = tmpSelectedOptions.value.filter((option) => option.id !== opt.id);
     }
 
-    emit('update:modelValue', tmpSelectedOptions.value)
+    emit('update:modelValue', tmpSelectedOptions.value);
+    emit('callback')
 }
 
 /** Option list. */
@@ -121,12 +121,13 @@ const toggleOptions = (newVal) => {
         }
 
     } else if ('object' === props.type) {
-        if(!tmpSelectedOptions.value.includes(newVal)) {
+        if(!tmpSelectedOptions.value.some((opt) => opt.id === newVal.id)) {
             tmpSelectedOptions.value.push(newVal);
         } else {
             tmpSelectedOptions.value = tmpSelectedOptions.value.filter((option) => option.id != newVal.id)
         }
     }
     emit('update:modelValue', tmpSelectedOptions.value);
+    emit('callback');
 }
 </script>

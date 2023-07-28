@@ -7,7 +7,7 @@
        <Alert
             class="fixed z-103 right-10 top-10 w-96"
             :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
+            :message="flash?.success_message?.message || flash.error_message"
             @emptyFlash="Object.assign(props.flash, { success_message:'', error_message:'' });"
         />
 

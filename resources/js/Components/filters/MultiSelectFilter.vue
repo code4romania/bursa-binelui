@@ -21,14 +21,20 @@
             </ComboboxButton>
 
             <ComboboxOptions
-                class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg z-103 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             >
-                <div class="z-20 my-1.5 sticky top-1.5 px-2">
+                <div class="z-100 my-1.5 sticky top-1.5 px-2 bg-white">
+                    <input
+                        v-model="query"
+                        class="w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-1 outline-none focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
+                    />
+                </div>
+                <!-- <div class="z-101 bg-white my-1.5 sticky top-1.5 px-2">
                     <ComboboxInput
                         class="w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
                         @input="query = $event.target.value"
                     />
-                </div>
+                </div> -->
 
                 <ComboboxOption
                     v-for="(option, index) in selectOptions" :key="index"
