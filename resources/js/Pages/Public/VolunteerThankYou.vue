@@ -44,11 +44,11 @@
         <HowCanYouHelp
             v-if="flash?.data"
             class="mb-20"
-            :id="flash?.data?.id"
-            pageRoute="organization"
+            :pageRoute="route('project', data.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
+            :acceptsVolunteers="flash?.data.accepting_volunteers"
         />
 
         <!-- Donate modal -->
