@@ -6,18 +6,20 @@
             <span v-else><slot /></span>
         </label>
 
-        <input
-            ref="dateRangeInput"
-            type="text"
-            class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
-            :value="formattedDateRange"
-            @focus="openDatePicker"
-        />
+        <div class="relative">
+            <input
+                ref="dateRangeInput"
+                type="text"
+                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
+                :value="formattedDateRange"
+                @focus="openDatePicker"
+            />
 
-        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none top-1/3">
-            <SvgLoader name="calendar" class="shrink-0" />
+            <div class="absolute inset-y-0 top-0 right-0 flex items-center pr-3 pointer-events-none">
+                <SvgLoader name="calendar" class="shrink-0" />
+            </div>
+
         </div>
-
         <div v-if="open" class="absolute mt-1 top-100% left-0 z-50 bg-white shadow-lg rounded-md p-1 w-72" @click="keepOpen">
             <div class="flex items-center justify-around">
                 <button @click="goToPreviousMonth" class="col-span-1">

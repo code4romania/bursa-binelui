@@ -417,9 +417,7 @@
     let project = ref(props.project);
     let form = useForm(project.value);
 
-    onMounted(() => {
-        console.log(project.value)
-    })
+    onMounted(() => {})
     const  editField = (field) => {
         let newForm = useForm({
             [field]: form[field]

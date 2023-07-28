@@ -18,7 +18,7 @@
             </ComboboxButton>
 
             <ComboboxOptions
-                class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg z-103 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
             >
                 <div class="z-20 my-1.5 sticky top-1.5 px-2">
                     <ComboboxInput

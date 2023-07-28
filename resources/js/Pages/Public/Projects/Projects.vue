@@ -22,7 +22,7 @@
                         <div class="flex gap-6">
                             <SearchFilter
                                 id="project-search"
-                                class="w-full"
+                                class="w-full z-101"
                                 v-model="filter.s"
                                 color="gray-700"
                                 :placeholder="$t('search')"
@@ -49,9 +49,8 @@
                                 {{ $t('empty_filters') }}
                             </SecondaryButton>
 
-
                             <!-- Sort -->
-                            <Sort class="w-1/2 sm:w-auto" />
+                            <Sort class="w-full md:w-auto z-103" />
                         </div>
                     </div>
 
@@ -87,27 +86,29 @@
 
                 <div v-if="'list' === viewType" class="grid grid-cols-12 gap-6 mt-6">
 
-                    <MultiSelectFilter
-                        class="col-span-12 md:col-span-6 lg:col-span-3"
+                    <Select
+                        class="relative col-span-12 md:col-span-6 lg:col-span-3 z-102"
                         :label="$t('status')"
                         v-model="filter.status"
                         :options="statuses"
                         @callback="filterProjects"
                     />
 
-                    <MultiSelectObjectFilter
-                        class="col-span-12 md:col-span-6 lg:col-span-3"
+                    <SelectMultiple
+                        class="relative col-span-12 md:col-span-6 lg:col-span-3 z-101"
                         :label="$t('county_city')"
-                        v-model="filter.c"
+                        v-model="filter.counties"
                         :options="props.counties"
+                        type="object"
                         @callback="filterProjects"
                     />
 
-                    <MultiSelectFilter
-                        class="col-span-12 md:col-span-6 lg:col-span-3"
+                    <SelectMultiple
+                        class="relative col-span-12 md:col-span-6 lg:col-span-3 z-100"
                         :label="$t('project_categories')"
                         v-model="filter.categories"
                         :options="domains"
+                        type="singleValue"
                         @callback="filterProjects"
                     />
 
@@ -152,16 +153,13 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Sort from '@/Components/filters/Sort.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
-    import MultiSelectFilter from "@/Components/filters/MultiSelectFilter.vue";
     import Map from '@/Components/maps/Map.vue'
-    import DatePeriod from '@/Components/form/DatePeriod.vue'
+    import DatePeriod from '@/Components/form/DatePeriod.vue';
+    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import Select from '@/Components/form/Select.vue';
 
     /** Active filter state. */
     const hasValues = ref(false);
@@ -169,7 +167,7 @@
     /** Filter values. */
     const filter = ref({
         counties: [],
-        status:null,
+        status: null,
         categories: [],
         date: ''
     });
@@ -197,13 +195,19 @@
 
     /** Filter projects. */
     const filterProjects = () => {
+
+        if (0 < filter.value.counties.length) {
+            filter.value.counties = filter.value.counties.map(county => parseInt(county.id))
+        }
+
         router.visit(route('projects'), {
             method: 'get',
             data: filter.value,
             preserveState: true,
             onSuccess: (data) => {
-                console.log(filter.value)
-
+                if (0 < filter.value.counties.length) {
+                    filter.value.counties = props.counties.filter(county => props.counties.includes(county.id));
+                }
                 if (Object.values(filter.value).every(value => (value === null) || (value.length === 0))) {
                     hasValues.value = false
                 } else {
@@ -232,7 +236,7 @@
 
     const domains = computed(() => props.categories.map((category) => category.name));
 
-    watch(filter, () => {
-        filterProjects();
-    },{deep:true})
+    // watch(filter, () => {
+    //     filterProjects();
+    // },{deep:true})
 </script>

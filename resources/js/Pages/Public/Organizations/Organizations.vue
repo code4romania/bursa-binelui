@@ -46,15 +46,15 @@
                     type="object"
                     v-model="filter.ad"
                     :options="activity_domains"
+                    @callback="filterOrganizations"
                 />
 
-                <MultiSelectObjectFilter
+                <SelectMultiple
                     class="w-80"
                     :label="$t('county_city')"
                     v-model="filter.c"
                     :options="counties"
-                    id="counties"
-                    ref="counties"
+                    type="object"
                     @callback="filterOrganizations"
                 />
             </div>
@@ -111,14 +111,22 @@ const filterOrganizations = () => {
         filter.value.ad = filter.value.ad.map(domain => domain.id)
     }
 
+    if (0 < filter.value.c.length) {
+        filter.value.c = filter.value.c.map(county => county.id)
+    }
+
     router.visit(route('organizations'), {
         method: 'get',
         data: filter.value,
         preserveState: true,
         onSuccess: (data) => {
 
-            if (0 < data.props.request.ad.length) {
+            if (0 < filter.value.ad.length) {
                 filter.value.ad = props.activity_domains.filter(domain => filter.value.ad.includes(parseInt(domain.id)));
+            }
+
+            if (0 < filter.value.c.length) {
+                filter.value.c = props.counties.map(county => filter.value.c.includes(parseInt(county.id)))
             }
 
             if (Object.values(data.props.request).every(value => value === null)) {

@@ -52,9 +52,7 @@ Route::get('/contact', function () {
 Route::get('/donator', function () {
     return Inertia::render('Public/Donor/Donor');
 })->name('donor');
-Route::get('/multumim', function () {
-    return Inertia::render('Public/Donor/ThankYou');
-})->name('thanks');
+Route::get('/multumim', function () { return Inertia::render('Public/VolunteerThankYou'); })->name('volunteer.thanks');
 
 Route::get('/gallery/{project}', function () {
     return Inertia::render('Public/Projects/Gallery');
