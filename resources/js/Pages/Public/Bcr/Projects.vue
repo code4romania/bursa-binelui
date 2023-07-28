@@ -111,7 +111,6 @@
 
 <script setup>
     /** Remove this import after backend connection. */
-    import projects from '@/local_json/projects.js';
 
     /** Import from vue. */
     import { ref } from 'vue';
