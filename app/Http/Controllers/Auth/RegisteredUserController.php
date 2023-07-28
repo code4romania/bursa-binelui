@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             event(new Registered($user));
 
             if ($data['type'] == 'ngo-admin') {
-                $ong = $data['ngo-admin'];
+                $ong = $data['ong'];
                 $organization = Organization::create($ong);
                 $organization->activityDomains()->attach($ong['activity_domains_ids']);
                 $organization->counties()->attach($ong['counties_ids']);

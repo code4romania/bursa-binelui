@@ -390,5 +390,7 @@ export default {
     "donation_period": "Perioada donatii",
     "ong_description": "Descriere organizație",
     "need_help": "Ai nevoie de ajutor în plus?",
-    "register_subscribe": "Doresc sa ma abonez la newsletter"
+    "register_subscribe": "Doresc sa ma abonez la newsletter",
+    "join_easy": "și continuă să faci fapte bune!",
+    "register_as_volunteer": "Înscrie-te ca voluntar"
 }

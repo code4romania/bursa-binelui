@@ -105,8 +105,15 @@ class ProjectController extends Controller
             'name' => 'required',
             'phone' => 'required',
         ]);
+
         try {
-            [$lastName, $firstName] = explode(' ', $request->name);
+            $name = explode(' ', $request->name);
+
+            if (is_array($name) && !empty($name)) {
+                $lastName = $name[0] ? $name[0] : '';
+                $firstName = (1 < count($name)) ? implode(' ', array_slice($name, 1)) : '';
+            }
+
         } catch (\Exception $e) {
             throw ValidationException::withMessages(['name' => __('invalid_name')]);
         }
@@ -119,6 +126,11 @@ class ProjectController extends Controller
             'phone' => $request->phone,
         ])->projects()->attach($project->id);
 
-        return redirect()->back()->with('success', __('success_volunteer'));
+        /**
+         * TODO: Corner case user volunteers is redirect to VolunteerThankYou page
+         *  with project but if refreshes the page some data in thank you page is lost
+         *  Posibly implementation duplicate ThankYou page and and send parameter of project
+         */
+        return redirect()->route('volunteer.thanks')->with(['data' => $project]);
     }
 }

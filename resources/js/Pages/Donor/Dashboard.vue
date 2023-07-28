@@ -3,10 +3,9 @@
         <!-- Inertia page head -->
         <Head :title="$t('my_profile')" />
 
+        <div class="px-6 mx-auto my-10 space-y-10 lg:px-0 max-w-7xl">
 
-        <div class="mx-auto my-10 space-y-10 max-w-7xl">
-
-            <div class="flex gap-10">
+            <div class="flex flex-col gap-6 md:gap-10 md:flex-row">
                 <div class="w-full md:w-1/2">
                     <!-- Header -->
                     <header class="flex items-center gap-4">
@@ -67,8 +66,8 @@
                     :key="index"
                     class="flex items-center col-span-12 gap-6 md:col-span-6"
                 >
-                    <img :src="`/images/badges/${badge.name}.png`" alt="">
-                    <div class="pr-4 space-y-6 text-gray-500">
+                    <img class="w-36 md:w-auto" :src="`/images/badges/${badge.name}.png`" :alt="`${badge.name}`">
+                    <div class="pr-4 space-y-4 text-gray-500 lg:space-y-6">
                         <h3 class="text-lg font-bold">{{ $t(`${badge.title}`) }}</h3>
                         <p class="text-sm">{{ $t(`${badge.description}`) }}</p>
                     </div>

@@ -36,4 +36,9 @@ class Volunteer extends Model
     {
         return $this->belongsToMany(Project::class);
     }
+
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class);
+    }
 }
