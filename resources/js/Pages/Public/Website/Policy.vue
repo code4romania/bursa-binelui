@@ -10,8 +10,6 @@
 </template>
 
 <script setup>
-    /** Remove this import after backend connection. */
-    import project from '@/local_json/project.js';
 
     /** Import from inertia. */
     import { Head, Link } from '@inertiajs/vue3';
