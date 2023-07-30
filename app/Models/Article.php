@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Article extends Model  implements HasMedia
+class Article extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
@@ -40,7 +40,9 @@ class Article extends Model  implements HasMedia
         'created_at' => 'date:y-m-d h:i',
         'updated_at' => 'date:y-m-d h:i',
     ];
+
     protected $with = ['media'];
+
     protected $appends = ['cover_image'];
 
     public function registerMediaConversions(Media $media = null): void
@@ -73,5 +75,4 @@ class Article extends Model  implements HasMedia
             ->where('id', '!=', $this->id)
             ->limit(3);
     }
-
 }

@@ -31,10 +31,12 @@ class RegistrationRequest extends FormRequest
             'user.password' => ['string', 'required', 'confirmed'],
 
         ];
-        if ($this->type == 'ong') {
+        if ($this->type === "ngo-admin") {
             $rules['ong'] = ['array', 'required'];
             $rules['ong.name'] = ['string', 'required'];
             $rules['ong.description'] = ['string', 'required'];
+            $rules['ong.logo'] = ['file', 'required'];
+            $rules['ong.statute'] = ['file', 'required'];
             $rules['ong.street_address'] = ['string', 'required'];
             $rules['ong.cif'] = ['string', 'required'];
             $rules['ong.contact_email'] = ['email', 'required'];

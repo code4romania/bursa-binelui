@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div v-if="!finalize">
         <!-- Label -->
         <label class="text-sm font-semibold text-gray-700">{{ $t('where_did_you_find') }}</label>
 
         <!-- Radio group -->
         <fieldset class="mt-4">
-            <div class="space-y-4">
+            <div class="space-y-4" v-if="!finalize">
                 <div
                     v-for="option in options"
                     :key="option.value"
@@ -58,7 +58,8 @@
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
     const props = defineProps({
-        social: Object
+        social: Object,
+        finalize: Boolean,
     });
 
     const other = ref('');

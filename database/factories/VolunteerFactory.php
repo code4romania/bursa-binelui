@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use function Symfony\Component\Translation\t;
 
 class VolunteerFactory extends Factory
 {
@@ -18,7 +18,7 @@ class VolunteerFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
-            'status' => $this->faker->randomElement(['pending', 'approved', 'rejected'])
+            'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
         ];
     }
 }

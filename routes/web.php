@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AdminBBTemporary;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminBBTemporary;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,7 +52,9 @@ Route::get('/contact', function () {
 Route::get('/donator', function () {
     return Inertia::render('Public/Donor/Donor');
 })->name('donor');
-Route::get('/multumim', function () { return Inertia::render('Public/VolunteerThankYou'); })->name('volunteer.thanks');
+Route::get('/multumim', function () {
+    return Inertia::render('Public/VolunteerThankYou');
+})->name('volunteer.thanks');
 
 Route::get('/gallery/{project}', function () {
     return Inertia::render('Public/Projects/Gallery');
@@ -60,7 +62,6 @@ Route::get('/gallery/{project}', function () {
 Route::get('/bcr/proiecte', function () {
     return Inertia::render('Public/Bcr/Projects');
 })->name('bcr.projects');
-
 
 require __DIR__ . '/auth.php';
 

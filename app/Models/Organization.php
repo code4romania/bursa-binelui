@@ -51,7 +51,7 @@ class Organization extends Model implements HasMedia
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
-        'accepts_volunteers' => 'boolean'
+        'accepts_volunteers' => 'boolean',
     ];
 
     protected $with = ['counties', 'activityDomains', 'projects', 'media'];
@@ -102,6 +102,6 @@ class Organization extends Model implements HasMedia
 
     public function getCoverImageAttribute(): string
     {
-        return $this->getFirstMediaUrl('organizationFiles', 'preview') ?? '';
+        return $this->getFirstMediaUrl('organizationFilesLogo', 'preview') ?? '';
     }
 }

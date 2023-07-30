@@ -21,7 +21,7 @@ class ArticleController extends Controller
 
         $articles = Article::active()->with('category');
         if ($request->get('category')) {
-            $category = $categories->search(function (ArticleCategory $item) use  ($request) {
+            $category = $categories->search(function (ArticleCategory $item) use ($request) {
                 return $item['slug'] == $request->get('category');
             });
             $articles = $articles->where('article_category_id', $category);
@@ -38,7 +38,7 @@ class ArticleController extends Controller
     {
         $article->load('category');
         $gallery = $article->getMedia('gallery');
-//dd($article->relatedArticles()->get());
+        //dd($article->relatedArticles()->get());
         return Inertia::render('Public/Articles/Article', [
             'article' => $article,
             'gallery' => $gallery,

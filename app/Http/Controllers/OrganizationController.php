@@ -133,6 +133,7 @@ class OrganizationController extends Controller
     {
         $organization = auth()->user()->organization;
         $organization->clearMediaCollection('organizationFiles');
+
         return redirect()->back();
     }
 
@@ -147,9 +148,9 @@ class OrganizationController extends Controller
         try {
             $name = explode(' ', $request->name);
 
-            if (is_array($name) && !empty($name)) {
+            if (\is_array($name) && ! empty($name)) {
                 $lastName = $name[0] ? $name[0] : '';
-                $firstName = (1 < count($name)) ? implode(' ', array_slice($name, 1)) : '';
+                $firstName = (1 < \count($name)) ? implode(' ', \array_slice($name, 1)) : '';
             }
         } catch (\Exception $e) {
             throw ValidationException::withMessages(['name' => __('invalid_name')]);
@@ -163,7 +164,7 @@ class OrganizationController extends Controller
             'phone' => $request->phone,
         ])->organizations()->attach($organization->id);
 
-        /**
+        /*
          * TODO: Corner case user volunteers is redirect to VolunteerThankYou page
          *  with organization but if refreshes the page some data in thank you page is lost
          *  Posibly implementation duplicate ThankYou page and and send parameter of organization

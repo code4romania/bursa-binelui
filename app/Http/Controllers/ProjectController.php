@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
+use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\Volunteer;
-use App\Models\ActivityDomain;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -32,7 +32,7 @@ class ProjectController extends Controller
             $projects->whereIn('category', $request->query('category'));
         }
 
-        /** For this wee need to sent to front the small start and biggest end */
+        /* For this wee need to sent to front the small start and biggest end */
         if ($request->query('date')) {
             $date = explode('-', $request->query('date'));
             $projects->where('start', '>=', str_replace('.', '-', $date[0]));
@@ -52,7 +52,7 @@ class ProjectController extends Controller
         return Inertia::render('Public/Projects/Projects', [
             'query' => $projects->paginate()->withQueryString(),
             'counties' => $counties,
-            'categories' =>  ActivityDomain::all()
+            'categories' =>  ActivityDomain::all(),
         ]);
     }
 
@@ -109,11 +109,10 @@ class ProjectController extends Controller
         try {
             $name = explode(' ', $request->name);
 
-            if (is_array($name) && !empty($name)) {
+            if (\is_array($name) && ! empty($name)) {
                 $lastName = $name[0] ? $name[0] : '';
-                $firstName = (1 < count($name)) ? implode(' ', array_slice($name, 1)) : '';
+                $firstName = (1 < \count($name)) ? implode(' ', \array_slice($name, 1)) : '';
             }
-
         } catch (\Exception $e) {
             throw ValidationException::withMessages(['name' => __('invalid_name')]);
         }
@@ -126,7 +125,7 @@ class ProjectController extends Controller
             'phone' => $request->phone,
         ])->projects()->attach($project->id);
 
-        /**
+        /*
          * TODO: Corner case user volunteers is redirect to VolunteerThankYou page
          *  with project but if refreshes the page some data in thank you page is lost
          *  Posibly implementation duplicate ThankYou page and and send parameter of project

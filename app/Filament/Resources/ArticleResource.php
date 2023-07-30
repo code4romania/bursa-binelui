@@ -69,7 +69,7 @@ class ArticleResource extends Resource
                     ->label(__('article.gallery'))
                     ->enableReordering()->columnSpanFull(),
 
-        ]);
+            ]);
     }
 
     public static function table(Table $table): Table

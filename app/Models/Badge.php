@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Badge extends Model  implements HasMedia
+class Badge extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
@@ -29,5 +31,4 @@ class Badge extends Model  implements HasMedia
             ->fit(Manipulations::FIT_CROP, 300, 300)
             ->nonQueued();
     }
-
 }

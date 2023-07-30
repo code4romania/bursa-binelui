@@ -8,6 +8,7 @@ use App\Enums\ProjectCategory;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
+use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\User;
@@ -16,7 +17,6 @@ use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
-use App\Models\ActivityDomain;
 
 class ProjectController extends Controller
 {
@@ -56,7 +56,6 @@ class ProjectController extends Controller
         $projectCategories = cache()->remember('activityDomains', 60 * 60 * 24, function () {
             return ActivityDomain::get(['name', 'id']);
         });
-
 
         return Inertia::render('AdminOng/Projects/AddRegionalProject', [
             'counties' => $counties,

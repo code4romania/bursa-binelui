@@ -1,4 +1,4 @@
-<template>
+    <template>
     <PageLayout>
         <!-- Inertia page head -->
         <Head :title="$t('my_organization_title')" />

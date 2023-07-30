@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use App\Models\County;
 use App\Models\ActivityDomain;
+use App\Models\County;
+use Inertia\Inertia;
 
 class EvolutionController extends Controller
 {
@@ -40,7 +40,7 @@ class EvolutionController extends Controller
             [
                 'month' => 'Iun',
                 'number' => 30,
-            ]
+            ],
         ];
 
         $donations_amount = [
@@ -67,7 +67,7 @@ class EvolutionController extends Controller
             [
                 'month' => 'Iun',
                 'amount' => 2230,
-            ]
+            ],
         ];
 
         $projects_number = [
@@ -94,7 +94,7 @@ class EvolutionController extends Controller
             [
                 'month' => 'Iun',
                 'number' => 330,
-            ]
+            ],
         ];
 
         $table_data = [
@@ -105,28 +105,28 @@ class EvolutionController extends Controller
                     'month' => 'Ian',
                     'number' => 23,
                     'amount' => 400,
-                    'domain' => 'Social'
+                    'domain' => 'Social',
                 ],
                 [
                     'id' => 2,
                     'month' => 'Ian',
                     'number' => 23,
                     'amount' => 400,
-                    'domain' => 'Social'
+                    'domain' => 'Social',
                 ],
                 [
                     'id' => 3,
                     'month' => 'Ian',
                     'number' => 23,
                     'amount' => 400,
-                    'domain' => 'Social'
+                    'domain' => 'Social',
                 ],
                 [
                     'id' => 4,
                     'month' => 'Ian',
                     'number' => 23,
                     'amount' => 400,
-                    'domain' => 'Social'
+                    'domain' => 'Social',
                 ],
             ],
             'first_page_url' => 'http://bursabinelui.test/articole?page=1',
@@ -155,6 +155,7 @@ class EvolutionController extends Controller
         ];
 
         $counties = County::get(['name', 'id']);
+
         return Inertia::render('Public/Evolution/Evolution', [
             'donations' => $donations,
             'amount' => $amount,
@@ -164,7 +165,7 @@ class EvolutionController extends Controller
             'projects_number' => $projects_number,
             'counties' => $counties,
             'domains' => ActivityDomain::all(),
-            'table_data' => $table_data
+            'table_data' => $table_data,
         ]);
     }
 }

@@ -15,7 +15,7 @@ use App\Notifications\Ngo\OrganizationCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
             'Auth/Register',
             [
                 'activity_domains' => $activityDomains,
-                'counties' => $counties
+                'counties' => $counties,
             ]
         );
     }
@@ -53,7 +53,6 @@ class RegisteredUserController extends Controller
     public function store(RegistrationRequest $request): RedirectResponse
     {
         try {
-
             $data = $request->validated();
             $user = $data['user'];
 
@@ -61,13 +60,15 @@ class RegisteredUserController extends Controller
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
-                'role' => $data['type']
+                'role' => $data['type'],
             ]);
             event(new Registered($user));
 
             if ($data['type'] == 'ngo-admin') {
                 $ong = $data['ong'];
                 $organization = Organization::create($ong);
+                $organization->addMediaFromRequest('ong.logo')->toMediaCollection('organizationFilesLogo');
+                $organization->addMediaFromRequest('ong.statute')->toMediaCollection('organizationFilesStatute');
                 $organization->activityDomains()->attach($ong['activity_domains_ids']);
                 $organization->counties()->attach($ong['counties_ids']);
                 $adminUsers = User::whereRole(UserRole::bb_admin)->get();
@@ -76,8 +77,8 @@ class RegisteredUserController extends Controller
                 $user->organization_id = $organization->id;
                 $user->save();
             }
-            return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
 
+            return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
         } catch(\Throwable $th) {
             return redirect()->back()->with('error_message', 'Contul nu a fost creat');
         }
@@ -88,12 +89,8 @@ class RegisteredUserController extends Controller
         try {
             $user = User::find($userId);
             $user->source_of_information = $request->input('source_of_information');
-
             $user->save();
-
-            // return redirect()->route('login')->with('success', 'Contul tau este pregatit');
             return redirect()->back()->with('success_message', 'Multumim pentru feedback');
-
         } catch(\Throwable $th) {
             return redirect()->back()->with('error_message', 'Something went wrong');
         }

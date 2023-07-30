@@ -13,7 +13,6 @@ use App\Models\Organization;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Volunteer;
-use Database\Factories\ArticleFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -55,7 +54,6 @@ class DatabaseSeeder extends Seeder
                 $project->each(function ($project) {
                     $project->volunteers()->attach(Volunteer::factory()->count(10)->create());
                 });
-
             }
 
             for ($i = 0; $i < self::USER_BB_MANAGER_NUMBER; $i++) {

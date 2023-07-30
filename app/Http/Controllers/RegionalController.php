@@ -110,7 +110,7 @@ class RegionalController extends Controller
             'parteners' => $parteners,
             'registration' => $registration,
             'faqs' => $faqs,
-            'countries' => $countries
+            'countries' => $countries,
         ]);
     }
 
@@ -211,109 +211,109 @@ class RegionalController extends Controller
         $gallery = [
             [
                 'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'video'
+                'type' => 'video',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
             [
                 'src' => '/images/project_img.png',
-                'type' => 'image'
+                'type' => 'image',
             ],
         ];
 
         return Inertia::render('Public/Regional/Project', [
             'project' => $project,
-            'gallery' => $gallery
+            'gallery' => $gallery,
         ]);
     }
 }

@@ -26,6 +26,7 @@
                     @next="next"
                     @google="google"
                     @success="success"
+                    :finalize="finalize"
                 />
             </div>
         </Auth>
@@ -159,6 +160,8 @@ const submit = () => {
         form.ong.activity_domains_ids = form.ong.activity_domains_ids.map(domain => domain.id)
         form.ong.counties_ids = form.ong.counties_ids.map(county => county.id)
     }
+    console.log('form')
+    console.log(form)
 
     form.post(route('register'), {
         onError: (error) => {
@@ -193,10 +196,11 @@ const submit = () => {
     });
 };
 
+let finalize = ref(false) ;
 /** After user is registered update data. */
 const success = () => {
-
     if (usrid.value) {
+        finalize.value = true;
         social.patch(route('user.update', { id: usrid.value }), {
             onSuccess: (data) => {
                 social.source_of_information = ''
