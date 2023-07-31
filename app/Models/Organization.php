@@ -56,7 +56,7 @@ class Organization extends Model implements HasMedia
 
     protected $with = ['counties', 'activityDomains', 'projects', 'media'];
 
-    protected $appends = ['cover_image'];
+    protected $appends = ['cover_image', 'statute_link'];
 
     public function projects(): HasMany
     {
@@ -103,5 +103,10 @@ class Organization extends Model implements HasMedia
     public function getCoverImageAttribute(): string
     {
         return $this->getFirstMediaUrl('organizationFilesLogo', 'preview') ?? '';
+    }
+
+    public function getStatuteLinkAttribute(): string
+    {
+        return $this->getFirstMediaUrl('organizationFilesStatute') ?? '';
     }
 }

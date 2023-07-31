@@ -14,5 +14,5 @@ Route::post('/organizatie/{organization}/voluntar', [OrganizationController::cla
 Route::prefix('ong')->middleware('auth')->group(function () {
     Route::get('organizatie', [OrganizationController::class, 'edit'])->name('admin.ong.edit');
     Route::delete('organizatie/remove-cover-image', [OrganizationController::class, 'removeCoverImage'])->name('organization.remove_cover_image');
-    Route::put('organizatie/update/{organization}', [OrganizationController::class, 'update'])->name('admin.ong.update');
+    Route::post('organizatie/update/{organization}', [OrganizationController::class, 'update'])->name('admin.ong.update');
 });

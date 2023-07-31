@@ -11,10 +11,9 @@
                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
         </label>
 
-        <img v-if="preview" :src="preview" alt="File Preview" class="object-cover w-24 h-24" />
+        <img v-if="preview!==''" :src="preview" alt="File Preview" class="object-cover w-24 h-24" />
+        <img :src="form" v-else-if="isUrl(form)" alt="logo">
         <SvgLoader v-else name="avatar" class="w-24 h-24" />
-
-        <pre>{{ form }}</pre>
     </div>
 </template>
 
@@ -34,6 +33,8 @@
 
     /** Image preview. */
     const preview = ref('');
+    const isUrl = (url) => url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+
 
     /** Component emits. */
     const emit = defineEmits(['upload']);
@@ -44,7 +45,6 @@
 
         if (file) {
             const reader = new FileReader();
-
             reader.onload = (() => preview.value = reader.result);
             reader.readAsDataURL(file);
         } else {

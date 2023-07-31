@@ -103,21 +103,27 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrganizationRequest $request, Organization $organization)
+    public function update(Request $request, Organization $organization)
     {
         try {
             /** Get all request data. */
             $modelData = $request->input();
-            if ($request->hasFile('activity_domains')) {
-                $organization->activityDomains()->sync($request->input('activity_domains'));
+
+            if ($request->has('activity_domains')) {
+                $ids = collect($request->input('activity_domains'))->pluck('id')->toArray();
+                $organization->activityDomains()->sync($ids);
             }
-            $organization->addMediaFromBase64($request->input('cover_image'))->toMediaCollection('organizationFiles');
+            if ($request->hasFile('cover_image')) {
+                $organization->clearMediaCollection('organizationFilesLogo');
+                $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
+            }
 
             $organization->update($modelData);
 
-            return redirect()->route('admin.ong.edit', [$organization])->with('success_message', 'Organization updated successfully');
+
+            return redirect()->route('admin.ong.edit')->with('success_message', 'Organization updated successfully');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.ong.edit', [$organization])->with('error_message', 'Organization update failed');
+            return redirect()->route('admin.ong.edit')->with('error_message', 'Organization update failed');
         }
     }
 
