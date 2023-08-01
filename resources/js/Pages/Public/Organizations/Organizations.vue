@@ -13,8 +13,18 @@
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('organization_title') }}</h2>
             </header>
 
+            <div v-if="!showFilters" class="flex w-full gap-6 mt-6">
+                <SecondaryButton
+                    @click="showFilters = true"
+                    class="flex items-center gap-2 py-2.5 px-3.5"
+                >
+                    <SvgLoader name="filtres" />
+                    {{ $t('filters') }}
+                </SecondaryButton>
+            </div>
+
             <!-- Filters -->
-            <div class="flex w-full gap-6 mt-6">
+            <div v-if="showFilters" class="flex w-full gap-6 mt-6">
                 <SearchFilter
                     v-model="filter.s"
                     :placeholder="$t('search')"
@@ -29,7 +39,7 @@
                 </SecondaryButton>
 
                 <SecondaryButton
-                    v-if="hasValues"
+                    v-if="showFilters"
                     @click="emptyFilters"
                     class="flex items-center gap-2 py-0"
                 >
@@ -38,7 +48,7 @@
                 </SecondaryButton>
             </div>
 
-            <div class="flex w-full gap-6 mt-6">
+            <div v-if="showFilters" class="flex w-full gap-6 mt-6">
 
                 <SelectMultiple
                     class="w-80"
@@ -96,6 +106,7 @@ const props = defineProps({
 
 /** Active filter state. */
 const hasValues = ref(false);
+const showFilters = ref(false);
 
 /** Filter values. */
 const filter = ref({
@@ -131,8 +142,10 @@ const filterOrganizations = () => {
 
             if (Object.values(data.props.request).every(value => value === null)) {
                 hasValues.value = false
+                showFilters.value = false
             } else {
                 hasValues.value = true
+                showFilters.value = true
             }
         }
     })
@@ -141,5 +154,6 @@ const filterOrganizations = () => {
 /** Empty filters. */
 const emptyFilters = () => {
     router.visit(route('organizations'));
+    showFilters.value = false
 };
 </script>

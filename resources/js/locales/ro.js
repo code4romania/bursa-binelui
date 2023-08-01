@@ -388,5 +388,6 @@ export default {
     "register_subscribe": "Doresc sa ma abonez la newsletter",
     "join_easy": "și continuă să faci fapte bune!",
     "register_as_volunteer": "Înscrie-te ca voluntar",
+    "filters": 'Filtre',
     "regional_rules_title": 'Reguli Gale Regionale'
 }
