@@ -11,6 +11,7 @@ Route::get('editia/{year}', [ChampionshipController::class, 'edition'])->name('e
 
 Route::get('projects', [ChampionshipController::class, 'projects'])->name('infinite_projects');
 Route::post('project/subscribe-project', [ChampionshipController::class, 'subscribeProject'])->name('championship.subscribe.project');
+Route::get('reguli-campionatul-de-bine', [ChampionshipController::class, 'championshipRules'])->name('championship.rules');
 
 /* Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {

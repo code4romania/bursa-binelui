@@ -190,7 +190,7 @@
                 <Link
                     v-for="(edition, index) in editions"
                     :key="index"
-                    :href="route('lastedition', edition.href)"
+                    :href="route('edition', edition.href)"
                     class="text-xl font-bold text-blue-500"
                 >
                     {{ edition.name }}

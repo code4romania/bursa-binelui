@@ -115,6 +115,11 @@
 
                 <p class="hidden mt-10 text-base text-gray-500 lg:block">{{ $t('competition') }}</p>
 
+                <p class="hidden text-base text-gray-500 lg:block">
+                    {{ $t('regional_rules') }}
+                    <Link :href="route('championship.rules')" class="text-blue-500">{{ $t('here') }}.</Link>
+                </p>
+
                 <div class="absolute hidden md:block -top-24 -left-32">
                     <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
                 </div>
@@ -131,7 +136,7 @@
 
                     <div
                         class="absolute flex items-center justify-center w-32 h-32 rounded-lg bg-gray-50 -bottom-10 -left-10">
-                        <SvgLoader class="shrink-0" name="trofee" />
+                        <SvgLoader class="shrink-0" name="cup" />
                     </div>
                 </div>
             </div>
@@ -162,7 +167,7 @@
         </div>
 
         <!-- Projects -->
-        <div id="projects" class="mx-auto mb-10 p-9 max-w-7xl">
+        <div v-if="0 < projects?.data.length" id="projects" class="mx-auto mb-10 p-9 max-w-7xl">
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
@@ -209,7 +214,7 @@
         </div>
 
         <!-- Testimonials -->
-        <div class="w-full bg-cyan-900">
+        <div v-if="0 < testimonials.length" class="w-full bg-cyan-900">
             <div class="flex items-center mx-auto max-w-7xl p-9 gap-x-4">
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                     <SvgLoader class="shrink-0 fill-white" name="quote" />
@@ -219,7 +224,7 @@
         </div>
 
         <!-- Carousel -->
-        <div class="relative overflow-hidden bg-gray-50">
+        <div v-if="0 < testimonials.length" class="relative overflow-hidden bg-gray-50">
             <div class="flex items-center max-w-5xl mx-auto mt-12 mb-8 p-9 gap-x-4">
                 <carousel class="w-full" :items-to-show="1" :autoplay="4000" :pauseAutoplayOnHover="true" :wrapAround="true"
                     :transition="300">
@@ -243,7 +248,7 @@
         </div>
 
         <!-- Articles -->
-        <div class="relative mb-10 overflow-hidden pb-9">
+        <div v-if="0 < articles.length" class="relative mb-10 overflow-hidden pb-9">
 
             <div class="pt-12 pb-20 bg-primary-500">
                 <div class="flex items-center gap-4 mx-auto px-9 max-w-7xl">
@@ -268,7 +273,7 @@
         </div>
 
         <!-- External links -->
-        <div class="mx-auto max-w-7xl p-9 gap-x-4">
+        <div v-if="0 < links.length" class="mx-auto max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                     <SvgLoader class="shrink-0 fill-primary-500" name="links" />
@@ -296,9 +301,11 @@
             </div>
 
             <div class="flex flex-col gap-y-4">
-                <Link v-for="(edition, index) in editions" :key="index"   >
-                    class="text-xl font-bold text-blue-500">
-                {{ edition.name }}
+                <Link
+                    v-for="(edition, index) in editions" :key="index" class="text-xl font-bold text-blue-500"
+                    :href="route('edition', edition.id)"
+                >
+                    {{ edition.name }}
                 </Link>
             </div>
         </div>
