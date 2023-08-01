@@ -4,7 +4,7 @@
     >
         <div class="flex flex-col flex-1">
             <Link
-                :href="route('regional.project', data.id)"
+                :href="urlRoute"
                 class="relative bg-gray-200 rounded-t-lg group-hover:opacity-75 sm:h-52"
             >
 
@@ -21,7 +21,7 @@
                 <p v-if="'winners' === data.status" class="pb-4 text-sm font-medium text-red-500">{{ $t('regional_winners') }}</p>
 
                 <Link
-                    :href="route('regional.project', data.id)"
+                    :href="urlRoute"
                     class="mt-4 text-2xl font-bold text-gray-700"
                 >
                     {{ data.name }}
@@ -31,7 +31,7 @@
 
 
                 <Link
-                    :href="route('lastedition', data.id)"
+                    :href="urlRoute"
                     class="flex items-center p-6 text-sm font-semibold gap-x-2 text-primary-500"
                 >
                     {{ $t('see')  }}
@@ -53,5 +53,6 @@
     const props = defineProps({
         data: Object,
         cardType: String,
+        urlRoute: String
     });
 </script>

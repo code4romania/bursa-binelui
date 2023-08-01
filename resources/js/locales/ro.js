@@ -270,7 +270,7 @@ export default {
     "register_projects": "proiecte înscrise",
     "donors": "donatori",
     "about_championship": "Despre Campionatul de Bine",
-    "competition": "O competiție pentru atragerea donațiilor individuale. Citește Regulamentul aici.",
+    "competition": "O competiție pentru atragerea donațiilor individuale.",
     "testimonials": "Testimoniale",
     "prev_edtions": "Ediții anterioare",
     "read_article": "Citește articol",
@@ -291,7 +291,7 @@ export default {
     "here": "aici",
     "about_regional": "Despre Galele Regionale",
     "see": "Vizualizează",
-    "bb_regional_title": "Gale Regionale Bursa Binelui",
+    "bb_regional_title": "Gale Regionale",
     "other_articles": "Articole din domeniul",
     "other_categories": "Alte categorii",
     "share_article": "Distribuie acest articol pe",
@@ -387,5 +387,6 @@ export default {
     "need_help": "Ai nevoie de ajutor în plus?",
     "register_subscribe": "Doresc sa ma abonez la newsletter",
     "join_easy": "și continuă să faci fapte bune!",
-    "register_as_volunteer": "Înscrie-te ca voluntar"
+    "register_as_volunteer": "Înscrie-te ca voluntar",
+    "regional_rules_title": 'Reguli Gale Regionale'
 }

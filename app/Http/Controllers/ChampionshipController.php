@@ -187,4 +187,15 @@ class ChampionshipController extends Controller
 
         return response()->json(['message' => 'error']);
     }
+
+    public function championshipRules()
+    {
+        return Inertia::render('Public/Championship/Rules', [
+            'content' => [
+                'title' => 'Reguli Gale regionale',
+                'subtitle' => 'Subtitle',
+                'body' => '<div>body</div>'
+            ],
+        ]);
+    }
 }

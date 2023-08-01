@@ -17,7 +17,7 @@ class VolunteerController extends Controller
             return redirect()->route('admin.ong.edit');
         }
         if (auth()->user()->organization->projects->count() == 0) {
-            $volunteers = Volunteer::where('id', 0)->paginate();
+            $volunteers = Volunteer::where('id', 0)->paginate(15)->withQueryString();
         } else {
             $volunteers = Volunteer::whereHas('projects', function ($query) {
                 $query->whereIn('projects.id', auth()->user()->organization->projects->pluck('id'));
@@ -30,7 +30,7 @@ class VolunteerController extends Controller
         return Inertia::render(
             'AdminOng/Volunteers/Volunteers',
             [
-                'volunteers' => $volunteers->paginate()->withQueryString(),
+                'volunteers' => $volunteers,
                 'status' => $status,
             ]
         );
