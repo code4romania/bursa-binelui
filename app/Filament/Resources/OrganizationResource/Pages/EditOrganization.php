@@ -17,7 +17,6 @@ class EditOrganization extends EditRecord
     protected function getActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
             Action::make('Approve')
                 ->action(function () {
                     $this->record->status = OrganizationStatus::approved->value;
