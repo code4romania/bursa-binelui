@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,6 +41,8 @@ class Organization extends Model implements HasMedia
         'accepts_volunteers',
         'why_volunteer',
         'status',
+        'eu_platesc_merchant_id',
+        'eu_platesc_private_key',
     ];
 
     /**
@@ -108,5 +111,9 @@ class Organization extends Model implements HasMedia
     public function getStatuteLinkAttribute(): string
     {
         return $this->getFirstMediaUrl('organizationFilesStatute') ?? '';
+    }
+    public function getAdministrator()
+    {
+       return $this->users()->where('role', UserRole::ngo_admin)->first();
     }
 }

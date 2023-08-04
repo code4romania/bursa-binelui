@@ -90,11 +90,15 @@ class NewOrganizationWidget extends BaseWidget
                 ->label(__('organization.actions.approve'))
                 ->size('sm')
                 ->icon(null)
-                ->action(fn (Organization $record) => $record->status = OrganizationStatus::approved->value)
+                ->action(function (Organization $record){$record->status = OrganizationStatus::approved->value; $record->save();})
                 ->requiresConfirmation(),
             Action::make('reject')
                 ->label(__('organization.actions.reject'))
-                ->action(fn (Organization $record) => $record->status = OrganizationStatus::rejected->value)
+                ->action(function (Organization $record) {
+                    $record->status = OrganizationStatus::rejected->value;
+                    $record->save();
+                } )
+                ->requiresConfirmation()
                 ->size('sm')
                 ->icon(null),
         ];

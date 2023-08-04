@@ -8,6 +8,9 @@ use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource\Pages;
 use App\Filament\Resources\OrganizationResource\Widgets\ApprovedOrganizationWidget;
 use App\Filament\Resources\OrganizationResource\Widgets\NewOrganizationWidget;
+use App\Filament\Resources\OrganizationResource\Widgets\RejectedOrganizationWidget;
+use App\Forms\Components\Link;
+use App\Forms\Components\UserLink;
 use App\Models\Organization;
 use App\Tables\Columns\OrganizationNameColumn;
 use Filament\Forms;
@@ -39,51 +42,112 @@ class OrganizationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('county_id')
-                    ->relationship('counties', 'name')
-                    ->multiple()
-                    ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cif')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status_document')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('street_address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('contact_person')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('contact_phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('contact_email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('website')
-                    ->maxLength(255),
-                Forms\Components\Select::make('activity_domains')
-                    ->multiple()
-                    ->relationship('activityDomains', 'name')
-                    ->required(),
-                Forms\Components\Textarea::make('why_volunteer')
-                    ->maxLength(65535),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->maxLength(65535),
-                Forms\Components\Toggle::make('accepts_volunteers')
-                    ->required(),
-                Forms\Components\TextInput::make('eu_platesc_merchant_id')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('eu_platesc_private_key')
-                    ->required()
-                    ->maxLength(255),
+                UserLink::make('administator')->label(__('organization.labels.administrator'))->inlineLabel()->columnSpanFull(),
+                Forms\Components\Fieldset::make(__('organization.labels.general_data'))->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->label(__('organization.labels.name'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('cif')
+                        ->label(__('organization.labels.cif'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('organizationFilesLogo')
+                        ->collection('organizationFilesLogo')
+                        ->label(__('organization.labels.logo'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxFiles(1)
+                        ->acceptedFileTypes(['image/*']),
+                    Forms\Components\Textarea::make('description')
+                        ->label(__('organization.labels.description'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(65535),
+                    Forms\Components\Select::make('activity_domains')
+                        ->label(__('organization.labels.activity_domains'))
+                        ->columnSpanFull()
+                        ->inlineLabel()
+                        ->multiple()
+                        ->relationship('activityDomains', 'name')
+                        ->required(),
+                    Forms\Components\Grid::make(3)
+                        ->schema(
+                            [
+                                Link::make('organizationFilesStatuteLabel')->inlineLabel()->label(__('organization.labels.statute')),
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('organizationFilesStatute')
+                                    ->disableLabel()
+                                    ->disablePreview()
+                                ->collection('organizationFilesStatute')
+                                ->required()
+                            ]
+                        )->columns(2),
+                ]),
+                Forms\Components\Fieldset::make(__('organization.labels.volunteering_data'))->schema([
+                    Forms\Components\Toggle::make('accepts_volunteers')
+                        ->label(__('organization.labels.accepts_volunteers'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required(),
+                    Forms\Components\Textarea::make('why_volunteer')
+                        ->label(__('organization.labels.why_volunteer'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->maxLength(65535),
+
+                ]),
+                Forms\Components\Fieldset::make(__('organization.labels.contact_data'))->schema([
+                    Forms\Components\TextInput::make('website')
+                        ->label(__('organization.labels.website'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('contact_email')
+                        ->email()
+                        ->label(__('organization.labels.contact_email'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('contact_phone')
+                        ->tel()
+                        ->label(__('organization.labels.contact_phone'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('contact_person')
+                        ->label(__('organization.labels.contact_person'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('street_address')
+                        ->label(__('organization.labels.street_address'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->required()
+                        ->maxLength(255),
+                ]),
+                Forms\Components\Fieldset::make(__('organization.labels.eu_platesc_data'))->schema([
+                    Forms\Components\TextInput::make('eu_platesc_merchant_id')
+                        ->label(__('organization.labels.eu_platesc_merchant_id'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('eu_platesc_private_key')
+                        ->label(__('organization.labels.eu_platesc_private_key'))
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->maxLength(255),
+                ]),
+
             ]);
     }
 
@@ -140,6 +204,7 @@ class OrganizationResource extends Resource
         return [
             NewOrganizationWidget::class,
             ApprovedOrganizationWidget::class,
+            RejectedOrganizationWidget::class
         ];
     }
 
@@ -159,6 +224,7 @@ class OrganizationResource extends Resource
 
             TextColumn::make('created_at')
                 ->label(__('field.created_at'))
+                ->dateTime('Y-m-d')
                 ->sortable(),
 
         ];
