@@ -20,16 +20,16 @@ class EditOrganization extends EditRecord
             Actions\DeleteAction::make(),
             Action::make('Approve')
                 ->action(function () {
-                    $this->record->status = OrganizationStatus::active->value;
+                    $this->record->status = OrganizationStatus::approved->value;
                     $this->record->save();
                 })
-                ->requiresConfirmation()->hidden(fn () => $this->record->status == OrganizationStatus::active->value),
+                ->requiresConfirmation()->hidden(fn () => $this->record->status == OrganizationStatus::approved->value),
             Action::make('Reject')
                 ->action(function () {
-                    $this->record->status = OrganizationStatus::disabled->value;
+                    $this->record->status = OrganizationStatus::rejected->value;
                     $this->record->save();
                 })
-                ->requiresConfirmation()->hidden(fn () => $this->record->status == OrganizationStatus::disabled->value),
+                ->requiresConfirmation()->hidden(fn () => $this->record->status == OrganizationStatus::rejected->value),
         ];
     }
 }

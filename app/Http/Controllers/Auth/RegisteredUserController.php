@@ -15,10 +15,8 @@ use App\Notifications\Ngo\OrganizationCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -90,6 +88,7 @@ class RegisteredUserController extends Controller
             $user = User::find($userId);
             $user->source_of_information = $request->input('source_of_information');
             $user->save();
+
             return redirect()->back()->with('success_message', 'Multumim pentru feedback');
         } catch(\Throwable $th) {
             return redirect()->back()->with('error_message', 'Something went wrong');

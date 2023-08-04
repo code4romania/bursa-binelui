@@ -10,8 +10,8 @@ enum OrganizationStatus: string
 {
     use ArrayableEnum;
     case pending = 'pending';
-    case active = 'active';
-    case disabled = 'disabled';
+    case approved = 'active';
+    case rejected = 'disabled';
 
     protected function translationKeyPrefix(): ?string
     {

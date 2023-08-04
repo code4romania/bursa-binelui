@@ -20,10 +20,4 @@ export default defineConfig({
         }),
         svgLoader()
     ],
-    server: {
-        host: '0.0.0.0',
-        hmr: {
-            host: 'bursa_binelui.test'
-        },
-    }
 });

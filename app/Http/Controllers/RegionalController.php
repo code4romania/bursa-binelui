@@ -206,7 +206,8 @@ class RegionalController extends Controller
         ]);
     }
 
-    public function regionalEdition() {
+    public function regionalEdition()
+    {
         $editions = [
             [
                 'href' => '1',
@@ -289,7 +290,7 @@ class RegionalController extends Controller
             'name' => 'Nume',
             'start' => '2023-06-01',
             'end' => '2023-07-20',
-            'status' => 'in-progress'
+            'status' => 'in-progress',
         ];
 
         $projects = Project::publish()->paginate(9)->withQueryString();
@@ -422,7 +423,7 @@ class RegionalController extends Controller
             'content' => [
                 'title' => 'Reguli Gale regionale',
                 'subtitle' => 'Subtitle',
-                'body' => '<div>body</div>'
+                'body' => '<div>body</div>',
             ],
         ]);
     }

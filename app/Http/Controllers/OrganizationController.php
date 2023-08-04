@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
-use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
@@ -41,7 +40,7 @@ class OrganizationController extends Controller
             $query->search($request->query(OrganizationQuery::search->value, ''));
         }
         /* Apply the active scope. */
-        $query->status(OrganizationStatus::active);
+        $query->status(OrganizationStatus::approved);
 
         /* Extract existing organizations cities with county. */
         /* Return inertia page. */
@@ -119,7 +118,6 @@ class OrganizationController extends Controller
             }
 
             $organization->update($modelData);
-
 
             return redirect()->route('admin.ong.edit')->with('success_message', 'Organization updated successfully');
         } catch (\Throwable $th) {

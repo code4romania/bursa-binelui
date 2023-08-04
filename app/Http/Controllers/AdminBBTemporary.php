@@ -13,7 +13,7 @@ class AdminBBTemporary extends Controller
         $content = [
             'title' => 'Despre Bursa Binelui',
             'subtitle' => 'Despre subtitle',
-            'body' => 'content'
+            'body' => 'content',
         ];
 
         return Inertia::render('Public/About', [

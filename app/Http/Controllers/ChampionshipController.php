@@ -194,7 +194,7 @@ class ChampionshipController extends Controller
             'content' => [
                 'title' => 'Reguli Gale regionale',
                 'subtitle' => 'Subtitle',
-                'body' => '<div>body</div>'
+                'body' => '<div>body</div>',
             ],
         ]);
     }

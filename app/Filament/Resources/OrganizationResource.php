@@ -6,12 +6,16 @@ namespace App\Filament\Resources;
 
 use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource\Pages;
+use App\Filament\Resources\OrganizationResource\Widgets\ApprovedOrganizationWidget;
+use App\Filament\Resources\OrganizationResource\Widgets\NewOrganizationWidget;
 use App\Models\Organization;
+use App\Tables\Columns\OrganizationNameColumn;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 
@@ -89,9 +93,9 @@ class OrganizationResource extends Resource
             ->columns([
                 Tables\Columns\IconColumn::make('status')->options([
                     'heroicon-o-x-circle',
-                    'heroicon-o-pencil' => OrganizationStatus::disabled->value,
+                    'heroicon-o-pencil' => OrganizationStatus::rejected->value,
                     'heroicon-o-clock' => OrganizationStatus::pending->value,
-                    'heroicon-o-check-circle' => OrganizationStatus::active->value,
+                    'heroicon-o-check-circle' => OrganizationStatus::approved->value,
                 ]),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('created_at')
@@ -131,12 +135,32 @@ class OrganizationResource extends Resource
         ];
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            NewOrganizationWidget::class,
+            ApprovedOrganizationWidget::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrganizations::route('/'),
+            'index' => Pages\OrganisationIndex::route('/'),
             'create' => Pages\CreateOrganization::route('/create'),
             'edit' => Pages\EditOrganization::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgetColumns()
+    {
+        return [
+            OrganizationNameColumn::make('organisation_info')->label(__('organization.organization')),
+
+            TextColumn::make('created_at')
+                ->label(__('field.created_at'))
+                ->sortable(),
+
         ];
     }
 }
