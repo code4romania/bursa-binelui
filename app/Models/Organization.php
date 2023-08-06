@@ -112,8 +112,9 @@ class Organization extends Model implements HasMedia
     {
         return $this->getFirstMediaUrl('organizationFilesStatute') ?? '';
     }
+
     public function getAdministrator()
     {
-       return $this->users()->where('role', UserRole::ngo_admin)->first();
+        return $this->users()->where('role', UserRole::ngo_admin)->first();
     }
 }

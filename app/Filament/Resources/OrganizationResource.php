@@ -84,8 +84,8 @@ class OrganizationResource extends Resource
                                 Forms\Components\SpatieMediaLibraryFileUpload::make('organizationFilesStatute')
                                     ->disableLabel()
                                     ->disablePreview()
-                                ->collection('organizationFilesStatute')
-                                ->required()
+                                    ->collection('organizationFilesStatute')
+                                    ->required(),
                             ]
                         )->columns(2),
                 ]),
@@ -204,7 +204,7 @@ class OrganizationResource extends Resource
         return [
             NewOrganizationWidget::class,
             ApprovedOrganizationWidget::class,
-            RejectedOrganizationWidget::class
+            RejectedOrganizationWidget::class,
         ];
     }
 
