@@ -7,8 +7,14 @@ namespace App\Filament\Resources;
 use App\Enums\ProjectCategory;
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\Widgets\ApprovedProject;
+use App\Filament\Resources\ProjectResource\Widgets\NewProject;
+use App\Filament\Resources\ProjectResource\Widgets\RejectedProject;
 use App\Models\Project;
+use App\Tables\Columns\ResourceNameColumn;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Grid;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -24,7 +30,6 @@ class ProjectResource extends Resource
     protected static ?string $model = Project::class;
 
     protected static ?string $navigationGroup = 'Administrează';
-
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -34,15 +39,27 @@ class ProjectResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('organization_id')
+                    ->label(__('project.labels.organization'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
                     ->relationship('organization', 'name')
                     ->required(),
                 Forms\Components\Select::make('status')->options(ProjectStatus::options())->disabled()
+                    ->label(__('project.labels.status'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
                     ->required(),
                 Forms\Components\Toggle::make('is_national')
+                    ->label(__('project.labels.is_national'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
                     ->reactive()
                     ->required(),
-                Forms\Components\Select::make('county_id')
+                Forms\Components\Select::make('counties')
                     ->relationship('counties', 'name')
+                    ->label(__('project.labels.counties'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
                     ->multiple()
                     ->required()
                     ->preload()
@@ -50,12 +67,12 @@ class ProjectResource extends Resource
                         return $get('is_national') === true;
                     }),
                 Forms\Components\TextInput::make('category')
+                    ->label(__('project.labels.category'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('target_budget')
@@ -95,61 +112,32 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('target_budget'),
                 Tables\Columns\TextColumn::make('created_at')->date(),
-            ])
-            ->filters([
-                SelectFilter::make('status')
-                    ->multiple()
-                    ->options(ProjectStatus::options())
-                    ->label(__('project.filters.status')),
-                SelectFilter::make('organization')
-                    ->multiple()
-                    ->relationship('organization', 'name')
-                    ->label(__('project.filters.organization')),
-                SelectFilter::make('category')
-                    ->multiple()
-                    ->options(ProjectCategory::options())
-                    ->label(__('project.filters.category')),
-                SelectFilter::make('counties')
-                    ->multiple()
-                    ->relationship('counties', 'name')
-                    ->label(__('project.filters.counties')),
-                Filter::make('created_at')
-                    ->form([
-                        Forms\Components\Grid::make()->schema([
-                            Forms\Components\DatePicker::make('created_at')->label(__('project.filters.created_from'))->columnSpan(1),
-                            Forms\Components\DatePicker::make('created_at')->label(__('project.filters.created_until')),
-                        ]),
-                    ])->columnSpan(2),
-                //                    ->query(function (Builder $query, array $data): Builder {
-                //                        return $query
-                //                            ->when(
-                //                                $data['created_at'],
-                //                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                //                            )
-                //                            ->when(
-                //                                $data['created_at'],
-                //                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                //                            );
-                //                    })
-            ])
-            ->filtersLayout(Layout::AboveContent)
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make(__('project.actions.approve'))
-                    ->action(function () {
-                    })
-                    ->icon('heroicon-o-check-circle')
-                    ->requiresConfirmation(),
-                Tables\Actions\Action::make(__('project.actions.reject'))
-                    ->action(function () {
-                    })
-                    ->icon('heroicon-o-x-circle')
-                    ->color('danger')
-                    ->requiresConfirmation(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
             ]);
+    }
+
+    public static function getWidgetFilters(): array
+    {
+        return [
+            SelectFilter::make('organization')
+                ->multiple()
+                ->relationship('organization', 'name')
+                ->label(__('project.filters.organization')),
+            SelectFilter::make('category')
+                ->multiple()
+                ->options(ProjectCategory::options())
+                ->label(__('project.filters.category')),
+            SelectFilter::make('counties')
+                ->multiple()
+                ->relationship('counties', 'name')
+                ->label(__('project.filters.counties')),
+            Filter::make('created_at')
+                ->form([
+                    Grid::make()->schema([
+                        DatePicker::make('created_at')->label(__('project.filters.created_from'))->columnSpan(1),
+                        DatePicker::make('created_at')->label(__('project.filters.created_until')),
+                    ]),
+                ])->columnSpan(2),
+        ];
     }
 
     protected function getTableActionsPosition(): ?string
@@ -167,8 +155,32 @@ class ProjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProjects::route('/'),
+            'index' => Pages\ProjectIndex::route('/'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
+            'view' => Pages\ViewProject::route('/{record}'),
+        ];
+    }
+
+    public static function getWidgetColumns(): array
+    {
+        return [
+            ResourceNameColumn::make('project_info')
+                ->label(__('project.labels.project')),
+            Tables\Columns\TextColumn::make('category')
+                ->label(__('project.labels.category')),
+            Tables\Columns\TextColumn::make('target_budget')
+            ->label(__('project.labels.target_budget')),
+            Tables\Columns\TextColumn::make('created_at')->date('d-m-Y')
+            ->label(__('project.labels.created_at')),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+          NewProject::class,
+            ApprovedProject::class,
+            RejectedProject::class
         ];
     }
 }

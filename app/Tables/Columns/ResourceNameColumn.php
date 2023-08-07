@@ -6,9 +6,9 @@ namespace App\Tables\Columns;
 
 use Filament\Tables\Columns\Column;
 
-class OrganizationNameColumn extends Column
+class ResourceNameColumn extends Column
 {
-    protected string $view = 'tables.columns.organization-name-column';
+    protected string $view = 'tables.columns.resource-name-column';
 
     public static function make(string $name): static
     {

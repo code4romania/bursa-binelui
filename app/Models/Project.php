@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Concerns\HasLocation;
 use App\Enums\ProjectStatus;
+use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,11 +18,15 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property string $status
+ */
 class Project extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
     use HasLocation;
+    use HasProjectStatus;
 
     protected $fillable = [
         'name',
@@ -116,4 +121,5 @@ class Project extends Model implements HasMedia
     {
         return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
     }
+
 }

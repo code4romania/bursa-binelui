@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\ProjectCategory;
+use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +28,7 @@ class ProjectFactory extends Factory
             'slug' => \Str::slug($name),
             'category' => $this->faker->randomElement(ProjectCategory::values()),
             'description' => $this->faker->text,
-            'status'=> $this->faker->randomElement(['draft', 'published']),
+            'status'=> $this->faker->randomElement(ProjectStatus::values()),
             'target_budget' => $this->faker->numberBetween(1000, 100000),
             'scope' => $this->faker->text,
             'reason_to_donate' => $this->faker->text,

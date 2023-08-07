@@ -16,6 +16,7 @@ return [
             'disabled' => 'Inactivă',
         ],
     'actions' => [
+        'edit'=> 'Editează',
         'approve' => 'Aprobă',
         'reject' => 'Respinge',
         ],
@@ -28,5 +29,32 @@ return [
         'environment' => 'Mediu',
         'infrastructure' => 'Infrastructură',
         'other' => 'Altele',
+    ],
+    'heading' => [
+        'pending' => 'Proiecte in curs de aprobare',
+        'change_request' => 'Proiecte cu modificări',
+        'approved' => 'Proiecte active',
+        'rejected' => 'Proiecte dezactivate',
+    ],
+
+    'labels' =>[
+        'project' => 'Proiect',
+        'category' => 'Categorie',
+        'target_budget' => 'Target',
+        'created_at' => 'Data creării',
+        'organization' => 'Organizație',
+        'is_national' => 'Național',
+        'counties' => 'Județe',
+        'status' => 'Status',
+        'name' => 'Nume',
+        'description' => 'Descriere',
+        'scope' => 'Scop',
+        'beneficiaries' => 'Beneficiari',
+        'reason_to_donate' => 'Motivul donației',
+        'accepting_volunteers' => 'Acceptă voluntari',
+        'accepting_comments' => 'Acceptă comentarii',
+        'videos' => 'Video-uri',
+        'external_links' => 'Link-uri externe',
     ]
+
 ];

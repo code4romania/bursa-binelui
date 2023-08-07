@@ -12,7 +12,7 @@ use App\Filament\Resources\OrganizationResource\Widgets\RejectedOrganizationWidg
 use App\Forms\Components\Link;
 use App\Forms\Components\UserLink;
 use App\Models\Organization;
-use App\Tables\Columns\OrganizationNameColumn;
+use App\Tables\Columns\ResourceNameColumn;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -220,7 +220,7 @@ class OrganizationResource extends Resource
     public static function getWidgetColumns()
     {
         return [
-            OrganizationNameColumn::make('organisation_info')->label(__('organization.organization')),
+            ResourceNameColumn::make('organisation_info')->label(__('organization.organization')),
 
             TextColumn::make('created_at')
                 ->label(__('field.created_at'))
