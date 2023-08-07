@@ -13,6 +13,6 @@
     class=" flex text-center justify-items-center object-center align-middle"
 >
     <div x-data="{ state: $wire.entangle('{{ $getStatePath() }}').defer }" class="mx-auto">
-            <a href="{{ $getRecord()->getStatuteLinkAttribute() }}" target="_blank"> {{ $getRecord()->getFirstMedia('organizationFilesStatute')->name}}.{{ $getRecord()->getFirstMedia('organizationFilesStatute')->extension}}</a>
+            <a href="{{ $getRecord()?->getStatuteLinkAttribute() }}" target="_blank"> {{ $getRecord()->getFirstMedia('organizationFilesStatute')?->name}}.{{ $getRecord()->getFirstMedia('organizationFilesStatute')?->extension}}</a>
     </div>
 </x-dynamic-component>

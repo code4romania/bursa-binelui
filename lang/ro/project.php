@@ -34,7 +34,7 @@ return [
         'pending' => 'Proiecte in curs de aprobare',
         'change_request' => 'Proiecte cu modificări',
         'approved' => 'Proiecte active',
-        'rejected' => 'Proiecte dezactivate',
+        'rejected' => 'Proiecte refuzate' ,
     ],
 
     'labels' =>[
