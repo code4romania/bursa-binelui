@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
 use App\Enums\ProjectStatus;
-use App\Filament\Resources\ProjectResource;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
-use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
 class RejectedProject extends BaseProjectWidget
@@ -27,9 +27,10 @@ class RejectedProject extends BaseProjectWidget
     {
         return 'rejected_project';
     }
+
     protected function getTableRecordUrlUsing(): \Closure
     {
-       return function (Project $record) {
+        return function (Project $record) {
             return route('filament.resources.projects.edit', $record);
         };
     }

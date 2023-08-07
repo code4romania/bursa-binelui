@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
 use App\Enums\ProjectStatus;
@@ -71,7 +73,7 @@ class BaseProjectWidget extends BaseWidget
 
     protected function getTableRecordUrlUsing(): \Closure
     {
-       return function (Project $record) {
+        return function (Project $record) {
             return route('filament.resources.projects.edit', $record);
         };
     }
@@ -104,6 +106,7 @@ class BaseProjectWidget extends BaseWidget
                 ->icon(null),
         ];
     }
+
     protected function getTableRecordsPerPage(): int
     {
         return 5;

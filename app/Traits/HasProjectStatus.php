@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Enums\ProjectStatus;
@@ -47,5 +49,4 @@ trait HasProjectStatus
     {
         $query->where('status', ProjectStatus::rejected);
     }
-
 }

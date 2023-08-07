@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Policies;
+declare(strict_types=1);
 
-use App\Models\User;
+namespace App\Policies;
 
 class ProjectPolicy
 {

@@ -121,5 +121,4 @@ class Project extends Model implements HasMedia
     {
         return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
     }
-
 }

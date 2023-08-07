@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
-use App\Enums\ProjectCategory;
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource;
 use App\Models\Project;
-use Closure;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Builder;
 
 class NewProject extends BaseProjectWidget
@@ -33,6 +32,7 @@ class NewProject extends BaseProjectWidget
     {
         return 'new_project';
     }
+
     protected function getTableActions(): array
     {
         return [

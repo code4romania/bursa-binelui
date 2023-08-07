@@ -21,15 +21,14 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Actions\Position;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Query\Builder;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
     protected static ?string $navigationGroup = 'Administrează';
+
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -169,18 +168,18 @@ class ProjectResource extends Resource
             Tables\Columns\TextColumn::make('category')
                 ->label(__('project.labels.category')),
             Tables\Columns\TextColumn::make('target_budget')
-            ->label(__('project.labels.target_budget')),
+                ->label(__('project.labels.target_budget')),
             Tables\Columns\TextColumn::make('created_at')->date('d-m-Y')
-            ->label(__('project.labels.created_at')),
+                ->label(__('project.labels.created_at')),
         ];
     }
 
     public static function getWidgets(): array
     {
         return [
-          NewProject::class,
+            NewProject::class,
             ApprovedProject::class,
-            RejectedProject::class
+            RejectedProject::class,
         ];
     }
 }

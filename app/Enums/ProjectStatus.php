@@ -17,7 +17,6 @@ enum ProjectStatus: string
     case active = 'active';
     case disabled = 'disabled';
 
-
     protected function translationKeyPrefix(): ?string
     {
         return 'project.status_arr';
