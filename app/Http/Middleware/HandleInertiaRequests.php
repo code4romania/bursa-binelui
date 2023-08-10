@@ -46,6 +46,7 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'google_maps_api_key' => config('services.google_maps_api_key'),
         ]);
     }
 }

@@ -1,14 +1,13 @@
 <template>
-    <div>
-        <div id="map" class="rounded-lg" style="height: 550px"></div>
-    </div>
+    <div id="map" class="rounded-lg h-[550px]"></div>
 </template>
 
 <script setup>
 /** Import from vue. */
 import { ref, onMounted } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 
-const googleKey = import.meta.env.VITE_GOOGLE_KEY;
+const googleKey = usePage().props.google_maps_api_key;
 
 /** Component props. */
 const props = defineProps({ data: Array });
