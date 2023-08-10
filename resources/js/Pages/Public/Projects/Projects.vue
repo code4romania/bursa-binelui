@@ -96,7 +96,7 @@
 
                     <SelectMultiple
                         class="relative col-span-12 md:col-span-6 lg:col-span-3 z-101"
-                        :label="$t('county_city')"
+                        :label="$t('county')"
                         v-model="filter.counties"
                         :options="props.counties"
                         type="object"
