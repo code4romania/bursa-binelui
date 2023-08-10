@@ -79,7 +79,7 @@
 
                     <MultiSelectObjectFilter
                         class="w-full"
-                        :label="$t('county_city')"
+                        :label="$t('county')"
                         v-model="filter.c"
                         :options="props.cities"
                         @callback="filterProjects"
