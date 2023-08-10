@@ -60,7 +60,7 @@
                     <h1 class="text-3xl font-bold text-cyan-900">{{ $t('contact') }}</h1>
                     <p class="text-sm font-medium text-gray-500">{{ $t('contact_info') }}</p>
 
-                    <a href="mail:to=support@example.com" class="flex items-center gap-2 py-6 text-sm text-gray-500">
+                    <a href="mailto:support@example.com" class="flex items-center gap-2 py-6 text-sm text-gray-500">
                         <SvgLoader class="shrink-0" name="email" />
                         support@example.com
                     </a>
