@@ -33,7 +33,7 @@
                 <div class="flex items-center justify-center w-1/2 gap-6">
                     <MultiSelectObjectFilter
                         class="w-full"
-                        :label="$t('county_city')"
+                        :label="$t('county')"
                         :options="counties"
                         @callback="updateChart"
                     />
