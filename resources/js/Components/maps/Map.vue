@@ -7,8 +7,6 @@
 import { ref, onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 
-const googleKey = usePage().props.google_maps_api_key;
-
 /** Component props. */
 const props = defineProps({ data: Array });
 
@@ -22,7 +20,7 @@ const selectedCounties = ref([]);
 async function initializeMap() {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${googleKey}`;
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=' + usePage().props.google_maps_api_key;
         script.async = true;
         script.defer = true;
         script.onload = () => {
