@@ -74,7 +74,7 @@
                         <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('organization_logo_label') }}</dt>
                             <dt class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                <img class="flex-shrink-0 w-32 h-32" :src="form.cover_image" alt="" />
+                                <img class="flex-shrink-0 w-32 h-32" :src="logo" alt="" />
                                 <div>
                                     <EditModal
                                         @action="editField"
@@ -440,16 +440,13 @@
     /** Initialize inertia from Object. */
     const form = useForm({ ...props.organization });
     const clonedOrganization = ({...props.organization});
+    const logo = ref(form.cover_image);
 
     const editField = () => {
-
-        console.log(form);
         form.post(route('admin.ong.update', form.id), {
             preserveScroll: true,
             onSuccess: (response) => {
-                // console.log(response);
-
-                // form.cover_image = response.organization.cover_image;
+                logo.value = response.props.organization.cover_image
             },
             onError: () => {},
         });

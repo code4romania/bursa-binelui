@@ -136,7 +136,7 @@ class OrganizationController extends Controller
     public function removeCoverImage(Request $request)
     {
         $organization = auth()->user()->organization;
-        $organization->clearMediaCollection('organizationFiles');
+        $organization->clearMediaCollection('organizationFilesLogo');
 
         return redirect()->back();
     }

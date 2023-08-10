@@ -33,8 +33,13 @@
 
     /** Image preview. */
     const preview = ref('');
-    const isUrl = (url) => url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    const isUrl = (form) => {
+        if (typeof form === 'string') {
+            return form.match(/\.(jpeg|jpg|gif|png)$/) != null
+        }
 
+        return false
+    };
 
     /** Component emits. */
     const emit = defineEmits(['upload']);
