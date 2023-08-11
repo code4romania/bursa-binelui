@@ -108,6 +108,29 @@ const navigation = [
         icon: FolderIcon
     },
     {
+        name: 'Proiectele mele regionale',
+        href: 'admin.ong.projects',
+        route: route('admin.ong.projects'),
+        subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
+        subMenu: [
+            {
+                name: 'published_projects',
+                href: 'admin.ong.projects',
+                route: route('admin.ong.regional.projects', {'project_status': 'published'}),
+                icon: FolderOpenIcon,
+                subroutes: [],
+            },
+            {
+                name: 'draft_projects',
+                href: 'admin.ong.projects',
+                route: route('admin.ong.regional.projects', {'project_status': 'draft'}),
+                subroutes: [],
+                icon: FolderMinusIcon
+            },
+        ],
+        icon: FolderIcon
+    },
+    {
         name: 'Voluntari',
         href: 'admin.ong.volunteers',
         route: route('admin.ong.volunteers'),
