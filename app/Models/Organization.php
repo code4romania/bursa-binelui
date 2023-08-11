@@ -16,6 +16,9 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+
 
 class Organization extends Model implements HasMedia
 {
@@ -23,6 +26,7 @@ class Organization extends Model implements HasMedia
     use InteractsWithMedia;
     use HasActivityDomain;
     use HasOrganizationStatus;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -116,5 +120,13 @@ class Organization extends Model implements HasMedia
     public function getAdministrator()
     {
         return $this->users()->where('role', UserRole::ngo_admin)->first();
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->dontSubmitEmptyLogs()
+            ->logFillable()
+            ->logOnlyDirty();
     }
 }

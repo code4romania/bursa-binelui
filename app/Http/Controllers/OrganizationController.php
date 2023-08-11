@@ -104,6 +104,7 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
+
         try {
             /** Get all request data. */
             $modelData = $request->input();

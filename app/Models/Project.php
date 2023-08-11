@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -25,15 +27,15 @@ class Project extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-    use HasLocation;
     use HasProjectStatus;
+    use LogsActivity;
 
     protected $fillable = [
         'name',
         'description',
         'organization_id',
-        'category',
         'target_budget',
+        'status',
         'scope',
         'reason_to_donate',
         'beneficiaries',
@@ -57,7 +59,13 @@ class Project extends Model implements HasMedia
 
     protected $appends = ['total_donations', 'cover_image', 'active', 'is_period_active'];
 
-    protected $with = ['media', 'organization', 'donations', 'counties'];
+    protected $with = [
+        'media',
+        'organization',
+        'donations',
+        'counties',
+        'categories',
+    ];
 
     public function organization(): BelongsTo
     {
@@ -120,5 +128,16 @@ class Project extends Model implements HasMedia
     public function championships()
     {
         return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
+    }
+    public function categories():BelongsToMany
+    {
+        return $this->belongsToMany(ProjectCategory::class,'project_category');
+    }
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->dontSubmitEmptyLogs()
+            ->logFillable()
+            ->logOnlyDirty();
     }
 }

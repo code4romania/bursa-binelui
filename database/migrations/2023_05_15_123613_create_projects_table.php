@@ -19,12 +19,11 @@ return new class extends Migration
             $table->foreignIdFor(Organization::class)->constrained()->cascadeOnDelete();
             $table->string('status')->default('draft');
             $table->boolean('is_national')->default(false);
-            $table->string('category');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->integer('target_budget');
-            $table->date('start');
-            $table->date('end');
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable()->unique();
+            $table->integer('target_budget')->nullable();
+            $table->date('start')->nullable();
+            $table->date('end')->nullable();
             $table->text('description')->nullable();
             $table->text('scope')->nullable();
             $table->text('beneficiaries')->nullable();

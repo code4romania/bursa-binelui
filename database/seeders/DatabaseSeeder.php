@@ -11,6 +11,7 @@ use App\Models\Article;
 use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Models\ProjectCategory;
 use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Database\Seeder;
@@ -31,14 +32,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if ('production' !== config('app.env', 'production')) {
-            $activityDomains = ActivityDomainEnum::values();
-            $tmpActivityDomains = [];
-            User::factory(['email' => 'bb-admin@example.com'])->bbAdmin()->create();
+            $this->seedProjectCategories();
+            $this->seedActivityDomains();
+
             Championship::factory()->count(3)->create();
-            foreach ($activityDomains as $domain) {
-                $tmpActivityDomains[] = ['name' => $domain, 'slug' => \Str::slug($domain)];
-            }
-            ActivityDomain::insert($tmpActivityDomains);
+            User::factory(['email' => 'bb-admin@example.com'])->bbAdmin()->create();
             for ($i = 0; $i < self::USER_DONOR_NUMBER; $i++) {
                 User::factory()->donor()->create();
             }
@@ -70,5 +68,37 @@ class DatabaseSeeder extends Seeder
                     ->has(Article::factory()->count(4))->create();
             }
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function seedActivityDomains(): void
+    {
+        $activityDomains = ActivityDomainEnum::values();
+        $tmpActivityDomains = [];
+        foreach ($activityDomains as $domain) {
+            $tmpActivityDomains[] = ['name' => $domain, 'slug' => \Str::slug($domain)];
+        }
+        ActivityDomain::insert($tmpActivityDomains);
+    }
+
+    private function seedProjectCategories()
+    {
+        $projectCategories = [
+            'Antreprenoriat social',
+            'Cultura',
+            'Drepturile omului',
+            'Educație',
+            'Mediu',
+            'Protecția animalelor',
+            'Sanatate',
+            'Social',
+            'Sport',
+        ];
+       $projectCategories  =   collect($projectCategories)->transform(function ($category) {
+            return ['name' => $category, 'slug' => \Str::slug($category)];
+        });
+       ProjectCategory::insert($projectCategories->toArray());
     }
 }

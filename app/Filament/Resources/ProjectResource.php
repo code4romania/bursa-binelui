@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Enums\ProjectCategory;
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\Widgets\ApprovedProject;
