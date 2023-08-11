@@ -74,8 +74,7 @@ class ProjectController extends Controller
         if ($request->has('counties')) {
             $project->counties()->attach($data['counties']);
         }
-        if($request->has('category'))
-        {
+        if ($request->has('category')) {
             $project->activityDomains()->attach($data['category']);
         }
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
@@ -96,7 +95,8 @@ class ProjectController extends Controller
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('project_files');
         });
-        $redirectUrl = $project->status === ProjectStatus::draft ? route('project',['project'=>$project->slug])  : route('admin.ong.project.edit', $project->id);
+        $redirectUrl = $project->status === ProjectStatus::draft ? route('project', ['project'=>$project->slug]) : route('admin.ong.project.edit', $project->id);
+
         return redirect()->to($redirectUrl)->with('success', 'Project created.');
     }
 

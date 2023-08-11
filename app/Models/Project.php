@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Concerns\HasLocation;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -129,10 +128,12 @@ class Project extends Model implements HasMedia
     {
         return $this->hasManyThrough(Championship::class, ChampionshipStageProject::class, 'project_id', 'id', 'id', 'championship_id');
     }
-    public function categories():BelongsToMany
+
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(ProjectCategory::class,'project_category');
+        return $this->belongsToMany(ProjectCategory::class, 'project_category');
     }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

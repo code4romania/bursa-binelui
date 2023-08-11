@@ -51,19 +51,20 @@ class StoreRequest extends FormRequest
                 'file_group.*.file' => ['required', 'file'],
             ];
         }
+
         return [
             'name' => ['string', 'max:255', 'nullable'],
-            'target_budget' => ['numeric','nullable'],
-            'project_status' => ['string','required'],
+            'target_budget' => ['numeric', 'nullable'],
+            'project_status' => ['string', 'required'],
             'categories' => ['array'],
             'categories.*' => ['nullable', 'exists:project_categories,id'],
-            'start' => ['date','nullable'],
-            'end' => ['date','nullable'],
-            'counties' => ['array','nullable'],
-            'counties.*' => ['exists:counties,id','nullable'],
-            'description' => ['string','nullable'],
-            'scope' => ['string','nullable'],
-            'reason_to_donate' => ['string','nullable'],
+            'start' => ['date', 'nullable'],
+            'end' => ['date', 'nullable'],
+            'counties' => ['array', 'nullable'],
+            'counties.*' => ['exists:counties,id', 'nullable'],
+            'description' => ['string', 'nullable'],
+            'scope' => ['string', 'nullable'],
+            'reason_to_donate' => ['string', 'nullable'],
             'beneficiaries' => ['nullable', 'string'],
             'accepting_volunteers' => ['boolean', 'nullable'],
             'accepting_comments' => ['boolean', 'nullable'],
@@ -71,9 +72,9 @@ class StoreRequest extends FormRequest
             'videos.*' => ['nullable', 'url'],
             'external_links' => ['nullable', 'array'],
             'external_links.*' => ['nullable', 'url'],
-            'is_national' => ['boolean','nullable'],
-            'file_group' => ['array','nullable'],
-            'file_group.*.file' => ['file','nullable'],
+            'is_national' => ['boolean', 'nullable'],
+            'file_group' => ['array', 'nullable'],
+            'file_group.*.file' => ['file', 'nullable'],
         ];
     }
 }

@@ -1,25 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\VolunteerResource\Pages;
-use App\Filament\Resources\VolunteerResource\RelationManagers;
 use App\Models\Volunteer;
-use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class VolunteerResource extends Resource
 {
     protected static ?string $model = Volunteer::class;
 
     protected static ?string $navigationGroup = 'Administrează';
-    protected static ?int $navigationSort=6;
 
+    protected static ?int $navigationSort = 6;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 

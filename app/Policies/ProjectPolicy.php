@@ -15,6 +15,7 @@ class ProjectPolicy
     {
         return true;
     }
+
     public function view(User $user, Project $project): bool
     {
         if ($user->organization_id !== $project->organization_id) {
@@ -29,6 +30,7 @@ class ProjectPolicy
         if ($user->organization_id !== $project->organization_id && $user->role !== UserRole::ngo_admin) {
             return false;
         }
+
         return true;
     }
 }

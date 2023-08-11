@@ -96,9 +96,9 @@ class DatabaseSeeder extends Seeder
             'Social',
             'Sport',
         ];
-       $projectCategories  =   collect($projectCategories)->transform(function ($category) {
+        $projectCategories = collect($projectCategories)->transform(function ($category) {
             return ['name' => $category, 'slug' => \Str::slug($category)];
         });
-       ProjectCategory::insert($projectCategories->toArray());
+        ProjectCategory::insert($projectCategories->toArray());
     }
 }
