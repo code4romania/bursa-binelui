@@ -110,7 +110,7 @@ const navigation = [
     {
         name: 'Proiectele mele regionale',
         href: 'admin.ong.projects',
-        route: route('admin.ong.projects'),
+        route: route('admin.ong.regional.projects'),
         subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
         subMenu: [
             {
