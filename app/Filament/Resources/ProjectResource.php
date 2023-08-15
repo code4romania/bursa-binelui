@@ -10,6 +10,7 @@ use App\Filament\Resources\ProjectResource\Widgets\ApprovedProject;
 use App\Filament\Resources\ProjectResource\Widgets\NewProject;
 use App\Filament\Resources\ProjectResource\Widgets\RejectedProject;
 use App\Models\Project;
+use App\Models\ProjectCategory;
 use App\Tables\Columns\ResourceNameColumn;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -122,7 +123,7 @@ class ProjectResource extends Resource
                 ->label(__('project.filters.organization')),
             SelectFilter::make('category')
                 ->multiple()
-                ->options(ProjectCategory::options())
+                ->relationship('categories', 'name')
                 ->label(__('project.filters.category')),
             SelectFilter::make('counties')
                 ->multiple()

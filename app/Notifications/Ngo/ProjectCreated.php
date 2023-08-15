@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Notifications\Ngo;
 
 use App\Models\Project;
+use App\Models\RegionalProject;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -13,12 +14,12 @@ class ProjectCreated extends Notification
 {
     use Queueable;
 
-    private Project $project;
+    private Project|RegionalProject $project;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Project $project)
+    public function __construct(Project|RegionalProject $project)
     {
         $this->project = $project;
     }

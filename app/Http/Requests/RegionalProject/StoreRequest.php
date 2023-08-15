@@ -38,18 +38,17 @@ class StoreRequest extends FormRequest
                 'key_results' => ['required', 'string'],
                 'pride_success' => ['required', 'string'],
                 'had_partners' => ['required', 'boolean'],
-                'partners' => ['required', 'string'],
+                'partners' => ['required_if:had_partners,true', 'string','nullable'],
                 'project_budget' => ['required', 'string'],
                 'impact_area' => ['required', 'string'],
                 'participant_count' => ['required', 'string'],
                 'project_team' => ['required', 'string'],
                 'info_sources' => ['required', 'string'],
                 'contact_info' => ['required', 'array'],
-                'contact_info.*.name' => ['required', 'string'],
-                'contact_info.*.email' => ['required', 'email'],
-                'contact_info.*.phone' => ['required', 'string'],
-                'contact_info.*.role' => ['required', 'string'],
-                'contact_info.*.organization' => ['required', 'string'],
+                'contact_info.name' => ['required', 'string'],
+                'contact_info.email' => ['required', 'email'],
+                'contact_info.phone' => ['required', 'string'],
+                'contact_info.job' => ['required', 'string'],
             ];
         }
         return [

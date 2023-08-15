@@ -160,7 +160,7 @@
                         <!-- had_partners -->
                         <Radio
                             :label="$t('regional_had_partners_label')"
-                            :options="[{'label': 'Da', 'value': 'yes'}, {'label': 'Nu', 'value': 'no'}]"
+                            :options="[{'label': 'Da', 'value': true}, {'label': 'Nu', 'value': false}]"
                             name="had_partners"
                             v-model="form.had_partners"
                             :error="form.errors.had_partners"
@@ -168,7 +168,7 @@
 
                         <!-- What parteners -->
                         <Textarea
-                            v-if="'yes'===form.had_partners"
+                            v-if="form.had_partners"
                             class="w-full"
                             :label="$t('regional_partners_label')"
                             id="what-parteners-project"
@@ -376,7 +376,7 @@ import Radio from '@/Components/form/Radio.vue';
 
 /** Initialize inertia from Object. */
 const form = useForm({
-    project_status: 'in_review',
+    project_status: 'pending',
     name: '',
     description: '',
     categories: [],
@@ -434,13 +434,16 @@ function prepareProjectLinks() {
 const createProject = (status='in_review') => {
     form.counties = selectedCounties.map(item => item.id);
 
-    if(0 < form.categories.length) {
+    console.log(form.categories);
+    if(form.categories.length>0) {
         form.categories = form.categories.map(item => item.id);
     }
     if (status==='draft')
     {
         form.project_status = 'draft';
     }
+    console.log(form);
+    // return;
 
     prepareProjectLinks();
     form.post(route('admin.ong.regional.project.create'), {
