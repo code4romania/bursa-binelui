@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Ngo;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegionalProject\StoreRequest;
 use App\Models\ActivityDomain;
 use App\Models\Project;
 use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
+use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
@@ -51,27 +53,13 @@ class RegionalProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-
         $data = $request->validated();
-        $data['organization_id'] = auth()->user()->organization_id;
-        $data['slug'] = \Str::slug($data['name']);
-        $project = Project::create($data);
-        if ($request->has('counties')) {
-            $project->counties()->attach($data['counties']);
-        }
-        if ($request->has('category')) {
-            $project->activityDomains()->attach($data['category']);
-        }
+        $project = (new ProjectService(RegionalProject::class))->create($data);
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
-            $fileAdder->toMediaCollection('project_files');
+            $fileAdder->toMediaCollection('regionalProjectFiles');
         });
-
-        auth()->user()->notify(new ProjectCreated($project));
-        $adminUsers = User::whereRole(UserRole::bb_admin)->get();
-        Notification::send($adminUsers, new ProjectCreatedAdmin($project));
-
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }
 

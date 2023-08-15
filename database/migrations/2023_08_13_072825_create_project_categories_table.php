@@ -23,6 +23,10 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Project::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\ProjectCategory::class)->constrained()->cascadeOnDelete();
         });
+        Schema::create('regional_project_category', function (Blueprint $table) {
+            $table->foreignIdFor(\App\Models\RegionalProject::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\ProjectCategory::class)->constrained()->cascadeOnDelete();
+        });
     }
 
     /**

@@ -96,13 +96,6 @@ const navigation = [
                 route: route('admin.ong.projects', {'project_status': 'draft'}),
                 subroutes: [],
                 icon: FolderMinusIcon
-            },
-            {
-                name: 'regional_projects',
-                href: 'admin.ong.projects',
-                route: route('admin.ong.regional.project.add'),
-                subroutes: [],
-                icon: FolderMinusIcon
             }
         ],
         icon: FolderIcon
@@ -111,7 +104,7 @@ const navigation = [
         name: 'Proiectele mele regionale',
         href: 'admin.ong.projects',
         route: route('admin.ong.regional.projects'),
-        subroutes: ['admin.ong.project.add', 'admin.ong.project.edit'],
+        subroutes: ['admin.ong.regional.project.add', 'admin.ong.regional.project.edit'],
         subMenu: [
             {
                 name: 'published_projects',

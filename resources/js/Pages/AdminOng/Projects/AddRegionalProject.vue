@@ -49,78 +49,78 @@
                             :error="form.errors.counties"
                         />
 
-                        <!-- Date start -->
+                        <!-- Date start_date -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('project_date_start_label')"
+                            :label="$t('project_date_start_date_label')"
                             color="gray-700"
                             type="date"
-                            v-model="form.start"
-                            :error="form.errors.start"
+                            v-model="form.start_date"
+                            :error="form.errors.start_date"
                         />
 
-                        <!-- Date end -->
+                        <!-- Date end_date -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('project_date_end_label')"
+                            :label="$t('project_date_end_date_label')"
                             color="gray-700"
                             type="date"
-                            v-model="form.end"
-                            :error="form.errors.end"
+                            v-model="form.end_date"
+                            :error="form.errors.end_date"
                         />
 
-                        <!-- Project category -->
+                        <!-- Project categories -->
                         <SelectMultiple
                             class="w-full xl:w-1/2"
-                            :label="$t('project_category_label')"
+                            :label="$t('project_categories_label')"
                             :options="projectCategories"
-                            v-model="form.category"
+                            v-model="form.categories"
                             type="singleValue"
-                            :error="form.errors.category"
+                            :error="form.errors.categories"
                         />
 
                         <label class="flex items-center">
                             <Checkbox
-                                name="addressed"
-                                v-model:checked="form.addressed"
+                                name="for_youth"
+                                v-model:checked="form.for_youth"
                             />
-                            <span class="ml-2 text-sm text-gray-700">{{ $t('regional_addressed_label') }}</span>
+                            <span class="ml-2 text-sm text-gray-700">{{ $t('regional_for_youth_label') }}</span>
 
                             <!-- Error -->
-                            <p v-show="form.errors.addressed" class="mt-2 text-sm text-red-600">
-                                {{ form.errors.addressed }}</p>
+                            <p v-show="form.errors.for_youth" class="mt-2 text-sm text-red-600">
+                                {{ form.errors.for_youth }}</p>
                         </label>
 
-                        <!-- Needs -->
+                        <!-- identified_need -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_needs_label')"
-                            id="needs-project"
+                            :label="$t('regional_identified_need_label')"
+                            id="identified_need-project"
                             color="gray-700"
-                            v-model="form.needs"
-                            :error="form.errors.needs"
+                            v-model="form.identified_need"
+                            :error="form.errors.identified_need"
                         >
                         </Textarea>
 
-                        <!-- Solution -->
+                        <!-- proposed_solution -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_solution_label')"
-                            id="solution-project"
+                            :label="$t('regional_proposed_solution_label')"
+                            id="proposed_solution-project"
                             color="gray-700"
-                            v-model="form.solution"
-                            :error="form.errors.solution"
+                            v-model="form.proposed_solution"
+                            :error="form.errors.proposed_solution"
                         >
                         </Textarea>
 
-                        <!-- Stats -->
+                        <!-- project_progress -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_project_stats_label')"
-                            id="stats-project"
+                            :label="$t('regional_project_progress_label')"
+                            id="project_progress-project"
                             color="gray-700"
-                            v-model="form.stats"
-                            :error="form.errors.stats"
+                            v-model="form.project_progress"
+                            :error="form.errors.project_progress"
                         >
                         </Textarea>
 
@@ -130,94 +130,94 @@
                             :label="$t('regional_what_is_special_label')"
                             id="special-project"
                             color="gray-700"
-                            v-model="form.special_about"
-                            :error="form.errors.special_about"
+                            v-model="form.project_differentiator"
+                            :error="form.errors.project_differentiator"
                         >
                         </Textarea>
 
-                        <!-- Results -->
+                        <!-- key_results -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_results_label')"
-                            id="results-project"
+                            :label="$t('regional_key_results_label')"
+                            id="key_results-project"
                             color="gray-700"
-                            v-model="form.results"
-                            :error="form.errors.results"
+                            v-model="form.key_results"
+                            :error="form.errors.key_results"
                         >
                         </Textarea>
 
-                        <!-- Proud -->
+                        <!-- pride_success -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_proud_label')"
-                            id="proud-project"
+                            :label="$t('regional_pride_success_label')"
+                            id="pride_success-project"
                             color="gray-700"
-                            v-model="form.proud"
-                            :error="form.errors.proud"
+                            v-model="form.pride_success"
+                            :error="form.errors.pride_success"
                         >
                         </Textarea>
 
-                        <!-- Parteners -->
+                        <!-- had_partners -->
                         <Radio
-                            :label="$t('regional_parteners_label')"
+                            :label="$t('regional_had_partners_label')"
                             :options="[{'label': 'Da', 'value': 'yes'}, {'label': 'Nu', 'value': 'no'}]"
-                            name="parteners"
-                            v-model="form.parteners"
-                            :error="form.errors.parteners"
+                            name="had_partners"
+                            v-model="form.had_partners"
+                            :error="form.errors.had_partners"
                         />
 
                         <!-- What parteners -->
                         <Textarea
-                            v-if="'yes'==form.parteners"
+                            v-if="'yes'===form.had_partners"
                             class="w-full"
-                            :label="$t('regional_what_parteners_label')"
+                            :label="$t('regional_partners_label')"
                             id="what-parteners-project"
                             color="gray-700"
-                            v-model="form.what_parteners"
-                            :error="form.errors.what_parteners"
+                            v-model="form.partners"
+                            :error="form.errors.partners"
                         >
                         </Textarea>
 
-                        <!-- Budget -->
+                        <!-- project_budget -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_budget_label')"
-                            id="budget-project"
+                            :label="$t('regional_project_budget_label')"
+                            id="project_budget-project"
                             color="gray-700"
-                            v-model="form.budget"
-                            :error="form.errors.budget"
+                            v-model="form.project_budget"
+                            :error="form.errors.project_budget"
                         >
                         </Textarea>
-                        <p class="text-sm font-normal text-gray-500">{{ $t('regional_budget_summary') }}</p>
+                        <p class="text-sm font-normal text-gray-500">{{ $t('regional_project_budget_summary') }}</p>
 
                         <!-- Arie -->
                         <Radio
                             :label="$t('regional_arie_label')"
-                            :options="arias"
+                            :options="impact_areas"
                             name="locations"
-                            v-model="form.aria"
-                            :error="form.errors.aria"
+                            v-model="form.impact_area"
+                            :error="form.errors.impact_area"
                         />
 
-                        <!-- Participants -->
+                        <!-- participant_count -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_participants_no_label')"
-                            id="participants-scope"
+                            :label="$t('regional_participant_count_no_label')"
+                            id="participant_count-scope"
                             color="gray-700"
-                            v-model="form.participants"
-                            :error="form.errors.participants"
+                            v-model="form.participant_count"
+                            :error="form.errors.participant_count"
                         >
                         </Textarea>
 
-                        <!-- Organization -->
+                        <!-- project_team -->
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_organization_label')"
-                            id="organization-scope"
+                            :label="$t('regional_project_team_label')"
+                            id="project_team-scope"
                             color="gray-700"
-                            v-model="form.organization"
-                            :error="form.errors.organization"
+                            v-model="form.project_team"
+                            :error="form.errors.project_team"
                         >
                         </Textarea>
 
@@ -225,11 +225,11 @@
 
                         <Textarea
                             class="w-full"
-                            :label="$t('regional_extra_info_label')"
+                            :label="$t('regional_info_sources_label')"
                             id="extra-info"
                             color="gray-700"
-                            v-model="form.extra_info"
-                            :error="form.errors.extra_info"
+                            v-model="form.info_sources"
+                            :error="form.errors.info_sources"
                         >
                         </Textarea>
 
@@ -275,60 +275,63 @@
                             <p class="text-gray-500">Organizația poate recruta voluntari prin platforma Bursa Binelui. Completează datele de mai jos dacă dorești acest lucru pentru organizația ta.</p>
                         </div>
 
-                        <!-- Contact name -->
+                        <!-- contact_info name -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('regional_contact_person')"
+                            :label="$t('regional_contact_info_person')"
                             color="gray-700"
-                            id="contact-name"
+                            id="contact_info-name"
                             type="text"
-                            v-model="form.contact.name"
-                            :error="form?.errors?.contact?.name"
+                            v-model="form.contact_info.name"
+                            :error="form?.errors?.contact_info?.name"
                         />
 
-                        <!-- Contact job -->
+                        <!-- contact_info job -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('regional_contact_job')"
+                            :label="$t('regional_contact_info_job')"
                             color="gray-700"
-                            id="contact-job"
+                            id="contact_info-job"
                             type="text"
-                            v-model="form.contact.job"
-                            :error="form?.errors?.contact?.job"
+                            v-model="form.contact_info.job"
+                            :error="form?.errors?.contact_info?.job"
                         />
 
-                        <!-- Contact phone-->
+                        <!-- contact_info phone-->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('regional_contact_phone')"
+                            :label="$t('regional_contact_info_phone')"
                             color="gray-700"
                             id="project-name"
                             type="number"
-                            v-model="form.contact.phone"
-                            :error="form?.errors?.contact?.phone"
+                            v-model="form.contact_info.phone"
+                            :error="form?.errors?.contact_info?.phone"
                         />
 
 
-                        <!-- Contact email -->
+                        <!-- contact_info email -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('regional_contact_email')"
+                            :label="$t('regional_contact_info_email')"
                             color="gray-700"
-                            id="contact-email"
+                            id="contact_info-email"
                             type="email"
-                            v-model="form.contact.email"
-                            :error="form?.errors?.contact?.email"
+                            v-model="form.contact_info.email"
+                            :error="form?.errors?.contact_info?.email"
                         />
 
                         <hr class="bg-gray-500">
 
-                        <div class="flex items-center justify-end gap-6">
+                        <div class="flex items-center justify-end_date gap-6">
 
                             <SecondaryButton class="py-2.5">
                                 {{ $t('cancel') }}
                             </SecondaryButton>
 
-                            <SecondaryButton class="py-2.5">
+                            <SecondaryButton
+                                class="py-2.5"
+                                @click="createProject('draft')"
+                            >
                                 {{ $t('preview') }}
                             </SecondaryButton>
 
@@ -373,29 +376,30 @@ import Radio from '@/Components/form/Radio.vue';
 
 /** Initialize inertia from Object. */
 const form = useForm({
+    project_status: 'in_review',
     name: '',
     description: '',
-    category: [],
-    start: '',
-    end: '',
+    categories: [],
+    start_date: '',
+    end_date: '',
     counties: [],
-    addressed: false,
-    needs: '',
-    solution: '',
-    stats: '',
-    special_about: '',
-    results: '',
-    proud: '',
-    parteners: '',
-    what_parteners: '',
-    budget: '',
-    aria: '',
-    participants: '',
-    organization: '',
-    extra_info: '',
+    for_youth: false,
+    identified_need: '',
+    proposed_solution: '',
+    project_progress: '',
+    project_differentiator: '',
+    key_results: '',
+    pride_success: '',
+    had_partners: '',
+    partners: '',
+    project_budget: '',
+    impact_area: '',
+    participant_count: '',
+    project_team: '',
+    info_sources: '',
     file_group: [],
     project_links: [{url: ''}],
-    contact: {
+    contact_info: {
         name: '',
         job: '',
         phone: '',
@@ -407,7 +411,7 @@ let selectedCounties = [];
 const props = defineProps(['projectCategories', 'counties']);
 let projectLinks = ref(form.project_links);
 
-const arias = [
+const impact_areas = [
     {
         'label': 'Local',
         'value': 'local'
@@ -427,15 +431,19 @@ function prepareProjectLinks() {
 }
 
 /** Create project. */
-const createProject = () => {
+const createProject = (status='in_review') => {
     form.counties = selectedCounties.map(item => item.id);
 
-    if(0 < form.category.length) {
-        form.category = form.category.map(item => item.id);
+    if(0 < form.categories.length) {
+        form.categories = form.categories.map(item => item.id);
+    }
+    if (status==='draft')
+    {
+        form.project_status = 'draft';
     }
 
     prepareProjectLinks();
-    form.post(route('admin.ong.project.storeRegional'), {
+    form.post(route('admin.ong.regional.project.create'), {
         preserveScroll: true,
         onError: () => {},
     });

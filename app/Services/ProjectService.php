@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
 use App\Models\Project;
+use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
@@ -14,7 +15,13 @@ use Illuminate\Support\Facades\Notification;
 
 class ProjectService
 {
-    public function create(array $data): Project
+    private Project|RegionalProject $project;
+    public function __construct($projectClass)
+    {
+        $this->project = new $projectClass;
+    }
+
+    public function create(array $data): Project|RegionalProject
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = $data['project_status'];
@@ -34,14 +41,14 @@ class ProjectService
         return $project;
     }
 
-    private function createDraftProject(array $data): Project
+    private function createDraftProject(array $data): Project|RegionalProject
     {
         if (empty($data['name'])) {
             $data['name'] = 'Draft-' . date('Y-m-d H:i:s') . '-' . auth()->user()->name;
             $data['slug'] = \Str::slug($data['name']);
         }
 
-        return  Project::create($data);
+        return  $this->project::create($data);
     }
 
     private function sendCreateNotifications($project): void
@@ -51,10 +58,10 @@ class ProjectService
         Notification::send($adminUsers, new ProjectCreatedAdmin($project));
     }
 
-    private function createPendingProject(array $data): Project
+    private function createPendingProject(array $data): Project|RegionalProject
     {
         $data['slug'] = \Str::slug($data['name']);
-        $project = Project::create($data);
+        $project = $this->project::create($data);
         $this->sendCreateNotifications($project);
 
         return $project;

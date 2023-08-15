@@ -20,20 +20,22 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->boolean('for_youth')->default(false);
+            $table->boolean('for_youth')->default(false)->nullable();
             $table->text('identified_need')->nullable();
             $table->text('proposed_solution')->nullable();
             $table->text('project_progress')->nullable();
             $table->text('project_differentiator')->nullable();
             $table->text('key_results')->nullable();
             $table->text('pride_success')->nullable();
-            $table->boolean('had_partners')->default(false);
+            $table->boolean('had_partners')->nullable()->default(false);
+            $table->string('partners')->nullable();
             $table->text('project_budget')->nullable();
             $table->string('impact_area')->nullable();
             $table->text('participant_count')->nullable();
             $table->text('project_team')->nullable();
             $table->text('info_sources')->nullable();
             $table->json('contact_info')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
