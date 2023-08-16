@@ -23,13 +23,17 @@ class Badge extends Model implements HasMedia
         'description',
     ];
 
+    protected $appends = [
+        'image',
+    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')
             ->useFallbackUrl(Vite::asset('resources/images/badge.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
-                $this->addMediaConversion('default')
+                $this->addMediaConversion('thumb')
                     ->fit(Manipulations::FIT_CROP, 300, 300)
                     ->nonQueued();
             });
@@ -44,6 +48,6 @@ class Badge extends Model implements HasMedia
 
     public function getImageAttribute(): string
     {
-        return $this->getFirstMediaUrl();
+        return $this->getFirstMediaUrl(conversionName: 'thumb');
     }
 }

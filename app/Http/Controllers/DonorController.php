@@ -23,47 +23,10 @@ class DonorController extends Controller
             ],
         ];
 
-        $badges = [
-            [
-                'name' => 'multiple_donor',
-                'title' => 'multiple_donor_title',
-                'description' => 'multiple_donor_description',
-            ],
-            [
-                'name' => 'subscriber',
-                'title' => 'subscriber_donor_title',
-                'description' => 'subscriber_donor_description',
-            ],
-            [
-                'name' => 'long_race',
-                'title' => 'long_race_title',
-                'description' => 'long_race_description',
-            ],
-            [
-                'name' => 'supporter',
-                'title' => 'supporter_donor_title',
-                'description' => 'supporter_donor_description',
-            ],
-            [
-                'name' => 'month_volunteer',
-                'title' => 'month_volunteer_title',
-                'description' => 'month_volunteer_description',
-            ],
-            [
-                'name' => 'top_donor',
-                'title' => 'top_donor_title',
-                'description' => 'top_donor_description',
-            ],
-            [
-                'name' => 'donor',
-                'title' => 'recurent_donor_title',
-                'description' => 'recurent_donor_description',
-            ],
-        ];
-
         return Inertia::render('Donor/Dashboard', [
             'profile' => $profile,
-            'badges' => $badges,
+            'badges' => auth()->user()->badges
+                ->map(fn ($badge) => $badge->only('image', 'title', 'description')),
         ]);
     }
 
