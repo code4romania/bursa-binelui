@@ -55,10 +55,6 @@ class DatabaseSeeder extends Seeder
             ->count(3)
             ->create();
 
-        Badge::factory()
-            ->count(30)
-            ->create();
-
         Organization::factory()
             ->count(50)
             ->has(
@@ -75,6 +71,10 @@ class DatabaseSeeder extends Seeder
                     ->count(10)
                     ->hasVolunteers(10)
             )
+            ->create();
+
+        Badge::factory()
+            ->count(30)
             ->create();
 
         $articleCategories = ['Social', 'Educație', 'Sănătate', 'Cultură', 'Mediu', 'Sport', 'Animale', 'Altele'];
