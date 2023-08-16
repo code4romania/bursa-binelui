@@ -46,7 +46,7 @@
                             :label="$t('project_category_label')"
                             use-translation="true"
                             :options="projectCategories"
-                            v-model="form.categories"
+                            v-model="selectedCategories"
                             type="singleValue"
                             :error="form.errors.categories"
                         />
@@ -310,7 +310,8 @@ const form = useForm({
     project_links: [{url: ''}],
     project_articles: [{url:''}]
 });
-let selectedCounties = [];
+let selectedCounties = ref([]);
+let selectedCategories = ref([]);
 const props = defineProps(['projectCategories', 'counties']);
 let projectLinks = ref(form.project_links);
 let projectArticles = ref(form.project_articles);
@@ -326,10 +327,7 @@ function prepareExternalLinks() {
 /** Create project. */
 const createProject = (status) => {
     form.counties = selectedCounties.map(item => item.id);
-
-    if(0 < form.categories.length) {
-        form.categories = form.categories.map(item => item.id);
-    }
+    form.categories = selectedCategories.value.map(item => item.id);
     form.project_status = status;
 
     prepareProjectLinks();
