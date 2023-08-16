@@ -141,4 +141,18 @@ class Project extends Model implements HasMedia
             ->logFillable()
             ->logOnlyDirty();
     }
+
+    public function getRequiredFieldsForApproval(): array
+    {
+        return[
+            'name',
+            'description',
+            'start',
+            'end',
+            'categories',
+            'reason_to_donate',
+            'beneficiaries'
+        ];
+
+    }
 }

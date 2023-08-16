@@ -247,7 +247,7 @@
                             </SecondaryButton>
 
                             <SecondaryButton class="py-2.5"
-                            @click="createProject('draft')">
+                            @click="createProject">
                                 {{ $t('preview') }}
                             </SecondaryButton>
 
@@ -255,7 +255,7 @@
                                 background="primary-500"
                                 hover="primary-400"
                                 color="white"
-                                @click="createProject('pending')"
+                                @click="createProject"
                             >
                                 {{ $t('save') }}
                             </PrimaryButton>
@@ -295,7 +295,6 @@ const form = useForm({
     name: '',
     target_budget: '',
     categories: [],
-    project_status: '',
     start: '',
     end: '',
     counties: [],
@@ -325,10 +324,9 @@ function prepareExternalLinks() {
 }
 
 /** Create project. */
-const createProject = (status) => {
-    form.counties = selectedCounties.map(item => item.id);
+const createProject = () => {
+    form.counties = selectedCounties.value.map(item => item.id);
     form.categories = selectedCategories.value.map(item => item.id);
-    form.project_status = status;
 
     prepareProjectLinks();
     prepareExternalLinks();

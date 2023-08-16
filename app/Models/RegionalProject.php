@@ -52,6 +52,8 @@ class RegionalProject extends Model implements HasMedia
         'had_partners' => 'boolean',
         'contact_info' => 'array',
     ];
+    protected $appends = ['cover_image', 'type'];
+
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -76,6 +78,41 @@ class RegionalProject extends Model implements HasMedia
     public function counties(): BelongsToMany
     {
         return $this->belongsToMany(County::class);
+    }
+
+    public function getCoverImageAttribute(): string
+    {
+        return $this->getFirstMediaUrl('regionalProjectFiles', 'preview') ?? '';
+    }
+
+    public function getTypeAttribute(): string
+    {
+        return 'regional';
+    }
+
+    public function getRequiredFieldsForApproval(): array
+    {
+        return [
+            'name',
+            'description',
+            'start_date',
+            'end_date',
+            'for_youth',
+            'identified_need',
+            'proposed_solution',
+            'project_progress',
+            'project_differentiator',
+            'key_results',
+            'pride_success',
+            'had_partners',
+            'partners',
+            'project_budget',
+            'impact_area',
+            'participant_count',
+            'project_team',
+            'info_sources',
+            'contact_info',
+        ];
     }
 
 }

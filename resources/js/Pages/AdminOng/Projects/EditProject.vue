@@ -110,7 +110,7 @@
                         <!-- Edit project category -->
                         <div class="grid grid-cols-12 px-4 py-6 bg-white">
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_category_label') }}</dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.category }}</dt>
+                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.categories.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
                                 @action="editField('category')"
                                 class="flex justify-end col-span-1"
@@ -417,7 +417,6 @@
     let project = ref(props.project);
     let form = useForm(project.value);
 
-    onMounted(() => {})
     const  editField = (field) => {
         let newForm = useForm({
             [field]: form[field]

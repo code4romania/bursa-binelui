@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="mt-8">
+                <div class="mt-8" v-if="data?.type!=='regional'">
                     <div
                         class="flex items-center justify-between mb-1 text-xl font-bold"
                     >
@@ -113,8 +113,9 @@
                 </div>
 
                 <SecondaryButton
-                    v-if="'admin' == cardType && 'active' == data.status"
+                    v-if="'admin' == cardType && 'pending' == data.status"
                     class="w-full mt-4 py-2.5"
+                    @click="changeProjectStatus(data.id, 'draft', data.type)"
                 >
                     {{ $t("draft") }}
                 </SecondaryButton>
@@ -122,6 +123,7 @@
                 <SecondaryButton
                     v-if="'admin' == cardType && 'draft' == data.status"
                     class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
+                    @click="changeProjectStatus(data.id, 'pending', data.type)"
                 >
                     {{ $t("publish") }}
                 </SecondaryButton>
@@ -161,7 +163,7 @@
 import {computed, onMounted} from "vue";
 
     /** Import from inertia. */
-    import { Link } from "@inertiajs/vue3";
+import {Link, useForm} from "@inertiajs/vue3";
 
     /** Import components. */
     import SvgLoader from "@/Components/SvgLoader.vue";
@@ -195,5 +197,16 @@ import {computed, onMounted} from "vue";
         const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
         return daysDiff;
-    })
+    });
+    const changeProjectStatus = (id, status, type) => {
+       let form = useForm({
+            status: status,
+            id: id,
+        });
+       console.log(type);
+       let tmpRoute = type==='regional'?route('admin.ong.regional.project.change-status', id):route('admin.ong.project.change-status', id);
+        if (confirm('Are you sure you want to change the status of this project?')) {
+           form.post(tmpRoute);
+        }
+    };
 </script>

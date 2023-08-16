@@ -27,7 +27,6 @@ class RegionalProjectController extends Controller
 
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => $projects,
-//            'projectStatus' => $projectStatus,
         ]);
     }
 
@@ -93,5 +92,14 @@ class RegionalProjectController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function changeStatus(Request $request, string $id)
+    {
+        try {
+            (new ProjectService(RegionalProject::class))->changeStatus($id, $request->get('status'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error_message', $exception->getMessage());
+        }
+        return redirect()->back()->with('success_message', 'Project status changed.');
     }
 }

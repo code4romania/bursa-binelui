@@ -86,7 +86,7 @@ const navigation = [
             {
                 name: 'published_projects',
                 href: 'admin.ong.projects',
-                route: route('admin.ong.projects', {'project_status': 'published'}),
+                route: route('admin.ong.projects', {'project_status': 'approved'}),
                 icon: FolderOpenIcon,
                 subroutes: [],
             },

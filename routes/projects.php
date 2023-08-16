@@ -15,7 +15,7 @@ Route::post('/proiect/{project:slug}/voluntar', [\App\Http\Controllers\ProjectCo
 /* Ong routes. */
 Route::prefix('ong')->middleware('auth')->group(function () {
     Route::get('proiecte', [ProjectController::class, 'index'])->name('admin.ong.projects');
-
+    Route::post('project/change-status/{project}', [ProjectController::class, 'changeStatus'])->name('admin.ong.project.change-status');
     Route::get('add-proiect', [ProjectController::class, 'create'])->name('admin.ong.project.add');
     Route::post('add-proiect', [ProjectController::class, 'store'])->name('admin.ong.project.store');
     Route::get('edit-proiect/{project}', [ProjectController::class, 'edit'])->name('admin.ong.project.edit');
@@ -24,6 +24,7 @@ Route::prefix('ong')->middleware('auth')->group(function () {
         Route::get('/', [RegionalProjectController::class, 'index'])->name('admin.ong.regional.projects');
         Route::get('/add', [RegionalProjectController::class, 'create'])->name('admin.ong.regional.project.add');
         Route::post('/store', [RegionalProjectController::class, 'store'])->name('admin.ong.regional.project.create');
+        Route::post('/change-status/{project}', [RegionalProjectController::class, 'changeStatus'])->name('admin.ong.regional.project.change-status');
     });
 
 });

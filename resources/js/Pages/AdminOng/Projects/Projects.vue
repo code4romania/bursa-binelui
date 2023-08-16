@@ -60,17 +60,18 @@
     import SvgLoader from '@/Components/SvgLoader.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import Alert from '@/Components/Alert.vue';
+    import {onMounted} from "vue";
 
-    const flash = {
-        success_message:'',
-        error_message:''
-    };
     const  props =defineProps({
         query: {
             type: Object,
         },
         projectStatus:{
             type: String,
+        },
+        flash : {
+            success_message:'',
+            error_message:''
         }
     });
 

@@ -24,11 +24,15 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projectStatus = $request->get('project_status', 'approved');
-        $projects = Project::with('organization')->where('status', $projectStatus)->where('organization_id', auth()->user()->organization_id)->paginate(16)->withQueryString();
+        $projectStatus = $request->get('project_status');
+        $projects = Project::query()->with('organization')->where('organization_id', auth()->user()->organization_id);
+        if ($projectStatus)
+        {
+            $projects = $projects->where('status', $projectStatus);
+        }
 
         return Inertia::render('AdminOng/Projects/Projects', [
-            'query' => $projects,
+            'query' => $projects->paginate(16)->withQueryString(),
             'projectStatus' => $projectStatus,
         ]);
     }
@@ -52,13 +56,11 @@ class ProjectController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $project = (new ProjectService())->create($data);
+        $project = (new ProjectService(Project::class))->create($data);
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('project_files');
         });
-        $redirectUrl = $project->status === ProjectStatus::draft ? route('project', ['project'=>$project->slug]) : route('admin.ong.project.edit', $project->id);
-
-        return redirect()->to($redirectUrl)->with('success', 'Project created.');
+        return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }
 
     public function edit(Project $project)
@@ -70,7 +72,7 @@ class ProjectController extends Controller
         return Inertia::render('AdminOng/Projects/EditProject', [
             'project' => $project,
             'counties' => $counties,
-            'projectCategories' =>  ProjectCategory::get(['name', 'id']),
+            'projectCategories' => ProjectCategory::get(['name', 'id']),
         ]);
     }
 
@@ -82,5 +84,15 @@ class ProjectController extends Controller
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
         $project->update($request->all());
+    }
+
+    public function changeStatus($id, Request $request)
+    {
+        try {
+            (new ProjectService(Project::class))->changeStatus($id, $request->get('status'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error_message', $exception->getMessage());
+        }
+        return redirect()->back()->with('success_message', 'Project status changed.');
     }
 }

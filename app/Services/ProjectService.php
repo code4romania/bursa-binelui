@@ -6,31 +6,33 @@ namespace App\Services;
 
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
+use App\Http\Requests\Project\StoreRequest;
 use App\Models\Project;
 use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\ValidationData;
+use Illuminate\Validation\ValidationException;
 
 class ProjectService
 {
     private Project|RegionalProject $project;
-    public function __construct($projectClass)
+    public function __construct($projectClass=null)
     {
-        $this->project = new $projectClass;
+
+        if ($projectClass !== null) {
+            $projectClass = new $projectClass;
+            $this->project = $projectClass;
+        }
     }
 
     public function create(array $data): Project|RegionalProject
     {
         $data['organization_id'] = auth()->user()->organization_id;
-        $data['status'] = $data['project_status'];
-        if ($data['project_status'] === ProjectStatus::draft->value) {
-            $project = $this->createDraftProject($data);
-        } else {
-            $project = $this->createPendingProject($data);
-        }
-
+        $data['status'] = ProjectStatus::draft->value;
+        $project = $this->createDraftProject($data);
         if (! empty($data['categories'])) {
             $project->categories()->attach($data['categories']);
         }
@@ -45,9 +47,8 @@ class ProjectService
     {
         if (empty($data['name'])) {
             $data['name'] = 'Draft-' . date('Y-m-d H:i:s') . '-' . auth()->user()->name;
-            $data['slug'] = \Str::slug($data['name']);
         }
-
+        $data['slug'] = \Str::slug($data['name']);
         return  $this->project::create($data);
     }
 
@@ -65,5 +66,26 @@ class ProjectService
         $this->sendCreateNotifications($project);
 
         return $project;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function changeStatus($id, string $status): void
+    {
+        $this->project = $this->project::findOrFail($id);
+        if ($this->project->status === ProjectStatus::draft && $status === ProjectStatus::pending->value) {
+           $fields = $this->project->toArray();
+           $requiredFields = $this->project->getRequiredFieldsForApproval();
+           foreach ($fields as $key => $value) {
+             if (in_array($key, $requiredFields) && empty($value)) {
+               throw new \Exception('Project is missing required fields for approval, please fill in all required fields . Please fill: '. $key );
+             }
+           }
+        }
+        $this->project->update(['status' => $status]);
+        if ($status === ProjectStatus::approved->value) {
+            $this->sendCreateNotifications($this->project);
+        }
     }
 }
