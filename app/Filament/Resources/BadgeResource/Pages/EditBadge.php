@@ -18,4 +18,11 @@ class EditBadge extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function getRelationManagers(): array
+    {
+        return [
+            //
+        ];
+    }
 }
