@@ -116,12 +116,12 @@
                                 class="flex justify-end col-span-1"
                             >
 
-                                <Select
+                                <SelectMultiple
                                     class="w-full"
                                     :label="$t('project_category_label')"
                                     :options="props.projectCategories"
-                                    v-model="form.category"
-                                    :error="form.errors.category"
+                                    v-model="form.categories"
+                                    :error="form.errors.categories"
                                 />
 
                             </EditModal>
