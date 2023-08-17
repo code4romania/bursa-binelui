@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Championship;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Navigation\NavigationItem;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->registerCarbonMacros();
     }
 
     /**
@@ -93,5 +94,14 @@ class AppServiceProvider extends ServiceProvider
 
             ]);
         });
+    }
+
+    protected function registerCarbonMacros(): void
+    {
+        Carbon::macro('toFormattedDate', fn () => $this->translatedFormat(config('forms.components.date_time_picker.display_formats.date')));
+        Carbon::macro('toFormattedDateTime', fn () => $this->translatedFormat(config('forms.components.date_time_picker.display_formats.date_time')));
+        Carbon::macro('toFormattedDateTimeWithSeconds', fn () => $this->translatedFormat(config('forms.components.date_time_picker.display_formats.date_time_with_seconds')));
+        Carbon::macro('toFormattedTime', fn () => $this->translatedFormat(config('forms.components.date_time_picker.display_formats.time')));
+        Carbon::macro('toFormattedTimeWithSeconds', fn () => $this->translatedFormat(config('forms.components.date_time_picker.display_formats.time_with_seconds')));
     }
 }

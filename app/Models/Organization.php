@@ -74,9 +74,6 @@ class Organization extends Model implements HasMedia
             ->nonQueued();
     }
 
-    /**
-     * Get the users or the organization.
-     */
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
@@ -90,6 +87,11 @@ class Organization extends Model implements HasMedia
     public function activityDomains(): BelongsToMany
     {
         return $this->belongsToMany(ActivityDomain::class);
+    }
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
     }
 
     /**

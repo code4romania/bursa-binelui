@@ -11,6 +11,7 @@ use App\Models\Badge;
 use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -70,6 +71,9 @@ class DatabaseSeeder extends Seeder
                 Project::factory()
                     ->count(10)
                     ->hasVolunteers(10)
+            )
+            ->has(
+                Ticket::factory()
             )
             ->create();
 
