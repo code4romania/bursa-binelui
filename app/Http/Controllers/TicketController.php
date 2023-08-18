@@ -79,4 +79,20 @@ class TicketController extends Controller
             'ticket' => new TicketResource($ticket),
         ]);
     }
+
+    public function status(Ticket $ticket, Request $request): RedirectResponse
+    {
+        $this->authorize('update', $ticket);
+
+        if ($ticket->isOpen()) {
+            $ticket->close();
+            $message = __('ticket.action_close_confirm.success');
+        } else {
+            $ticket->open();
+            $message = __('ticket.action_reopen_confirm.success');
+        }
+
+        return redirect()->route('admin.ong.tickets.view', $ticket)
+            ->with('success_message', $message);
+    }
 }

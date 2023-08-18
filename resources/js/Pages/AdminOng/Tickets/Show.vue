@@ -5,110 +5,66 @@
 
         <!-- Alert -->
         <Alert
-            class="fixed z-50 right-10 top-10 w-96"
-            :type="
-                flash.error_message
-                    ? 'error'
-                    : flash.success_message
-                    ? 'success'
-                    : false
-            "
+            class="fixed right-10 top-10 w-96"
+            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
             :message="flash.success_message || flash.error_message"
-            @emptyFlash="
-                Object.assign(flash, { success_message: '', error_message: '' })
-            "
+            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
         />
 
         <!-- Dashboard template -->
         <Dashboard>
             <div class="w-full mb-24 p-9">
                 <header class="flex items-center gap-4">
-                    <div
-                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500"
-                    >
-                        <SvgLoader
-                            class="shrink-0 fill-primary-500"
-                            name="annotation"
-                        />
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                        <SvgLoader class="shrink-0 fill-primary-500" name="annotation" />
                     </div>
                     <h1 class="text-2xl font-bold text-gray-900">
                         {{ ticket.subject }}
                     </h1>
                 </header>
 
-                <div class="mt-6 border-t border-gray-100">
-                    <dl class="divide-y divide-gray-100">
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                            >
-                                {{ $t("date") }}
-                            </dt>
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                            >
-                                {{ ticket.created_at }}
-                            </dt>
-                        </div>
+                <dl class="my-8 border border-gray-100 divide-y divide-gray-50">
+                    <div class="grid items-center px-4 py-3 text-gray-700 bg-gray-50 md:grid-cols-12">
+                        <dt class="font-semibold md:col-span-5 lg:col-span-3" v-text="$t('date')" />
+                        <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.created_at" />
+                    </div>
 
-                        <!-- Edit project name -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                            >
-                                {{ $t("subject") }}
-                            </dt>
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                            >
-                                {{ ticket.subject }}
-                            </dt>
-                        </div>
+                    <div class="grid items-center px-4 py-3 text-gray-700 bg-white md:grid-cols-12">
+                        <dt class="font-semibold md:col-span-5 lg:col-span-3" v-text="$t('subject')" />
+                        <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.subject" />
+                    </div>
 
-                        <!-- Edit target amount -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                            >
-                                {{ $t("message") }}
-                            </dt>
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                            >
-                                {{ ticket.content }}
-                            </dt>
-                        </div>
+                    <div class="grid items-center px-4 py-3 text-gray-700 bg-gray-50 md:grid-cols-12">
+                        <dt class="font-semibold md:col-span-5 lg:col-span-3" v-text="$t('message')" />
+                        <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.content" />
+                    </div>
+                </dl>
 
-                        <div
-                            v-for="(message, index) in ticket.messages"
-                            :key="index"
-                            :class="[
-                                index % 2 == 0 ? 'bg-white' : 'bg-gray-100',
-                                'px-4 py-6 grid grid-cols-12',
-                            ]"
-                        >
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                            >
-                                <p
-                                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                                >
-                                    {{ message.user.name }}
-                                </p>
-                                <p
-                                    class="col-span-12 text-sm leading-5 text-gray-700 md:col-span-5"
-                                >
-                                    {{ message.created_at }}
-                                </p>
-                            </dt>
-                            <dt
-                                class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                            >
-                                {{ message.content }}
-                            </dt>
-                        </div>
-                    </dl>
-                </div>
+                <dl class="my-8 border border-gray-100 divide-y divide-gray-50">
+                    <div
+                        v-for="(message, index) in ticket.messages"
+                        :key="index"
+                        :class="[index % 2 === 0 ? 'bg-white' : 'bg-gray-50', 'px-4 py-3 grid grid-cols-12 text-sm']"
+                    >
+                        <dt class="col-span-12 leading-none text-gray-700 md:col-span-5 lg:col-span-3">
+                            <p
+                                class="text-sm font-semibold"
+                                :class="{
+                                    'text-warning-600': message.user.is_bb_admin,
+                                }"
+                                v-text="message.user.name"
+                            />
+
+                            <time
+                                class="text-xs text-gray-500"
+                                :datetime="message.created_at"
+                                :title="message.created_at"
+                                v-text="message.created_at_relative"
+                            />
+                        </dt>
+                        <dt class="col-span-12 md:col-span-6 lg:col-span-8" v-text="message.content" />
+                    </div>
+                </dl>
 
                 <div class="flex items-center justify-end w-full gap-4 mt-8">
                     <Modal
@@ -118,14 +74,10 @@
                     >
                         <form class="w-full space-y-4" @submit.prevent="reply">
                             <h3>
-                                <span
-                                    class="block text-lg font-semibold to-gray-900"
-                                >
-                                    {{ $t("ticket_reply_header") }}
+                                <span class="block text-lg font-semibold to-gray-900">
+                                    {{ $t('ticket_reply_header') }}
                                 </span>
-                                <span class="block text-base text-gray-500">{{
-                                    ticket.subject
-                                }}</span>
+                                <span class="block text-base text-gray-500">{{ ticket.subject }}</span>
                             </h3>
 
                             <Textarea
@@ -137,14 +89,9 @@
                             />
 
                             <!-- Actions -->
-                            <div
-                                class="flex items-center justify-end w-full gap-6 pt-6"
-                            >
-                                <SecondaryButton
-                                    @click="closeModal"
-                                    class="py-2.5"
-                                >
-                                    {{ $t("cancel") }}
+                            <div class="flex items-center justify-end w-full gap-6 pt-6">
+                                <SecondaryButton @click="closeModal" class="py-2.5">
+                                    {{ $t('cancel') }}
                                 </SecondaryButton>
 
                                 <PrimaryButton
@@ -153,25 +100,13 @@
                                     color="white"
                                     class="w-auto"
                                 >
-                                    {{ $t("save") }}
+                                    {{ $t('save') }}
                                 </PrimaryButton>
                             </div>
                         </form>
                     </Modal>
 
-                    <ModalAction
-                        triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
-                        :triggerModalText="$t('close_ticket')"
-                        :cancelModalText="$t('cancel')"
-                        :actionModalText="$t('close')"
-                        :title="$t('confirm')"
-                        :body="`${$t('confirm_reject_text')} ${ticket.subject}`"
-                        :actionRoute="
-                            route('admin.ong.tickets.status', ticket.id)
-                        "
-                        actionType="post"
-                        :data="ticket"
-                    />
+                    <ToggleTicketStatusModal :data="ticket" />
                 </div>
             </div>
         </Dashboard>
@@ -180,18 +115,18 @@
 
 <script setup>
     /** Import from inertia. */
-    import { Head, Link, useForm } from "@inertiajs/vue3";
+    import { Head, Link, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
-    import PageLayout from "@/Layouts/PageLayout.vue";
-    import Dashboard from "@/Components/templates/Dashboard.vue";
-    import Alert from "@/Components/Alert.vue";
-    import SvgLoader from "@/Components/SvgLoader.vue";
-    import ModalAction from "@/Components/modals/ModalAction.vue";
-    import Modal from "@/Components/modals/Modal.vue";
-    import Textarea from "@/Components/form/Textarea.vue";
-    import SecondaryButton from "@/Components/buttons/SecondaryButton.vue";
-    import PrimaryButton from "@/Components/buttons/PrimaryButton.vue";
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import Dashboard from '@/Components/templates/Dashboard.vue';
+    import Alert from '@/Components/Alert.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import ToggleTicketStatusModal from '@/Components/modals/ToggleTicketStatusModal.vue';
+    import Modal from '@/Components/modals/Modal.vue';
+    import Textarea from '@/Components/form/Textarea.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
     const props = defineProps({
         ticket: {
@@ -200,21 +135,21 @@
         flash: {
             type: Object,
             default: () => ({
-                success_message: "",
-                error_message: "",
+                success_message: '',
+                error_message: '',
             }),
         },
     });
 
     const form = useForm({
-        content: "",
+        content: '',
     });
 
-    const closeModal = () => document.getElementById("ticket-answer").click();
+    const closeModal = () => document.getElementById('ticket-answer').click();
 
     const reply = () => {
         closeModal();
-        form.post(route("admin.ong.tickets.reply", props.ticket.id), {
+        form.post(route('admin.ong.tickets.reply', props.ticket.id), {
             preserveScroll: true,
             onSuccess: () => {
                 form.reset();

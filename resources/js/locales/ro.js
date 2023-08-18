@@ -233,7 +233,8 @@ export default {
     "ticket": "Ticket",
     "subject": "Subiect",
     "date": "Data",
-    "close_ticket": "Inchide ticket",
+    "close_ticket": "Închide ticket",
+    "reopen_ticket": "Redeschide ticket",
     "answer": "Raspunde",
     "message": "Mesaj",
     "add_ticket": "Deschide un tichet nou",
@@ -397,5 +398,7 @@ export default {
     'ticket_created_at': 'Data',
     'ticket_closed_at': 'Închis la data',
     'ticket_reply_header': 'Trimite un răspuns',
+    'confirm_close_ticket': 'Ești sigur că vrei să închizi acest tichet?',
+    'confirm_reopen_ticket': 'Ești sigur că vrei să redeschizi acest tichet?',
     "add_regional_project": "Adaugă un proiect regional",
 }

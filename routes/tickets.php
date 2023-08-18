@@ -15,4 +15,6 @@ Route::prefix('ong/tickets')->middleware('auth')->group(function () {
 
     Route::get('/{ticket}', [TicketController::class, 'show'])->name('admin.ong.tickets.view');
     Route::post('/{ticket}/reply', [TicketController::class, 'reply'])->name('admin.ong.tickets.reply');
+    Route::post('/{ticket}/status', [TicketController::class, 'status'])
+        ->whereIn('status', ['open', 'closed'])->name('admin.ong.tickets.status');
 });

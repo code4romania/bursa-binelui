@@ -23,7 +23,7 @@ return[
         'title' => 'Închide ticket',
         'text' => 'Ești sigur că dorești să efectuezi operaţia?',
         'action' => 'Închide',
-        'success' => 'Ticket-ul a fost închis',
+        'success' => 'Ticket-ul a fost închis.',
     ],
 
     'action_reopen_confirm' => [

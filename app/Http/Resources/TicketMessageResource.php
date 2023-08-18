@@ -16,10 +16,12 @@ class TicketMessageResource extends JsonResource
         return [
             'id' => $this->id,
             'content' => $this->content,
-            'created_at' => $this->created_at->toFormattedDateTime(),
+            'created_at' => $this->created_at->toDateTimeString(),
+            'created_at_relative' => $this->created_at->diffForHumans(),
             'user' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,
+                'is_bb_admin' => $this->user->isBbAdmin(),
             ],
         ];
     }

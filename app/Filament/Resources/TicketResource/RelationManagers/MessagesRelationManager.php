@@ -35,8 +35,8 @@ class MessagesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Stack::make([
-                    Split::make([
+                Split::make([
+                    Stack::make([
                         TextColumn::make('user.name')
                             ->translateLabel()
                             ->weight('bold')
@@ -51,10 +51,11 @@ class MessagesRelationManager extends RelationManager
 
                         TextColumn::make('created_at')
                             ->translateLabel()
-                            ->dateTime()
+                            ->since()
                             ->color('secondary')
                             ->size('sm'),
                     ]),
+
                     TextColumn::make('content')
                         ->formatStateUsing(fn ($state) => new HtmlString(nl2br($state)))
                         ->wrap(),
