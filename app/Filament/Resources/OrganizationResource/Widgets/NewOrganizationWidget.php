@@ -6,17 +6,15 @@ namespace App\Filament\Resources\OrganizationResource\Widgets;
 
 use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource;
+use App\Filament\Resources\OrganizationResource\Actions\ApproveAction;
+use App\Filament\Resources\OrganizationResource\Actions\RejectAction;
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Concerns\CanPaginateRecords;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
 class NewOrganizationWidget extends BaseWidget
 {
-    use CanPaginateRecords {
-        paginateTableQuery as protected;
-    }
 
     protected static ?int $sort = 1;
 
@@ -41,7 +39,9 @@ class NewOrganizationWidget extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Organization::query()->isPending();
+        return Organization::query()->isPending()
+            ->with(['media'])
+            ->select(['id', 'name','created_at','status']);
     }
 
     protected function getTableQueryStringIdentifier(): ?string
@@ -90,27 +90,13 @@ class NewOrganizationWidget extends BaseWidget
                 ->icon(null),
             Action::make('edit')
                 ->label(__('organization.actions.edit'))
-                ->url(self::getTableRecordUrlUsing())
-                ->size('sm')
+                ->url(fn (Organization $record) => OrganizationResource::getUrl('edit', [
+                    'record' => $record,
+                ]))
                 ->icon(null),
-            Action::make('accept')
-                ->label(__('organization.actions.approve'))
-                ->size('sm')
-                ->icon(null)
-                ->action(function (Organization $record) {
-                    $record->status = OrganizationStatus::approved->value;
-                    $record->save();
-                })
-                ->requiresConfirmation(),
-            Action::make('reject')
-                ->label(__('organization.actions.reject'))
-                ->action(function (Organization $record) {
-                    $record->status = OrganizationStatus::rejected->value;
-                    $record->save();
-                })
-                ->requiresConfirmation()
-                ->size('sm')
-                ->icon(null),
+            ApproveAction::make('approve'),
+            RejectAction::make('reject'),
+
         ];
     }
 }
