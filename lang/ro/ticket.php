@@ -17,6 +17,7 @@ return[
         'reply' => 'Răspunde',
         'close' => 'Închide',
         'reopen' => 'Redeschide',
+        'view' => 'Vezi ticketul',
     ],
 
     'action_close_confirm' => [
@@ -39,6 +40,12 @@ return[
 
     'action_reply' => [
         'success' => 'Mesajul a fost trimis.',
+    ],
+
+    'mail' => [
+        'created' => [
+            'subject' => 'Ticketul #:id a fost creat',
+        ],
     ],
 
 ];

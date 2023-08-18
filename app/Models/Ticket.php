@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Events\TicketCreated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,10 @@ class Ticket extends Model
 
     protected $casts = [
         'closed_at' => 'datetime',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => TicketCreated::class,
     ];
 
     public function user(): BelongsTo
