@@ -6,8 +6,11 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Organization;
+use App\Models\Project;
 use App\Policies\OrganizationPolicy;
+use App\Policies\ProjectPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Organization::class => OrganizationPolicy::class,
+        Project::class => ProjectPolicy::class,
     ];
 
     /**
@@ -25,6 +29,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('view-project', function ($user) {
+            return $user->isAdmin();
+        });
     }
 }

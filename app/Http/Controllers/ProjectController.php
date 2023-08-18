@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
+use App\Enums\ProjectStatus;
 use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;
@@ -39,14 +40,6 @@ class ProjectController extends Controller
             $projects->where('end', '<=', str_replace('.', '-', $date[1]));
         }
 
-        // if ($request->query('start_date')) {
-        //     $projects->where('start', '>=', $request->query('start_date'));
-        // }
-
-        // if ($request->query('end_date')) {
-        //     $projects->where('end', '<=', $request->query('end_date'));
-        // }
-
         $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Projects/Projects', [
@@ -58,6 +51,10 @@ class ProjectController extends Controller
 
     public function item(Project $project)
     {
+        if ($project->status !== ProjectStatus::approved) {
+            $this->authorize('view', $project);
+        }
+
         return Inertia::render('Public/Projects/Project', [
             'project' => $project,
         ]);
