@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
-use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource;
+use App\Filament\Resources\OrganizationResource\Actions\RejectAction;
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Concerns\CanPaginateRecords;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
 class ApprovedOrganizationWidget extends BaseWidget
 {
-    use CanPaginateRecords {
-        paginateTableQuery as protected;
-    }
-
     /** @var string */
     protected static string $resource = OrganizationResource::class;
 
@@ -41,7 +36,9 @@ class ApprovedOrganizationWidget extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Organization::isApproved();
+        return Organization::isApproved()
+            ->with(['media'])
+            ->select(['id', 'name', 'created_at', 'status']);
     }
 
     protected function getTableQueryStringIdentifier(): ?string
@@ -73,23 +70,23 @@ class ApprovedOrganizationWidget extends BaseWidget
 
     protected function getTableRecordUrlUsing(): \Closure
     {
-        return fn (Organization $record) => OrganizationResource::getUrl('edit', [
-            'record' => $record,
-        ]);
+        return fn (Organization $record) => OrganizationResource::getUrl('view', $record);
     }
 
     protected function getTableActions(): array
     {
         return [
             Action::make('view')
-                ->label(__('organization.actions.edit'))
-                ->url(self::getTableRecordUrlUsing())
-                ->size('sm')
+                ->label(__('organization.actions.view'))
+                ->url($this->getTableRecordUrlUsing())
                 ->icon(null),
-            Action::make('reject')
-                ->label(__('organization.actions.reject'))
-                ->action(fn (Organization $record) => $record->status = OrganizationStatus::rejected->value)
-                ->size('sm')
-                ->icon(null), ];
+
+            Action::make('edit')
+                ->label(__('organization.actions.edit'))
+                ->url(fn (Organization $record) => OrganizationResource::getUrl('edit', $record))
+                ->icon(null),
+
+            RejectAction::make('reject'),
+        ];
     }
 }

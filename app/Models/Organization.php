@@ -60,8 +60,6 @@ class Organization extends Model implements HasMedia
         'accepts_volunteers' => 'boolean',
     ];
 
-    protected $with = ['counties', 'activityDomains', 'projects', 'media'];
-
     protected $appends = ['cover_image', 'statute_link'];
 
     public function projects(): HasMany
