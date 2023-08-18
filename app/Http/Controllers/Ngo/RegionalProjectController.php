@@ -6,7 +6,9 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
 use App\Models\ActivityDomain;
+use App\Models\County;
 use App\Models\Project;
+use App\Models\ProjectCategory;
 use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
@@ -73,9 +75,15 @@ class RegionalProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(RegionalProject $project)
     {
-        //
+//        $this->authorize('view', $project);
+        $project->load('media');
+        return Inertia::render('AdminOng/Projects/EditRegionalProject', [
+            'project' => $project,
+            'counties' =>  County::get(['name', 'id']),
+            'projectCategories' => ProjectCategory::get(['name', 'id']),
+        ]);
     }
 
     /**

@@ -52,7 +52,7 @@
                         <!-- Date start_date -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('project_date_start_date_label')"
+                            :label="$t('start_date')"
                             color="gray-700"
                             type="date"
                             v-model="form.start_date"
@@ -62,7 +62,7 @@
                         <!-- Date end_date -->
                         <Input
                             class="w-full xl:w-1/2"
-                            :label="$t('project_date_end_date_label')"
+                            :label="$t('end_date')"
                             color="gray-700"
                             type="date"
                             v-model="form.end_date"

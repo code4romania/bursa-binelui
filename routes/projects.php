@@ -23,6 +23,7 @@ Route::prefix('ong')->middleware('auth')->group(function () {
     Route::prefix('regional')->group(function (){
         Route::get('/', [RegionalProjectController::class, 'index'])->name('admin.ong.regional.projects');
         Route::get('/add', [RegionalProjectController::class, 'create'])->name('admin.ong.regional.project.add');
+        Route::get('/edit/{project}', [RegionalProjectController::class, 'edit'])->name('admin.ong.regional.project.edit');
         Route::post('/store', [RegionalProjectController::class, 'store'])->name('admin.ong.regional.project.create');
         Route::post('/change-status/{project}', [RegionalProjectController::class, 'changeStatus'])->name('admin.ong.regional.project.change-status');
     });

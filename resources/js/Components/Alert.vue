@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div v-if="show"  class="z-100 mt-20" :class="['border-l-4 p-4', 'success' == type ? 'border-green-400 bg-green-50' : 'error' == type ? 'border-red-400 bg-red-50' : 'border-yellow-400 bg-yellow-50']">
+        <div v-if="show"  class="z-120" :class="['border-l-4 p-4', 'success' == type ? 'border-green-400 bg-green-50' : 'error' == type ? 'border-red-400 bg-red-50' : 'border-yellow-400 bg-yellow-50']">
             <div class="flex">
 
                 <div class="flex-shrink-0">

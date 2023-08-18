@@ -105,7 +105,15 @@
                     </Link>
 
                     <Link
+                        v-if="data.type!=='regional'"
                         :href="route('admin.ong.project.edit', data.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t("edit") }}
+                    </Link>
+                    <Link
+                        v-if="data.type==='regional'"
+                        :href="route('admin.ong.regional.project.edit', data.id)"
                         class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                     >
                         {{ $t("edit") }}

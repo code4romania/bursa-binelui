@@ -221,6 +221,7 @@ export default {
     "project": "Proiect",
     "start_date": "Dată început",
     "end_date": "Dată sfârșit",
+    "regional_period": "Perioada desfasurare",
     "amount": "Suma",
     "edit_donation": "Editare donatie",
     "two_decimals": "Valoarea câmpului trebuie să fie un număr cu 2 zecimale.",
