@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Vite;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -17,18 +19,35 @@ class Badge extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
-        'name',
+        'title',
         'description',
-        'image',
-        'points',
-        'is_active',
     ];
 
-    public function registerMediaConversions(Media $media = null): void
+    protected $appends = [
+        'image',
+    ];
+
+    public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+        $this->addMediaCollection('default')
+            ->useFallbackUrl(Vite::asset('resources/images/badge.png'))
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this->addMediaConversion('thumb')
+                    ->fit(Manipulations::FIT_CROP, 300, 300)
+                    ->nonQueued();
+            });
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+            ->using(BadgeUser::class)
+            ->orderByPivot('allocated_at', 'desc');
+    }
+
+    public function getImageAttribute(): string
+    {
+        return $this->getFirstMediaUrl(conversionName: 'thumb');
     }
 }

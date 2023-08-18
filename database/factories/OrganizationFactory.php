@@ -30,6 +30,9 @@ class OrganizationFactory extends Factory
             'accepts_volunteers' => fake()->boolean(),
             'why_volunteer' => fake()->text(333),
             'status' => fake()->randomElement(['pending', 'active', 'disabled']),
+
+            'eu_platesc_merchant_id' => config('services.eu_platesc.merchant_id'),
+            'eu_platesc_private_key' => config('services.eu_platesc.private_key'),
         ];
     }
 }

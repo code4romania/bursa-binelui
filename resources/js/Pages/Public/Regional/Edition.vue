@@ -202,9 +202,22 @@
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
+        <!-- FAQ -->
+        <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
+            <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
+            <Faqs :data="faqs" />
+            <div class="mt-10">
+                <Link
+                    :href="route('contact')"
+                    class="bg-primary-500 flex-1 text-center  sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                >
+                    {{ $t('contact_us') }}
+                </Link>
+            </div>
+        </div>
+
         <!-- Projects -->
         <div class="mx-auto mb-10 p-9 max-w-7xl">
-
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                     <SvgLoader class="shrink-0 fill-primary-500" name="list"/>
@@ -269,19 +282,6 @@
                 :list="query"
                 classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 mb-4"
             />
-            </div>
-
-        <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
-            <Faqs :data="faqs" />
-            <div class="mt-10">
-                <Link
-                    :href="route('contact')"
-                    class="bg-primary-500 flex-1 text-center  sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                    {{ $t('contact_us') }}
-                </Link>
-            </div>
         </div>
 
         <!-- Articles -->

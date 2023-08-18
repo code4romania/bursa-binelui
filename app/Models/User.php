@@ -9,6 +9,7 @@ use App\Traits\HasRole;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -54,9 +55,13 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Get the organization of the user.
-     */
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class)
+            ->using(BadgeUser::class)
+            ->orderByPivot('allocated_at', 'desc');
+    }
+
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);

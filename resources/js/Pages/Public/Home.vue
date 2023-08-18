@@ -8,7 +8,10 @@
         <header class="flex flex-col-reverse w-full mx-auto lg:gap-10 xl:gap-20 lg:flex-row lg:max-w-7xl px-9">
             <div class="w-full py-12 lg:w-6/12">
                 <!-- Title -->
-                <h1 :class="['relative z-50 text-4xl font-extrabold text-gray-900 lg:text-6xl']">{{ $t('home_title') }}</h1>
+                <h1 class="relative z-50 text-4xl font-extrabold text-gray-900 lg:text-6xl tracking-tight">
+                    <span class="inline-block">{{ $t('home_title_1') }}</span>
+                    <span class="inline-block text-primary-500">{{ $t('home_title_2') }}</span>
+                </h1>
 
                 <!-- Links -->
                 <div class="relative flex flex-col items-center gap-6 pb-10 my-10 md:flex-row">

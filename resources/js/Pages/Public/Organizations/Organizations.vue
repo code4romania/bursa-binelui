@@ -61,7 +61,7 @@
 
                 <SelectMultiple
                     class="w-80"
-                    :label="$t('county_city')"
+                    :label="$t('county')"
                     v-model="filter.c"
                     :options="counties"
                     type="object"

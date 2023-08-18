@@ -10,4 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class ActivityDomain extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 }

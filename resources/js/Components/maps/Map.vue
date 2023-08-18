@@ -1,14 +1,11 @@
 <template>
-    <div>
-        <div id="map" class="rounded-lg" style="height: 550px"></div>
-    </div>
+    <div id="map" class="rounded-lg h-[550px]"></div>
 </template>
 
 <script setup>
 /** Import from vue. */
 import { ref, onMounted } from 'vue';
-
-const googleKey = import.meta.env.VITE_GOOGLE_KEY;
+import { usePage } from '@inertiajs/vue3';
 
 /** Component props. */
 const props = defineProps({ data: Array });
@@ -23,7 +20,7 @@ const selectedCounties = ref([]);
 async function initializeMap() {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${googleKey}`;
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=' + usePage().props.google_maps_api_key;
         script.async = true;
         script.defer = true;
         script.onload = () => {

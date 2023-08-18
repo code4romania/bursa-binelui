@@ -6,22 +6,16 @@ namespace App\Filament\Resources\BadgeResource\Pages;
 
 use App\Filament\Resources\BadgeResource;
 use Filament\Pages\Actions;
-use Filament\Resources\Pages\ListRecords;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\ViewRecord;
 
-class ListBadges extends ListRecords
+class ViewBadge extends ViewRecord
 {
     protected static string $resource = BadgeResource::class;
 
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\EditAction::make(),
         ];
-    }
-
-    protected function getTableQuery(): Builder
-    {
-        return parent::getTableQuery()->with('media');
     }
 }
