@@ -12,6 +12,7 @@ use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\ProjectCategory;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -52,12 +53,14 @@ class DatabaseSeeder extends Seeder
                 ActivityDomain::insert($collection->toArray());
             });
 
+        $this->seedProjectCategories();
+
         Championship::factory()
             ->count(3)
             ->create();
 
         Organization::factory()
-            ->count(50)
+            ->count(10)
             ->has(
                 User::factory()
                     ->ngoAdmin()
@@ -71,6 +74,9 @@ class DatabaseSeeder extends Seeder
                 Project::factory()
                     ->count(10)
                     ->hasVolunteers(10)
+            )
+            ->has(
+                Ticket::factory()
             )
             ->create();
 
@@ -87,19 +93,6 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    /**
-     * @return void
-     */
-    private function seedActivityDomains(): void
-    {
-        $activityDomains = ActivityDomainEnum::values();
-        $tmpActivityDomains = [];
-        foreach ($activityDomains as $domain) {
-            $tmpActivityDomains[] = ['name' => $domain, 'slug' => \Str::slug($domain)];
-        }
-        ActivityDomain::insert($tmpActivityDomains);
-    }
-
     private function seedProjectCategories()
     {
         $projectCategories = [
@@ -114,7 +107,7 @@ class DatabaseSeeder extends Seeder
             'Sport',
         ];
         $projectCategories = collect($projectCategories)->transform(function ($category) {
-            return ['name' => $category, 'slug' => \Str::slug($category)];
+            return ['name' => $category, 'slug' => Str::slug($category)];
         });
         ProjectCategory::insert($projectCategories->toArray());
     }

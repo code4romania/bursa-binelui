@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /* Tichets routes. */
-Route::prefix('ong')->middleware('auth')->group(function () {
-    Route::get('/tichete-deschise', function () {
-        return Inertia::render('AdminOng/Tichets/OpenTickets');
-    })->name('admin.ong.tickets.open');
-    Route::get('/tichete-inchise', function () {
-        return Inertia::render('AdminOng/Tichets/ClosedTickets');
-    })->name('admin.ong.tickets.closed');
-    Route::get('/tichet/{tichet}', function () {
-        return Inertia::render('AdminOng/Tichets/Ticket');
-    })->name('admin.ong.tickets.view');
+Route::prefix('ong/tickets')->middleware('auth')->group(function () {
+    Route::get('/{status}', [TicketController::class, 'index'])
+        ->whereIn('status', ['open', 'closed'])
+        ->name('admin.ong.tickets.index');
+
+    Route::post('/', [TicketController::class, 'store'])->name('admin.ong.tickets.store');
+
+    Route::get('/{ticket}', [TicketController::class, 'show'])->name('admin.ong.tickets.view');
+    Route::post('/{ticket}/reply', [TicketController::class, 'reply'])->name('admin.ong.tickets.reply');
+    Route::post('/{ticket}/status', [TicketController::class, 'status'])
+        ->whereIn('status', ['open', 'closed'])->name('admin.ong.tickets.status');
 });
