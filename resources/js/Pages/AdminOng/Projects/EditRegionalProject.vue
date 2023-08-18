@@ -651,7 +651,7 @@ const editField = (field) => {
     let newForm = useForm({
         [field]: form[field]
     })
-    newForm.put(route('admin.ong.regional.project.update', project.value.id))
+    newForm.post(route('admin.ong.regional.project.update', project.value.id))
 }
 
 

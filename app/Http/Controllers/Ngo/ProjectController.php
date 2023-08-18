@@ -84,6 +84,7 @@ class ProjectController extends Controller
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
         $project->update($request->all());
+        return redirect()->back()->with('success_message', 'Project updated.');
     }
 
     public function changeStatus($id, Request $request)

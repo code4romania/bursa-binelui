@@ -89,9 +89,15 @@ class RegionalProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, RegionalProject $project)
     {
-        //
+//        $this->authorize('editAsNgo', $project);;
+        if ($request->has('counties')) {
+            $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
+        }
+        $project->update($request->all());
+        return redirect()->back()->with('success_message', 'Project updated.');
+
     }
 
     /**
