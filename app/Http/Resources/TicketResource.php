@@ -17,6 +17,7 @@ class TicketResource extends JsonResource
             'id' => $this->id,
             'subject' => $this->subject,
             'content' => $this->content,
+            'is_open' => $this->isOpen(),
             'created_at' => $this->created_at->toFormattedDateTime(),
             'closed_at' => $this->closed_at?->toFormattedDateTime(),
             'messages' => TicketMessageResource::collection($this->whenLoaded('messages')),

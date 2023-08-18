@@ -46,6 +46,9 @@ class TicketCreatedNotification extends Notification
             ->line(__('ticket.mail.created.subject', [
                 'id' => $this->ticket->id,
             ]))
-            ->action(__('ticket.action.view'), TicketResource::getUrl('view', $this->ticket));
+            ->action(
+                __('ticket.action.view'),
+                TicketResource::getUrl('view', $this->ticket)
+            );
     }
 }

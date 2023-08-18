@@ -14,29 +14,28 @@
         <!-- Dashboard template -->
         <Dashboard>
             <div class="w-full mb-24 p-9">
-                <header class="flex items-center gap-4">
-                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                <header class="flex gap-4">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500 shrink-0">
                         <SvgLoader class="shrink-0 fill-primary-500" name="annotation" />
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-900">
-                        {{ ticket.subject }}
+                    <h1 class="overflow-hidden text-2xl font-bold text-gray-900 text-ellipsis">
+                        {{ $t('ticket') }} #{{ ticket.id }}: {{ ticket.subject }}
                     </h1>
                 </header>
 
-                <dl class="my-8 border border-gray-100 divide-y divide-gray-50">
-                    <div class="grid items-center px-4 py-3 text-gray-700 bg-gray-50 md:grid-cols-12">
+                <dl class="my-8 divide-y divide-gray-200">
+                    <div class="grid px-4 py-3 text-gray-700 md:grid-cols-12">
+                        <dt class="font-semibold md:col-span-5 lg:col-span-3">ID</dt>
+                        <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.id" />
+                    </div>
+                    <div class="grid px-4 py-3 text-gray-700 md:grid-cols-12">
                         <dt class="font-semibold md:col-span-5 lg:col-span-3" v-text="$t('date')" />
                         <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.created_at" />
                     </div>
 
-                    <div class="grid items-center px-4 py-3 text-gray-700 bg-white md:grid-cols-12">
-                        <dt class="font-semibold md:col-span-5 lg:col-span-3" v-text="$t('subject')" />
-                        <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.subject" />
-                    </div>
-
-                    <div class="grid items-center px-4 py-3 text-gray-700 bg-gray-50 md:grid-cols-12">
+                    <div class="grid px-4 py-3 text-gray-700 md:grid-cols-12">
                         <dt class="font-semibold md:col-span-5 lg:col-span-3" v-text="$t('message')" />
-                        <dt class="text-sm md:col-span-6 lg:col-span-8" v-text="ticket.content" />
+                        <dt class="text-sm break-words md:col-span-6 lg:col-span-8" v-text="ticket.content" />
                     </div>
                 </dl>
 
@@ -44,7 +43,14 @@
                     <div
                         v-for="(message, index) in ticket.messages"
                         :key="index"
-                        :class="[index % 2 === 0 ? 'bg-white' : 'bg-gray-50', 'px-4 py-3 grid grid-cols-12 text-sm']"
+                        class="grid grid-cols-12 px-4 py-3 text-sm"
+                        :class="{
+                            'bg-gray-50': index % 2 === 0,
+                            'outline-dashed outline-1 outline-warning-500 shadow bg-warning-50': isMessageHighlighted(
+                                message
+                            ),
+                        }"
+                        :id="`reply-${message.id}`"
                     >
                         <dt class="col-span-12 leading-none text-gray-700 md:col-span-5 lg:col-span-3">
                             <p
@@ -71,6 +77,7 @@
                         triggerModalClasses="whitespace-nowrap px-3 py-4 text-sm text-blue-500"
                         :triggerModalText="$t('answer')"
                         id="ticket-answer"
+                        v-if="ticket.is_open"
                     >
                         <form class="w-full space-y-4" @submit.prevent="reply">
                             <h3>
@@ -106,7 +113,7 @@
                         </form>
                     </Modal>
 
-                    <ToggleTicketStatusModal :data="ticket" />
+                    <ToggleTicketStatusModal :ticket="ticket" />
                 </div>
             </div>
         </Dashboard>
@@ -144,6 +151,8 @@
     const form = useForm({
         content: '',
     });
+
+    const isMessageHighlighted = (message) => window.location.hash === `#reply-${message.id}`;
 
     const closeModal = () => document.getElementById('ticket-answer').click();
 

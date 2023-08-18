@@ -55,7 +55,10 @@ class TicketStatusChangedNotification extends Notification
             ->line(__('ticket.mail.closed.subject', [
                 'id' => $this->ticket->id,
             ]))
-            ->action(__('ticket.mail.closed.action'), route('admin.ong.tickets.view', $this->ticket));
+            ->action(
+                __('ticket.action.view'),
+                route('admin.ong.tickets.view', $this->ticket)
+            );
     }
 
     protected function buildReopenedMail(object $notifiable): MailMessage
@@ -67,6 +70,9 @@ class TicketStatusChangedNotification extends Notification
             ->line(__('ticket.mail.reopened.subject', [
                 'id' => $this->ticket->id,
             ]))
-            ->action(__('ticket.mail.reopened.action'), route('admin.ong.tickets.view', $this->ticket));
+            ->action(
+                __('ticket.action.view'),
+                route('admin.ong.tickets.view', $this->ticket)
+            );
     }
 }

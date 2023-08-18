@@ -112,8 +112,8 @@
                     class="mb-24"
                     :columns="
                         isOpen
-                            ? [$t('ticket_subject'), $t('ticket_created_at')]
-                            : [$t('ticket_subject'), $t('ticket_closed_at')]
+                            ? ['ID', $t('ticket_subject'), $t('ticket_created_at')]
+                            : ['ID', $t('ticket_subject'), $t('ticket_closed_at')]
                     "
                     :currentPage="props.tickets.meta.current_page"
                     :prev="props.tickets.links.prev"
@@ -121,7 +121,10 @@
                     :links="props.tickets.meta.links"
                 >
                     <tr v-for="(ticket, index) in props.tickets.data" :key="index">
-                        <td class="w-8/12 px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        <td class="w-8 px-3 py-4 overflow-hidden text-sm text-right text-gray-500 text-ellipsis">
+                            #{{ ticket.id }}
+                        </td>
+                        <td class="w-8/12 max-w-lg px-3 py-4 overflow-hidden text-sm text-gray-500 text-ellipsis">
                             {{ ticket.subject }}
                         </td>
                         <td class="w-1/12 px-3 py-4 text-sm text-gray-500 whitespace-nowrap">

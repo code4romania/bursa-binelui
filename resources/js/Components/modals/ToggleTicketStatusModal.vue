@@ -1,7 +1,7 @@
 <template>
     <div>
         <button @click="open = !open" class="block text-sm font-medium text-danger-500">
-            <span v-if="ticketIsOpen" v-text="$t('close_ticket')" />
+            <span v-if="ticket.is_open" v-text="$t('close_ticket')" />
             <span v-else v-text="$t('reopen_ticket')" />
         </button>
 
@@ -51,7 +51,7 @@
 
                                             <p
                                                 class="mt-2 text-sm text-gray-500"
-                                                v-if="ticketIsOpen"
+                                                v-if="ticket.is_open"
                                                 v-text="$t('confirm_close_ticket')"
                                             />
                                             <p
@@ -75,7 +75,7 @@
                                             type="button"
                                             class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-primary-500 hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:col-start-2"
                                         >
-                                            <span v-if="ticketIsOpen" v-text="$t('close_ticket')" />
+                                            <span v-if="ticket.is_open" v-text="$t('close_ticket')" />
                                             <span v-else v-text="$t('reopen_ticket')" />
                                         </button>
                                     </div>
@@ -102,7 +102,7 @@
 
     /** Component props. */
     const props = defineProps({
-        data: [Object, Array],
+        ticket: Object,
     });
 
     /** Local state. */
@@ -110,13 +110,11 @@
 
     const form = useForm({});
 
-    const ticketIsOpen = computed(() => props.data.closed_at === null);
-
     /** Delete action. */
     const action = () => {
         open.value = false;
 
-        form.post(route('admin.ong.tickets.status', props.data.id), {
+        form.post(route('admin.ong.tickets.status', props.ticket.id), {
             preserveScroll: true,
             onFinish: () => {
                 open.value = false;

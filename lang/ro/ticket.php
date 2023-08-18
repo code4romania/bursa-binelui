@@ -44,15 +44,16 @@ return[
 
     'mail' => [
         'created' => [
+            'subject' => 'Ticketul #:id a fost creat.',
         ],
         'replied' => [
-            'subject' => 'Ticketul #:id a primit un răspuns nou',
+            'subject' => 'Ticketul #:id a primit un răspuns nou.',
         ],
         'closed' => [
-            'subject' => 'Ticketul #:id a fost închis',
+            'subject' => 'Ticketul #:id a fost închis.',
         ],
         'reopened' => [
-            'subject' => 'Ticketul #:id a fost redeschis',
+            'subject' => 'Ticketul #:id a fost redeschis.',
         ],
     ],
 
