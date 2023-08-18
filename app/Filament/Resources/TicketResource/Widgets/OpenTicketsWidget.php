@@ -59,7 +59,8 @@ class OpenTicketsWidget extends TableWidget
     protected function getTableActions(): array
     {
         return [
-            ViewAction::make(),
+            ViewAction::make()
+                ->url($this->getTableRecordUrlUsing()),
         ];
     }
 
