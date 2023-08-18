@@ -7,6 +7,7 @@ return [
             'disabled' => 'Inactivă',
         ],
     'actions' => [
+        'view' => 'Vizualizează',
         'edit' => 'Editează',
         'approve' => 'Aprobă',
         'reject' => 'Respinge',

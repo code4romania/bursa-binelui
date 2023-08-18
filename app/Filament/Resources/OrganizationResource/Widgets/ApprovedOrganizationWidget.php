@@ -82,6 +82,12 @@ class ApprovedOrganizationWidget extends BaseWidget
     {
         return [
             Action::make('view')
+                ->label(__('organization.actions.view'))
+                ->url(fn (Organization $record) => OrganizationResource::getUrl('view', [
+                    'record' => $record,
+                ]))
+                ->icon(null),
+            Action::make('edit')
                 ->label(__('organization.actions.edit'))
                 ->url(self::getTableRecordUrlUsing())
                 ->size('sm')
@@ -90,6 +96,8 @@ class ApprovedOrganizationWidget extends BaseWidget
                 ->label(__('organization.actions.reject'))
                 ->action(fn (Organization $record) => $record->status = OrganizationStatus::rejected->value)
                 ->size('sm')
-                ->icon(null), ];
+                ->icon(null),
+
+            ];
     }
 }

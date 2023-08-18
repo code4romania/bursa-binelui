@@ -214,6 +214,8 @@ class OrganizationResource extends Resource
             'index' => Pages\OrganisationIndex::route('/'),
             'create' => Pages\CreateOrganization::route('/create'),
             'edit' => Pages\EditOrganization::route('/{record}/edit'),
+            'view' => Pages\ViewOrganization::route('/{record}'),
+
         ];
     }
 

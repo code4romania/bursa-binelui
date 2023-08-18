@@ -81,6 +81,12 @@ class RejectedOrganizationWidget extends BaseWidget
     protected function getTableActions(): array
     {
         return [
+            Action::make('view')
+                ->label(__('organization.actions.view'))
+                ->url(fn (Organization $record) => OrganizationResource::getUrl('view', [
+                    'record' => $record,
+                ]))
+                ->icon(null),
             Action::make('edit')
                 ->label(__('organization.actions.edit'))
                 ->url(self::getTableRecordUrlUsing())
