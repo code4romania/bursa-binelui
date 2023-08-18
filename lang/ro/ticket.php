@@ -44,7 +44,9 @@ return[
 
     'mail' => [
         'created' => [
-            'subject' => 'Ticketul #:id a fost creat',
+        ],
+        'replied' => [
+            'subject' => 'Ticketul #:id a primit un răspuns nou',
         ],
         'closed' => [
             'subject' => 'Ticketul #:id a fost închis',

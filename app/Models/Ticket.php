@@ -65,10 +65,12 @@ class Ticket extends Model
 
     public function open(): void
     {
-        $this->messages()->create([
-            'user_id' => auth()->user()->id,
-            'content' => __('ticket.action_reopen_confirm.success'),
-        ]);
+        self::withoutEvents(function () {
+            $this->messages()->create([
+                'user_id' => auth()->user()->id,
+                'content' => __('ticket.action_reopen_confirm.success'),
+            ]);
+        });
 
         $this->update([
             'closed_at' => null,
@@ -77,10 +79,12 @@ class Ticket extends Model
 
     public function close(): void
     {
-        $this->messages()->create([
-            'user_id' => auth()->user()->id,
-            'content' => __('ticket.action_close_confirm.success'),
-        ]);
+        self::withoutEvents(function () {
+            $this->messages()->create([
+                'user_id' => auth()->user()->id,
+                'content' => __('ticket.action_close_confirm.success'),
+            ]);
+        });
 
         $this->update([
             'closed_at' => $this->freshTimestamp(),

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Events\TicketReplyReceived;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,10 @@ class TicketMessage extends Model
 
     protected $touches = [
         'ticket',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => TicketReplyReceived::class,
     ];
 
     public function user(): BelongsTo
