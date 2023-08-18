@@ -92,11 +92,6 @@ class RejectedOrganizationWidget extends BaseWidget
                 ->icon(null)
                 ->action(fn (Organization $record) => $record->status = OrganizationStatus::approved->value)
                 ->requiresConfirmation(),
-            Action::make('reject')
-                ->label(__('organization.actions.reject'))
-                ->action(fn (Organization $record) => $record->status = OrganizationStatus::rejected->value)
-                ->size('sm')
-                ->icon(null),
         ];
     }
 }

@@ -131,6 +131,27 @@
             icon: FolderIcon,
         },
         {
+            name: "Proiectele mele regionale",
+            route: route("admin.ong.regional.projects"),
+            subMenu: [
+                {
+                    name: "published_projects",
+                    route: route("admin.ong.regional.projects", {
+                        project_status: "published",
+                    }),
+                    icon: FolderOpenIcon,
+                },
+                {
+                    name: "draft_projects",
+                    route: route("admin.ong.regional.projects", {
+                        project_status: "draft",
+                    }),
+                    icon: FolderMinusIcon,
+                },
+            ],
+            icon: FolderIcon,
+        },
+        {
             name: "Voluntari",
             route: route("admin.ong.volunteers"),
             subMenu: [
@@ -159,7 +180,7 @@
         },
         {
             name: "Tickets",
-            route: route("admin.ong.tickets.index", { status: 'open' }),
+            route: route("admin.ong.tickets.index", { status: "open" }),
             icon: DocumentDuplicateIcon,
         },
     ];

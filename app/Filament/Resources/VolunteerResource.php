@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Models\User;
+use App\Filament\Resources\VolunteerResource\Pages;
+use App\Models\Volunteer;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class UserResource extends Resource
+class VolunteerResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Volunteer::class;
 
     protected static ?string $navigationGroup = 'Administrează';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -56,9 +56,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListVolunteers::route('/'),
+            'create' => Pages\CreateVolunteer::route('/create'),
+            'edit' => Pages\EditVolunteer::route('/{record}/edit'),
         ];
     }
 }

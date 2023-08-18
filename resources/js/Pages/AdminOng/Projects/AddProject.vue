@@ -41,15 +41,14 @@
                             :error="form.errors.target_budget"
                         />
 
-                        <!-- Project category -->
                         <SelectMultiple
                             class="w-full xl:w-1/2"
                             :label="$t('project_category_label')"
                             use-translation="true"
                             :options="projectCategories"
-                            v-model="form.category"
+                            v-model="selectedCategories"
                             type="singleValue"
-                            :error="form.errors.category"
+                            :error="form.errors.categories"
                         />
 
                         <!-- Date period. -->
@@ -247,7 +246,8 @@
                                 {{ $t('cancel') }}
                             </SecondaryButton>
 
-                            <SecondaryButton class="py-2.5">
+                            <SecondaryButton class="py-2.5"
+                            @click="createProject">
                                 {{ $t('preview') }}
                             </SecondaryButton>
 
@@ -294,7 +294,7 @@ import SelectMultiple from "@/Components/form/SelectMultiple.vue";
 const form = useForm({
     name: '',
     target_budget: '',
-    category: [],
+    categories: [],
     start: '',
     end: '',
     counties: [],
@@ -309,7 +309,8 @@ const form = useForm({
     project_links: [{url: ''}],
     project_articles: [{url:''}]
 });
-let selectedCounties = [];
+let selectedCounties = ref([]);
+let selectedCategories = ref([]);
 const props = defineProps(['projectCategories', 'counties']);
 let projectLinks = ref(form.project_links);
 let projectArticles = ref(form.project_articles);
@@ -324,11 +325,8 @@ function prepareExternalLinks() {
 
 /** Create project. */
 const createProject = () => {
-    form.counties = selectedCounties.map(item => item.id);
-
-    if(0 < form.category.length) {
-        form.category = form.category.map(item => item.id);
-    }
+    form.counties = selectedCounties.value.map(item => item.id);
+    form.categories = selectedCategories.value.map(item => item.id);
 
     prepareProjectLinks();
     prepareExternalLinks();

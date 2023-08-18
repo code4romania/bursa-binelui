@@ -11,6 +11,7 @@ use App\Models\Badge;
 use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Models\ProjectCategory;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -52,12 +53,14 @@ class DatabaseSeeder extends Seeder
                 ActivityDomain::insert($collection->toArray());
             });
 
+        $this->seedProjectCategories();
+
         Championship::factory()
             ->count(3)
             ->create();
 
         Organization::factory()
-            ->count(50)
+            ->count(10)
             ->has(
                 User::factory()
                     ->ngoAdmin()
@@ -88,5 +91,24 @@ class DatabaseSeeder extends Seeder
                 ->hasArticles(4)
                 ->create();
         }
+    }
+
+    private function seedProjectCategories()
+    {
+        $projectCategories = [
+            'Antreprenoriat social',
+            'Cultura',
+            'Drepturile omului',
+            'Educație',
+            'Mediu',
+            'Protecția animalelor',
+            'Sanatate',
+            'Social',
+            'Sport',
+        ];
+        $projectCategories = collect($projectCategories)->transform(function ($category) {
+            return ['name' => $category, 'slug' => Str::slug($category)];
+        });
+        ProjectCategory::insert($projectCategories->toArray());
     }
 }
