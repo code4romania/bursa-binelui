@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
-use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\OrganizationResource\Actions\ApproveAction;
-use App\Filament\Resources\OrganizationResource\Actions\RejectAction;
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -15,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RejectedOrganizationWidget extends BaseWidget
 {
-
     /** @var string */
     protected static string $resource = OrganizationResource::class;
 
@@ -41,7 +38,7 @@ class RejectedOrganizationWidget extends BaseWidget
     {
         return Organization::isRejected()
             ->with(['media'])
-            ->select(['id', 'name', 'created_at','status']);
+            ->select(['id', 'name', 'created_at', 'status']);
     }
 
     protected function getTableQueryStringIdentifier(): ?string
@@ -73,9 +70,7 @@ class RejectedOrganizationWidget extends BaseWidget
 
     protected function getTableRecordUrlUsing(): \Closure
     {
-        return fn(Organization $record) => OrganizationResource::getUrl('edit', [
-            'record' => $record,
-        ]);
+        return fn (Organization $record) => OrganizationResource::getUrl('view', $record);
     }
 
     protected function getTableActions(): array
@@ -83,16 +78,14 @@ class RejectedOrganizationWidget extends BaseWidget
         return [
             Action::make('view')
                 ->label(__('organization.actions.view'))
-                ->url(fn(Organization $record) => OrganizationResource::getUrl('view', [
-                    'record' => $record,
-                ]))
+                ->url($this->getTableRecordUrlUsing())
                 ->icon(null),
+
             Action::make('edit')
                 ->label(__('organization.actions.edit'))
-                ->url(fn(Organization $record) => OrganizationResource::getUrl('edit', [
-                    'record' => $record,
-                ]))
+                ->url(fn (Organization $record) => OrganizationResource::getUrl('edit', $record))
                 ->icon(null),
+
             ApproveAction::make('approve'),
         ];
     }

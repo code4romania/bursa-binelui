@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Actions;
@@ -17,8 +18,8 @@ class RejectAction extends Action
         $this->requiresConfirmation();
         $this->modalHeading(__('organization.actions.reject'));
         $this->modalButton(__('organization.actions.reject'));
-        $this->action(function ( Organization $record){
-            $record->update(['status' => OrganizationStatus::approved]);;
+        $this->action(function (Organization $record) {
+            $record->update(['status' => OrganizationStatus::rejected]);
         });
     }
 }
