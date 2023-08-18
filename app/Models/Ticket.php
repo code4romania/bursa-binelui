@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Events\TicketCreated;
+use App\Events\TicketUpdated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ class Ticket extends Model
 
     protected $dispatchesEvents = [
         'created' => TicketCreated::class,
+        'updated' => TicketUpdated::class,
     ];
 
     public function user(): BelongsTo

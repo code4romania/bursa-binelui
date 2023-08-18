@@ -46,6 +46,12 @@ return[
         'created' => [
             'subject' => 'Ticketul #:id a fost creat',
         ],
+        'closed' => [
+            'subject' => 'Ticketul #:id a fost închis',
+        ],
+        'reopened' => [
+            'subject' => 'Ticketul #:id a fost redeschis',
+        ],
     ],
 
 ];
