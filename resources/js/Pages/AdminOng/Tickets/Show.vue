@@ -116,14 +116,16 @@
                         :triggerModalText="$t('answer')"
                         id="ticket-answer"
                     >
-                        <form
-                            class="w-full space-y-4"
-                            @submit.prevent="editDonation"
-                        >
-                            <h3
-                                class="w-full text-lg font-semibold text-gray-900"
-                            >
-                                {{ ticket.subject }}
+                        <form class="w-full space-y-4" @submit.prevent="reply">
+                            <h3>
+                                <span
+                                    class="block text-lg font-semibold to-gray-900"
+                                >
+                                    {{ $t("ticket_reply_header") }}
+                                </span>
+                                <span class="block text-base text-gray-500">{{
+                                    ticket.subject
+                                }}</span>
                             </h3>
 
                             <Textarea
@@ -131,7 +133,7 @@
                                 :label="$t('message')"
                                 id="project-scope"
                                 color="gray-700"
-                                v-model="form.message"
+                                v-model="form.content"
                             />
 
                             <!-- Actions -->
@@ -164,7 +166,10 @@
                         :actionModalText="$t('close')"
                         :title="$t('confirm')"
                         :body="`${$t('confirm_reject_text')} ${ticket.subject}`"
-                        actionRoute="route('admin.client.destroy', ticket.user.id)"
+                        :actionRoute="
+                            route('admin.ong.tickets.status', ticket.id)
+                        "
+                        actionType="post"
                         :data="ticket"
                     />
                 </div>
@@ -188,27 +193,32 @@
     import SecondaryButton from "@/Components/buttons/SecondaryButton.vue";
     import PrimaryButton from "@/Components/buttons/PrimaryButton.vue";
 
-    const flash = {
-        success_message: "",
-        error_message: "",
-    };
-
     const props = defineProps({
         ticket: {
             type: Object,
         },
+        flash: {
+            type: Object,
+            default: () => ({
+                success_message: "",
+                error_message: "",
+            }),
+        },
     });
 
-    // const ticket = {
-    //     id: 1,
-    //     subject: "Subiect ticket",
-    //     date: "12.08.2022",
-    //     message: "mesaj ticket",
-    // };
-
     const form = useForm({
-        message: "",
+        content: "",
     });
 
     const closeModal = () => document.getElementById("ticket-answer").click();
+
+    const reply = () => {
+        closeModal();
+        form.post(route("admin.ong.tickets.reply", props.ticket.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+            },
+        });
+    };
 </script>

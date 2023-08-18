@@ -16,6 +16,7 @@ class Ticket extends Model
 
     protected $fillable = [
         'closed_at',
+        'organization_id',
         'user_id',
         'subject',
         'content',
@@ -57,6 +58,11 @@ class Ticket extends Model
 
     public function open(): void
     {
+        $this->messages()->create([
+            'user_id' => auth()->user()->id,
+            'content' => __('ticket.action_reopen_confirm.success'),
+        ]);
+
         $this->update([
             'closed_at' => null,
         ]);
@@ -64,6 +70,11 @@ class Ticket extends Model
 
     public function close(): void
     {
+        $this->messages()->create([
+            'user_id' => auth()->user()->id,
+            'content' => __('ticket.action_close_confirm.success'),
+        ]);
+
         $this->update([
             'closed_at' => $this->freshTimestamp(),
         ]);

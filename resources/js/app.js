@@ -9,7 +9,7 @@ import i18n from './plugins/i18n.js';
 
 import.meta.glob(['../images/**']);
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Bursa Binelui';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

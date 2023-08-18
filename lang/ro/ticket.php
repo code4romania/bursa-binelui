@@ -30,7 +30,15 @@ return[
         'title' => 'Redeschide ticket',
         'text' => 'Ești sigur că dorești să efectuezi operaţia?',
         'action' => 'Redeschide',
-        'success' => 'Ticket-ul a fost redeschis',
+        'success' => 'Ticket-ul a fost redeschis.',
+    ],
+
+    'action_open' => [
+        'success' => 'Ticket-ul a fost deschis.',
+    ],
+
+    'action_reply' => [
+        'success' => 'Mesajul a fost trimis.',
     ],
 
 ];

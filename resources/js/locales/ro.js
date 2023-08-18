@@ -396,5 +396,6 @@ export default {
     "ticket_subject": 'Subiect',
     'ticket_created_at': 'Data',
     'ticket_closed_at': 'Închis la data',
+    'ticket_reply_header': 'Trimite un răspuns',
     "add_regional_project": "Adaugă un proiect regional",
 }

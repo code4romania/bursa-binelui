@@ -81,14 +81,18 @@
                                 id="subject"
                                 type="text"
                                 v-model="form.subject"
+                                :error="form.errors.subject"
+                                is-required
                             />
 
                             <Textarea
                                 class="w-full"
                                 :label="$t('message')"
-                                id="message"
+                                id="content"
                                 color="gray-700"
-                                v-model="form.message"
+                                v-model="form.content"
+                                :error="form.errors.content"
+                                is-required
                             />
 
                             <!-- Actions -->
@@ -136,10 +140,10 @@
                             ? [$t('ticket_subject'), $t('ticket_created_at')]
                             : [$t('ticket_subject'), $t('ticket_closed_at')]
                     "
-                    :currentPage="props.tickets.current_page"
-                    :prev="props.tickets.prev_page_url"
-                    :next="props.tickets.next_page_url"
-                    :links="props.tickets.links"
+                    :currentPage="props.tickets.meta.current_page"
+                    :prev="props.tickets.links.prev"
+                    :next="props.tickets.links.next"
+                    :links="props.tickets.meta.links"
                 >
                     <tr
                         v-for="(ticket, index) in props.tickets.data"
@@ -201,7 +205,7 @@
 
     const form = useForm({
         subject: "",
-        message: "",
+        content: "",
     });
 
     const props = defineProps({
@@ -215,7 +219,14 @@
 
     const closeModal = () => document.getElementById("add_ticket").click();
 
-    const addTicket = () => {};
+    const addTicket = () => {
+        form.post(route("admin.ong.tickets.store"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+            },
+        });
+    };
 
     const isOpen = computed(() => props.status === "open");
 </script>

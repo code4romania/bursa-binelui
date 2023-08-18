@@ -9,59 +9,43 @@ use App\Models\User;
 
 class TicketPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
     public function viewAny(User $user): bool
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
     public function view(User $user, Ticket $ticket): bool
     {
-        return true;
+        return $user->isBbAdmin() || $user->organization->is($ticket->organization);
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
     public function create(User $user): bool
     {
-        return true;
+        return $user->isNgoAdmin();
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
     public function update(User $user, Ticket $ticket): bool
     {
-        return true;
+        return $user->isBbAdmin() || ($user->isNgoAdmin() && $user->organization->is($ticket->organization));
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
+    public function reply(User $user, Ticket $ticket): bool
+    {
+        return $this->update($user, $ticket) && $ticket->isOpen();
+    }
+
     public function delete(User $user, Ticket $ticket): bool
     {
-        return true;
+        return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
     public function restore(User $user, Ticket $ticket): bool
     {
-        return true;
+        return false;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
     public function forceDelete(User $user, Ticket $ticket): bool
     {
-        return true;
+        return false;
     }
 }

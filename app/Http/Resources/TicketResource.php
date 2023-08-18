@@ -19,7 +19,7 @@ class TicketResource extends JsonResource
             'content' => $this->content,
             'created_at' => $this->created_at->toFormattedDateTime(),
             'closed_at' => $this->closed_at?->toFormattedDateTime(),
-            'messages' => TicketMessageResource::collection($this->messages),
+            'messages' => TicketMessageResource::collection($this->whenLoaded('messages')),
         ];
     }
 }
