@@ -83,6 +83,9 @@ class ProjectController extends Controller
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
+        if ($request->has('categories')) {
+            $project->categories()->sync(collect($request->get('categories'))->pluck('id'));
+        }
         $project->update($request->all());
         return redirect()->back()->with('success_message', 'Project updated.');
     }

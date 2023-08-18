@@ -112,7 +112,7 @@
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">{{ $t('project_category_label') }}</dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">{{ form.categories.map(item=>item.name).join(', ') }}</dt>
                             <EditModal
-                                @action="editField('category')"
+                                @action="editField('categories')"
                                 class="flex justify-end col-span-1"
                             >
 
@@ -421,6 +421,7 @@
         let newForm = useForm({
             [field]: form[field]
         })
+        console.log(newForm);
         newForm.put(route('admin.ong.project.update', project.value.id))
     }
 
