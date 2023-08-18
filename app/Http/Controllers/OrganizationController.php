@@ -53,29 +53,13 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreOrganizationRequest $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Organization $organization)
     {
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organization', [
-            'organization' => $organization,
+            'organization' => $organization->loadMissing(['activityDomains', 'counties', 'projects', 'media']),
         ]);
     }
 
@@ -119,18 +103,10 @@ class OrganizationController extends Controller
 
             $organization->update($modelData);
 
-            return redirect()->route('admin.ong.edit')->with('success_message', 'Organization updated successfully');
+            return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
         } catch (\Throwable $th) {
-            return redirect()->route('admin.ong.edit')->with('error_message', 'Organization update failed');
+            return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Organization $organization)
-    {
-        //
     }
 
     public function removeCoverImage(Request $request)

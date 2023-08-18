@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
-                        <img class="mx-auto" src="/images/ong.png" alt="" />
+                        <img class="mx-auto" :src="organization.cover_image ? organization.cover_image :'/images/ong.png'" alt="" />
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ return [
             'disabled' => 'Inactivă',
         ],
     'actions' => [
+        'view' => 'Vizualizează',
         'edit' => 'Editează',
         'approve' => 'Aprobă',
         'reject' => 'Respinge',
@@ -39,7 +40,13 @@ return [
         'eu_platesc_merchant_id' => 'Merchant ID',
         'eu_platesc_private_key' => 'Key',
         'administrator' => 'Administrator'
-
-
+    ],
+    'messages'=>[
+        'update_success' => 'Organizația a fost actualizată cu succes!',
+        'update_error' => 'A apărut o eroare la actualizarea organizației!',
+        'approve_success' => 'Organizația a fost aprobată cu succes!',
+        'approve_error' => 'A apărut o eroare la aprobarea organizației!',
+        'reject_success' => 'Organizația a fost respinsă cu succes!',
+        'reject_error' => 'A apărut o eroare la respingerea organizației!',
     ]
 ];
