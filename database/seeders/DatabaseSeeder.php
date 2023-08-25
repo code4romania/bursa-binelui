@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +30,8 @@ class DatabaseSeeder extends Seeder
         if (app()->isProduction()) {
             return;
         }
+
+        Mail::fake();
 
         User::factory(['email' => 'bb-admin@example.com'])
             ->bbAdmin()
