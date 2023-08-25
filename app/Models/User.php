@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Concerns\MustSetInitialPassword;
 use App\Traits\HasRole;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory;
     use Notifiable;
     use HasRole;
+    use MustSetInitialPassword;
 
     /**
      * The attributes that are mass assignable.
