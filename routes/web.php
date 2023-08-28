@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AdminBBTemporary;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -84,3 +85,5 @@ require __DIR__ . '/articles.php';
 require __DIR__ . '/donor.php';
 
 require __DIR__ . '/evolution.php';
+
+Route::get('/{page:slug}', PageController::class)->name('page');

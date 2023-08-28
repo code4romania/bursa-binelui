@@ -6,12 +6,24 @@ module.exports = {
     content: [
         './app/**/*.php',
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/awcodes/filament-tiptap-editor/resources/views/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
     ],
 
     theme: {
+        container: ({ theme }) => ({
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                sm: '1.5rem',
+                lg: '2rem',
+            },
+            screens: {
+                DEFAULT: theme('screens.xl')
+            },
+        }),
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
