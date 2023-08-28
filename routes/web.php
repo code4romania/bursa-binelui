@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\AdminBBTemporary;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
@@ -37,32 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/* Website routes. */
-Route::get('/despre', [AdminBBTemporary::class, 'about'])->name('about');
-Route::get('/intrebari-frecvente', [AdminBBTemporary::class, 'faqs'])->name('faqs');
+Route::inertia('/termenii-si-conditii', 'Public/Website/Terms')->name('terms');
+Route::inertia('/politica-de-confidentialitate', 'Public/Website/Policy')->name('policy');
+Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
+Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
+Route::inertia('/multumim', 'Public/VolunteerThankYou')->name('volunteer.thanks');
 
-Route::get('/termenii-si-conditii', function () {
-    return Inertia::render('Public/Website/Terms');
-})->name('terms');
-Route::get('/politica-de-confidentialitate', function () {
-    return Inertia::render('Public/Website/Policy');
-})->name('policy');
-Route::get('/contact', function () {
-    return Inertia::render('Public/Website/Contact');
-})->name('contact');
-Route::get('/donator', function () {
-    return Inertia::render('Public/Donor/Donor');
-})->name('donor');
-Route::get('/multumim', function () {
-    return Inertia::render('Public/VolunteerThankYou');
-})->name('volunteer.thanks');
-
-Route::get('/gallery/{project}', function () {
-    return Inertia::render('Public/Projects/Gallery');
-})->name('gallery');
-Route::get('/bcr/proiecte', function () {
-    return Inertia::render('Public/Bcr/Projects');
-})->name('bcr.projects');
+Route::inertia('/gallery/{project}', 'Public/Projects/Gallery')->name('gallery');
+Route::inertia('/bcr/proiecte', 'Public/Bcr/Projects')->name('bcr.projects');
 
 require __DIR__ . '/auth.php';
 
