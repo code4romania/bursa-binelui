@@ -1,6 +1,5 @@
 <template>
-    <div class="min-h-screen flex flex-col">
-
+    <div class="flex flex-col min-h-screen">
         <!-- Navbar -->
         <Navbar />
 
@@ -16,6 +15,6 @@
 
 <script setup>
     /** Import components */
-    import Navbar  from '@/Components/Navbar.vue';
+    import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
 </script>

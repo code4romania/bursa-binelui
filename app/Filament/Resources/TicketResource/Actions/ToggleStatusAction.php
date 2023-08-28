@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Resources\InterventionResource\Actions;
+namespace App\Filament\Resources\TicketResource\Actions;
 
 use App\Filament\Resources\TicketResource;
 use App\Models\Ticket;
