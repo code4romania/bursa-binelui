@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\OrganizationStatus;
 use App\Enums\UserRole;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
@@ -44,6 +45,7 @@ class Organization extends Model implements HasMedia
         'accepts_volunteers',
         'why_volunteer',
         'status',
+        'status_updated_at',
         'eu_platesc_merchant_id',
         'eu_platesc_private_key',
     ];
@@ -57,6 +59,7 @@ class Organization extends Model implements HasMedia
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'status_updated_at' => 'datetime',
         'accepts_volunteers' => 'boolean',
     ];
 
@@ -71,7 +74,7 @@ class Organization extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->fit(Manipulations::FIT_CONTAIN, 300, 300)
             ->nonQueued();
     }
 
@@ -106,14 +109,14 @@ class Organization extends Model implements HasMedia
         $query->orWhere('website', 'LIKE', "%{$searchedText}%");
     }
 
-    public function getCoverImageAttribute(): string
+    public function getCoverImageAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('organizationFilesLogo', 'preview') ?? '';
+        return $this->getFirstMediaUrl('organizationFilesLogo', 'preview') ?: null;
     }
 
-    public function getStatuteLinkAttribute(): string
+    public function getStatuteLinkAttribute(): ?string
     {
-        return $this->getFirstMediaUrl('organizationFilesStatute') ?? '';
+        return $this->getFirstMediaUrl('organizationFilesStatute') ?: null;
     }
 
     public function getAdministrator()
@@ -127,5 +130,21 @@ class Organization extends Model implements HasMedia
             ->dontSubmitEmptyLogs()
             ->logFillable()
             ->logOnlyDirty();
+    }
+
+    public function markAsApproved(): bool
+    {
+        return $this->update([
+            'status' => OrganizationStatus::approved,
+            'status_updated_at' => $this->freshTimestamp(),
+        ]);
+    }
+
+    public function markAsRejected(): bool
+    {
+        return $this->update([
+            'status' => OrganizationStatus::rejected,
+            'status_updated_at' => $this->freshTimestamp(),
+        ]);
     }
 }

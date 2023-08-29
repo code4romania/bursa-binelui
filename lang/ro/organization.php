@@ -1,16 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 return [
-    'status_arr' =>
-        [
-            'pending' => 'În așteptare',
-            'active' => 'Activă',
-            'disabled' => 'Inactivă',
-        ],
+    'label' => [
+        'singular' => 'organizație',
+        'plural' => 'Organizații',
+    ],
+
+    'status_arr' => [
+        'pending' => 'În așteptare',
+        'active' => 'Activă',
+        'disabled' => 'Inactivă',
+    ],
     'actions' => [
         'view' => 'Vizualizează',
         'edit' => 'Editează',
         'approve' => 'Aprobă',
         'reject' => 'Respinge',
+        'deactivate' => 'Dezactivează',
+        'reactivate' => 'Reactivează',
     ],
     'organization' => 'Organizație',
     'heading' => [
@@ -25,7 +34,7 @@ return [
         'cif' => 'CIF/CUI',
         'logo' => 'Logo-ul organizației',
         'description' => 'Descriere organizație',
-        'activity_domains' => 'Domenis de activitate',
+        'activity_domains' => 'Domenii de activitate',
         'statute' => 'Statutul organizației',
         'volunteering_data' => 'Voluntari',
         'accepts_volunteers' => 'Organizația acceptă voluntari?',
@@ -39,7 +48,11 @@ return [
         'eu_platesc_data' => 'Date EuPlătesc',
         'eu_platesc_merchant_id' => 'Merchant ID',
         'eu_platesc_private_key' => 'Key',
-        'administrator' => 'Administrator'
+        'administrator' => 'Administrator',
+        'created_at' => 'Data înscrierii',
+        'approved_at' => 'Data adăugării',
+        'rejected_at' => 'Data dezactivării',
+
     ],
     'messages'=>[
         'update_success' => 'Organizația a fost actualizată cu succes!',
@@ -48,5 +61,25 @@ return [
         'approve_error' => 'A apărut o eroare la aprobarea organizației!',
         'reject_success' => 'Organizația a fost respinsă cu succes!',
         'reject_error' => 'A apărut o eroare la respingerea organizației!',
-    ]
+    ],
+
+    'approve_modal' => [
+        'heading' => 'Aprobă organizația',
+        'subheading' => 'Sunteți sigur că doriți să aprobați organizația ":name"?',
+    ],
+
+    'reject_modal' => [
+        'heading' => 'Respinge organizația',
+        'subheading' => 'Sunteți sigur că doriți să respingeți organizația ":name"?',
+    ],
+
+    'deactivate_modal' => [
+        'heading' => 'Dezactivează organizația',
+        'subheading' => 'Sunteți sigur că doriți să dezactivați organizația ":name"?',
+    ],
+
+    'reactivate_modal' => [
+        'heading' => 'Reactivează organizația',
+        'subheading' => 'Sunteți sigur că doriți să reactivați organizația ":name"?',
+    ],
 ];

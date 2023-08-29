@@ -5,27 +5,30 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Pages;
 
 use App\Filament\Resources\OrganizationResource;
-use Filament\Pages\Actions;
-use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\OrganizationResource\Widgets\ApprovedOrganizationsWidget;
+use App\Filament\Resources\OrganizationResource\Widgets\PendingOrganizationsWidget;
+use App\Filament\Resources\OrganizationResource\Widgets\RejectedOrganizationsWidget;
+use Filament\Resources\Pages\Page;
 
-class ListOrganizations extends ListRecords
+class ListOrganizations extends Page
 {
     protected static string $resource = OrganizationResource::class;
 
-    protected static ?string $title = '';
+    protected static string $view = 'filament.resources.organization-resource.pages.organisation-index';
 
-    protected function getActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
+    protected static ?string $title = '';
 
     protected function getHeaderWidgets(): array
     {
         return [
-            OrganizationResource\Widgets\NewOrganizationWidget::class,
-
+            PendingOrganizationsWidget::class,
+            ApprovedOrganizationsWidget::class,
+            RejectedOrganizationsWidget::class,
         ];
+    }
+
+    protected function getHeaderWidgetsColumns(): int
+    {
+        return 1;
     }
 }
