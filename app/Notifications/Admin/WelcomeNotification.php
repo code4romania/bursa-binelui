@@ -29,9 +29,9 @@ class WelcomeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(__('auth.welcome.subject'))
+            ->subject(__('auth.welcome.subject', ['app' => config('app.name')]))
             ->greeting(__('auth.welcome.greeting', [
-                'name' => $notifiable->full_name,
+                'name' => $notifiable->name,
             ]))
             ->line(__('auth.welcome.intro', [
                 'app' => config('app.name'),
