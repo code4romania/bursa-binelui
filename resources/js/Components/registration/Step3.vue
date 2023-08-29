@@ -34,6 +34,8 @@
                 @upload="ongLogo"
                 :form="form"
                 :recivedFile="form.ong.logo"
+                :error="form.errors['ong.logo']"
+
             />
         </div>
 
@@ -69,6 +71,7 @@
                 @upload="ongStatute"
                 v-model="form.ong.statute"
                 :recivedFile="form.ong.statute"
+                :error="form.errors['ong.statute']"
             />
             <p class="block mt-1 text-xs font-medium leading-6 text-gray-500">{{ $t('file_description') }}</p>
         </div>

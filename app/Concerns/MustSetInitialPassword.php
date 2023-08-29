@@ -22,7 +22,10 @@ trait MustSetInitialPassword
 
         static::created(function (self $user) {
             if (! app()->runningInConsole()) {
-                $user->sendWelcomeNotification();
+                if (!empty($user->created_by))
+                {
+                    $user->sendWelcomeNotification();
+                }
             }
         });
     }
