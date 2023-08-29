@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Resources\OrganizationResource\Actions;
+namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
 
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
@@ -29,7 +29,7 @@ class ReactivateAction extends Action
         $this->modalHeading(__('organization.reactivate_modal.heading'));
 
         $this->modalSubheading(
-            fn (Organization $record) =>  __('organization.reactivate_modal.subheading', [
+            fn (Organization $record) => __('organization.reactivate_modal.subheading', [
                 'name' => $record->name,
             ])
         );

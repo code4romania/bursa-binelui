@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
 use App\Filament\Resources\OrganizationResource;
-use App\Filament\Resources\OrganizationResource\Actions\ApproveAction;
-use App\Filament\Resources\OrganizationResource\Actions\RejectAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\ApproveAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\RejectAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Actions\EditAction;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\OrganizationStatus;
-use App\Enums\UserRole;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -119,9 +119,11 @@ class Organization extends Model implements HasMedia
         return $this->getFirstMediaUrl('organizationFilesStatute') ?: null;
     }
 
-    public function getAdministrator()
+    public function getAdministrators(): Collection
     {
-        return $this->users()->where('role', UserRole::ngo_admin)->first();
+        return $this->users()
+            ->onlyNGOAdmins()
+            ->get();
     }
 
     public function getActivitylogOptions(): LogOptions

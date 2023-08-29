@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Enums\OrganizationStatus;
 use App\Filament\Forms\Components\Download;
 use App\Filament\Resources\OrganizationResource\Pages;
 use App\Forms\Components\UserLink;
 use App\Models\Organization;
+use App\Rules\ValidCIF;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -17,10 +17,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Filament\Tables\Filters\Layout;
-use Filament\Tables\Filters\SelectFilter;
 
 class OrganizationResource extends Resource
 {
@@ -65,6 +61,8 @@ class OrganizationResource extends Resource
 
                         TextInput::make('cif')
                             ->label(__('organization.labels.cif'))
+                            ->unique(ignoreRecord: true)
+                            ->rule(new ValidCIF)
                             ->inlineLabel()
                             ->required()
                             ->maxLength(255),
@@ -168,54 +166,6 @@ class OrganizationResource extends Resource
                             ->maxLength(255),
                     ]),
             ]);
-    }
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\IconColumn::make('status')->options([
-                    'heroicon-o-x-circle',
-                    'heroicon-o-pencil' => OrganizationStatus::rejected->value,
-                    'heroicon-o-clock' => OrganizationStatus::pending->value,
-                    'heroicon-o-check-circle' => OrganizationStatus::approved->value,
-                ]),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-
-            ])
-            ->filters([
-                SelectFilter::make('status')
-                    ->multiple()
-                    ->options(OrganizationStatus::options())
-                    ->label(__('Status organizație')),
-            ])
-            ->filtersLayout(Layout::AboveContent)
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make(__('organization.actions.approve'))
-                    ->action(function () {
-                    })
-                    ->icon('heroicon-o-check-circle')
-                    ->requiresConfirmation(),
-                Tables\Actions\Action::make(__('organization.actions.reject'))
-                    ->action(function () {
-                    })
-                    ->icon('heroicon-o-x-circle')
-                    ->color('danger')
-                    ->requiresConfirmation(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
