@@ -10,7 +10,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Support\Str;
 
 class CreateUser extends CreateRecord
 {
@@ -51,10 +50,5 @@ class CreateUser extends CreateRecord
                     ->required(),
 
             ]);
-    }
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        $data['password'] = bcrypt(Str::random(16));
-        return $data;
     }
 }

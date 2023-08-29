@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -34,7 +35,15 @@ class PasswordController extends Controller
     public function setInitialPassword(User $user, Request $request): \Inertia\Response
     {
         if (! $request->hasValidSignature()) {
-            abort(401);
+            abort(Response::HTTP_FORBIDDEN, __('auth.welcome.invalid_signature'));
+        }
+
+        if (\is_null($user)) {
+            abort(Response::HTTP_FORBIDDEN, __('auth.welcome.no_user'));
+        }
+
+        if ($user->hasSetPassword()) {
+            abort(Response::HTTP_FORBIDDEN, __('auth.welcome.already_used'));
         }
         return Inertia::render('Auth/SetInitialPassword', [
             'user' => $user,
@@ -53,6 +62,7 @@ class PasswordController extends Controller
         $user->update([
             'password' => Hash::make($validated['password']),
         ]);
+        $user->markPasswordAsSet();
 
         return redirect()->route('login')->with('success_message', __('user.messages.set_initial_password_success'));
     }
