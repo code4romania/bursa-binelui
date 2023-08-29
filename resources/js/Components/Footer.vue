@@ -1,37 +1,34 @@
 <template>
     <footer class="bg-gray-800" aria-labelledby="footer-heading">
-
         <!-- Alert -->
         <Alert
-            class="fixed right-10 top-10 w-96 z-50"
+            class="fixed z-50 right-10 top-10 w-96"
             :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
             :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
+            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
         />
 
         <!-- Code4 info -->
         <div class="bg-gray-100">
             <div class="mx-auto container max-w-7xl flex items-center gap-x-6 px-6 py-4 sm:pr-3.5 lg:pl-8">
-                <SvgLoader name="code4_logo"/>
-                <div class="flex flex-col md:flex-row text-sm font-semibold leading-5 gap-1">
+                <SvgLoader name="code4_logo" />
+                <div class="flex flex-col gap-1 text-sm font-semibold leading-5 md:flex-row">
                     <p class="text-gray-700">{{ $t('code4_solution') }}</p>
                     <a class="text-blue-500" href="https://code4.ro/ro">{{ $t('find_more') }}</a>
                 </div>
             </div>
         </div>
 
-        <div class="mx-auto max-w-7xl px-6 pb-8 lg:px-8 mt-10 lg:mt-16">
+        <div class="px-6 pb-8 mx-auto mt-10 max-w-7xl lg:px-8 lg:mt-16">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                 <div class="grid grid-cols-2 gap-8 xl:col-span-2">
-
                     <div class="md:grid md:grid-cols-2 md:gap-4">
-
                         <div>
                             <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('util_links') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
                                     <Link
-                                        :href="route('about')"
+                                        href="route('page', { slug: 'about' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
                                     >
                                         {{ $t('about_link') }}
@@ -107,13 +104,12 @@
                 </div>
 
                 <div class="mt-10 xl:mt-0">
-                    <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('news_letter_subscribe_title') }}</h3>
+                    <h3 class="text-sm font-semibold leading-5 text-gray-400">
+                        {{ $t('news_letter_subscribe_title') }}
+                    </h3>
                     <p class="mt-4 text-sm leading-6 text-gray-400">{{ $t('news_letter_subscribe_text') }}</p>
 
-                    <form
-                        class="mt-6 sm:flex items-center sm:max-w-md"
-                        @submit.prevent="subscribe"
-                    >
+                    <form class="items-center mt-6 sm:flex sm:max-w-md" @submit.prevent="subscribe">
                         <Input
                             id="subscribe-email"
                             placeholder="Adresa de email"
@@ -138,29 +134,31 @@
                 </div>
             </div>
 
-            <div class="border-t border-white/10 pt-8 md:flex md:items-center md:justify-between mt-10 lg:mt-16">
+            <div class="pt-8 mt-10 border-t border-white/10 md:flex md:items-center md:justify-between lg:mt-16">
                 <div class="flex space-x-6 md:order-2">
                     <a href="#">
-                        <SvgLoader name="facebook"/>
+                        <SvgLoader name="facebook" />
                     </a>
 
                     <a href="#">
-                        <SvgLoader name="instagram"/>
+                        <SvgLoader name="instagram" />
                     </a>
 
                     <a href="#">
-                        <SvgLoader name="twitter"/>
+                        <SvgLoader name="twitter" />
                     </a>
 
                     <a href="#">
-                        <SvgLoader name="github"/>
+                        <SvgLoader name="github" />
                     </a>
 
                     <a href="#">
-                        <SvgLoader name="drible"/>
+                        <SvgLoader name="drible" />
                     </a>
                 </div>
-                <p class="mt-8 text-sm leading-5 text-gray-400 md:order-1 md:mt-0">&copy; {{ currentYear }} {{ $t('footer_info') }}</p>
+                <p class="mt-8 text-sm leading-5 text-gray-400 md:order-1 md:mt-0">
+                    &copy; {{ currentYear }} {{ $t('footer_info') }}
+                </p>
             </div>
         </div>
     </footer>
@@ -177,9 +175,9 @@
     import Alert from './Alert.vue';
 
     const flash = {
-        success_message:'',
-        error_message:''
-    }
+        success_message: '',
+        error_message: '',
+    };
 
     /** Form variables. */
     const form = useForm({
