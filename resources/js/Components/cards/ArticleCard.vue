@@ -1,7 +1,7 @@
 <template>
     <li class="flex flex-col col-span-1 bg-white rounded-lg shadow-md">
         <div class="flex flex-col flex-1">
-            <Link href="#" class="relative sm:h-52">
+            <Link :href="route('article', data.slug)" class="relative sm:h-52">
                 <img class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full" :src="data.cover_image ? data.cover_image : '/images/no_image.jpg'" alt="aticle image" />
             </Link>
 
@@ -13,7 +13,7 @@
 
                 <h3 class="text-2xl font-bold text-gray-700 line-clamp-2">{{ data.title }}</h3>
 
-                <div class="text-base text-gray-500" v-html="data.content"></div>
+                <div class="text-base text-gray-500 line-clamp-4" v-html="data.content"/>
 
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-gray-500">{{ data.date }}</p>
