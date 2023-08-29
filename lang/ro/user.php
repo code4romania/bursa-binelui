@@ -10,4 +10,7 @@ return [
     'email'=>'Email',
     'role'=>'Rol',
     'organization'=>'Organizație',
+    'messages'=>[
+        'set_initial_password_success' => 'Parola a fost setată cu succes!',
+    ]
 ];

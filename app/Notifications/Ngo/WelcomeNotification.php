@@ -37,7 +37,7 @@ class WelcomeNotification extends Notification
                 'app' => config('app.name'),
             ]))
             ->action(__('auth.welcome.submit'), URL::signedRoute(
-                'filament.auth.welcome',
+                'ngo.user.welcome',
                 ['user' => $notifiable->id]
             ));
     }
