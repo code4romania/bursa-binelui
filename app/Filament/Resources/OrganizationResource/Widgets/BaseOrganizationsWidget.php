@@ -52,7 +52,7 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                     PendingOrganizationsWidget::class => OrganizationStatus::pending,
                     ApprovedOrganizationsWidget::class => OrganizationStatus::approved,
                     RejectedOrganizationsWidget::class => OrganizationStatus::rejected,
-                }), ,
+                }),
         ];
     }
 
