@@ -52,9 +52,11 @@ return [
         'created_at' => 'Data înscrierii',
         'approved_at' => 'Data adăugării',
         'rejected_at' => 'Data dezactivării',
-
+        'contact_email' => 'Email de contact',
+        'contact_phone' => 'Telefon de contact',
+        'counties' => 'Județe',
     ],
-    'messages'=>[
+    'messages' => [
         'update_success' => 'Organizația a fost actualizată cu succes!',
         'update_error' => 'A apărut o eroare la actualizarea organizației!',
         'approve_success' => 'Organizația a fost aprobată cu succes!',

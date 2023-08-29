@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
+use App\Enums\OrganizationStatus;
 use App\Filament\Resources\OrganizationResource;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\ExportAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -42,6 +44,18 @@ abstract class BaseOrganizationsWidget extends BaseWidget
         return 'desc';
     }
 
+    protected function getTableHeaderActions(): array
+    {
+        return [
+            ExportAction::make()
+                ->status(match (\get_class($this)) {
+                    PendingOrganizationsWidget::class => OrganizationStatus::pending,
+                    ApprovedOrganizationsWidget::class => OrganizationStatus::approved,
+                    RejectedOrganizationsWidget::class => OrganizationStatus::rejected,
+                }), ,
+        ];
+    }
+
     protected function getTableColumns(): array
     {
         return [
@@ -76,5 +90,10 @@ abstract class BaseOrganizationsWidget extends BaseWidget
             ['*'],
             $this->getTablePaginationPageName(),
         );
+    }
+
+    public static function getResource(): string
+    {
+        return static::$resource;
     }
 }

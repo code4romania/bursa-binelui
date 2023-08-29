@@ -126,8 +126,8 @@ class OrganizationResource extends Resource
                             ->maxLength(255),
 
                         TextInput::make('contact_email')
-                            ->email()
                             ->label(__('organization.labels.contact_email'))
+                            ->email()
                             ->inlineLabel()
                             ->required()
                             ->maxLength(255),
