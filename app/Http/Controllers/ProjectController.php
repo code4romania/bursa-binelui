@@ -51,10 +51,6 @@ class ProjectController extends Controller
 
     public function item(Project $project)
     {
-        if ($project->status !== ProjectStatus::approved) {
-            $this->authorize('view', $project);
-        }
-
         return Inertia::render('Public/Projects/Project', [
             'project' => $project,
         ]);

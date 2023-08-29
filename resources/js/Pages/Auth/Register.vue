@@ -168,7 +168,7 @@ const submit = () => {
             /** Set active component in case of validation errors. */
             if (error['user.name'] || error['user.password'] || error['user.email'] || error['user.password_confirmation']) {
                 current.value = 1
-            } else if (error['ong.name'] || error['ong.cif'] || error['ong.description'] || error['ong.activity_domains_ids']) {
+            } else if (error['ong.name'] || error['ong.cif'] || error['ong.description'] || error['ong.activity_domains_ids'] || error['ong.statute'] || error['ong.logo']) {
                 current.value = 2
             } else if (error['ong.counties_ids'] || error['ong.street_address'] || error['ong.contact_person'] || error['ong.contact_phone'] || error['ong.contact_email'] || error['ong.webiste']) {
                 current.value = 3

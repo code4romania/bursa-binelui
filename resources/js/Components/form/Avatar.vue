@@ -13,9 +13,10 @@
                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
             />
 
-
         </label>
     </div>
+    <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
+
 </template>
 
 <script setup>
@@ -30,6 +31,7 @@
         label: String,
         id: String,
         form: Object,
+        error: String,
         recivedFile: [Object, String]
     });
 

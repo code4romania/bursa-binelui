@@ -15,6 +15,8 @@
 
         <p class="text-sm font-semibold text-gray-700 truncate">{{ name }}</p>
     </div>
+    <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
+
 </template>
 
 <script setup>
@@ -25,6 +27,7 @@
     const props = defineProps({
         label: String,
         id: String,
+        error: String,
         recivedFile: [Object, String]
     });
 
