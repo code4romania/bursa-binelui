@@ -11,14 +11,14 @@
                     <span v-if="data.team">&nbsp;|&nbsp;{{ data.team }}</span>
                 </div>
 
-                <h3 class="text-2xl font-bold text-gray-700 line-clamp-2">{{ data.name }}</h3>
+                <h3 class="text-2xl font-bold text-gray-700 line-clamp-2">{{ data.title }}</h3>
 
                 <div class="text-base text-gray-500" v-html="data.content"></div>
 
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-gray-500">{{ data.date }}</p>
                     <Link
-                        href=""
+                        :href="route('article', data.slug)"
                         class="flex items-center text-sm font-semibold gap-x-2 text-primary-500"
                     >
                         {{ $t('read_article') }}
