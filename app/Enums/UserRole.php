@@ -18,5 +18,4 @@ enum UserRole: string
     {
         return 'user.roles';
     }
-
 }
