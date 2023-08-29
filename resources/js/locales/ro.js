@@ -20,6 +20,7 @@ export default {
     "log_in": "Intră în cont",
     "google_log_in": "Continuă cu Google",
     "password_reset": "Resetează parola",
+    'set_password': 'Setează parola',
     "no_account": "Nu ai cont pe Bursa Binelui?",
     "header_confirm_password": "Confirm Password",
     "confirm_password_info": "This is a secure area of the application. Please confirm your password before continuing.",

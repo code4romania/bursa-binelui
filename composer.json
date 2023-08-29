@@ -15,6 +15,7 @@
         "filament/spatie-laravel-translatable-plugin": "^2.17",
         "guzzlehttp/guzzle": "^7.8",
         "inertiajs/inertia-laravel": "^0.6",
+        "jeffgreco13/filament-breezy": "^1.5",
         "laravel/framework": "^10.20",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",

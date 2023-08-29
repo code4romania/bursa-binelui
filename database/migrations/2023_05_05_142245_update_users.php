@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('role', ['donor', 'ngo-admin', 'bb-manager', 'bb-admin']);
             $table->string('phone')->nullable();
             $table->string('source_of_information')->nullable();
+            $table->timestamp('password_set_at')->nullable();
             $table->foreignIdFor(Organization::class)->nullable()->constrained();
         });
     }
