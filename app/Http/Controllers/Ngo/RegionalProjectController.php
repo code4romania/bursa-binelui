@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Ngo;
 
-use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
 use App\Models\ActivityDomain;
 use App\Models\County;
-use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Models\RegionalProject;
-use App\Models\User;
-use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
-use App\Notifications\Ngo\ProjectCreated;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 
 class RegionalProjectController extends Controller
@@ -61,6 +57,7 @@ class RegionalProjectController extends Controller
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
+
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }
 
@@ -79,6 +76,7 @@ class RegionalProjectController extends Controller
     {
 //        $this->authorize('view', $project);
         $project->load('media');
+
         return Inertia::render('AdminOng/Projects/EditRegionalProject', [
             'project' => $project,
             'counties' =>  County::get(['name', 'id']),
@@ -96,8 +94,8 @@ class RegionalProjectController extends Controller
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
         $project->update($request->all());
-        return redirect()->back()->with('success_message', 'Project updated.');
 
+        return redirect()->back()->with('success_message', 'Project updated.');
     }
 
     /**
@@ -107,6 +105,7 @@ class RegionalProjectController extends Controller
     {
         //
     }
+
     public function changeStatus(Request $request, string $id)
     {
         try {
@@ -114,6 +113,7 @@ class RegionalProjectController extends Controller
         } catch (\Exception $exception) {
             return redirect()->back()->with('error_message', $exception->getMessage());
         }
+
         return redirect()->back()->with('success_message', 'Project status changed.');
     }
 }

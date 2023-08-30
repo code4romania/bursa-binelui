@@ -151,8 +151,7 @@ class Project extends Model implements HasMedia
             'end',
             'categories',
             'reason_to_donate',
-            'beneficiaries'
+            'beneficiaries',
         ];
-
     }
 }

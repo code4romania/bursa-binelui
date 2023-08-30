@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\RegionalProject;
 
 use App\Enums\ProjectStatus;
@@ -22,7 +24,6 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-
 //        if ($this->project_status === ProjectStatus::pending->value) {
 //            return [
 //                'project_status' => ['required', 'string'], // 'pending' or 'approved

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
 class RegionalProjectController extends Controller
 {
@@ -21,5 +21,4 @@ class RegionalProjectController extends Controller
     {
         //
     }
-
 }

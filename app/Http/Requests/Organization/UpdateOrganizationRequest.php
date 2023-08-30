@@ -13,6 +13,7 @@ class UpdateOrganizationRequest extends FormRequest
     {
         return $this->user()->can('update', $this->organization);
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -32,7 +33,7 @@ class UpdateOrganizationRequest extends FormRequest
             'contact_person' => ['nullable', 'string'],
             'activity_domains_ids' => ['nullable', 'array'],
             'counties_ids' => ['nullable', 'array'],
-            'volunteer' => ['nullable','boolean'],
+            'volunteer' => ['nullable', 'boolean'],
             'why_volunteer' => ['nullable', 'string'],
             'website' => ['nullable', 'string'],
         ];

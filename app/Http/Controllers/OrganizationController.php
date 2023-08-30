@@ -89,24 +89,26 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-         try {
-        /** Get all request data. */
-        $modelData = $request->validated();
+        try {
+            /** Get all request data. */
+            $modelData = $request->validated();
 
-        if ($request->has('activity_domains')) {
-            $ids = collect($modelData['activity_domains'])->pluck('id')->toArray();
-            $organization->activityDomains()->sync($ids);
+            if ($request->has('activity_domains')) {
+                $ids = collect($modelData['activity_domains'])->pluck('id')->toArray();
+                $organization->activityDomains()->sync($ids);
+            }
+            if ($request->hasFile('cover_image')) {
+                $organization->clearMediaCollection('organizationFilesLogo');
+                $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
+            }
+            $organization->fill($modelData)->saveForApproval();
+
+            return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
+        } catch (\Throwable $th) {
+            Log::warning($th->getMessage());
+
+            return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
         }
-        if ($request->hasFile('cover_image')) {
-            $organization->clearMediaCollection('organizationFilesLogo');
-            $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
-        }
-        $organization->fill($modelData)->saveForApproval();
-        return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
-         } catch (\Throwable $th) {
-             Log::warning($th->getMessage());
-             return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
-         }
     }
 
     public function removeCoverImage(Request $request)

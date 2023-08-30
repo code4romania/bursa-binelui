@@ -73,8 +73,7 @@ class Activity extends BaseActivity
 
     public function getStatusAttribute(): ?string
     {
-        if($this->causer?->role !== UserRole::ngo_admin )
-        {
+        if ($this->causer?->role !== UserRole::ngo_admin) {
             return __('activity.status.approved');
         }
         if ($this->isApproved()) {

@@ -6,22 +6,19 @@ namespace App\Services;
 
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
-use App\Http\Requests\Project\StoreRequest;
 use App\Models\Project;
 use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Validation\ValidationData;
-use Illuminate\Validation\ValidationException;
 
 class ProjectService
 {
     private Project|RegionalProject $project;
-    public function __construct($projectClass=null)
-    {
 
+    public function __construct($projectClass = null)
+    {
         if ($projectClass !== null) {
             $projectClass = new $projectClass;
             $this->project = $projectClass;
@@ -49,6 +46,7 @@ class ProjectService
             $data['name'] = 'Draft-' . date('Y-m-d H:i:s') . '-' . auth()->user()->name;
         }
         $data['slug'] = \Str::slug($data['name']);
+
         return  $this->project::create($data);
     }
 
@@ -75,17 +73,17 @@ class ProjectService
     {
         $this->project = $this->project::findOrFail($id);
         if ($this->project->status === ProjectStatus::draft && $status === ProjectStatus::pending->value) {
-           $fields = $this->project->toArray();
-           $requiredFields = $this->project->getRequiredFieldsForApproval();
-           $missingFields = [];
-           foreach ($fields as $key => $value) {
-             if (in_array($key, $requiredFields) && empty($value)) {
+            $fields = $this->project->toArray();
+            $requiredFields = $this->project->getRequiredFieldsForApproval();
+            $missingFields = [];
+            foreach ($fields as $key => $value) {
+                if (\in_array($key, $requiredFields) && empty($value)) {
                     $missingFields[] = $key;
-             }
-           }
-           if (! empty($missingFields)) {
-               throw new \Exception('Project is missing required fields for approval, please fill in all required fields . Please fill: '. implode(', ', $missingFields) );
-           }
+                }
+            }
+            if (! empty($missingFields)) {
+                throw new \Exception('Project is missing required fields for approval, please fill in all required fields . Please fill: ' . implode(', ', $missingFields));
+            }
         }
         $this->project->update(['status' => $status]);
         if ($status === ProjectStatus::approved->value) {

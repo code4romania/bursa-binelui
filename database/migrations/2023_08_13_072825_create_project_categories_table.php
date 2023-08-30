@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::create('project_category', function (Blueprint $table) {
-            $table->foreignIdFor( Project::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Project::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(ProjectCategory::class)->constrained()->cascadeOnDelete();
         });
         Schema::create('regional_project_category', function (Blueprint $table) {

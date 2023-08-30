@@ -21,6 +21,7 @@ class ProjectPolicy
         if ($user->organization_id !== $project->organization_id) {
             return false;
         }
+
         /* Anyone can see the details of an organization. */
         return true;
     }
