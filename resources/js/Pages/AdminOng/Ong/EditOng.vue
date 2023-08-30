@@ -44,7 +44,7 @@
                                     id="organization-name"
                                     type="text"
                                     v-model="organization.name"
-                                    :error="form.errors.name"
+                                    :error="props.errors.name"
                                 />
                             </EditModal>
                         </div>
@@ -69,7 +69,7 @@
                                     id="organizationcif"
                                     type="text"
                                     v-model="organization.cif"
-                                    :error="form.errors.cif"
+                                    :error="props.errors.cif"
                                 />
                             </EditModal>
                         </div>
@@ -82,9 +82,9 @@
                             <dt
                                 class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-6"
                             >
-                                <img class="flex-shrink-0 w-32 h-32" :src="logo" alt="" />
+                                <img class="flex-shrink-0 w-32 h-32" :src="organization.cover_image" alt="" />
                                 <div>
-                                    <EditModal @action="editField(clonedOrganization)" :text="$t('change_image_label')">
+                                    <EditModal @action="editField('cover_image')" :text="$t('change_image_label')">
                                         <FileInput
                                             :label="$t('upload_logo')"
                                             @upload="handleFileChange"
@@ -100,7 +100,7 @@
                                         :title="$t('confirm')"
                                         :body="`${$t('confirm_delete_image_text')}`"
                                         :actionRoute="route('organization.remove_cover_image', organization.id)"
-                                        :data="form"
+                                        :data="organization"
                                     />
                                 </div>
                             </dt>
@@ -115,7 +115,7 @@
                                 {{ organization.description }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('description')"
                                 @cancel="resetField('description')"
                                 class="flex justify-end col-span-1"
                             >
@@ -125,7 +125,7 @@
                                     id="organization-description"
                                     color="gray-700"
                                     v-model="organization.description"
-                                    :error="form.errors.description"
+                                    :error="props.errors.description"
                                 />
                             </EditModal>
                         </div>
@@ -139,7 +139,7 @@
                                 {{ organization.activity_domains?.map((item) => item.name).join(', ') }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('activity_domains')"
                                 @cancel="resetField('activity_domains')"
                                 class="flex justify-end col-span-1"
                             >
@@ -149,7 +149,7 @@
                                     type="singleValue"
                                     :options="activity_domains"
                                     v-model="organization.activity_domains"
-                                    :error="form.errors.activity_domains"
+                                    :error="props.errors.activity_domains"
                                 />
                             </EditModal>
                         </div>
@@ -169,7 +169,7 @@
                                 </a>
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('statute_link')"
                                 @cancel="resetField('statute_link')"
                                 class="flex justify-end col-span-1"
                             >
@@ -180,7 +180,7 @@
                                     id="status-document"
                                     type="text"
                                     v-model="organization.statute_link"
-                                    :error="form.errors.statute_link"
+                                    :error="props.errors.statute_link"
                                 />
                             </EditModal>
                         </div>
@@ -201,7 +201,7 @@
                             </dt>
 
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('accepts_volunteers')"
                                 @cancel="resetField('accepts_volunteers')"
                                 class="flex justify-end col-span-1"
                             >
@@ -215,8 +215,8 @@
                                     }}</span>
 
                                     <!-- Error -->
-                                    <p v-show="form.errors.accepts_volunteers" class="mt-2 text-sm text-red-600">
-                                        {{ form.errors.accepts_volunteers }}
+                                    <p v-show="props.errors.accepts_volunteers" class="mt-2 text-sm text-red-600">
+                                        {{ props.errors.accepts_volunteers }}
                                     </p>
                                 </label>
                             </EditModal>
@@ -231,7 +231,7 @@
                                 {{ organization.why_volunteer }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('why_volunteer')"
                                 @cancel="resetField('why_volunteer')"
                                 class="flex justify-end col-span-1"
                             >
@@ -241,7 +241,7 @@
                                     id="organization-volunteer"
                                     color="gray-700"
                                     v-model="organization.why_volunteer"
-                                    :error="form.errors.why_volunteer"
+                                    :error="props.errors.why_volunteer"
                                 />
                             </EditModal>
                         </div>
@@ -261,7 +261,7 @@
                                 {{ organization.website }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('website')"
                                 @cancel="resetField('website')"
                                 class="flex justify-end col-span-1"
                             >
@@ -272,7 +272,7 @@
                                     id="website"
                                     type="text"
                                     v-model="organization.website"
-                                    :error="form.errors.website"
+                                    :error="props.errors.website"
                                 />
                             </EditModal>
                         </div>
@@ -286,7 +286,7 @@
                                 {{ organization.contact_email }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('contact_email')"
                                 @cancel="resetField('contact_email')"
                                 class="flex justify-end col-span-1"
                             >
@@ -297,7 +297,7 @@
                                     id="email"
                                     type="email"
                                     v-model="organization.contact_email"
-                                    :error="form.errors.contact_email"
+                                    :error="props.errors.contact_email"
                                 />
                             </EditModal>
                         </div>
@@ -311,7 +311,7 @@
                                 {{ organization.contact_phone }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('contact_phone')"
                                 @cancel="resetField('contact_phone')"
                                 class="flex justify-end col-span-1"
                             >
@@ -322,7 +322,7 @@
                                     id="phone"
                                     type="text"
                                     v-model="organization.contact_phone"
-                                    :error="form.errors.contact_phone"
+                                    :error="props.errors.contact_phone"
                                 />
                             </EditModal>
                         </div>
@@ -336,7 +336,7 @@
                                 {{ organization.contact_person }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('contact_person')"
                                 @cancel="resetField('contact_person')"
                                 class="flex justify-end col-span-1"
                             >
@@ -347,7 +347,7 @@
                                     id="contact-person"
                                     type="text"
                                     v-model="organization.contact_person"
-                                    :error="form.errors.contact_person"
+                                    :error="props.errors.contact_person"
                                 />
                             </EditModal>
                         </div>
@@ -362,7 +362,7 @@
                                 {{ originalOrganization.counties?.map((item) => item.name).join(', ') }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('counties')"
                                 @cancel="
                                     organization.counties = originalOrganization.counties;
                                     organization.street_address = originalOrganization.street_address;
@@ -377,7 +377,7 @@
                                         type="object"
                                         v-model="organization.counties"
                                         v-if="!organization.is_national"
-                                        :error="form.errors.counties"
+                                        :error="props.errors.counties"
                                     />
                                 </div>
 
@@ -388,7 +388,7 @@
                                     id="street-addres"
                                     type="text"
                                     v-model="organization.street_address"
-                                    :error="form.errors.street_address"
+                                    :error="props.errors.street_address"
                                 />
                             </EditModal>
                         </div>
@@ -408,7 +408,7 @@
                                 {{ organization.status }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('status')"
                                 @cancel="resetField('status')"
                                 class="flex justify-end col-span-1"
                             >
@@ -419,7 +419,7 @@
                                     id="merchant"
                                     type="text"
                                     v-model="organization.status"
-                                    :error="form.errors.status"
+                                    :error="props.errors.status"
                                 />
                             </EditModal>
                         </div>
@@ -433,7 +433,7 @@
                                 {{ organization.status }}
                             </dt>
                             <EditModal
-                                @action="editField(clonedOrganization)"
+                                @action="editField('status')"
                                 @cancel="resetField('status')"
                                 class="flex justify-end col-span-1"
                             >
@@ -444,7 +444,7 @@
                                     id="key-label"
                                     type="text"
                                     v-model="organization.status"
-                                    :error="form.errors.status"
+                                    :error="props.errors.status"
                                 />
                             </EditModal>
                         </div>
@@ -476,6 +476,7 @@
 
     /** Page props. */
     const props = defineProps({
+        errors: Object,
         organization: Object,
         activity_domains: Array,
         counties: Array,
@@ -484,24 +485,25 @@
 
     const organization = ref(props.organization);
     const originalOrganization = computed(() => props.organization);
-    // const clonedOrganization = { ...props.organization };
-    // const logo = ref(form.cover_image);
-
-    const form = useForm({});
-
     const resetField = (field) => {
         organization.value[field] = originalOrganization.value[field];
     };
 
     const editField = (field) => {
-        form[field] = organization.value[field];
+        let data = {[field]: organization.value[field]};
+        let tmpForm = useForm(data)
 
-        form.post(route('admin.ong.update', organization.value.id), {
+        console.log(field)
+        console.log(tmpForm)
+
+
+
+        tmpForm.post(route('admin.ong.update', organization.value.id), {
             preserveScroll: true,
             onSuccess: (response) => {
-                organization.value.logo = response.props.organization.cover_image;
+                organization.value.cover_image = response.props.organization.cover_image;
+                console.log(organization)
             },
-            onError: () => {},
         });
     };
 
