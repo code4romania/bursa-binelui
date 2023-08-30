@@ -101,7 +101,7 @@ trait LogsActivityForApproval
     {
         $attributes = collect($changes)->keys();
         foreach ($attributes as $attribute) {
-            $changes = Activity::userPendingChanges($this->id,\get_class($this))->get();
+            $changes = Activity::userPendingChanges($this->id, \get_class($this))->get();
             foreach ($changes as $change) {
                 if ($change->properties->keys()->contains($attribute)) {
                     $change->delete();

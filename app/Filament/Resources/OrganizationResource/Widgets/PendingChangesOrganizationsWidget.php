@@ -35,9 +35,9 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
         return [
             TitleWithImageColumn::make('name')
                 ->label(__('organization.organization'))
-                ->image(fn($record) => $record->cover_image)
+                ->image(fn ($record) => $record->cover_image)
                 ->description(
-                    fn($record) => sprintf(
+                    fn ($record) => sprintf(
                         '%s: %s',
                         __('field.updated_at'),
                         $record->activities->last()->created_at->toFormattedDateTime()
@@ -49,7 +49,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
             TextColumn::make('created_at')
                 ->label(__('organization.labels.approved_at'))
                 ->description(
-                    fn($record) => sprintf(
+                    fn ($record) => sprintf(
                         '%s: %s',
                         __('field.updated_at'),
                         $record->activities->last()->created_at->toFormattedDateTime()

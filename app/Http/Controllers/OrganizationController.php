@@ -78,8 +78,8 @@ class OrganizationController extends Controller
             return \App\Models\County::get(['name', 'id']);
         });
         $changes = Activity::userPendingChanges($organization->id, Organization::class)->get()->map(function ($change) {
-                return $change->properties->keys();
-            })->flatten()->unique();
+            return $change->properties->keys();
+        })->flatten()->unique();
 
         return Inertia::render('AdminOng/Ong/EditOng', [
             'organization' => $organization,

@@ -99,13 +99,11 @@ class Activity extends BaseActivity
 
     public function scopeUserPendingChanges(Builder $query, int $recordId, string $modelClass): Builder
     {
-
         return $query->where('subject_id', $recordId)
             ->where('subject_type', $modelClass)
             ->where('approved_at', null)
             ->where('rejected_at', null)
             ->where('log_name', 'pending');
 //                ->whereJsonContains('properties', $attribute)
-
     }
 }
