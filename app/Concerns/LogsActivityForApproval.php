@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Concerns;
 
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Spatie\Activitylog\ActivityLogger;
@@ -69,5 +70,29 @@ trait LogsActivityForApproval
         }
 
         $logger->log($description);
+    }
+
+    public function approveChanges($changesId): void
+    {
+        /** @var Activity $changes */
+        $changes = Activity::find($changesId);
+        foreach ($changes->properties as $key => $change) {
+            $this->setAttribute($key, $change['new']);
+        }
+        $changes->setApproved();
+        $this->save();
+        //TODO send email
+    }
+
+    public function rejectChanges($changesId): void
+    {
+        /** @var Activity $changes */
+        $changes = Activity::find($changesId);
+        foreach ($changes->properties as $key => $change) {
+            $this->setAttribute($key, $change['old']);
+        }
+        $changes->setRejected();
+        $this->save();
+        //TODO send email
     }
 }

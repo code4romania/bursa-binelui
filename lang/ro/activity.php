@@ -13,11 +13,16 @@ return[
         'created_at' => 'Data și ora',
         'changed_field' => 'Câmpul editat',
         'causer' => 'Editat de către',
+        'status' => 'Status',
     ],
 
     'value' => [
         'old' => 'Valoare anterioară',
         'new' => 'Valoare nouă',
     ],
+    'actions'=>[
+        'approve'=>'Aprobă',
+        'reject'=>'Respinge',
+    ]
 
 ];

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
+use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ApproveAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\RejectAction;
 use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ViewAction;
 use App\Filament\Resources\UserResource;
 use App\Models\Activity;
@@ -16,7 +18,7 @@ class OrganizationActivityWidget extends BaseWidget
 {
     public Organization $record;
 
-    protected int | string | array $columnSpan = 2;
+    protected int|string|array $columnSpan = 2;
 
     protected function getTableQuery(): Builder
     {
@@ -47,6 +49,7 @@ class OrganizationActivityWidget extends BaseWidget
                         ? UserResource::getUrl('view', $record->causer)
                         : null
                 ),
+            TextColumn::make('status'),
         ];
     }
 
@@ -54,6 +57,8 @@ class OrganizationActivityWidget extends BaseWidget
     {
         return [
             ViewAction::make(),
+            ApproveAction::make(),
+            RejectAction::make(),
         ];
     }
 }
