@@ -97,17 +97,11 @@ trait LogsActivityForApproval
         //TODO send email
     }
 
-    public function removePendingChangesForTheSameAttribute($changes)
+    public function removePendingChangesForTheSameAttribute($changes): void
     {
         $attributes = collect($changes)->keys();
         foreach ($attributes as $attribute) {
-            $changes = Activity::where('subject_id', $this->id)
-                ->where('subject_type', \get_class($this))
-                ->where('approved_at', null)
-                ->where('rejected_at', null)
-                ->where('log_name', 'pending')
-//                ->whereJsonContains('properties', $attribute)
-                ->get();
+            $changes = Activity::userPendingChanges($this->id,\get_class($this))->get();
             foreach ($changes as $change) {
                 if ($change->properties->keys()->contains($attribute)) {
                     $change->delete();
