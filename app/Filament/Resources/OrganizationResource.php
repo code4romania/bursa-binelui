@@ -89,6 +89,14 @@ class OrganizationResource extends Resource
                             ->preload()
                             ->required(),
 
+                        Select::make('counties')
+                            ->relationship('counties', 'name')
+                            ->label(__('organization.labels.counties'))
+                            ->inlineLabel()
+                            ->multiple()
+                            ->preload()
+                            ->required(),
+
                         SpatieMediaLibraryFileUpload::make('organizationFilesStatute')
                             ->label(__('organization.labels.statute'))
                             ->inlineLabel()
