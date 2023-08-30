@@ -9,6 +9,7 @@ use App\Filament\Resources\OrganizationResource\Actions\Pages\ApproveAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\DeactivateAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\ReactivateAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\RejectAction;
+use App\Filament\Resources\OrganizationResource\Widgets\OrganizationActivityWidget;
 use Filament\Pages\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -37,6 +38,13 @@ class ViewOrganization extends ViewRecord
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isActive()),
 
+        ];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [
+            OrganizationActivityWidget::class,
         ];
     }
 }

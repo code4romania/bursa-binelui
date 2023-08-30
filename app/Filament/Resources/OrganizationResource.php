@@ -71,9 +71,8 @@ class OrganizationResource extends Resource
                             ->collection('organizationFilesLogo')
                             ->label(__('organization.labels.logo'))
                             ->inlineLabel()
-                            ->required()
-                            ->maxFiles(1)
-                            ->acceptedFileTypes(['image/*']),
+                            ->image()
+                            ->maxFiles(1),
 
                         Textarea::make('description')
                             ->label(__('organization.labels.description'))
@@ -102,8 +101,7 @@ class OrganizationResource extends Resource
                             ->inlineLabel()
                             ->disablePreview()
                             ->collection('organizationFilesStatute')
-                            ->hiddenOn('view')
-                            ->required(),
+                            ->hiddenOn('view'),
 
                         Download::make('organizationFilesStatute')
                             ->label(__('organization.labels.statute'))

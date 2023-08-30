@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
@@ -14,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -26,7 +26,7 @@ class Organization extends Model implements HasMedia
     use InteractsWithMedia;
     use HasActivityDomain;
     use HasOrganizationStatus;
-    use LogsActivity;
+    use LogsActivityForApproval;
 
     /**
      * The attributes that are mass assignable.

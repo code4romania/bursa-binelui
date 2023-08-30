@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
-use App\Http\Requests\StoreOrganizationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\Volunteer;
@@ -88,25 +87,25 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
-        try {
-            /** Get all request data. */
-            $modelData = $request->input();
+        // try {
+        /** Get all request data. */
+        $modelData = $request->input();
 
-            if ($request->has('activity_domains')) {
-                $ids = collect($request->input('activity_domains'))->pluck('id')->toArray();
-                $organization->activityDomains()->sync($ids);
-            }
-            if ($request->hasFile('cover_image')) {
-                $organization->clearMediaCollection('organizationFilesLogo');
-                $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
-            }
-
-            $organization->update($modelData);
-
-            return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
-        } catch (\Throwable $th) {
-            return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
+        if ($request->has('activity_domains')) {
+            $ids = collect($request->input('activity_domains'))->pluck('id')->toArray();
+            $organization->activityDomains()->sync($ids);
         }
+        if ($request->hasFile('cover_image')) {
+            $organization->clearMediaCollection('organizationFilesLogo');
+            $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
+        }
+
+        $organization->fill($modelData)->saveForApproval();
+
+        return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
+        // }
     }
 
     public function removeCoverImage(Request $request)
