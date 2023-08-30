@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
+use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -85,27 +87,26 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Organization $organization)
+    public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        // try {
+         try {
         /** Get all request data. */
-        $modelData = $request->input();
+        $modelData = $request->validated();
 
         if ($request->has('activity_domains')) {
-            $ids = collect($request->input('activity_domains'))->pluck('id')->toArray();
+            $ids = collect($modelData['activity_domains'])->pluck('id')->toArray();
             $organization->activityDomains()->sync($ids);
         }
         if ($request->hasFile('cover_image')) {
             $organization->clearMediaCollection('organizationFilesLogo');
             $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
         }
-
         $organization->fill($modelData)->saveForApproval();
-
         return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
-        // } catch (\Throwable $th) {
-        //     return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
-        // }
+         } catch (\Throwable $th) {
+             Log::warning($th->getMessage());
+             return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
+         }
     }
 
     public function removeCoverImage(Request $request)
