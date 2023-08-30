@@ -31,6 +31,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.name }}
+                                <p v-show="props.changes.includes('name')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
                             <EditModal
                                 @action="editField('name')"
@@ -56,6 +58,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.cif }}
+                                <p v-show="props.changes.includes('cif')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
                             <EditModal
                                 @action="editField('cif')"
@@ -113,6 +117,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.description }}
+                                <p v-show="props.changes.includes('description')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
                             <EditModal
                                 @action="editField('description')"
@@ -137,6 +143,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.activity_domains?.map((item) => item.name).join(', ') }}
+                                <p v-show="props.changes.includes('activity_domains')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
                             <EditModal
                                 @action="editField('activity_domains')"
@@ -166,6 +174,7 @@
                                     class="inline-flex justify-center rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:col-start-2"
                                 >
                                     {{ $t('open_statue') }}
+
                                 </a>
                             </dt>
                             <EditModal
@@ -198,6 +207,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.accepts_volunteers ? $t('yes') : $t('no') }}
+                                <p v-show="props.changes.includes('accepts_volunteers')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
 
                             <EditModal
@@ -229,6 +240,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.why_volunteer }}
+                                <p v-show="props.changes.includes('why_volunteer')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
                             <EditModal
                                 @action="editField('why_volunteer')"
@@ -259,6 +272,8 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.website }}
+                                <p v-show="props.changes.includes('website')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+
                             </dt>
                             <EditModal
                                 @action="editField('website')"
@@ -284,6 +299,7 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.contact_email }}
+                                <p v-show="props.changes.includes('contact_email')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
                             </dt>
                             <EditModal
                                 @action="editField('contact_email')"
@@ -309,6 +325,7 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.contact_phone }}
+                                <p v-show="props.changes.includes('contact_phone')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
                             </dt>
                             <EditModal
                                 @action="editField('contact_phone')"
@@ -334,6 +351,7 @@
                             </dt>
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.contact_person }}
+                                <p v-show="props.changes.includes('contact_person')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
                             </dt>
                             <EditModal
                                 @action="editField('contact_person')"
@@ -360,6 +378,7 @@
                             <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                                 {{ organization.street_address }},
                                 {{ originalOrganization.counties?.map((item) => item.name).join(', ') }}
+                                <p v-show="props.changes.includes('street_address')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
                             </dt>
                             <EditModal
                                 @action="editField('counties')"
@@ -481,6 +500,7 @@
         activity_domains: Array,
         counties: Array,
         flash: Object,
+        changes: Array,
     });
 
     const organization = ref(props.organization);
@@ -492,12 +512,6 @@
     const editField = (field) => {
         let data = {[field]: organization.value[field]};
         let tmpForm = useForm(data)
-
-        console.log(field)
-        console.log(tmpForm)
-
-
-
         tmpForm.post(route('admin.ong.update', organization.value.id), {
             preserveScroll: true,
             onSuccess: (response) => {

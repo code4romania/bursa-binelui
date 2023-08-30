@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
+use App\Models\Activity;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\Volunteer;
@@ -76,11 +77,15 @@ class OrganizationController extends Controller
         $counties = cache()->remember('counties', 60 * 60 * 24, function () {
             return \App\Models\County::get(['name', 'id']);
         });
+        $changes = Activity::userPendingChanges($organization->id, Organization::class)->get()->map(function ($change) {
+                return $change->properties->keys();
+            })->flatten()->unique();
 
         return Inertia::render('AdminOng/Ong/EditOng', [
             'organization' => $organization,
             'activity_domains' => $activityDomains,
             'counties' => $counties,
+            'changes' => $changes,
         ]);
     }
 
