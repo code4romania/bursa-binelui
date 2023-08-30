@@ -6,6 +6,7 @@ namespace App\Filament\Resources\OrganizationResource\Pages;
 
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\OrganizationResource\Widgets\ApprovedOrganizationsWidget;
+use App\Filament\Resources\OrganizationResource\Widgets\PendingChangesOrganizationsWidget;
 use App\Filament\Resources\OrganizationResource\Widgets\PendingOrganizationsWidget;
 use App\Filament\Resources\OrganizationResource\Widgets\RejectedOrganizationsWidget;
 use Filament\Resources\Pages\Page;
@@ -22,6 +23,7 @@ class ListOrganizations extends Page
     {
         return [
             PendingOrganizationsWidget::class,
+            PendingChangesOrganizationsWidget::class,
             ApprovedOrganizationsWidget::class,
             RejectedOrganizationsWidget::class,
         ];

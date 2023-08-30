@@ -26,6 +26,7 @@ return [
         'in_approval' => 'Cereri noi de înscriere',
         'approved' => 'Organizații active',
         'rejected' => 'Organizații dezactivate',
+        'pending_changes'=> 'Organizații aprobate cu modificări în așteptare',
     ],
     'labels' => [
         'has_statute_file' => 'Are statut',

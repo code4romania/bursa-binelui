@@ -13,6 +13,8 @@ enum OrganizationStatus: string
     case approved = 'active';
     case rejected = 'disabled';
 
+    public const pending_changes = 'pending_changes';
+
     protected function translationKeyPrefix(): ?string
     {
         return 'organization.status_arr';

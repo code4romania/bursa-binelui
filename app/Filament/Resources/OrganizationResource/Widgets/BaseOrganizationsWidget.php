@@ -51,6 +51,7 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->status(match (\get_class($this)) {
                     PendingOrganizationsWidget::class => OrganizationStatus::pending,
                     ApprovedOrganizationsWidget::class => OrganizationStatus::approved,
+                    PendingChangesOrganizationsWidget::class => OrganizationStatus::pending_changes,
                     RejectedOrganizationsWidget::class => OrganizationStatus::rejected,
                 }),
         ];
