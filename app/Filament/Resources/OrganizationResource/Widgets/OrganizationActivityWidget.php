@@ -49,7 +49,8 @@ class OrganizationActivityWidget extends BaseWidget
                         ? UserResource::getUrl('view', $record->causer)
                         : null
                 ),
-            TextColumn::make('status'),
+            TextColumn::make('status')
+                ->label(__('activity.column.status')),
         ];
     }
 

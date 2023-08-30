@@ -26,6 +26,7 @@ trait LogsActivityForApproval
         if ($changes->isEmpty()) {
             return;
         }
+        $this->removePendingChangesForTheSameAttribute($this->getDirty());
 
         $eventName = 'updated';
 
@@ -94,5 +95,24 @@ trait LogsActivityForApproval
         $changes->setRejected();
         $this->save();
         //TODO send email
+    }
+
+    public function removePendingChangesForTheSameAttribute($changes)
+    {
+        $attributes = collect($changes)->keys();
+        foreach ($attributes as $attribute) {
+            $changes = Activity::where('subject_id', $this->id)
+                ->where('subject_type', \get_class($this))
+                ->where('approved_at', null)
+                ->where('rejected_at', null)
+                ->where('log_name', 'pending')
+//                ->whereJsonContains('properties', $attribute)
+                ->get();
+            foreach ($changes as $change) {
+                if ($change->properties->keys()->contains($attribute)) {
+                    $change->delete();
+                }
+            }
+        }
     }
 }
