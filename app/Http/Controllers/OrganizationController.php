@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
+use App\Http\Resources\OrganizationResource;
 use App\Models\Activity;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
@@ -82,7 +83,7 @@ class OrganizationController extends Controller
         })->flatten()->unique();
 
         return Inertia::render('AdminOng/Ong/EditOng', [
-            'organization' => $organization,
+            'organization' => new OrganizationResource($organization),
             'activity_domains' => $activityDomains,
             'counties' => $counties,
             'changes' => $changes,
