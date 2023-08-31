@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Models\Activity as BaseActivity;
 
 class Activity extends BaseActivity
@@ -82,14 +83,19 @@ class Activity extends BaseActivity
         return null !== $this->rejected_at;
     }
 
-    public function scopeUserPendingChanges(Builder $query, int $recordId, string $modelClass): Builder
+    public function scopePendingChangesFor(Builder $query, Model $subject, array $keys = []): Builder
     {
-        return $query->where('subject_id', $recordId)
-            ->where('subject_type', $modelClass)
-            ->where('approved_at', null)
-            ->where('rejected_at', null)
-            ->where('log_name', 'pending');
-//                ->whereJsonContains('properties', $attribute)
+        return $query->inLog('pending')
+            ->forSubject($subject)
+            ->whereNull('approved_at')
+            ->whereNull('rejected_at')
+            ->when(filled($keys), function (Builder $query) use ($keys) {
+                $query->where(function (Builder $query) use ($keys) {
+                    foreach ($keys as $key) {
+                        $query->orWhereJsonContainsKey("properties->{$key}");
+                    }
+                });
+            });
     }
 
     public function approve(): void

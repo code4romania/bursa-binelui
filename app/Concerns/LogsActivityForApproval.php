@@ -23,7 +23,8 @@ trait LogsActivityForApproval
         if ($changes->isEmpty()) {
             return;
         }
-        $this->removePendingChangesForTheSameAttribute($this->getDirty());
+
+        Activity::pendingChangesFor($this, $changes->keys()->all())->delete();
 
         $eventName = 'updated';
 
@@ -36,19 +37,6 @@ trait LogsActivityForApproval
             ->performedOn($this)
             ->withProperties($changes)
             ->log($description);
-    }
-
-    public function removePendingChangesForTheSameAttribute($changes): void
-    {
-        $attributes = collect($changes)->keys();
-        foreach ($attributes as $attribute) {
-            $changes = Activity::userPendingChanges($this->id, \get_class($this))->get();
-            foreach ($changes as $change) {
-                if ($change->properties->keys()->contains($attribute)) {
-                    $change->delete();
-                }
-            }
-        }
     }
 
     public function tapActivity(Activity $activity, string $eventName)

@@ -9,6 +9,7 @@ use App\Enums\OrganizationStatus;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Models\Activity;
 use App\Models\ActivityDomain;
+use App\Models\County;
 use App\Models\Organization;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
@@ -71,15 +72,20 @@ class OrganizationController extends Controller
     public function edit()
     {
         $organization = auth()->user()->organization;
+
         $activityDomains = cache()->remember('activityDomains', 60 * 60 * 24, function () {
-            return \App\Models\ActivityDomain::get(['name', 'id']);
+            return ActivityDomain::get(['name', 'id']);
         });
+
         $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name', 'id']);
+            return County::get(['name', 'id']);
         });
-        $changes = Activity::userPendingChanges($organization->id, Organization::class)->get()->map(function ($change) {
-            return $change->properties->keys();
-        })->flatten()->unique();
+
+        $changes = Activity::pendingChangesFor($organization)
+            ->get()
+            ->flatMap(fn (Activity $activity) => $activity->properties->keys())
+            ->unique()
+            ->values();
 
         return Inertia::render('AdminOng/Ong/EditOng', [
             'organization' => $organization,
