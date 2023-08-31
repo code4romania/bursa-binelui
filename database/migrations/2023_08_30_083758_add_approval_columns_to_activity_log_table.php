@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::connection(config('activitylog.database_connection'))->table(config('activitylog.table_name'), function (Blueprint $table) {
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('rejected_at')->nullable();
-//            $table->dropColumn('updated_at');
+            $table->dropColumn('updated_at');
         });
     }
 
