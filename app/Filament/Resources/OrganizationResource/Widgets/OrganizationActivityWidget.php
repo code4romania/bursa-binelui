@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
-use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ApproveAction;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\RejectAction;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ViewAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ApproveActivityAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\RejectActivityAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ViewActivityAction;
 use App\Filament\Resources\UserResource;
 use App\Models\Activity;
 use App\Models\Organization;
@@ -57,9 +57,11 @@ class OrganizationActivityWidget extends BaseWidget
     protected function getTableActions(): array
     {
         return [
-            ViewAction::make(),
-            ApproveAction::make(),
-            RejectAction::make(),
+            ViewActivityAction::make(),
+
+            ApproveActivityAction::make(),
+
+            RejectActivityAction::make(),
         ];
     }
 }

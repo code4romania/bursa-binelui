@@ -8,7 +8,7 @@ use App\Filament\Forms\Components\Value;
 use App\Models\Activity;
 use Filament\Tables\Actions\ViewAction as BaseAction;
 
-class ViewAction extends BaseAction
+class ViewActivityAction extends BaseAction
 {
     public static function getDefaultName(): ?string
     {

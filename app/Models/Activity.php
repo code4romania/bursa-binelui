@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Activity as BaseActivity;
 
@@ -27,22 +26,6 @@ class Activity extends BaseActivity
         static::addGlobalScope('latest', function (Builder $query) {
             return $query->latest();
         });
-    }
-
-    public function setApproved(): void
-    {
-        $this->update([
-            'approved_at' => now(),
-            'rejected_at' => null,
-        ]);
-    }
-
-    public function setRejected(): void
-    {
-        $this->update([
-            'approved_at' => null,
-            'rejected_at' => now(),
-        ]);
     }
 
     public function scopeBetweenDates(Builder $query, ?string $from = null, ?string $until = null): Builder
@@ -73,9 +56,6 @@ class Activity extends BaseActivity
 
     public function getStatusAttribute(): ?string
     {
-        if ($this->causer?->role !== UserRole::ngo_admin) {
-            return __('activity.status.approved');
-        }
         if ($this->isApproved()) {
             return __('activity.status.approved');
         }
@@ -85,6 +65,11 @@ class Activity extends BaseActivity
         }
 
         return null;
+    }
+
+    public function isPending(): bool
+    {
+        return ! $this->isApproved() && ! $this->isRejected();
     }
 
     public function isApproved(): bool
@@ -105,5 +90,35 @@ class Activity extends BaseActivity
             ->where('rejected_at', null)
             ->where('log_name', 'pending');
 //                ->whereJsonContains('properties', $attribute)
+    }
+
+    public function approve(): void
+    {
+        if ($this->isRejected()) {
+            return;
+        }
+
+        activity()->withoutLogs(function () {
+            $this->properties->each(function ($value, $key) {
+                $this->subject->setAttribute($key, $value['new']);
+            });
+
+            $this->subject->save();
+
+            $this->update([
+                'approved_at' => now(),
+            ]);
+        });
+    }
+
+    public function reject(): void
+    {
+        if ($this->isApproved()) {
+            return;
+        }
+
+        $this->update([
+            'rejected_at' => now(),
+        ]);
     }
 }
