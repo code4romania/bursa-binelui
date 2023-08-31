@@ -7,11 +7,11 @@ namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
 
-class ReactivateAction extends Action
+class ApproveOrganizationAction extends Action
 {
     public static function getDefaultName(): ?string
     {
-        return 'reactivate';
+        return 'approve';
     }
 
     protected function setUp(): void
@@ -22,19 +22,19 @@ class ReactivateAction extends Action
 
         $this->icon('heroicon-s-check');
 
-        $this->label(__('organization.actions.reactivate'));
+        $this->label(__('organization.actions.approve'));
 
         $this->requiresConfirmation();
 
-        $this->modalHeading(__('organization.reactivate_modal.heading'));
+        $this->modalHeading(__('organization.approve_modal.heading'));
 
         $this->modalSubheading(
-            fn (Organization $record) => __('organization.reactivate_modal.subheading', [
+            fn (Organization $record) => __('organization.approve_modal.subheading', [
                 'name' => $record->name,
             ])
         );
 
-        $this->modalButton(__('organization.actions.reactivate'));
+        $this->modalButton(__('organization.actions.approve'));
 
         $this->action(function (Organization $record) {
             $record->markAsApproved();

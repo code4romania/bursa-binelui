@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
 use App\Filament\Resources\OrganizationResource;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\ApproveAction;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\RejectAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\ApproveOrganizationAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\RejectOrganizationAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Actions\EditAction;
@@ -65,9 +65,9 @@ class PendingOrganizationsWidget extends BaseOrganizationsWidget
                 ->label(__('organization.actions.edit'))
                 ->url(fn (Organization $record) => OrganizationResource::getUrl('edit', $record)),
 
-            ApproveAction::make(),
+            ApproveOrganizationAction::make(),
 
-            RejectAction::make(),
+            RejectOrganizationAction::make(),
         ];
     }
 }

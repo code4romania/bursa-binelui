@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
 use App\Filament\Resources\OrganizationResource;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\ReactivateAction;
+use App\Filament\Resources\OrganizationResource\Actions\Tables\ReactivateOrganizationAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Actions\EditAction;
@@ -64,7 +64,7 @@ class RejectedOrganizationsWidget extends BaseOrganizationsWidget
                 ->label(__('organization.actions.edit'))
                 ->url(fn (Organization $record) => OrganizationResource::getUrl('edit', $record)),
 
-            ReactivateAction::make(),
+            ReactivateOrganizationAction::make(),
         ];
     }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
+namespace App\Filament\Resources\OrganizationResource\Actions\Pages;
 
 use App\Models\Organization;
-use Filament\Tables\Actions\Action;
+use Filament\Pages\Actions\Action;
 
-class RejectAction extends Action
+class RejectOrganizationAction extends Action
 {
     public static function getDefaultName(): ?string
     {

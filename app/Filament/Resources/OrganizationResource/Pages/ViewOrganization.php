@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Pages;
 
 use App\Filament\Resources\OrganizationResource;
-use App\Filament\Resources\OrganizationResource\Actions\Pages\ApproveAction;
-use App\Filament\Resources\OrganizationResource\Actions\Pages\DeactivateAction;
-use App\Filament\Resources\OrganizationResource\Actions\Pages\ReactivateAction;
-use App\Filament\Resources\OrganizationResource\Actions\Pages\RejectAction;
+use App\Filament\Resources\OrganizationResource\Actions\Pages\ApproveOrganizationAction;
+use App\Filament\Resources\OrganizationResource\Actions\Pages\DeactivateOrganizationAction;
+use App\Filament\Resources\OrganizationResource\Actions\Pages\ReactivateOrganizationAction;
+use App\Filament\Resources\OrganizationResource\Actions\Pages\RejectOrganizationAction;
 use App\Filament\Resources\OrganizationResource\Widgets\OrganizationActivityWidget;
 use Filament\Pages\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
@@ -22,19 +22,19 @@ class ViewOrganization extends ViewRecord
         return [
             EditAction::make(),
 
-            ApproveAction::make()
+            ApproveOrganizationAction::make()
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isPending()),
 
-            RejectAction::make()
+            RejectOrganizationAction::make()
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isPending()),
 
-            ReactivateAction::make()
+            ReactivateOrganizationAction::make()
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isDisabled()),
 
-            DeactivateAction::make()
+            DeactivateOrganizationAction::make()
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isActive()),
 
