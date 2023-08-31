@@ -64,8 +64,6 @@ class Organization extends Model implements HasMedia
         'accepts_volunteers' => 'boolean',
     ];
 
-    protected $appends = ['cover_image', 'statute_link'];
-
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class)->without('organization');
@@ -108,16 +106,6 @@ class Organization extends Model implements HasMedia
         $query->orWhere('description', 'LIKE', "%{$searchedText}%");
         $query->orWhere('contact_person', 'LIKE', "%{$searchedText}%");
         $query->orWhere('website', 'LIKE', "%{$searchedText}%");
-    }
-
-    public function getCoverImageAttribute(): ?string
-    {
-        return $this->getFirstMediaUrl('organizationFilesLogo', 'preview') ?: null;
-    }
-
-    public function getStatuteLinkAttribute(): ?string
-    {
-        return $this->getFirstMediaUrl('organizationFilesStatute') ?: null;
     }
 
     public function getAdministrators(): Collection
