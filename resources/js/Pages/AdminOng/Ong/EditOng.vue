@@ -302,7 +302,13 @@
                         alt
                     >
                         <template #value>
-                            {{ organization.website }}
+                            <a
+                                href="{{ organization.website }}"
+                                target="_blank"
+                                rel="noopener noreferer"
+                                class="hover:underline text-primary-600"
+                                v-text="organization.website"
+                            />
                         </template>
 
                         <template #action>
@@ -330,7 +336,13 @@
                         :hasPendingChanges="props.changes.includes('contact_email')"
                     >
                         <template #value>
-                            {{ organization.contact_email }}
+                            <a
+                                href="mailto:{{ organization.contact_email }}"
+                                target="_blank"
+                                rel="noopener noreferer"
+                                class="hover:underline text-primary-600"
+                                v-text="organization.contact_email"
+                            />
                         </template>
 
                         <template #action>
@@ -462,14 +474,14 @@
                     <!-- Merchant id -->
                     <Field :label="$t('merchant_id')" alt>
                         <template #value>
-                            {{ organization.merchant_id }}
+                            {{ organization.eu_platesc_merchant_id ? $t('yes') : $t('no') }}
                         </template>
                     </Field>
 
                     <!-- Merchant key -->
                     <Field :label="$t('key_label')">
                         <template #value>
-                            {{ organization.merchant_key }}
+                            {{ organization.eu_platesc_private_key ? $t('yes') : $t('no') }}
                         </template>
                     </Field>
                 </dl>

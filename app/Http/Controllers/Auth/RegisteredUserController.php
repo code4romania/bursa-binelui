@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             if ($data['type'] == 'ngo-admin') {
                 $ong = $data['ong'];
                 $organization = Organization::create($ong);
-                $organization->addMediaFromRequest('ong.logo')->toMediaCollection('organizationFilesLogo');
+                $organization->addMediaFromRequest('ong.logo')->toMediaCollection('logo');
                 if ($request->hasFile('ong.statute')) {
                     $organization->addMediaFromRequest('ong.statute')->toMediaCollection('organizationFilesStatute');
                 }

@@ -17,13 +17,9 @@ class OrganizationResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'cif' => $this->cif,
-            'counties' => $this->counties->map(function ($county) {
-                return $county->name;
-            })->implode(', ') ?? '',
-            'activity_domains' => $this->activityDomains->map(function ($activityDomain) {
-                return $activityDomain->name;
-            })->implode(', '),
-            'logo' => $this->getFirstMediaUrl('logo','preview'),
+            'counties' => $this->counties->map->only('id', 'name'),
+            'activity_domains' => $this->activityDomains,
+            'logo' => $this->getFirstMediaUrl('logo', 'preview'),
             'statute_link' => $this->getFirstMediaUrl('organizationFilesStatute'),
             'description' => $this->description,
             'street_address' => $this->street_address,
@@ -34,12 +30,8 @@ class OrganizationResource extends JsonResource
             'accepts_volunteers' => $this->accepts_volunteers,
             'why_volunteer' => $this->why_volunteer,
             'status' => $this->status,
-            'eu_platesc_merchant_id' => !empty($this->eu_platesc_merchant_id),
-            'eu_platesc_private_key' => !empty($this->eu_platesc_private_key),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-
-
+            'eu_platesc_merchant_id' => filled($this->eu_platesc_merchant_id),
+            'eu_platesc_private_key' => filled($this->eu_platesc_private_key),
         ];
     }
 }

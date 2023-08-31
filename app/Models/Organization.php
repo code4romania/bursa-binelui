@@ -69,12 +69,16 @@ class Organization extends Model implements HasMedia
         return $this->hasMany(Project::class)->without('organization');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CONTAIN, 300, 300)
-            ->nonQueued();
+        $this->addMediaCollection('logo')
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('preview')
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
+                    ->nonQueued();
+            });
     }
 
     public function users(): HasMany

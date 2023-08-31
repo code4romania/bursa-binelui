@@ -14,7 +14,6 @@ use App\Models\County;
 use App\Models\Organization;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -101,32 +100,38 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        try {
-            /** Get all request data. */
-            $modelData = $request->validated();
+        $attributes = $request->validated();
 
-            if ($request->has('activity_domains')) {
-                $ids = collect($modelData['activity_domains'])->pluck('id')->toArray();
-                $organization->activityDomains()->sync($ids);
-            }
-            if ($request->hasFile('cover_image')) {
-                $organization->clearMediaCollection('organizationFilesLogo');
-                $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
-            }
-            $organization->fill($modelData)->saveForApproval();
+        // $organization->altfelDeSave($attributes);
 
-            return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
-        } catch (\Throwable $th) {
-            Log::warning($th->getMessage());
-
-            return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
+        if ($request->has('counties')) {
+            $organization->counties()
+                ->sync(
+                    collect($attributes['counties'])->pluck('id')
+                );
         }
+
+        if ($request->has('activity_domains')) {
+            $organization->activityDomains()
+                ->sync(
+                    collect($attributes['activity_domains'])->pluck('id')
+                );
+        }
+
+        if ($request->hasFile('cover_image')) {
+            $organization->addMediaFromRequest('cover_image')
+                ->toMediaCollection('logo');
+        }
+
+        $organization->fill($attributes)->saveForApproval();
+
+        return redirect()->route('admin.ong.edit')
+            ->with('success_message', __('organization.messages.update_success'));
     }
 
     public function removeCoverImage(Request $request)
     {
-        $organization = auth()->user()->organization;
-        $organization->clearMediaCollection('organizationFilesLogo');
+        auth()->user()->organization->clearMediaCollection('logo');
 
         return redirect()->back();
     }

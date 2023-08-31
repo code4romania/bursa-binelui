@@ -41,9 +41,21 @@ trait LogsActivityForApproval
 
     public function tapActivity(Activity $activity, string $eventName)
     {
-        $this->flipProperties($activity);
+        // Flip properties
+        $properties = [];
 
-        if (! auth()->user()->isBbAdmin() && ! auth()->user()->isBbManager()) {
+        foreach ($activity->properties->get('attributes', []) as $key => $value) {
+            $properties[$key] = [
+                'old' => data_get($activity->properties, "old.{$key}"),
+                'new' => $value,
+            ];
+        }
+
+        if (! empty($properties)) {
+            $activity->properties = $properties;
+        }
+
+        if (app()->runningInConsole() || ! auth()->user()->isBbAdmin() && ! auth()->user()->isBbManager()) {
             return;
         }
 
@@ -62,21 +74,5 @@ trait LogsActivityForApproval
                 ])
                 ->save()
         );
-    }
-
-    private function flipProperties(Activity &$activity): void
-    {
-        $properties = [];
-
-        foreach ($activity->properties->get('attributes', []) as $key => $value) {
-            $properties[$key] = [
-                'old' => data_get($activity->properties, "old.{$key}"),
-                'new' => $value,
-            ];
-        }
-
-        if (! empty($properties)) {
-            $activity->properties = $properties;
-        }
     }
 }
