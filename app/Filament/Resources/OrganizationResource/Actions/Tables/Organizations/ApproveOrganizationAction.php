@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
+namespace App\Filament\Resources\OrganizationResource\Actions\Tables\Organizations;
 
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
