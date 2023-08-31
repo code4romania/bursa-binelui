@@ -13,6 +13,7 @@ use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Organization;
 use App\Models\Volunteer;
+use App\Services\OrganizationService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -100,36 +101,13 @@ class OrganizationController extends Controller
      */
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        $attributes = $request->validated();
-
-        // $organization->altfelDeSave($attributes);
-
-        if ($request->has('counties')) {
-            $organization->counties()
-                ->sync(
-                    collect($attributes['counties'])->pluck('id')
-                );
-        }
-
-        if ($request->has('activity_domains')) {
-            $organization->activityDomains()
-                ->sync(
-                    collect($attributes['activity_domains'])->pluck('id')
-                );
-        }
-
-        if ($request->hasFile('cover_image')) {
-            $organization->addMediaFromRequest('cover_image')
-                ->toMediaCollection('logo');
-        }
-
-        $organization->fill($attributes)->saveForApproval();
+        OrganizationService::update($organization, $request->validated());
 
         return redirect()->route('admin.ong.edit')
             ->with('success_message', __('organization.messages.update_success'));
     }
 
-    public function removeCoverImage(Request $request)
+    public function removeLogo(Request $request)
     {
         auth()->user()->organization->clearMediaCollection('logo');
 

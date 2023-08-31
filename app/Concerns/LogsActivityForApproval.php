@@ -55,24 +55,35 @@ trait LogsActivityForApproval
             $activity->properties = $properties;
         }
 
-        if (app()->runningInConsole() || ! auth()->user()->isBbAdmin() && ! auth()->user()->isBbManager()) {
+        if (auth()->guest()) {
             return;
         }
 
-        activity()->disableLogging();
+        if (auth()->user()->isBbAdmin() || auth()->user()->isBbManager()) {
+            activity()->disableLogging();
 
-        if (! $activity->description) {
-            $activity->description = $this->getDescriptionForEvent($eventName);
+            if (! $activity->description) {
+                $activity->description = $this->getDescriptionForEvent($eventName);
+            }
+
+            $activity->properties->each(
+                fn ($values, $key) => $activity
+                    ->replicate()
+                    ->fill([
+                        'properties' => [$key => $values],
+                        'approved_at' => now(),
+                    ])
+                    ->save()
+            );
+        } else {
+            if (
+                $activity->properties->count() === 1 &&
+                property_exists($this, 'requiresApproval') &&
+                ! \in_array($activity->properties->keys()->first(), $this->requiresApproval)
+            ) {
+                $activity->log_name = 'auto_approved';
+                $activity->approved_at = now();
+            }
         }
-
-        $activity->properties->each(
-            fn ($values, $key) => $activity
-                ->replicate()
-                ->fill([
-                    'properties' => [$key => $values],
-                    'approved_at' => now(),
-                ])
-                ->save()
-        );
     }
 }

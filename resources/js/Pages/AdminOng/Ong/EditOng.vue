@@ -1,4 +1,4 @@
-    <template>
+<template>
     <PageLayout>
         <!-- Inertia page head -->
         <Head :title="$t('my_organization_title')" />
@@ -80,21 +80,21 @@
                     <!-- Edit organization image -->
                     <Field
                         :label="$t('organization_logo_label')"
-                        :hasPendingChanges="props.changes.includes('cover_image')"
+                        :hasPendingChanges="props.changes.includes('logo')"
                         alt
                     >
                         <template #value>
                             <div
                                 class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700"
                             >
-                                <img class="object-contain w-32 h-32 shrink-0" :src="organization.cover_image" alt="" />
+                                <img class="object-contain w-32 h-32 shrink-0" :src="organization.logo" alt="" />
 
                                 <div>
-                                    <EditModal @action="editField('cover_image')" :text="$t('change_image_label')">
+                                    <EditModal @action="editField('logo')" :text="$t('change_image_label')">
                                         <FileInput
                                             :label="$t('upload_logo')"
-                                            @upload="(file) => (organization.cover_image = file)"
-                                            :form="organization.cover_image"
+                                            @upload="(file) => (organization.logo = file)"
+                                            :form="organization.logo"
                                             accept="image/png, image/jpeg"
                                             previewable
                                         />
@@ -107,7 +107,7 @@
                                         :actionModalText="$t('delete')"
                                         :title="$t('confirm')"
                                         :body="`${$t('confirm_delete_image_text')}`"
-                                        :actionRoute="route('organization.remove_cover_image', organization.id)"
+                                        :actionRoute="route('organization.remove_logo', organization.id)"
                                         :data="organization"
                                     />
                                 </div>
@@ -184,18 +184,13 @@
 
                         <template #action>
                             <EditModal
-                                @action="editField('statute_link')"
-                                @cancel="resetField('statute_link')"
+                                @action="editField('statute')"
+                                @cancel="resetField('statute')"
                                 class="flex justify-end col-span-1"
                             >
                                 <FileInput
                                     :label="$t('status_document_label')"
-                                    @upload="
-                                        (file) => {
-                                            console.log(file);
-                                        }
-                                    "
-                                    :form="organization.statute"
+                                    @upload="(file) => (organization.statute = file)"
                                 />
                             </EditModal>
                         </template>
@@ -527,9 +522,11 @@
     };
 
     const editField = (field) => {
-        let data = { [field]: organization.value[field] };
-        let tmpForm = useForm(data);
-        tmpForm.post(route('admin.ong.update', organization.value.id), {
+        const form = useForm({
+            [field]: organization.value[field],
+        });
+
+        form.post(route('admin.ong.update', organization.value.id), {
             preserveScroll: true,
             onSuccess: (response) => {
                 organization.value.cover_image = response.props.organization.cover_image;

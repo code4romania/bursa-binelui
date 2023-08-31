@@ -68,7 +68,7 @@ class RegisteredUserController extends Controller
                 $organization = Organization::create($ong);
                 $organization->addMediaFromRequest('ong.logo')->toMediaCollection('logo');
                 if ($request->hasFile('ong.statute')) {
-                    $organization->addMediaFromRequest('ong.statute')->toMediaCollection('organizationFilesStatute');
+                    $organization->addMediaFromRequest('ong.statute')->toMediaCollection('statute');
                 }
                 $organization->activityDomains()->attach($ong['activity_domains_ids']);
                 $organization->counties()->attach($ong['counties_ids']);

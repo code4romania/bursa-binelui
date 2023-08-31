@@ -20,7 +20,7 @@ class OrganizationResource extends JsonResource
             'counties' => $this->counties->map->only('id', 'name'),
             'activity_domains' => $this->activityDomains,
             'logo' => $this->getFirstMediaUrl('logo', 'preview'),
-            'statute_link' => $this->getFirstMediaUrl('organizationFilesStatute'),
+            'statute_link' => $this->getFirstMediaUrl('statute'),
             'description' => $this->description,
             'street_address' => $this->street_address,
             'contact_person' => $this->contact_person,

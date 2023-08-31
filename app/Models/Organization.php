@@ -64,6 +64,13 @@ class Organization extends Model implements HasMedia
         'accepts_volunteers' => 'boolean',
     ];
 
+    public array $requiresApproval = [
+        'name',
+        'cif',
+        'street_address',
+        'statute',
+    ];
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class)->without('organization');
@@ -79,6 +86,11 @@ class Organization extends Model implements HasMedia
                     ->fit(Manipulations::FIT_CONTAIN, 300, 300)
                     ->nonQueued();
             });
+
+        $this->addMediaCollection('statute')
+            ->singleFile();
+
+        $this->addMediaCollection('statute_pending');
     }
 
     public function users(): HasMany

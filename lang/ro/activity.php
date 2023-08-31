@@ -5,6 +5,8 @@ declare(strict_types=1);
 return[
 
     'status' => [
+        'pending' => 'În așteptare',
+        'auto_approved' => 'Aprobată automat',
         'approved' => 'Aprobată',
         'rejected' => 'Refuzată',
     ],
@@ -20,9 +22,9 @@ return[
         'old' => 'Valoare anterioară',
         'new' => 'Valoare nouă',
     ],
-    'actions'=>[
-        'approve'=>'Aprobă',
-        'reject'=>'Respinge',
-    ]
+    'actions' => [
+        'approve' => 'Aprobă',
+        'reject' => 'Respinge',
+    ],
 
 ];

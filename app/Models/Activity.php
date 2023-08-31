@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Models\Activity as BaseActivity;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Activity extends BaseActivity
 {
@@ -47,16 +48,32 @@ class Activity extends BaseActivity
 
     public function getChangedFieldOldValueAttribute(): ?string
     {
-        return data_get($this->properties, $this->changed_field . '.old');
+        $value = data_get($this->properties, $this->changed_field . '.old');
+
+        if ($this->description === 'statute') {
+            return Media::find($value)?->getUrl();
+        }
+
+        return $value;
     }
 
     public function getChangedFieldNewValueAttribute(): ?string
     {
-        return data_get($this->properties, $this->changed_field . '.new');
+        $value = data_get($this->properties, $this->changed_field . '.new');
+
+        if ($this->description === 'statute') {
+            return Media::find($value)?->getUrl();
+        }
+
+        return $value;
     }
 
     public function getStatusAttribute(): ?string
     {
+        if ($this->log_name === 'auto_approved') {
+            return __('activity.status.auto_approved');
+        }
+
         if ($this->isApproved()) {
             return __('activity.status.approved');
         }
@@ -65,7 +82,7 @@ class Activity extends BaseActivity
             return __('activity.status.rejected');
         }
 
-        return null;
+        return __('activity.status.pending');
     }
 
     public function isPending(): bool

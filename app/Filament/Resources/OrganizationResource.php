@@ -96,14 +96,14 @@ class OrganizationResource extends Resource
                             ->preload()
                             ->required(),
 
-                        SpatieMediaLibraryFileUpload::make('organizationFilesStatute')
+                        SpatieMediaLibraryFileUpload::make('statute')
                             ->label(__('organization.labels.statute'))
                             ->inlineLabel()
                             ->disablePreview()
-                            ->collection('organizationFilesStatute')
+                            ->collection('statute')
                             ->hiddenOn('view'),
 
-                        Download::make('organizationFilesStatute')
+                        Download::make('statute')
                             ->label(__('organization.labels.statute'))
                             ->inlineLabel()
                             ->hiddenOn('edit'),
