@@ -13,24 +13,6 @@ class OrganizationResource extends JsonResource
 
     public function toArray(Request $request): array
     {
-        //"id" => 1
-        //    "name" => "Toth-Popescu dasdasd"
-        //    "cif" => "1629208165"
-        //    "description" => "Eum occaecati doloremque provident molestias. Fuga rerum totam sit rem. Ut voluptas est id ut laudantium. Corrupti impedit mollitia qui delectus. Earum recusand ▶"
-        //    "street_address" => "Calea Brăduțului"
-        //    "contact_person" => "Amanda Neagoe"
-        //    "contact_phone" => "0742380766"
-        //    "contact_email" => "arina93@sirbu.com"
-        //    "website" => "http://www.groza.net/ex-sapiente-dolorum-sit.html"
-        //    "accepts_volunteers" => 1
-        //    "why_volunteer" => "Amet deserunt fuga dolor nihil quis et minima. Officiis iusto tempore sequi quis beatae architecto. Vero atque blanditiis libero quam illo. Dolorum laborum aut  ▶"
-        //    "status" => "active"
-        //    "eu_platesc_merchant_id" => "44840998340"
-        //    "eu_platesc_private_key" => "0C4D2EAA6F3E343A7FE74B04C83A66E9BEE882E3"
-        //    "created_at" => "2023-08-31 12:27:37"
-        //    "updated_at" => "2023-08-31 13:02:29"
-        //    "deleted_at" => null
-        //    "status_updated_at" => null
         return [
             'id' => $this->id,
             'name' => $this->name,
