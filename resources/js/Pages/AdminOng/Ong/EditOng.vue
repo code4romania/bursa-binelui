@@ -22,18 +22,18 @@
                     @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
                 />
 
-                <div class="mt-6 border border-gray-100">
-                    <dl class="divide-y divide-gray-100">
-                        <!-- Edit organization name -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_name_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.name }}
-                                <p v-show="props.changes.includes('name')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+                <dl class="mt-6 border border-gray-100 divide-y divide-gray-100">
+                    <!-- Edit organization name -->
+                    <Field
+                        :label="$t('organization_name_label')"
+                        :hasPendingChanges="props.changes.includes('name')"
+                        alt
+                    >
+                        <template #value>
+                            {{ organization.name }}
+                        </template>
 
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('name')"
                                 @cancel="resetField('name')"
@@ -49,18 +49,16 @@
                                     :error="props.errors.name"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organization cif -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('cif_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.cif }}
-                                <p v-show="props.changes.includes('cif')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+                    <!-- Edit organization cif -->
+                    <Field :label="$t('cif_label')" :hasPendingChanges="props.changes.includes('cif')">
+                        <template #value>
+                            {{ organization.cif }}
+                        </template>
 
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('cif')"
                                 @cancel="resetField('cif')"
@@ -76,28 +74,34 @@
                                     :error="props.errors.cif"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organization image -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_logo_label') }}
-                            </dt>
-                            <dt
-                                class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                    <!-- Edit organization image -->
+                    <Field
+                        :label="$t('organization_logo_label')"
+                        :hasPendingChanges="props.changes.includes('cover_image')"
+                        alt
+                    >
+                        <template #value>
+                            <div
+                                class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700"
                             >
-                                <img class="flex-shrink-0 w-32 h-32" :src="organization.cover_image" alt="" />
+                                <img class="object-contain w-32 h-32 shrink-0" :src="organization.cover_image" alt="" />
+
                                 <div>
                                     <EditModal @action="editField('cover_image')" :text="$t('change_image_label')">
                                         <FileInput
                                             :label="$t('upload_logo')"
-                                            @upload="handleFileChange"
+                                            @upload="(file) => (organization.cover_image = file)"
                                             :form="organization.cover_image"
+                                            accept="image/png, image/jpeg"
+                                            previewable
                                         />
                                     </EditModal>
 
                                     <ModalAction
-                                        triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
+                                        triggerModalClasses="block text-sm font-medium leadin-5 text-red-600"
                                         :triggerModalText="$t('delete_image_label')"
                                         :cancelModalText="$t('cancel')"
                                         :actionModalText="$t('delete')"
@@ -107,19 +111,20 @@
                                         :data="organization"
                                     />
                                 </div>
-                            </dt>
-                        </div>
+                            </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organization description -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_description_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.description }}
-                                <p v-show="props.changes.includes('description')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+                    <!-- Edit organization description -->
+                    <Field
+                        :label="$t('organization_description_label')"
+                        :hasPendingChanges="props.changes.includes('description')"
+                    >
+                        <template #value>
+                            {{ organization.description }}
+                        </template>
 
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('description')"
                                 @cancel="resetField('description')"
@@ -134,18 +139,20 @@
                                     :error="props.errors.description"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit activity domains -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_activity_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.activity_domains?.map((item) => item.name).join(', ') }}
-                                <p v-show="props.changes.includes('activity_domains')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+                    <!-- Edit activity domains -->
+                    <Field
+                        :label="$t('organization_activity_label')"
+                        :hasPendingChanges="props.changes.includes('activity_domains')"
+                        alt
+                    >
+                        <template #value>
+                            {{ organization.activity_domains?.map((item) => item.name).join(', ') }}
+                        </template>
 
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('activity_domains')"
                                 @cancel="resetField('activity_domains')"
@@ -160,57 +167,79 @@
                                     :error="props.errors.activity_domains"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit activity domains -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('status_document_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                <a
-                                    :href="organization.statute_link"
-                                    target="_blank"
-                                    class="inline-flex justify-center rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:col-start-2"
-                                >
-                                    {{ $t('open_statue') }}
+                    <!-- Edit statute -->
+                    <Field :label="$t('status_document_label')" :hasPendingChanges="props.changes.includes('statute')">
+                        <template #value>
+                            <a
+                                v-if="organization.statute_link"
+                                :href="organization.statute_link"
+                                target="_blank"
+                                class="inline-flex justify-center rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:col-start-2"
+                                v-text="$t('open_statue')"
+                            />
+                        </template>
 
-                                </a>
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('statute_link')"
                                 @cancel="resetField('statute_link')"
                                 class="flex justify-end col-span-1"
                             >
-                                <Input
-                                    class="w-full"
+                                <FileInput
                                     :label="$t('status_document_label')"
-                                    color="gray-700"
-                                    id="status-document"
-                                    type="text"
-                                    v-model="organization.statute_link"
-                                    :error="props.errors.statute_link"
+                                    @upload="
+                                        (file) => {
+                                            console.log(file);
+                                        }
+                                    "
+                                    :form="organization.statute"
                                 />
                             </EditModal>
-                        </div>
-                    </dl>
-                </div>
+                        </template>
+                    </Field>
+
+                    <!-- Edit counties -->
+                    <Field :label="$t('counties_label')" :hasPendingChanges="props.changes.includes('counties')" alt>
+                        <template #value>
+                            {{ organization.counties?.map((item) => item.name).join(', ') }}
+                        </template>
+
+                        <template #action>
+                            <EditModal
+                                @action="editField('counties')"
+                                @cancel="resetField('counties')"
+                                class="flex justify-end col-span-1"
+                            >
+                                <SelectMultiple
+                                    class="w-full z-101"
+                                    :label="$t('counties_label')"
+                                    type="singleValue"
+                                    :options="counties"
+                                    v-model="organization.counties"
+                                    :error="props.errors.counties"
+                                />
+                            </EditModal>
+                        </template>
+                    </Field>
+                </dl>
 
                 <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('volunteer') }}</h2>
 
-                <div class="border border-gray-100">
-                    <dl class="divide-y divide-gray-100">
-                        <!-- Edit accepts voluntiers -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_accepts_volunteers_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.accepts_volunteers ? $t('yes') : $t('no') }}
-                                <p v-show="props.changes.includes('accepts_volunteers')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+                <dl class="border border-gray-100 divide-y divide-gray-100">
+                    <!-- Edit accepts voluntiers -->
+                    <Field
+                        :label="$t('organization_accepts_volunteers_label')"
+                        :hasPendingChanges="props.changes.includes('accepts_volunteers')"
+                        alt
+                    >
+                        <template #value>
+                            {{ organization.accepts_volunteers ? $t('yes') : $t('no') }}
+                        </template>
 
-                            </dt>
-
+                        <template #action>
                             <EditModal
                                 @action="editField('accepts_volunteers')"
                                 @cancel="resetField('accepts_volunteers')"
@@ -221,9 +250,11 @@
                                         name="accepts_volunteers"
                                         v-model:checked="organization.accepts_volunteers"
                                     />
-                                    <span class="ml-2 text-sm text-gray-700">{{
-                                        $t('organization_accepts_volunteers_label')
-                                    }}</span>
+
+                                    <span
+                                        class="ml-2 text-sm text-gray-700"
+                                        v-text="$t('organization_accepts_volunteers_label')"
+                                    />
 
                                     <!-- Error -->
                                     <p v-show="props.errors.accepts_volunteers" class="mt-2 text-sm text-red-600">
@@ -231,18 +262,19 @@
                                     </p>
                                 </label>
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit why volunteer -->
-                        <div class="grid grid-cols-12 gap-6 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_why_volunteer_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.why_volunteer }}
-                                <p v-show="props.changes.includes('why_volunteer')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
+                    <!-- Edit why volunteer -->
+                    <Field
+                        :label="$t('organization_why_volunteer_label')"
+                        :hasPendingChanges="props.changes.includes('why_volunteer')"
+                    >
+                        <template #value>
+                            {{ organization.why_volunteer }}
+                        </template>
 
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('why_volunteer')"
                                 @cancel="resetField('why_volunteer')"
@@ -257,24 +289,23 @@
                                     :error="props.errors.why_volunteer"
                                 />
                             </EditModal>
-                        </div>
-                    </dl>
-                </div>
+                        </template>
+                    </Field>
+                </dl>
 
                 <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('organization_contact') }}</h2>
+                <dl class="border border-gray-100 divide-y divide-gray-100">
+                    <!-- Edit organizaton website -->
+                    <Field
+                        :label="$t('organization_website_label')"
+                        :hasPendingChanges="props.changes.includes('website')"
+                        alt
+                    >
+                        <template #value>
+                            {{ organization.website }}
+                        </template>
 
-                <div class="border border-gray-100">
-                    <dl class="divide-y divide-gray-100">
-                        <!-- Edit organizaton website -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_website_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.website }}
-                                <p v-show="props.changes.includes('website')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
-
-                            </dt>
+                        <template #action>
                             <EditModal
                                 @action="editField('website')"
                                 @cancel="resetField('website')"
@@ -290,17 +321,19 @@
                                     :error="props.errors.website"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organizaton email -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_email_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.contact_email }}
-                                <p v-show="props.changes.includes('contact_email')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
-                            </dt>
+                    <!-- Edit organizaton email -->
+                    <Field
+                        :label="$t('organization_email_label')"
+                        :hasPendingChanges="props.changes.includes('contact_email')"
+                    >
+                        <template #value>
+                            {{ organization.contact_email }}
+                        </template>
+
+                        <template #action>
                             <EditModal
                                 @action="editField('contact_email')"
                                 @cancel="resetField('contact_email')"
@@ -316,17 +349,20 @@
                                     :error="props.errors.contact_email"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organizaton phone -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_phone_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.contact_phone }}
-                                <p v-show="props.changes.includes('contact_phone')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
-                            </dt>
+                    <!-- Edit organizaton phone -->
+                    <Field
+                        :label="$t('organization_phone_label')"
+                        :hasPendingChanges="props.changes.includes('contact_phone')"
+                        alt
+                    >
+                        <template #value>
+                            {{ organization.contact_phone }}
+                        </template>
+
+                        <template #action>
                             <EditModal
                                 @action="editField('contact_phone')"
                                 @cancel="resetField('contact_phone')"
@@ -342,17 +378,20 @@
                                     :error="props.errors.contact_phone"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organizaton contact person -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_contact_person_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.contact_person }}
-                                <p v-show="props.changes.includes('contact_person')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
-                            </dt>
+                    <!-- Edit organizaton contact person -->
+
+                    <Field
+                        :label="$t('organization_contact_person_label')"
+                        :hasPendingChanges="props.changes.includes('contact_person')"
+                    >
+                        <template #value>
+                            {{ organization.contact_person }}
+                        </template>
+
+                        <template #action>
                             <EditModal
                                 @action="editField('contact_person')"
                                 @cancel="resetField('contact_person')"
@@ -368,18 +407,21 @@
                                     :error="props.errors.contact_person"
                                 />
                             </EditModal>
-                        </div>
+                        </template>
+                    </Field>
 
-                        <!-- Edit organizaton address -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('organization_address_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.street_address }},
-                                {{ originalOrganization.counties?.map((item) => item.name).join(', ') }}
-                                <p v-show="props.changes.includes('street_address')" class="mt-2 text-sm text-red-600">{{$t('field_has_pending_changes')}}</p>
-                            </dt>
+                    <!-- Edit organizaton address -->
+                    <Field
+                        :label="$t('organization_address_label')"
+                        :hasPendingChanges="props.changes.includes('street_address')"
+                        alt
+                    >
+                        <template #value>
+                            {{ organization.street_address }},
+                            {{ originalOrganization.counties?.map((item) => item.name).join(', ') }}
+                        </template>
+
+                        <template #action>
                             <EditModal
                                 @action="editField('counties')"
                                 @cancel="
@@ -410,65 +452,27 @@
                                     :error="props.errors.street_address"
                                 />
                             </EditModal>
-                        </div>
-                    </dl>
-                </div>
+                        </template>
+                    </Field>
+                </dl>
 
                 <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('i_pay_title') }}</h2>
 
-                <div class="border border-gray-100">
-                    <dl class="divide-y divide-gray-100">
-                        <!-- Edit merchant id -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('merchant_id') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.status }}
-                            </dt>
-                            <EditModal
-                                @action="editField('status')"
-                                @cancel="resetField('status')"
-                                class="flex justify-end col-span-1"
-                            >
-                                <Input
-                                    class="w-full"
-                                    :label="$t('merchant_id')"
-                                    color="gray-700"
-                                    id="merchant"
-                                    type="text"
-                                    v-model="organization.status"
-                                    :error="props.errors.status"
-                                />
-                            </EditModal>
-                        </div>
+                <dl class="border border-gray-100 divide-y divide-gray-100">
+                    <!-- Merchant id -->
+                    <Field :label="$t('merchant_id')" alt>
+                        <template #value>
+                            {{ organization.merchant_id }}
+                        </template>
+                    </Field>
 
-                        <!-- Edit key -->
-                        <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                                {{ $t('key_label') }}
-                            </dt>
-                            <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                                {{ organization.status }}
-                            </dt>
-                            <EditModal
-                                @action="editField('status')"
-                                @cancel="resetField('status')"
-                                class="flex justify-end col-span-1"
-                            >
-                                <Input
-                                    class="w-full"
-                                    :label="$t('key_label')"
-                                    color="gray-700"
-                                    id="key-label"
-                                    type="text"
-                                    v-model="organization.status"
-                                    :error="props.errors.status"
-                                />
-                            </EditModal>
-                        </div>
-                    </dl>
-                </div>
+                    <!-- Merchant key -->
+                    <Field :label="$t('key_label')">
+                        <template #value>
+                            {{ organization.merchant_key }}
+                        </template>
+                    </Field>
+                </dl>
             </div>
         </Dashboard>
     </PageLayout>
@@ -484,6 +488,7 @@
     import Dashboard from '@/Components/templates/Dashboard.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Alert from '@/Components/Alert.vue';
+    import Field from '@/Components/Field.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
     import Textarea from '@/Components/form/Textarea.vue';
@@ -510,18 +515,14 @@
     };
 
     const editField = (field) => {
-        let data = {[field]: organization.value[field]};
-        let tmpForm = useForm(data)
+        let data = { [field]: organization.value[field] };
+        let tmpForm = useForm(data);
         tmpForm.post(route('admin.ong.update', organization.value.id), {
             preserveScroll: true,
             onSuccess: (response) => {
                 organization.value.cover_image = response.props.organization.cover_image;
-                console.log(organization)
+                console.log(organization);
             },
         });
-    };
-
-    const handleFileChange = (file) => {
-        organization.value.cover_image = file;
     };
 </script>
