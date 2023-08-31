@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace App\Concerns;
 
 use App\Models\Activity;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pipeline\Pipeline;
 use Spatie\Activitylog\ActivityLogger;
-use Spatie\Activitylog\EventLogBag;
 use Spatie\Activitylog\Traits\LogsActivity as SpatieLogsActivity;
 
 trait LogsActivityForApproval
@@ -30,71 +27,15 @@ trait LogsActivityForApproval
 
         $eventName = 'updated';
 
-        $this->activitylogOptions = $this->getActivitylogOptions();
+        $description = $this->getDescriptionForEvent($eventName) ?: $eventName;
 
-        $description = $this->getDescriptionForEvent($eventName);
-
-        $logName = 'pending';
-
-        // Submitting empty description will cause place holder replacer to fail.
-        if ($description == '') {
-            return;
-        }
-
-        // User can define a custom pipelines to mutate, add or remove from changes
-        // each pipe receives the event carrier bag with changes and the model in
-        // question every pipe should manipulate new and old attributes.
-        $event = app(Pipeline::class)
-            ->send(new EventLogBag($eventName, $this, $changes->all(), $this->activitylogOptions))
-            ->through(static::$changesPipes)
-            ->thenReturn();
-
-        foreach ($event->changes as $key => $value) {
-            static::actuallyLog($logName, $eventName, $this, $event->changes, $description);
-        }
-
-        // Reset log options so the model can be serialized.
-        $this->activitylogOptions = null;
-    }
-
-    protected static function actuallyLog(?string $logName, string $eventName, Model $model, array $properties, string $description): void
-    {
         // Actual logging
-        $logger = app(ActivityLogger::class)
-            ->useLog($logName)
+        app(ActivityLogger::class)
+            ->useLog('pending')
             ->event($eventName)
-            ->performedOn($model)
-            ->withProperties($properties);
-
-        if (method_exists($model, 'tapActivity')) {
-            $logger->tap([$model, 'tapActivity'], $eventName);
-        }
-
-        $logger->log($description);
-    }
-
-    public function approveChanges($changesId): void
-    {
-        /** @var Activity $changes */
-        $changes = Activity::find($changesId);
-        foreach ($changes->properties as $key => $change) {
-            $this->setAttribute($key, $change['new']);
-        }
-        $changes->setApproved();
-        $this->save();
-        //TODO send email
-    }
-
-    public function rejectChanges($changesId): void
-    {
-        /** @var Activity $changes */
-        $changes = Activity::find($changesId);
-        foreach ($changes->properties as $key => $change) {
-            $this->setAttribute($key, $change['old']);
-        }
-        $changes->setRejected();
-        $this->save();
-        //TODO send email
+            ->performedOn($this)
+            ->withProperties($changes)
+            ->log($description);
     }
 
     public function removePendingChangesForTheSameAttribute($changes): void
@@ -107,6 +48,47 @@ trait LogsActivityForApproval
                     $change->delete();
                 }
             }
+        }
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $this->flipProperties($activity);
+
+        if (! auth()->user()->isBbAdmin() && ! auth()->user()->isBbManager()) {
+            return;
+        }
+
+        activity()->disableLogging();
+
+        if (! $activity->description) {
+            $activity->description = $this->getDescriptionForEvent($eventName);
+        }
+
+        $activity->properties->each(
+            fn ($values, $key) => $activity
+                ->replicate()
+                ->fill([
+                    'properties' => [$key => $values],
+                    'approved_at' => now(),
+                ])
+                ->save()
+        );
+    }
+
+    private function flipProperties(Activity &$activity): void
+    {
+        $properties = [];
+
+        foreach ($activity->properties->get('attributes', []) as $key => $value) {
+            $properties[$key] = [
+                'old' => data_get($activity->properties, "old.{$key}"),
+                'new' => $value,
+            ];
+        }
+
+        if (! empty($properties)) {
+            $activity->properties = $properties;
         }
     }
 }
