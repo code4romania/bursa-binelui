@@ -92,15 +92,21 @@ return [
     'reject_modal' => [
         'heading' => 'Respinge organizația',
         'subheading' => 'Sunteți sigur că doriți să respingeți organizația ":name"?',
+        'reason' => 'Motiv respingere',
     ],
 
     'deactivate_modal' => [
         'heading' => 'Dezactivează organizația',
         'subheading' => 'Sunteți sigur că doriți să dezactivați organizația ":name"?',
+        'reason' => 'Motiv respingere',
     ],
 
     'reactivate_modal' => [
         'heading' => 'Reactivează organizația',
         'subheading' => 'Sunteți sigur că doriți să reactivați organizația ":name"?',
+    ],
+
+    'ticket_rejected' => [
+        'subject' => 'Organizația ta a fost respinsă de către un administrator.',
     ],
 ];

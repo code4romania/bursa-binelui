@@ -15,6 +15,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RejectedOrganizationsWidget extends BaseOrganizationsWidget
 {
+    protected $listeners = [
+        'refreshRejectedOrganizationsWidget' => '$refresh',
+    ];
+
     protected function getTableHeading(): string
     {
         return __('organization.heading.rejected');

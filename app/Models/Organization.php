@@ -192,11 +192,17 @@ class Organization extends Model implements HasMedia
         ]);
     }
 
-    public function markAsRejected(): bool
+    public function markAsRejected(?string $reason = null): void
     {
-        return $this->update([
+        $this->update([
             'status' => OrganizationStatus::rejected,
             'status_updated_at' => $this->freshTimestamp(),
+        ]);
+
+        $this->tickets()->create([
+            'subject' => __('organization.ticket_rejected.subject'),
+            'content' => $reason,
+            'user_id' => auth()->user()->id,
         ]);
     }
 }

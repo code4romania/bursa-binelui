@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\TicketResource\Widgets;
 
+use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\TicketResource;
 use App\Models\Ticket;
 use Closure;
@@ -47,10 +48,18 @@ class OpenTicketsWidget extends TableWidget
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('id')
+                ->label('ID')
+                ->prefix('#')
+                ->sortable(),
+
             TextColumn::make('subject')
                 ->label(__('ticket.subject')),
+
             TextColumn::make('organization.name')
-                ->label(__('ticket.organization')),
+                ->label(__('ticket.organization'))
+                ->url(fn (Ticket $record) => OrganizationResource::getUrl('view', $record->organization)),
+
             TextColumn::make('created_at')
                 ->label(__('ticket.date')),
         ];
