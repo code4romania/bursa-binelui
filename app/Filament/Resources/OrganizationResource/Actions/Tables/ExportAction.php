@@ -71,14 +71,6 @@ class ExportAction extends BaseAction
                                 ->join(', ')
                         ),
 
-                    Column::make('accepts_volunteers')
-                        ->heading(__('organization.labels.accepts_volunteers'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->accepts_volunteers
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
-
                     Column::make('contact_person')
                         ->heading(__('organization.labels.contact_person')),
 
