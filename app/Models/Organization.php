@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
+use App\Enums\ProjectStatus;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -164,4 +165,13 @@ class Organization extends Model implements HasMedia
     {
         return $this->belongsToMany(Volunteer::class);
     }
+
+
+    public function hasActiveProjects(): bool
+    {
+        return $this->whereHas('projects', function (Builder $query) {
+            $query->where('status', ProjectStatus::active);
+        })->count() > 0;
+    }
+
 }

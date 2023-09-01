@@ -95,6 +95,27 @@ class ExportAction extends BaseAction
                                 ->pluck('name')
                                 ->join(', ')
                         ),
+                    Column::make('hasVolunteers')
+                        ->heading(__('organization.labels.has_volunteers'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->hasAlexaVolunteers()
+                                ? __('forms::components.select.boolean.true')
+                                : __('forms::components.select.boolean.false')
+                        ),
+                    Column::make('hasProjects')
+                    ->heading(__('organization.labels.has_projects'))
+                    ->formatStateUsing(
+                        fn (Organization $record) => $record->hasProjects()
+                            ? __('forms::components.select.boolean.true')
+                            : __('forms::components.select.boolean.false')
+                    ),
+                    Column::make('hasActiveProjects')
+                    ->heading(__('organization.labels.has_active_projects'))
+                    ->formatStateUsing(
+                        fn (Organization $record) => $record->hasActiveProjects()
+                            ? __('forms::components.select.boolean.true')
+                            : __('forms::components.select.boolean.false')
+                    ),
 
                     /*
                      * TODO: figure out what stats to include:

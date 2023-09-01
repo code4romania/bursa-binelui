@@ -52,7 +52,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
                     fn ($record) => sprintf(
                         '%s: %s',
                         __('field.updated_at'),
-                        $record->activities->last()->created_at->toFormattedDateTime()
+                        $record->activities->first()->created_at->toFormattedDateTime()
                     )
                 )
                 ->dateTime()
