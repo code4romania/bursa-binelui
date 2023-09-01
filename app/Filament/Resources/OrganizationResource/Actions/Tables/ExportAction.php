@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
 
 use App\Enums\OrganizationStatus;
+use App\Enums\ProjectStatus;
 use App\Filament\Resources\OrganizationResource;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Builder;
@@ -45,6 +46,11 @@ class ExportAction extends BaseAction
                             'activityDomains',
                             'counties',
                             'users' => fn ($q) => $q->onlyNGOAdmins(),
+                            'projects' => fn ($q) => $q->select('id', 'organization_id', 'status')
+                                ->withCount('donations'),
+                        ])
+                        ->withCount([
+                            'volunteers',
                         ]);
                 })
                 ->withColumns([
@@ -95,35 +101,55 @@ class ExportAction extends BaseAction
                                 ->pluck('name')
                                 ->join(', ')
                         ),
-                    Column::make('hasVolunteers')
-                        ->heading(__('organization.labels.has_volunteers'))
+
+                    Column::make('accepts_volunteers')
+                        ->heading(__('organization.labels.accepts_volunteers'))
                         ->formatStateUsing(
-                            fn (Organization $record) => $record->hasAlexaVolunteers()
+                            fn (Organization $record) => $record->accepts_volunteers
                                 ? __('forms::components.select.boolean.true')
                                 : __('forms::components.select.boolean.false')
                         ),
-                    Column::make('hasProjects')
-                    ->heading(__('organization.labels.has_projects'))
-                    ->formatStateUsing(
-                        fn (Organization $record) => $record->hasProjects()
-                            ? __('forms::components.select.boolean.true')
-                            : __('forms::components.select.boolean.false')
-                    ),
-                    Column::make('hasActiveProjects')
-                    ->heading(__('organization.labels.has_active_projects'))
-                    ->formatStateUsing(
-                        fn (Organization $record) => $record->hasActiveProjects()
-                            ? __('forms::components.select.boolean.true')
-                            : __('forms::components.select.boolean.false')
-                    ),
 
-                    /*
-                     * TODO: figure out what stats to include:
-                     * - number of donations
-                     * - value of donations
-                     * - number of projects
-                     * - number of volunteers
-                     */
+                    Column::make('has_volunteers')
+                        ->heading(__('organization.labels.has_volunteers'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->volunteers_count
+                                ? __('forms::components.select.boolean.true')
+                                : __('forms::components.select.boolean.false')
+                        ),
+
+                    Column::make('has_projects')
+                        ->heading(__('organization.labels.has_projects'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->projects->count()
+                                ? __('forms::components.select.boolean.true')
+                                : __('forms::components.select.boolean.false')
+                        ),
+
+                    Column::make('has_active_projects')
+                        ->heading(__('organization.labels.has_active_projects'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->projects->where('status', ProjectStatus::active)->count()
+                                ? __('forms::components.select.boolean.true')
+                                : __('forms::components.select.boolean.false')
+                        ),
+
+                    Column::make('has_eu_platesc')
+                        ->heading(__('organization.labels.has_eu_platesc'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->eu_platesc_merchant_id !== null && $record->eu_platesc_private_key !== null
+                                ? __('forms::components.select.boolean.true')
+                                : __('forms::components.select.boolean.false')
+                        ),
+
+                    Column::make('has_donations')
+                        ->heading(__('organization.labels.has_donations'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => dd($record, $record->projects->sum('donations_count'))
+                                ? __('forms::components.select.boolean.true')
+                                : __('forms::components.select.boolean.false')
+                        ),
+
                 ]),
         ]);
     }

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -80,6 +81,7 @@ class Organization extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')
+            ->useFallbackUrl(Vite::asset('resources/images/organization.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this
@@ -114,15 +116,57 @@ class Organization extends Model implements HasMedia
         return $this->hasMany(Ticket::class);
     }
 
+    public function activities(): MorphMany
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
+
+    public function volunteers(): BelongsToMany
+    {
+        return $this->belongsToMany(Volunteer::class);
+    }
+
     /**
      * Scope a query to include the searched text.
      */
-    public function scopeSearch(Builder $query, string $searchedText): void
+    public function scopeSearch(Builder $query, string $searchedText): Builder
     {
-        $query->orWhere('name', 'LIKE', "%{$searchedText}%");
-        $query->orWhere('description', 'LIKE', "%{$searchedText}%");
-        $query->orWhere('contact_person', 'LIKE', "%{$searchedText}%");
-        $query->orWhere('website', 'LIKE', "%{$searchedText}%");
+        return $query
+            ->orWhere('name', 'LIKE', "%{$searchedText}%")
+            ->orWhere('description', 'LIKE', "%{$searchedText}%")
+            ->orWhere('contact_person', 'LIKE', "%{$searchedText}%")
+            ->orWhere('website', 'LIKE', "%{$searchedText}%");
+    }
+
+    public function scopeWhereAcceptsVolunteers(Builder $query): Builder
+    {
+        return $query->where('accepts_volunteers', true);
+    }
+
+    public function scopeWhereHasVolunteers(Builder $query): Builder
+    {
+        return $query->whereHas('volunteers');
+    }
+
+    public function scopeWhereHasProjects(Builder $query): Builder
+    {
+        return $query->whereHas('projects');
+    }
+
+    public function scopeWhereHasActiveProjects(Builder $query): Builder
+    {
+        return $query->whereRelation('projects', 'status', ProjectStatus::active);
+    }
+
+    public function scopeWhereHasEuPlatesc(Builder $query): Builder
+    {
+        return $query->whereNotNull('eu_platesc_merchant_id')
+            ->whereNotNull('eu_platesc_private_key');
+    }
+
+    public function scopeWhereHasDonations(Builder $query): Builder
+    {
+        return $query->whereHas('projects.donations');
     }
 
     public function getAdministrators(): Collection
@@ -155,23 +199,4 @@ class Organization extends Model implements HasMedia
             'status_updated_at' => $this->freshTimestamp(),
         ]);
     }
-
-    public function activities(): MorphMany
-    {
-        return $this->morphMany(Activity::class, 'subject');
-    }
-
-    public function volunteers(): BelongsToMany
-    {
-        return $this->belongsToMany(Volunteer::class);
-    }
-
-
-    public function hasActiveProjects(): bool
-    {
-        return $this->whereHas('projects', function (Builder $query) {
-            $query->where('status', ProjectStatus::active);
-        })->count() > 0;
-    }
-
 }
