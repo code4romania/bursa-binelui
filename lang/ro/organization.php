@@ -26,7 +26,7 @@ return [
         'in_approval' => 'Cereri noi de înscriere',
         'approved' => 'Organizații active',
         'rejected' => 'Organizații dezactivate',
-        'pending_changes'=> 'Organizații aprobate cu modificări în așteptare',
+        'pending_changes' => 'Organizații aprobate cu modificări în așteptare',
     ],
     'filters' => [
         'counties' => 'Județe',
@@ -39,7 +39,6 @@ return [
         'has_active_projects' => 'Are proiecte active',
         'has_eu_platesc' => 'Are EuPlătesc',
         'has_donations' => 'Are donații',
-
 
     ],
     'labels' => [
@@ -70,6 +69,11 @@ return [
         'contact_email' => 'Email de contact',
         'contact_phone' => 'Telefon de contact',
         'counties' => 'Județe',
+        'has_volunteers' => 'Organizația are voluntari?',
+        'has_projects' => 'Organizația are proiecte?',
+        'has_active_projects' => 'Organizația are proiecte active?',
+        'has_eu_platesc' => 'Organizația are date EuPlătesc?',
+        'has_donations' => 'Organizația are donații?',
     ],
     'messages' => [
         'update_success' => 'Organizația a fost actualizată cu succes!',

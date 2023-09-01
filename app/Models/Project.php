@@ -54,6 +54,7 @@ class Project extends Model implements HasMedia
         'end' => 'date:Y-m-d',
         'accepting_volunteers' => 'boolean',
         'accepting_comments' => 'boolean',
+        'status' => ProjectStatus::class,
     ];
 
     protected $appends = ['total_donations', 'cover_image', 'active', 'is_period_active'];
