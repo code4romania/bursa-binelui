@@ -78,6 +78,11 @@ class Organization extends Model implements HasMedia
         return $this->hasMany(Project::class)->without('organization');
     }
 
+    public function donations()
+    {
+        return $this->hasManyThrough(Donation::class, Project::class);
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')
