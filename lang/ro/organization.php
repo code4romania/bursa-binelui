@@ -74,6 +74,8 @@ return [
         'has_active_projects' => 'Organizația are proiecte active?',
         'has_eu_platesc' => 'Organizația are date EuPlătesc?',
         'has_donations' => 'Organizația are donații?',
+        'changes_count' => 'Număr modificări în așteptare',
+        'latest_updated_at' => 'Data ultimei modificări',
     ],
     'messages' => [
         'update_success' => 'Organizația a fost actualizată cu succes!',
