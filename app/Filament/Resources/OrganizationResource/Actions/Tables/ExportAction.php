@@ -145,7 +145,7 @@ class ExportAction extends BaseAction
                     Column::make('has_donations')
                         ->heading(__('organization.labels.has_donations'))
                         ->formatStateUsing(
-                            fn (Organization $record) => dd($record, $record->projects->sum('donations_count'))
+                            fn (Organization $record) => $record->projects->sum('donations_count')
                                 ? __('forms::components.select.boolean.true')
                                 : __('forms::components.select.boolean.false')
                         ),
