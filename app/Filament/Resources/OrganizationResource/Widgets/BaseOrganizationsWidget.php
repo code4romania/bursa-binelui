@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
 use App\Enums\OrganizationStatus;
+use App\Enums\ProjectStatus;
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\OrganizationResource\Actions\Tables\ExportAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
+use Filament\Forms\Components\Grid;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -97,4 +102,48 @@ abstract class BaseOrganizationsWidget extends BaseWidget
     {
         return static::$resource;
     }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('counties')
+                ->relationship('counties', 'name')
+                ->label(__('organization.filters.counties'))
+                ->placeholder(__('organization.filters.counties_placeholder'))
+                ->multiple()
+                ->columnSpan(2),
+            SelectFilter::make('activity_domains')
+                ->relationship('activityDomains', 'name')
+                ->label(__('organization.filters.activity_domains'))
+                ->placeholder(__('organization.filters.activity_domains_placeholder'))
+                ->multiple()
+                ->columnSpan(2),
+            Filter::make('accepts_volunteers')->toggle()->label(__('organization.filters.accepts_volunteers'))->query(
+                fn (Builder $query)  => $query->where('accepts_volunteers', true),
+            ),
+            Filter::make('has_volunteers')->toggle()->label(__('organization.filters.has_volunteers'))->query(
+                fn (Builder $query)  => $query->whereHas('volunteers'),
+            ),
+            Filter::make('has_projects')->toggle()->label(__('organization.filters.has_projects'))->query(
+                fn (Builder $query)  => $query->whereHas('projects'),
+            ),
+            Filter::make('has_active_projects')->toggle()->label(__('organization.filters.has_active_projects'))->query(
+                fn (Builder $query)  => $query->whereHas('projects', fn (Builder $query) => $query->where('status', '!=', ProjectStatus::active)),
+            ),
+            Filter::make('has_eu_platesc')->toggle()->label(__('organization.filters.has_eu_platesc'))->query(
+                fn (Builder $query)  => $query->whereNotNull('eu_platesc_merchant_id')->whereNotNull('eu_platesc_private_key'),
+            ),
+            Filter::make('has_donations')->toggle()->label(__('organization.filters.has_donations'))->query(
+                fn (Builder $query)  => $query->whereHas('projects', fn (Builder $query) => $query->whereHas('donations')),
+            ),
+
+
+
+        ];
+    }
+    protected function getTableFiltersLayout(): ?string
+    {
+        return  Layout::AboveContent;
+    }
+
 }

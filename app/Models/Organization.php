@@ -159,4 +159,9 @@ class Organization extends Model implements HasMedia
     {
         return $this->morphMany(Activity::class, 'subject');
     }
+
+    public function volunteers(): BelongsToMany
+    {
+        return $this->belongsToMany(Volunteer::class);
+    }
 }

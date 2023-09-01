@@ -28,6 +28,20 @@ return [
         'rejected' => 'Organizații dezactivate',
         'pending_changes'=> 'Organizații aprobate cu modificări în așteptare',
     ],
+    'filters' => [
+        'counties' => 'Județe',
+        'counties_placeholder' => 'Selectează județele',
+        'activity_domains' => 'Domenii de activitate',
+        'activity_domains_placeholder' => 'Selectează domeniile de activitate',
+        'accepts_volunteers' => 'Acceptă voluntari',
+        'has_volunteers' => 'Are voluntari',
+        'has_projects' => 'Are proiecte',
+        'has_active_projects' => 'Are proiecte active',
+        'has_eu_platesc' => 'Are EuPlătesc',
+        'has_donations' => 'Are donații',
+
+
+    ],
     'labels' => [
         'has_statute_file' => 'Are statut',
         'general_data' => 'Date organizație',
