@@ -35,7 +35,7 @@ class RejectedOrganizationsWidget extends BaseOrganizationsWidget
         return [
             TitleWithImageColumn::make('name')
                 ->label(__('organization.organization'))
-                ->image(fn ($record) => $record->cover_image)
+                ->image(fn ($record) => $record->getFirstMediaUrl('logo'))
                 ->description(
                     fn ($record) => sprintf(
                         '%s: %s',
