@@ -45,11 +45,13 @@ class PasswordController extends Controller
         if ($user->hasSetPassword()) {
             abort(Response::HTTP_FORBIDDEN, __('auth.welcome.already_used'));
         }
+
         return Inertia::render('Auth/SetInitialPassword', [
             'user' => $user,
             'token' => sha1($user->email),
         ]);
     }
+
     public function storeInitialPassword(Request $request, User $user): RedirectResponse
     {
         if ($request->token !== sha1($user->email)) {

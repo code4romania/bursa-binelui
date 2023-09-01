@@ -66,10 +66,9 @@ class RegisteredUserController extends Controller
             if ($data['type'] == 'ngo-admin') {
                 $ong = $data['ong'];
                 $organization = Organization::create($ong);
-                $organization->addMediaFromRequest('ong.logo')->toMediaCollection('organizationFilesLogo');
-                if ($request->hasFile('ong.statute'))
-                {
-                    $organization->addMediaFromRequest('ong.statute')->toMediaCollection('organizationFilesStatute');
+                $organization->addMediaFromRequest('ong.logo')->toMediaCollection('logo');
+                if ($request->hasFile('ong.statute')) {
+                    $organization->addMediaFromRequest('ong.statute')->toMediaCollection('statute');
                 }
                 $organization->activityDomains()->attach($ong['activity_domains_ids']);
                 $organization->counties()->attach($ong['counties_ids']);
@@ -83,6 +82,7 @@ class RegisteredUserController extends Controller
             return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
         } catch(\Throwable $th) {
             Log::log('error', $th->getMessage());
+
             return redirect()->back()->with('error_message', __('auth.failed'));
         }
     }

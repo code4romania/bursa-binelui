@@ -36,8 +36,8 @@ Route::middleware(config('filament.middleware.base'))
     ->group(function () {
         Route::get('/welcome/{user}', Welcome::class)->name('filament.auth.welcome');
     });
-Route::get('ngo/welcome/{user}', [PasswordController::class,'setInitialPassword'])->name('ngo.user.welcome');
-Route::post('ngo/welcome/{user}', [PasswordController::class,'storeInitialPassword'])->name('ngo.user.welcome.store');
+Route::get('ngo/welcome/{user}', [PasswordController::class, 'setInitialPassword'])->name('ngo.user.welcome');
+Route::post('ngo/welcome/{user}', [PasswordController::class, 'storeInitialPassword'])->name('ngo.user.welcome.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');

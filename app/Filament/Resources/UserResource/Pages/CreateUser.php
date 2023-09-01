@@ -14,9 +14,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
+
     protected static bool $canCreateAnother = false;
 
-    public  function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -30,13 +31,16 @@ class CreateUser extends CreateRecord
                     ->required(),
                 Select::make('role')
                     ->label(__('user.role'))
-                    ->options(collect(
-                        UserRole::options())->only([
-                            UserRole::bb_admin->value,
-                            UserRole::bb_manager->value,
-                            UserRole::ngo_admin->value
-                        ]
-                    )->toArray()
+                    ->options(
+                        collect(
+                        UserRole::options()
+                    )->only(
+                            [
+                                UserRole::bb_admin->value,
+                                UserRole::bb_manager->value,
+                                UserRole::ngo_admin->value,
+                            ]
+                        )->toArray()
                     )->reactive()
                     ->required(),
                 Select::make('organization')
@@ -51,9 +55,11 @@ class CreateUser extends CreateRecord
 
             ]);
     }
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['created_by'] = auth()->id();
+
         return $data;
     }
 }

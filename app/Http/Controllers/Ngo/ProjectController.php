@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Ngo;
 
-use App\Enums\ProjectStatus;
-use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
-use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\ProjectCategory;
-use App\Models\User;
-use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
-use App\Notifications\Ngo\ProjectCreated;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -26,8 +19,7 @@ class ProjectController extends Controller
     {
         $projectStatus = $request->get('project_status');
         $projects = Project::query()->with('organization')->where('organization_id', auth()->user()->organization_id);
-        if ($projectStatus)
-        {
+        if ($projectStatus) {
             $projects = $projects->where('status', $projectStatus);
         }
 
@@ -60,6 +52,7 @@ class ProjectController extends Controller
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('project_files');
         });
+
         return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
     }
 
@@ -87,6 +80,7 @@ class ProjectController extends Controller
             $project->categories()->sync(collect($request->get('categories'))->pluck('id'));
         }
         $project->update($request->all());
+
         return redirect()->back()->with('success_message', 'Project updated.');
     }
 
@@ -97,6 +91,7 @@ class ProjectController extends Controller
         } catch (\Exception $exception) {
             return redirect()->back()->with('error_message', $exception->getMessage());
         }
+
         return redirect()->back()->with('success_message', 'Project status changed.');
     }
 }

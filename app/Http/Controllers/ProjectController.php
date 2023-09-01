@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
-use App\Enums\ProjectStatus;
 use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;

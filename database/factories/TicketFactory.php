@@ -35,7 +35,10 @@ class TicketFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Ticket $ticket) {
-            $ngoAdmin = $ticket->organization->getAdministrator();
+            $ngoAdmin = $ticket->organization
+                ->getAdministrators()
+                ->first();
+
             $bbAdmin = User::query()
                 ->role(UserRole::bb_admin)
                 ->first();

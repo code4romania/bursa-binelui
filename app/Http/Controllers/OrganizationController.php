@@ -6,10 +6,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
-use App\Http\Requests\StoreOrganizationRequest;
+use App\Http\Requests\Organization\UpdateOrganizationRequest;
+use App\Http\Resources\OrganizationResource;
+use App\Models\Activity;
 use App\Models\ActivityDomain;
+use App\Models\County;
 use App\Models\Organization;
 use App\Models\Volunteer;
+use App\Services\OrganizationService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -69,50 +73,43 @@ class OrganizationController extends Controller
     public function edit()
     {
         $organization = auth()->user()->organization;
+
         $activityDomains = cache()->remember('activityDomains', 60 * 60 * 24, function () {
-            return \App\Models\ActivityDomain::get(['name', 'id']);
-        });
-        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name', 'id']);
+            return ActivityDomain::get(['name', 'id']);
         });
 
+        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
+            return County::get(['name', 'id']);
+        });
+
+        $changes = Activity::pendingChangesFor($organization)
+            ->get()
+            ->flatMap(fn (Activity $activity) => $activity->properties->keys())
+            ->unique()
+            ->values();
+
         return Inertia::render('AdminOng/Ong/EditOng', [
-            'organization' => $organization,
+            'organization' => new OrganizationResource($organization),
             'activity_domains' => $activityDomains,
             'counties' => $counties,
+            'changes' => $changes,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Organization $organization)
+    public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
-        try {
-            /** Get all request data. */
-            $modelData = $request->input();
+        OrganizationService::update($organization, $request->validated());
 
-            if ($request->has('activity_domains')) {
-                $ids = collect($request->input('activity_domains'))->pluck('id')->toArray();
-                $organization->activityDomains()->sync($ids);
-            }
-            if ($request->hasFile('cover_image')) {
-                $organization->clearMediaCollection('organizationFilesLogo');
-                $organization->addMediaFromRequest('cover_image')->toMediaCollection('organizationFilesLogo');
-            }
-
-            $organization->update($modelData);
-
-            return redirect()->route('admin.ong.edit')->with('success_message', __('organization.messages.update_success'));
-        } catch (\Throwable $th) {
-            return redirect()->route('admin.ong.edit')->with('error_message', __('organization.messages.update_error'));
-        }
+        return redirect()->route('admin.ong.edit')
+            ->with('success_message', __('organization.messages.update_success'));
     }
 
-    public function removeCoverImage(Request $request)
+    public function removeLogo(Request $request)
     {
-        $organization = auth()->user()->organization;
-        $organization->clearMediaCollection('organizationFilesLogo');
+        auth()->user()->organization->clearMediaCollection('logo');
 
         return redirect()->back();
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\HasProjectStatus;
@@ -52,8 +54,8 @@ class RegionalProject extends Model implements HasMedia
         'had_partners' => 'boolean',
         'contact_info' => 'array',
     ];
-    protected $appends = ['cover_image', 'type'];
 
+    protected $appends = ['cover_image', 'type'];
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -62,6 +64,7 @@ class RegionalProject extends Model implements HasMedia
             ->fit(Manipulations::FIT_CROP, 300, 300)
             ->nonQueued();
     }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -72,7 +75,7 @@ class RegionalProject extends Model implements HasMedia
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(ProjectCategory::class,'regional_project_category');
+        return $this->belongsToMany(ProjectCategory::class, 'regional_project_category');
     }
 
     public function counties(): BelongsToMany
@@ -114,5 +117,4 @@ class RegionalProject extends Model implements HasMedia
             'contact_info',
         ];
     }
-
 }

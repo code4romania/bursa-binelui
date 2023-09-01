@@ -402,4 +402,5 @@ export default {
     'confirm_close_ticket': 'Ești sigur că vrei să închizi acest tichet?',
     'confirm_reopen_ticket': 'Ești sigur că vrei să redeschizi acest tichet?',
     "add_regional_project": "Adaugă un proiect regional",
+    "field_has_pending_changes":'Acest câmp are modificări neaprobare. Dacă il editezi, modificările vor fi pierdute.',
 }

@@ -22,8 +22,7 @@ trait MustSetInitialPassword
 
         static::created(function (self $user) {
             if (! app()->runningInConsole()) {
-                if (!empty($user->created_by))
-                {
+                if (! empty($user->created_by)) {
                     $user->sendWelcomeNotification();
                 }
             }
@@ -44,9 +43,9 @@ trait MustSetInitialPassword
 
     public function sendWelcomeNotification(): void
     {
-        if ($this->role===UserRole::ngo_admin)
-        {
+        if ($this->role === UserRole::ngo_admin) {
             $this->notify(new WelcomeNotification());
+
             return;
         }
         $this->notify(new AdminWelcomeNotification());

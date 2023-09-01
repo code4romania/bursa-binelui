@@ -22,7 +22,8 @@ class EditUser extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-    public  function form(Form $form): Form
+
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -36,13 +37,16 @@ class EditUser extends EditRecord
                     ->required(),
                 Select::make('role')
                     ->label(__('user.role'))
-                    ->options(collect(
-                        UserRole::options())->only([
-                            UserRole::bb_admin->value,
-                            UserRole::bb_manager->value,
-                            UserRole::ngo_admin->value
-                        ]
-                    )->toArray()
+                    ->options(
+                        collect(
+                        UserRole::options()
+                    )->only(
+                            [
+                                UserRole::bb_admin->value,
+                                UserRole::bb_manager->value,
+                                UserRole::ngo_admin->value,
+                            ]
+                        )->toArray()
                     )->reactive()
                     ->required(),
                 Select::make('organization')
@@ -57,5 +61,4 @@ class EditUser extends EditRecord
 
             ]);
     }
-
 }

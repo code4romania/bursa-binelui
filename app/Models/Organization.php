@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\UserRole;
+use App\Concerns\LogsActivityForApproval;
+use App\Enums\OrganizationStatus;
+use App\Enums\ProjectStatus;
 use App\Traits\HasActivityDomain;
 use App\Traits\HasOrganizationStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,8 +14,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -25,7 +29,7 @@ class Organization extends Model implements HasMedia
     use InteractsWithMedia;
     use HasActivityDomain;
     use HasOrganizationStatus;
-    use LogsActivity;
+    use LogsActivityForApproval;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +48,7 @@ class Organization extends Model implements HasMedia
         'accepts_volunteers',
         'why_volunteer',
         'status',
+        'status_updated_at',
         'eu_platesc_merchant_id',
         'eu_platesc_private_key',
     ];
@@ -57,22 +62,38 @@ class Organization extends Model implements HasMedia
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'status_updated_at' => 'datetime',
         'accepts_volunteers' => 'boolean',
     ];
 
-    protected $appends = ['cover_image', 'statute_link'];
+    public array $requiresApproval = [
+        'name',
+        'cif',
+        'street_address',
+        'statute',
+    ];
 
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class)->without('organization');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+        $this->addMediaCollection('logo')
+            ->useFallbackUrl(Vite::asset('resources/images/organization.png'))
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('preview')
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
+                    ->nonQueued();
+            });
+
+        $this->addMediaCollection('statute')
+            ->singleFile();
+
+        $this->addMediaCollection('statute_pending');
     }
 
     public function users(): HasMany
@@ -95,30 +116,64 @@ class Organization extends Model implements HasMedia
         return $this->hasMany(Ticket::class);
     }
 
+    public function activities(): MorphMany
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
+
+    public function volunteers(): BelongsToMany
+    {
+        return $this->belongsToMany(Volunteer::class);
+    }
+
     /**
      * Scope a query to include the searched text.
      */
-    public function scopeSearch(Builder $query, string $searchedText): void
+    public function scopeSearch(Builder $query, string $searchedText): Builder
     {
-        $query->orWhere('name', 'LIKE', "%{$searchedText}%");
-        $query->orWhere('description', 'LIKE', "%{$searchedText}%");
-        $query->orWhere('contact_person', 'LIKE', "%{$searchedText}%");
-        $query->orWhere('website', 'LIKE', "%{$searchedText}%");
+        return $query
+            ->orWhere('name', 'LIKE', "%{$searchedText}%")
+            ->orWhere('description', 'LIKE', "%{$searchedText}%")
+            ->orWhere('contact_person', 'LIKE', "%{$searchedText}%")
+            ->orWhere('website', 'LIKE', "%{$searchedText}%");
     }
 
-    public function getCoverImageAttribute(): string
+    public function scopeWhereAcceptsVolunteers(Builder $query): Builder
     {
-        return $this->getFirstMediaUrl('organizationFilesLogo', 'preview') ?? '';
+        return $query->where('accepts_volunteers', true);
     }
 
-    public function getStatuteLinkAttribute(): string
+    public function scopeWhereHasVolunteers(Builder $query): Builder
     {
-        return $this->getFirstMediaUrl('organizationFilesStatute') ?? '';
+        return $query->whereHas('volunteers');
     }
 
-    public function getAdministrator()
+    public function scopeWhereHasProjects(Builder $query): Builder
     {
-        return $this->users()->where('role', UserRole::ngo_admin)->first();
+        return $query->whereHas('projects');
+    }
+
+    public function scopeWhereHasActiveProjects(Builder $query): Builder
+    {
+        return $query->whereRelation('projects', 'status', ProjectStatus::active);
+    }
+
+    public function scopeWhereHasEuPlatesc(Builder $query): Builder
+    {
+        return $query->whereNotNull('eu_platesc_merchant_id')
+            ->whereNotNull('eu_platesc_private_key');
+    }
+
+    public function scopeWhereHasDonations(Builder $query): Builder
+    {
+        return $query->whereHas('projects.donations');
+    }
+
+    public function getAdministrators(): Collection
+    {
+        return $this->users()
+            ->onlyNGOAdmins()
+            ->get();
     }
 
     public function getActivitylogOptions(): LogOptions
@@ -127,5 +182,21 @@ class Organization extends Model implements HasMedia
             ->dontSubmitEmptyLogs()
             ->logFillable()
             ->logOnlyDirty();
+    }
+
+    public function markAsApproved(): bool
+    {
+        return $this->update([
+            'status' => OrganizationStatus::approved,
+            'status_updated_at' => $this->freshTimestamp(),
+        ]);
+    }
+
+    public function markAsRejected(): bool
+    {
+        return $this->update([
+            'status' => OrganizationStatus::rejected,
+            'status_updated_at' => $this->freshTimestamp(),
+        ]);
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->string('cif');
+            $table->string('cif')->unique();
             $table->text('description');
             $table->string('street_address');
             $table->string('contact_person');
