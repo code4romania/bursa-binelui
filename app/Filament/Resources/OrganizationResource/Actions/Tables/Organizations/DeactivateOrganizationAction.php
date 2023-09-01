@@ -7,6 +7,7 @@ namespace App\Filament\Resources\OrganizationResource\Actions\Tables\Organizatio
 use App\Models\Organization;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\Action;
+use Livewire\Component;
 
 class DeactivateOrganizationAction extends Action
 {
@@ -48,5 +49,7 @@ class DeactivateOrganizationAction extends Action
 
             $record->markAsRejected($reason);
         });
+
+        $this->after(fn (Component $livewire) => $livewire->emit('refreshRejectedOrganizationsWidget'));
     }
 }

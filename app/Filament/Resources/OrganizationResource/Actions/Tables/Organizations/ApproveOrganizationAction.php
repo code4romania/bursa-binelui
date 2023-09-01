@@ -6,6 +6,7 @@ namespace App\Filament\Resources\OrganizationResource\Actions\Tables\Organizatio
 
 use App\Models\Organization;
 use Filament\Tables\Actions\Action;
+use Livewire\Component;
 
 class ApproveOrganizationAction extends Action
 {
@@ -39,5 +40,7 @@ class ApproveOrganizationAction extends Action
         $this->action(function (Organization $record) {
             $record->markAsApproved();
         });
+
+        $this->after(fn (Component $livewire) => $livewire->emit('refreshApprovedOrganizationsWidget'));
     }
 }
