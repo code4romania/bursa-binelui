@@ -110,14 +110,13 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->relationship('counties', 'name')
                 ->label(__('organization.filters.counties'))
                 ->placeholder(__('organization.filters.counties_placeholder'))
-                ->multiple()
-                ->columnSpan(2),
+                ->multiple(),
             SelectFilter::make('activity_domains')
                 ->relationship('activityDomains', 'name')
                 ->label(__('organization.filters.activity_domains'))
                 ->placeholder(__('organization.filters.activity_domains_placeholder'))
-                ->multiple()
-                ->columnSpan(2),
+                ->multiple(),
+
             Filter::make('accepts_volunteers')->toggle()->label(__('organization.filters.accepts_volunteers'))->query(
                 fn (Builder $query)  => $query->where('accepts_volunteers', true),
             ),
@@ -141,9 +140,9 @@ abstract class BaseOrganizationsWidget extends BaseWidget
 
         ];
     }
-    protected function getTableFiltersLayout(): ?string
-    {
-        return  Layout::AboveContent;
-    }
+//    protected function getTableFiltersLayout(): ?string
+//    {
+//        return  Layout::AboveContent;
+//    }
 
 }
