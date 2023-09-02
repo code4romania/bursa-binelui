@@ -46,19 +46,16 @@
                 </div>
             </div>
 
-            <SvgLoader name="home_bg" class="hidden lg:block" />
+            <HeroPattern class="hidden lg:block" />
         </header>
 
-        <div class="container drop-shadow-md">
+        <div class="container">
             <div class="relative flow-root bg-white rounded shadow-md">
                 <SvgLoader
                     class="absolute hidden lg:block -left-20 bottom-10 fill-primary-300 -z-10"
                     name="small_dotted"
                 />
-                <SvgLoader
-                    class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-300 -z-10"
-                    name="dotted_square"
-                />
+                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-300" />
 
                 <div class="relative mx-auto my-10 lg:max-w-5xl">
                     <div class="flex flex-col items-center w-full mb-4 md:flex-row">
@@ -79,7 +76,7 @@
                             class="relative flex items-center justify-center flex-1 p-6 bg-white border border-gray-300 gap-x-2"
                         >
                             <p>un program</p>
-                            <SvgLoader name="code4_logo" />
+                            <Icon name="code4romania" class="w-20 h-6 sm:h-8 md:h-10 shrink-0 sm:w-28 md:w-36" />
                         </a>
                     </div>
 
@@ -131,10 +128,7 @@
             </div>
 
             <div class="relative">
-                <SvgLoader
-                    class="absolute bottom-0 hidden shrink-0 fill-primary-300 md:block right-1/2"
-                    name="dotted_square"
-                />
+                <LargeSquarePattern class="absolute bottom-0 hidden shrink-0 fill-primary-300 md:block right-1/2" />
 
                 <Carousel
                     class="relative w-screen py-9"
@@ -244,9 +238,13 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
+
+    import HeroPattern from '@/Components/patterns/HeroPattern.vue';
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     /** Component props. */
     const props = defineProps({

@@ -8,14 +8,18 @@
             @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
         />
 
-        <!-- Code4 info -->
         <div class="bg-gray-100">
-            <div class="mx-auto container max-w-7xl flex items-center gap-x-6 px-6 py-4 sm:pr-3.5 lg:pl-8">
-                <SvgLoader name="code4_logo" />
-                <div class="flex flex-col gap-1 text-sm font-semibold leading-5 md:flex-row">
-                    <p class="text-gray-700">{{ $t('code4_solution') }}</p>
-                    <a class="text-blue-500" href="https://code4.ro/ro">{{ $t('find_more') }}</a>
-                </div>
+            <div class="container py-4">
+                <a
+                    href="https://code4.ro"
+                    target="_blank"
+                    rel="noopener"
+                    class="flex items-center w-full max-w-2xl gap-3 text-sm hover:text-blue-600 focus:text-blue-600 focus:outline-0 hover:underline focus:underline"
+                >
+                    <Icon name="code4romania" class="w-20 h-6 sm:h-8 md:h-10 shrink-0 sm:w-28 md:w-36" />
+
+                    <span v-text="$t('code4_solution')" />
+                </a>
             </div>
         </div>
 
@@ -135,25 +139,21 @@
             </div>
 
             <div class="pt-8 mt-10 border-t border-white/10 md:flex md:items-center md:justify-between lg:mt-16">
-                <div class="flex space-x-6 md:order-2">
-                    <a href="#">
-                        <SvgLoader name="facebook" />
+                <div class="flex gap-6 md:order-2">
+                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                        <Icon name="social/facebook" class="w-6 h-6" />
                     </a>
 
-                    <a href="#">
-                        <SvgLoader name="instagram" />
+                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                        <Icon name="social/instagram" class="w-6 h-6" />
                     </a>
 
-                    <a href="#">
-                        <SvgLoader name="twitter" />
+                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                        <Icon name="social/twitter" class="w-6 h-6" />
                     </a>
 
-                    <a href="#">
-                        <SvgLoader name="github" />
-                    </a>
-
-                    <a href="#">
-                        <SvgLoader name="drible" />
+                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                        <Icon name="social/github" class="w-6 h-6" />
                     </a>
                 </div>
                 <p class="mt-8 text-sm leading-5 text-gray-400 md:order-1 md:mt-0">
@@ -171,7 +171,7 @@
     /** Import componets. */
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
+    import Icon from '@/Components/Icon.vue';
     import Alert from './Alert.vue';
 
     const flash = {

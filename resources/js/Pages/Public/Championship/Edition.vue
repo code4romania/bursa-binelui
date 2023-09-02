@@ -176,9 +176,7 @@
                 </carousel>
             </div>
 
-            <div class="absolute hidden md:block -bottom-32 -left-16">
-                <SvgLoader class="shrink-0 fill-gray-200" name="dotted_square" />
-            </div>
+            <LargeSquarePattern class="absolute hidden md:block -bottom-32 -left-16 fill-gray-200" />
         </div>
 
         <!-- Articles -->
@@ -282,6 +280,8 @@
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import Select from '@/Components/form/Select.vue';
     import Table from '@/Components/templates/Table.vue';
+
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 

@@ -6,7 +6,7 @@
             rel="noopener"
             class="transition-opacity duration-150 hover:opacity-75"
         >
-            <Icon name="facebook" class="w-8 h-8" />
+            <Icon name="social/color/facebook" class="w-8 h-8" />
         </a>
 
         <a
@@ -15,7 +15,7 @@
             rel="noopener"
             class="transition-opacity duration-150 hover:opacity-75"
         >
-            <Icon name="linkedin" class="w-8 h-8" />
+            <Icon name="social/color/linkedin" class="w-8 h-8" />
         </a>
 
         <a
@@ -24,7 +24,7 @@
             rel="noopener"
             class="transition-opacity duration-150 hover:opacity-75"
         >
-            <Icon name="whatsapp" class="w-8 h-8" />
+            <Icon name="social/color/whatsapp" class="w-8 h-8" />
         </a>
 
         <button

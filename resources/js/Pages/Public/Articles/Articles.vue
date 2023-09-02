@@ -31,10 +31,7 @@
                     </div>
 
                     <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
-
-                        <div class="absolute bottom-0 right-0">
-                            <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
-                        </div>
+                        <LargeSquarePattern class="absolute bottom-0 right-0 fill-primary-500" />
 
                         <div class="relative flex items-center w-fit">
                             <img class="mx-auto rounded-md shadow" :src="article.cover_image" alt="" />
@@ -174,8 +171,11 @@ import { Head, Link, router } from '@inertiajs/vue3';
 
 /** Import components. */
 import PageLayout from '@/Layouts/PageLayout.vue';
+import Icon from '@/Components/Icon.vue';
 import SvgLoader from '@/Components/SvgLoader.vue';
 import Pagination from '@/Components/pagination/Pagination.vue';
+
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
 /** Import plugins */
 import 'vue3-carousel/dist/carousel.css';

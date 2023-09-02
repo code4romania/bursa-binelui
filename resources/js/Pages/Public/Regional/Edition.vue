@@ -168,16 +168,11 @@
                     <Link :href="route('regional.rules')" class="text-blue-500">{{ $t('here') }}.</Link>
                 </p>
 
-                <div class="absolute hidden md:block -top-24 -left-32">
-                    <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute hidden md:block -top-24 -left-32 fill-primary-300" />
             </div>
 
             <div class="relative items-center justify-center w-full lg:px-20 lg:pb-9 lg:w-6/12 sm:flex">
-
-                <div class="absolute bottom-0 right-0 hidden md:block">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute bottom-0 right-0 hidden md:block fill-primary-500" />
 
                 <div class="relative flex items-center bg-white rounded shadow w-fit">
                     <img class="mx-auto rounded-lg" src="/images/auth_image.jpg" alt="" />
@@ -374,6 +369,7 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
@@ -386,6 +382,8 @@
 
     import ChampionshipModal from '@/Components/modals/ChampionshipModal.vue';
     import Modal from '@/Components/modals/Modal.vue';
+
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 

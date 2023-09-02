@@ -66,10 +66,7 @@
             </div>
 
             <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
-
-                <div class="absolute bottom-0 right-0">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute bottom-0 right-0 fill-primary-500" />
 
                 <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
                     <img class="mx-auto" src="/images/project_img.png" alt="" />
@@ -266,13 +263,9 @@
                     </Link>
                 </div>
 
-                <div class="absolute top-0 right-0 z-10 hidden sm:block">
-                    <SvgLoader class="shrink-0" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden sm:block" />
 
-                <div class="absolute left-0 z-10 -bottom-20">
-                    <SvgLoader class="shrink-0" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute left-0 z-10 -bottom-20" />
             </div>
         </div>
     </PageLayout>
@@ -293,6 +286,8 @@
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
+
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const props = defineProps({
         project: {

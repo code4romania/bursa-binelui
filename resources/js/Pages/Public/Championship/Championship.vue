@@ -120,16 +120,11 @@
                     <Link :href="route('championship.rules')" class="text-blue-500">{{ $t('here') }}.</Link>
                 </p>
 
-                <div class="absolute hidden md:block -top-24 -left-32">
-                    <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute hidden md:block -top-24 -left-32 fill-primary-500" />
             </div>
 
             <div class="relative items-center justify-center hidden w-full lg:px-20 lg:pb-20 lg:w-6/12 sm:flex">
-
-                <div class="absolute bottom-0 right-0 hidden md:block">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute bottom-0 right-0 hidden md:block fill-primary-500" />
 
                 <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
                     <img class="mx-auto" src="/images/project_img.png" alt="" />
@@ -242,9 +237,7 @@
                 </carousel>
             </div>
 
-            <div class="absolute hidden md:block -bottom-32 -left-16">
-                <SvgLoader class="shrink-0 fill-gray-200" name="dotted_square" />
-            </div>
+            <LargeSquarePattern class="absolute hidden md:block -bottom-32 -left-16 fill-gray-200" />
         </div>
 
         <!-- Articles -->
@@ -327,6 +320,7 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import Sort from '@/Components/filters/Sort.vue';
+    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import Input from '@/Components/form/Input.vue';
@@ -337,6 +331,8 @@
     import Select from '@/Components/form/Select.vue';
     import ChampionshipModal from '@/Components/modals/ChampionshipModal.vue';
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
+
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
 

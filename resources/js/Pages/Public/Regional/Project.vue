@@ -31,10 +31,7 @@
             </div>
 
             <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
-
-                <div class="absolute bottom-0 right-0">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute bottom-0 right- fill-primary-300" />
 
                 <div class="relative flex items-center w-fit">
                     <img class="mx-auto rounded-md shadow" :src="project.cover_image!=='' ?project.cover_image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"/>
@@ -199,13 +196,9 @@
                     </Link>
                 </div>
 
-                <div class="absolute right-0 z-10 hidden overflow-hidden -top-32 sm:block">
-                    <SvgLoader class="shrink-0 fill-gray-300" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute right-0 z-10 hidden overflow-hidden -top-32 sm:block fill-gray-300" />
 
-                <div class="absolute z-10 overflow-hidden -left-10 -bottom-24">
-                    <SvgLoader class="shrink-0 fill-gray-300" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute z-10 overflow-hidden -left-10 -bottom-24 fill-gray-300" />
             </div>
         </div>
     </PageLayout>
@@ -220,11 +213,14 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
     import Gallery from '@/Components/gallery/Gallery.vue';
+
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const props = defineProps({
         project: {
