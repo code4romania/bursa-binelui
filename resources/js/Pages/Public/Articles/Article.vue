@@ -6,24 +6,29 @@
         <div class="mx-auto mb-10 max-w-7xl">
             <div class="aspect-w-16 aspect-h-9">
                 <img
-                    :src="article.cover_image!=='' ?article.cover_image: 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'"
+                    :src="
+                        article.cover_image !== ''
+                            ? article.cover_image
+                            : 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+                    "
                     alt="imagine proiect"
                     class="object-cover w-full h-full"
                 />
             </div>
 
-            <div class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1">
+            <div
+                class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
+            >
                 {{ article.category.name }}
             </div>
 
-            <h1 v-if="article.title" class="mt-6 text-6xl font-extrabold text-left text-gray-900">{{ article.title }}</h1>
+            <h1 v-if="article.title" class="mt-6 text-6xl font-extrabold text-left text-gray-900">
+                {{ article.title }}
+            </h1>
 
             <div class="mt-6">
                 <h2 class="text-2xl font-bold text-cyan-900">{{ $t('share_article') }}</h2>
-                <SharePage
-                    class="mt-4"
-                    :pageRoute="route('article', article.id)"
-                />
+                <SharePage class="mt-4" :pageRoute="route('article', article.id)" />
             </div>
 
             <div id="article" class="mt-6 text-sm text-gray-500" v-html="article.content"></div>
@@ -31,10 +36,7 @@
 
         <div class="w-full bg-gray-100">
             <div class="mx-auto max-w-7xl">
-                <Gallery
-                    v-if="gallery.length"
-                    :gallery="gallery"
-                />
+                <Gallery v-if="gallery.length" :gallery="gallery" />
                 <div class="flex items-center justify-between pt-6 pb-10 border-t border-gray-300">
                     <div class="flex items-center justify-start w-full text-gray-500 f">
                         <p>{{ article.author }}</p>
@@ -45,7 +47,6 @@
         </div>
 
         <div class="relative mb-10 overflow-hidden pb-9">
-
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
@@ -55,34 +56,35 @@
                 </div>
             </div>
 
-            <div class="bg-white px-9">
-                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+            <div class="relative bg-white">
+                <ul
+                    role="list"
+                    class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                >
                     <ArticleCard :data="article" class="relative z-50 lg:-mt-12" v-for="article in related" />
                 </ul>
-            </div>
-
-            <div class="absolute top-0 right-0 z-10 hidden lg:block">
-                <SvgLoader class="shrink-0" name="squer_half_color" />
+                <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden lg:block fill-primary-200" />
             </div>
         </div>
     </PageLayout>
 </template>
 
 <script setup>
+    /** Import from inertia. */
+    import { Head } from '@inertiajs/vue3';
 
-/** Import from inertia. */
-import { Head } from '@inertiajs/vue3';
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import ArticleCard from '@/Components/cards/ArticleCard.vue';
+    import Gallery from '@/Components/gallery/Gallery.vue';
+    import SharePage from '@/Components/SharePage.vue';
 
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-import SvgLoader from '@/Components/SvgLoader.vue';
-import ArticleCard from '@/Components/cards/ArticleCard.vue';
-import Gallery from '@/Components/gallery/Gallery.vue';
-import SharePage from '@/Components/SharePage.vue';
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
-const props = defineProps({
-    article: Object,
-    gallery: Array,
-    related: Array,
-});
+    const props = defineProps({
+        article: Object,
+        gallery: Array,
+        related: Array,
+    });
 </script>

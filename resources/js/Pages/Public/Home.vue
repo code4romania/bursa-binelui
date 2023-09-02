@@ -27,10 +27,7 @@
                         {{ $t('see_evolution') }}
                     </Link>
 
-                    <SvgLoader
-                        class="absolute top-0 hidden shrink-0 fill-primary-300 -left-16 md:block -z-10"
-                        name="small_dotted_square"
-                    />
+                    <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-300 -left-16 md:block" />
                 </div>
 
                 <!-- Info texts -->
@@ -51,10 +48,7 @@
 
         <div class="container">
             <div class="relative flow-root bg-white rounded shadow-md">
-                <SvgLoader
-                    class="absolute hidden lg:block -left-20 bottom-10 fill-primary-300 -z-10"
-                    name="small_dotted"
-                />
+                <SmallSquarePattern class="absolute hidden lg:block -left-20 bottom-10 fill-primary-300" />
                 <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-300" />
 
                 <div class="relative mx-auto my-10 lg:max-w-5xl">
@@ -245,6 +239,7 @@
 
     import HeroPattern from '@/Components/patterns/HeroPattern.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import SmallSquarePattern from '@/Components/patterns/SmallSquarePattern.vue';
 
     /** Component props. */
     const props = defineProps({
