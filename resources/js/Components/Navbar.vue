@@ -267,8 +267,9 @@
 </template>
 
 <script setup>
+    import { computed } from 'vue';
     /** Import from inertia. */
-    import { Link } from '@inertiajs/vue3';
+    import { Link, usePage } from '@inertiajs/vue3';
 
     /** Import plugins. */
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
@@ -329,15 +330,10 @@
         },
     ];
 
-    /** Languages menu links. */
-    const languages = [
-        {
-            id: 1,
-            name: 'RO',
-        },
-        {
-            id: 2,
-            name: 'EN',
-        },
-    ];
+    const languages = computed(() =>
+        usePage().props.locales.map((locale) => ({
+            name: locale,
+            id: locale,
+        }))
+    );
 </script>

@@ -1,20 +1,16 @@
 <template>
     <div class="flex flex-col min-h-screen">
-        <!-- Navbar -->
         <Navbar />
 
-        <!-- Page content -->
-        <div class="flex-grow">
+        <div class="grid flex-1 gap-y-10">
             <slot />
         </div>
 
-        <!-- Footer -->
         <Footer />
     </div>
 </template>
 
 <script setup>
-    /** Import components */
     import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
 </script>

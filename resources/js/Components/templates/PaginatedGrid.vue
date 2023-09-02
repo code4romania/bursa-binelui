@@ -8,7 +8,7 @@
 
                     <template v-if="'project' == type">
                         <ProjectCard
-                            :data="item"
+                            :project="item"
                             :cardType="cardType"
                         />
                     </template>

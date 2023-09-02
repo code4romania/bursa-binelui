@@ -181,6 +181,7 @@ export default {
     "project_details": "Detalii proiect",
     "range": "Aria de acoperire",
     "project_ends": "Se incheie in",
+    'project_ending_soon': "Se încheie curând",
     "days": "zile",
     "donate_to_project": "Donează către proiectul",
     "donate_form_intro": "Completează datele de mai jos pentru a face donația",
@@ -402,5 +403,5 @@ export default {
     'confirm_close_ticket': 'Ești sigur că vrei să închizi acest tichet?',
     'confirm_reopen_ticket': 'Ești sigur că vrei să redeschizi acest tichet?',
     "add_regional_project": "Adaugă un proiect regional",
-    "field_has_pending_changes":'Acest câmp are modificări neaprobare. Dacă il editezi, modificările vor fi pierdute.',
+    "field_has_pending_changes": 'Acest câmp are modificări neaprobare. Dacă il editezi, modificările vor fi pierdute.',
 }

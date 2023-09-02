@@ -131,7 +131,7 @@
                     <template v-for="(item, index) in organization.projects" :key="index">
                         <ProjectCard
                             class="-mt-6"
-                            :data="item"
+                            :project="item"
                             cardType="client"
                         />
                     </template>
