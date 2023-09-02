@@ -4,6 +4,8 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from 'ziggy-js/dist/vue';
 import i18n from './plugins/i18n.js';
 
+import 'virtual:svg-icons-register';
+
 import.meta.glob(['../images/**']);
 
 createInertiaApp({

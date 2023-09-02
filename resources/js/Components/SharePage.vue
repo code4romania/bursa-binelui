@@ -1,79 +1,63 @@
 <template>
     <div class="flex items-center gap-6 mb-12">
-        <a :href="`https://www.facebook.com/sharer/sharer.php?u=${pageRoute}`" target="_blank" rel="noopener">
-            <SvgLoader class="shrink-0" name="facebook_colored" />
+        <a
+            :href="`https://www.facebook.com/sharer/sharer.php?u=${pageRoute}`"
+            target="_blank"
+            rel="noopener"
+            class="transition-opacity duration-150 hover:opacity-75"
+        >
+            <Icon name="facebook" class="w-8 h-8" />
         </a>
 
-        <a :href="`https://www.linkedin.com/sharing/share-offsite/?url=${pageRoute}`" target="_blank" rel="noopener">
-            <SvgLoader class="shrink-0" name="linkedin_colored" />
+        <a
+            :href="`https://www.linkedin.com/sharing/share-offsite/?url=${pageRoute}`"
+            target="_blank"
+            rel="noopener"
+            class="transition-opacity duration-150 hover:opacity-75"
+        >
+            <Icon name="linkedin" class="w-8 h-8" />
         </a>
 
-        <a :href="`https://api.whatsapp.com/send?text=${pageRoute}`" data-action="share/whatsapp/share"   target="_blank" rel="noopener">
-            <SvgLoader class="shrink-0" name="whatsapp_colored" />
+        <a
+            :href="`https://api.whatsapp.com/send?text=${pageRoute}`"
+            target="_blank"
+            rel="noopener"
+            class="transition-opacity duration-150 hover:opacity-75"
+        >
+            <Icon name="whatsapp" class="w-8 h-8" />
         </a>
 
-        <div class="relative">
-            <div class="flex items-center justify-center w-8 h-8 border rounded-full border-primary-500">
-                <SvgLoader @click="copyEmbed" class="shrink-0 fill-white" name="code" />
-            </div>
-            <span v-if="copied" class="absolute inline-flex items-center px-2 py-1 text-xs font-medium text-white rounded-full -top-2 -right-14 bg-primary-500 ring-1 ring-inset ring-primary-500">
-                {{ $t('copied') }}
-            </span>
-        </div>
+        <button
+            @click="copy(url)"
+            class="relative overflow-hidden duration-150 rounded-full ransition-opacity hover:opacity-75"
+        >
+            <Icon v-if="copied && text === url" name="check" class="w-8 h-8 text-white bg-blue-500" />
+            <Icon v-else name="link" class="w-8 h-8 text-blue-500" />
+        </button>
+
+        <button
+            @click="copy(embedCode)"
+            class="relative overflow-hidden duration-150 rounded-full ransition-opacity hover:opacity-75"
+        >
+            <Icon v-if="copied && text === embedCode" name="check" class="w-8 h-8 text-white bg-primary-500" />
+            <Icon v-else name="embed" class="w-8 h-8 text-primary-500" />
+        </button>
     </div>
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-
-    /** Import components */
-    import SvgLoader from '@/Components/SvgLoader.vue';
+    import { ref, computed } from 'vue';
+    import { useClipboard } from '@vueuse/core';
+    import Icon from '@/Components/Icon.vue';
 
     /** Component props. */
     const props = defineProps({
-        pageRoute: String
+        pageRoute: String,
     });
 
-    /** Component emits. */
-    defineEmits(['copyCode', 'donate', 'volunteer']);
+    const { text, copy, copied, isSupported } = useClipboard();
 
-    /** Local state. */
-    const copied = ref(false);
+    const url = computed(() => window.location.href);
 
-    /**
-     * Copy embed code.
-     */
-    const copyEmbed = () => {
-
-        /** Embed iframe. */
-        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
-
-        /** Check if navigator object exists and copy iframe. */
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(embedCode)
-            .then(() => alert('Embed code copied to clipboard!'))
-            .catch(() => alert('Failed to copy embed code to clipboard!'));
-        } else {
-            /** Create textarea element. */
-            const tempInput = document.createElement('textarea');
-
-            /** Set textarea value as embed code. */
-            tempInput.value = embedCode;
-
-            /** Apend textarea to body. */
-            document.body.appendChild(tempInput);
-
-            /** Select textarea text. */
-            tempInput.select();
-
-            /** Copy textarea content. */
-            document.execCommand('copy');
-
-            /** Remove textarea. */
-            document.body.removeChild(tempInput);
-        }
-
-        copied.value= true;
-        setTimeout(() => { copied.value = false }, 1000)
-    }
+    const embedCode = computed(() => `<iframe src="${url.value}" width="100%" height="600px"></iframe>`);
 </script>
