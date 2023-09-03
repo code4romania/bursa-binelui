@@ -16,6 +16,11 @@ class TicketsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'subject';
 
+    public static function getTitle(): string
+    {
+        return __('ticket.label.plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,5 +50,5 @@ class TicketsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

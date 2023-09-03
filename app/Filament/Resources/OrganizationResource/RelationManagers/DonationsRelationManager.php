@@ -16,6 +16,11 @@ class DonationsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'uuid';
 
+    public static function getTitle(): string
+    {
+        return __('donation.label.plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,5 +50,5 @@ class DonationsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

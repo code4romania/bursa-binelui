@@ -50,11 +50,4 @@ class ViewOrganization extends ViewRecord
     {
         return __('organization.organization');
     }
-
-    protected function getFooterWidgets(): array
-    {
-        return [
-            OrganizationActivityWidget::class,
-        ];
-    }
 }

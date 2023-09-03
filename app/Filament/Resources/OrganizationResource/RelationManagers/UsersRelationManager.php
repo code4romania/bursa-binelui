@@ -16,6 +16,11 @@ class UsersRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getTitle(): string
+    {
+        return __('user.label.plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,5 +50,5 @@ class UsersRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

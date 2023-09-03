@@ -16,6 +16,12 @@ class ProjectsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getTitle(): string
+    {
+        return __('project.label.plural');
+    }
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,5 +51,5 @@ class ProjectsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

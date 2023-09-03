@@ -16,6 +16,11 @@ class VolunteersRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'full_name';
 
+    public static function getTitle(): string
+    {
+        return __('volunteer.label.plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,5 +50,5 @@ class VolunteersRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }
