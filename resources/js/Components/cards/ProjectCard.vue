@@ -1,7 +1,5 @@
 <template>
-    <article
-        class="flex flex-col col-span-1 my-4 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg drop-shadow-lg"
-    >
+    <article class="flex flex-col overflow-hidden bg-white divide-y divide-gray-200 rounded-lg drop-shadow-lg">
         <Link
             :href="route('project', project.slug)"
             class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3"
@@ -61,7 +59,7 @@
                 </div>
 
                 <div v-if="project.activity_domains" class="flex items-center gap-1">
-                    <SvgLoader name="activity" class="w-4 h-4 text-gray-500 shrink-0" />
+                    <Icon name="activity" class="w-4 h-4 text-gray-500 shrink-0" />
                     <span class="text-gray-700 truncate">{{ project.activity_domains }}</span>
                 </div>
             </div>
@@ -166,7 +164,6 @@
     import { Link, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Icon from '@/Components/Icon.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';

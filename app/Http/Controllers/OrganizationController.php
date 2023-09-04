@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
+use App\Http\Resources\OrganizationCardsResource;
 use App\Http\Resources\OrganizationResource;
 use App\Models\Activity;
 use App\Models\ActivityDomain;
@@ -25,7 +26,8 @@ class OrganizationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Organization::query();
+        $query = Organization::query()
+            ->with('activityDomains');
 
         /* Check if we have filters by activity domains. */
         if ($request->query(OrganizationQuery::activity_domain->value)) {
@@ -51,7 +53,9 @@ class OrganizationController extends Controller
         return Inertia::render('Public/Organizations/Organizations', [
             'activity_domains' => ActivityDomain::all(),
             'counties' => \App\Models\County::all(),
-            'query' => $query->paginate(),
+            'query' => OrganizationCardsResource::collection(
+                $query->paginate()
+            ),
             'request' => $request,
         ]);
     }

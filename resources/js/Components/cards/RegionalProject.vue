@@ -35,7 +35,7 @@
                     </div>
 
                     <div v-if="data.activity_domains" class="flex items-center gap-1">
-                        <SvgLoader class="shrink-0" name="activity" />
+                        <Icon class="w-4 h-4 text-gray-500 shrink-0" name="activity" />
                         <span class="w-20 truncate lg:w-40">{{ data.activity_domains.join(',') }}</span>
                     </div>
                 </div>

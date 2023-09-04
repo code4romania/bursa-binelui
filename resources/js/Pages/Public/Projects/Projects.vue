@@ -114,14 +114,14 @@
         </div>
 
         <div class="container">
-            <h2 class="text-2xl font-bold text-gray-900">{{ props.query.meta.total }} {{ $t('of_projects') }}</h2>
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ props.query.meta.total }} {{ $t('of_projects') }}</h2>
 
             <!-- Published projects -->
             <PaginatedGrid
                 type="project"
                 cardType="client"
-                :list="props.query"
-                classes="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                :list="query"
+                classes="grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
             />
         </div>
     </PageLayout>
