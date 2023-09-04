@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -116,35 +117,53 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->placeholder(__('organization.filters.activity_domains_placeholder'))
                 ->multiple(),
 
-            Filter::make('accepts_volunteers')
-                ->toggle()
+            TernaryFilter::make('accepts_volunteers')
                 ->label(__('organization.filters.accepts_volunteers'))
-                ->query(fn (Builder $query) => $query->whereAcceptsVolunteers()),
+                ->queries(
+                    true: fn (Builder $query) => $query->whereAcceptsVolunteers(),
+                    false: fn (Builder $query) => $query->whereDoesntAcceptsVolunteers(),
+                    blank: fn (Builder $query) => $query,
+                ),
 
-            Filter::make('has_volunteers')
-                ->toggle()
+            TernaryFilter::make('has_volunteers')
                 ->label(__('organization.filters.has_volunteers'))
-                ->query(fn (Builder $query) => $query->whereHasVolunteers()),
+                ->queries(
+                    true: fn (Builder $query) => $query->whereHasVolunteers(),
+                    false: fn (Builder $query) => $query->whereDoesntHaveVolunteers(),
+                    blank: fn (Builder $query) => $query,
+                ),
 
-            Filter::make('has_projects')
-                ->toggle()
+            TernaryFilter::make('has_projects')
                 ->label(__('organization.filters.has_projects'))
-                ->query(fn (Builder $query) => $query->whereHasProjects()),
+                ->queries(
+                    true: fn (Builder $query) => $query->whereHasProjects(),
+                    false: fn (Builder $query) => $query->whereDoesntHaveProjects(),
+                    blank: fn (Builder $query) => $query,
+                ),
 
-            Filter::make('has_active_projects')
-                ->toggle()
+            TernaryFilter::make('has_active_projects')
                 ->label(__('organization.filters.has_active_projects'))
-                ->query(fn (Builder $query) => $query->whereHasActiveProjects()),
+                ->queries(
+                    true: fn (Builder $query) => $query->whereHasActiveProjects(),
+                    false: fn (Builder $query) => $query->whereDoesntHaveActiveProjects(),
+                    blank: fn (Builder $query) => $query,
+                ),
 
-            Filter::make('has_eu_platesc')
-                ->toggle()
+            TernaryFilter::make('has_eu_platesc')
                 ->label(__('organization.filters.has_eu_platesc'))
-                ->query(fn (Builder $query) => $query->whereHasEuPlatesc()),
+                ->queries(
+                    true: fn (Builder $query) => $query->whereHasEuPlatesc(),
+                    false: fn (Builder $query) => $query->whereDoesntHaveEuPlatesc(),
+                    blank: fn (Builder $query) => $query,
+                ),
 
-            Filter::make('has_donations')
-                ->toggle()
+            TernaryFilter::make('has_donations')
                 ->label(__('organization.filters.has_donations'))
-                ->query(fn (Builder $query) => $query->whereHasDonations()),
+                ->queries(
+                    true: fn (Builder $query) => $query->whereHasDonations(),
+                    false: fn (Builder $query) => $query->whereDoesntHaveDonations(),
+                    blank: fn (Builder $query) => $query,
+                )
 
         ];
     }
