@@ -15,6 +15,7 @@ use App\Notifications\Ngo\OrganizationCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -78,6 +79,7 @@ class RegisteredUserController extends Controller
                 $user->organization_id = $organization->id;
                 $user->save();
             }
+            Auth::login($user);
 
             return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
         } catch(\Throwable $th) {

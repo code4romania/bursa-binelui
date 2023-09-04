@@ -9,7 +9,9 @@ use App\Models\Organization;
 use App\Models\Project;
 use App\Policies\OrganizationPolicy;
 use App\Policies\ProjectPolicy;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -31,6 +33,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('view-project', function ($user) {
             return $user->isAdmin();
+        });
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new MailMessage)
+                ->subject(__('auth.mail.verify_email.subject'))
+                ->line(__('auth.mail.verify_email.line_1'))
+                ->action(__('auth.mail.verify_email.action'), $url);
         });
     }
 }
