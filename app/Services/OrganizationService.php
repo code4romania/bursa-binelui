@@ -16,12 +16,6 @@ class OrganizationService
         $key = $attributes->keys()->first();
         $value = $attributes->get($key);
 
-        if (! \in_array($key, $organization->requiresApproval)) {
-            $organization->update($attributes->all());
-
-            return;
-        }
-
         return match ($key) {
             'counties' => $organization->counties()
                 ->sync(collect($value)->pluck('id')),
@@ -34,7 +28,9 @@ class OrganizationService
 
             'statute' => static::saveStatue($organization, $value),
 
-            default => $organization->fill($attributes->all())->saveForApproval(),
+            default => \in_array($key, $organization->requiresApproval)
+                ? $organization->fill($attributes->all())->saveForApproval()
+                : $organization->update($attributes->all()),
         };
     }
 
