@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('source_of_information')->nullable();
             $table->timestamp('password_set_at')->nullable();
-            $table->foreignIdFor(Organization::class)->nullable()->constrained();
+            $table->foreignIdFor(Organization::class)->nullable()->constrained()->onDelete('cascade');
         });
     }
 
