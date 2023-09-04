@@ -53,14 +53,14 @@
             </h1>
 
             <div class="flex items-center gap-5 text-sm font-medium">
-                <div v-if="project.county" class="flex items-center gap-1">
-                    <Icon name="location" class="w-4 h-4 text-gray-500 shrink-0" />
+                <div v-if="project.county" class="flex items-center gap-1 truncate">
+                    <LocationMarkerIcon class="w-4 h-4 text-gray-500 shrink-0" />
                     <span class="text-gray-700" v-text="project.county" />
                 </div>
 
-                <div v-if="project.activity_domains" class="flex items-center gap-1">
-                    <Icon name="activity" class="w-4 h-4 text-gray-500 shrink-0" />
-                    <span class="text-gray-700 truncate">{{ project.activity_domains }}</span>
+                <div v-if="project.categories" class="flex items-center gap-1 truncate">
+                    <BookmarkIcon class="w-4 h-4 text-gray-500 shrink-0" />
+                    <span class="text-gray-700 truncate">{{ project.categories }}</span>
                 </div>
             </div>
 
@@ -169,6 +169,8 @@
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import ProjectTag from '@/Components/projects/Tag.vue';
+
+    import { BookmarkIcon, LocationMarkerIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({

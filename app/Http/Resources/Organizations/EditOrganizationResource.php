@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Organizations;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationResource extends JsonResource
+class EditOrganizationResource extends JsonResource
 {
     public static $wrap = null;
 
@@ -18,7 +18,7 @@ class OrganizationResource extends JsonResource
             'name' => $this->name,
             'cif' => $this->cif,
             'counties' => $this->counties->map->only('id', 'name'),
-            'activity_domains' => $this->activityDomains,
+            'activity_domains' => $this->activityDomains->map->only('id', 'name'),
             'logo' => $this->getFirstMediaUrl('logo', 'preview'),
             'statute_link' => $this->getFirstMediaUrl('statute'),
             'description' => $this->description,

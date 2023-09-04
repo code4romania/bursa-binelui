@@ -8,7 +8,8 @@ use App\Enums\OrganizationQuery;
 use App\Enums\OrganizationStatus;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Http\Resources\OrganizationCardsResource;
-use App\Http\Resources\OrganizationResource;
+use App\Http\Resources\Organizations\EditOrganizationResource;
+use App\Http\Resources\Organizations\ShowOrganizationResource;
 use App\Models\Activity;
 use App\Models\ActivityDomain;
 use App\Models\County;
@@ -67,7 +68,13 @@ class OrganizationController extends Controller
     {
         /* Return inertia page. */
         return Inertia::render('Public/Organizations/Organization', [
-            'organization' => $organization->loadMissing(['activityDomains', 'counties', 'projects', 'media']),
+            'organization' => new ShowOrganizationResource(
+                $organization->loadMissing([
+                    'activityDomains',
+                    'counties',
+                    'projects' => fn ($query) => $query->wherePublished(),
+                ]),
+            ),
         ]);
     }
 
@@ -93,7 +100,7 @@ class OrganizationController extends Controller
             ->values();
 
         return Inertia::render('AdminOng/Ong/EditOng', [
-            'organization' => new OrganizationResource($organization),
+            'organization' => new EditOrganizationResource($organization),
             'activity_domains' => $activityDomains,
             'counties' => $counties,
             'changes' => $changes,

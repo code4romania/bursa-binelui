@@ -1,41 +1,70 @@
 <template>
     <div>
-        <button
-            id="volunteer-active-modal"
-            @click="open = !open"
-            :class="triggerModalClasses"
-        >
+        <button id="volunteer-active-modal" @click="open = !open" :class="triggerModalClasses">
             {{ triggerModalText }}
         </button>
 
         <Teleport to="body" :show="open">
             <TransitionRoot as="template" :show="open">
                 <Dialog as="div" class="relative z-101" @close="open = false">
-                    <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+                    <TransitionChild
+                        as="template"
+                        enter="ease-out duration-300"
+                        enter-from="opacity-0"
+                        enter-to="opacity-100"
+                        leave="ease-in duration-200"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
+                    >
                         <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
                     </TransitionChild>
 
                     <div class="fixed inset-0 z-50 overflow-y-auto">
                         <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
-                            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                                <DialogPanel class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                            <TransitionChild
+                                as="template"
+                                enter="ease-out duration-300"
+                                enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enter-to="opacity-100 translate-y-0 sm:scale-100"
+                                leave="ease-in duration-200"
+                                leave-from="opacity-100 translate-y-0 sm:scale-100"
+                                leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            >
+                                <DialogPanel
+                                    class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+                                >
                                     <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
-                                        <button type="button" class="text-gray-400 bg-white rounded-md hover:text-gray-500" @click="open = false">
+                                        <button
+                                            type="button"
+                                            class="text-gray-400 bg-white rounded-md hover:text-gray-500"
+                                            @click="open = false"
+                                        >
                                             <span class="sr-only">Close</span>
-                                            <XMarkIcon class="w-6 h-6" aria-hidden="true" />
+                                            <XIcon class="w-6 h-6" aria-hidden="true" />
                                         </button>
                                     </div>
                                     <div class="sm:flex sm:items-start">
-
                                         <div class="w-full mt-6">
                                             <div>
-                                                <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('register_as_volunteer') }}</h3>
-                                                <h3 v-if="data.name" class="text-xl font-semibold text-center text-primary-500">{{ data.name }}</h3>
-                                                <p class="my-4 text-sm text-gray-500">{{ $t('voluntier_form_intro') }}</p>
-                                                <p v-if="$page.props.auth.user" class="my-4 text-sm text-gray-500">{{ $t('logged_as') }} {{ $page.props.auth.user.name }} ({{ $page.props.auth.user.email }})</p>
+                                                <h3 class="text-xl font-semibold text-center text-gray-800">
+                                                    {{ $t('register_as_volunteer') }}
+                                                </h3>
+                                                <h3
+                                                    v-if="data.name"
+                                                    class="text-xl font-semibold text-center text-primary-500"
+                                                >
+                                                    {{ data.name }}
+                                                </h3>
+                                                <p class="my-4 text-sm text-gray-500">
+                                                    {{ $t('voluntier_form_intro') }}
+                                                </p>
+                                                <p v-if="$page.props.auth.user" class="my-4 text-sm text-gray-500">
+                                                    {{ $t('logged_as') }} {{ $page.props.auth.user.name }} ({{
+                                                        $page.props.auth.user.email
+                                                    }})
+                                                </p>
                                             </div>
-                                            <form class="space-y-4" @submit.prevent="volunteerForm" >
-
+                                            <form class="space-y-4" @submit.prevent="volunteerForm">
                                                 <!-- Name -->
                                                 <Input
                                                     v-if="!$page.props.auth.user"
@@ -60,7 +89,7 @@
                                                     :error="form.errors.email"
                                                 />
 
-                                               <!-- Phone -->
+                                                <!-- Phone -->
                                                 <Input
                                                     v-if="!$page.props.auth.user"
                                                     class="w-full"
@@ -87,23 +116,27 @@
                                                 />
 
                                                 <!-- Confirm -->
-                                                <label
-                                                    v-if="!$page.props.auth.user"
-                                                    class="flex items-center"
-                                                >
-                                                    <Checkbox
-                                                        name="confirm"
-                                                        v-model:checked="form.terms"
-                                                    />
-                                                    <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('i_agree') }}</span>
-                                                    <Link :href="route('terms')" class="text-sm text-primary-500">{{ $t('terms_link') }}<span class="text-red-500">*</span></Link>
+                                                <label v-if="!$page.props.auth.user" class="flex items-center">
+                                                    <Checkbox name="confirm" v-model:checked="form.terms" />
+                                                    <span class="ml-2 mr-1 text-sm text-gray-700">{{
+                                                        $t('i_agree')
+                                                    }}</span>
+                                                    <Link :href="route('terms')" class="text-sm text-primary-500"
+                                                        >{{ $t('terms_link') }}<span class="text-red-500">*</span></Link
+                                                    >
 
                                                     <!-- Error -->
-                                                    <p v-show="form.errors.terms" class="mt-2 text-sm text-red-600">{{ form.errors.terms }}</p>
+                                                    <p v-show="form.errors.terms" class="mt-2 text-sm text-red-600">
+                                                        {{ form.errors.terms }}
+                                                    </p>
                                                 </label>
 
-                                                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert" v-show="successSubmit">
-                                                    <span class="font-medium">{{$t('volunteer_form_success')}}</span>
+                                                <div
+                                                    class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                                                    role="alert"
+                                                    v-show="successSubmit"
+                                                >
+                                                    <span class="font-medium">{{ $t('volunteer_form_success') }}</span>
                                                 </div>
                                                 <!-- Actions -->
                                                 <div class="w-full pt-6">
@@ -117,7 +150,9 @@
                                                     </PrimaryButton>
 
                                                     <div v-if="!$page.props.auth.user">
-                                                        <p class="py-1 text-sm font-medium text-center text-gray-900">{{ $t('or') }}</p>
+                                                        <p class="py-1 text-sm font-medium text-center text-gray-900">
+                                                            {{ $t('or') }}
+                                                        </p>
 
                                                         <Link
                                                             :href="route('login')"
@@ -126,12 +161,13 @@
                                                             {{ $t('login_bb') }}
                                                         </Link>
 
-                                                        <p class="pt-2 text-sm font-medium text-center text-gray-900">{{ $t('join_easy') }}</p>
+                                                        <p class="pt-2 text-sm font-medium text-center text-gray-900">
+                                                            {{ $t('join_easy') }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
-
                                     </div>
                                 </DialogPanel>
                             </TransitionChild>
@@ -141,10 +177,7 @@
             </TransitionRoot>
         </Teleport>
 
-        <Modal
-            id="project-expired"
-            class="hidden"
-        >
+        <Modal id="project-expired" class="hidden">
             <div class="w-full mt-6">
                 <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
                 <h3 class="text-xl font-semibold text-center text-primary-500">{{ $t('donate_to_other_projects') }}</h3>
@@ -164,11 +197,11 @@
     import { ref, computed } from 'vue';
 
     /** Import from inertia. */
-    import {  Link, useForm, usePage } from '@inertiajs/vue3';
+    import { Link, useForm, usePage } from '@inertiajs/vue3';
 
     /** Import plugins. */
     import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
-    import { XMarkIcon } from '@heroicons/vue/24/outline';
+    import { XIcon } from '@heroicons/vue/outline';
 
     /** Import components. */
     import Modal from '@/Components/modals/Modal.vue';
@@ -181,7 +214,7 @@
         triggerModalText: String,
         triggerModalClasses: String,
         data: [Object, Array, String, Number],
-        postUrl: String
+        postUrl: String,
     });
 
     /** Local data. */
@@ -196,7 +229,7 @@
     });
 
     /** Trigger modal */
-    const triggerClick = ((id) => document.getElementById(`${id}`).click());
+    const triggerClick = (id) => document.getElementById(`${id}`).click();
 
     /** Check donation period. */
     const projectExpired = computed(() => {
@@ -205,7 +238,7 @@
         }
 
         return false;
-    })
+    });
 
     let successSubmit = ref(false);
 
@@ -213,28 +246,26 @@
     const volunteerForm = () => {
         /** Check if project is active. */
         if (projectExpired.value) {
-            open.value = false
-            triggerClick('project-expired')
+            open.value = false;
+            triggerClick('project-expired');
 
             return;
         }
 
-
-        let user = (usePage().props?.auth && usePage().props?.auth?.user) ? usePage().props.auth.user : null
+        let user = usePage().props?.auth && usePage().props?.auth?.user ? usePage().props.auth.user : null;
 
         if (user) {
-            form.name = `${usePage().props.auth.user.name} `
-            form.email = usePage().props.auth.user.email
-            form.terms = true
+            form.name = `${usePage().props.auth.user.name} `;
+            form.email = usePage().props.auth.user.email;
+            form.terms = true;
         }
         form.post(props.postUrl, {
             onSuccess: () => {
                 successSubmit.value = true;
-
             },
             onError: (error) => {
                 console.log(error);
-            }
+            },
         });
     };
 </script>

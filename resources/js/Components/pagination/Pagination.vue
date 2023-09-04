@@ -7,7 +7,7 @@
                 :href="resource.links.prev"
                 class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:border-gray-300 hover:text-gray-700"
             >
-                <ArrowLongLeftIcon class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true" />
+                <ArrowNarrowLeftIcon class="w-5 h-5 mr-3 text-gray-400" aria-hidden="true" />
                 {{ $t('prev') }}
             </Link>
         </div>
@@ -37,7 +37,7 @@
                 class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:border-gray-300 hover:text-gray-700"
             >
                 {{ $t('next') }}
-                <ArrowLongRightIcon class="w-5 h-5 ml-3 text-gray-400" aria-hidden="true" />
+                <ArrowNarrowRightIcon class="w-5 h-5 ml-3 text-gray-400" aria-hidden="true" />
             </Link>
         </div>
     </nav>
@@ -50,7 +50,7 @@
     import { Link } from '@inertiajs/vue3';
 
     /** Import plugins. */
-    import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/vue/20/solid';
+    import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({

@@ -62,6 +62,8 @@
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Icon from '@/Components/Icon.vue';
 
+    import { BookmarkIcon } from '@heroicons/vue/solid';
+
     /** Component props. */
     const props = defineProps({
         data: Object,

@@ -1,5 +1,5 @@
 <template>
-    <footer class="bg-gray-800" aria-labelledby="footer-heading">
+    <footer class="mt-32 bg-gray-800">
         <!-- Alert -->
         <Alert
             class="fixed z-50 right-10 top-10 w-96"

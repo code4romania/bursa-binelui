@@ -25,7 +25,7 @@ class ProjectCardsResource extends JsonResource
                 'name' => $this->organization->name,
                 'id' => $this->organization->id,
             ],
-            'activity_domains' => 'Replace me', // $this->activityDomains->pluck('name')->join(', '),
+            'categories' => $this->categories->pluck('name')->join(', '),
             'donations' => [
                 'target' => money_format($this->target_budget),
                 'total' => money_format($this->total_donations),

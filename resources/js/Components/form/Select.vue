@@ -16,7 +16,7 @@
             </ComboboxButton>
 
             <ComboboxButton class="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
-                <ChevronUpDownIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
+                <SelectorIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>
 
             <ComboboxOptions
@@ -70,7 +70,7 @@
     import { computed, ref, watch } from 'vue';
 
     /** Import plugins. */
-    import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid';
+    import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid';
     import {
         Combobox,
         ComboboxButton,

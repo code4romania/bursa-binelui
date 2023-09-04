@@ -1,17 +1,30 @@
 <template>
     <transition name="fade">
-        <div v-if="show"  class="z-120" :class="['border-l-4 p-4', 'success' == type ? 'border-green-400 bg-green-50' : 'error' == type ? 'border-red-400 bg-red-50' : 'border-yellow-400 bg-yellow-50']">
+        <div
+            v-if="show"
+            class="z-120"
+            :class="[
+                'border-l-4 p-4',
+                'success' == type
+                    ? 'border-green-400 bg-green-50'
+                    : 'error' == type
+                    ? 'border-red-400 bg-red-50'
+                    : 'border-yellow-400 bg-yellow-50',
+            ]"
+        >
             <div class="flex">
-
                 <div class="flex-shrink-0">
-                    <ExclamationTriangleIcon v-if="'warning' == type" class="h-5 w-5 text-yellow-700" aria-hidden="true" />
-                    <CheckCircleIcon v-if="'success' == type" class="h-5 w-5 text-green-700" aria-hidden="true" />
-                    <XCircleIcon v-if="'error' == type" class="h-5 w-5 text-red-700" aria-hidden="true" />
+                    <ExclamationIcon v-if="'warning' == type" class="w-5 h-5 text-yellow-700" aria-hidden="true" />
+                    <CheckCircleIcon v-if="'success' == type" class="w-5 h-5 text-green-700" aria-hidden="true" />
+                    <XCircleIcon v-if="'error' == type" class="w-5 h-5 text-red-700" aria-hidden="true" />
                 </div>
 
                 <div class="ml-3">
                     <p
-                        :class="[`text-sm font-medium`, 'success' == type ? 'text-green-800' : 'error' == type ? 'text-red-800' : 'text-yellow-700']"
+                        :class="[
+                            `text-sm font-medium`,
+                            'success' == type ? 'text-green-800' : 'error' == type ? 'text-red-800' : 'text-yellow-700',
+                        ]"
                     >
                         {{ message }}
                     </p>
@@ -23,15 +36,15 @@
 
 <script setup>
     /** Import form vue. */
-    import { watchEffect, ref } from 'vue'
+    import { watchEffect, ref } from 'vue';
 
     /** Import plugins. */
-    import { ExclamationTriangleIcon, XCircleIcon, CheckCircleIcon } from '@heroicons/vue/20/solid';
+    import { ExclamationIcon, XCircleIcon, CheckCircleIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({
         type: [String, Array, Boolean],
-        message: String
+        message: String,
     });
 
     /** Local state. */
@@ -43,14 +56,14 @@
     /** Show alert card. */
     watchEffect(() => {
         if (props.message) {
-            show.value = true
+            show.value = true;
 
             setTimeout(() => {
-                show.value = false
-                emit('emptyFlash', '')
-            }, 3000)
+                show.value = false;
+                emit('emptyFlash', '');
+            }, 3000);
         }
-    })
+    });
 </script>
 
 <style scoped>
