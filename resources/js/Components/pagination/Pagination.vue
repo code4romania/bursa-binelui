@@ -54,10 +54,6 @@
 
     /** Component props. */
     const props = defineProps({
-        current_page: String,
-        links: Array,
-        prev: String,
-        next: String,
         resource: {
             type: Object,
             required: true,

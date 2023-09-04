@@ -28,14 +28,7 @@
             </ul>
 
             <!-- Pagination -->
-            <Pagination
-                v-if="list.links"
-                :currentPage="list.current_page"
-                :prev="list.links.prev"
-                :next="list.links.next"
-                :links="list.meta.links"
-                :resource="list"
-            />
+            <Pagination v-if="list.links" :resource="list" />
         </template>
 
         <div v-else class="mt-20 text-xl font-bold text-center text-gray-700 mb-9">

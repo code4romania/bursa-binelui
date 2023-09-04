@@ -115,12 +115,9 @@
                             ? ['ID', $t('ticket_subject'), $t('ticket_created_at')]
                             : ['ID', $t('ticket_subject'), $t('ticket_closed_at')]
                     "
-                    :currentPage="props.tickets.meta.current_page"
-                    :prev="props.tickets.links.prev"
-                    :next="props.tickets.links.next"
-                    :links="props.tickets.meta.links"
+                    :resource="tickets"
                 >
-                    <tr v-for="(ticket, index) in props.tickets.data" :key="index">
+                    <tr v-for="(ticket, index) in tickets.data" :key="index">
                         <td class="w-8 px-3 py-4 overflow-hidden text-sm text-right text-gray-500 text-ellipsis">
                             #{{ ticket.id }}
                         </td>

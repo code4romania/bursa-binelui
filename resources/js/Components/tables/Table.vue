@@ -6,7 +6,14 @@
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-cyan-900">
                             <tr>
-                                <th v-for="(column, index) in columns" :key="index" scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">{{ column }}</th>
+                                <th
+                                    v-for="(column, index) in columns"
+                                    :key="index"
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-white"
+                                >
+                                    {{ column }}
+                                </th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
                             </tr>
                         </thead>
@@ -17,14 +24,7 @@
                 </div>
 
                 <!-- Pagination -->
-                <Pagination
-                    class="mt-6"
-                    v-if="links"
-                    :currentPage="currentPage"
-                    :prev="prev"
-                    :next="next"
-                    :links="links"
-                />
+                <Pagination class="mt-6" v-if="resource.links" :resource="resource" />
             </div>
         </div>
     </div>
@@ -36,10 +36,7 @@
 
     /** Component props. */
     const props = defineProps({
-        columns:  Array,
-        currentPage: Number,
-        prev: String,
-        next: String,
-        links: Array
+        columns: Array,
+        resource: Object,
     });
 </script>

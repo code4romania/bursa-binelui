@@ -6,10 +6,12 @@ namespace App\Http\Controllers\Ngo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
+use App\Http\Resources\ProjectCardsResource;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Services\ProjectService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,13 +20,17 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projectStatus = $request->get('project_status');
-        $projects = Project::query()->with('organization')->where('organization_id', auth()->user()->organization_id);
-        if ($projectStatus) {
-            $projects = $projects->where('status', $projectStatus);
-        }
 
         return Inertia::render('AdminOng/Projects/Projects', [
-            'query' => $projects->paginate(16)->withQueryString(),
+            'query' => ProjectCardsResource::collection(
+                Project::query()
+                    ->where('organization_id', auth()->user()->organization_id)
+                    ->when($projectStatus, function (Builder $query, $projectStatus) {
+                        return $query->status($projectStatus);
+                    })
+                    ->paginate(16)
+                    ->withQueryString()
+            ),
             'projectStatus' => $projectStatus,
         ]);
     }

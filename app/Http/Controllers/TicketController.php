@@ -27,7 +27,7 @@ class TicketController extends Controller
                     )
                     ->orderBy('closed_at', 'desc')
                     ->orderBy('created_at', 'desc')
-                    ->paginate()
+                    ->get()
             ),
         ]);
     }

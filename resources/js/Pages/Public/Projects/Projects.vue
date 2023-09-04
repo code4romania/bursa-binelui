@@ -186,7 +186,7 @@
             filter.value.counties = filter.value.counties.map((county) => parseInt(county.id));
         }
 
-        return;
+        // return;
 
         router.visit(route('projects'), {
             method: 'get',
