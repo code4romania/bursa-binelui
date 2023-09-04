@@ -91,6 +91,9 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
+    /**
+     * @deprecated use `wherePublished` instead
+     */
     public function scopePublish(Builder $query): Builder
     {
         return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);

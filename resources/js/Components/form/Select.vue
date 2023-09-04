@@ -1,12 +1,14 @@
 <template>
-
     <Combobox class="z-100" as="div" v-model="selectedOption" v-bind="{ disabled: isDisabled }">
         <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
-            <ComboboxButton :class="[ isDisabled ? 'bg-gray-200' : 'bg-white', 'w-full rounded-md h-9 border-0  py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6']">
-                <ul
-                    class="flex gap-x-1"
-                >
+            <ComboboxButton
+                :class="[
+                    isDisabled ? 'bg-gray-200' : 'bg-white',
+                    'w-full rounded-md h-9 border-0  py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6',
+                ]"
+            >
+                <ul class="flex flex-wrap overflow-x-auto gap-x-1 whitespace-nowrap">
                     <li v-if="selectedOption">
                         {{ computedName(selectedOption) }}
                     </li>
@@ -28,17 +30,29 @@
                 </div>
 
                 <ComboboxOption
-                    v-for="option in selectOptions" :key="option.id"
+                    v-for="option in selectOptions"
+                    :key="option.id"
                     :value="option"
                     as="template"
                     v-slot="{ active, selected }"
                 >
-                    <li :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-primary-500 text-white' : 'text-gray-900']">
-                        <span :class="['block truncate', selected && 'font-semibold']" >
-                            {{ computedName(option)}}
+                    <li
+                        :class="[
+                            'relative cursor-default select-none py-2 pl-3 pr-9',
+                            active ? 'bg-primary-500 text-white' : 'text-gray-900',
+                        ]"
+                    >
+                        <span :class="['block truncate', selected && 'font-semibold']">
+                            {{ computedName(option) }}
                         </span>
 
-                        <span v-if="selected" :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-primary-500']">
+                        <span
+                            v-if="selected"
+                            :class="[
+                                'absolute inset-y-0 right-0 flex items-center pr-4',
+                                active ? 'text-white' : 'text-primary-500',
+                            ]"
+                        >
                             <CheckIcon class="w-5 h-5" aria-hidden="true" />
                         </span>
                     </li>
@@ -53,12 +67,19 @@
 
 <script setup>
     /** Import form vue. */
-    import {  computed, ref, watch } from 'vue';
+    import { computed, ref, watch } from 'vue';
 
     /** Import plugins. */
     import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid';
-    import { Combobox, ComboboxButton, ComboboxInput, ComboboxLabel, ComboboxOption, ComboboxOptions } from '@headlessui/vue';
-    import {useI18n} from "vue-i18n";
+    import {
+        Combobox,
+        ComboboxButton,
+        ComboboxInput,
+        ComboboxLabel,
+        ComboboxOption,
+        ComboboxOptions,
+    } from '@headlessui/vue';
+    import { useI18n } from 'vue-i18n';
 
     /** Component props. */
     const props = defineProps({
@@ -68,12 +89,12 @@
         error: String,
         isDisabled: {
             type: Boolean,
-            disabled: false
+            disabled: false,
         },
         useTranslation: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     });
     const { t } = useI18n();
 
@@ -88,33 +109,27 @@
 
     /** Option list. */
     const selectOptions = computed(() =>
-        query.value === '' ? props.options : props.options.filter((option) => {
-            return option.name.toLowerCase().includes(query.value.toLowerCase())
-        })
+        query.value === ''
+            ? props.options
+            : props.options.filter((option) => {
+                  return option.name.toLowerCase().includes(query.value.toLowerCase());
+              })
     );
 
     const computedName = (option) => {
-       let name = option.name ? option.name : option
+        let name = option.name ? option.name : option;
 
         if (props.useTranslation) {
-            return  t(name);
+            return t(name);
         }
         return name;
-    }
+    };
 
     /** Watch changes in selected options. */
     watch(selectedOption, (newVal, oldVal) => {
         if (newVal != oldVal) {
             emit('update:modelValue', selectedOption.value);
-            emit('selected', selectedOption.value)
+            emit('selected', selectedOption.value);
         }
-    })
+    });
 </script>
-
-<style scoped>
-    ul {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-</style>

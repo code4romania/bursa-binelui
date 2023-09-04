@@ -54,9 +54,9 @@
                 </Link>
             </h1>
 
-            <div class="flex items-center gap-5 text-base font-medium">
+            <div class="flex items-center gap-5 text-sm font-medium">
                 <div v-if="project.county" class="flex items-center gap-1">
-                    <SvgLoader name="location" class="w-4 h-4 text-gray-500 shrink-0" />
+                    <Icon name="location" class="w-4 h-4 text-gray-500 shrink-0" />
                     <span class="text-gray-700" v-text="project.county" />
                 </div>
 
@@ -167,6 +167,7 @@
 
     /** Import components. */
     import SvgLoader from '@/Components/SvgLoader.vue';
+    import Icon from '@/Components/Icon.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import Modal from '@/Components/modals/Modal.vue';

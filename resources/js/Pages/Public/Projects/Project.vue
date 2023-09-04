@@ -149,7 +149,7 @@
 
                     <div class="px-10 py-8 space-y-8 bg-gray-50">
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-primary-500" name="location" />
+                            <Icon class="w-5 h-5 mt-1 shrink-0 fill-primary-500" name="location" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">

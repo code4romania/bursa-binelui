@@ -5,16 +5,12 @@
         <template v-if="list.data?.length">
             <ul :class="[`${classes}`]" role="list">
                 <template v-for="item in list.data" :key="item.id">
-
                     <template v-if="'project' == type">
-                        <ProjectCard
-                            :project="item"
-                            :cardType="cardType"
-                        />
+                        <ProjectCard :project="item" :cardType="cardType" />
                     </template>
 
                     <template v-if="'ong' == type">
-                        <OngCard :data="item"/>
+                        <OngCard :data="item" />
                     </template>
 
                     <template v-if="'project-summary' == cardType">
@@ -35,16 +31,14 @@
             <Pagination
                 v-if="list.links"
                 :currentPage="list.current_page"
-                :prev="list.prev_page_url"
-                :next="list.next_page_url"
-                :links="list.links"
+                :prev="list.links.prev"
+                :next="list.links.next"
+                :links="list.meta.links"
+                :resource="list"
             />
         </template>
 
-        <div
-            v-else
-            class="mt-20 text-xl font-bold text-center text-gray-700 mb-9"
-        >
+        <div v-else class="mt-20 text-xl font-bold text-center text-gray-700 mb-9">
             {{ $t('no_data') }}
         </div>
     </div>
@@ -60,10 +54,10 @@
     import ChampionshipProject from '@/Components/cards/ChampionshipProject.vue';
 
     /** Component props. */
-   const props= defineProps({
+    const props = defineProps({
         type: String,
         list: Object,
         classes: String,
-        cardType: String
+        cardType: String,
     });
 </script>

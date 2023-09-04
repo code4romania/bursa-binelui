@@ -49,4 +49,9 @@ trait HasProjectStatus
     {
         $query->where('status', ProjectStatus::rejected);
     }
+
+    public function scoepWherePublished(Builder $query): Builder
+    {
+        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
+    }
 }

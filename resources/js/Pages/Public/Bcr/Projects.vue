@@ -3,12 +3,11 @@
         <!-- Inertia page head -->
         <Head :title="$t('projects_title')" />
 
-        <div class="p-9 mx-auto max-w-7xl mb-24">
-
+        <div class="mx-auto mb-24 p-9 max-w-7xl">
             <!-- Header -->
             <header class="flex items-center gap-4">
-                <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                    <SvgLoader class="shrink-0" name="list"/>
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                    <SvgLoader class="shrink-0" name="list" />
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('projects_title') }}</h2>
             </header>
@@ -16,8 +15,7 @@
             <!-- Filters -->
             <div class="lg:my-11">
                 <div class="flex w-full">
-                    <div class="xl:w-8/12 flex items-center gap-6">
-
+                    <div class="flex items-center gap-6 xl:w-8/12">
                         <!-- Search -->
                         <SearchFilter
                             v-model="filter.s"
@@ -27,19 +25,12 @@
                         />
 
                         <!-- Search action -->
-                        <SecondaryButton
-                            @click="filterProjects"
-                            class="py-2"
-                        >
+                        <SecondaryButton @click="filterProjects" class="py-2">
                             {{ $t('search') }}
                         </SecondaryButton>
 
                         <!-- Empty filters. -->
-                        <SecondaryButton
-                            v-if="hasValues"
-                            @click="emptyFilters"
-                            class="py-2 flex gap-2 items-center"
-                        >
+                        <SecondaryButton v-if="hasValues" @click="emptyFilters" class="flex items-center gap-2 py-2">
                             <SvgLoader name="close" />
                             {{ $t('empty_filters') }}
                         </SecondaryButton>
@@ -49,12 +40,12 @@
                     </div>
 
                     <!-- Tabs -->
-                    <div class="xl:w-4/12 flex justify-end gap-6">
+                    <div class="flex justify-end gap-6 xl:w-4/12">
                         <Link
                             :href="route('projects')"
                             class="flex items-center gap-x-4 bg-primary-500 hover:bg-primary-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
                         >
-                            <SvgLoader class="shrink-0" name="grid"/>
+                            <SvgLoader class="shrink-0" name="grid" />
                             {{ $t('projects_list') }}
                         </Link>
 
@@ -62,20 +53,14 @@
                             :href="route('projects')"
                             class="flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
                         >
-                            <SvgLoader class="shrink-0" name="location"/>
+                            <Icon class="w-5 h-5 shrink-0" name="location" />
                             {{ $t('projects_map') }}
                         </Link>
                     </div>
                 </div>
 
-                <div class="flex w-full justify-between gap-6 mt-6">
-
-                    <Select
-                        class="w-full"
-                        :label="$t('status')"
-                        v-model="filter.status"
-                        :options="statuses"
-                    />
+                <div class="flex justify-between w-full gap-6 mt-6">
+                    <Select class="w-full" :label="$t('status')" v-model="filter.status" :options="statuses" />
 
                     <MultiSelectObjectFilter
                         class="w-full"
@@ -86,13 +71,7 @@
                     />
 
                     <!-- Date -->
-                    <Input
-                        class="w-full"
-                        :label="$t('period')"
-                        color="gray-700"
-                        id="project-name"
-                        type="date"
-                    />
+                    <Input class="w-full" :label="$t('period')" color="gray-700" id="project-name" type="date" />
                 </div>
             </div>
 
@@ -122,6 +101,7 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Sort from '@/Components/filters/Sort.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
+    import Icon from '@/Components/Icon.vue';
     import Input from '@/Components/form/Input.vue';
     import Select from '@/Components/form/Select.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
@@ -138,7 +118,7 @@
         ad: '',
         c: '',
         s: '',
-        status:''
+        status: '',
     });
 
     /** Statuses */
@@ -147,168 +127,168 @@
 
     /** Filter projects. */
     const filterProjects = () => {
-        if (Object.values(filter.value).every(value => value === null)) {
-            hasValues.value = false
+        if (Object.values(filter.value).every((value) => value === null)) {
+            hasValues.value = false;
         } else {
-            hasValues.value = true
+            hasValues.value = true;
         }
     };
 
     /** Empty filters. */
     const emptyFilters = () => {
-        router.visit(route('projects'))
+        router.visit(route('projects'));
     };
 
     const props = {
-        "activity_domains": [
-            "Protecția mediului",
-            "Educație",
-            "Sănătate",
-            "Drepturile omului",
-            "Dezvoltare rurală",
-            "Sprijin dizabilități",
-            "Egalitate de gen",
-            "Reducerea sărăciei",
-            "Integrarea minorităților",
-            "Sprijin tineret",
-            "Asistență vârstnici",
-            "Patrimoniu cultural",
-            "Artă și cultură",
-            "Sport și recreere",
-            "Dezvoltare comunitară",
-            "Prevenire violență domestică",
-            "Ajutor imigranți/refugiați",
-            "Combatere trafic uman",
-            "Bună guvernare",
-            "Protecția animalelor",
-            "Prevenire dependență droguri",
-            "Advocacy politici publice",
-            "Anti-discriminare",
-            "Îmbunătățire infrastructură",
-            "Antreprenoriat social",
-            "Gestionare dezastre",
-            "Drepturile consumatorilor",
-            "Sprijin familie",
-            "Promovare voluntariat",
-            "Asistență juridică",
-            "Protecția vieții private",
-            "Combatere corupție",
-            "Sănătate mintală",
-            "Drepturile animalelor",
-            "Cercetare științifică",
-            "Dezvoltare durabilă",
-            "Securitate alimentară",
-            "Control boli infecțioase",
-            "Sprijin veterani",
-            "Dezvoltare regională/internațională"
+        activity_domains: [
+            'Protecția mediului',
+            'Educație',
+            'Sănătate',
+            'Drepturile omului',
+            'Dezvoltare rurală',
+            'Sprijin dizabilități',
+            'Egalitate de gen',
+            'Reducerea sărăciei',
+            'Integrarea minorităților',
+            'Sprijin tineret',
+            'Asistență vârstnici',
+            'Patrimoniu cultural',
+            'Artă și cultură',
+            'Sport și recreere',
+            'Dezvoltare comunitară',
+            'Prevenire violență domestică',
+            'Ajutor imigranți/refugiați',
+            'Combatere trafic uman',
+            'Bună guvernare',
+            'Protecția animalelor',
+            'Prevenire dependență droguri',
+            'Advocacy politici publice',
+            'Anti-discriminare',
+            'Îmbunătățire infrastructură',
+            'Antreprenoriat social',
+            'Gestionare dezastre',
+            'Drepturile consumatorilor',
+            'Sprijin familie',
+            'Promovare voluntariat',
+            'Asistență juridică',
+            'Protecția vieții private',
+            'Combatere corupție',
+            'Sănătate mintală',
+            'Drepturile animalelor',
+            'Cercetare științifică',
+            'Dezvoltare durabilă',
+            'Securitate alimentară',
+            'Control boli infecțioase',
+            'Sprijin veterani',
+            'Dezvoltare regională/internațională',
         ],
-        "cities": [
-        {
-            "id": 88653,
-            "name": "Bretea Română, Hunedoara"
-        },
-        {
-            "id": 117248,
-            "name": "Periș, Mureș"
-        },
-        {
-            "id": 65057,
-            "name": "Zăbala, Covasna"
-        },
-        {
-            "id": 76335,
-            "name": "Ijdileni, Galați"
-        },
-        {
-            "id": 68002,
-            "name": "Mănești, Dâmbovița"
-        },
-        {
-            "id": 87665,
-            "name": "Oraș Simeria, Hunedoara"
-        },
-        {
-            "id": 110964,
-            "name": "Crivina, Mehedinți"
-        },
-        {
-            "id": 95836,
-            "name": "Mădârjești, Iași"
-        },
-        {
-            "id": 70478,
-            "name": "Răcarii De Sus, Dolj"
-        },
-        {
-            "id": 21793,
-            "name": "Florești, Bacău"
-        },
-        {
-            "id": 160555,
-            "name": "Florești, Tulcea"
-        },
-        {
-            "id": 27855,
-            "name": "Budureasa, Bihor"
-        },
-        {
-            "id": 138191,
-            "name": "Micula Nouă, Satu Mare"
-        },
-        {
-            "id": 141731,
-            "name": "Ip, Sălaj"
-        },
-        {
-            "id": 47710,
-            "name": "Plavățu, Buzău"
-        },
-        {
-            "id": 9351,
-            "name": "Sânleani, Arad"
-        },
-        {
-            "id": 38134,
-            "name": "Cucorăni, Botoșani"
-        },
-        {
-            "id": 91624,
-            "name": "Totești, Hunedoara"
-        },
-        {
-            "id": 168586,
-            "name": "Bârzești, Vâlcea"
-        },
-        {
-            "id": 113126,
-            "name": "Răiculești, Mehedinți"
-        }
-        ],
-        "query": {
-        "current_page": 1,
-        "data": projects,
-        "first_page_url": "http://bursabinelui.test/proiecte?page=1",
-        "from": 1,
-        "last_page": 2,
-        "last_page_url": "http://bursabinelui.test/proiecte?page=2",
-        "links": [
+        cities: [
             {
-            "url": "http://bursabinelui.test/proiecte?page=1",
-            "label": "1",
-            "active": true
+                id: 88653,
+                name: 'Bretea Română, Hunedoara',
             },
             {
-            "url": "http://bursabinelui.test/proiecte?page=2",
-            "label": "2",
-            "active": false
-            }
+                id: 117248,
+                name: 'Periș, Mureș',
+            },
+            {
+                id: 65057,
+                name: 'Zăbala, Covasna',
+            },
+            {
+                id: 76335,
+                name: 'Ijdileni, Galați',
+            },
+            {
+                id: 68002,
+                name: 'Mănești, Dâmbovița',
+            },
+            {
+                id: 87665,
+                name: 'Oraș Simeria, Hunedoara',
+            },
+            {
+                id: 110964,
+                name: 'Crivina, Mehedinți',
+            },
+            {
+                id: 95836,
+                name: 'Mădârjești, Iași',
+            },
+            {
+                id: 70478,
+                name: 'Răcarii De Sus, Dolj',
+            },
+            {
+                id: 21793,
+                name: 'Florești, Bacău',
+            },
+            {
+                id: 160555,
+                name: 'Florești, Tulcea',
+            },
+            {
+                id: 27855,
+                name: 'Budureasa, Bihor',
+            },
+            {
+                id: 138191,
+                name: 'Micula Nouă, Satu Mare',
+            },
+            {
+                id: 141731,
+                name: 'Ip, Sălaj',
+            },
+            {
+                id: 47710,
+                name: 'Plavățu, Buzău',
+            },
+            {
+                id: 9351,
+                name: 'Sânleani, Arad',
+            },
+            {
+                id: 38134,
+                name: 'Cucorăni, Botoșani',
+            },
+            {
+                id: 91624,
+                name: 'Totești, Hunedoara',
+            },
+            {
+                id: 168586,
+                name: 'Bârzești, Vâlcea',
+            },
+            {
+                id: 113126,
+                name: 'Răiculești, Mehedinți',
+            },
         ],
-        "next_page_url": "http://bursabinelui.test/proiecte?page=2",
-        "path": "http://bursabinelui.test/proiecte",
-        "per_page": 15,
-        "prev_page_url": null,
-        "to": 15,
-        "total": 20
-        }
-    }
+        query: {
+            current_page: 1,
+            data: projects,
+            first_page_url: 'http://bursabinelui.test/proiecte?page=1',
+            from: 1,
+            last_page: 2,
+            last_page_url: 'http://bursabinelui.test/proiecte?page=2',
+            links: [
+                {
+                    url: 'http://bursabinelui.test/proiecte?page=1',
+                    label: '1',
+                    active: true,
+                },
+                {
+                    url: 'http://bursabinelui.test/proiecte?page=2',
+                    label: '2',
+                    active: false,
+                },
+            ],
+            next_page_url: 'http://bursabinelui.test/proiecte?page=2',
+            path: 'http://bursabinelui.test/proiecte',
+            per_page: 15,
+            prev_page_url: null,
+            to: 15,
+            total: 20,
+        },
+    };
 </script>

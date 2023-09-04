@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
+use App\Http\Resources\ProjectCardsResource;
 use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;
@@ -17,16 +18,20 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::publish();
+        $projects = Project::query()
+            ->wherePublished();
+
         /* Check if we have filters by activity domains. */
         if ($request->query('c')) {
             $projects->whereHas('counties', function ($query) use ($request) {
                 $query->whereIn('counties.id', $request->query('c'));
             });
         }
-        if ($request->query('status')) {
-            $projects->whereIn('status', $request->query('status'));
-        }
+
+        // TODO: fix
+        // if ($request->query('status')) {
+        //     $projects->whereIn('status', $request->query('status'));
+        // }
 
         if ($request->query('category')) {
             $projects->whereIn('category', $request->query('category'));
@@ -39,12 +44,13 @@ class ProjectController extends Controller
             $projects->where('end', '<=', str_replace('.', '-', $date[1]));
         }
 
-        $counties = County::get(['name', 'id']);
-
         return Inertia::render('Public/Projects/Projects', [
-            'query' => $projects->paginate()->withQueryString(),
-            'counties' => $counties,
-            'categories' =>  ActivityDomain::all(),
+            'query' => ProjectCardsResource::collection(
+                $projects->paginate()
+                    ->withQueryString()
+            ),
+            'counties' => County::all(['name', 'id']),
+            'categories' => ActivityDomain::all(),
         ]);
     }
 
@@ -81,7 +87,7 @@ class ProjectController extends Controller
             'status' => EuPlatescStatus::in_progress->value,
             'card_status' => null,
             'card_holder_status_message' => null,
-            'approval_date'=> null,
+            'approval_date' => null,
             'charge_date' => null,
             'updated_without_correct_e_pid' => false,
         ]);
