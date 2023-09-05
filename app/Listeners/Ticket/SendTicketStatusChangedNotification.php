@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Listeners;
+namespace App\Listeners\Ticket;
 
-use App\Events\TicketUpdated;
+use App\Events\Ticket\TicketUpdated;
 use App\Models\User;
 use App\Notifications\Admin;
 use App\Notifications\Ngo;

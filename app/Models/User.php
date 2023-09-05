@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
- use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\MustSetInitialPassword;
+use App\Events\User\UserDeleting;
 use App\Traits\HasRole;
 use Filament\Models\Contracts\FilamentUser;
- use Illuminate\Database\Eloquent\Builder;
- use Illuminate\Database\Eloquent\Factories\HasFactory;
- use Illuminate\Database\Eloquent\Prunable;
- use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,6 +62,10 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dispatchesEvents = [
+        'deleting' => UserDeleting::class,
+    ];
+
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class)
@@ -80,13 +85,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function canAccessFilament(): bool
     {
-        return  $this->isBBAdmin() || $this->isBBManager();
+        return $this->isBBAdmin() || $this->isBBManager();
     }
 
     public function getFilamentName(): string
     {
         return "{$this->name}";
     }
+
     public function prunable(): Builder
     {
         return static::whereNull('email_verified_at')->where('created_at', '<=', now()->subHours(48));

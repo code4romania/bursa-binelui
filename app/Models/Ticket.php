@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Events\TicketCreated;
-use App\Events\TicketUpdated;
+use App\Events\Ticket\TicketCreated;
+use App\Events\Ticket\TicketUpdated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

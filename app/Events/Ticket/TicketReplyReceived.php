@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\Events\Ticket;
 
 use App\Models\TicketMessage;
 use Illuminate\Broadcasting\InteractsWithSockets;
