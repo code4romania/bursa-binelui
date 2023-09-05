@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Organization\SendOrganizationForApproval;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
@@ -23,6 +24,9 @@ class VerifyEmailController extends Controller
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
+            if ($request->user()->isNgoAdmin()) {
+                event(new SendOrganizationForApproval($request->user()->load('organization')->organization));
+            }
         }
 
         return redirect()->intended(RouteServiceProvider::HOME . '?verified=1');

@@ -33,8 +33,8 @@ class CreateUser extends CreateRecord
                     ->label(__('user.role'))
                     ->options(
                         collect(
-                        UserRole::options()
-                    )->only(
+                            UserRole::options()
+                        )->only(
                             [
                                 UserRole::bb_admin->value,
                                 UserRole::bb_manager->value,

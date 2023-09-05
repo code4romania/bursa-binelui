@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Events\User;
+namespace App\Events\Organization;
 
-use App\Models\User;
+use App\Models\Organization;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserDeleting
+class SendOrganizationForApproval
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
-    public User $user;
+    public Organization $organization;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user)
+    public function __construct(Organization $organization)
     {
-        $this->user = $user;
+        $this->organization = $organization;
     }
 }
