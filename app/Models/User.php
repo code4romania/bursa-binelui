@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\MustSetInitialPassword;
+use App\Enums\UserRole;
 use App\Events\User\UserDeleting;
 use App\Traits\HasRole;
 use Filament\Models\Contracts\FilamentUser;
@@ -95,6 +96,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function prunable(): Builder
     {
-        return static::whereNull('email_verified_at')->where('created_at', '<=', now()->subHours(48));
+        return static::query()
+            ->with('organization:id,name')
+            ->where('created_at', '<=', now()->subHours(48))
+            ->whereNotIn('role', [UserRole::bb_admin, UserRole::bb_manager])
+            ->whereNull('email_verified_at')
+            ->whereNull('password_set_at');
     }
 }

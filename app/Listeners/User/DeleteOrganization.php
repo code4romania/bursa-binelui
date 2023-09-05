@@ -7,18 +7,25 @@ namespace App\Listeners\User;
 use App\Events\User\UserDeleting;
 use Illuminate\Support\Facades\Log;
 
-class UserDeletingListener
+class DeleteOrganization
 {
     /**
      * Handle the event.
      */
     public function handle(UserDeleting $event): void
     {
-        $user = $event->user->loadMissing('organization');
-        Log::info('UserDeletingListener', [
-            'user' => $user->id,
+        if (
+            ! $event->user->isNgoAdmin() ||
+            $event->user->organization->users()->count() > 1
+        ) {
+            return;
+        }
+
+        Log::info('DeleteOrganization', [
+            'user' => $event->user->id,
             'organization' => $event->user->organization->id,
         ]);
-        $user->organization->delete();
+
+        $event->user->organization->delete();
     }
 }

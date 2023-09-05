@@ -10,7 +10,6 @@ use App\Filament\Resources\OrganizationResource\Actions\Tables\ExportAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -120,8 +119,7 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->label(__('organization.filters.accepts_volunteers'))
                 ->queries(
                     true: fn (Builder $query) => $query->whereAcceptsVolunteers(),
-                    false: fn (Builder $query) => $query->whereDoesntAcceptsVolunteers(),
-                    blank: fn (Builder $query) => $query,
+                    false: fn (Builder $query) => $query->whereDoesntAcceptVolunteers(),
                 ),
 
             TernaryFilter::make('has_volunteers')
@@ -129,7 +127,6 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->queries(
                     true: fn (Builder $query) => $query->whereHasVolunteers(),
                     false: fn (Builder $query) => $query->whereDoesntHaveVolunteers(),
-                    blank: fn (Builder $query) => $query,
                 ),
 
             TernaryFilter::make('has_projects')
@@ -137,7 +134,6 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->queries(
                     true: fn (Builder $query) => $query->whereHasProjects(),
                     false: fn (Builder $query) => $query->whereDoesntHaveProjects(),
-                    blank: fn (Builder $query) => $query,
                 ),
 
             TernaryFilter::make('has_active_projects')
@@ -145,7 +141,6 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->queries(
                     true: fn (Builder $query) => $query->whereHasActiveProjects(),
                     false: fn (Builder $query) => $query->whereDoesntHaveActiveProjects(),
-                    blank: fn (Builder $query) => $query,
                 ),
 
             TernaryFilter::make('has_eu_platesc')
@@ -153,7 +148,6 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->queries(
                     true: fn (Builder $query) => $query->whereHasEuPlatesc(),
                     false: fn (Builder $query) => $query->whereDoesntHaveEuPlatesc(),
-                    blank: fn (Builder $query) => $query,
                 ),
 
             TernaryFilter::make('has_donations')
@@ -161,13 +155,8 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                 ->queries(
                     true: fn (Builder $query) => $query->whereHasDonations(),
                     false: fn (Builder $query) => $query->whereDoesntHaveDonations(),
-                    blank: fn (Builder $query) => $query,
                 ),
 
         ];
     }
-//    protected function getTableFiltersLayout(): ?string
-//    {
-//        return  Layout::AboveContent;
-//    }
 }

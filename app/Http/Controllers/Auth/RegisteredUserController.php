@@ -59,6 +59,7 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($user['password']),
                 'role' => $data['type'],
             ]);
+
             event(new Registered($user));
 
             if ($data['type'] == 'ngo-admin') {
@@ -74,9 +75,11 @@ class RegisteredUserController extends Controller
                 $user->organization_id = $organization->id;
                 $user->save();
             }
+
             Auth::login($user);
 
-            return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
+            return redirect()->route('register')
+                ->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
         } catch(\Throwable $th) {
             Log::log('error', $th->getMessage());
 

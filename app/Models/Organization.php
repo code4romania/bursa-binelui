@@ -143,7 +143,7 @@ class Organization extends Model implements HasMedia
         return $query->where('accepts_volunteers', true);
     }
 
-    public function scopeWhereDoesntAcceptsVolunteers(Builder $query): Builder
+    public function scopeWhereDoesntAcceptVolunteers(Builder $query): Builder
     {
         return $query->where('accepts_volunteers', false);
     }
@@ -234,7 +234,7 @@ class Organization extends Model implements HasMedia
     public function markAsPending(): bool
     {
         return $this->update([
-            'status' => OrganizationStatus::pending
+            'status' => OrganizationStatus::pending,
         ]);
     }
 }
