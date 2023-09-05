@@ -2,33 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Listeners;
+namespace App\Listeners\Ticket;
 
-use App\Events\TicketCreated;
+use App\Events\Ticket\TicketReplyReceived;
 use App\Models\User;
 use App\Notifications\Admin;
 use App\Notifications\Ngo;
 use Illuminate\Support\Facades\Notification;
 
-class SendTicketCreatedNotification
+class SendTicketReplyReceivedNotification
 {
     /**
      * Handle the event.
      */
-    public function handle(TicketCreated $event): void
+    public function handle(TicketReplyReceived $event): void
     {
         Notification::send(
             User::query()
                 ->onlyBBAdmins()
                 ->get(),
-            new Admin\TicketCreatedNotification($event->ticket)
+            new Admin\TicketReceivedReplyNotification($event->message)
         );
 
         Notification::send(
             User::query()
-                ->onlyNGOAdmins($event->ticket->organization)
+                ->onlyNGOAdmins($event->message->ticket->organization)
                 ->get(),
-            new Ngo\TicketCreatedNotification($event->ticket)
+            new Ngo\TicketReceivedReplyNotification($event->message)
         );
     }
 }

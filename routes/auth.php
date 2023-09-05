@@ -39,10 +39,16 @@ Route::middleware(config('filament.middleware.base'))
 Route::get('ngo/welcome/{user}', [PasswordController::class, 'setInitialPassword'])->name('ngo.user.welcome');
 Route::post('ngo/welcome/{user}', [PasswordController::class, 'storeInitialPassword'])->name('ngo.user.welcome.store');
 
+
+
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+});
+
+Route::middleware(['auth','verified'])->group(function () {
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
@@ -50,5 +56,4 @@ Route::middleware('auth')->group(function () {
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });

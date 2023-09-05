@@ -143,9 +143,19 @@ class Organization extends Model implements HasMedia
         return $query->where('accepts_volunteers', true);
     }
 
+    public function scopeWhereDoesntAcceptsVolunteers(Builder $query): Builder
+    {
+        return $query->where('accepts_volunteers', false);
+    }
+
     public function scopeWhereHasVolunteers(Builder $query): Builder
     {
         return $query->whereHas('volunteers');
+    }
+
+    public function scopeWhereDoesntHaveVolunteers(Builder $query): Builder
+    {
+        return $query->whereDoesntHave('volunteers');
     }
 
     public function scopeWhereHasProjects(Builder $query): Builder
@@ -153,20 +163,42 @@ class Organization extends Model implements HasMedia
         return $query->whereHas('projects');
     }
 
+    public function scopeWhereDoesntHaveProjects(Builder $query): Builder
+    {
+        return $query->whereDoesntHave('projects');
+    }
+
+
     public function scopeWhereHasActiveProjects(Builder $query): Builder
     {
         return $query->whereRelation('projects', 'status', ProjectStatus::active);
     }
+
+    public function scopeWhereDoesntHaveActiveProjects(Builder $query): Builder
+    {
+        return $query->whereRelation('projects', 'status', '!=', ProjectStatus::active);
+    }
+
 
     public function scopeWhereHasEuPlatesc(Builder $query): Builder
     {
         return $query->whereNotNull('eu_platesc_merchant_id')
             ->whereNotNull('eu_platesc_private_key');
     }
+    public function scopeWhereDoesntHaveEuPlatesc(Builder $query): Builder
+    {
+        return $query->whereNull('eu_platesc_merchant_id')
+            ->orWhereNull('eu_platesc_private_key');
+    }
 
     public function scopeWhereHasDonations(Builder $query): Builder
     {
         return $query->whereHas('projects.donations');
+    }
+
+    public function scopeWhereDoesntHaveDonations(Builder $query): Builder
+    {
+        return $query->whereDoesntHave('projects.donations');
     }
 
     public function getAdministrators(): Collection

@@ -78,9 +78,9 @@ class DatabaseSeeder extends Seeder
                     ->count(10)
                     ->hasVolunteers(10)
             )
-//            ->has(
-////                Ticket::factory()
-//            )
+            ->has(
+                Ticket::factory()
+            )
             ->create();
 
         Badge::factory()
