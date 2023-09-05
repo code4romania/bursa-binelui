@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 return[
 
+    'label'=>[
+        'singular'=>'Tichet',
+        'plural'=>'Tichete',
+    ],
+
     'closed_at' => 'Închis la data',
     'date' => 'Dată',
     'message' => 'Mesaj',
+    'opened_by' => 'Deschis de',
     'organization' => 'Organizație',
     'subject' => 'Subiect',
     'status' => 'Status',

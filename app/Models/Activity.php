@@ -41,6 +41,26 @@ class Activity extends BaseActivity
             });
     }
 
+    public function scopeWherePending(Builder $query): Builder
+    {
+        return $query->inLog('pending')
+            ->whereNull('approved_at')
+            ->whereNull('rejected_at');
+    }
+
+    public function scopePendingChangesFor(Builder $query, Model $subject, array $keys = []): Builder
+    {
+        return $query->wherePending()
+            ->forSubject($subject)
+            ->when(filled($keys), function (Builder $query) use ($keys) {
+                $query->where(function (Builder $query) use ($keys) {
+                    foreach ($keys as $key) {
+                        $query->orWhereJsonContainsKey("properties->{$key}");
+                    }
+                });
+            });
+    }
+
     public function getChangedFieldAttribute(): ?string
     {
         return $this->properties->keys()->first();
@@ -98,21 +118,6 @@ class Activity extends BaseActivity
     public function isRejected(): bool
     {
         return null !== $this->rejected_at;
-    }
-
-    public function scopePendingChangesFor(Builder $query, Model $subject, array $keys = []): Builder
-    {
-        return $query->inLog('pending')
-            ->forSubject($subject)
-            ->whereNull('approved_at')
-            ->whereNull('rejected_at')
-            ->when(filled($keys), function (Builder $query) use ($keys) {
-                $query->where(function (Builder $query) use ($keys) {
-                    foreach ($keys as $key) {
-                        $query->orWhereJsonContainsKey("properties->{$key}");
-                    }
-                });
-            });
     }
 
     public function approve(): void

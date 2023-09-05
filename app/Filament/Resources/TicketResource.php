@@ -45,6 +45,16 @@ class TicketResource extends Resource
                     ->inlineLabel()
                     ->columnSpanFull(),
 
+                Value::make('user.name')
+                    ->label(__('ticket.opened_by'))
+                    ->inlineLabel()
+                    ->columnSpanFull(),
+
+                Value::make('organization.name')
+                    ->label(__('ticket.organization'))
+                    ->inlineLabel()
+                    ->columnSpanFull(),
+
                 Value::make('closed_at')
                     ->visible(fn (Ticket $record) => ! $record->isOpen())
                     ->label(__('ticket.closed_at'))

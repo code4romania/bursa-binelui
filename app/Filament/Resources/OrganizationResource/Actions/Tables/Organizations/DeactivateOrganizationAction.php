@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Actions\Tables\Organizations;
 
 use App\Models\Organization;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\Action;
+use Livewire\Component;
 
 class DeactivateOrganizationAction extends Action
 {
@@ -34,10 +36,20 @@ class DeactivateOrganizationAction extends Action
             ])
         );
 
+        $this->form([
+            Textarea::make('reason')
+                ->label(__('organization.deactivate_modal.reason'))
+                ->required(),
+        ]);
+
         $this->modalButton(__('organization.actions.deactivate'));
 
-        $this->action(function (Organization $record) {
-            $record->markAsRejected();
+        $this->action(function (Organization $record, array $data) {
+            $reason = strip_tags($data['reason']);
+
+            $record->markAsRejected($reason);
         });
+
+        $this->after(fn (Component $livewire) => $livewire->emit('refreshRejectedOrganizationsWidget'));
     }
 }
