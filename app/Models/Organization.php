@@ -230,4 +230,11 @@ class Organization extends Model implements HasMedia
             'status_updated_at' => $this->freshTimestamp(),
         ]);
     }
+
+    public function markAsPending(): bool
+    {
+        return $this->update([
+            'status' => OrganizationStatus::pending
+        ]);
+    }
 }
