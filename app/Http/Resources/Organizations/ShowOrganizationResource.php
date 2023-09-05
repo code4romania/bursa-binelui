@@ -18,7 +18,7 @@ class ShowOrganizationResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'counties' => $this->counties->map->only('id', 'name'),
+            'location' => $this->counties->pluck('name')->join(', '),
             'activity_domains' => $this->activityDomains->pluck('name')->join(', '),
             'logo' => $this->getFirstMediaUrl('logo', 'preview'),
             'description' => $this->description,

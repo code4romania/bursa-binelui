@@ -55,7 +55,7 @@
     import { ref, watch, onMounted } from 'vue';
 
     /** Import from inertia. */
-    import { Head, router } from '@inertiajs/vue3';
+    import { Head, router, usePage } from '@inertiajs/vue3';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -76,7 +76,6 @@
 
     /** Active filter state. */
     const hasValues = ref(false);
-    const showFilters = ref(false);
 
     /** Filter values. */
     const filter = ref({
@@ -87,43 +86,27 @@
 
     /** Filter organizations. */
     const filterOrganizations = () => {
-        if (0 < filter.value.ad.length) {
-            filter.value.ad = filter.value.ad.map((domain) => domain.id);
+        let query = {};
+
+        if (filter.value.ad.length) {
+            query.ad = filter.value.ad.map((domain) => domain.id).join(',');
         }
 
-        if (0 < filter.value.c.length) {
-            filter.value.c = filter.value.c.map((county) => county.id);
+        if (filter.value.c.length) {
+            query.c = filter.value.c.map((domain) => domain.id).join(',');
         }
 
-        router.visit(route('organizations'), {
-            method: 'get',
-            data: filter.value,
-            preserveState: true,
-            onSuccess: (data) => {
-                if (0 < filter.value.ad.length) {
-                    filter.value.ad = props.activity_domains.filter((domain) =>
-                        filter.value.ad.includes(parseInt(domain.id))
-                    );
-                }
+        if (filter.value.s.length) {
+            query.s = filter.value.s;
+        }
 
-                if (0 < filter.value.c.length) {
-                    filter.value.c = props.counties.map((county) => filter.value.c.includes(parseInt(county.id)));
-                }
-
-                if (Object.values(data.props.request).every((value) => value === null)) {
-                    hasValues.value = false;
-                    showFilters.value = false;
-                } else {
-                    hasValues.value = true;
-                    showFilters.value = true;
-                }
-            },
+        router.get(route('organizations'), {
+            filter: query,
         });
     };
 
     /** Empty filters. */
     const emptyFilters = () => {
         router.visit(route('organizations'));
-        showFilters.value = false;
     };
 </script>

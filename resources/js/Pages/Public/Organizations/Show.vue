@@ -9,16 +9,18 @@
                 <div class="flex flex-col justify-center w-full lg:w-6/12 xl:pr-6">
                     <div class="py-4 mr-6 bg-white border-b border-gray-200">
                         <div class="flex items-center gap-4">
-                            <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
-                                <SvgLoader class="shrink-0 fill-primary-500 stroke-primary-500" name="global" />
-                            </div>
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">
-                                {{ organization.counties.join(', ') }}
-                            </h3>
+                            <GlobeAltIcon
+                                class="flex items-center justify-center w-10 h-10 p-2 text-white rounded-lg bg-primary-500 shrink-0"
+                            />
+
+                            <span
+                                class="text-base font-medium leading-6 text-gray-900"
+                                v-text="organization.location"
+                            />
                         </div>
                     </div>
 
-                    <h1 class="py-12 text-6xl font-extrabold text-gray-900">{{ organization.name }}</h1>
+                    <h1 class="py-12 text-6xl font-extrabold text-gray-900" v-text="organization.name" />
 
                     <div class="flex items-center gap-4">
                         <Link
@@ -174,7 +176,7 @@
     import SharePage from '@/Components/SharePage.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
 
-    import { ChartBarIcon } from '@heroicons/vue/outline';
+    import { ChartBarIcon, GlobeAltIcon } from '@heroicons/vue/outline';
 
     /** Page props. */
     const props = defineProps({

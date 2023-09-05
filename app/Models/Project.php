@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasCounties;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -25,6 +27,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Project extends Model implements HasMedia
 {
     use HasFactory;
+    use HasCounties;
     use InteractsWithMedia;
     use HasProjectStatus;
     use LogsActivity;
@@ -65,12 +68,17 @@ class Project extends Model implements HasMedia
         'categories',
     ];
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+        $this->addMediaCollection('cover_image')
+            ->singleFile()
+            ->useFallbackUrl(Vite::image('placeholder.png'))
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->fit(Manipulations::FIT_CROP, 300, 300)
+                    ->nonQueued();
+            });
     }
 
     public function getActivitylogOptions(): LogOptions
@@ -97,11 +105,6 @@ class Project extends Model implements HasMedia
     public function scopePublish(Builder $query): Builder
     {
         return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
-    }
-
-    public function counties(): BelongsToMany
-    {
-        return $this->belongsToMany(County::class);
     }
 
     public function volunteers(): BelongsToMany

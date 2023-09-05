@@ -6,7 +6,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Vite;
 
 class ProjectCardsResource extends JsonResource
 {
@@ -20,7 +19,7 @@ class ProjectCardsResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'county' => 'Replace me', // $this->county?->name,
-            'image' => Vite::asset('resources/images/placeholder.png'),
+            'image' => $this->getFirstMediaUrl('cover_image'),
             'organization' => [
                 'name' => $this->organization->name,
                 'id' => $this->organization->id,

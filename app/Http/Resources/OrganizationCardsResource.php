@@ -21,7 +21,7 @@ class OrganizationCardsResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'logo' => $this->getFirstMediaUrl('logo', 'preview'),
+            'logo' => $this->getFirstMediaUrl('logo'),
             'activity_domains' => $this->activityDomains->pluck('name')->join(', '),
         ];
     }

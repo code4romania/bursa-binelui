@@ -1,7 +1,10 @@
 <template>
     <article class="flex flex-col overflow-hidden bg-white divide-y divide-gray-200 rounded-lg drop-shadow-lg">
-        <Link :href="route('organization', organization.id)" class="relative block w-full p-12 overflow-hidden group">
-            <div class="aspect-w-3 aspect-h-1">
+        <Link
+            :href="route('organization', organization.id)"
+            class="relative block w-full px-12 py-6 overflow-hidden group"
+        >
+            <div class="aspect-w-3 aspect-h-2">
                 <img
                     :src="organization.logo"
                     class="object-contain object-center w-full transition-opacity duration-150 group-hover:opacity-75"

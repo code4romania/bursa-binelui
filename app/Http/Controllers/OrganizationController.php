@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\OrganizationQuery;
-use App\Enums\OrganizationStatus;
+use App\Http\Filters\ActivityDomainsFilter;
+use App\Http\Filters\CountiesFilter;
+use App\Http\Filters\SearchFilter;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Http\Resources\OrganizationCardsResource;
 use App\Http\Resources\Organizations\EditOrganizationResource;
@@ -19,45 +20,28 @@ use App\Services\OrganizationService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OrganizationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $query = Organization::query()
-            ->with('activityDomains');
-
-        /* Check if we have filters by activity domains. */
-        if ($request->query(OrganizationQuery::activity_domain->value)) {
-            $query->whereHas('activityDomains', function ($query) use ($request) {
-                $query->whereIn('activity_domains.id', $request->query(OrganizationQuery::activity_domain->value));
-            });
-        }
-
-        if ($request->query(OrganizationQuery::counties->value)) {
-            $query->whereHas('counties', function ($query) use ($request) {
-                $query->whereIn('counties.id', $request->query(OrganizationQuery::counties->value));
-            });
-        }
-        /* Check if we have a search. */
-        if ($request->query(OrganizationQuery::search->value, '')) {
-            $query->search($request->query(OrganizationQuery::search->value, ''));
-        }
-        /* Apply the active scope. */
-        $query->status(OrganizationStatus::approved);
-
-        /* Extract existing organizations cities with county. */
-        /* Return inertia page. */
-        return Inertia::render('Public/Organizations/Organizations', [
+        return Inertia::render('Public/Organizations/Index', [
             'activity_domains' => ActivityDomain::all(),
-            'counties' => \App\Models\County::all(),
+            'counties' => County::all(),
             'query' => OrganizationCardsResource::collection(
-                $query->paginate()
+                QueryBuilder::for(Organization::class)
+                    ->allowedFilters([
+                        AllowedFilter::custom('c', new CountiesFilter),
+                        AllowedFilter::custom('ad', new ActivityDomainsFilter),
+                        AllowedFilter::custom('s', new SearchFilter),
+                    ])
+                    ->with('activityDomains')
+                    ->isApproved()
+                    ->paginate()
             ),
-            'request' => $request,
+            'filters' => $request->query('filter'),
         ]);
     }
 
@@ -67,7 +51,7 @@ class OrganizationController extends Controller
     public function show(Organization $organization)
     {
         /* Return inertia page. */
-        return Inertia::render('Public/Organizations/Organization', [
+        return Inertia::render('Public/Organizations/Show', [
             'organization' => new ShowOrganizationResource(
                 $organization->loadMissing([
                     'activityDomains',

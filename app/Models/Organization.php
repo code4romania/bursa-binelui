@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasCounties;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
 use App\Enums\ProjectStatus;
@@ -28,6 +29,7 @@ class Organization extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use HasActivityDomain;
+    use HasCounties;
     use HasOrganizationStatus;
     use LogsActivityForApproval;
 
@@ -86,7 +88,7 @@ class Organization extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')
-            ->useFallbackUrl(Vite::asset('resources/images/organization.png'))
+            ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this
@@ -104,11 +106,6 @@ class Organization extends Model implements HasMedia
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
-    }
-
-    public function counties(): BelongsToMany
-    {
-        return $this->belongsToMany(County::class);
     }
 
     public function activityDomains(): BelongsToMany

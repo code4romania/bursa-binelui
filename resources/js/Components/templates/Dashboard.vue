@@ -73,9 +73,9 @@
         HomeIcon,
         UsersIcon,
         FolderOpenIcon,
-        FolderMinusIcon,
-        UserMinusIcon,
-        UserPlusIcon,
+        FolderRemoveIcon,
+        UserRemoveIcon,
+        UserAddIcon,
         UserGroupIcon,
     } from '@heroicons/vue/outline';
 
@@ -100,12 +100,12 @@
                 {
                     name: 'draft_projects',
                     route: route('admin.ong.projects', { project_status: 'draft' }),
-                    icon: FolderMinusIcon,
+                    icon: FolderRemoveIcon,
                 },
                 {
                     name: 'regional_projects',
                     route: route('admin.ong.regional.project.add'),
-                    icon: FolderMinusIcon,
+                    icon: FolderRemoveIcon,
                 },
             ],
             icon: FolderIcon,
@@ -126,7 +126,7 @@
                     route: route('admin.ong.regional.projects', {
                         project_status: 'draft',
                     }),
-                    icon: FolderMinusIcon,
+                    icon: FolderRemoveIcon,
                 },
             ],
             icon: FolderIcon,
@@ -143,12 +143,12 @@
                 {
                     name: 'volunteers_pending',
                     route: route('admin.ong.volunteers', { status: 'pending' }),
-                    icon: UserPlusIcon,
+                    icon: UserAddIcon,
                 },
                 {
                     name: 'volunteers_rejected',
                     route: route('admin.ong.volunteers', { status: 'rejected' }),
-                    icon: UserMinusIcon,
+                    icon: UserRemoveIcon,
                 },
             ],
             icon: UsersIcon,

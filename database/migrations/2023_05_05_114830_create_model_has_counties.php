@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\County;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('county_organization', function (Blueprint $table) {
+        Schema::create('model_has_counties', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\County::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Organization::class)->constrained()->cascadeOnDelete();
+            $table->morphs('model');
+            $table->foreignIdFor(County::class)->constrained()->cascadeOnDelete();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('county_organization');
+        Schema::dropIfExists('model_has_counties');
     }
 };

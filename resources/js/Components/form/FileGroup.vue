@@ -5,7 +5,7 @@
         }}</label>
         <div class="flex justify-center p-6 px-6 mt-2 border border-dashed rounded-lg border-gray-900/25">
             <div class="text-center">
-                <PhotoIcon class="w-12 h-12 mx-auto text-gray-300" aria-hidden="true" />
+                <PhotographIcon class="w-12 h-12 mx-auto text-gray-300" aria-hidden="true" />
 
                 <div class="flex justify-center mt-4 text-sm leading-6 text-center text-gray-600">
                     <label
@@ -47,7 +47,7 @@
 
 <script setup>
     /** Import plugins. */
-    import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/solid';
+    import { PhotographIcon, UserCircleIcon } from '@heroicons/vue/solid';
     import DangerButton from '@/Components/buttons/DangerButton.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
