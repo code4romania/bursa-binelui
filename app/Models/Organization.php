@@ -168,6 +168,7 @@ class Organization extends Model implements HasMedia
         return $query->whereDoesntHave('projects');
     }
 
+
     public function scopeWhereHasActiveProjects(Builder $query): Builder
     {
         return $query->whereRelation('projects', 'status', ProjectStatus::active);
@@ -178,12 +179,12 @@ class Organization extends Model implements HasMedia
         return $query->whereRelation('projects', 'status', '!=', ProjectStatus::active);
     }
 
+
     public function scopeWhereHasEuPlatesc(Builder $query): Builder
     {
         return $query->whereNotNull('eu_platesc_merchant_id')
             ->whereNotNull('eu_platesc_private_key');
     }
-
     public function scopeWhereDoesntHaveEuPlatesc(Builder $query): Builder
     {
         return $query->whereNull('eu_platesc_merchant_id')
@@ -228,13 +229,6 @@ class Organization extends Model implements HasMedia
         return $this->update([
             'status' => OrganizationStatus::rejected,
             'status_updated_at' => $this->freshTimestamp(),
-        ]);
-    }
-
-    public function markAsPending(): bool
-    {
-        return $this->update([
-            'status' => OrganizationStatus::pending,
         ]);
     }
 }

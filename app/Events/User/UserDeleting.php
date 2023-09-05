@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Events\User;
 
 use App\Models\User;
@@ -24,4 +22,6 @@ class UserDeleting
     {
         $this->user = $user;
     }
+
+
 }

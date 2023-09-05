@@ -10,6 +10,7 @@ use App\Filament\Resources\OrganizationResource\Actions\Tables\ExportAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -162,7 +163,7 @@ abstract class BaseOrganizationsWidget extends BaseWidget
                     true: fn (Builder $query) => $query->whereHasDonations(),
                     false: fn (Builder $query) => $query->whereDoesntHaveDonations(),
                     blank: fn (Builder $query) => $query,
-                ),
+                )
 
         ];
     }
