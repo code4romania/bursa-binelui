@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel
     {
 //         $schedule->command('inspire')->hourly();
         $schedule->command('model:prune')->daily();
-
     }
 
     /**
