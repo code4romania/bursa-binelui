@@ -97,5 +97,4 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         return static::whereNull('email_verified_at')->where('created_at', '<=', now()->subHours(48));
     }
-
 }
