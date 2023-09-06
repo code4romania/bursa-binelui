@@ -212,7 +212,6 @@
 
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Dashboard from '@/Components/templates/Dashboard.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Alert from '@/Components/Alert.vue';
     import Table from '@/Components/Table.vue';
@@ -307,8 +306,8 @@
     const closeModal = () => document.getElementById('donation-edit').click();
 
     /**
-                             Remove this when retriving data from back
-                             * */
+                                 Remove this when retriving data from back
+                                 * */
 
     /** Donations */
     const donations = {

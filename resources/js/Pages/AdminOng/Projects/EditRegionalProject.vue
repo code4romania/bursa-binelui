@@ -461,7 +461,6 @@
 
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Dashboard from '@/Components/templates/Dashboard.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Alert from '@/Components/Alert.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
