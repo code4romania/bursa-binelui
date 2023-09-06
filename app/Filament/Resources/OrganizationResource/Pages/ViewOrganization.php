@@ -41,10 +41,13 @@ class ViewOrganization extends ViewRecord
         ];
     }
 
-    protected function getFooterWidgets(): array
+    public function hasCombinedRelationManagerTabsWithForm(): bool
     {
-        return [
-            OrganizationActivityWidget::class,
-        ];
+        return true;
+    }
+
+    public function getFormTabLabel(): ?string
+    {
+        return __('organization.organization');
     }
 }

@@ -6,6 +6,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Forms\Components\Download;
 use App\Filament\Resources\OrganizationResource\Pages;
+use App\Filament\Resources\OrganizationResource\RelationManagers\ActivitiesRelationManager;
+use App\Filament\Resources\OrganizationResource\RelationManagers\DonationsRelationManager;
+use App\Filament\Resources\OrganizationResource\RelationManagers\ProjectsRelationManager;
+use App\Filament\Resources\OrganizationResource\RelationManagers\TicketsRelationManager;
+use App\Filament\Resources\OrganizationResource\RelationManagers\UsersRelationManager;
+use App\Filament\Resources\OrganizationResource\RelationManagers\VolunteersRelationManager;
 use App\Forms\Components\UserLink;
 use App\Models\Organization;
 use App\Rules\ValidCIF;
@@ -172,6 +178,18 @@ class OrganizationResource extends Resource
                             ->maxLength(255),
                     ]),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            ProjectsRelationManager::class,
+            DonationsRelationManager::class,
+            UsersRelationManager::class,
+            VolunteersRelationManager::class,
+            TicketsRelationManager::class,
+            ActivitiesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

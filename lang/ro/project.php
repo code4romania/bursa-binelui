@@ -36,6 +36,10 @@ return [
         'approved' => 'Proiecte active',
         'rejected' => 'Proiecte refuzate' ,
     ],
+    'label' => [
+        'singular' => 'Proiect',
+        'plural' => 'Proiecte',
+    ],
 
     'labels' =>[
         'project' => 'Proiect',
