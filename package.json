@@ -14,6 +14,7 @@
         "@tailwindcss/typography": "^0.5.9",
         "@vitejs/plugin-vue": "^4.3.4",
         "@vue/server-renderer": "^3.3.4",
+        "@vuepic/vue-datepicker": "^6.0.3",
         "@vueuse/core": "^10.4.1",
         "autoprefixer": "^10.4.15",
         "axios": "^1.5.0",

@@ -28,8 +28,8 @@ class OrganizationController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Public/Organizations/Index', [
-            'activity_domains' => ActivityDomain::all(),
-            'counties' => County::all(),
+            'activity_domains' => ActivityDomain::all(['id', 'name']),
+            'counties' => County::all(['id', 'name']),
             'query' => OrganizationCardsResource::collection(
                 QueryBuilder::for(Organization::class)
                     ->allowedFilters([

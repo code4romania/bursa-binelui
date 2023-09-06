@@ -5,52 +5,39 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
+use App\Http\Filters\CategoryFilter;
+use App\Http\Filters\CountiesFilter;
+use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Resources\ProjectCardsResource;
-use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Project;
+use App\Models\ProjectCategory;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::query()
-            ->wherePublished();
-
-        /* Check if we have filters by activity domains. */
-        if ($request->query('c')) {
-            $projects->whereHas('counties', function ($query) use ($request) {
-                $query->whereIn('counties.id', $request->query('c'));
-            });
-        }
-
-        // TODO: fix
-        // if ($request->query('status')) {
-        //     $projects->whereIn('status', $request->query('status'));
-        // }
-
-        if ($request->query('category')) {
-            $projects->whereIn('category', $request->query('category'));
-        }
-
-        /* For this wee need to sent to front the small start and biggest end */
-        if ($request->query('date')) {
-            $date = explode('-', $request->query('date'));
-            $projects->where('start', '>=', str_replace('.', '-', $date[0]));
-            $projects->where('end', '<=', str_replace('.', '-', $date[1]));
-        }
-
-        return Inertia::render('Public/Projects/Projects', [
+        return Inertia::render('Public/Projects/Index', [
+            'categories' => ProjectCategory::all(['id', 'name']),
+            'counties' => County::all(['id', 'name']),
+            'google_maps_api_key' => config('services.google_maps_api_key'),
             'query' => ProjectCardsResource::collection(
-                $projects->paginate()
+                QueryBuilder::for(Project::class)
+                    ->allowedFilters([
+                        AllowedFilter::custom('c', new CountiesFilter),
+                        AllowedFilter::custom('category', new CategoryFilter),
+                        AllowedFilter::custom('date', new ProjectDatesFilter),
+                    ])
+                    ->wherePublished()
+                    ->paginate()
                     ->withQueryString()
             ),
-            'counties' => County::all(['name', 'id']),
-            'categories' => ActivityDomain::all(),
         ]);
     }
 

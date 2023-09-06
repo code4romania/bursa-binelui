@@ -33,7 +33,6 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'locales' => locales(),
-            'google_maps_api_key' => config('services.google_maps_api_key'),
         ]);
     }
 }

@@ -100,11 +100,11 @@
                     @callback="filterProjects"
                 />
 
-                <DatePeriod
+                <DatePicker
                     :label="$t('donation_period')"
                     class="col-span-12 md:col-span-6 lg:col-span-3"
-                    id="dateperiod"
                     v-model="filter.date"
+                    range
                 />
             </div>
         </div>
@@ -143,7 +143,7 @@
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import Map from '@/Components/maps/Map.vue';
-    import DatePeriod from '@/Components/form/DatePeriod.vue';
+    import DatePicker from '@/Components/form/DatePicker.vue';
     import SelectMultiple from '@/Components/form/SelectMultiple.vue';
     import Select from '@/Components/form/Select.vue';
 

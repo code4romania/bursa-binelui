@@ -21,7 +21,7 @@
         },
         label: {
             type: [String, Number],
-            required: true,
+            default: null,
         },
         accent: {
             type: Boolean,
