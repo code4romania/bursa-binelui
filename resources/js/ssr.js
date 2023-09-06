@@ -4,6 +4,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from 'ziggy-js/dist/vue';
+import { i18nVue } from 'laravel-vue-i18n';
 
 createServer((page) =>
     createInertiaApp({
@@ -17,6 +18,13 @@ createServer((page) =>
                 .use(ZiggyVue, {
                     ...page.props.ziggy,
                     location: new URL(page.props.ziggy.location),
+                })
+                .use(i18nVue, {
+                    // lang: 'ro',
+                    resolve: lang => {
+                        const langs = import.meta.glob('../../lang/*.json', { eager: true });
+                        return langs[`../../lang/${lang}.json`].default;
+                    },
                 });
         },
     })
