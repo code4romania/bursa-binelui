@@ -145,12 +145,8 @@
         {
             name: 'Voluntari',
             route: route('admin.ong.volunteers'),
+            icon: UserGroupIcon,
             subMenu: [
-                {
-                    name: 'volunteers_approved',
-                    route: route('admin.ong.volunteers', { status: 'approved' }),
-                    icon: UserGroupIcon,
-                },
                 {
                     name: 'volunteers_pending',
                     route: route('admin.ong.volunteers', { status: 'pending' }),
@@ -162,7 +158,6 @@
                     icon: UserRemoveIcon,
                 },
             ],
-            icon: UsersIcon,
         },
         {
             name: 'Donații',

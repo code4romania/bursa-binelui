@@ -1,6 +1,16 @@
 <template>
     <DashboardLayout>
-        <Title :title="$t('volunteers')" />
+        <Title v-if="status === 'pending'" :title="$t('new_volunteer_requests')">
+            <UserAddIcon />
+        </Title>
+
+        <Title v-else-if="status === 'rejected'" :title="$t('rejected_requests')">
+            <UserRemoveIcon />
+        </Title>
+
+        <Title v-else :title="$t('my_volunteers')">
+            <UserGroupIcon />
+        </Title>
 
         <!-- Alert -->
         <Alert
@@ -9,122 +19,78 @@
             @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
         />
 
-        <DropdownLinkVue class="flex items-center gap-4">
-            <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                <SvgLoader class="shrink-0" name="add_white" v-if="status === 'pending'" />
-                <SvgLoader class="shrink-0" name="block" v-else-if="status === 'rejected'" />
-                <SvgLoader class="shrink-0 fill-white" name="heart_white" v-else />
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900" v-if="status === 'pending'">
-                {{ $t('new_volunteer_requests') }}
-            </h2>
-            <h2 class="text-2xl font-bold text-gray-900" v-else-if="status === 'rejected'">
-                {{ $t('rejected_requests') }}
-            </h2>
-            <h2 class="text-2xl font-bold text-gray-900" v-else>{{ $t('my_volunteers') }}</h2>
-        </DropdownLinkVue>
-
         <Table
             class="mb-24"
-            :columns="requests"
+            :columns="['Nume', 'Telefon', 'Proiect', 'Data Inscriere', 'Utilizator']"
             :currentPage="volunteers.current_page"
             :prev="volunteers.prev_page_url"
             :next="volunteers.next_page_url"
-            :links="volunteers.links"
+            :resource="volunteers"
         >
-            <tr v-for="person in volunteers.data" :key="person.email">
+            <tr v-for="(volunteer, index) in volunteers.data" :key="index">
                 <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                     <div class="flex items-center gap-4">
-                        <img v-if="person?.user?.image" :src="person.user.image" alt="avatar" />
+                        <img v-if="volunteer?.user?.image" :src="volunteer.user.image" alt="avatar" />
                         <SvgLoader v-else class="shrink-0" name="default_avatar" />
+
                         <div>
-                            <p class="text-sm font-medium text-gray-900">
-                                {{ person.user?.name ? person.user.name : person.first_name + ' ' + person.last_name }}
-                            </p>
-                            <p class="text-sm text-gray-500">
-                                {{ person.user?.email ? person.user.email : person.email }}
-                            </p>
+                            <p class="text-sm font-medium text-gray-900" v-text="volunteer.name" />
+                            <p class="text-sm text-gray-500" v-text="volunteer.email" />
                         </div>
                     </div>
                 </td>
+
+                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-text="volunteer.phone" />
+
+                <td class="px-3 py-4 text-sm text-gray-900 whitespace-nowrap" v-text="volunteer.project" />
+
+                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-text="volunteer.created_at" />
+
                 <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ person.user?.phone ? person.user?.phone : person.phone }}
-                </td>
-                <td class="px-3 py-4 text-sm text-gray-900 whitespace-nowrap">
-                    {{ person.projects ? person.projects.map((item) => item.name).join(', ') : $t('general') }}
-                </td>
-                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ person.created_at }}</td>
-                <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ person.user_id ? $t('yes') : $t('no') }}
+                    {{ volunteer.has_user ? $t('yes') : $t('no') }}
                 </td>
 
-                <td
-                    class="relative flex flex-col items-center py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
-                    v-if="status === 'pending'"
-                >
-                    <ModalAction
-                        triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
-                        :triggerModalText="$t('accept')"
-                        :cancelModalText="$t('cancel')"
-                        :actionModalText="$t('accept')"
-                        :title="$t('confirm')"
-                        :body="`${$t('confirm_accept_text')} ${
-                            person.user?.name ? person.user.name : person.first_name + ' ' + person.last_name
-                        }`"
-                        :actionRoute="route('admin.ong.volunteers.approve', person.id)"
-                        :actionType="'approve'"
-                        :data="volunteers.data"
-                    />
+                <td class="w-0 py-4 pl-3 pr-4 text-sm text-gray-500 whitespace-nowrap sm:pr-6">
+                    <div class="flex gap-4">
+                        <ModalAction
+                            v-if="status === 'pending'"
+                            triggerModalClasses="block text-sm font-medium leading-5 text-blue-600 hover:underline "
+                            :triggerModalText="$t('accept')"
+                            :cancelModalText="$t('cancel')"
+                            :actionModalText="$t('accept')"
+                            :title="$t('confirm')"
+                            :body="`${$t('confirm_accept_text')} ${volunteer.name}`"
+                            :actionRoute="route('admin.ong.volunteers.approve', volunteer.id)"
+                            actionType="approve"
+                            :data="volunteers.data"
+                        />
 
-                    <ModalAction
-                        triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
-                        :triggerModalText="$t('reject')"
-                        :cancelModalText="$t('cancel')"
-                        :actionModalText="$t('reject')"
-                        :title="$t('confirm')"
-                        :body="`${$t('confirm_reject_text')} ${
-                            person.user?.name ? person.user.name : person.first_name + ' ' + person.last_name
-                        }`"
-                        :actionRoute="route('admin.ong.volunteers.reject', person.id)"
-                        :actionType="'reject'"
-                        :data="volunteers.data"
-                    />
-                </td>
-                <td
-                    class="relative flex flex-col items-center py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
-                    v-else-if="status === 'rejected'"
-                >
-                    <ModalAction
-                        triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
-                        :triggerModalText="$t('delete')"
-                        :cancelModalText="$t('cancel')"
-                        :actionModalText="$t('delete')"
-                        :title="$t('confirm')"
-                        :body="`${$t('confirm_delete_text')} ${
-                            person.user?.name ? person.user.name : person.first_name + ' ' + person.last_name
-                        }`"
-                        :actionRoute="route('admin.ong.volunteers.delete', person.id)"
-                        :actionType="'deleteVolunteer'"
-                        :data="person.projects"
-                    />
-                </td>
-                <td
-                    class="relative flex flex-col items-center py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
-                    v-else
-                >
-                    <ModalAction
-                        triggerModalClasses="block text-sm font-medium leadin-5 text-blue-500"
-                        :triggerModalText="$t('reject')"
-                        :cancelModalText="$t('cancel')"
-                        :actionModalText="$t('reject')"
-                        :title="$t('confirm')"
-                        :body="`${$t('confirm_reject_text')} ${
-                            person.user?.name ? person.user.name : person.first_name + ' ' + person.last_name
-                        }`"
-                        :actionRoute="route('admin.ong.volunteers.reject', person.id)"
-                        :actionType="'reject'"
-                        :data="volunteers.data"
-                    />
+                        <ModalAction
+                            v-else-if="status === 'rejected'"
+                            triggerModalClasses="block text-sm font-medium leading-5 text-red-600  hover:underline "
+                            :triggerModalText="$t('delete')"
+                            :cancelModalText="$t('cancel')"
+                            :actionModalText="$t('delete')"
+                            :title="$t('confirm')"
+                            :body="`${$t('confirm_delete_text')} ${volunteer.name}`"
+                            :actionRoute="route('admin.ong.volunteers.delete', volunteer.id)"
+                            actionType="delete"
+                            :data="volunteer.projects"
+                        />
+
+                        <ModalAction
+                            v-if="status !== 'rejected'"
+                            triggerModalClasses="block text-sm font-medium leading-5 text-red-600 hover:underline "
+                            :triggerModalText="$t('reject')"
+                            :cancelModalText="$t('cancel')"
+                            :actionModalText="$t('reject')"
+                            :title="$t('confirm')"
+                            :body="`${$t('confirm_reject_text')} ${volunteer.name}`"
+                            :actionRoute="route('admin.ong.volunteers.reject', volunteer.id)"
+                            actionType="reject"
+                            :data="volunteers.data"
+                        />
+                    </div>
                 </td>
             </tr>
         </Table>
@@ -132,25 +98,18 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, Link } from '@inertiajs/vue3';
-
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+    import Pagination from '@/Components/pagination/Pagination.vue';
     import Title from '@/Components/Title.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Alert from '@/Components/Alert.vue';
-    import Table from '@/Components/templates/Table.vue';
+    import Table from '@/Components/Table.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import { onMounted } from 'vue';
 
-    const flash = {
-        success_message: '',
-        error_message: '',
-    };
-
-    const requests = ['Nume', 'Telefon', 'Proiect', 'Data Inscriere', 'Utilizator'];
+    import { UserGroupIcon, UserAddIcon, UserRemoveIcon } from '@heroicons/vue/outline';
 
     const props = defineProps({
         volunteers: Object,

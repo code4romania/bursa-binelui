@@ -4,13 +4,13 @@
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-cyan-900">
+                        <thead class="bg-gray-50">
                             <tr>
                                 <th
                                     v-for="(column, index) in columns"
                                     :key="index"
                                     scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold text-white"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                 >
                                     {{ column }}
                                 </th>

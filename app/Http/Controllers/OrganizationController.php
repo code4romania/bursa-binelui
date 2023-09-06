@@ -18,7 +18,6 @@ use App\Models\Organization;
 use App\Models\Volunteer;
 use App\Services\OrganizationService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -107,32 +106,23 @@ class OrganizationController extends Controller
         return redirect()->back();
     }
 
-    public function volunteer(Organization $organization, Request $request)
+    public function volunteer(Request $request, Organization $organization)
     {
-        $request->validate([
-            'terms' => 'required|accepted',
-            'email' => 'required|email',
+        $attributes = $request->validate([
+            'terms' => ['required', 'accepted'],
+            'email' => ['required', 'email'],
             'name' => 'required',
             'phone' => 'required',
         ]);
-        try {
-            $name = explode(' ', $request->name);
 
-            if (\is_array($name) && ! empty($name)) {
-                $lastName = $name[0] ? $name[0] : '';
-                $firstName = (1 < \count($name)) ? implode(' ', \array_slice($name, 1)) : '';
-            }
-        } catch (\Exception $e) {
-            throw ValidationException::withMessages(['name' => __('invalid_name')]);
-        }
-
-        Volunteer::create([
+        $volunteer = Volunteer::create([
             'user_id' => auth()->user()->id ?? null,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        ])->organizations()->attach($organization->id);
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
+            'phone' => $attributes['phone'],
+        ]);
+
+        $volunteer->organizations()->attach($organization->id, ['status' => 'pending']);
 
         /*
          * TODO: Corner case user volunteers is redirect to VolunteerThankYou page

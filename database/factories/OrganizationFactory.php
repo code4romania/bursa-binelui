@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\OrganizationStatus;
+use App\Enums\VolunteerStatus;
 use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Organization;
@@ -98,7 +99,30 @@ class OrganizationFactory extends Factory
             $projects = Project::factory()
                 ->for($organization)
                 ->count(10)
-                ->hasVolunteers(10)
+                ->hasAttached(
+                    Volunteer::factory()
+                        ->count(10),
+                    fn () => [
+                        'status' => fake()->randomElement([
+                            VolunteerStatus::PENDING,
+                            VolunteerStatus::APPROVED,
+                            VolunteerStatus::REJECTED,
+                        ]),
+                    ]
+                )
+                ->hasAttached(
+                    Volunteer::factory()
+                        ->withUser()
+                        ->count(10),
+                    fn () => [
+                        'status' => fake()->randomElement([
+                            VolunteerStatus::PENDING,
+                            VolunteerStatus::APPROVED,
+                            VolunteerStatus::REJECTED,
+                        ]),
+                    ]
+                )
+
                 ->create();
 
             $ticket = Ticket::factory()
@@ -109,7 +133,16 @@ class OrganizationFactory extends Factory
             $organization->volunteers()->attach(
                 Volunteer::factory()
                     ->count(10)
-                    ->create()
+                    ->create(),
+                ['status' => VolunteerStatus::PENDING]
+            );
+
+            $organization->volunteers()->attach(
+                Volunteer::factory()
+                    ->count(10)
+                    ->withUser()
+                    ->create(),
+                ['status' => VolunteerStatus::PENDING]
             );
         });
     }

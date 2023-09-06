@@ -258,7 +258,7 @@
     import Modal from '@/Components/modals/Modal.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import Select from '@/Components/form/Select.vue';
-    import Table from '@/Components/templates/Table.vue';
+    import Table from '@/Components/Table.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 

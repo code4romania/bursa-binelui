@@ -125,7 +125,7 @@
             </div>
 
             <!-- Projects -->
-            <div class="bg-gray-50 px-9">
+            <div id="projects" class="bg-gray-50 px-9">
                 <div class="flex items-center gap-4 py-12 mx-auto max-w-7xl">
                     <ChartBarIcon
                         class="flex items-center justify-center w-10 h-10 p-2 rounded-lg shrink-0 stroke-white bg-primary-500"
@@ -151,9 +151,7 @@
             <HowCanYouHelp
                 class="mb-20"
                 :pageRoute="route('organization', organization.id)"
-                @donate="triggerDonate"
                 @volunteer="triggerVolunteer"
-                @copyCode="copyEmbed"
                 :acceptsVolunteers="organization.accepting_volunteers"
             />
         </div>

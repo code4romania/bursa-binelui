@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,8 +16,7 @@ class Volunteer extends Model
 
     protected $fillable = [
         'user_id',
-        'first_name',
-        'last_name',
+        'name',
         'email',
         'phone',
         'status',
@@ -33,15 +33,31 @@ class Volunteer extends Model
 
     public function projects(): MorphToMany
     {
-        return $this->morphedByMany(Project::class, 'model', 'model_has_volunteers', 'model_id');
+        return $this->morphedByMany(Project::class, 'model', 'model_has_volunteers')
+            ->using(VolunteerRequest::class)
+            ->withTimestamps()
+            ->withPivot('status');
     }
 
     public function organizations(): MorphToMany
     {
-        return $this->morphedByMany(Organization::class, 'model', 'model_has_volunteers', 'model_id');
+        return $this->morphedByMany(Organization::class, 'model', 'model_has_volunteers')
+            ->using(VolunteerRequest::class)
+            ->withTimestamps()
+            ->withPivot('status');
     }
 
-    public function scope()
+    /** @deprecated */
+    public function scopeWhereBelongsToOrganization(Builder $query, int $organizationId): Builder
     {
+        return $query
+            ->whereHas(
+                'organizations',
+                fn ($query) => $query->where('organizations.id', $organizationId)
+            )
+            ->orWhereHas(
+                'projects',
+                fn ($query) => $query->where('organization_id', $organizationId)
+            );
     }
 }

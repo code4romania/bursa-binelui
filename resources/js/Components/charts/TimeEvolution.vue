@@ -11,7 +11,7 @@
                 :hover="['time_evolution' === time_evolution_1 ? 'red-400' : 'gray-200']"
                 :color="['time_evolution' === time_evolution_1 ? 'white' : 'gray-700']"
                 class="px-6 py-1.5"
-                @click="time_evolution_1='time_evolution'"
+                @click="time_evolution_1 = 'time_evolution'"
             >
                 {{ $t('time_evolution') }}
             </PrimaryButton>
@@ -21,7 +21,7 @@
                 :hover="['donations_per_domain' === time_evolution_1 ? 'red-400' : 'gray-200']"
                 :color="['donations_per_domain' === time_evolution_1 ? 'white' : 'gray-700']"
                 class="px-6 py-1.5"
-                @click="time_evolution_1='donations_per_domain'"
+                @click="time_evolution_1 = 'donations_per_domain'"
             >
                 {{ $t('Donații per domenii') }}
             </PrimaryButton>
@@ -37,7 +37,7 @@
                         :hover="['nr_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
                         :color="['nr_donations' === time_evolution_2 ? 'white' : 'gray-700']"
                         class="px-6 py-1.5"
-                        @click="time_evolution_2='nr_donations'"
+                        @click="time_evolution_2 = 'nr_donations'"
                     >
                         {{ $t('donation_number') }}
                     </PrimaryButton>
@@ -47,7 +47,7 @@
                         :hover="['amount_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
                         :color="['amount_donations' === time_evolution_2 ? 'white' : 'gray-700']"
                         class="px-6 py-1.5"
-                        @click="time_evolution_2='amount_donations'"
+                        @click="time_evolution_2 = 'amount_donations'"
                     >
                         {{ $t('donation_amount') }}
                     </PrimaryButton>
@@ -71,7 +71,10 @@
             />
         </div>
 
-        <div v-if="'donations_per_domain' === time_evolution_1" class="grid grid-cols-12 gap-10 border border-gray-200 rounded">
+        <div
+            v-if="'donations_per_domain' === time_evolution_1"
+            class="grid grid-cols-12 gap-10 border border-gray-200 rounded"
+        >
             <div class="flex items-center justify-between col-span-12 p-4 border-b border-gray-200">
                 <h3 class="text-lg font-bold text-gray-900">{{ $t('time_evolution') }}</h3>
 
@@ -81,7 +84,7 @@
                         :hover="['nr_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
                         :color="['nr_donations' === time_evolution_2 ? 'white' : 'gray-700']"
                         class="px-6 py-1.5"
-                        @click="time_evolution_2='nr_donations'"
+                        @click="time_evolution_2 = 'nr_donations'"
                     >
                         {{ $t('donation_number') }}
                     </PrimaryButton>
@@ -91,7 +94,7 @@
                         :hover="['amount_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
                         :color="['amount_donations' === time_evolution_2 ? 'white' : 'gray-700']"
                         class="px-6 py-1.5"
-                        @click="time_evolution_2='amount_donations'"
+                        @click="time_evolution_2 = 'amount_donations'"
                     >
                         {{ $t('donation_amount') }}
                     </PrimaryButton>
@@ -112,7 +115,6 @@
                         <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.number }}</td>
                         <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.amount }}</td>
                     </tr>
-
                 </Table>
             </div>
 
@@ -127,28 +129,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-import LineChart from '@/Components/charts/LineChart.vue';
-import DonutChart from '@/Components/charts/DonutChart.vue';
-import Table from '@/Components/tables/Table.vue';
+    import { ref } from 'vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import LineChart from '@/Components/charts/LineChart.vue';
+    import DonutChart from '@/Components/charts/DonutChart.vue';
+    import Table from '@/Components/Table.vue';
 
-const props = defineProps({
-    donations: Number,
-    amount: Number,
-    donations_number: Array,
-    donations_amount: Array,
-    table_data: Array
-});
+    const props = defineProps({
+        donations: Number,
+        amount: Number,
+        donations_number: Array,
+        donations_amount: Array,
+        table_data: Array,
+    });
 
-const time_evolution_1 = ref('time_evolution');
-const time_evolution_2 = ref('nr_donations');
-const time_evolution_3 = ref('categories');
-const time_evolution_4 = ref('amount');
+    const time_evolution_1 = ref('time_evolution');
+    const time_evolution_2 = ref('nr_donations');
+    const time_evolution_3 = ref('categories');
+    const time_evolution_4 = ref('amount');
 
-const xAxe = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+    const xAxe = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
 
-const donationsNumberY = "number"
-const donationsAmountY = "amount"
-
+    const donationsNumberY = 'number';
+    const donationsAmountY = 'amount';
 </script>
