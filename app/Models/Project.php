@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasCounties;
+use App\Concerns\HasVolunteers;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -25,6 +28,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Project extends Model implements HasMedia
 {
     use HasFactory;
+    use HasCounties;
+    use HasVolunteers;
     use InteractsWithMedia;
     use HasProjectStatus;
     use LogsActivity;
@@ -57,8 +62,6 @@ class Project extends Model implements HasMedia
         'status' => ProjectStatus::class,
     ];
 
-    protected $appends = ['total_donations', 'cover_image', 'active', 'is_period_active'];
-
     protected $with = [
         'media',
         'organization',
@@ -67,17 +70,30 @@ class Project extends Model implements HasMedia
         'categories',
     ];
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('cover_image')
+            ->singleFile()
+            ->useFallbackUrl(Vite::image('placeholder.png'))
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->fit(Manipulations::FIT_CROP, 300, 300)
+                    ->nonQueued();
+            });
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->dontSubmitEmptyLogs()
+            ->logFillable()
+            ->logOnlyDirty();
+    }
+
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
     }
 
     public function donations(): HasMany
@@ -85,39 +101,12 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
-    public function getTotalDonationsAttribute(): int
-    {
-        return (int) $this->donations->sum('amount');
-    }
-
-    public function getCoverImageAttribute(): string
-    {
-        return $this->getFirstMediaUrl('project_files', 'preview') ?? '';
-    }
-
+    /**
+     * @deprecated use `wherePublished` instead
+     */
     public function scopePublish(Builder $query): Builder
     {
-        return $query->whereIn('status', [ProjectStatus::active->value, ProjectStatus::disabled->value]);
-    }
-
-    public function getActiveAttribute(): bool
-    {
-        return $this->status == ProjectStatus::active->value;
-    }
-
-    public function getIsPeriodActiveAttribute(): bool
-    {
-        return $this->start <= now() && $this->end >= now();
-    }
-
-    public function counties(): BelongsToMany
-    {
-        return $this->belongsToMany(County::class);
-    }
-
-    public function volunteers(): BelongsToMany
-    {
-        return $this->belongsToMany(Volunteer::class);
+        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
     }
 
     public function stages(): BelongsToMany
@@ -135,14 +124,6 @@ class Project extends Model implements HasMedia
         return $this->belongsToMany(ProjectCategory::class, 'project_category');
     }
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->dontSubmitEmptyLogs()
-            ->logFillable()
-            ->logOnlyDirty();
-    }
-
     public function getRequiredFieldsForApproval(): array
     {
         return[
@@ -154,5 +135,42 @@ class Project extends Model implements HasMedia
             'reason_to_donate',
             'beneficiaries',
         ];
+    }
+
+    public function getTotalDonationsAttribute(): int
+    {
+        return (int) $this->donations->sum('amount');
+    }
+
+    public function getCoverImageAttribute(): string
+    {
+        return $this->getFirstMediaUrl('project_files', 'preview') ?? '';
+    }
+
+    public function getPercentageAttribute(): float
+    {
+        return min(100, $this->total_donations / $this->target_budget * 100);
+    }
+
+    public function getActiveAttribute(): bool
+    {
+        return $this->status === ProjectStatus::active;
+    }
+
+    public function getIsPeriodActiveAttribute(): bool
+    {
+        return $this->start->isPast() && $this->end->isFuture();
+    }
+
+    public function getIsActiveAttribute(): bool
+    {
+        return $this->status === ProjectStatus::active
+            && $this->start->isPast()
+            && $this->end->isFuture();
+    }
+
+    public function getIsEndingSoonAttribute(): bool
+    {
+        return $this->end->diffInDays(today()) <= 5;
     }
 }

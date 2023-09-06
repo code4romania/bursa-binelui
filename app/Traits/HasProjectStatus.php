@@ -30,6 +30,11 @@ trait HasProjectStatus
         return $this->status === ProjectStatus::rejected;
     }
 
+    public function isPublished(): bool
+    {
+        return \in_array($this->status, [ProjectStatus::active, ProjectStatus::disabled]);
+    }
+
     public function scopeStatus(Builder $query, array|string|Collection|ProjectStatus $statuses): void
     {
         $query->whereIn('status', collect($statuses));
@@ -48,5 +53,10 @@ trait HasProjectStatus
     public function scopeIsRejected(Builder $query): void
     {
         $query->where('status', ProjectStatus::rejected);
+    }
+
+    public function scopeWherePublished(Builder $query): Builder
+    {
+        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
     }
 }

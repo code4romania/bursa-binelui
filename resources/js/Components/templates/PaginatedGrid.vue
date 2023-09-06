@@ -3,56 +3,31 @@
         <slot />
 
         <template v-if="list.data?.length">
-            <ul :class="[`${classes}`]" role="list">
-                <template v-for="item in list.data" :key="item.id">
+            <ul class="grid mb-10" :class="classes">
+                <li v-for="item in list.data" :key="item.id">
+                    <ProjectCard v-if="'project' === type" :project="item" :cardType="cardType" />
 
-                    <template v-if="'project' == type">
-                        <ProjectCard
-                            :data="item"
-                            :cardType="cardType"
-                        />
-                    </template>
+                    <OrganizationCard v-else-if="'ong' === type" :organization="item" />
 
-                    <template v-if="'ong' == type">
-                        <OngCard :data="item"/>
-                    </template>
+                    <ProjectSummaryCard v-else-if="'project-summary' === cardType" :data="item" />
 
-                    <template v-if="'project-summary' == cardType">
-                        <ProjectSummaryCard :data="item" />
-                    </template>
+                    <RegionalProject v-else-if="'project-regional' === cardType" :data="item" />
 
-                    <template v-if="'project-regional' == cardType">
-                        <RegionalProject :data="item" />
-                    </template>
-
-                    <template v-if="'project-championship' == cardType">
-                        <ChampionshipProject :data="item" />
-                    </template>
-                </template>
+                    <ChampionshipProject v-else-if="'project-championship' === cardType" :data="item" />
+                </li>
             </ul>
 
             <!-- Pagination -->
-            <Pagination
-                v-if="list.links"
-                :currentPage="list.current_page"
-                :prev="list.prev_page_url"
-                :next="list.next_page_url"
-                :links="list.links"
-            />
+            <Pagination v-if="list.links && list.links.first !== list.links.last" :resource="list" />
         </template>
 
-        <div
-            v-else
-            class="mt-20 text-xl font-bold text-center text-gray-700 mb-9"
-        >
-            {{ $t('no_data') }}
-        </div>
+        <div v-else class="mt-20 text-xl font-bold text-center text-gray-700 mb-9" v-text="$t('no_data')" />
     </div>
 </template>
 
 <script setup>
     /** Import Components. */
-    import OngCard from '@/Components/cards/OngCard.vue';
+    import OrganizationCard from '@/Components/cards/OrganizationCard.vue';
     import Pagination from '@/Components/pagination/Pagination.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
@@ -60,10 +35,10 @@
     import ChampionshipProject from '@/Components/cards/ChampionshipProject.vue';
 
     /** Component props. */
-   const props= defineProps({
+    const props = defineProps({
         type: String,
         list: Object,
         classes: String,
-        cardType: String
+        cardType: String,
     });
 </script>

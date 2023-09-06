@@ -5,7 +5,6 @@
 
         <div class="relative px-6 my-14 lg:px-0">
             <div class="flex flex-col max-w-5xl gap-20 mx-auto sm:flex-row">
-
                 <div class="w-full space-y-4 sm:w-6/12">
                     <h1 class="text-3xl font-bold text-cyan-900">{{ $t('send_message') }}</h1>
                     <p class="text-sm font-medium text-gray-500">{{ $t('send_message_info') }}</p>
@@ -52,7 +51,6 @@
                         >
                             {{ $t('send') }}
                         </PrimaryButton>
-
                     </form>
                 </div>
 
@@ -73,13 +71,8 @@
                 </div>
             </div>
 
-            <div class="absolute bottom-0 left-0 hidden lg:block">
-                <SvgLoader class="shrink-0" name="pattern" />
-            </div>
-
-            <div class="absolute top-0 right-0 hidden lg:block">
-                <SvgLoader class="shrink-0" name="pattern" />
-            </div>
+            <LargeSquarePattern class="absolute bottom-0 hidden text-gray-200 -left-32 -ml-1/2 lg:block" />
+            <LargeSquarePattern class="absolute top-0 hidden text-gray-200 -right-32 lg:block" />
         </div>
     </PageLayout>
 </template>
@@ -95,11 +88,13 @@
     import Textarea from '@/Components/form/Textarea.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+
     const form = useForm({
         name: '',
         email: '',
-        text: ''
-    })
+        text: '',
+    });
 
     /** Submit action. */
     const contact = () => {

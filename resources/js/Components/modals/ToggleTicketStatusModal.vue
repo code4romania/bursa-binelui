@@ -98,7 +98,7 @@
 
     /** Import plugins. */
     import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
-    import { CheckIcon } from '@heroicons/vue/24/outline';
+    import { CheckIcon } from '@heroicons/vue/outline';
 
     /** Component props. */
     const props = defineProps({

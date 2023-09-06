@@ -6,13 +6,13 @@
         <!-- Header -->
         <div class="flex flex-col-reverse w-full gap-10 mx-auto lg:my-10 lg:flex-row lg:max-w-7xl sm:mt-0 px-9">
             <div class="relative flex flex-col w-full lg:w-6/12">
-
-                <h1 class="relative z-50 py-6 text-3xl font-extrabold text-gray-900 lg:py-12 lg:text-6xl">{{ $t('regional_title') }}</h1>
+                <h1 class="relative z-50 py-6 text-3xl font-extrabold text-gray-900 lg:py-12 lg:text-6xl">
+                    {{ $t('regional_title') }}
+                </h1>
 
                 <p class="my-6 text-base text-gray-500 lg:hidden lg:mb-0">{{ $t('competition') }}</p>
 
                 <div class="flex flex-col w-full gap-4 mb-6 lg:mb-0 sm:flex-row">
-
                     <!-- Register -->
                     <Modal
                         v-if="!$page.props.auth.user"
@@ -20,8 +20,12 @@
                         :triggerModalText="$t('register_project')"
                     >
                         <form class="mt-6 space-y-6" @submit.prevent="submit">
-                            <h3 class="text-lg font-semibold text-center text-gray-900">Intră în contul organizației tale pentru a inscrie un proiect</h3>
-                            <p class="text-base text-center text-gray-500">Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim.</p>
+                            <h3 class="text-lg font-semibold text-center text-gray-900">
+                                Intră în contul organizației tale pentru a inscrie un proiect
+                            </h3>
+                            <p class="text-base text-center text-gray-500">
+                                Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim.
+                            </p>
 
                             <!-- Email. -->
                             <Input
@@ -49,7 +53,6 @@
 
                             <!-- Action -->
                             <div class="space-y-6">
-
                                 <!-- Log in button -->
                                 <PrimaryButton
                                     background="primary-500"
@@ -79,30 +82,25 @@
                                 </Link>
                             </div>
                         </form>
-
                     </Modal>
 
                     <!-- Add Project -->
-                    <ChampionshipModal
-                        v-if="$page.props.auth.user"
-                    >
-
-                       <div class="px-9">
+                    <ChampionshipModal v-if="$page.props.auth.user">
+                        <div class="px-9">
                             <Link
                                 :href="route('admin.ong.regional.project.add')"
                                 class="flex w-fit items-center gap-x-2 py-2.5 my-10 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
                                 <SvgLoader name="add" />
-                                {{ $t("add_new_project") }}
+                                {{ $t('add_new_project') }}
                             </Link>
-                       </div>
+                        </div>
 
-                        <div v-if="query.data.length" class="grid grid-cols-1 mb-4 overflow-y-auto gap-x-8 gap-y-12 px-9 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-128">
-                            <ProjectSummaryCard
-                                v-for="data in query.data"
-                                :data="data"
-                                @choosed="test"
-                            />
+                        <div
+                            v-if="query.data.length"
+                            class="grid grid-cols-1 mb-4 overflow-y-auto gap-x-8 gap-y-12 px-9 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-h-128"
+                        >
+                            <ProjectSummaryCard v-for="data in query.data" :data="data" @choosed="test" />
                         </div>
                     </ChampionshipModal>
 
@@ -118,14 +116,16 @@
 
                             <p class="text-lg font-bold text-primary-500">{{ name }}</p>
 
-                            <p class="text-sm text-center text-gray-500">{{ $t('championship_success_description') }}</p>
+                            <p class="text-sm text-center text-gray-500">
+                                {{ $t('championship_success_description') }}
+                            </p>
 
                             <div class="flex items-center w-full gap-4">
                                 <SecondaryButton
                                     class="flex items-center justify-center mt-6 flex-1 gap-x-2 py-2.5"
                                     @click="closeSucces"
                                 >
-                                    {{ $t("close") }}
+                                    {{ $t('close') }}
                                 </SecondaryButton>
 
                                 <Link
@@ -135,26 +135,22 @@
                                     {{ $t('championship_rules') }}
                                 </Link>
                             </div>
-
                         </div>
                     </Modal>
                 </div>
 
-                <div class="absolute hidden md:block -top-24 -left-32">
-                    <SvgLoader class="shrink-0 fill-primary-300" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute hidden md:block -top-24 -left-32 fill-primary-300" />
             </div>
 
             <div class="relative items-center justify-center w-full lg:px-20 lg:pb-9 lg:w-6/12 sm:flex">
-
-                <div class="absolute bottom-0 right-0 hidden md:block">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="dotted_square" />
-                </div>
+                <LargeSquarePattern class="absolute bottom-0 right-0 hidden md:block fill-primary-500" />
 
                 <div class="relative flex items-center bg-white rounded shadow w-fit">
                     <img class="mx-auto rounded-lg" src="/images/auth_image.jpg" alt="" />
 
-                    <div class="absolute flex items-center justify-center w-32 h-32 rounded-lg bg-gray-50 -bottom-10 -left-10">
+                    <div
+                        class="absolute flex items-center justify-center w-32 h-32 rounded-lg bg-gray-50 -bottom-10 -left-10"
+                    >
                         <SvgLoader class="shrink-0" name="location_big" />
                     </div>
                 </div>
@@ -169,7 +165,6 @@
 
         <!-- Curent year -->
         <div class="relative mb-10 overflow-hidden pb-9">
-
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
@@ -179,8 +174,11 @@
                 </div>
             </div>
 
-            <div class="-mt-12 px-9">
-                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+            <div class="relative -mt-12 bg-white">
+                <ul
+                    role="list"
+                    class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                >
                     <EditionCard
                         v-for="edition in regions"
                         :key="edition.id"
@@ -189,16 +187,13 @@
                         :urlRoute="route('regional.edition.region', edition.id)"
                     />
                 </ul>
-            </div>
 
-            <div class="absolute top-0 right-0 z-10 hidden lg:block">
-                <SvgLoader class="shrink-0" name="squer_half_color" />
+                <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden lg:block fill-primary-200" />
             </div>
         </div>
 
         <!-- Last year -->
         <div class="relative mb-10 overflow-hidden pb-9">
-
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
@@ -208,8 +203,11 @@
                 </div>
             </div>
 
-            <div class="-mt-12 px-9">
-                <ul role="list" class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+            <div class="relative -mt-12 bg-white">
+                <ul
+                    role="list"
+                    class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                >
                     <EditionCard
                         v-for="edition in regions"
                         :key="edition.id"
@@ -218,10 +216,8 @@
                         :urlRoute="route('regional.edition.region', edition.id)"
                     />
                 </ul>
-            </div>
 
-            <div class="absolute top-0 right-0 z-10 hidden lg:block">
-                <SvgLoader class="shrink-0" name="squer_half_color" />
+                <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden lg:block fill-primary-200" />
             </div>
         </div>
     </PageLayout>
@@ -236,6 +232,7 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
@@ -246,7 +243,10 @@
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
     import EditionCard from '@/Components/cards/Edition.vue';
 
-    const about_championship = 'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.'
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+
+    const about_championship =
+        'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.';
 
     /** Component props. */
     const props = defineProps({
@@ -257,7 +257,7 @@
         parteners: Array,
         faqs: Array,
         countries: Array,
-        regions: Array
+        regions: Array,
     });
 
     /** Active filter state. */
@@ -268,25 +268,25 @@
         stage: 'Etapa curenta',
         sort: '',
         s: '',
-        c: ''
+        c: '',
     });
 
     /** Filter projects. */
     const filterProjects = () => {
-        if (Object.values(filter.value).every(value => value === null)) {
-            hasValues.value = false
+        if (Object.values(filter.value).every((value) => value === null)) {
+            hasValues.value = false;
         } else {
-            hasValues.value = true
+            hasValues.value = true;
         }
     };
 
     /** Empty filters. */
     const emptyFilters = () => {
-        router.visit(route('championship'))
+        router.visit(route('championship'));
     };
 
-     /** Form variables. */
-     const form = useForm({
+    /** Form variables. */
+    const form = useForm({
         email: '',
         password: '',
         remember: false,
@@ -299,10 +299,10 @@
         });
     };
 
-    const name = ref('')
+    const name = ref('');
     const test = (project) => {
-        const form =  useForm({...project});
-        name.value = project.name
+        const form = useForm({ ...project });
+        name.value = project.name;
 
         // form.post(route('need.subscribe.route'), {
         //     onSuccess: () => {
@@ -311,11 +311,11 @@
         //     },
         // });
 
-        document.getElementById('championship-modal').click()
-        document.getElementById('championship-success').click()
-    }
+        document.getElementById('championship-modal').click();
+        document.getElementById('championship-success').click();
+    };
 
-    const closeSucces = (() => document.getElementById('championship-success').click())
+    const closeSucces = () => document.getElementById('championship-success').click();
 
     const stages = ['Etapa curenta', 'Etapa precendenta'];
 </script>

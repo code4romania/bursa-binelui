@@ -32,13 +32,13 @@
 </template>
 
 <script setup>
-/** Import from inertia. */
-import { Head, Link } from '@inertiajs/vue3';
-import PageLayout from '@/Layouts/PageLayout.vue';
-import SvgLoader from '@/Components/SvgLoader.vue';
-import Table from '@/Components/templates/Table.vue';
+    /** Import from inertia. */
+    import { Head, Link } from '@inertiajs/vue3';
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import Table from '@/Components/Table.vue';
 
-const props = defineProps({
-    donations: Array
-});
+    const props = defineProps({
+        donations: Array,
+    });
 </script>

@@ -4,7 +4,6 @@
         <Head :title="$t('faqs_title')" />
 
         <div class="mx-auto mt-4 mb-10 space-y-6 p-9 max-w-7xl">
-
             <h1 v-if="faqs?.title" class="text-3xl font-bold text-cyan-900">{{ faqs.title }}</h1>
             <div v-if="faqs?.content" v-html="faqs.content" class="space-y-4 text-base text-gray-500"></div>
 
@@ -23,13 +22,8 @@
                 </Link>
             </div>
 
-            <div class="absolute left-0 z-0 hidden bottom-60 md:block" style="z-index: -1 !important;">
-                <SvgLoader class="shrink-0 fill-gray-200" name="dotted_square" />
-            </div>
-
-            <div class="absolute right-0 z-0 hidden top-32 md:block" style="z-index: -1 !important;">
-                <SvgLoader class="shrink-0 fill-gray-200" name="dotted_square" />
-            </div>
+            <LargeSquarePattern class="absolute left-0 z-0 hidden bottom-60 md:block fill-gray-200" />
+            <LargeSquarePattern class="absolute right-0 z-0 hidden top-32 md:block fill-gray-200" />
         </div>
     </PageLayout>
 </template>
@@ -41,10 +35,13 @@
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Faqs from '@/Components/faqs/Faqs.vue';
+    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
 
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+
     const props = defineProps({
-        faqs: Object
-    })
+        faqs: Object,
+    });
 </script>
 

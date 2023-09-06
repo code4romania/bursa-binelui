@@ -1,28 +1,14 @@
 <template>
-    <Combobox
-        class="z-100"
-        as="div"
-        v-bind="{ disabled: isDisabled }"
-        v-model="selectedOptions"
-        multiple
-    >
-        <ComboboxLabel
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >{{ label }}</ComboboxLabel
-        >
+    <Combobox class="z-100" as="div" v-bind="{ disabled: isDisabled }" v-model="selectedOptions" multiple>
+        <ComboboxLabel class="block text-sm font-medium leading-6 text-gray-900">{{ label }}</ComboboxLabel>
         <div class="relative">
             <ComboboxInput
                 @change="query = $event.target.value"
                 class="w-full rounded-md h-9 border-0 py-1.5 px-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
             />
 
-            <ComboboxButton
-                class="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none"
-            >
-                <ChevronUpDownIcon
-                    class="w-5 h-5 text-gray-400"
-                    aria-hidden="true"
-                />
+            <ComboboxButton class="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
+                <SelectorIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>
 
             <ComboboxOptions
@@ -67,10 +53,7 @@
             >
                 {{ option.name ? option.name : option }}
 
-                <XCircleIcon
-                    class="w-4 h-4 -mr-1 fill-white"
-                    aria-hidden="true"
-                />
+                <XCircleIcon class="w-4 h-4 -mr-1 fill-white" aria-hidden="true" />
             </button>
         </div>
 
@@ -81,10 +64,10 @@
 
 <script setup>
     /** Import form vue. */
-    import { computed, ref, watch } from "vue";
+    import { computed, ref, watch } from 'vue';
 
     /** Import plugins. */
-    import { ChevronUpDownIcon, XCircleIcon } from "@heroicons/vue/20/solid";
+    import { SelectorIcon, XCircleIcon } from '@heroicons/vue/solid';
     import {
         Combobox,
         ComboboxButton,
@@ -92,7 +75,7 @@
         ComboboxLabel,
         ComboboxOption,
         ComboboxOptions,
-    } from "@headlessui/vue";
+    } from '@headlessui/vue';
 
     /** Component props. */
     const props = defineProps({
@@ -106,51 +89,43 @@
         },
         type: {
             type: String,
-            default: "object",
+            default: 'object',
         },
     });
 
     /** Query input. */
-    const query = ref("");
+    const query = ref('');
 
     /** Selected options. */
     let selectedOptions = ref(props.modelValue);
 
     /** Initialize emits. */
-    const emit = defineEmits(["update:modelValue", "callback", "selected"]);
+    const emit = defineEmits(['update:modelValue', 'callback', 'selected']);
 
     function remove(opt) {
-        if ("singleValue" === props.type) {
-            selectedOptions.value = selectedOptions.value.filter(
-                (option) => option != opt
-            );
-        } else if (props.type === "object") {
-            selectedOptions.value = selectedOptions.value.filter(
-                (option) => option.id !== opt.id
-            );
+        if ('singleValue' === props.type) {
+            selectedOptions.value = selectedOptions.value.filter((option) => option != opt);
+        } else if (props.type === 'object') {
+            selectedOptions.value = selectedOptions.value.filter((option) => option.id !== opt.id);
         }
 
-        emit("update:modelValue", selectedOptions.value);
-        emit("callback");
+        emit('update:modelValue', selectedOptions.value);
+        emit('callback');
     }
 
     /** Option list. */
     const options = computed(() => {
-        if ("singleValue" === props.type) {
-            return query.value === ""
+        if ('singleValue' === props.type) {
+            return query.value === ''
                 ? props.options
                 : props.options.filter((option) => {
-                      return option
-                          .toLowerCase()
-                          .includes(query.value.toLowerCase());
+                      return option.toLowerCase().includes(query.value.toLowerCase());
                   });
-        } else if ("object" === props.type) {
-            return query.value === ""
+        } else if ('object' === props.type) {
+            return query.value === ''
                 ? props.options
                 : props.options.filter((option) => {
-                      return option.name
-                          .toLowerCase()
-                          .includes(query.value.toLowerCase());
+                      return option.name.toLowerCase().includes(query.value.toLowerCase());
                   });
         }
     });
@@ -158,8 +133,8 @@
     watch(
         selectedOptions,
         (values) => {
-            emit("update:modelValue", values);
-            emit("callback");
+            emit('update:modelValue', values);
+            emit('callback');
         },
         {
             deep: true,

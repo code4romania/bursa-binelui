@@ -10,11 +10,8 @@ use App\Models\ArticleCategory;
 use App\Models\Badge;
 use App\Models\Championship;
 use App\Models\Organization;
-use App\Models\Project;
 use App\Models\ProjectCategory;
-use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
@@ -64,23 +61,17 @@ class DatabaseSeeder extends Seeder
 
         Organization::factory()
             ->count(10)
-            ->has(
-                User::factory()
-                    ->ngoAdmin()
-                    ->sequence(fn (Sequence $sequence) => [
-                        'email' => $sequence->index
-                            ? "admin-{$sequence->index}@example.com"
-                            : 'admin@example.com',
-                    ])
-            )
-            ->has(
-                Project::factory()
-                    ->count(10)
-                    ->hasVolunteers(10)
-            )
-            ->has(
-                Ticket::factory()
-            )
+            ->approved()
+            ->create();
+
+        Organization::factory()
+            ->count(10)
+            ->rejected()
+            ->create();
+
+        Organization::factory()
+            ->count(10)
+            ->pending()
             ->create();
 
         Badge::factory()

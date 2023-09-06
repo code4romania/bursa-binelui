@@ -6,7 +6,6 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -18,14 +17,6 @@ class HandleInertiaRequests extends Middleware
     protected $rootView = 'app';
 
     /**
-     * Determine the current asset version.
-     */
-    public function version(Request $request): string|null
-    {
-        return parent::version($request);
-    }
-
-    /**
      * Define the props that are shared by default.
      *
      * @return array<string, mixed>
@@ -33,20 +24,29 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'flash' => [
-                'success_message' => fn () => $request->session()->get('success_message'),
-                'error_message' => fn () => $request->session()->get('error_message'),
-                'data' => fn () => $request->session()->get('data'),
-            ],
+            'flash' => fn () => $this->flash($request),
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy)->toArray(), [
-                    'location' => $request->url(),
-                ]);
-            },
-            'google_maps_api_key' => config('services.google_maps_api_key'),
+            'locales' => locales(),
         ]);
+    }
+
+    protected function flash(Request $request): ?array
+    {
+        $type = match (true) {
+            $request->session()->has('error') => 'error',
+            $request->session()->has('success') => 'success',
+            default => null,
+        };
+
+        if ($type === null) {
+            return null;
+        }
+
+        return [
+            'success' => $type === 'success',
+            'message' => $request->session()->get($type),
+        ];
     }
 }

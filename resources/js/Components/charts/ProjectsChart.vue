@@ -10,7 +10,7 @@
                 :hover="['time_evolution' === time_evolution_2 ? 'red-400' : 'gray-200']"
                 :color="['time_evolution' === time_evolution_2 ? 'white' : 'gray-700']"
                 class="px-6 py-1.5"
-                @click="time_evolution_2='time_evolution'"
+                @click="time_evolution_2 = 'time_evolution'"
             >
                 {{ $t('time_evolution') }}
             </PrimaryButton>
@@ -20,7 +20,7 @@
                 :hover="['projects_per_domain' === time_evolution_2 ? 'red-400' : 'gray-200']"
                 :color="['projects_per_domain' === time_evolution_2 ? 'white' : 'gray-700']"
                 class="px-6 py-1.5"
-                @click="time_evolution_2='projects_per_domain'"
+                @click="time_evolution_2 = 'projects_per_domain'"
             >
                 {{ $t('projects_per_domain') }}
             </PrimaryButton>
@@ -55,8 +55,10 @@
             />
         </div>
 
-        <div v-if="'projects_per_domain' === time_evolution_2" class="grid grid-cols-12 gap-10 border border-gray-200 rounded">
-
+        <div
+            v-if="'projects_per_domain' === time_evolution_2"
+            class="grid grid-cols-12 gap-10 border border-gray-200 rounded"
+        >
             <div class="col-span-12 p-4 md:col-span-6">
                 <Table
                     class=""
@@ -71,7 +73,6 @@
                         <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.number }}</td>
                         <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.amount }}</td>
                     </tr>
-
                 </Table>
             </div>
 
@@ -86,26 +87,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-import LineChart from '@/Components/charts/LineChart.vue';
-import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
-import DonutChart from '@/Components/charts/DonutChart.vue';
-import Table from '@/Components/tables/Table.vue';
+    import { ref } from 'vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import LineChart from '@/Components/charts/LineChart.vue';
+    import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
+    import DonutChart from '@/Components/charts/DonutChart.vue';
+    import Table from '@/Components/Table.vue';
 
-const props = defineProps({
-    projects: Number,
-    projects_number: Array,
-    counties: Array,
-    domains: Array,
-    table_data:Array
-});
+    const props = defineProps({
+        projects: Number,
+        projects_number: Array,
+        counties: Array,
+        domains: Array,
+        table_data: Array,
+    });
 
-const time_evolution_2 = ref('time_evolution');
+    const time_evolution_2 = ref('time_evolution');
 
-const xAxe = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
+    const xAxe = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Noi', 'Dec'];
 
-const projectsNumberY = "number"
+    const projectsNumberY = 'number';
 
-const updateChart = () => {}
+    const updateChart = () => {};
 </script>

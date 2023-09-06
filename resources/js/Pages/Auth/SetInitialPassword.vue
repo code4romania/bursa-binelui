@@ -1,18 +1,13 @@
 <template>
     <PageLayout>
         <!-- Inertia page head -->
-       <Head :title="$t('set_password')" />
+        <Head :title="$t('set_password')" />
 
-       <Alert
-            v-if="status"
-            class="fixed right-10 top-10 w-96 z-103"
-            type="success"
-            :message="status"
-        />
+        <!-- Auth template. -->
+        <Auth :content="content">
+            <Alert v-if="status" type="success" :message="status" />
 
-       <!-- Auth template. -->
-       <Auth :content="content">
-           <form class="mt-4 space-y-6 lg:mb-28" @submit.prevent="submit">
+            <form class="mt-4 space-y-6 lg:mb-28" @submit.prevent="submit">
                 <!-- Password -->
                 <Input
                     :label="$t('password')"
@@ -34,61 +29,61 @@
                 />
 
                 <!-- Action -->
-               <div class="grid grid-cols-1">
-                   <PrimaryButton
-                       background="primary-500"
-                       hover="primary-400"
-                       color="white"
-                       :class="{ 'opacity-25': form.processing }"
-                       :disabled="form.processing"
-                   >
-                       {{ $t('save') }}
-                   </PrimaryButton>
-               </div>
-           </form>
-       </Auth>
-   </PageLayout>
+                <div class="grid grid-cols-1">
+                    <PrimaryButton
+                        background="primary-500"
+                        hover="primary-400"
+                        color="white"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                    >
+                        {{ $t('save') }}
+                    </PrimaryButton>
+                </div>
+            </form>
+        </Auth>
+    </PageLayout>
 </template>
 
 <script setup>
-/** Import from inertia. */
-import { Head, useForm } from '@inertiajs/vue3';
+    /** Import from inertia. */
+    import { Head, useForm } from '@inertiajs/vue3';
 
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-import Auth from '@/Components/templates/Auth.vue';
-import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-import Input from '@/Components/form/Input.vue';
-import Alert from '@/Components/Alert.vue';
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import Auth from '@/Components/templates/Auth.vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import Input from '@/Components/form/Input.vue';
+    import Alert from '@/Components/Alert.vue';
 
-/** Component props. */
-const props = defineProps({
-    user: {
-        type: Object,
-        required: true,
-    },
-    token : {
-        type: String,
-        required: true,
-    },
-});
+    /** Component props. */
+    const props = defineProps({
+        user: {
+            type: Object,
+            required: true,
+        },
+        token: {
+            type: String,
+            required: true,
+        },
+    });
 
-/** Page content. */
-const content = {
-    title: "Setează parola",
-    description: "Setează parola",
-}
+    /** Page content. */
+    const content = {
+        title: 'Setează parola',
+        description: 'Setează parola',
+    };
 
-/** Form variables. */
-const form = useForm({
-    user: props.user.id,
-    token: props.token,
-    password: '',
-    password_confirmation: '',
-});
+    /** Form variables. */
+    const form = useForm({
+        user: props.user.id,
+        token: props.token,
+        password: '',
+        password_confirmation: '',
+    });
 
-/** Submit action. */
-const submit = () => {
-    form.post(route('ngo.user.welcome.store',props.user.id), {});
-};
+    /** Submit action. */
+    const submit = () => {
+        form.post(route('ngo.user.welcome.store', props.user.id), {});
+    };
 </script>

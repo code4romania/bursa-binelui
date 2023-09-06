@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasCounties;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class RegionalProject extends Model implements HasMedia
 {
     use HasFactory;
+    use HasCounties;
     use InteractsWithMedia;
     use HasProjectStatus;
     use LogsActivity;
@@ -76,11 +78,6 @@ class RegionalProject extends Model implements HasMedia
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(ProjectCategory::class, 'regional_project_category');
-    }
-
-    public function counties(): BelongsToMany
-    {
-        return $this->belongsToMany(County::class);
     }
 
     public function getCoverImageAttribute(): string

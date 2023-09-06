@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasCounties;
+use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
 use App\Enums\ProjectStatus;
@@ -28,6 +30,8 @@ class Organization extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use HasActivityDomain;
+    use HasCounties;
+    use HasVolunteers;
     use HasOrganizationStatus;
     use LogsActivityForApproval;
 
@@ -86,7 +90,7 @@ class Organization extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')
-            ->useFallbackUrl(Vite::asset('resources/images/organization.png'))
+            ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this
@@ -106,11 +110,6 @@ class Organization extends Model implements HasMedia
         return $this->hasMany(User::class);
     }
 
-    public function counties(): BelongsToMany
-    {
-        return $this->belongsToMany(County::class);
-    }
-
     public function activityDomains(): BelongsToMany
     {
         return $this->belongsToMany(ActivityDomain::class);
@@ -124,11 +123,6 @@ class Organization extends Model implements HasMedia
     public function activities(): MorphMany
     {
         return $this->morphMany(Activity::class, 'subject');
-    }
-
-    public function volunteers(): BelongsToMany
-    {
-        return $this->belongsToMany(Volunteer::class);
     }
 
     /**
@@ -151,16 +145,6 @@ class Organization extends Model implements HasMedia
     public function scopeWhereDoesntAcceptVolunteers(Builder $query): Builder
     {
         return $query->where('accepts_volunteers', false);
-    }
-
-    public function scopeWhereHasVolunteers(Builder $query): Builder
-    {
-        return $query->whereHas('volunteers');
-    }
-
-    public function scopeWhereDoesntHaveVolunteers(Builder $query): Builder
-    {
-        return $query->whereDoesntHave('volunteers');
     }
 
     public function scopeWhereHasProjects(Builder $query): Builder

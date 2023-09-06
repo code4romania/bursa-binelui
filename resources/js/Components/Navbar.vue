@@ -47,13 +47,13 @@
                     </Link>
 
                     <!-- Notification icon -->
-                    <button
+                    <!-- <button
                         v-if="$page.props.auth.user"
                         type="button"
                         class="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                     >
                         <BellIcon class="w-6 h-6" aria-hidden="true" />
-                    </button>
+                    </button> -->
 
                     <!-- User links -->
                     <Menu v-if="$page.props.auth.user" as="div" class="relative ml-3">
@@ -131,8 +131,8 @@
                     <DisclosureButton
                         class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
                     >
-                        <Bars3Icon v-if="!open" class="block w-6 h-6" aria-hidden="true" />
-                        <XMarkIcon v-else class="block w-6 h-6" aria-hidden="true" />
+                        <MenuIcon v-if="!open" class="block w-6 h-6" aria-hidden="true" />
+                        <XIcon v-else class="block w-6 h-6" aria-hidden="true" />
                     </DisclosureButton>
                 </div>
             </div>
@@ -267,12 +267,13 @@
 </template>
 
 <script setup>
+    import { computed } from 'vue';
     /** Import from inertia. */
-    import { Link } from '@inertiajs/vue3';
+    import { Link, usePage } from '@inertiajs/vue3';
 
     /** Import plugins. */
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-    import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+    import { MenuIcon, BellIcon, XIcon } from '@heroicons/vue/outline';
 
     /** Import components. */
     import NavLink from '@/Components/links/NavLink.vue';
@@ -329,15 +330,10 @@
         },
     ];
 
-    /** Languages menu links. */
-    const languages = [
-        {
-            id: 1,
-            name: 'RO',
-        },
-        {
-            id: 2,
-            name: 'EN',
-        },
-    ];
+    const languages = computed(() =>
+        usePage().props.locales.map((locale) => ({
+            name: locale,
+            id: locale,
+        }))
+    );
 </script>

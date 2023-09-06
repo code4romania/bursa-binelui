@@ -16,7 +16,7 @@ return [
     */
 
     'default_locales' => [
-        config('app.locale'),
+        // config('app.locale') is already included by default
     ],
 
 ];

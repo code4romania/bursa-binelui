@@ -1,66 +1,62 @@
 <template>
-    <transition name="fade">
-        <div v-if="show"  class="z-120" :class="['border-l-4 p-4', 'success' == type ? 'border-green-400 bg-green-50' : 'error' == type ? 'border-red-400 bg-red-50' : 'border-yellow-400 bg-yellow-50']">
-            <div class="flex">
+    <div class="p-4 my-4 rounded-md bg-green-50" :class="color">
+        <div class="flex gap-3">
+            <Component :is="icon" class="w-5 h-5 shrink-0" :class="iconColor" aria-hidden="true" />
 
-                <div class="flex-shrink-0">
-                    <ExclamationTriangleIcon v-if="'warning' == type" class="h-5 w-5 text-yellow-700" aria-hidden="true" />
-                    <CheckCircleIcon v-if="'success' == type" class="h-5 w-5 text-green-700" aria-hidden="true" />
-                    <XCircleIcon v-if="'error' == type" class="h-5 w-5 text-red-700" aria-hidden="true" />
-                </div>
-
-                <div class="ml-3">
-                    <p
-                        :class="[`text-sm font-medium`, 'success' == type ? 'text-green-800' : 'error' == type ? 'text-red-800' : 'text-yellow-700']"
-                    >
-                        {{ message }}
-                    </p>
-                </div>
-            </div>
+            <p class="text-sm font-medium" v-text="message" />
         </div>
-    </transition>
+    </div>
 </template>
 
 <script setup>
-    /** Import form vue. */
-    import { watchEffect, ref } from 'vue'
+    import { computed } from 'vue';
 
     /** Import plugins. */
-    import { ExclamationTriangleIcon, XCircleIcon, CheckCircleIcon } from '@heroicons/vue/20/solid';
+    import { CheckCircleIcon, ExclamationIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({
-        type: [String, Array, Boolean],
-        message: String
+        type: {
+            type: String,
+            required: true,
+            validator: (type) => ['success', 'error', 'warning'].includes(type),
+        },
+        message: {
+            type: String,
+            required: true,
+        },
     });
 
-    /** Local state. */
-    const show = ref(false);
-
-    /** Initialize emits. */
-    const emit = defineEmits(['update:modelValue']);
-
-    /** Show alert card. */
-    watchEffect(() => {
-        if (props.message) {
-            show.value = true
-
-            setTimeout(() => {
-                show.value = false
-                emit('emptyFlash', '')
-            }, 3000)
+    const icon = computed(() => {
+        if (props.type === 'warning') {
+            return ExclamationIcon;
         }
-    })
+        if (props.type === 'error') {
+            return ExclamationCircleIcon;
+        }
+
+        return CheckCircleIcon;
+    });
+
+    const iconColor = computed(() => {
+        if (props.type === 'warning') {
+            return 'text-yellow-500';
+        }
+        if (props.type === 'error') {
+            return 'text-red-500';
+        }
+
+        return 'text-green-500';
+    });
+
+    const color = computed(() => {
+        if (props.type === 'warning') {
+            return 'bg-yellow-50 text-yellow-800';
+        }
+        if (props.type === 'error') {
+            return 'bg-red-50 text-red-800';
+        }
+
+        return 'bg-green-50 text-green-800';
+    });
 </script>
-
-<style scoped>
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity 0.5s;
-    }
-
-    .fade-enter,
-    .fade-leave-to {
-        opacity: 0;
-    }
-</style>

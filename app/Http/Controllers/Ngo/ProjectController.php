@@ -6,10 +6,13 @@ namespace App\Http\Controllers\Ngo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
+use App\Http\Resources\ProjectCardsResource;
+use App\Models\Activity;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Services\ProjectService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,14 +20,19 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
+        // TODO: fix issue with approved projects not being displayed
         $projectStatus = $request->get('project_status');
-        $projects = Project::query()->with('organization')->where('organization_id', auth()->user()->organization_id);
-        if ($projectStatus) {
-            $projects = $projects->where('status', $projectStatus);
-        }
 
         return Inertia::render('AdminOng/Projects/Projects', [
-            'query' => $projects->paginate(16)->withQueryString(),
+            'query' => ProjectCardsResource::collection(
+                Project::query()
+                    ->where('organization_id', auth()->user()->organization_id)
+                    ->when($projectStatus, function (Builder $query, $projectStatus) {
+                        return $query->status($projectStatus);
+                    })
+                    ->paginate(16)
+                    ->withQueryString()
+            ),
             'projectStatus' => $projectStatus,
         ]);
     }
@@ -66,6 +74,11 @@ class ProjectController extends Controller
             'project' => $project,
             'counties' => $counties,
             'projectCategories' => ProjectCategory::get(['name', 'id']),
+            'changes' => Activity::pendingChangesFor($project)
+                ->get()
+                ->flatMap(fn (Activity $activity) => $activity->properties->keys())
+                ->unique()
+                ->values(),
         ]);
     }
 
@@ -81,7 +94,8 @@ class ProjectController extends Controller
         }
         $project->update($request->all());
 
-        return redirect()->back()->with('success_message', 'Project updated.');
+        return redirect()->back()
+            ->with('success', 'Project updated.');
     }
 
     public function changeStatus($id, Request $request)
@@ -89,9 +103,11 @@ class ProjectController extends Controller
         try {
             (new ProjectService(Project::class))->changeStatus($id, $request->get('status'));
         } catch (\Exception $exception) {
-            return redirect()->back()->with('error_message', $exception->getMessage());
+            return redirect()->back()
+                ->with('error', $exception->getMessage());
         }
 
-        return redirect()->back()->with('success_message', 'Project status changed.');
+        return redirect()->back()
+            ->with('success', 'Project status changed.');
     }
 }

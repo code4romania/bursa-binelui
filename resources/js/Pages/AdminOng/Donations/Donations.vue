@@ -1,24 +1,16 @@
 <template>
-    <PageLayout>
-        <!-- Inertia page head -->
-        <Head :title="$t('donations')" />
-
-        <!-- Alert -->
-        <Alert
-            class="fixed right-10 top-10 w-96 z-50"
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message:'', error_message:'' });"
-        />
+    <DashboardLayout>
+        <Title :title="$t('donations')">
+            <CurrencyEuroIcon />
+        </Title>
 
         <!-- Dashboard template -->
         <Dashboard>
-           <div class="p-9 mb-24 w-full">
-
+            <div class="w-full mb-24 p-9">
                 <!-- Header -->
                 <header class="flex items-center gap-4">
-                    <div class="bg-primary-500 w-8 h-8 rounded-lg flex items-center justify-center">
-                        <SvgLoader class="shrink-0" name="money"/>
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
+                        <SvgLoader class="shrink-0" name="money" />
                     </div>
                     <h2 class="text-2xl font-bold text-gray-900">{{ $t('donations') }}</h2>
                 </header>
@@ -26,8 +18,7 @@
                 <!-- Filters -->
                 <div class="my-11">
                     <div class="grid grid-cols-12 gap-6">
-
-                        <div class="col-span-12 grid grid-cols-12 gap-6">
+                        <div class="grid grid-cols-12 col-span-12 gap-6">
                             <SearchFilter
                                 id="project-search"
                                 class="col-span-4"
@@ -37,26 +28,23 @@
                                 @keydown.enter="filterTable"
                             />
 
-                            <SecondaryButton
-                                @click="filterTable"
-                                class="py-2 col-span-2 text-center"
-                            >
+                            <SecondaryButton @click="filterTable" class="col-span-2 py-2 text-center">
                                 {{ $t('search') }}
                             </SecondaryButton>
 
                             <SecondaryButton
                                 v-if="hasValues"
                                 @click="emptyFilters"
-                                class="py-2 col-span-2 text-center flex gap-2 items-center justify-center"
+                                class="flex items-center justify-center col-span-2 gap-2 py-2 text-center"
                             >
                                 <SvgLoader name="close" />
                                 {{ $t('empty_filters') }}
                             </SecondaryButton>
 
-                            <div :class="['col-span-12 flex justify-end', hasValues ? 'sm:col-span-4' : 'sm:col-span-6']">
-                                <SecondaryButton
-                                    class="py-2 flex items-center justify-center gap-4"
-                                >
+                            <div
+                                :class="['col-span-12 flex justify-end', hasValues ? 'sm:col-span-4' : 'sm:col-span-6']"
+                            >
+                                <SecondaryButton class="flex items-center justify-center gap-4 py-2">
                                     <SvgLoader class="shrink-0" name="download" />
                                     {{ $t('download_table') }}
                                 </SecondaryButton>
@@ -109,34 +97,37 @@
                     :links="donations.links"
                 >
                     <tr v-for="donation in donations.data" :key="donation.id">
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.id }}</td>
-                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.id }}</td>
+                        <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                             <div class="flex items-center gap-4">
-                                <img v-if="donation.user.image" :src="donation.user.image" alt="avatar">
+                                <img v-if="donation.user.image" :src="donation.user.image" alt="avatar" />
                                 <SvgLoader v-else class="shrink-0" name="default_avatar" />
                                 <div>
-                                    <p class="text-sm text-gray-900 font-medium">{{ donation.user.name }}</p>
+                                    <p class="text-sm font-medium text-gray-900">{{ donation.user.name }}</p>
                                     <p class="text-sm text-gray-500">{{ donation.user.email }}</p>
                                 </div>
                             </div>
                         </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.project }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{{ donation.amount }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.created_at }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.approved_at }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.uploaded_at }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.withdraw_amount }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ donation.status }}</td>
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.project }}</td>
+                        <td class="px-3 py-4 text-sm text-gray-900 whitespace-nowrap">{{ donation.amount }}</td>
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.created_at }}</td>
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.approved_at }}</td>
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.uploaded_at }}</td>
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {{ donation.withdraw_amount }}
+                        </td>
+                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.status }}</td>
 
-                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <td class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
                             <Modal
                                 triggerModalClasses="whitespace-nowrap px-3 py-4 text-sm text-blue-500"
                                 :triggerModalText="$t('edit')"
                                 id="donation-edit"
                             >
-                                <form class="space-y-4 w-full" @submit.prevent="editDonation">
-
-                                    <h3 class="w-full text-gray-900 font-semibold text-lg">{{ $t('edit_donation') }}</h3>
+                                <form class="w-full space-y-4" @submit.prevent="editDonation">
+                                    <h3 class="w-full text-lg font-semibold text-gray-900">
+                                        {{ $t('edit_donation') }}
+                                    </h3>
 
                                     <Select
                                         class="w-full"
@@ -181,11 +172,8 @@
                                     />
 
                                     <!-- Actions -->
-                                    <div class="pt-6 w-full flex items-center justify-end gap-6">
-                                        <SecondaryButton
-                                            @click="closeModal"
-                                            class="py-2.5"
-                                        >
+                                    <div class="flex items-center justify-end w-full gap-6 pt-6">
+                                        <SecondaryButton @click="closeModal" class="py-2.5">
                                             {{ $t('back') }}
                                         </SecondaryButton>
 
@@ -203,9 +191,9 @@
                         </td>
                     </tr>
                 </Table>
-           </div>
+            </div>
         </Dashboard>
-    </PageLayout>
+    </DashboardLayout>
 </template>
 
 <script setup>
@@ -216,11 +204,9 @@
     import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Dashboard from '@/Components/templates/Dashboard.vue';
+    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Alert from '@/Components/Alert.vue';
-    import Table from '@/Components/templates/Table.vue';
+    import Table from '@/Components/Table.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import Select from '@/Components/form/Select.vue';
     import Input from '@/Components/form/Input.vue';
@@ -228,6 +214,7 @@
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import { CurrencyEuroIcon } from '@heroicons/vue/outline';
 
     /** Page data. */
     // const props = defineProps({
@@ -241,44 +228,54 @@
     // })
 
     const flash = {
-        success_message:'',
-        error_message:''
+        success_message: '',
+        error_message: '',
     };
 
     /** Active filter state. */
     const hasValues = ref(false);
 
-    const columns = ['#ID', ,'CATRE', 'SUMA (RON)', 'DATA CREARE', 'DATA APROBARE', 'DATA INCARCARE', 'RETRAGERE RON', 'STATUS'];
+    const columns = [
+        '#ID',
+        ,
+        'CATRE',
+        'SUMA (RON)',
+        'DATA CREARE',
+        'DATA APROBARE',
+        'DATA INCARCARE',
+        'RETRAGERE RON',
+        'STATUS',
+    ];
 
     /** Filter values. */
     const filter = ref({
         search: '',
         status: '',
         amount: '',
-        project:'',
+        project: '',
         start_date: '',
-        end_date: ''
+        end_date: '',
     });
 
     /** Filter table. */
     const filterTable = () => {
         // router.visit(route('route'), {
-            // method: 'get',
-            // data: filter.value,
-            // preserveState: true,
-            // onSuccess: (data) => {
-                // if (Object.values(data.props.request).every(value => value === null)) {
-                //     hasValues.value = false
-                // } else {
-                //     hasValues.value = true
-                // }
-            // }
+        // method: 'get',
+        // data: filter.value,
+        // preserveState: true,
+        // onSuccess: (data) => {
+        // if (Object.values(data.props.request).every(value => value === null)) {
+        //     hasValues.value = false
+        // } else {
+        //     hasValues.value = true
+        // }
+        // }
         // })
 
-        if (Object.values(filter).every(value => value === null)) {
-            hasValues.value = false
+        if (Object.values(filter).every((value) => value === null)) {
+            hasValues.value = false;
         } else {
-            hasValues.value = true
+            hasValues.value = true;
         }
     };
 
@@ -296,75 +293,71 @@
         //     onSuccess: () => {},
         //     onError: () => {},
         // });
-    }
+    };
 
-    const closeModal =(() => document.getElementById('donation-edit').click());
-
-    /**
-     Remove this when retriving data from back
-     * */
+    const closeModal = () => document.getElementById('donation-edit').click();
 
     /** Donations */
     const donations = {
-        "current_page": 2,
-        "data": [
+        current_page: 2,
+        data: [
             {
                 user: {
                     image: '',
                     name: 'Jane Cooper',
                     email: 'jane.cooper@example.com',
-                    phone: '0755864325'
+                    phone: '0755864325',
                 },
                 id: 1,
                 project: 'Fundatia pentru Voineasa',
                 organization: 'Fundatia pentru Voineasa',
-                amount: "300",
+                amount: '300',
                 created_at: '12.08.2022',
                 approved_at: '12.08.2022',
                 uploaded_at: '12.08.2022',
                 withdraw_amount: '300',
                 status: 'Incasata',
-                comment: 'comment'
+                comment: 'comment',
             },
         ],
-        "first_page_url": "http://bursabinelui.test/proiecte?page=1",
-        "from": 1,
-        "last_page": 2,
-        "last_page_url": "http://bursabinelui.test/proiecte?page=2",
-        "links": [
+        first_page_url: 'http://bursabinelui.test/proiecte?page=1',
+        from: 1,
+        last_page: 2,
+        last_page_url: 'http://bursabinelui.test/proiecte?page=2',
+        links: [
             {
-                "url": "http://bursabinelui.test/proiecte?page=1",
-                "label": "1",
-                "active": true
+                url: 'http://bursabinelui.test/proiecte?page=1',
+                label: '1',
+                active: true,
             },
             {
-                "url": "http://bursabinelui.test/proiecte?page=1",
-                "label": "1",
-                "active": true
+                url: 'http://bursabinelui.test/proiecte?page=1',
+                label: '1',
+                active: true,
             },
             {
-                "url": "http://bursabinelui.test/proiecte?page=2",
-                "label": "2",
-                "active": false
+                url: 'http://bursabinelui.test/proiecte?page=2',
+                label: '2',
+                active: false,
             },
             {
-                "url": "http://bursabinelui.test/proiecte?page=3",
-                "label": "3",
-                "active": false
+                url: 'http://bursabinelui.test/proiecte?page=3',
+                label: '3',
+                active: false,
             },
             {
-                "url": "http://bursabinelui.test/proiecte?page=1",
-                "label": "1",
-                "active": true
+                url: 'http://bursabinelui.test/proiecte?page=1',
+                label: '1',
+                active: true,
             },
         ],
-        "next_page_url": "http://bursabinelui.test/proiecte?page=3",
-        "path": "http://bursabinelui.test/proiecte",
-        "per_page": 15,
-        "prev_page_url": 'http://bursabinelui.test/proiecte?page=1',
-        "to": 15,
-        "total": 20
-    }
+        next_page_url: 'http://bursabinelui.test/proiecte?page=3',
+        path: 'http://bursabinelui.test/proiecte',
+        per_page: 15,
+        prev_page_url: 'http://bursabinelui.test/proiecte?page=1',
+        to: 15,
+        total: 20,
+    };
 
     /** Statuses */
     const statuses = ['Active', 'Inactive'];

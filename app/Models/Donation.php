@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Donation extends Model
 {
+    use HasFactory;
+    use HasUuid;
+
     protected $fillable = [
         'uuid',
         'user_id',
@@ -27,7 +31,6 @@ class Donation extends Model
         'charge_date',
         'updated_without_correct_e_pid',
     ];
-    use HasFactory;
 
     public function project(): BelongsTo
     {
