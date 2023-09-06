@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasCounties;
+use App\Concerns\HasVolunteers;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +29,7 @@ class Project extends Model implements HasMedia
 {
     use HasFactory;
     use HasCounties;
+    use HasVolunteers;
     use InteractsWithMedia;
     use HasProjectStatus;
     use LogsActivity;
@@ -105,11 +107,6 @@ class Project extends Model implements HasMedia
     public function scopePublish(Builder $query): Builder
     {
         return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
-    }
-
-    public function volunteers(): BelongsToMany
-    {
-        return $this->belongsToMany(Volunteer::class);
     }
 
     public function stages(): BelongsToMany

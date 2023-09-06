@@ -1,37 +1,31 @@
 <template>
-    <transition name="fade">
-        <div
-            v-if="show"
-            class="z-120"
-            :class="[
-                'border-l-4 p-4',
-                'success' == type
-                    ? 'border-green-400 bg-green-50'
-                    : 'error' == type
-                    ? 'border-red-400 bg-red-50'
-                    : 'border-yellow-400 bg-yellow-50',
-            ]"
+    <Teleport to="#alert-teleport-target">
+        <transition
+            enter-active-class="transition duration-300 ease-out transform"
+            enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+            enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
+            leave-active-class="transition duration-100 ease-in"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
         >
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <ExclamationIcon v-if="'warning' == type" class="w-5 h-5 text-yellow-700" aria-hidden="true" />
-                    <CheckCircleIcon v-if="'success' == type" class="w-5 h-5 text-green-700" aria-hidden="true" />
-                    <XCircleIcon v-if="'error' == type" class="w-5 h-5 text-red-700" aria-hidden="true" />
-                </div>
+            <div
+                v-if="show"
+                class="w-full max-w-sm p-4 overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5"
+            >
+                <div class="flex items-center gap-3">
+                    <div class="shrink-0">
+                        <ExclamationIcon v-if="'warning' === type" class="w-6 h-6 text-yellow-500" aria-hidden="true" />
+                        <CheckCircleIcon v-if="'success' === type" class="w-6 h-6 text-green-500" aria-hidden="true" />
+                        <XCircleIcon v-if="'error' === type" class="w-6 h-6 text-red-500" aria-hidden="true" />
+                    </div>
 
-                <div class="ml-3">
-                    <p
-                        :class="[
-                            `text-sm font-medium`,
-                            'success' == type ? 'text-green-800' : 'error' == type ? 'text-red-800' : 'text-yellow-700',
-                        ]"
-                    >
-                        {{ message }}
-                    </p>
+                    <div class="flex-1 w-0">
+                        <p class="text-sm font-medium text-gray-900" v-text="message" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </transition>
+        </transition>
+    </Teleport>
 </template>
 
 <script setup>
@@ -65,15 +59,3 @@
         }
     });
 </script>
-
-<style scoped>
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity 0.5s;
-    }
-
-    .fade-enter,
-    .fade-leave-to {
-        opacity: 0;
-    }
-</style>

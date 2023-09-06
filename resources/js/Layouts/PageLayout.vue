@@ -10,7 +10,7 @@
                     :name="icon"
                 />
 
-                <h1 class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl" v-text="title" />
+                <h1 class="text-2xl font-bold leading-none text-gray-900 md:text-3xl" v-text="title" />
 
                 <Head :title="title" />
             </header>

@@ -11,6 +11,7 @@ use App\Models\Organization;
 use App\Models\Project;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\Volunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -104,6 +105,12 @@ class OrganizationFactory extends Factory
                 ->for($organization)
                 ->for($admin)
                 ->create();
+
+            $organization->volunteers()->attach(
+                Volunteer::factory()
+                    ->count(10)
+                    ->create()
+            );
         });
     }
 }

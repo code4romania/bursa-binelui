@@ -3,17 +3,11 @@
         <!-- Inertia page head -->
         <Head title="Log in" />
 
-        <Alert
-            v-if="status"
-            class="fixed right-10 top-10 w-96 z-103"
-            type="success"
-            :message="status"
-        />
+        <Alert v-if="status" type="success" :message="status" />
 
         <!-- Auth template. -->
         <Auth :content="content">
             <form class="mt-4 space-y-4" @submit.prevent="submit">
-
                 <!-- Email. -->
                 <Input
                     :label="$t('email')"
@@ -39,7 +33,6 @@
                 />
 
                 <div class="flex items-center justify-between">
-
                     <!-- Checkbox -->
                     <label class="flex items-center">
                         <Checkbox name="remember" v-model:checked="form.remember" />
@@ -52,14 +45,12 @@
                         :href="route('password.request')"
                         class="text-sm underline rounded-md text-primary-500 hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
-                        {{  $t('password_forgoten') }}
+                        {{ $t('password_forgoten') }}
                     </Link>
-
                 </div>
 
                 <!-- Action -->
                 <div class="grid grid-cols-2 gap-4 mt-6">
-
                     <!-- Log in button -->
                     <PrimaryButton
                         background="primary-500"
@@ -72,13 +63,12 @@
                         {{ $t('log_in') }}
                     </PrimaryButton>
 
-
                     <SecondaryButton
                         class="col-span-2 md:col-span-1 w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"
                         @click="googleLogin"
                     >
                         <SvgLoader name="google" />
-                        {{ $t("google_login") }}
+                        {{ $t('google_login') }}
                     </SecondaryButton>
                 </div>
             </form>
@@ -103,18 +93,18 @@
     /** Component props. */
     defineProps({
         canResetPassword: { type: Boolean },
-        status: {type: String }
+        status: { type: String },
     });
 
     /** Page content. */
     const content = {
-        title: "Intră în cont",
-        description: "Nu ai cont pe Bursa Binelui?",
+        title: 'Intră în cont',
+        description: 'Nu ai cont pe Bursa Binelui?',
         link: {
-            text: "Creează cont nou",
-            href: "register"
-        }
-    }
+            text: 'Creează cont nou',
+            href: 'register',
+        },
+    };
 
     /** Form variables. */
     const form = useForm({
@@ -136,5 +126,5 @@
         /** TODO
          * Method for login with google
          */
-    }
+    };
 </script>

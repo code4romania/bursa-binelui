@@ -2,7 +2,6 @@
     <footer class="mt-32 bg-gray-800">
         <!-- Alert -->
         <Alert
-            class="fixed z-50 right-10 top-10 w-96"
             :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
             :message="flash.success_message || flash.error_message"
             @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"

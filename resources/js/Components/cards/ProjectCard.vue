@@ -85,7 +85,7 @@
                 class="flex mt-4 border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
             >
                 <Link
-                    :href="route('project', project.id)"
+                    :href="route('project', project.slug)"
                     class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                 >
                     {{ $t('view') }}

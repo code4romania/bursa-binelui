@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Ngo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
 use App\Http\Resources\ProjectCardsResource;
+use App\Models\Activity;
 use App\Models\County;
 use App\Models\Project;
 use App\Models\ProjectCategory;
@@ -19,6 +20,7 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
+        // TODO: fix issue with approved projects not being displayed
         $projectStatus = $request->get('project_status');
 
         return Inertia::render('AdminOng/Projects/Projects', [
@@ -72,6 +74,11 @@ class ProjectController extends Controller
             'project' => $project,
             'counties' => $counties,
             'projectCategories' => ProjectCategory::get(['name', 'id']),
+            'changes' => Activity::pendingChangesFor($project)
+                ->get()
+                ->flatMap(fn (Activity $activity) => $activity->properties->keys())
+                ->unique()
+                ->values(),
         ]);
     }
 

@@ -11,11 +11,12 @@ use Inertia\Inertia;
 
 class VolunteerController extends Controller
 {
-    public function index(Request $request, $status = '')
+    public function index(Request $request, ?string $status = null)
     {
         if (auth()->user()->organization == null) {
             return redirect()->route('admin.ong.edit');
         }
+
         if (auth()->user()->organization->projects->count() == 0) {
             $volunteers = Volunteer::where('id', 0)->paginate(15)->withQueryString();
         } else {
@@ -27,13 +28,10 @@ class VolunteerController extends Controller
             }
         }
 
-        return Inertia::render(
-            'AdminOng/Volunteers/Volunteers',
-            [
-                'volunteers' => $volunteers,
-                'status' => $status,
-            ]
-        );
+        return Inertia::render('AdminOng/Volunteers/Volunteers', [
+            'status' => $status,
+            'volunteers' => $volunteers,
+        ]);
     }
 
     public function approve(Request $request, $id)

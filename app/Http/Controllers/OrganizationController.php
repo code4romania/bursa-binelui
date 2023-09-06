@@ -77,17 +77,15 @@ class OrganizationController extends Controller
             return County::get(['name', 'id']);
         });
 
-        $changes = Activity::pendingChangesFor($organization)
-            ->get()
-            ->flatMap(fn (Activity $activity) => $activity->properties->keys())
-            ->unique()
-            ->values();
-
         return Inertia::render('AdminOng/Ong/EditOng', [
             'organization' => new EditOrganizationResource($organization),
             'activity_domains' => $activityDomains,
             'counties' => $counties,
-            'changes' => $changes,
+            'changes' => Activity::pendingChangesFor($organization)
+                ->get()
+                ->flatMap(fn (Activity $activity) => $activity->properties->keys())
+                ->unique()
+                ->values(),
         ]);
     }
 

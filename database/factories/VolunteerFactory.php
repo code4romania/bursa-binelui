@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\VolunteerStatus;
 use App\Models\Volunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -14,11 +15,15 @@ class VolunteerFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->unique()->safeEmail,
-            'phone' => $this->faker->phoneNumber,
-            'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'status' => fake()->randomElement([
+                VolunteerStatus::pending,
+                VolunteerStatus::active,
+                VolunteerStatus::inactive,
+            ]),
         ];
     }
 }

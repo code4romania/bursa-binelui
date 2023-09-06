@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Volunteer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_volunteer', function (Blueprint $table) {
+        Schema::create('model_has_volunteers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Project::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Volunteer::class)->constrained()->cascadeOnDelete();
+            $table->morphs('model');
+            $table->foreignIdFor(Volunteer::class)->constrained()->cascadeOnDelete();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_volunteer');
+        Schema::dropIfExists('model_has_volunteers');
     }
 };

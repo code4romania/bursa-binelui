@@ -41,9 +41,11 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function item(Project $project)
+    public function show(Project $project)
     {
-        return Inertia::render('Public/Projects/Project', [
+        // TODO: prevent display of unpublished projects
+
+        return Inertia::render('Public/Projects/Show', [
             'project' => $project,
         ]);
     }

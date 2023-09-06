@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasCounties;
+use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
 use App\Enums\ProjectStatus;
@@ -30,6 +31,7 @@ class Organization extends Model implements HasMedia
     use InteractsWithMedia;
     use HasActivityDomain;
     use HasCounties;
+    use HasVolunteers;
     use HasOrganizationStatus;
     use LogsActivityForApproval;
 
@@ -123,11 +125,6 @@ class Organization extends Model implements HasMedia
         return $this->morphMany(Activity::class, 'subject');
     }
 
-    public function volunteers(): BelongsToMany
-    {
-        return $this->belongsToMany(Volunteer::class);
-    }
-
     /**
      * Scope a query to include the searched text.
      */
@@ -143,11 +140,6 @@ class Organization extends Model implements HasMedia
     public function scopeWhereAcceptsVolunteers(Builder $query): Builder
     {
         return $query->where('accepts_volunteers', true);
-    }
-
-    public function scopeWhereHasVolunteers(Builder $query): Builder
-    {
-        return $query->whereHas('volunteers');
     }
 
     public function scopeWhereHasProjects(Builder $query): Builder
