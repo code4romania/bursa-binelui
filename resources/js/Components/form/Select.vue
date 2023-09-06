@@ -79,7 +79,7 @@
         ComboboxOption,
         ComboboxOptions,
     } from '@headlessui/vue';
-    import { useI18n } from 'vue-i18n';
+    import { trans } from 'laravel-vue-i18n';
 
     /** Component props. */
     const props = defineProps({
@@ -96,7 +96,6 @@
             default: false,
         },
     });
-    const { t } = useI18n();
 
     /** Query input. */
     const query = ref('');
@@ -120,7 +119,7 @@
         let name = option.name ? option.name : option;
 
         if (props.useTranslation) {
-            return t(name);
+            return trans(name);
         }
         return name;
     };
