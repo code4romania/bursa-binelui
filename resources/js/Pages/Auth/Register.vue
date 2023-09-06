@@ -3,15 +3,9 @@
         <!-- Inertia page head -->
         <Head title="Register" />
 
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash?.success_message?.message || flash.error_message"
-            @emptyFlash="Object.assign(props.flash, { success_message: '', error_message: '' })"
-        />
-
         <!-- Auth template. -->
         <Auth :content="content">
+            <Alert v-if="status" type="success" :message="status" />
             <!-- Steps -->
             <div class="mt-6">
                 <component

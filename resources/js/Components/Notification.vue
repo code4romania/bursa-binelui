@@ -13,17 +13,15 @@
                 class="w-full max-w-sm p-4 overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5"
             >
                 <div class="flex items-center gap-3">
-                    <div class="shrink-0">
-                        <Component
-                            :is="isSuccess ? CheckCircleIcon : ExclamationCircleIcon"
-                            class="w-6 h-6"
-                            :class="{
-                                'text-green-500': isSuccess,
-                                'text-red-500': !isSuccess,
-                            }"
-                            aria-hidden="true"
-                        />
-                    </div>
+                    <Component
+                        :is="isSuccess ? CheckCircleIcon : ExclamationCircleIcon"
+                        class="w-6 h-6 shrink-0"
+                        :class="{
+                            'text-green-500': isSuccess,
+                            'text-red-500': !isSuccess,
+                        }"
+                        aria-hidden="true"
+                    />
 
                     <div class="flex-1 w-0">
                         <p class="text-sm font-medium text-gray-900" v-text="message" />
