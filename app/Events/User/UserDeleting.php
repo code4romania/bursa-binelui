@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\Events\User;
 
-use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TicketCreated
+class UserDeleting
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
-    public Ticket $ticket;
+    public User $user;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Ticket $ticket)
+    public function __construct(User $user)
     {
-        $this->ticket = $ticket;
+        $this->user = $user;
     }
 }

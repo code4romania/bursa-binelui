@@ -37,7 +37,8 @@ trait MustSetInitialPassword
     public function markPasswordAsSet(): bool
     {
         return $this->forceFill([
-            'password_set_at' => $this->freshTimestamp(),
+            'email_verified_at' => now(),
+            'password_set_at' => now(),
         ])->save();
     }
 

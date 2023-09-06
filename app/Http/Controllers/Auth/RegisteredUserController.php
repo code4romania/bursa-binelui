@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\UserRole;
+use App\Enums\OrganizationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\User;
-use App\Notifications\Admin\OrganizationCreated as OrganizationCreatedAdmin;
-use App\Notifications\Ngo\OrganizationCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -61,10 +59,12 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($user['password']),
                 'role' => $data['type'],
             ]);
+
             event(new Registered($user));
 
             if ($data['type'] == 'ngo-admin') {
                 $ong = $data['ong'];
+                $ong['status'] = OrganizationStatus::draft;
                 $organization = Organization::create($ong);
                 $organization->addMediaFromRequest('ong.logo')->toMediaCollection('logo');
                 if ($request->hasFile('ong.statute')) {
@@ -72,14 +72,14 @@ class RegisteredUserController extends Controller
                 }
                 $organization->activityDomains()->attach($ong['activity_domains_ids']);
                 $organization->counties()->attach($ong['counties_ids']);
-                $adminUsers = User::whereRole(UserRole::bb_admin)->get();
-                Notification::send($adminUsers, new OrganizationCreatedAdmin($organization));
-                Notification::send($user, new OrganizationCreated($organization));
                 $user->organization_id = $organization->id;
                 $user->save();
             }
 
-            return redirect()->route('register')->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
+            Auth::login($user);
+
+            return redirect()->route('register')
+                ->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
         } catch(\Throwable $th) {
             Log::log('error', $th->getMessage());
 

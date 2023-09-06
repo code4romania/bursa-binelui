@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\MustSetInitialPassword;
+use App\Enums\UserRole;
+use App\Events\User\UserDeleting;
 use App\Traits\HasRole;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
     use HasRole;
     use MustSetInitialPassword;
+    use Prunable;
 
     /**
      * The attributes that are mass assignable.
@@ -58,6 +63,10 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dispatchesEvents = [
+        'deleting' => UserDeleting::class,
+    ];
+
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class)
@@ -77,11 +86,21 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessFilament(): bool
     {
-        return  $this->isBBAdmin() || $this->isBBManager();
+        return $this->isBBAdmin() || $this->isBBManager();
     }
 
     public function getFilamentName(): string
     {
         return "{$this->name}";
+    }
+
+    public function prunable(): Builder
+    {
+        return static::query()
+            ->with('organization:id,name')
+            ->where('created_at', '<=', now()->subHours(48))
+            ->whereNotIn('role', [UserRole::bb_admin, UserRole::bb_manager])
+            ->whereNull('email_verified_at')
+            ->whereNull('password_set_at');
     }
 }

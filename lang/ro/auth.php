@@ -6,6 +6,13 @@ return [
     'failed'   => 'Datele de identificare nu pot fi confirmate.',
     'password' => 'Parola este greșită.',
     'throttle' => 'Prea multe încercări de intrare în cont. Puteți încerca din nou peste :seconds secunde.',
+    'mail' =>[
+        'verify_email'=>[
+            'subject' => 'Verifică-ți adresa de email',
+            'line_1' => 'Te rugăm să confirmi adresa de email apăsând pe butonul de mai jos.',
+            'action' => 'Confirmă adresa de email',
+        ],
+    ],
     'welcome'  => [
         'already_used'      => 'Parola a fost deja setată.',
         'greeting'          => 'Bun venit, :name!',

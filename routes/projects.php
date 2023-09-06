@@ -13,7 +13,7 @@ Route::post('/proiect/{project:slug}/donatie', [\App\Http\Controllers\ProjectCon
 Route::post('/proiect/{project:slug}/voluntar', [\App\Http\Controllers\ProjectController::class, 'volunteer'])->name('project.volunteer');
 
 /* Ong routes. */
-Route::prefix('ong')->middleware('auth')->group(function () {
+Route::prefix('ong')->middleware(['auth', 'verified'])->group(function () {
     Route::get('proiecte', [ProjectController::class, 'index'])->name('admin.ong.projects');
     Route::post('project/change-status/{project}', [ProjectController::class, 'changeStatus'])->name('admin.ong.project.change-status');
     Route::get('add-proiect', [ProjectController::class, 'create'])->name('admin.ong.project.add');

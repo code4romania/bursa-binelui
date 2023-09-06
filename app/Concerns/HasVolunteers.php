@@ -19,4 +19,9 @@ trait HasVolunteers
     {
         return $query->whereHas('volunteers');
     }
+
+    public function scopeWhereDoesntHaveVolunteers(Builder $query): Builder
+    {
+        return $query->whereDoesntHave('volunteers');
+    }
 }

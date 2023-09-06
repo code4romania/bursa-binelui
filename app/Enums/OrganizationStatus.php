@@ -9,11 +9,11 @@ use App\Concerns\ArrayableEnum;
 enum OrganizationStatus: string
 {
     use ArrayableEnum;
+    case draft = 'draft';
     case pending = 'pending';
     case approved = 'active';
     case rejected = 'disabled';
-
-    public const pending_changes = 'pending_changes';
+    case pending_changes = 'pending_changes';
 
     protected function translationKeyPrefix(): ?string
     {

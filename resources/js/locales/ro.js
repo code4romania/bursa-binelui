@@ -404,4 +404,7 @@ export default {
     'confirm_reopen_ticket': 'Ești sigur că vrei să redeschizi acest tichet?',
     "add_regional_project": "Adaugă un proiect regional",
     "field_has_pending_changes": 'Acest câmp are modificări neaprobare. Dacă il editezi, modificările vor fi pierdute.',
+    'verify_email_title': 'Îți mulțumim că te-ai înregistrat pe platforma Bursa Binelui !',
+    "verify_email_description": "Te rugăm să îți validezi adresa de email pentru a-ți accesa contul. Dacă nu ai primit un email pentru validare, te rugăm să ne contactezi la email.",
+    'verify_email_warning': 'Dacă adresa de email nu va fi validată în 48 de ore, datele tale vor fi șterse și nu vor putea fi recuperate',
 }
