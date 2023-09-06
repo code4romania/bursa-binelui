@@ -86,31 +86,21 @@ class ProjectController extends Controller
 
     public function volunteer(Project $project, Request $request)
     {
-        $request->validate([
-            'terms' => 'required|accepted',
-            'email' => 'required|email',
+        $attributes = $request->validate([
+            'terms' => ['required', 'accepted'],
+            'email' => ['required', 'email'],
             'name' => 'required',
             'phone' => 'required',
         ]);
 
-        try {
-            $name = explode(' ', $request->name);
-
-            if (\is_array($name) && ! empty($name)) {
-                $lastName = $name[0] ? $name[0] : '';
-                $firstName = (1 < \count($name)) ? implode(' ', \array_slice($name, 1)) : '';
-            }
-        } catch (\Exception $e) {
-            throw ValidationException::withMessages(['name' => __('invalid_name')]);
-        }
-
-        Volunteer::create([
+        $volunteer = Volunteer::create([
             'user_id' => auth()->user()->id ?? null,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        ])->projects()->attach($project->id);
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
+            'phone' => $attributes['phone'],
+        ]);
+
+        $volunteer->projects()->attach($project->id, ['status' => 'pending']);
 
         /*
          * TODO: Corner case user volunteers is redirect to VolunteerThankYou page
