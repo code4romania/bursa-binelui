@@ -2,7 +2,9 @@
     <div class="flex flex-col min-h-screen">
         <Navbar />
 
-        <div class="flex flex-1 gap-y-10">
+        <Notification />
+
+        <div class="flex items-start flex-1 gap-y-10">
             <div class="p-4 mt-1 overflow-y-auto bg-white border-r border-gray-200 lg:w-72 shrink-0">
                 <p class="mb-5 text-base font-medium text-gray-500">Administrează</p>
                 <nav>
@@ -54,7 +56,7 @@
                 </nav>
             </div>
 
-            <div class="flex-1 p-9">
+            <div class="grid items-start flex-1 gap-8 p-9">
                 <slot />
             </div>
         </div>
@@ -66,6 +68,7 @@
 <script setup>
     import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
+    import Notification from '@/Components/Notification.vue';
 
     import {
         CurrencyEuroIcon,

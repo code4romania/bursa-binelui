@@ -2,12 +2,6 @@
     <DashboardLayout>
         <Title :title="$t('ong_description')" />
 
-        <Alert
-            :type="$page.props.flash.message ? 'error' : $page.props.flash?.success_message ? 'success' : false"
-            :message="$page.props.flash?.success_message || $page.props.flash?.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <dl class="mt-6 border border-gray-100 divide-y divide-gray-100">
             <!-- Edit organization name -->
             <Field :label="$t('organization_name_label')" :hasPendingChanges="changes.includes('name')" alt>

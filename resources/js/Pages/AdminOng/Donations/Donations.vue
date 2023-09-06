@@ -4,13 +4,6 @@
             <CurrencyEuroIcon />
         </Title>
 
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <!-- Dashboard template -->
         <Dashboard>
             <div class="w-full mb-24 p-9">
@@ -213,7 +206,6 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Alert from '@/Components/Alert.vue';
     import Table from '@/Components/Table.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import Select from '@/Components/form/Select.vue';
@@ -304,10 +296,6 @@
     };
 
     const closeModal = () => document.getElementById('donation-edit').click();
-
-    /**
-                                 Remove this when retriving data from back
-                                 * */
 
     /** Donations */
     const donations = {

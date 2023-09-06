@@ -2,13 +2,6 @@
     <DashboardLayout>
         <Title :title="$t('projects_title')" />
 
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <Link
             v-if="route().current('admin.ong.projects')"
             :href="route('admin.ong.project.add')"
@@ -46,7 +39,6 @@
     import Title from '@/Components/Title.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
-    import Alert from '@/Components/Alert.vue';
 
     import { PlusIcon } from '@heroicons/vue/solid';
 

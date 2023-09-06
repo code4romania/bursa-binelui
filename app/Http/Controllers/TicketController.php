@@ -49,7 +49,7 @@ class TicketController extends Controller
         ]);
 
         return redirect()->route('admin.ong.tickets.view', $ticket)
-            ->with('success_message', __('ticket.action_open.success'));
+            ->with('success', __('ticket.action_open.success'));
     }
 
     public function reply(Ticket $ticket, Request $request): RedirectResponse
@@ -66,7 +66,7 @@ class TicketController extends Controller
         ]);
 
         return redirect()->route('admin.ong.tickets.view', $ticket)
-            ->with('success_message', __('ticket.action_reply.success'));
+            ->with('success', __('ticket.action_reply.success'));
     }
 
     public function show(Ticket $ticket)
@@ -93,6 +93,6 @@ class TicketController extends Controller
         }
 
         return redirect()->route('admin.ong.tickets.view', $ticket)
-            ->with('success_message', $message);
+            ->with('success', $message);
     }
 }

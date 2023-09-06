@@ -1,12 +1,5 @@
 <template>
     <footer class="mt-32 bg-gray-800">
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <div class="bg-gray-100">
             <div class="container py-4">
                 <a
@@ -165,18 +158,12 @@
 
 <script setup>
     /** Import from inertia. */
-    import { Link, useForm } from '@inertiajs/vue3';
+    import { useForm } from '@inertiajs/vue3';
 
     /** Import componets. */
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import Icon from '@/Components/Icon.vue';
-    import Alert from './Alert.vue';
-
-    const flash = {
-        success_message: '',
-        error_message: '',
-    };
 
     /** Form variables. */
     const form = useForm({

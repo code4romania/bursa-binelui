@@ -40,7 +40,7 @@ class VolunteerController extends Controller
         $volunteerRequest->markAsApproved();
 
         return redirect()->back()
-            ->with('success_message', 'Voluntarul a fost aprobat cu succes');
+            ->with('success', 'Voluntarul a fost aprobat cu succes');
     }
 
     public function reject(Request $request, VolunteerRequest $volunteerRequest)
@@ -48,7 +48,7 @@ class VolunteerController extends Controller
         $volunteerRequest->markAsRejected();
 
         return redirect()->back()
-            ->with('success_message', 'Voluntarul a fost respins cu succes');
+            ->with('success', 'Voluntarul a fost respins cu succes');
     }
 
     public function delete(Request $request, VolunteerRequest $volunteerRequest)
@@ -56,6 +56,6 @@ class VolunteerController extends Controller
         $volunteerRequest->delete();
 
         return redirect()->back()
-            ->with('success_message', 'Voluntarul a fost sters cu succes');
+            ->with('success', 'Voluntarul a fost sters cu succes');
     }
 }

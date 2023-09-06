@@ -2,6 +2,8 @@
     <div class="flex flex-col min-h-screen">
         <Navbar />
 
+        <Notification />
+
         <div class="grid flex-1 gap-y-10">
             <header v-if="title" class="container flex items-center gap-4 mt-10">
                 <Icon
@@ -25,6 +27,7 @@
 <script setup>
     import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
+    import Notification from '@/Components/Notification.vue';
     import Icon from '@/Components/Icon.vue';
 
     const props = defineProps({

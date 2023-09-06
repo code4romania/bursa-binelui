@@ -96,7 +96,7 @@ class OrganizationController extends Controller
         OrganizationService::update($organization, $request->validated());
 
         return redirect()->route('admin.ong.edit')
-            ->with('success_message', __('organization.messages.update_success'));
+            ->with('success', __('organization.messages.update_success'));
     }
 
     public function removeLogo(Request $request)

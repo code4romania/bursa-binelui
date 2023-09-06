@@ -3,13 +3,6 @@
         <!-- Inertia page head -->
         <Title :title="$t('edit_project_title')" />
 
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
             <!-- Edit project name -->
             <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
@@ -462,7 +455,6 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Alert from '@/Components/Alert.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
     import Select from '@/Components/form/Select.vue';

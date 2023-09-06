@@ -94,7 +94,8 @@ class ProjectController extends Controller
         }
         $project->update($request->all());
 
-        return redirect()->back()->with('success_message', 'Project updated.');
+        return redirect()->back()
+            ->with('success', 'Project updated.');
     }
 
     public function changeStatus($id, Request $request)
@@ -102,9 +103,11 @@ class ProjectController extends Controller
         try {
             (new ProjectService(Project::class))->changeStatus($id, $request->get('status'));
         } catch (\Exception $exception) {
-            return redirect()->back()->with('error_message', $exception->getMessage());
+            return redirect()->back()
+                ->with('error', $exception->getMessage());
         }
 
-        return redirect()->back()->with('success_message', 'Project status changed.');
+        return redirect()->back()
+            ->with('success', 'Project status changed.');
     }
 }

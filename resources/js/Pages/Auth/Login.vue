@@ -3,10 +3,10 @@
         <!-- Inertia page head -->
         <Head title="Log in" />
 
-        <Alert v-if="status" type="success" :message="status" />
-
         <!-- Auth template. -->
         <Auth :content="content">
+            <Alert v-if="status" type="success" :message="status" />
+
             <form class="mt-4 space-y-4" @submit.prevent="submit">
                 <!-- Email. -->
                 <Input

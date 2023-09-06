@@ -3,10 +3,10 @@
         <!-- Inertia page head -->
         <Head :title="$t('password_reset')" />
 
-        <Alert v-if="status" type="success" :message="status" />
-
         <!-- Auth template. -->
         <Auth :content="content">
+            <Alert v-if="status" type="success" :message="status" />
+
             <form class="mt-4 space-y-6 lg:mb-28" @submit.prevent="submit">
                 <!-- Email -->
                 <Input

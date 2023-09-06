@@ -66,6 +66,7 @@ class PasswordController extends Controller
         ]);
         $user->markPasswordAsSet();
 
-        return redirect()->route('login')->with('success_message', __('user.messages.set_initial_password_success'));
+        return redirect()->route('login')
+            ->with('success', __('user.messages.set_initial_password_success'));
     }
 }

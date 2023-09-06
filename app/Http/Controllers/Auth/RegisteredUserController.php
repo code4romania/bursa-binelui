@@ -79,11 +79,12 @@ class RegisteredUserController extends Controller
             Auth::login($user);
 
             return redirect()->route('register')
-                ->with('success_message', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
+                ->with('success', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
         } catch(\Throwable $th) {
             Log::log('error', $th->getMessage());
 
-            return redirect()->back()->with('error_message', __('auth.failed'));
+            return redirect()->back()
+                ->with('error', __('auth.failed'));
         }
     }
 
@@ -94,9 +95,11 @@ class RegisteredUserController extends Controller
             $user->source_of_information = $request->input('source_of_information');
             $user->save();
 
-            return redirect()->back()->with('success_message', 'Multumim pentru feedback');
+            return redirect()->back()
+                ->with('success', 'Multumim pentru feedback');
         } catch(\Throwable $th) {
-            return redirect()->back()->with('error_message', 'Something went wrong');
+            return redirect()->back()
+                ->with('error', 'Something went wrong');
         }
     }
 }

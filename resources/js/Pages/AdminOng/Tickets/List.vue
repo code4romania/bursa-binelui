@@ -1,11 +1,5 @@
 <template>
     <DashboardLayout>
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <div class="flex flex-wrap">
             <Link
                 :href="route('admin.ong.tickets.index', { status: 'open' })"
@@ -134,7 +128,6 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import Alert from '@/Components/Alert.vue';
     import Table from '@/Components/Table.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
     import Modal from '@/Components/modals/Modal.vue';

@@ -4,13 +4,6 @@
             <AnnotationIcon />
         </Title>
 
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <dl class="my-8 divide-y divide-gray-200">
             <div class="grid px-4 py-3 text-gray-700 md:grid-cols-12">
                 <dt class="font-semibold md:col-span-5 lg:col-span-3">ID</dt>
@@ -106,7 +99,6 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import Alert from '@/Components/Alert.vue';
     import ToggleTicketStatusModal from '@/Components/modals/ToggleTicketStatusModal.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import Textarea from '@/Components/form/Textarea.vue';

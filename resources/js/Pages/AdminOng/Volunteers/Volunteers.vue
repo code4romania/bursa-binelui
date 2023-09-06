@@ -12,13 +12,6 @@
             <UserGroupIcon />
         </Title>
 
-        <!-- Alert -->
-        <Alert
-            :type="flash.error_message ? 'error' : flash.success_message ? 'success' : false"
-            :message="flash.success_message || flash.error_message"
-            @emptyFlash="Object.assign(flash, { success_message: '', error_message: '' })"
-        />
-
         <Table
             class="mb-24"
             :columns="['Nume', 'Telefon', 'Proiect', 'Data Inscriere', 'Utilizator']"
@@ -103,7 +96,6 @@
     import Pagination from '@/Components/pagination/Pagination.vue';
     import Title from '@/Components/Title.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Alert from '@/Components/Alert.vue';
     import Table from '@/Components/Table.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';

@@ -23,12 +23,12 @@
                     <h1 class="py-12 text-6xl font-extrabold text-gray-900" v-text="organization.name" />
 
                     <div class="flex items-center gap-4">
-                        <Link
-                            :href="route('projects')"
+                        <a
+                            href="#projects"
                             class="text-center inline text-white bg-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
                         >
                             {{ $t('see_projects') }}
-                        </Link>
+                        </a>
 
                         <!-- Volunteer modal -->
                         <VolunteerModal
