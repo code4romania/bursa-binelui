@@ -6,7 +6,6 @@
         <div class="mx-auto mb-10 p-9 max-w-7xl">
             <div class="flex flex-col w-full gap-6 sm:flex-row">
                 <div class="w-full sm:w-6/12">
-
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
                             <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
@@ -42,7 +41,6 @@
         </div>
 
         <HowCanYouHelp
-            v-if="flash?.data"
             class="mb-20"
             :pageRoute="route('project', data.slug)"
             @donate="triggerDonate"
@@ -52,25 +50,14 @@
         />
 
         <!-- Donate modal -->
-        <DonateModal
-            triggerModalClasses="h-0"
-            triggerModalText=""
-            :data="flash?.data"
-        />
+        <DonateModal triggerModalClasses="h-0" triggerModalText="" :data="flash?.data" />
 
         <!-- Volunteer modal -->
-        <VolunteerModal
-            triggerModalClasses="h-0"
-            triggerModalText=""
-            :data="flash?.data"
-        />
+        <VolunteerModal triggerModalClasses="h-0" triggerModalText="" :data="flash?.data" />
     </PageLayout>
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, Link } from '@inertiajs/vue3';
-
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
@@ -79,46 +66,16 @@
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
 
     const props = defineProps({
-        flash: Object
-    })
-
-    /**
-     * Copy embed code.
-     */
-     const copyEmbed = () => {
-
-        /** Embed iframe. */
-        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
-
-        /** Check if navigator object exists and copy iframe. */
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(embedCode)
-            .then(() => alert('Embed code copied to clipboard!'))
-            .catch(() => alert('Failed to copy embed code to clipboard!'));
-        } else {
-            /** Create textarea element. */
-            const tempInput = document.createElement('textarea');
-
-            /** Set textarea value as embed code. */
-            tempInput.value = embedCode;
-
-            /** Apend textarea to body. */
-            document.body.appendChild(tempInput);
-
-            /** Select textarea text. */
-            tempInput.select();
-
-            /** Copy textarea content. */
-            document.execCommand('copy');
-
-            /** Remove textarea. */
-            document.body.removeChild(tempInput);
-        }
-    }
+        flash: Object,
+    });
 
     /** Trigger volunteer modal from card. */
-    const triggerVolunteer = (() => { document.getElementById('volunteer-active-modal').click(); });
+    const triggerVolunteer = () => {
+        document.getElementById('volunteer-active-modal').click();
+    };
 
     /** Trigger donate modal from card. */
-    const triggerDonate = (() => { document.getElementById('donate-active-modal').click(); });
+    const triggerDonate = () => {
+        document.getElementById('donate-active-modal').click();
+    };
 </script>
