@@ -27,20 +27,20 @@ class OrganizationController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Public/Organizations/Index', [
-            'activity_domains' => ActivityDomain::all(['id', 'name']),
-            'counties' => County::all(['id', 'name']),
-            'query' => OrganizationCardsResource::collection(
+            'filter' => $request->query('filter'),
+            'domains' => $this->getActivityDomains(),
+            'counties' => $this->getCounties(),
+            'resource' => OrganizationCardsResource::collection(
                 QueryBuilder::for(Organization::class)
                     ->allowedFilters([
-                        AllowedFilter::custom('c', new CountiesFilter),
-                        AllowedFilter::custom('ad', new ActivityDomainsFilter),
-                        AllowedFilter::custom('s', new SearchFilter),
+                        AllowedFilter::custom('county', new CountiesFilter),
+                        AllowedFilter::custom('domain', new ActivityDomainsFilter),
+                        AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->with('activityDomains')
                     ->isApproved()
                     ->paginate()
             ),
-            'filters' => $request->query('filter'),
         ]);
     }
 
@@ -79,7 +79,7 @@ class OrganizationController extends Controller
         return Inertia::render('AdminOng/Ong/EditOng', [
             'organization' => new EditOrganizationResource($organization),
             'activity_domains' => $activityDomains,
-            'counties' => $counties,
+            'counties' => $this->getCounties(),
             'changes' => Activity::pendingChangesFor($organization)
                 ->get()
                 ->flatMap(fn (Activity $activity) => $activity->properties->keys())

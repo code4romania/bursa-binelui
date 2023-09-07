@@ -1,50 +1,56 @@
 <template>
     <PageLayout :title="$t('organization_title')" icon="list">
         <!-- Filters -->
-        <div class="container">
-            <div class="flex w-full gap-6 mt-6">
-                <SearchFilter v-model="filter.s" :placeholder="$t('search')" @keydown.enter="filterOrganizations" />
+        <div class="container grid items-start gap-6 sm:grid-cols-6">
+            <div class="flex gap-x-6 sm:col-span-3">
+                <SearchFilter
+                    v-model="filter.search"
+                    :placeholder="$t('search')"
+                    @keydown.enter="filterOrganizations"
+                    class="flex-1"
+                />
 
                 <SecondaryButton @click="filterOrganizations" class="p-0">
                     {{ $t('search') }}
                 </SecondaryButton>
+            </div>
 
-                <SecondaryButton @click="emptyFilters" class="flex items-center gap-2 py-0">
-                    <SvgLoader name="close" />
-                    {{ $t('empty_filters') }}
+            <div class="sm:col-span-3">
+                <SecondaryButton @click="emptyFilters" class="flex items-center gap-x-1.5">
+                    <XIcon class="-ml-0.5 h-4 w-4" aria-hidden="true" />
+                    <span v-text="$t('empty_filters')" />
                 </SecondaryButton>
             </div>
 
-            <div class="flex w-full gap-6 mt-6">
-                <SelectMultiple
-                    class="w-80"
-                    :label="$t('domains')"
-                    type="object"
-                    v-model="filter.ad"
-                    :options="activity_domains"
-                    @callback="filterOrganizations"
-                />
+            <Select
+                :label="$t('domains')"
+                v-model="filter.domain"
+                @update:modelValue="filterOrganizations"
+                :options="domains"
+                class="sm:col-span-2"
+                multiple
+            />
 
-                <SelectMultiple
-                    class="w-80"
-                    :label="$t('county')"
-                    v-model="filter.c"
-                    :options="counties"
-                    type="object"
-                    @callback="filterOrganizations"
-                />
-            </div>
+            <Select
+                :label="$t('county')"
+                v-model="filter.county"
+                @update:modelValue="filterOrganizations"
+                :options="counties"
+                class="sm:col-span-2"
+                multiple
+            />
         </div>
 
         <div class="container">
-            <h2 class="my-6 text-3xl font-bold text-gray-900">
-                {{ query.meta.total }} {{ 1 >= parseInt(query.meta.total) ? $t('organization') : $t('organizations') }}
+            <h2 class="my-6 text-4xl font-bold text-gray-900">
+                {{ resource.meta.total }}
+                {{ 1 >= parseInt(resource.meta.total) ? $t('organization') : $t('organizations') }}
             </h2>
 
             <!-- List -->
             <PaginatedGrid
                 type="ong"
-                :list="query"
+                :list="resource"
                 classes="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
             />
         </div>
@@ -52,57 +58,54 @@
 </template>
 
 <script setup>
-    import { ref, watch, onMounted } from 'vue';
+    import { ref } from 'vue';
+    import { router } from '@inertiajs/vue3';
+    import { XIcon } from '@heroicons/vue/solid';
 
-    /** Import from inertia. */
-    import { Head, router, usePage } from '@inertiajs/vue3';
-
-    /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import Select from '@/Components/form/Select.vue';
 
     /** Page props. */
     const props = defineProps({
-        query: [Array, Object],
-        activity_domains: [Array, Object],
-        counties: [Array, Object],
-        request: [Array, Object],
+        resource: {
+            type: Object,
+            required: true,
+        },
+        counties: {
+            type: Array,
+            default: () => [],
+        },
+        domains: {
+            type: Array,
+            default: () => [],
+        },
+        filter: {
+            type: Object,
+            required: false,
+        },
     });
-
-    /** Active filter state. */
-    const hasValues = ref(false);
 
     /** Filter values. */
     const filter = ref({
-        ad: [],
-        c: [],
-        s: '',
+        county: props.filter?.county || [],
+        domain: props.filter?.domain || [],
+        search: props.filter?.search || null,
     });
 
     /** Filter organizations. */
     const filterOrganizations = () => {
-        let query = {};
-
-        if (filter.value.ad.length) {
-            query.ad = filter.value.ad.map((domain) => domain.id).join(',');
-        }
-
-        if (filter.value.c.length) {
-            query.c = filter.value.c.map((domain) => domain.id).join(',');
-        }
-
-        if (filter.value.s.length) {
-            query.s = filter.value.s;
-        }
-
-        router.get(route('organizations'), {
-            filter: query,
-        });
+        router.get(
+            route('organizations'),
+            {
+                filter: filter.value,
+            },
+            {
+                preserveScroll: true,
+            }
+        );
     };
 
     /** Empty filters. */
