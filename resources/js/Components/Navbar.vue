@@ -30,7 +30,7 @@
                 <div class="hidden lg:ml-6 lg:flex lg:items-center lg:space-x-4">
                     <!-- Login link -->
                     <NavLink
-                        v-if="!$page.props.auth.user"
+                        v-if="!$page.props.auth?.user"
                         :href="route('dashboard')"
                         :active="route().current('login')"
                     >
@@ -39,7 +39,7 @@
 
                     <!-- Register link -->
                     <Link
-                        v-if="!$page.props.auth.user"
+                        v-if="!$page.props.auth?.user"
                         :href="route('register')"
                         class="relative inline-flex items-center gap-x-1.5 rounded-md bg-primary-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
                     >
@@ -56,7 +56,7 @@
                     </button> -->
 
                     <!-- User links -->
-                    <Menu v-if="$page.props.auth.user" as="div" class="relative ml-3">
+                    <Menu v-if="$page.props.auth?.user" as="div" class="relative ml-3">
                         <MenuButton class="flex items-center gap-4 text-sm bg-white rounded-full focus:outline-none">
                             {{ $page.props.auth.user.name }}
                             <img
