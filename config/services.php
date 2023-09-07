@@ -42,4 +42,10 @@ return [
 
     'google_maps_api_key' => env('GOOGLE_MAPS_API_KEY'),
 
+    'google_recaptcha' => [
+        'url' => 'https://www.google.com/recaptcha/api/siteverify',
+        'site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
+        'secret_key' => env('GOOGLE_RECAPTCHA_SECRET_SITE_KEY'),
+        'threshold' => max(0.0, min(1.0, floatval(env('GOOGLE_RECAPTCHA_SECRET_SITE_KEY', 0.5)))),
+    ],
 ];
