@@ -510,6 +510,6 @@
         let newForm = useForm({
             [field]: form[field],
         });
-        newForm.post(route('admin.ong.regional.project.update', project.value.id));
+        newForm.post(route('dashboard.projects.regional.update', project.value.id));
     };
 </script>

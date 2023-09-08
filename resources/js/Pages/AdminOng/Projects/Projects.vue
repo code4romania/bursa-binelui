@@ -3,8 +3,8 @@
         <Title :title="$t('projects_title')" />
 
         <Link
-            v-if="route().current('admin.ong.projects')"
-            :href="route('admin.ong.project.add')"
+            v-if="route().current('dashboard.projects.index')"
+            :href="route('dashboard.projects.create')"
             class="inline-flex items-center justify-center gap-4 mt-9 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
         >
             <PlusIcon class="w-4 h-4" />
@@ -13,8 +13,8 @@
         </Link>
 
         <Link
-            v-if="route().current('admin.ong.regional.projects')"
-            :href="route('admin.ong.regional.project.add')"
+            v-if="route().current('dashboard.projects.regional.index')"
+            :href="route('dashboard.projects.regional.create')"
             class="inline-flex items-center justify-center gap-4 mt-9 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
         >
             <PlusIcon class="w-4 h-4" />

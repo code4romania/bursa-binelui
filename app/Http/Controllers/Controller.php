@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityDomain;
 use App\Models\County;
+use App\Models\ProjectCategory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -31,6 +32,17 @@ class Controller extends BaseController
     {
         return Cache::remember('counties', static::optionsCacheTTL(), function () {
             return County::query()
+                ->addSelect('id as value')
+                ->addSelect('name as label')
+                ->get()
+                ->toArray();
+        });
+    }
+
+    public function getProjectCategories(): array
+    {
+        return Cache::remember('project-categories', static::optionsCacheTTL(), function () {
+            return ProjectCategory::query()
                 ->addSelect('id as value')
                 ->addSelect('name as label')
                 ->get()

@@ -307,7 +307,7 @@
 
         prepareProjectLinks();
         prepareExternalLinks();
-        form.post(route('admin.ong.project.store'), {
+        form.post(route('dashboard.projects.store'), {
             preserveScroll: true,
             onError: () => {},
         });

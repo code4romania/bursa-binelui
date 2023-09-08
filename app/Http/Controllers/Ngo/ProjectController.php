@@ -61,7 +61,7 @@ class ProjectController extends Controller
             $fileAdder->toMediaCollection('project_files');
         });
 
-        return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
+        return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
     }
 
     public function edit(Project $project)

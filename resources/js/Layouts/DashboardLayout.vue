@@ -106,23 +106,23 @@
         },
         {
             name: 'Proiectele mele',
-            route: route('admin.ong.projects'),
+            route: route('dashboard.projects.index'),
             subMenu: [
                 {
                     name: 'published_projects',
-                    route: route('admin.ong.projects', {
+                    route: route('dashboard.projects.index', {
                         project_status: 'published',
                     }),
                     icon: FolderOpenIcon,
                 },
                 {
                     name: 'draft_projects',
-                    route: route('admin.ong.projects', { project_status: 'draft' }),
+                    route: route('dashboard.projects.index', { project_status: 'draft' }),
                     icon: FolderRemoveIcon,
                 },
                 {
                     name: 'regional_projects',
-                    route: route('admin.ong.regional.project.add'),
+                    route: route('dashboard.projects.regional.create'),
                     icon: FolderRemoveIcon,
                 },
             ],
@@ -130,18 +130,18 @@
         },
         {
             name: 'Proiectele mele regionale',
-            route: route('admin.ong.regional.projects'),
+            route: route('dashboard.projects.regional.index'),
             subMenu: [
                 {
                     name: 'published_projects',
-                    route: route('admin.ong.regional.projects', {
+                    route: route('dashboard.projects.regional.index', {
                         project_status: 'published',
                     }),
                     icon: FolderOpenIcon,
                 },
                 {
                     name: 'draft_projects',
-                    route: route('admin.ong.regional.projects', {
+                    route: route('dashboard.projects.regional.index', {
                         project_status: 'draft',
                     }),
                     icon: FolderRemoveIcon,

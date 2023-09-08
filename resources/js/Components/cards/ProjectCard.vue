@@ -93,14 +93,14 @@
 
                 <Link
                     v-if="project.type !== 'regional'"
-                    :href="route('admin.ong.project.edit', project.id)"
+                    :href="route('dashboard.projects.edit', project.id)"
                     class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                 >
                     {{ $t('edit') }}
                 </Link>
                 <Link
                     v-if="project.type === 'regional'"
-                    :href="route('admin.ong.regional.project.edit', project.id)"
+                    :href="route('dashboard.projects.regional.edit', project.id)"
                     class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                 >
                     {{ $t('edit') }}
@@ -202,9 +202,7 @@
         });
         console.log(type);
         let tmpRoute =
-            type === 'regional'
-                ? route('admin.ong.regional.project.change-status', id)
-                : route('admin.ong.project.change-status', id);
+            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
         if (confirm('Are you sure you want to change the status of this project?')) {
             form.post(tmpRoute);
         }

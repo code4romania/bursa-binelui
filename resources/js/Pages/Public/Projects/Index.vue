@@ -39,41 +39,33 @@
 
                 <!-- Tabs -->
                 <div class="flex flex-col justify-end gap-6 xl:w-4/12 sm:flex-row">
-                    <button
-                        @click="
-                            viewType = 'list';
-                            filter.c = null;
-                        "
+                    <Link
                         :href="route('projects')"
-                        :class="[
-                            'list' === viewType
-                                ? 'flex items-center gap-x-4 bg-primary-500 hover:bg-primary-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm'
-                                : 'flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5',
-                        ]"
+                        class="flex items-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
+                        :class="{
+                            'text-white bg-primary-500 hover:bg-primary-400': view === 'list',
+                            'text-gray-900 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50': view !== 'list',
+                        }"
                     >
-                        <SvgLoader class="shrink-0" name="grid" />
-                        {{ $t('projects_list') }}
-                    </button>
+                        <ViewGridIcon class="w-5 h-5 shrink-0" />
+                        <span v-text="$t('projects_list')" />
+                    </Link>
 
-                    <button
-                        @click="
-                            viewType = 'map';
-                            filter.c = null;
-                        "
-                        :href="route('projects')"
-                        :class="[
-                            'map' === viewType
-                                ? 'flex items-center gap-x-4 bg-primary-500 hover:bg-primary-400 text-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm'
-                                : 'flex items-center gap-x-4 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5',
-                        ]"
+                    <Link
+                        :href="route('projects.map')"
+                        class="flex items-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
+                        :class="{
+                            'text-white bg-primary-500 hover:bg-primary-400': view === 'map',
+                            'text-gray-900 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50': view !== 'map',
+                        }"
                     >
-                        <Icon class="w-5 h-5 shrink-0" name="location" />
-                        {{ $t('projects_map') }}
-                    </button>
+                        <LocationMarkerIcon class="w-5 h-5 shrink-0" />
+                        <span v-text="$t('projects_map')" />
+                    </Link>
                 </div>
             </div>
 
-            <div v-if="'list' === viewType" class="grid grid-cols-12 gap-6 mt-6">
+            <div v-if="view === 'list'" class="grid grid-cols-12 gap-6 mt-6">
                 <Select
                     class="relative col-span-12 md:col-span-6 lg:col-span-3 z-102"
                     :label="$t('status')"
@@ -109,7 +101,7 @@
             </div>
         </div>
 
-        <div v-if="'map' === viewType" class="container">
+        <div v-if="view === 'map'" class="container">
             <Map :data="projectsForMap" @countySelected="filter.c = $event" />
         </div>
 
@@ -133,6 +125,7 @@
 
     /** Import from inertia. */
     import { Head, Link, router, usePage } from '@inertiajs/vue3';
+    import { ViewGridIcon, LocationMarkerIcon } from '@heroicons/vue/solid';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -178,8 +171,6 @@
     const statuses = ['Active', 'Inactive'];
     const cities = [{}];
 
-    const viewType = ref('list');
-
     /** Filter projects. */
     const filterProjects = () => {
         if (0 < filter.value.counties.length) {
@@ -219,6 +210,11 @@
         },
         categories: {
             type: Array,
+        },
+        view: {
+            type: String,
+            default: 'list',
+            validator: (view) => ['list', 'map'].includes(view),
         },
     });
 

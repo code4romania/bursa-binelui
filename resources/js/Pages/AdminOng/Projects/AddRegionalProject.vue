@@ -431,7 +431,7 @@
         // return;
 
         prepareProjectLinks();
-        form.post(route('admin.ong.regional.project.create'), {
+        form.post(route('dashboard.projects.regional.store'), {
             preserveScroll: true,
             onError: () => {},
         });

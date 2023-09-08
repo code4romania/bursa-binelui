@@ -427,7 +427,7 @@
             [field]: organization.value[field],
         });
 
-        form.post(route('admin.ong.project.update', project.value.id), {
+        form.post(route('dashboard.projects.update', project.value.id), {
             preserveScroll: true,
             onSuccess: (response) => {
                 //

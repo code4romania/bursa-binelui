@@ -58,7 +58,7 @@ class RegionalProjectController extends Controller
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
 
-        return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
+        return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
     }
 
     /**

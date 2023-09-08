@@ -9,23 +9,43 @@ use App\Http\Filters\CategoryFilter;
 use App\Http\Filters\CountiesFilter;
 use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Resources\ProjectCardsResource;
-use App\Models\County;
 use App\Models\Project;
-use App\Models\ProjectCategory;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         return Inertia::render('Public/Projects/Index', [
-            'categories' => ProjectCategory::all(['id', 'name']),
-            'counties' => County::all(['id', 'name']),
+            'view' => 'list',
+            'categories' => $this->getProjectCategories(),
+            'counties' => $this->getCounties(),
+            'query' => ProjectCardsResource::collection(
+                QueryBuilder::for(Project::class)
+                    ->allowedFilters([
+                        AllowedFilter::custom('c', new CountiesFilter),
+                        AllowedFilter::custom('category', new CategoryFilter),
+                        AllowedFilter::custom('date', new ProjectDatesFilter),
+                    ])
+                    ->wherePublished()
+                    ->paginate()
+                    ->withQueryString()
+            ),
+        ]);
+    }
+
+    public function map(Request $request): Response
+    {
+        return Inertia::render('Public/Projects/Index', [
+            'view' => 'map',
+            'categories' => $this->getProjectCategories(),
+            'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
             'query' => ProjectCardsResource::collection(
                 QueryBuilder::for(Project::class)
