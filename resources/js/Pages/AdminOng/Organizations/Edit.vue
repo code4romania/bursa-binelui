@@ -1,8 +1,8 @@
 <template>
-    <DashboardLayout>
+    <DashboardLayout gridClass="gap-10">
         <Title :title="$t('ong_description')" />
 
-        <dl class="mt-6 border border-gray-100 divide-y divide-gray-100">
+        <FieldSection>
             <!-- Edit organization name -->
             <Field :label="$t('organization_name_label')" :hasPendingChanges="changes.includes('name')" alt>
                 <template #value>
@@ -56,32 +56,19 @@
             <!-- Edit organization image -->
             <Field :label="$t('organization_logo_label')" :hasPendingChanges="changes.includes('logo')" alt>
                 <template #value>
-                    <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
-                        <img class="object-contain w-32 h-32 shrink-0" :src="organization.logo" alt="" />
+                    <img class="object-contain w-32 max-h-32 shrink-0" :src="organization.logo" alt="" />
+                </template>
 
-                        <div>
-                            <EditModal @action="editField('logo')" :text="$t('change_image_label')">
-                                <FileInput
-                                    :label="$t('upload_logo')"
-                                    @upload="(file) => (organization.logo = file)"
-                                    :form="organization.logo"
-                                    accept="image/png, image/jpeg"
-                                    previewable
-                                />
-                            </EditModal>
-
-                            <ModalAction
-                                triggerModalClasses="block text-sm font-medium leadin-5 text-red-600"
-                                :triggerModalText="$t('delete_image_label')"
-                                :cancelModalText="$t('cancel')"
-                                :actionModalText="$t('delete')"
-                                :title="$t('confirm')"
-                                :body="`${$t('confirm_delete_image_text')}`"
-                                :actionRoute="route('organization.remove_logo', organization.id)"
-                                :data="organization"
-                            />
-                        </div>
-                    </div>
+                <template #action>
+                    <EditModal @action="editField('logo')" class="flex justify-end col-span-1">
+                        <FileInput
+                            :label="$t('upload_logo')"
+                            @upload="(file) => (organization.logo = file)"
+                            :form="organization.logo"
+                            accept="image/png, image/jpeg"
+                            previewable
+                        />
+                    </EditModal>
                 </template>
             </Field>
 
@@ -116,7 +103,7 @@
                 alt
             >
                 <template #value>
-                    {{ organization.activity_domains?.map((item) => item.name).join(', ') }}
+                    {{ organization.activity_domain_names.join(', ') }}
                 </template>
 
                 <template #action>
@@ -125,13 +112,13 @@
                         @cancel="resetField('activity_domains')"
                         class="flex justify-end col-span-1"
                     >
-                        <SelectMultiple
-                            class="w-full z-101"
+                        <Select
                             :label="$t('organization_activity_label')"
                             type="singleValue"
                             :options="activity_domains"
                             v-model="organization.activity_domains"
                             :error="errors.activity_domains"
+                            multiple
                         />
                     </EditModal>
                 </template>
@@ -166,7 +153,7 @@
             <!-- Edit counties -->
             <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" alt>
                 <template #value>
-                    {{ organization.counties?.map((item) => item.name).join(', ') }}
+                    {{ organization.county_names.join(', ') }}
                 </template>
 
                 <template #action>
@@ -175,22 +162,20 @@
                         @cancel="resetField('counties')"
                         class="flex justify-end col-span-1"
                     >
-                        <SelectMultiple
-                            class="w-full z-101"
+                        <Select
                             :label="$t('counties_label')"
                             type="singleValue"
                             :options="counties"
                             v-model="organization.counties"
                             :error="errors.counties"
+                            multiple
                         />
                     </EditModal>
                 </template>
             </Field>
-        </dl>
+        </FieldSection>
 
-        <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('volunteer') }}</h2>
-
-        <dl class="border border-gray-100 divide-y divide-gray-100">
+        <FieldSection :title="$t('volunteer')">
             <!-- Edit accepts voluntiers -->
             <Field
                 :label="$t('organization_accepts_volunteers_label')"
@@ -216,8 +201,8 @@
                             />
 
                             <!-- Error -->
-                            <p v-show="props.errors.accepts_volunteers" class="mt-2 text-sm text-red-600">
-                                {{ props.errors.accepts_volunteers }}
+                            <p v-show="errors.accepts_volunteers" class="mt-2 text-sm text-red-600">
+                                {{ errors.accepts_volunteers }}
                             </p>
                         </label>
                     </EditModal>
@@ -250,10 +235,9 @@
                     </EditModal>
                 </template>
             </Field>
-        </dl>
+        </FieldSection>
 
-        <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('organization_contact') }}</h2>
-        <dl class="border border-gray-100 divide-y divide-gray-100">
+        <FieldSection :title="$t('organization_contact')">
             <!-- Edit organizaton website -->
             <Field :label="$t('organization_website_label')" :hasPendingChanges="changes.includes('website')" alt>
                 <template #value>
@@ -378,7 +362,7 @@
             >
                 <template #value>
                     {{ organization.street_address }},
-                    {{ originalOrganization.counties?.map((item) => item.name).join(', ') }}
+                    {{ originalOrganization.county_names.join(', ') }}
                 </template>
 
                 <template #action>
@@ -391,14 +375,14 @@
                         class="flex justify-end col-span-1"
                     >
                         <div class="flex flex-col gap-4 lg:flex-row">
-                            <SelectMultiple
-                                class="w-full z-101"
+                            <Select
                                 :label="$t('counties_label')"
                                 :options="counties"
                                 type="object"
                                 v-model="organization.counties"
                                 v-if="!organization.is_national"
                                 :error="errors.counties"
+                                multiple
                             />
                         </div>
 
@@ -414,11 +398,9 @@
                     </EditModal>
                 </template>
             </Field>
-        </dl>
+        </FieldSection>
 
-        <h2 class="text-2xl font-bold text-gray-900 my-9">{{ $t('i_pay_title') }}</h2>
-
-        <dl class="border border-gray-100 divide-y divide-gray-100">
+        <FieldSection :title="$t('payment_gateway_data')">
             <!-- Merchant id -->
             <Field :label="$t('merchant_id')" alt>
                 <template #value>
@@ -432,19 +414,20 @@
                     {{ organization.eu_platesc_private_key ? $t('yes') : $t('no') }}
                 </template>
             </Field>
-        </dl>
+        </FieldSection>
     </DashboardLayout>
 </template>
 
 <script setup>
     import { ref, computed } from 'vue';
     /** Import from inertia. */
-    import { Head, useForm } from '@inertiajs/vue3';
+    import { router, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
     import Alert from '@/Components/Alert.vue';
+    import FieldSection from '@/Components/FieldSection.vue';
     import Field from '@/Components/Field.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
@@ -452,7 +435,7 @@
     import Checkbox from '@/Components/form/Checkbox.vue';
     import FileInput from '@/Components/form/FileInput.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import Select from '@/Components/form/Select.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
     /** Page props. */
@@ -465,22 +448,21 @@
         changes: Array,
     });
 
-    const organization = ref(props.organization);
     const originalOrganization = computed(() => props.organization);
     const resetField = (field) => {
-        organization.value[field] = originalOrganization.value[field];
+        router.reload({
+            preserveScroll: true,
+            only: ['organization'],
+        });
     };
 
     const editField = (field) => {
         const form = useForm({
-            [field]: organization.value[field],
+            [field]: props.organization[field],
         });
 
-        form.post(route('admin.ong.update', organization.value.id), {
+        form.post(route('admin.ong.update'), {
             preserveScroll: true,
-            onSuccess: (response) => {
-                organization.value.cover_image = response.props.organization.cover_image;
-            },
         });
     };
 </script>

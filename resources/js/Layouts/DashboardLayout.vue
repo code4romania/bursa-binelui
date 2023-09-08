@@ -56,7 +56,7 @@
                 </nav>
             </div>
 
-            <div class="grid items-start flex-1 gap-8 p-9">
+            <div class="grid items-start flex-1 p-9" :class="gridClass">
                 <slot />
             </div>
         </div>
@@ -91,6 +91,10 @@
         icon: {
             type: String,
             default: null,
+        },
+        gridClass: {
+            type: String,
+            default: 'gap-8',
         },
     });
 

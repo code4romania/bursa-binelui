@@ -166,7 +166,7 @@
     "organization_email_label": "Email contact organizație (public)",
     "organization_address_label": "Adresă sediu",
     "street_address_label": "Strada",
-    "i_pay_title": "Date EuPlătesc",
+    "payment_gateway_data": "Date EuPlătesc",
     "merchant_id": "Merchant ID",
     "key_label": "Key",
     "organization_logo_label": "Logo-ul organizației",
