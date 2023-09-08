@@ -101,6 +101,9 @@
                 </button>
             </template>
         </Multiselect>
+
+        <!-- Error -->
+        <p v-show="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
     </div>
 </template>
 
@@ -112,6 +115,10 @@
     const props = defineProps({
         label: {
             type: String,
+        },
+        error: {
+            type: String,
+            default: null,
         },
         options: {
             type: [Array, Object],

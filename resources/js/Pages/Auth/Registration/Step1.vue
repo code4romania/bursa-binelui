@@ -1,10 +1,6 @@
 <template>
     <div>
-        <RadioGroup
-            :options="options"
-            v-model="form.type"
-            :error="form.errors ? form.errors.type : ''"
-        />
+        <RadioGroup :options="options" v-model="form.type" :error="form.errors?.type" />
 
         <PrimaryButton
             class="mt-6"
@@ -29,7 +25,6 @@
 
     const props = defineProps({
         form: Object,
-        current: Object
     });
 
     /** Default radio options. */
@@ -37,12 +32,12 @@
         {
             label: 'Creează cont donator',
             value: 'donor',
-            description: 'Dorești să donezi? Creează acum un cont și începe să faci fapte bune.'
+            description: 'Dorești să donezi? Creează acum un cont și începe să faci fapte bune.',
         },
         {
             label: 'Creează cont organizație',
             value: 'ngo-admin',
-            description: 'Vrei ca ONG-ul din care faci parte să apară pe Bursa Binelui? Înscrie organizația acum.'
+            description: 'Vrei ca ONG-ul din care faci parte să apară pe Bursa Binelui? Înscrie organizația acum.',
         },
     ]);
 </script>

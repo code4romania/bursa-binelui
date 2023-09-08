@@ -1,48 +1,31 @@
 <template>
-    <PageLayout>
-        <!-- Inertia page head -->
-        <Head title="Register" />
-
-        <!-- Auth template. -->
-        <Auth :content="content">
-            <Alert v-if="status" type="success" :message="status" />
-            <!-- Steps -->
-            <div class="mt-6">
-                <component
-                    :is="steps[current]"
-                    :current="steps[current]"
-                    :form="form"
-                    :social="social"
-                    :activity_domains="activity_domains"
-                    :counties="counties"
-                    @prev="prev"
-                    @next="next"
-                    @google="google"
-                    @success="success"
-                    :finalize="finalize"
-                />
-            </div>
-        </Auth>
-    </PageLayout>
+    <AuthLayout :title="$t('create_account')">
+        <!-- Steps -->
+        <component
+            :is="steps[current]"
+            :current="steps[current]"
+            :form="form"
+            :social="social"
+            @prev="prev"
+            @next="next"
+            @google="google"
+            @success="success"
+            :finalize="finalize"
+        />
+    </AuthLayout>
 </template>
 
 <script setup>
-    /** Import form vue. */
     import { ref, computed } from 'vue';
-
-    /** Import form inertia. */
-    import { Head, useForm } from '@inertiajs/vue3';
-
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
+    import { useForm } from '@inertiajs/vue3';
+    import AuthLayout from '@/Layouts/AuthLayout.vue';
     import Auth from '@/Components/templates/Auth.vue';
-    import Step1 from '@/Components/registration/Step1.vue';
-    import Step2 from '@/Components/registration/Step2.vue';
-    import Step3 from '@/Components/registration/Step3.vue';
-    import Step4 from '@/Components/registration/Step4.vue';
-    import Step5 from '@/Components/registration/Step5.vue';
-    import Success from '@/Components/registration/Success.vue';
-    import Alert from '@/Components/Alert.vue';
+    import Step1 from '@/Pages/Auth/Registration/Step1.vue';
+    import Step2 from '@/Pages/Auth/Registration/Step2.vue';
+    import Step3 from '@/Pages/Auth/Registration/Step3.vue';
+    import Step4 from '@/Pages/Auth/Registration/Step4.vue';
+    import Step5 from '@/Pages/Auth/Registration/Step5.vue';
+    import Success from '@/Pages/Auth/Registration/Success.vue';
 
     /** Intialize inertia form object. */
     const form = useForm({
@@ -52,7 +35,7 @@
             password: '',
             password_confirmation: '',
         },
-        ong: {
+        ngo: {
             name: '',
             description: '',
             street_address: '',
@@ -60,6 +43,8 @@
             contact_email: '',
             contact_phone: '',
             contact_person: '',
+            domains: [],
+            counties: [],
             activity_domains_ids: [],
             counties_ids: [],
             volunteer: false,
@@ -75,7 +60,7 @@
     });
 
     const props = defineProps({
-        activity_domains: {
+        domains: {
             type: Array,
             default: () => [],
         },
@@ -145,15 +130,8 @@
     /** Create user. */
     const submit = () => {
         if (form.type === 'donor') {
-            delete form.ong;
+            delete form.ngo;
         }
-
-        if (form.type === 'ngo-admin') {
-            form.ong.activity_domains_ids = form.ong.activity_domains_ids.map((domain) => domain.id);
-            form.ong.counties_ids = form.ong.counties_ids.map((county) => county.id);
-        }
-        console.log('form');
-        console.log(form);
 
         form.post(route('register'), {
             onError: (error) => {
@@ -166,38 +144,38 @@
                 ) {
                     current.value = 1;
                 } else if (
-                    error['ong.name'] ||
-                    error['ong.cif'] ||
-                    error['ong.description'] ||
-                    error['ong.activity_domains_ids'] ||
-                    error['ong.statute'] ||
-                    error['ong.logo']
+                    error['ngo.name'] ||
+                    error['ngo.cif'] ||
+                    error['ngo.description'] ||
+                    error['ngo.activity_domains_ids'] ||
+                    error['ngo.statute'] ||
+                    error['ngo.logo']
                 ) {
                     current.value = 2;
                 } else if (
-                    error['ong.counties_ids'] ||
-                    error['ong.street_address'] ||
-                    error['ong.contact_person'] ||
-                    error['ong.contact_phone'] ||
-                    error['ong.contact_email'] ||
-                    error['ong.webiste']
+                    error['ngo.counties_ids'] ||
+                    error['ngo.street_address'] ||
+                    error['ngo.contact_person'] ||
+                    error['ngo.contact_phone'] ||
+                    error['ngo.contact_email'] ||
+                    error['ngo.webiste']
                 ) {
                     current.value = 3;
-                } else if (error['ong.volunteer'] || error['ong.cif'] || error['ong.why_volunteer']) {
+                } else if (error['ngo.volunteer'] || error['ngo.cif'] || error['ngo.why_volunteer']) {
                     current.value = 4;
                 }
 
                 /** Repopulate array as objects. */
                 if (form.type === 'ngo-admin') {
-                    if (0 < form.ong.activity_domains_ids.length) {
-                        form.ong.activity_domains_ids = props.activity_domains.filter((domain) =>
-                            form.ong.activity_domains_ids.includes(domain.id)
+                    if (0 < form.ngo.activity_domains_ids.length) {
+                        form.ngo.activity_domains_ids = props.activity_domains.filter((domain) =>
+                            form.ngo.activity_domains_ids.includes(domain.id)
                         );
                     }
 
-                    if (0 < form.ong.counties_ids.length) {
-                        form.ong.counties_ids = props.counties.filter((county) =>
-                            form.ong.counties_ids.includes(county.id)
+                    if (0 < form.ngo.counties_ids.length) {
+                        form.ngo.counties_ids = props.counties.filter((county) =>
+                            form.ngo.counties_ids.includes(county.id)
                         );
                     }
                 }

@@ -6,11 +6,7 @@
         <!-- Radio group -->
         <fieldset class="mt-4">
             <div class="space-y-4" v-if="!finalize">
-                <div
-                    v-for="option in options"
-                    :key="option.value"
-                    class="flex items-center"
-                >
+                <div v-for="option in options" :key="option.value" class="flex items-center">
                     <input
                         @change="optionChanged(option.value)"
                         :id="option.value"
@@ -20,7 +16,9 @@
                         :value="option.value"
                         class="w-4 h-4 border-gray-300 text-primary-500 focus:ring-primary-500"
                     />
-                    <label :for="option.value" class="block ml-3 text-sm font-medium leading-6 text-gray-900">{{ option.label }}</label>
+                    <label :for="option.value" class="block ml-3 text-sm font-medium leading-6 text-gray-900">{{
+                        option.label
+                    }}</label>
                 </div>
 
                 <!-- Other -->
@@ -68,39 +66,39 @@
     const options = [
         {
             label: 'De la o altă organizație',
-            value: 'other_organization'
+            value: 'other_organization',
         },
         {
             label: 'Dintr-un motor de căutare (ex. Google)',
-            value: 'web'
+            value: 'web',
         },
         {
             label: 'Din social media',
-            value: 'media'
+            value: 'media',
         },
         {
             label: 'Din presă (scrisă, online, radio, TV)',
-            value: 'press'
+            value: 'press',
         },
         {
             label: 'De la un reprezentant BCR',
-            value: 'bcr'
+            value: 'bcr',
         },
         {
             label: 'Altul',
             value: 'other',
-        }
+        },
     ];
 
     /** Options changed. */
     const optionChanged = (value) => {
-        if ( ('other' === value)) {
+        if ('other' === value) {
             show.value = true;
         } else {
             show.value = false;
             other.value = '';
         }
-    }
+    };
 
-    const update = (() => props.social.source_of_information = other.value);
+    const update = () => (props.social.source_of_information = other.value);
 </script>
