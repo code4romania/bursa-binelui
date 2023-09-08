@@ -6,7 +6,7 @@
 
         <label class="flex items-center">
             <Checkbox name="confirm" v-model:checked="form.ngo.volunteer" />
-            <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('organization_accepts_volunteers_label') }}</span>
+            <span class="ml-2 mr-1 text-sm text-gray-700">{{ $t('organization_accepts_volunteers') }}</span>
         </label>
         <p v-show="form.errors['ngo.volunteer']" class="mt-2 text-sm text-red-600">
             {{ form.errors['ngo.volunteer'] }}

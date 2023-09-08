@@ -13,7 +13,7 @@
                 containerDisabled: `cursor-default bg-gray-100`,
                 containerActive: `outline-none ring-2 ring-primary-600`,
                 wrapper: `relative flex items-center justify-end w-full mx-auto outline-none cursor-pointer gap-2 pl-3.5 pr-2`,
-                singleLabel: `flex items-center h-full max-w-full absolute left-0 top-0 pointer-events-none bg-transparent leading-snug pr-16`,
+                singleLabel: `relative flex items-center flex-1 h-full py-px overflow-hidden pointer-events-none`,
                 singleLabelText: `overflow-ellipsis overflow-hidden block whitespace-nowrap max-w-full`,
                 search: `absolute inset-[2px] outline-none focus:ring-0 appearance-none border-0 text-base font-sans bg-white rounded sm:text-sm`,
                 tags: `flex-grow flex-shrink flex flex-wrap items-center mt-1 pl-2`,
@@ -74,7 +74,7 @@
             </template>
 
             <template #multiplelabel="{ values }">
-                <div class="relative flex items-center flex-1 h-full py-px overflow-hidden">
+                <div class="relative flex items-center flex-1 h-full py-px overflow-hidden pointer-events-none">
                     <span class="text-base truncate sm:text-sm">
                         <span v-if="values.length > 1">({{ values.length }})</span>
                         {{ values.map((item) => item.label).join(', ') }}

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
+use App\Http\Filters\AcceptsVolunteersFilter;
 use App\Http\Filters\CategoryFilter;
 use App\Http\Filters\CountiesFilter;
 use App\Http\Filters\ProjectDatesFilter;
+use App\Http\Filters\ProjectStatusFilter;
+use App\Http\Filters\SearchFilter;
 use App\Http\Resources\ProjectCardsResource;
 use App\Models\Project;
 use App\Models\Volunteer;
@@ -24,14 +27,18 @@ class ProjectController extends Controller
     {
         return Inertia::render('Public/Projects/Index', [
             'view' => 'list',
+            'filter' => $request->query('filter'),
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
-            'query' => ProjectCardsResource::collection(
+            'resource' => ProjectCardsResource::collection(
                 QueryBuilder::for(Project::class)
                     ->allowedFilters([
-                        AllowedFilter::custom('c', new CountiesFilter),
+                        AllowedFilter::custom('county', new CountiesFilter),
                         AllowedFilter::custom('category', new CategoryFilter),
                         AllowedFilter::custom('date', new ProjectDatesFilter),
+                        AllowedFilter::custom('status', new ProjectStatusFilter),
+                        AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
+                        AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->wherePublished()
                     ->paginate()
@@ -44,15 +51,19 @@ class ProjectController extends Controller
     {
         return Inertia::render('Public/Projects/Index', [
             'view' => 'map',
+            'filter' => $request->query('filter'),
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
-            'query' => ProjectCardsResource::collection(
+            'resource' => ProjectCardsResource::collection(
                 QueryBuilder::for(Project::class)
                     ->allowedFilters([
-                        AllowedFilter::custom('c', new CountiesFilter),
+                        AllowedFilter::custom('county', new CountiesFilter),
                         AllowedFilter::custom('category', new CategoryFilter),
                         AllowedFilter::custom('date', new ProjectDatesFilter),
+                        AllowedFilter::custom('status', new ProjectStatusFilter),
+                        AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
+                        AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->wherePublished()
                     ->paginate()

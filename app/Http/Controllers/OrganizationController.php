@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\AcceptsVolunteersFilter;
 use App\Http\Filters\ActivityDomainsFilter;
 use App\Http\Filters\CountiesFilter;
 use App\Http\Filters\SearchFilter;
@@ -29,21 +30,19 @@ class OrganizationController extends Controller
                     ->allowedFilters([
                         AllowedFilter::custom('county', new CountiesFilter),
                         AllowedFilter::custom('domain', new ActivityDomainsFilter),
+                        AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
                         AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->with('activityDomains')
                     ->isApproved()
                     ->paginate()
+                    ->withQueryString()
             ),
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Organization $organization)
     {
-        /* Return inertia page. */
         return Inertia::render('Public/Organizations/Show', [
             'organization' => new ShowOrganizationResource(
                 $organization->loadMissing([

@@ -6,17 +6,17 @@
                 <SearchFilter
                     v-model="filter.search"
                     :placeholder="$t('search')"
-                    @keydown.enter="filterOrganizations"
+                    @keydown.enter="applyFilters"
                     class="flex-1"
                 />
 
-                <SecondaryButton @click="filterOrganizations" class="p-0">
+                <SecondaryButton @click="applyFilters">
                     {{ $t('search') }}
                 </SecondaryButton>
             </div>
 
             <div class="sm:col-span-3">
-                <SecondaryButton @click="emptyFilters" class="flex items-center gap-x-1.5">
+                <SecondaryButton @click="clearFilters" class="flex items-center gap-x-1.5">
                     <XIcon class="-ml-0.5 h-4 w-4" aria-hidden="true" />
                     <span v-text="$t('empty_filters')" />
                 </SecondaryButton>
@@ -25,7 +25,7 @@
             <Select
                 :label="$t('domains')"
                 v-model="filter.domain"
-                @update:modelValue="filterOrganizations"
+                @update:modelValue="applyFilters"
                 :options="domains"
                 class="sm:col-span-2"
                 multiple
@@ -34,10 +34,27 @@
             <Select
                 :label="$t('county')"
                 v-model="filter.county"
-                @update:modelValue="filterOrganizations"
+                @update:modelValue="applyFilters"
                 :options="counties"
                 class="sm:col-span-2"
                 multiple
+            />
+
+            <Select
+                :label="$t('organization_accepts_volunteers')"
+                v-model="filter.volunteers"
+                @update:modelValue="applyFilters"
+                class="sm:col-span-2"
+                :options="[
+                    {
+                        value: 1,
+                        label: $t('yes'),
+                    },
+                    {
+                        value: 0,
+                        label: $t('no'),
+                    },
+                ]"
             />
         </div>
 
@@ -67,8 +84,8 @@
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import Select from '@/Components/form/Select.vue';
+    import useFilters from '@/Helpers/useFilters.js';
 
-    /** Page props. */
     const props = defineProps({
         resource: {
             type: Object,
@@ -88,28 +105,12 @@
         },
     });
 
-    /** Filter values. */
     const filter = ref({
         county: props.filter?.county || [],
         domain: props.filter?.domain || [],
+        volunteers: props.filter?.volunteers || null,
         search: props.filter?.search || null,
     });
 
-    /** Filter organizations. */
-    const filterOrganizations = () => {
-        router.get(
-            route('organizations'),
-            {
-                filter: filter.value,
-            },
-            {
-                preserveScroll: true,
-            }
-        );
-    };
-
-    /** Empty filters. */
-    const emptyFilters = () => {
-        router.visit(route('organizations'));
-    };
+    const { applyFilters, clearFilters } = useFilters(filter, route('organizations'));
 </script>

@@ -178,7 +178,7 @@
         <FieldSection :title="$t('volunteer')">
             <!-- Edit accepts voluntiers -->
             <Field
-                :label="$t('organization_accepts_volunteers_label')"
+                :label="$t('organization_accepts_volunteers')"
                 :hasPendingChanges="changes.includes('accepts_volunteers')"
                 alt
             >
@@ -195,10 +195,7 @@
                         <label class="flex items-center">
                             <Checkbox name="accepts_volunteers" v-model:checked="organization.accepts_volunteers" />
 
-                            <span
-                                class="ml-2 text-sm text-gray-700"
-                                v-text="$t('organization_accepts_volunteers_label')"
-                            />
+                            <span class="ml-2 text-sm text-gray-700" v-text="$t('organization_accepts_volunteers')" />
 
                             <!-- Error -->
                             <p v-show="errors.accepts_volunteers" class="mt-2 text-sm text-red-600">
