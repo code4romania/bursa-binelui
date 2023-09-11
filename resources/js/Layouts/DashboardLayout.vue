@@ -173,7 +173,7 @@
         },
         {
             name: 'Tickets',
-            route: route('admin.ong.tickets.index', { status: 'open' }),
+            route: route('dashboard.tickets.index', { status: 'open' }),
             icon: AnnotationIcon,
         },
     ];

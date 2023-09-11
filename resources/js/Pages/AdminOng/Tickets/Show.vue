@@ -130,7 +130,7 @@
 
     const reply = () => {
         closeModal();
-        form.post(route('admin.ong.tickets.reply', props.ticket.id), {
+        form.post(route('dashboard.tickets.reply', props.ticket.id), {
             preserveScroll: true,
             onSuccess: () => {
                 form.reset();

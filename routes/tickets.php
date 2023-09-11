@@ -5,16 +5,21 @@ declare(strict_types=1);
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
-/* Tichets routes. */
-Route::prefix('ong/tickets')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/{status}', [TicketController::class, 'index'])
+Route::group([
+    'middleware' => ['auth', 'verified'],
+    'prefix' => 'dashboard/tickets',
+    'as' => 'dashboard.tickets.',
+    'controller' => TicketController::class,
+], function () {
+    Route::get('/{status?}', 'index')
         ->whereIn('status', ['open', 'closed'])
-        ->name('admin.ong.tickets.index');
+        ->name('index');
 
-    Route::post('/', [TicketController::class, 'store'])->name('admin.ong.tickets.store');
+    Route::post('/', 'store')->name('store');
 
-    Route::get('/{ticket}', [TicketController::class, 'show'])->name('admin.ong.tickets.view');
-    Route::post('/{ticket}/reply', [TicketController::class, 'reply'])->name('admin.ong.tickets.reply');
-    Route::post('/{ticket}/status', [TicketController::class, 'status'])
-        ->whereIn('status', ['open', 'closed'])->name('admin.ong.tickets.status');
+    Route::get('/{ticket}', 'show')->name('view');
+    Route::post('/{ticket}/reply', 'reply')->name('reply');
+    Route::post('/{ticket}/status', 'status')
+        ->whereIn('status', ['open', 'closed'])
+        ->name('status');
 });

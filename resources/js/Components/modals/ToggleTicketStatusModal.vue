@@ -114,7 +114,7 @@
     const action = () => {
         open.value = false;
 
-        form.post(route('admin.ong.tickets.status', props.ticket.id), {
+        form.post(route('dashboard.tickets.status', props.ticket.id), {
             preserveScroll: true,
             onFinish: () => {
                 open.value = false;

@@ -47,7 +47,7 @@ class TicketReceivedReplyNotification extends Notification
             ]))
             ->action(
                 __('ticket.action.view'),
-                route('admin.ong.tickets.view', [
+                route('dashboard.tickets.view', [
                     $this->message->ticket,
                     "#reply-{$this->message->id}",
                 ])
