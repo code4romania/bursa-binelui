@@ -27,7 +27,6 @@ class TicketController extends Controller
                 QueryBuilder::for(Ticket::class)
                     ->where('organization_id', auth()->user()->organization_id)
                     ->whereOpen()
-                    ->whereClosed()
                     ->allowedSorts('id', 'created_at')
                     ->defaultSorts('created_at')
                     ->paginate()
