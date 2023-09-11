@@ -46,7 +46,7 @@
                 {{ project.organization.name }}
             </Link>
 
-            <h1 class="text-xl font-extrabold text-gray-700 sm:text-2xl md:text-xl 2xl:text-2xl">
+            <h1 class="text-xl font-extrabold text-gray-700 sm:text-2xl md:text-xl 2xl:text-2xl line-clamp-2">
                 <Link :href="route('project', project.slug)">
                     {{ project.name }}
                 </Link>

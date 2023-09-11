@@ -10,14 +10,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProjectCategory extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'slug',
     ];
-    use HasFactory;
 
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class);
+        return $this->morphedByMany(Project::class, 'model', 'model_has_project_categories')
+            ->withTimestamps();
     }
 }

@@ -121,7 +121,8 @@ class Project extends Model implements HasMedia
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(ProjectCategory::class, 'project_category');
+        return $this->morphToMany(ProjectCategory::class, 'model', 'model_has_project_categories')
+            ->withTimestamps();
     }
 
     public function getRequiredFieldsForApproval(): array

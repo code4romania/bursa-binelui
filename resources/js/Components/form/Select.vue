@@ -83,8 +83,8 @@
             </template>
 
             <template #caret>
-                <span class="relative z-10 flex items-center justify-center h-full py-px cursor-pointer shrink-0">
-                    <SelectorIcon class="relative z-10 w-5 h-5 text-gray-400" aria-hidden="true" />
+                <span class="relative flex items-center justify-center h-full py-px cursor-pointer shrink-0">
+                    <SelectorIcon class="w-5 h-5 text-gray-400" aria-hidden="true" />
                 </span>
             </template>
 

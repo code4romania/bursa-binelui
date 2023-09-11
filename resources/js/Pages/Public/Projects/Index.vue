@@ -16,12 +16,12 @@
             </div>
 
             <div class="flex gap-6 sm:col-span-3">
-                <SecondaryButton @click="clearFilters" class="flex items-center gap-x-1.5">
+                <SecondaryButton @click="clearFilters" class="flex items-center gap-x-1.5 w-full sm:w-auto">
                     <XIcon class="-ml-0.5 h-4 w-4" aria-hidden="true" />
                     <span v-text="$t('empty_filters')" />
                 </SecondaryButton>
 
-                <Sort class="w-full md:w-auto" />
+                <Sort class="w-full sm:w-auto" />
             </div>
 
             <div class="flex flex-col justify-end gap-6 sm:col-span-4 sm:flex-row">
@@ -51,7 +51,7 @@
             </div>
 
             <Select
-                class="relative col-span-12 md:col-span-6 lg:col-span-3"
+                class="relative sm:col-span-12 md:col-span-6 lg:col-span-3"
                 :label="$t('status')"
                 v-model="filter.status"
                 :options="{
@@ -62,7 +62,7 @@
             />
 
             <Select
-                class="relative col-span-12 md:col-span-6 lg:col-span-3"
+                class="relative sm:col-span-12 md:col-span-6 lg:col-span-3"
                 :label="$t('county')"
                 v-model="filter.county"
                 :options="counties"
@@ -72,10 +72,10 @@
             />
 
             <Select
-                class="relative col-span-12 md:col-span-6 lg:col-span-3"
+                class="relative sm:col-span-12 md:col-span-6 lg:col-span-3"
                 :label="$t('project_categories')"
-                v-model="filter.categories"
-                :options="domains"
+                v-model="filter.category"
+                :options="categories"
                 type="singleValue"
                 @update:modelValue="applyFilters"
                 multiple
@@ -83,7 +83,7 @@
 
             <DatePicker
                 :label="$t('donation_period')"
-                class="col-span-12 md:col-span-6 lg:col-span-3"
+                class="sm:col-span-12 md:col-span-6 lg:col-span-3"
                 v-model="filter.date"
                 @update:modelValue="applyFilters"
                 range
@@ -102,7 +102,7 @@
                 type="project"
                 cardType="client"
                 :list="resource"
-                classes="grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+                classes="grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
             />
         </div>
     </PageLayout>
@@ -151,7 +151,9 @@
         search: props.filter?.search || null,
     });
 
+    const sort = ref(null);
+
     const url = route(props.view === 'map' ? 'projects.map' : 'projects');
 
-    const { applyFilters, clearFilters } = useFilters(filter, url);
+    const { applyFilters, clearFilters } = useFilters(filter, sort, url);
 </script>

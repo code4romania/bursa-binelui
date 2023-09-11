@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
 use App\Http\Filters\AcceptsVolunteersFilter;
-use App\Http\Filters\CategoryFilter;
 use App\Http\Filters\CountiesFilter;
+use App\Http\Filters\ProjectCategoriesFilter;
 use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Filters\ProjectStatusFilter;
 use App\Http\Filters\SearchFilter;
@@ -34,11 +34,14 @@ class ProjectController extends Controller
                 QueryBuilder::for(Project::class)
                     ->allowedFilters([
                         AllowedFilter::custom('county', new CountiesFilter),
-                        AllowedFilter::custom('category', new CategoryFilter),
+                        AllowedFilter::custom('category', new ProjectCategoriesFilter),
                         AllowedFilter::custom('date', new ProjectDatesFilter),
                         AllowedFilter::custom('status', new ProjectStatusFilter),
                         AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
                         AllowedFilter::custom('search', new SearchFilter),
+                    ])
+                    ->allowedSorts([
+
                     ])
                     ->wherePublished()
                     ->paginate()
@@ -59,7 +62,7 @@ class ProjectController extends Controller
                 QueryBuilder::for(Project::class)
                     ->allowedFilters([
                         AllowedFilter::custom('county', new CountiesFilter),
-                        AllowedFilter::custom('category', new CategoryFilter),
+                        AllowedFilter::custom('category', new ProjectCategoriesFilter),
                         AllowedFilter::custom('date', new ProjectDatesFilter),
                         AllowedFilter::custom('status', new ProjectStatusFilter),
                         AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),

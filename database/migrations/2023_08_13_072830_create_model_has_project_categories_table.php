@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\ProjectCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +14,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_categories', function (Blueprint $table) {
+        Schema::create('model_has_project_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
             $table->timestamps();
+            $table->morphs('model');
+            $table->foreignIdFor(ProjectCategory::class)->constrained()->cascadeOnDelete();
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_categories');
+        Schema::dropIfExists('model_has_project_categories');
     }
 };
