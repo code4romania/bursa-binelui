@@ -18,7 +18,7 @@ class PendingOrganizationsWidget extends BaseOrganizationsWidget
 {
     protected function getTableHeading(): string
     {
-        return __('organization.heading.in_approval');
+        return __('organization.heading.in_approval', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
@@ -34,6 +34,9 @@ class PendingOrganizationsWidget extends BaseOrganizationsWidget
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('id')
+                ->label(__('field.id'))
+                ->sortable(),
             TitleWithImageColumn::make('name')
                 ->label(__('organization.organization'))
                 ->image(fn ($record) => $record->getFirstMediaUrl('logo'))

@@ -15,7 +15,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
 {
     protected function getTableHeading(): string
     {
-        return __('organization.heading.pending_changes');
+        return __('organization.heading.pending_changes', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder

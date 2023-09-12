@@ -21,7 +21,7 @@ class RejectedOrganizationsWidget extends BaseOrganizationsWidget
 
     protected function getTableHeading(): string
     {
-        return __('organization.heading.rejected');
+        return __('organization.heading.rejected', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder

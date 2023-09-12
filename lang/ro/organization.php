@@ -23,10 +23,10 @@ return [
     ],
     'organization' => 'Organizație',
     'heading' => [
-        'in_approval' => 'Cereri noi de înscriere',
-        'approved' => 'Organizații active',
-        'rejected' => 'Organizații dezactivate',
-        'pending_changes' => 'Organizații aprobate cu modificări în așteptare',
+        'in_approval' => 'Cereri noi de înscriere (:number)',
+        'approved' => 'Organizații active (:number)',
+        'rejected' => 'Organizații dezactivate (:number)',
+        'pending_changes' => 'Organizații aprobate cu modificări în așteptare (:number)',
     ],
     'filters' => [
         'counties' => 'Județe',

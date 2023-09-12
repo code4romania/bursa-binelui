@@ -21,7 +21,7 @@ class ApprovedOrganizationsWidget extends BaseOrganizationsWidget
 
     protected function getTableHeading(): string
     {
-        return __('organization.heading.approved');
+        return __('organization.heading.approved', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
