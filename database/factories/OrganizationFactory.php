@@ -10,6 +10,7 @@ use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Models\ProjectCategory;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Volunteer;
@@ -122,7 +123,13 @@ class OrganizationFactory extends Factory
                         ]),
                     ]
                 )
-
+                ->hasAttached(
+                    ProjectCategory::query()
+                        ->inRandomOrder()
+                        ->take(fake()->numberBetween(1, 3))
+                        ->get(),
+                    relationship:'categories'
+                )
                 ->create();
 
             $ticket = Ticket::factory()

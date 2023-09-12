@@ -2,33 +2,50 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Collections\ClosedTicketCollection;
+use App\Http\Resources\Collections\OpenTicketCollection;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TicketController extends Controller
 {
-    public function index(string $status, Request $request): Response
+    public function index(Request $request, ?string $status = null): Response|RedirectResponse
     {
-        return Inertia::render('AdminOng/Tickets/List', [
-            'status' => $status,
-            'tickets' => TicketResource::collection(
-                Ticket::query()
+        if (! $status) {
+            return redirect()->route('dashboard.tickets.index', 'open');
+        }
+
+        if ($status === 'open') {
+            $collection = new OpenTicketCollection(
+                QueryBuilder::for(Ticket::class)
                     ->where('organization_id', auth()->user()->organization_id)
-                    ->when(
-                        $status === 'open',
-                        fn ($query) => $query->whereOpen(),
-                        fn ($query) => $query->whereClosed()
-                    )
-                    ->orderBy('closed_at', 'desc')
-                    ->orderBy('created_at', 'desc')
-                    ->get()
-            ),
+                    ->whereOpen()
+                    ->allowedSorts('id', 'created_at')
+                    ->defaultSorts('created_at')
+                    ->paginate()
+            );
+        } else {
+            $collection = new ClosedTicketCollection(
+                QueryBuilder::for(Ticket::class)
+                    ->where('organization_id', auth()->user()->organization_id)
+                    ->whereClosed()
+                    ->allowedSorts('id', 'closed_at')
+                    ->defaultSorts('closed_at')
+                    ->paginate()
+            );
+        }
+
+        return Inertia::render('AdminOng/Tickets/Index', [
+            'status' => $status,
+            'collection' => $collection,
         ]);
     }
 
@@ -48,7 +65,7 @@ class TicketController extends Controller
             'organization_id' => auth()->user()->organization_id,
         ]);
 
-        return redirect()->route('admin.ong.tickets.view', $ticket)
+        return redirect()->route('dashboard.tickets.view', $ticket)
             ->with('success', __('ticket.action_open.success'));
     }
 
@@ -65,7 +82,7 @@ class TicketController extends Controller
             'content' => strip_tags($attributes['content']),
         ]);
 
-        return redirect()->route('admin.ong.tickets.view', $ticket)
+        return redirect()->route('dashboard.tickets.view', $ticket)
             ->with('success', __('ticket.action_reply.success'));
     }
 
@@ -92,7 +109,7 @@ class TicketController extends Controller
             $message = __('ticket.action_reopen_confirm.success');
         }
 
-        return redirect()->route('admin.ong.tickets.view', $ticket)
+        return redirect()->route('dashboard.tickets.view', $ticket)
             ->with('success', $message);
     }
 }

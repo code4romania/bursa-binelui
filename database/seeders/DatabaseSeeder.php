@@ -60,17 +60,17 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         Organization::factory()
-            ->count(10)
+            ->count(50)
             ->approved()
             ->create();
 
         Organization::factory()
-            ->count(10)
+            ->count(5)
             ->rejected()
             ->create();
 
         Organization::factory()
-            ->count(10)
+            ->count(5)
             ->pending()
             ->create();
 
@@ -78,7 +78,22 @@ class DatabaseSeeder extends Seeder
             ->count(30)
             ->create();
 
-        $articleCategories = ['Social', 'Educație', 'Sănătate', 'Cultură', 'Mediu', 'Sport', 'Animale', 'Altele'];
+        $this->seedArticleCategories();
+    }
+
+    private function seedArticleCategories(): void
+    {
+        $articleCategories = [
+            'Social',
+            'Educație',
+            'Sănătate',
+            'Cultură',
+            'Mediu',
+            'Sport',
+            'Animale',
+            'Altele',
+        ];
+
         foreach ($articleCategories as $category) {
             ArticleCategory::factory()
                 ->name($category)
@@ -87,7 +102,7 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function seedProjectCategories()
+    private function seedProjectCategories(): void
     {
         $projectCategories = [
             'Antreprenoriat social',
@@ -100,9 +115,11 @@ class DatabaseSeeder extends Seeder
             'Social',
             'Sport',
         ];
-        $projectCategories = collect($projectCategories)->transform(function ($category) {
-            return ['name' => $category, 'slug' => Str::slug($category)];
-        });
-        ProjectCategory::insert($projectCategories->toArray());
+
+        foreach ($projectCategories as $category) {
+            ProjectCategory::factory()
+                ->name($category)
+                ->create();
+        }
     }
 }

@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 return[
 
-    'label'=>[
-        'singular'=>'Tichet',
-        'plural'=>'Tichete',
+    'label' => [
+        'singular' => 'Tichet',
+        'plural' => 'Tichete',
+    ],
+
+    'column' => [
+        'id' => 'ID',
+        'subject' => 'Subiect',
+        'created_at' => 'Creat la data',
+        'closed_at' => 'Închis la data',
     ],
 
     'closed_at' => 'Închis la data',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Inertia\Inertia;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -28,5 +29,28 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        $response = parent::render($request, $e);
+
+        if (! app()->isLocal() && \in_array($response->status(), [401, 403, 404, 429, 500, 503])) {
+            return Inertia::render('Error', [
+                'status' => $response->status(),
+                'title' => __('error.' . $response->status() . '.title'),
+                'message' => __('error.' . $response->status() . '.message'),
+            ])
+                ->toResponse($request)
+                ->setStatusCode($response->status());
+        }
+
+        if ($response->status() === 419) {
+            return back()->with([
+                'message' => __('error.419.message'),
+            ]);
+        }
+
+        return $response;
     }
 }

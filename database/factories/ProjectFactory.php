@@ -23,30 +23,31 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->name;
+        $name = fake()->unique()->sentence();
 
         $start = CarbonImmutable::createFromInterface(
             fake()->dateTimeBetween('-3 days', 'today')
         );
 
-        $end = $start->addDays(7);
-
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'description' => $this->faker->text,
-            'status' => $this->faker->randomElement(ProjectStatus::values()),
-            'target_budget' => $this->faker->numberBetween(1000, 1000000),
-            'scope' => $this->faker->text,
-            'reason_to_donate' => $this->faker->text,
-            'beneficiaries' => $this->faker->text,
+            'description' => fake()->text(),
+            'status' => fake()->randomElement(ProjectStatus::values()),
+            'target_budget' => fake()->numberBetween(1_000, 1_000_000),
+            'scope' => fake()->text(),
+            'reason_to_donate' => fake()->text(),
+            'beneficiaries' => fake()->text(),
             'start' => $start,
-            'end' => $end,
-            'accepting_volunteers' => $this->faker->boolean,
-            'accepting_comments' => $this->faker->boolean,
-            'videos' => $this->faker->randomElements(['https://www.youtube.com/watch?v=9bZkp7q19f0', 'https://www.youtube.com/watch?v=2Vv-BfVoq4g', 'https://www.youtube.com/watch?v=JGwWNGJdvx8'], 2),
-            'external_links' => $this->faker->randomElements(['https://www.facebook.com/Asociatia-Comunitara-Cluj-Napoca-107374190771664', 'https://www.facebook.com/Asociatia-Comunitara-Cluj-Napoca-107374190771664'], 2),
-
+            'end' => $start->addDays(7),
+            'accepting_volunteers' => fake()->boolean(),
+            'accepting_comments' => fake()->boolean(),
+            'videos' => fake()->randomElements([
+                'https://www.youtube.com/watch?v=9bZkp7q19f0',
+                'https://www.youtube.com/watch?v=2Vv-BfVoq4g',
+                'https://www.youtube.com/watch?v=JGwWNGJdvx8',
+            ], 2),
+            'external_links' => fake()->url(),
         ];
     }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Ngo;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
@@ -58,7 +58,7 @@ class RegionalProjectController extends Controller
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
 
-        return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
+        return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
     }
 
     /**

@@ -88,7 +88,7 @@
                     <ChampionshipModal v-if="$page.props.auth.user">
                         <div class="px-9">
                             <Link
-                                :href="route('admin.ong.regional.project.add')"
+                                :href="route('dashboard.projects.regional.create')"
                                 class="flex w-fit items-center gap-x-2 py-2.5 my-10 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
                                 <SvgLoader name="add" />

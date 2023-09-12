@@ -1,6 +1,5 @@
 <template>
     <div class="space-y-6">
-
         <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('ong_profile') }}</h1>
 
         <!-- Ong Name -->
@@ -8,11 +7,11 @@
             :label="$t('ong_name')"
             id="ong_name"
             type="text"
-            v-model="form.ong.name"
+            v-model="form.ngo.name"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="ong_name"
-            :error="form.errors['ong.name']"
+            :error="form.errors['ngo.name']"
         />
 
         <!-- Ong cif -->
@@ -20,22 +19,21 @@
             :label="$t('ong_cif')"
             id="ong_cif"
             type="text"
-            v-model="form.ong.cif"
+            v-model="form.ngo.cif"
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="ong_cif"
-            :error="form.errors['ong.cif']"
+            :error="form.errors['ngo.cif']"
         />
 
         <div>
             <label class="block mb-1 text-sm font-medium leading-6 text-gray-700">{{ $t('ong_logo') }}</label>
             <Avatar
                 :label="$t('upload_logo')"
-                @upload="ongLogo"
+                @upload="(file) => (form.ngo.logo = file)"
                 :form="form"
-                :recivedFile="form.ong.logo"
-                :error="form.errors['ong.logo']"
-
+                :recivedFile="form.ngo.logo"
+                :error="form.errors['ngo.logo']"
             />
         </div>
 
@@ -45,46 +43,40 @@
             :label="$t('about_ong')"
             id="about-ong"
             color="gray-700"
-            v-model="form.ong.description"
-            :error="form.errors['ong.description']"
+            v-model="form.ngo.description"
+            :error="form.errors['ngo.description']"
         >
             <p class="text-xs font-normal text-gray-500">{{ $t('about_ong_description') }}</p>
         </Textarea>
 
         <!-- Activity domains -->
-        <div>
-            <SelectMultiple
-                class="w-full z-101"
-                :label="$t('domains')"
-                type="object"
-                :options="activity_domains"
-                v-model="form.ong.activity_domains_ids"
-                :error="form.errors['ong.activity_domains_ids']"
-            />
-        </div>
+        <Select
+            class="w-full z-101"
+            :label="$t('domains')"
+            type="object"
+            :options="$page.props.domains"
+            v-model="form.ngo.domains"
+            :error="form.errors['ngo.domains']"
+            multiple
+        />
 
         <!-- Statut -->
         <div>
             <p class="block mb-1 text-sm font-medium leading-6 text-gray-700">{{ $t('ong_statut') }}</p>
             <ButtonFile
                 :label="$t('upload_file')"
-                @upload="ongStatute"
-                v-model="form.ong.statute"
-                :recivedFile="form.ong.statute"
-                :error="form.errors['ong.statute']"
+                @upload="(file) => (form.ngo.statute = file)"
+                v-model="form.ngo.statute"
+                :recivedFile="form.ngo.statute"
+                :error="form.errors['ngo.statute']"
             />
             <p class="block mt-1 text-xs font-medium leading-6 text-gray-500">{{ $t('file_description') }}</p>
         </div>
 
         <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
-            <PrimaryButton
-                background="white"
-                hover="white"
-                color="gray-900"
-                @click="$emit('prev', $event.target)"
-            >
+            <SecondaryButton @click="$emit('prev', $event.target)">
                 {{ $t('back') }}
-            </PrimaryButton>
+            </SecondaryButton>
 
             <PrimaryButton
                 background="primary-500"
@@ -96,31 +88,20 @@
                 {{ $t('continue') }}
             </PrimaryButton>
         </div>
-
     </div>
 </template>
 
 <script setup>
-    import { onMounted } from "vue";
-
-    /** Import components. */
     import Input from '@/Components/form/Input.vue';
     import Avatar from '@/Components/form/Avatar.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import ButtonFile from '@/Components/form/ButtonFile.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import Select from '@/Components/form/Select.vue';
 
     /** Component props. */
     const props = defineProps({
         form: Object,
-        activity_domains: {
-            type: Array,
-            default: () => []
-        },
     });
-
-    /** Update form ong logo. */
-    const ongLogo = ((file) => props.form.ong.logo = file);
-    const ongStatute = ((file => props.form.ong.statute = file));
 </script>

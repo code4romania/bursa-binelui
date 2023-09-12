@@ -1,11 +1,10 @@
 <template>
     <div class="space-y-6">
-
-        <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('account_details') }}</h1>
+        <h1 v-if="'ngo-admin' === form.type" class="text-2xl font-bold text-cyan-900" v-text="$t('account_details')" />
 
         <!-- Name -->
         <Input
-            :label="'ngo-admin' == form.type ? $t('name_last_name_ong') : $t('name_last_name')"
+            :label="'ngo-admin' === form.type ? $t('name_last_name_ong') : $t('name_last_name')"
             id="name"
             type="text"
             v-model="form.user.name"
@@ -50,35 +49,27 @@
         />
 
         <!-- Terms -->
-        <label v-if="'donor' == form.type" class="flex items-center space-x-2">
+        <label v-if="'donor' === form.type" class="flex items-center space-x-2">
             <Checkbox name="terms" v-model:checked="form.terms" />
             <div class="flex items-center space-x-2 text-sm">
                 <span class="text-gray-700">{{ $t('i_agree') }}</span>
-                <Link
-                    :href="route('terms')"
-                    class="text-primary-500"
-                >
+                <Link :href="route('terms')" class="text-primary-500">
                     {{ $t('terms_link') }}
                 </Link>
                 <span class="text-red-500">*</span>
-                </div>
+            </div>
         </label>
 
         <!-- Subscribe -->
-        <label v-if="'donor' == form.type" class="flex items-center space-x-2">
+        <label v-if="'donor' === form.type" class="flex items-center space-x-2">
             <Checkbox name="subscribe" v-model:checked="form.subscribe" />
             <span class="text-sm text-gray-700">{{ $t('register_subscribe') }}</span>
         </label>
 
-        <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
-            <PrimaryButton
-                background="white"
-                hover="white"
-                color="gray-900"
-                @click="$emit('prev', $event.target)"
-            >
+        <div v-if="'ngo-admin' === form.type" class="flex items-center justify-between mt-6 gap-x-4">
+            <SecondaryButton @click="$emit('prev', $event.target)">
                 {{ $t('back') }}
-            </PrimaryButton>
+            </SecondaryButton>
 
             <PrimaryButton
                 background="primary-500"
@@ -91,7 +82,10 @@
             </PrimaryButton>
         </div>
 
-        <div v-if="'donor' == form.type" :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']">
+        <div
+            v-if="'donor' === form.type"
+            :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']"
+        >
             <PrimaryButton
                 class="flex-1 w-full"
                 background="primary-500"
@@ -107,17 +101,14 @@
                 @click="$emit('google', $event.target)"
             >
                 <SvgLoader name="google" />
-                {{ $t("google_login") }}
+                {{ $t('google_login') }}
             </SecondaryButton>
         </div>
     </div>
 </template>
 
 <script setup>
-    /** Import from inertia. */
     import { Link } from '@inertiajs/vue3';
-
-    /** Import components. */
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
@@ -126,6 +117,5 @@
 
     const props = defineProps({
         form: Object,
-        current: Object
     });
 </script>

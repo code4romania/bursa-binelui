@@ -2,36 +2,38 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Ngo;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Enums\VolunteerStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Volunteers\VolunteersTableResource;
+use App\Http\Resources\Collections\VolunteerCollection;
 use App\Models\VolunteerRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class VolunteerController extends Controller
 {
     public function index(Request $request, string $status = '')
     {
-        if (auth()->user()->organization == null) {
-            return redirect()->route('admin.ong.edit');
+        if (auth()->user()->organization === null) {
+            return redirect()->route('dashboard.organization.edit');
         }
 
         $status = VolunteerStatus::tryFrom($status) ?? VolunteerStatus::APPROVED;
 
-        return Inertia::render('AdminOng/Volunteers/Volunteers', [
-            'volunteers' => VolunteersTableResource::collection(
-                VolunteerRequest::query()
+        return Inertia::render('AdminOng/Volunteers/Index', [
+            'status' => $status,
+            'collection' => new VolunteerCollection(
+                QueryBuilder::for(VolunteerRequest::class)
                     ->with('volunteer')
                     ->whereBelongsToOrganization(auth()->user()->organization->id)
                     ->where('status', $status)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(15)
+                    ->allowedSorts('id', 'created_at', 'name')
+                    ->defaultSorts('-created_at')
+                    ->paginate()
                     ->withQueryString()
             ),
-            'status' => $status,
         ]);
     }
 

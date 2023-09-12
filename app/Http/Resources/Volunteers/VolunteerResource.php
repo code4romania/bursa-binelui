@@ -8,7 +8,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VolunteersTableResource extends JsonResource
+class VolunteerResource extends JsonResource
 {
     public static $wrap = null;
 

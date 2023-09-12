@@ -17,14 +17,11 @@ class OrganizationService
         $value = $attributes->get($key);
 
         return match ($key) {
-            'counties' => $organization->counties()
-                ->sync(collect($value)->pluck('id')),
+            'counties' => $organization->counties()->sync($value),
 
-            'activity_domains' => $organization->activityDomains()
-                ->sync(collect($value)->pluck('id')),
+            'activity_domains' => $organization->activityDomains()->sync($value),
 
-            'logo' => $organization->addMedia($value)
-                ->toMediaCollection('logo'),
+            'logo' => $organization->addMedia($value)->toMediaCollection('logo'),
 
             'statute' => static::saveStatue($organization, $value),
 

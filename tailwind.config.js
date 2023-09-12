@@ -57,9 +57,9 @@ module.exports = {
                 '110': '1010',
                 '120': '1020'
             },
-            maxHeight: {
+            spacing: {
                 '128': '32rem',
-            }
+            },
         },
     },
 

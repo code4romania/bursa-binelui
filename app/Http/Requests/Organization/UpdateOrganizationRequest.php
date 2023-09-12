@@ -9,11 +9,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOrganizationRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return $this->user()->can('update', $this->organization);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

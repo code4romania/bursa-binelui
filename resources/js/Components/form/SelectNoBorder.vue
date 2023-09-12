@@ -1,18 +1,18 @@
 <template>
     <Listbox as="div" v-model="selected">
-        <div class="relative text-gray-500 text-base font-medium leading-5">
+        <div class="relative text-base font-medium leading-5 text-gray-500">
             <ListboxButton class="flex items-center px-3">
                 <span>{{ selected.name }}</span>
-                <SelectorIcon class="h-5 w-5" aria-hidden="true" />
+                <SelectorIcon class="w-5 h-5" aria-hidden="true" />
             </ListboxButton>
 
             <transition
-                leave-active-class="transition ease-in duration-100"
+                leave-active-class="transition duration-100 ease-in"
                 leave-from-class="opacity-100"
                 leave-to-class="opacity-0"
             >
                 <ListboxOptions
-                    class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                    class="absolute z-10 w-full py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                 >
                     <ListboxOption
                         as="template"

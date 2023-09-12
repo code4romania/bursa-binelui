@@ -2,10 +2,10 @@
     <DashboardLayout>
         <div class="flex flex-wrap">
             <Link
-                :href="route('admin.ong.tickets.index', { status: 'open' })"
+                :href="route('dashboard.tickets.index', { status: 'open' })"
                 :class="[
                     'py-2.5 px-3.5 text-sm font-semibold',
-                    route().current('admin.ong.tickets.index', {
+                    route().current('dashboard.tickets.index', {
                         status: 'open',
                     })
                         ? 'bg-primary-500 text-white'
@@ -17,13 +17,13 @@
 
             <Link
                 :href="
-                    route('admin.ong.tickets.index', {
+                    route('dashboard.tickets.index', {
                         status: 'closed',
                     })
                 "
                 :class="[
                     'py-2.5 px-3.5 text-sm font-semibold',
-                    route().current('admin.ong.tickets.index', {
+                    route().current('dashboard.tickets.index', {
                         status: 'closed',
                     })
                         ? 'bg-primary-500 text-white'
@@ -80,41 +80,16 @@
             </Modal>
         </div>
 
-        <Title :title="isOpen ? $t('open_tickets') : $t('closed_tickets')">
-            <AnnotationIcon />
-        </Title>
+        <Title :title="isOpen ? $t('open_tickets') : $t('closed_tickets')" :icon="AnnotationIcon" />
 
-        <Table
-            class="mb-24"
-            :columns="
-                isOpen
-                    ? ['ID', $t('ticket_subject'), $t('ticket_created_at')]
-                    : ['ID', $t('ticket_subject'), $t('ticket_closed_at')]
-            "
-            :resource="tickets"
-        >
-            <tr v-for="(ticket, index) in tickets.data" :key="index">
-                <td class="w-8 px-3 py-4 overflow-hidden text-sm text-right text-gray-500 text-ellipsis">
-                    #{{ ticket.id }}
-                </td>
-                <td class="w-8/12 max-w-lg px-3 py-4 overflow-hidden text-sm text-gray-500 text-ellipsis">
-                    {{ ticket.subject }}
-                </td>
-                <td class="w-1/12 px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ isOpen ? ticket.created_at : ticket.closed_at }}
-                </td>
+        <Table :collection="collection">
+            <template #id="{ id }"> #{{ id }} </template>
 
-                <td
-                    class="relative flex items-center justify-end gap-4 py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6"
-                >
-                    <Link
-                        class="block text-sm font-medium text-blue-500 leadin-5"
-                        :href="route('admin.ong.tickets.view', ticket.id)"
-                    >
-                        {{ $t('view') }}
-                    </Link>
-                </td>
-            </tr>
+            <template #actions="{ row }">
+                <Link class="text-sm font-medium text-primary-600" :href="route('dashboard.tickets.view', row.id)">
+                    {{ $t('view') }}
+                </Link>
+            </template>
         </Table>
     </DashboardLayout>
 </template>
@@ -128,7 +103,7 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import Table from '@/Components/Table.vue';
+    import Table from '@/Components/tables/Table.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
@@ -137,11 +112,6 @@
     import Input from '@/Components/form/Input.vue';
 
     import { AnnotationIcon } from '@heroicons/vue/outline';
-
-    const flash = {
-        success_message: '',
-        error_message: '',
-    };
 
     const form = useForm({
         subject: '',
@@ -152,7 +122,7 @@
         status: {
             type: String,
         },
-        tickets: {
+        collection: {
             type: Object,
         },
     });
@@ -160,7 +130,7 @@
     const closeModal = () => document.getElementById('add_ticket').click();
 
     const addTicket = () => {
-        form.post(route('admin.ong.tickets.store'), {
+        form.post(route('dashboard.tickets.store'), {
             preserveScroll: true,
             onSuccess: () => {
                 form.reset();

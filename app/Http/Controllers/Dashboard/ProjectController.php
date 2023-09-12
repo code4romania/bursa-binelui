@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Ngo;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
@@ -61,7 +61,7 @@ class ProjectController extends Controller
             $fileAdder->toMediaCollection('project_files');
         });
 
-        return redirect()->route('admin.ong.project.edit', $project->id)->with('success', 'Project created.');
+        return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
     }
 
     public function edit(Project $project)
