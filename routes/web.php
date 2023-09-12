@@ -8,7 +8,6 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +19,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/', function () {
-//     return Inertia::render('Public/Home');
-// });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -49,10 +44,6 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/organizations.php';
 
 require __DIR__ . '/projects.php';
-
-require __DIR__ . '/volunteers.php';
-
-require __DIR__ . '/tickets.php';
 
 require __DIR__ . '/donations.php';
 

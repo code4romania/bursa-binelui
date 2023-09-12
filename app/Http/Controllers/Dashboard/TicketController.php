@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Collections\ClosedTicketCollection;
 use App\Http\Resources\Collections\OpenTicketCollection;
 use App\Http\Resources\TicketResource;
