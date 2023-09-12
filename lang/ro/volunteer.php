@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+
     'label' => [
         'singular' => 'Voluntar',
         'plural' => 'Voluntarii',
@@ -15,4 +16,12 @@ return [
         'created_at' => 'Dată înscriere',
         'has_user' => 'Utilizator',
     ],
+
+    'statuses' => [
+        'pending' => 'In asteptare',
+        'approved' => 'Aprobat',
+        'rejected' => 'Respins',
+    ],
+
+    'model' => 'Proiect',
 ];

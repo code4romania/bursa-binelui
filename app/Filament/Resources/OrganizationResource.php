@@ -32,6 +32,11 @@ class OrganizationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-office-building';
 
+    protected static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
     protected static function getNavigationGroup(): ?string
     {
         return __('navigation.group.manage');

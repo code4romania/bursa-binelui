@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -79,6 +82,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->belongsTo(Organization::class);
     }
 
+    public function donations(): HasMany
+    {
+        return  $this->hasMany(Donation::class);
+    }
+
     public function currentOrganization(): Organization
     {
         return $this->organization()->first();
@@ -92,6 +100,16 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function getFilamentName(): string
     {
         return "{$this->name}";
+    }
+
+    public function volunteer(): HasOne
+    {
+        return $this->hasOne(Volunteer::class);
+    }
+
+    public function volunteerRequest(): HasManyThrough
+    {
+        return $this->hasManyThrough(VolunteerRequest::class, Volunteer::class);
     }
 
     public function prunable(): Builder
