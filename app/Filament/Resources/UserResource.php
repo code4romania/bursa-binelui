@@ -6,7 +6,11 @@ namespace App\Filament\Resources;
 
 use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\VolunteersRelationManager;
 use App\Models\User;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -17,7 +21,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
-use PHPUnit\Util\Filter;
 
 class UserResource extends Resource
 {
@@ -27,12 +30,13 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    public static function getPluralLabel() : ?string{
+    public static function getPluralLabel(): ?string
+    {
         return __('user.label.plural');
     }
 
-
-    public static function getModelLabel() : string{
+    public static function getModelLabel(): string
+    {
         return __('user.label.singular');
     }
 
@@ -43,49 +47,74 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form ->schema([
-            TextInput::make('name')
-                ->label(__('user.name'))
-                ->required(),
-            TextInput::make('email')
-                ->label(__('user.email'))
-                ->email()
-                ->unique('users', 'email')
-                ->required(),
-            Select::make('role')
-                ->label(__('user.role'))
-                ->options(
-                    collect(
-                        UserRole::options()
-                    )->only(
-                        [
-                            UserRole::bb_admin->value,
-                            UserRole::bb_manager->value,
-                            UserRole::ngo_admin->value,
-                        ]
-                    )->toArray()
-                )->reactive()
-                ->required(),
-            Select::make('organization')
-                ->label(__('user.organization'))
-                ->relationship('organization', 'name')
-                ->hidden(function (callable $get) {
-                    return $get('role') !== UserRole::ngo_admin->value;
-                })
-                ->searchable()
-                ->preload()
-                ->required(),
+        return $form->schema([
+            Fieldset::make(__('user.labels.general_data'))
+                ->columns(1)->schema([
+                    TextInput::make('name')
+                        ->label(__('user.name'))
+                        ->inlineLabel()
+                        ->required()
+                        ->maxLength(255),
+                    TextInput::make('email')
+                        ->label(__('user.email'))
+                        ->email()
+                        ->unique('users', 'email')
+                        ->inlineLabel()
+                        ->required(),
+                    Select::make('role')
+                        ->label(__('user.role'))
+                        ->options(
+                            collect(
+                                UserRole::options()
+                            )->only(
+                                [
+                                    UserRole::bb_admin->value,
+                                    UserRole::bb_manager->value,
+                                    UserRole::ngo_admin->value,
+                                ]
+                            )->toArray()
+                        )->reactive()
+                        ->inlineLabel()
+                        ->visibleOn(['edit', 'create'])
+                        ->required(),
+                    Select::make('role')
+                        ->label(__('user.role'))
+                        ->options(UserRole::options())
+                        ->reactive()
+                        ->inlineLabel()
+                        ->visibleOn(['view'])
+                        ->required(),
+                    Select::make('organization')
+                        ->label(__('user.organization'))
+                        ->relationship('organization', 'name')
+                        ->hidden(function (callable $get) {
+                            return $get('role') !== UserRole::ngo_admin->value;
+                        })
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+                ]),
 
-        ]);;
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('email')->searchable()->sortable(),
-                TextColumn::make('role')->searchable()->sortable(),
+                TextColumn::make('name')
+                    ->label(__('user.name'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label(__('user.email'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('role')
+                    ->label(__('user.role'))
+                    ->getStateUsing(fn ($record) => $record->role->label())
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('role')
@@ -100,31 +129,34 @@ class UserResource extends Resource
                 TernaryFilter::make('has_donations')
                     ->label(__('user.filters.has_donations'))
                     ->queries(
-                        true: fn (Builder $query) => $query,
-                        false: fn (Builder $query) => $query,
+                        true: fn (Builder $query) => $query->whereHas('donations'),
+                        false: fn (Builder $query) => $query->doesntHave('donations'),
                     ),
                 TernaryFilter::make('is_volunteer')
                     ->label(__('user.filters.is_volunteer'))
                     ->queries(
-                        true: fn (Builder $query) => $query,
-                        false: fn (Builder $query) => $query,
+                        true: fn (Builder $query) => $query->has('volunteer'),
+                        false: fn (Builder $query) => $query->doesntHave('volunteer'),
                     ),
 
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
     public static function getRelations(): array
     {
         return [
-            //
+            DonationsRelationManager::class,
+            VolunteersRelationManager::class,
+            BadgesRelationManager::class
         ];
     }
+
 
     public static function getPages(): array
     {

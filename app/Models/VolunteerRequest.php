@@ -34,6 +34,11 @@ class VolunteerRequest extends MorphPivot
         return $this->morphTo();
     }
 
+    public function targetingOrganization(): bool
+    {
+        return $this->model_type === Organization::class;
+    }
+
     public function scopeWhereBelongsToOrganization(Builder $query, int $organizationId): Builder
     {
         return $query
