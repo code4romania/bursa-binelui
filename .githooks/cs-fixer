@@ -1,0 +1,61 @@
+#!/bin/bash
+unset CDPATH
+IFS='
+'
+get_config() {
+    for candidate in .php-cs-fixer.php .php-cs-fixer.dist.php .php_cs .php_cs.dist; do
+        if test -f "./$candidate"; then
+            echo "./$candidate"
+            return
+        fi
+    done
+}
+
+run_php_cs_fixer() {
+    echo $(pwd);
+    php_cs_fixer_bin=./vendor/bin/php-cs-fixer
+    if test ! -f "$php_cs_fixer_bin"; then
+        echo "php-cs-fixer file not found"
+        return  # Noop, php-cs-fixer not found.
+    fi
+
+    config="$(get_config)"
+    if test -z "$config"; then
+        echo "php_cs_fixer_bin not found"
+        return  # Noop, php-cs-fixer config not found.
+    fi
+
+    changed_files=$(git diff --staged --name-only --diff-filter=ACMRTUXB)
+
+    if ! echo "${changed_files}" | grep -qE "^(laravel/)?(\\.php-cs-fixer(\\.dist)?|composer\\.lock)$"; then
+
+        extra_args=$(printf -- '--path-mode=intersection\n--\n%s' "${changed_files}")
+    else
+        extra_args=''
+    fi
+
+    rerun_with_violation_details() {
+        echo >&2 "\033[0;33mCoding guidelines pre-commit check failed.\033[1;0m"
+        echo >&2 "\033[0;33mRunning check again in verbose mode ...\033[1;0m"
+
+        "$php_cs_fixer_bin" fix --config="$config"\
+            --stop-on-violation \
+            --using-cache=no \
+            ${extra_args}
+
+        exit 1
+    }
+
+    # PHP Coding Standards Fixer is run quietly. If there are errors it is run
+    # again in verbose mode to provide more information about which rules and
+    # which files are failing the check.
+    "$php_cs_fixer_bin" fix \
+        --config="$config" \
+        --stop-on-violation \
+        --using-cache=no \
+        ${extra_args} || rerun_with_violation_details
+}
+
+
+run_php_cs_fixer
+
