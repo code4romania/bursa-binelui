@@ -62,6 +62,13 @@ abstract class BaseOrganizationsWidget extends BaseWidget
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('id')
+                ->label(__('field.id'))
+                ->formatStateUsing(
+                    fn ($state) => __('field.id_format', ['number' => $state])
+                )
+                ->sortable(),
+
             TitleWithImageColumn::make('name')
                 ->label(__('organization.organization'))
                 ->image(fn ($record) => $record->cover_image)
