@@ -11,14 +11,13 @@ return [
     ],
     'label' => [
         'singular' => 'Utilizator',
-        'plural' => 'Utilizatori',
-    ],
+        'plural' => 'Utilizatori', ],
     'labels' => [
         'general_data' => 'Date generale',
         'volunteer_for_organization' => 'Voluntar in organizatie',
         'volunteer_for_project' => 'Proiect din organizatia: :organization',
     ],
-    'relations'=> [
+    'relations' => [
         'donations' => 'Donatii',
         'volunteer' => 'Proiecte la care este voluntar',
         'badges' => 'Insigne',
