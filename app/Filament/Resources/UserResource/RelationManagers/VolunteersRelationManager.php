@@ -28,6 +28,11 @@ class VolunteersRelationManager extends RelationManager
         return __('user.relations.volunteer');
     }
 
+    protected function getTableHeading(): string
+    {
+        return __('user.relations.heading.volunteers', ['count' => $this->getTableQuery()->count()]);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -9,17 +9,24 @@ use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
 class BadgesRelationManager extends RelationManager
 {
     protected static string $relationship = 'badges';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function getTitle(): string
     {
         return __('user.relations.badges');
+    }
+
+    protected function getTableHeading(): string
+    {
+        return __('user.relations.heading.badges', ['count' => $this->getTableQuery()->count()]);
     }
 
     public static function canViewForRecord(Model $record): bool
@@ -41,20 +48,29 @@ class BadgesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
+                ImageColumn::make('image')
+                    ->label(__('badge.image'))
+                    ->square(),
+
+                TextColumn::make('title')
+                    ->label(__('badge.title'))
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->label(__('badge.action.attach'))
+                    ->modalHeading(__('badge.action.attach'))
+                    ->color('primary'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->label(__('badge.action.detach')),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 }
