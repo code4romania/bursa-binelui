@@ -15,7 +15,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
 {
     protected function getTableHeading(): string
     {
-        return __('organization.heading.pending_changes');
+        return __('organization.heading.pending_changes', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
@@ -50,6 +50,13 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('id')
+                ->label(__('field.id'))
+                ->formatStateUsing(
+                    fn ($state) => __('field.id_format', ['number' => $state])
+                )
+                ->sortable(),
+
             TitleWithImageColumn::make('name')
                 ->label(__('organization.organization'))
                 ->image(fn (Organization $record) => $record->getFirstMediaUrl('logo'))
