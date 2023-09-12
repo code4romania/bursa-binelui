@@ -6,7 +6,6 @@ namespace App\Http\Resources\Collections;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection as BaseCollection;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 abstract class ResourceCollection extends BaseCollection
@@ -23,16 +22,7 @@ abstract class ResourceCollection extends BaseCollection
         ];
     }
 
-    protected function getColumns(): Collection
-    {
-        return collect($this->columns)
-            ->map(fn (array $config, string $column) => [
-                'field' => $column,
-                'label' => data_get($config, 'label', $column),
-                'sortable' => data_get($config, 'sortable', false),
-            ])
-            ->values();
-    }
+    abstract protected function getColumns(): array;
 
     protected function getSort(Request $request): array
     {

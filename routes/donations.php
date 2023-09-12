@@ -15,3 +15,12 @@ Route::prefix('ong')->middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('AdminOng/Donations/Donations');
     })->name('admin.ong.donations');
 });
+
+Route::group([
+    'middleware' => ['auth', 'verified'],
+    'prefix' => 'dashboard/donations',
+    'as' => 'dashboard.donations.',
+    'controller' => \App\Http\Controllers\Ngo\DonationController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+});

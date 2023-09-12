@@ -80,11 +80,9 @@
             </Modal>
         </div>
 
-        <Title :title="isOpen ? $t('open_tickets') : $t('closed_tickets')">
-            <AnnotationIcon />
-        </Title>
+        <Title :title="isOpen ? $t('open_tickets') : $t('closed_tickets')" :icon="AnnotationIcon" />
 
-        <Table class="mb-24" :collection="collection">
+        <Table :collection="collection">
             <template #id="{ id }"> #{{ id }} </template>
 
             <template #actions="{ row }">

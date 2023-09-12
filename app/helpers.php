@@ -15,5 +15,5 @@ function money_format($number, $decimals = 0): string
 
     $formatter->setAttribute(NumberFormatter::FRACTION_DIGITS, $decimals);
 
-    return $formatter->formatCurrency($number, 'RON');
+    return $formatter->formatCurrency((float) $number, 'RON');
 }

@@ -458,7 +458,7 @@
             [field]: props.organization[field],
         });
 
-        form.post(route('admin.ong.update'), {
+        form.post(route('dashboard.organization.update'), {
             preserveScroll: true,
         });
     };

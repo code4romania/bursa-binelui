@@ -2,11 +2,18 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Ngo\VolunteerController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('ong')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('voluntari/{status?}', [\App\Http\Controllers\Ngo\VolunteerController::class, 'index'])->name('admin.ong.volunteers');
-    Route::post('voluntari/approve/{volunteerRequest}', [\App\Http\Controllers\Ngo\VolunteerController::class, 'approve'])->name('admin.ong.volunteers.approve');
-    Route::post('voluntari/reject/{volunteerRequest}', [\App\Http\Controllers\Ngo\VolunteerController::class, 'reject'])->name('admin.ong.volunteers.reject');
-    Route::delete('voluntari/delete/{volunteerRequest}', [\App\Http\Controllers\Ngo\VolunteerController::class, 'delete'])->name('admin.ong.volunteers.delete');
+Route::group([
+    'middleware' => ['auth', 'verified'],
+    'prefix' => 'dashboard/volunteers',
+    'as' => 'dashboard.volunteers.',
+    'controller' => VolunteerController::class,
+], function () {
+    Route::get('/{status?}', 'index')->name('index');
+
+    Route::post('/{volunteerRequest}/approve', 'approve')->name('approve');
+    Route::post('/{volunteerRequest}/reject', 'reject')->name('reject');
+    Route::post('/{volunteerRequest}/delete', 'delete')->name('delete');
 });

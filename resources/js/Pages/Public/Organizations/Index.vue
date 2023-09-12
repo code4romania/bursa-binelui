@@ -112,5 +112,7 @@
         search: props.filter?.search || null,
     });
 
-    const { applyFilters, clearFilters } = useFilters(filter, route('organizations'));
+    const sort = ref(null);
+
+    const { applyFilters, clearFilters } = useFilters(filter, sort, route('organizations'));
 </script>

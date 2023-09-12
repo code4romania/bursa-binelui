@@ -38,7 +38,7 @@ class OrganizationController extends Controller
 
         OrganizationService::update($organization, $request->validated());
 
-        return redirect()->route('admin.ong.edit')
+        return redirect()->route('dashboard.organization.edit')
             ->with('success', __('organization.messages.update_success'));
     }
 }

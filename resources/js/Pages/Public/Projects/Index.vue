@@ -118,7 +118,6 @@
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import Map from '@/Components/maps/Map.vue';
     import DatePicker from '@/Components/form/DatePicker.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
     import Select from '@/Components/form/Select.vue';
     import useFilters from '@/Helpers/useFilters.js';
 

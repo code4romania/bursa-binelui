@@ -1,8 +1,6 @@
 <template>
     <DashboardLayout>
-        <Title :title="$t('ticket')">
-            <AnnotationIcon />
-        </Title>
+        <Title :title="$t('ticket')" :icon="AnnotationIcon" />
 
         <dl class="my-8 divide-y divide-gray-200">
             <div class="grid px-4 py-3 text-gray-700 md:grid-cols-12">

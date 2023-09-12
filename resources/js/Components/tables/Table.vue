@@ -25,7 +25,9 @@
                             <td
                                 class="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-0"
                             >
-                                <slot name="actions" :row="row" />
+                                <div class="flex gap-4">
+                                    <slot name="actions" :row="row" />
+                                </div>
                             </td>
                         </tr>
                     </tbody>

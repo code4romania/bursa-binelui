@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Collections;
 
+use App\Http\Resources\Columns\TableColumn;
 use App\Http\Resources\TicketResource;
 
 class OpenTicketCollection extends ResourceCollection
 {
     public $collects = TicketResource::class;
 
-    protected array $columns = [
-        'id' => [
-            'label' => 'ID',
-            'sortable' => true,
-        ],
-        'subject' => [
-            'label' => 'ticket_subject',
-            'sortable' => false,
-        ],
-        'created_at' => [
-            'label' => 'ticket_created_at',
-            'sortable' => true,
-        ],
-    ];
+    protected function getColumns(): array
+    {
+        return [
+            TableColumn::make('id')
+                ->label(__('ticket.column.id'))
+                ->sortable(),
+
+            TableColumn::make('subject')
+                ->label(__('ticket.column.subject')),
+
+            TableColumn::make('created_at')
+                ->label(__('ticket.column.created_at'))
+                ->sortable(),
+        ];
+    }
 }

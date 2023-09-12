@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <Footer />
+        <Footer class="mt-16" />
     </div>
 </template>
 
@@ -84,14 +84,6 @@
     } from '@heroicons/vue/outline';
 
     const props = defineProps({
-        title: {
-            type: String,
-            default: null,
-        },
-        icon: {
-            type: String,
-            default: null,
-        },
         gridClass: {
             type: String,
             default: 'gap-8',
@@ -101,12 +93,13 @@
     const navigation = [
         {
             name: 'Organizația mea',
-            route: route('admin.ong.edit', 1),
+            route: route('dashboard.organization.edit'),
             icon: HomeIcon,
         },
         {
             name: 'Proiectele mele',
             route: route('dashboard.projects.index'),
+            icon: FolderIcon,
             subMenu: [
                 {
                     name: 'published_projects',
@@ -126,11 +119,11 @@
                     icon: FolderRemoveIcon,
                 },
             ],
-            icon: FolderIcon,
         },
         {
             name: 'Proiectele mele regionale',
             route: route('dashboard.projects.regional.index'),
+            icon: FolderIcon,
             subMenu: [
                 {
                     name: 'published_projects',
@@ -147,28 +140,27 @@
                     icon: FolderRemoveIcon,
                 },
             ],
-            icon: FolderIcon,
         },
         {
             name: 'Voluntari',
-            route: route('admin.ong.volunteers'),
+            route: route('dashboard.volunteers.index'),
             icon: UserGroupIcon,
             subMenu: [
                 {
                     name: 'volunteers_pending',
-                    route: route('admin.ong.volunteers', { status: 'pending' }),
+                    route: route('dashboard.volunteers.index', { status: 'pending' }),
                     icon: UserAddIcon,
                 },
                 {
                     name: 'volunteers_rejected',
-                    route: route('admin.ong.volunteers', { status: 'rejected' }),
+                    route: route('dashboard.volunteers.index', { status: 'rejected' }),
                     icon: UserRemoveIcon,
                 },
             ],
         },
         {
             name: 'Donații',
-            route: route('admin.ong.donations'),
+            route: route('dashboard.donations.index'),
             icon: CurrencyEuroIcon,
         },
         {
