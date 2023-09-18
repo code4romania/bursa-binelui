@@ -1,8 +1,8 @@
 <template>
     <PageLayout :title="$t('projects_title')" icon="list">
         <!-- Filters -->
-        <div class="container grid items-start gap-6 sm:grid-cols-12">
-            <div class="flex gap-x-6 sm:col-span-5">
+        <div class="container grid items-start gap-6 md:grid-cols-12">
+            <div class="flex gap-x-6 md:col-span-12 lg:col-span-5">
                 <SearchFilter
                     v-model="filter.search"
                     :placeholder="$t('search')"
@@ -15,16 +15,19 @@
                 </SecondaryButton>
             </div>
 
-            <div class="flex gap-6 sm:col-span-3">
-                <SecondaryButton @click="clearFilters" class="flex items-center gap-x-1.5 w-full sm:w-auto">
+            <div class="flex gap-6 md:col-span-6 lg:col-span-3 whitespace-nowrap">
+                <SecondaryButton
+                    @click="clearFilters"
+                    class="flex items-center justify-center gap-x-1.5 w-full md:w-auto"
+                >
                     <XIcon class="-ml-0.5 h-4 w-4" aria-hidden="true" />
                     <span v-text="$t('empty_filters')" />
                 </SecondaryButton>
 
-                <Sort class="w-full sm:w-auto" />
+                <Sort class="w-full md:w-auto" :sort="collection.sort" />
             </div>
 
-            <div class="flex flex-col justify-end gap-6 sm:col-span-4 sm:flex-row">
+            <div class="flex flex-col justify-end gap-6 md:col-span-6 lg:col-span-4 md:flex-row">
                 <Link
                     :href="route('projects')"
                     class="flex items-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
@@ -51,7 +54,7 @@
             </div>
 
             <Select
-                class="relative sm:col-span-12 md:col-span-6 lg:col-span-3"
+                class="relative md:col-span-6 lg:col-span-3"
                 :label="$t('status')"
                 v-model="filter.status"
                 :options="{
@@ -62,7 +65,7 @@
             />
 
             <Select
-                class="relative sm:col-span-12 md:col-span-6 lg:col-span-3"
+                class="relative md:col-span-6 lg:col-span-3"
                 :label="$t('county')"
                 v-model="filter.county"
                 :options="counties"
@@ -72,7 +75,7 @@
             />
 
             <Select
-                class="relative sm:col-span-12 md:col-span-6 lg:col-span-3"
+                class="relative md:col-span-6 lg:col-span-3"
                 :label="$t('project_categories')"
                 v-model="filter.category"
                 :options="categories"
@@ -83,7 +86,7 @@
 
             <DatePicker
                 :label="$t('donation_period')"
-                class="sm:col-span-12 md:col-span-6 lg:col-span-3"
+                class="md:col-span-6 lg:col-span-3"
                 v-model="filter.date"
                 @update:modelValue="applyFilters"
                 range
@@ -95,13 +98,13 @@
         </div>
 
         <div class="container">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ resource.meta.total }} {{ $t('of_projects') }}</h2>
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ collection.meta.total }} {{ $t('of_projects') }}</h2>
 
             <!-- Published projects -->
             <PaginatedGrid
                 type="project"
                 cardType="client"
-                :list="resource"
+                :list="collection"
                 classes="grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
             />
         </div>
@@ -122,7 +125,7 @@
     import useFilters from '@/Helpers/useFilters.js';
 
     const props = defineProps({
-        resource: {
+        collection: {
             type: Object,
         },
         counties: {
@@ -136,23 +139,17 @@
             default: 'list',
             validator: (view) => ['list', 'map'].includes(view),
         },
-        filter: {
-            type: Object,
-            required: false,
-        },
     });
 
     const filter = ref({
-        county: props.filter?.county || [],
-        status: props.filter?.status || null,
-        category: props.filter?.category || [],
-        date: props.filter?.date || [],
-        search: props.filter?.search || null,
+        county: props.collection.filter?.county || [],
+        status: props.collection.filter?.status || null,
+        category: props.collection.filter?.category || [],
+        date: props.collection.filter?.date || [],
+        search: props.collection.filter?.search || null,
     });
-
-    const sort = ref(null);
 
     const url = route(props.view === 'map' ? 'projects.map' : 'projects');
 
-    const { applyFilters, clearFilters } = useFilters(filter, sort, url);
+    const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
 </script>

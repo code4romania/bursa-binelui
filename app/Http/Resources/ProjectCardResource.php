@@ -7,7 +7,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectCardsResource extends JsonResource
+class ProjectCardResource extends JsonResource
 {
     public static $wrap = null;
 

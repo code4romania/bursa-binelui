@@ -109,6 +109,16 @@ class Project extends Model implements HasMedia
         return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
     }
 
+    /**
+     * Scope a query to include the searched text.
+     */
+    public function scopeSearch(Builder $query, string $searchedText): Builder
+    {
+        return $query->where('name', 'LIKE', "%{$searchedText}%")
+            ->orWhere('description', 'LIKE', "%{$searchedText}%")
+            ->orWhereRelation('organization', 'name', 'LIKE', "%{$searchedText}%");
+    }
+
     public function stages(): BelongsToMany
     {
         return $this->belongsToMany(ChampionshipStage::class);
