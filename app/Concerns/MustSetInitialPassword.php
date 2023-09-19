@@ -34,9 +34,10 @@ trait MustSetInitialPassword
         return ! \is_null($this->password_set_at);
     }
 
-    public function markPasswordAsSet(): bool
+    public function setPassword(string $password): bool
     {
         return $this->forceFill([
+            'password' => Hash::make($password),
             'email_verified_at' => now(),
             'password_set_at' => now(),
         ])->save();

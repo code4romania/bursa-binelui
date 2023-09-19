@@ -7,10 +7,11 @@ namespace App\Http\Controllers;
 use App\Models\ActivityDomain;
 use App\Models\County;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class EvolutionController extends Controller
 {
-    public function index()
+    public function __invoke(): Response
     {
         $donations = 102030;
         $amount = 122345;
@@ -132,7 +133,7 @@ class EvolutionController extends Controller
             'first_page_url' => 'http://bursabinelui.test/articole?page=1',
             'from' => 1,
             'last_page' => 2,
-            'last_page_url'=> 'http://bursabinelui.test/articole?page=2',
+            'last_page_url' => 'http://bursabinelui.test/articole?page=2',
             'links' => [
                 [
                     'url' => 'http://bursabinelui.test/articole?page=1',
@@ -140,14 +141,14 @@ class EvolutionController extends Controller
                     'active' => true,
                 ],
                 [
-                    'url'=> 'http://bursabinelui.test/articole?page=2',
-                    'label'=> '2',
-                    'active'=> false,
+                    'url' => 'http://bursabinelui.test/articole?page=2',
+                    'label' => '2',
+                    'active' => false,
                 ],
             ],
-            'next_page_url'=> 'http://bursabinelui.test/articole?page=1',
-            'path'=> 'http://bursabinelui.test/articole',
-            'per_page' =>15,
+            'next_page_url' => 'http://bursabinelui.test/articole?page=1',
+            'path' => 'http://bursabinelui.test/articole',
+            'per_page' => 15,
             'prev_page_url' => null,
             'to' => 15,
             'total' => 20,

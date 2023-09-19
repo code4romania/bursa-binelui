@@ -15,7 +15,6 @@ use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -70,11 +69,7 @@ class Welcome extends Component implements HasForms
             ]);
         }
 
-        $this->user->update([
-            'password' => Hash::make(data_get($this->form->getState(), 'password')),
-        ]);
-
-        $this->user->markPasswordAsSet();
+        $this->user->setPassword(data_get($this->form->getState(), 'password'));
 
         Filament::auth()->login($this->user);
 

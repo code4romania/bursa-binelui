@@ -8,7 +8,16 @@ use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Dashboard\RegionalProjectController;
 use App\Http\Controllers\Dashboard\TicketController;
 use App\Http\Controllers\Dashboard\VolunteerController;
+use App\Http\Controllers\Dashboard\WelcomeController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', DashboardController::class)->name('main');
+
+Route::withoutMiddleware(['auth', 'verified'])->as('auth.')->group(function () {
+    Route::get('welcome/{user}', [WelcomeController::class, 'create'])->name('welcome');
+    Route::post('welcome/{user}', [WelcomeController::class, 'store'])->name('welcome.store');
+});
 
 Route::group([
     'prefix' => 'organization',

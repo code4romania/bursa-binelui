@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,6 +53,6 @@ require __DIR__ . '/articles.php';
 
 require __DIR__ . '/donor.php';
 
-require __DIR__ . '/evolution.php';
+Route::get('/evolutia-faptelor-bune', EvolutionController::class)->name('evolution');
 
 Route::get('/{page:slug}', PageController::class)->name('page');

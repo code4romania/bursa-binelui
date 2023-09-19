@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Organizations;
 
-use App\Http\Resources\ProjectCardsResource;
+use App\Http\Resources\ProjectCardResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,7 +32,7 @@ class ShowOrganizationResource extends JsonResource
             'status' => $this->status,
             'eu_platesc_merchant_id' => filled($this->eu_platesc_merchant_id),
             'eu_platesc_private_key' => filled($this->eu_platesc_private_key),
-            'projects' => ProjectCardsResource::collection(
+            'projects' => ProjectCardResource::collection(
                 $this->projects->map(function (Project $project) {
                     $project->setRelation('organization', $this);
 

@@ -44,28 +44,13 @@
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import Input from '@/Components/form/Input.vue';
 
-    /** Component props. */
-    const props = defineProps({
-        user: {
-            type: Object,
-            required: true,
-        },
-        token: {
-            type: String,
-            required: true,
-        },
-    });
-
-    /** Form variables. */
     const form = useForm({
-        user: props.user.id,
-        token: props.token,
-        password: '',
-        password_confirmation: '',
+        password: null,
+        password_confirmation: null,
     });
 
     /** Submit action. */
     const submit = () => {
-        form.post(route('ngo.user.welcome.store', props.user.id));
+        form.post(window.location.href);
     };
 </script>

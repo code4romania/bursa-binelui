@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Vite;
 
-class BCRProjectCardsResource extends JsonResource
+class BCRProjectCardResource extends JsonResource
 {
     public static $wrap = null;
 
