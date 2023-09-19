@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-6">
-        <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900" v-text="$t('contact_ong')" />
+        <h1 v-if="'organization' == form.type" class="text-2xl font-bold text-cyan-900" v-text="$t('contact_ong')" />
 
         <!-- County -->
 
@@ -80,7 +80,7 @@
             :error="form.errors['ngo.webiste']"
         />
 
-        <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
+        <div v-if="'organization' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <SecondaryButton @click="$emit('prev', $event.target)">
                 {{ $t('back') }}
             </SecondaryButton>

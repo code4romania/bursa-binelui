@@ -14,7 +14,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->isNgoAdmin();
+        return auth()->user()->isOrganizationAdmin();
     }
 
     /**

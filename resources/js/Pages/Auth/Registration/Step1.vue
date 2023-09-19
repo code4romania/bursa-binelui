@@ -31,12 +31,12 @@
     const options = ref([
         {
             label: 'Creează cont donator',
-            value: 'donor',
+            value: 'user',
             description: 'Dorești să donezi? Creează acum un cont și începe să faci fapte bune.',
         },
         {
             label: 'Creează cont organizație',
-            value: 'ngo-admin',
+            value: 'organization',
             description: 'Vrei ca ONG-ul din care faci parte să apară pe Bursa Binelui? Înscrie organizația acum.',
         },
     ]);

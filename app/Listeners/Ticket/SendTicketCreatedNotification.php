@@ -19,14 +19,14 @@ class SendTicketCreatedNotification
     {
         Notification::send(
             User::query()
-                ->onlyBBAdmins()
+                ->onlySuperUsers()
                 ->get(),
             new Admin\TicketCreatedNotification($event->ticket)
         );
 
         Notification::send(
             User::query()
-                ->onlyNGOAdmins($event->ticket->organization)
+                ->whereBelongsToOrganization($event->ticket->organization)
                 ->get(),
             new Ngo\TicketCreatedNotification($event->ticket)
         );

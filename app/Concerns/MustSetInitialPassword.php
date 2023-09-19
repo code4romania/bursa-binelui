@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Concerns;
 
-use App\Enums\UserRole;
-use App\Notifications\Admin\WelcomeNotification as AdminWelcomeNotification;
-use App\Notifications\Ngo\WelcomeNotification;
+use App\Notifications\Admin;
+use App\Notifications\Ngo;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -45,11 +44,12 @@ trait MustSetInitialPassword
 
     public function sendWelcomeNotification(): void
     {
-        if ($this->role === UserRole::ngo_admin) {
-            $this->notify(new WelcomeNotification());
-
-            return;
+        if ($this->isSuperUser()) {
+            $this->notify(new Admin\WelcomeNotification());
         }
-        $this->notify(new AdminWelcomeNotification());
+
+        if ($this->isOrganizationAdmin()) {
+            $this->notify(new Ngo\WelcomeNotification());
+        }
     }
 }

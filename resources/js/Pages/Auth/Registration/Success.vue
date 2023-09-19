@@ -12,7 +12,7 @@
                         :id="option.value"
                         name="info"
                         type="radio"
-                        v-model="social.source_of_information"
+                        v-model="social.referrer"
                         :value="option.value"
                         class="w-4 h-4 border-gray-300 text-primary-500 focus:ring-primary-500"
                     />
@@ -24,7 +24,7 @@
                 <!-- Other -->
                 <Input
                     @input="update"
-                    v-show="show && social.source_of_information"
+                    v-show="show && social.referrer"
                     id="other"
                     type="text"
                     v-model="other"
@@ -100,5 +100,5 @@
         }
     };
 
-    const update = () => (props.social.source_of_information = other.value);
+    const update = () => (props.social.referrer = other.value);
 </script>

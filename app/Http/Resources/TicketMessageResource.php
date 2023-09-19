@@ -21,7 +21,7 @@ class TicketMessageResource extends JsonResource
             'user' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,
-                'is_bb_admin' => $this->user->isBbAdmin(),
+                'is_superuser' => $this->user->isSuperUser(),
             ],
         ];
     }

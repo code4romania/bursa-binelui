@@ -55,7 +55,7 @@
     });
 
     const social = useForm({
-        source_of_information: '',
+        referrer: '',
     });
 
     const props = defineProps({
@@ -81,7 +81,7 @@
         let components = [Step1, Step2];
 
         /** Check if registration is of type oragnization */
-        if ('ngo-admin' === form.type) {
+        if ('organization' === form.type) {
             components = [...components, Step3, Step4, Step5];
         }
 
@@ -114,7 +114,7 @@
     const next = () => {
         if ('donor' === form.type && current.value === 1) {
             submit();
-        } else if ('ngo-admin' === form.type && current.value === 4) {
+        } else if ('organization' === form.type && current.value === 4) {
             submit();
         } else if ('' !== form.type) {
             current.value++;
@@ -165,7 +165,7 @@
                 }
 
                 /** Repopulate array as objects. */
-                if (form.type === 'ngo-admin') {
+                if (form.type === 'organization') {
                     if (0 < form.ngo.activity_domains_ids.length) {
                         form.ngo.activity_domains_ids = props.activity_domains.filter((domain) =>
                             form.ngo.activity_domains_ids.includes(domain.id)
@@ -195,7 +195,7 @@
             finalize.value = true;
             social.patch(route('user.update', { id: usrid.value }), {
                 onSuccess: (data) => {
-                    social.source_of_information = '';
+                    social.referrer = '';
                 },
             });
         }

@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function __invoke(): Response|RedirectResponse
     {
-        if (auth()->user()->isNgoAdmin()) {
+        if (auth()->user()->belongsToOrganization()) {
             return redirect()->route('dashboard.organization.edit');
         }
         if (auth()->user()->isDonor()) {

@@ -77,7 +77,6 @@
                             >
                                 <!-- Administrate Link -->
                                 <NavLink
-                                    v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
                                     class="w-full px-3 py-2"
                                     :href="route('donor.index')"
                                     :active="route().current('donor.index')"
@@ -85,7 +84,7 @@
                                     {{ $t('dashbord') }}
                                 </NavLink>
                                 <NavLink
-                                    v-if="$page.props.auth.user && 'ngo-admin' === $page.props.auth.user.role"
+                                    v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
                                     class="w-full px-3 py-2"
                                     :href="route('dashboard.main')"
                                     :active="route().current('dashboard.main')"
@@ -94,7 +93,6 @@
                                 </NavLink>
 
                                 <NavLink
-                                    v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
                                     class="w-full px-3 py-2"
                                     :href="route('donor.donations')"
                                     :active="route().current('donor.donations')"
@@ -178,28 +176,20 @@
                         />
                         <SvgLoader class="w-4 h-4" name="default_avatar" /> -->
                     </div>
-
-                    <button
-                        type="button"
-                        class="flex-shrink-0 p-1 ml-auto text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                    >
-                        <span class="sr-only">View notifications</span>
-                        <BellIcon class="w-6 h-6" aria-hidden="true" />
-                    </button>
                 </div>
 
-                <div class="mt-3 space-y-1">
+                <div v-if="$page.props.auth.user" class="mt-3 space-y-1">
                     <!-- Administrate Link -->
                     <NavLink
-                        v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
                         class="w-full px-3 py-2"
                         :href="route('donor.index')"
                         :active="route().current('donor.index')"
                     >
                         {{ $t('dashbord') }}
                     </NavLink>
+
                     <NavLink
-                        v-if="$page.props.auth.user && 'ngo-admin' === $page.props.auth.user.role"
+                        v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
                         class="w-full px-3 py-2"
                         :href="route('dashboard.main')"
                         :active="route().current('dashboard.main')"
@@ -208,7 +198,6 @@
                     </NavLink>
 
                     <NavLink
-                        v-if="$page.props.auth.user && 'donor' === $page.props.auth.user.role"
                         class="w-full px-3 py-2"
                         :href="route('donor.donations')"
                         :active="route().current('donor.donations')"
@@ -218,7 +207,6 @@
 
                     <!-- Account settings -->
                     <NavLink
-                        v-if="$page.props.auth.user"
                         class="w-full px-3 py-2"
                         :href="route('profile.edit')"
                         :active="route().current('profile.edit')"
@@ -227,36 +215,21 @@
                     </NavLink>
 
                     <!-- Log out -->
-                    <NavLink
-                        v-if="$page.props.auth.user"
-                        class="w-full px-3 py-2"
-                        :href="route('logout')"
-                        method="post"
-                        as="button"
-                    >
+                    <NavLink class="w-full px-3 py-2" :href="route('logout')" method="post" as="button">
                         {{ $t('log_out_link') }}
                     </NavLink>
-
-                    <NavLink
-                        class="w-full px-3 py-2"
-                        v-if="!$page.props.auth.user"
-                        :href="route('login')"
-                        :active="route().current('login')"
-                    >
+                </div>
+                <div v-else class="mt-3 space-y-1">
+                    <NavLink class="w-full px-3 py-2" :href="route('login')" :active="route().current('login')">
                         {{ $t('login_link') }}
                     </NavLink>
 
-                    <NavLink
-                        class="w-full px-3 py-2"
-                        v-if="!$page.props.auth.user"
-                        :href="route('register')"
-                        :active="route().current('register')"
-                    >
+                    <NavLink class="w-full px-3 py-2" :href="route('register')" :active="route().current('register')">
                         {{ $t('register_link') }}
                     </NavLink>
-
-                    <SelectNoBorder class="py-2" :options="languages" />
                 </div>
+
+                <SelectNoBorder class="py-2" :options="languages" />
             </div>
         </DisclosurePanel>
     </Disclosure>

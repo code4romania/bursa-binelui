@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\UserRole;
 use App\Models\Organization;
 use App\Models\Ticket;
 use App\Models\TicketMessage;
@@ -35,23 +34,23 @@ class TicketFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Ticket $ticket) {
-            $ngoAdmin = $ticket->organization
-                ->getAdministrators()
+            $organizationAdmin = $ticket->organization
+                ->users
                 ->first();
 
-            $bbAdmin = User::query()
-                ->role(UserRole::bb_admin)
+            $superAdmin = User::query()
+                ->onlySuperAdmins()
                 ->first();
 
             TicketMessage::factory()
                 ->for($ticket)
-                ->recycle($ngoAdmin)
+                ->recycle($organizationAdmin)
                 ->count(fake()->randomDigitNotNull())
                 ->create();
 
             TicketMessage::factory()
                 ->for($ticket)
-                ->recycle($bbAdmin)
+                ->recycle($superAdmin)
                 ->count(fake()->randomDigitNotNull())
                 ->create();
         });

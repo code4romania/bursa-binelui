@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Concerns;
+namespace App\Concerns\Enums;
 
-trait ArrayableEnum
+trait Arrayable
 {
     public static function names(): array
     {
@@ -27,19 +27,5 @@ trait ArrayableEnum
                 $case->value => $case->label(),
             ])
             ->all();
-    }
-
-    public function label(): string
-    {
-        $label = collect([$this->translationKeyPrefix(), $this->value])
-            ->filter()
-            ->implode('.');
-
-        return __($label);
-    }
-
-    protected function translationKeyPrefix(): ?string
-    {
-        return null;
     }
 }

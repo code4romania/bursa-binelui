@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-6">
-        <h1 v-if="'ngo-admin' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('ong_profile') }}</h1>
+        <h1 v-if="'organization' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('ong_profile') }}</h1>
 
         <!-- Ong Name -->
         <Input
@@ -73,7 +73,7 @@
             <p class="block mt-1 text-xs font-medium leading-6 text-gray-500">{{ $t('file_description') }}</p>
         </div>
 
-        <div v-if="'ngo-admin' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
+        <div v-if="'organization' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <SecondaryButton @click="$emit('prev', $event.target)">
                 {{ $t('back') }}
             </SecondaryButton>

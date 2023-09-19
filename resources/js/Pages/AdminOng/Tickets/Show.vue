@@ -33,7 +33,7 @@
                     <p
                         class="text-sm font-semibold"
                         :class="{
-                            'text-warning-600': message.user.is_bb_admin,
+                            'text-warning-600': message.user.is_superuser,
                         }"
                         v-text="message.user.name"
                     />

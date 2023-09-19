@@ -172,8 +172,8 @@
     "organization_logo_label": "Logo-ul organizației",
     "change_image_label": "Schimbă imaginea",
     "delete_image_label": "Sterge imagine",
-    "active": "Activ",
-    "inactive": "Inactiv",
+    "active": "Deschis",
+    "inactive": "Închis",
     "become_volunter": "Fii voluntar",
     "target_amount": "Suma target",
     "share_project": "Distribuie acest proiect pe",
@@ -405,5 +405,9 @@
     "sort.end_date": "Data sfârșit proiect",
     "sort.target": "Target",
     "sort.donations_total": "Suma donată",
-    "sort.donations_count": "Număr donații"
+    "sort.donations_count": "Număr donații",
+
+    "users.add_manager": "Adaugă manager",
+
+    "navigation.users": "Utilizatori"
 }

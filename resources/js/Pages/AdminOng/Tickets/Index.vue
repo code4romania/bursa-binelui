@@ -100,11 +100,9 @@
     /** Import from inertia. */
     import { useForm } from '@inertiajs/vue3';
 
-    /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
     import Table from '@/Components/tables/Table.vue';
-    import ModalAction from '@/Components/modals/ModalAction.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';

@@ -24,7 +24,8 @@ class VerifyEmailController extends Controller
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
-            if ($request->user()->isNgoAdmin()) {
+
+            if ($request->user()->isOrganizationAdmin()) {
                 event(new SendOrganizationForApproval($request->user()->load('organization')->organization));
             }
         }
