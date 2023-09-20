@@ -6,11 +6,9 @@ namespace App\Traits;
 
 use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 
 trait HasProjectStatus
 {
-
     //TODO
     //Rename wherw Is panding is approve is rejected
     public function initializeHasProjectStatus()
@@ -32,7 +30,7 @@ trait HasProjectStatus
     {
         return $this->status === ProjectStatus::rejected;
     }
-    
+
     public function scopeIsPending(Builder $query): void
     {
         $query->where('status', ProjectStatus::pending);
