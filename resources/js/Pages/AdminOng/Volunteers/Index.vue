@@ -24,40 +24,33 @@
             </template>
 
             <template #actions="{ row }">
-                <ModalAction
+                <ConfirmationModal
                     v-if="status === 'pending'"
-                    triggerModalClasses="block text-sm font-medium leading-5 text-blue-600 hover:underline "
-                    :triggerModalText="$t('accept')"
-                    :cancelModalText="$t('cancel')"
-                    :actionModalText="$t('accept')"
-                    :title="$t('confirm')"
-                    :body="`${$t('confirm_accept_text')} ${row.name}`"
-                    :actionRoute="route('dashboard.volunteers.approve', row.id)"
-                    actionType="approve"
+                    :title="$t('volunteers.accept.title')"
+                    :content="$t('volunteers.accept.content', { name: row.name })"
+                    :trigger="$t('volunteers.accept.trigger')"
+                    :confirmActionUrl="route('dashboard.volunteers.approve', row.id)"
+                    color="primary"
                 />
 
-                <ModalAction
+                <ConfirmationModal
                     v-else-if="status === 'rejected'"
-                    triggerModalClasses="block text-sm font-medium leading-5 text-red-600  hover:underline "
-                    :triggerModalText="$t('delete')"
-                    :cancelModalText="$t('cancel')"
-                    :actionModalText="$t('delete')"
-                    :title="$t('confirm')"
-                    :body="`${$t('confirm_delete_text')} ${row.name}`"
-                    :actionRoute="route('dashboard.volunteers.delete', row.id)"
-                    actionType="delete"
+                    :title="$t('volunteers.delete.title')"
+                    :content="$t('volunteers.delete.content', { name: row.name })"
+                    :trigger="$t('volunteers.delete.trigger')"
+                    :confirmActionUrl="route('dashboard.volunteers.delete', row.id)"
+                    confirmActionMethod="delete"
+                    color="danger"
                 />
 
-                <ModalAction
+                <ConfirmationModal
                     v-if="status !== 'rejected'"
-                    triggerModalClasses="block text-sm font-medium leading-5 text-red-600 hover:underline "
-                    :triggerModalText="$t('reject')"
-                    :cancelModalText="$t('cancel')"
-                    :actionModalText="$t('reject')"
-                    :title="$t('confirm')"
-                    :body="`${$t('confirm_reject_text')} ${row.name}`"
-                    :actionRoute="route('dashboard.volunteers.reject', row.id)"
-                    actionType="reject"
+                    :title="$t('volunteers.reject.title')"
+                    :content="$t('volunteers.reject.content', { name: row.name })"
+                    :trigger="$t('volunteers.reject.trigger')"
+                    :confirmActionUrl="route('dashboard.volunteers.delete', row.id)"
+                    confirmActionMethod="delete"
+                    color="danger"
                 />
             </template>
         </Table>
@@ -70,6 +63,7 @@
     import Pagination from '@/Components/pagination/Pagination.vue';
     import Title from '@/Components/Title.vue';
     import Table from '@/Components/tables/Table.vue';
+    import ConfirmationModal from '@/Components/modals/ConfirmationModal.vue';
     import ModalAction from '@/Components/modals/ModalAction.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
 

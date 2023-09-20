@@ -75,30 +75,14 @@
                 {{ $t('back') }}
             </SecondaryButton>
 
-            <PrimaryButton
-                background="primary-500"
-                hover="primary-400"
-                color="white"
-                type="button"
-                @click="$emit('next', $event.target)"
-            >
-                {{ $t('continue') }}
-            </PrimaryButton>
+            <PrimaryButton @click="$emit('next', $event.target)" :label="$t('continue')" />
         </div>
 
         <div
             v-if="'donor' === form.type"
             :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']"
         >
-            <PrimaryButton
-                class="flex-1 w-full"
-                background="primary-500"
-                hover="primary-400"
-                color="white"
-                @click="$emit('next', $event.target)"
-            >
-                {{ $t('register_link') }}
-            </PrimaryButton>
+            <PrimaryButton class="flex-1 w-full" @click="$emit('next', $event.target)" :label="$t('register_link')" />
 
             <SecondaryButton
                 class="w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"

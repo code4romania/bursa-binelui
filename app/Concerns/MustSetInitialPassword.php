@@ -20,10 +20,8 @@ trait MustSetInitialPassword
         });
 
         static::created(function (self $user) {
-            if (! app()->runningInConsole()) {
-                if (! empty($user->created_by)) {
-                    $user->sendWelcomeNotification();
-                }
+            if (filled($user->created_by)) {
+                $user->sendWelcomeNotification();
             }
         });
     }
@@ -44,12 +42,10 @@ trait MustSetInitialPassword
 
     public function sendWelcomeNotification(): void
     {
-        if ($this->isSuperUser()) {
-            $this->notify(new Admin\WelcomeNotification());
-        }
-
-        if ($this->isOrganizationAdmin()) {
-            $this->notify(new Ngo\WelcomeNotification());
-        }
+        $this->notify(
+            $this->isSuperUser()
+                ? new Admin\WelcomeNotification
+                : new Ngo\WelcomeNotification
+        );
     }
 }

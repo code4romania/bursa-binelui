@@ -51,15 +51,11 @@
             <div class="grid grid-cols-2 gap-4 mt-6">
                 <!-- Log in button -->
                 <PrimaryButton
-                    background="primary-500"
-                    hover="primary-400"
-                    color="white"
+                    type="submit"
                     class="col-span-2 md:col-span-1"
-                    :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                >
-                    {{ $t('log_in') }}
-                </PrimaryButton>
+                    :label="$t('log_in')"
+                />
 
                 <SecondaryButton
                     class="col-span-2 md:col-span-1 w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"

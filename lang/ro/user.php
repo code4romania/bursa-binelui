@@ -7,6 +7,7 @@ return [
         'superadmin' => 'Administrator Bursa Binelui',
         'supermanager' => 'Manager Bursa Binelui',
         'admin' => 'Administrator ONG',
+        'manager' => 'Manager ONG',
 
         'donor' => 'Donator/Voluntar',
     ],
@@ -35,6 +36,8 @@ return [
     'role' => 'Rol',
     'organization' => 'Organizație',
     'messages' => [
+        'created' => 'Utilizatorul a fost adăugat.',
+        'deleted' => 'Utilizatorul a fost șters.',
         'set_initial_password_success' => 'Parola a fost setată cu succes!',
     ],
     'filters' => [

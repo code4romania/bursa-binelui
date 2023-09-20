@@ -59,16 +59,7 @@
                             <!-- Action -->
                             <div class="space-y-6">
                                 <!-- Log in button -->
-                                <PrimaryButton
-                                    background="primary-500"
-                                    hover="primary-400"
-                                    color="white"
-                                    class="w-full"
-                                    :class="{ 'opacity-25': form.processing }"
-                                    :disabled="form.processing"
-                                >
-                                    {{ $t('log_in') }}
-                                </PrimaryButton>
+                                <PrimaryButton type="submit" :disabled="form.processing" :label="$t('log_in')" />
 
                                 <SecondaryButton
                                     class="flex items-center w-full justify-center gap-x-2 py-2.5"

@@ -1,5 +1,5 @@
 <template>
-    <Menu as="div" class="relative inline-block text-left z-101">
+    <Menu as="div" class="relative inline-block text-left">
         <div>
             <MenuButton
                 class="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm gap-x-1.5 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -19,7 +19,7 @@
         >
             <MenuItems
                 as="ul"
-                class="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg z-101 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="absolute right-0 z-50 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
                 <div class="py-1">
                     <MenuItem as="li" v-for="(column, index) in items" :key="index" v-slot="{ active }">
@@ -48,7 +48,6 @@
     import { computed } from 'vue';
     import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
     import { MenuAlt1Icon, SortAscendingIcon, SortDescendingIcon } from '@heroicons/vue/solid';
-    import { trans } from 'laravel-vue-i18n';
     import route from 'ziggy-js';
     import useSort from '@/Helpers/useSort.js';
 

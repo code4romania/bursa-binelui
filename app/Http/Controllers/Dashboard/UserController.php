@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collections\UserCollection;
-use App\Models\Ticket;
 use App\Models\User;
+use App\Rules\UserDoesntBelongToAnOrganization;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,13 +19,14 @@ class UserController extends Controller
     public function index(Request $request, ?string $status = null): Response
     {
         return Inertia::render('AdminOng/Users/Index', [
-            'collection' => new UserCollection(
+            'collection' => UserCollection::make(
                 QueryBuilder::for(User::class)
+                    ->with('organization:id')
                     ->where('organization_id', auth()->user()->organization_id)
-                    ->allowedSorts('id', 'created_at')
+                    ->allowedSorts('name', 'email', 'created_at')
                     ->defaultSorts('created_at')
-                    ->paginate()
-            ),
+                    ->paginate(),
+            )->withPermissions(),
         ]);
     }
 
@@ -34,30 +35,35 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         $attributes = $request->validate([
-            'subject' => ['required', 'string', 'max:200'],
-            'content' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:200'],
+            'email' => ['required', 'string', 'email', new UserDoesntBelongToAnOrganization],
         ]);
 
-        $ticket = Ticket::create([
-            'subject' => strip_tags($attributes['subject']),
-            'content' => strip_tags($attributes['content']),
-            'user_id' => auth()->user()->id,
-            'organization_id' => auth()->user()->organization_id,
-        ]);
+        $user = User::firstOrNew(
+            ['email' => $attributes['email']],
+            [
+                'name' => $attributes['name'],
+                'created_by' => auth()->user()->id,
+            ]
+        );
 
-        return redirect()->route('dashboard.tickets.view', $ticket)
-            ->with('success', __('ticket.action_open.success'));
+        $user->organization()
+            ->associate(auth()->user()->organization)
+            ->save();
+
+        return redirect()->back()
+            ->with('success', __('user.messages.created'));
     }
 
     public function destroy(Request $request, User $user): RedirectResponse
     {
         $this->authorize('delete', $user);
 
-        dd($user);
-
-        // $user->delete();
+        $user->organization()
+            ->dissociate()
+            ->save();
 
         return redirect()->back()
-            ->with('success', __('user.action_delete.success'));
+            ->with('success', __('user.messages.deleted'));
     }
 }

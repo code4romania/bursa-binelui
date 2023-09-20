@@ -35,48 +35,37 @@
         </div>
 
         <div v-if="isOpen">
-            <Modal
-                triggerModalClasses="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                :triggerModalText="$t('add_ticket')"
-                id="add_ticket"
-            >
-                <form class="w-full space-y-4" @submit.prevent="addTicket">
-                    <h3 class="w-full text-lg font-semibold text-gray-900">
-                        {{ $t('add_ticket') }}
-                    </h3>
+            <Modal :title="$t('add_ticket')" :form="form" :formUrl="route('dashboard.tickets.store')">
+                <template #trigger="{ open }">
+                    <SecondaryButton @click="open" :label="$t('add_ticket')" />
+                </template>
 
-                    <Input
-                        class="w-full"
-                        :label="$t('subject')"
-                        color="gray-700"
-                        id="subject"
-                        type="text"
-                        v-model="form.subject"
-                        :error="form.errors.subject"
-                        is-required
-                    />
+                <Input
+                    class="w-full"
+                    :label="$t('subject')"
+                    color="gray-700"
+                    id="subject"
+                    type="text"
+                    v-model="form.subject"
+                    :error="form.errors.subject"
+                    is-required
+                />
 
-                    <Textarea
-                        class="w-full"
-                        :label="$t('message')"
-                        id="content"
-                        color="gray-700"
-                        v-model="form.content"
-                        :error="form.errors.content"
-                        is-required
-                    />
+                <Textarea
+                    class="w-full"
+                    :label="$t('message')"
+                    id="content"
+                    color="gray-700"
+                    v-model="form.content"
+                    :error="form.errors.content"
+                    is-required
+                />
 
-                    <!-- Actions -->
-                    <div class="flex items-center justify-end w-full gap-6 pt-6">
-                        <SecondaryButton @click="closeModal" class="py-2.5">
-                            {{ $t('cancel') }}
-                        </SecondaryButton>
+                <template #actions="{ close }">
+                    <PrimaryButton type="submit" :label="$t('send')" />
 
-                        <PrimaryButton background="primary-500" hover="primary-400" color="white" class="w-auto">
-                            {{ $t('send') }}
-                        </PrimaryButton>
-                    </div>
-                </form>
+                    <SecondaryButton @click="close" class="py-2.5" :label="$t('cancel')" />
+                </template>
             </Modal>
         </div>
 
@@ -111,11 +100,6 @@
 
     import { AnnotationIcon } from '@heroicons/vue/outline';
 
-    const form = useForm({
-        subject: '',
-        content: '',
-    });
-
     const props = defineProps({
         status: {
             type: String,
@@ -125,16 +109,10 @@
         },
     });
 
-    const closeModal = () => document.getElementById('add_ticket').click();
-
-    const addTicket = () => {
-        form.post(route('dashboard.tickets.store'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                form.reset();
-            },
-        });
-    };
+    const form = useForm({
+        subject: '',
+        content: '',
+    });
 
     const isOpen = computed(() => props.status === 'open');
 </script>

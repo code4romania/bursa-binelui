@@ -64,7 +64,7 @@ Route::group([
 
     Route::post('/{volunteerRequest}/approve', 'approve')->name('approve');
     Route::post('/{volunteerRequest}/reject', 'reject')->name('reject');
-    Route::post('/{volunteerRequest}/delete', 'delete')->name('delete');
+    Route::delete('/{volunteerRequest}', 'delete')->name('delete');
 });
 
 Route::group([

@@ -39,17 +39,9 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name', 'id']);
-        });
-
-        $projectCategories = cache()->remember('projectCategories', 60 * 60 * 24, function () {
-            return ProjectCategory::get(['name', 'id']);
-        });
-
         return Inertia::render('AdminOng/Projects/AddProject', [
-            'counties' => $counties,
-            'projectCategories' => $projectCategories,
+            'counties' => $this->getCounties(),
+            'projectCategories' => $this->getProjectCategories(),
         ]);
     }
 

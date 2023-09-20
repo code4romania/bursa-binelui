@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
-use App\Models\ActivityDomain;
 use App\Models\County;
 use App\Models\ProjectCategory;
 use App\Models\RegionalProject;
@@ -33,17 +32,9 @@ class RegionalProjectController extends Controller
      */
     public function create()
     {
-        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name', 'id']);
-        });
-
-        $projectCategories = cache()->remember('activityDomains', 60 * 60 * 24, function () {
-            return ActivityDomain::get(['name', 'id']);
-        });
-
         return Inertia::render('AdminOng/Projects/AddRegionalProject', [
-            'counties' => $counties,
-            'projectCategories' => $projectCategories,
+            'counties' => $this->getCounties(),
+            'projectCategories' => $this->getProjectCategories(),
         ]);
     }
 

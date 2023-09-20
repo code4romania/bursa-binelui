@@ -78,15 +78,7 @@
                 {{ $t('back') }}
             </SecondaryButton>
 
-            <PrimaryButton
-                background="primary-500"
-                hover="primary-400"
-                color="white"
-                type="button"
-                @click="$emit('next', $event.target)"
-            >
-                {{ $t('continue') }}
-            </PrimaryButton>
+            <PrimaryButton @click="$emit('next', $event.target)" :label="$t('continue')" />
         </div>
     </div>
 </template>

@@ -2,16 +2,7 @@
     <div>
         <RadioGroup :options="options" v-model="form.type" :error="form.errors?.type" />
 
-        <PrimaryButton
-            class="mt-6"
-            background="primary-500"
-            hover="primary-400"
-            color="white"
-            type="button"
-            @click="$emit('next', $event.target)"
-        >
-            {{ $t('continue') }}
-        </PrimaryButton>
+        <PrimaryButton class="mt-6" type="button" @click="$emit('next', $event.target)" :label="$t('continue')" />
     </div>
 </template>
 

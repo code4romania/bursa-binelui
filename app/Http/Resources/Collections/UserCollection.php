@@ -6,9 +6,12 @@ namespace App\Http\Resources\Collections;
 
 use App\Http\Resources\Columns\TableColumn;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 
 class UserCollection extends ResourceCollection
 {
+    public string $model = User::class;
+
     public $collects = UserResource::class;
 
     protected function getColumns(): array
@@ -23,6 +26,13 @@ class UserCollection extends ResourceCollection
 
             TableColumn::make('role')
                 ->label(__('user.column.role')),
+        ];
+    }
+
+    protected function permissions(): array
+    {
+        return [
+            'create' => auth()->user()->can('create', User::class),
         ];
     }
 }

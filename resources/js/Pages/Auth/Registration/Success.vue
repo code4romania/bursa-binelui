@@ -34,16 +34,7 @@
             </div>
         </fieldset>
 
-        <PrimaryButton
-            background="primary-500"
-            hover="primary-400"
-            color="white"
-            type="button"
-            class="mt-6"
-            @click="$emit('success', $event.target)"
-        >
-            {{ $t('send') }}
-        </PrimaryButton>
+        <PrimaryButton class="mt-6" @click="$emit('success', $event.target)" :label="$t('send')" />
     </div>
 </template>
 

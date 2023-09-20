@@ -1,5 +1,5 @@
 <template>
-    <Disclosure as="nav" class="relative bg-white shadow z-110" v-slot="{ open }">
+    <Disclosure as="nav" class="relative bg-white shadow" v-slot="{ open }">
         <div class="px-4 mx-auto max-w-7xl xl:px-0 lg:py-2">
             <div class="flex justify-between h-16">
                 <!-- Logo -->
