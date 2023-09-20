@@ -131,10 +131,10 @@ class ProjectResource extends Resource
             Filter::make('created_at')
                 ->form([
                     Grid::make()->schema([
-                        DatePicker::make('created_at')->label(__('project.filters.created_from'))->columnSpan(1),
+                        DatePicker::make('created_at')->label(__('project.filters.created_from')),
                         DatePicker::make('created_at')->label(__('project.filters.created_until')),
                     ]),
-                ])->columnSpan(2),
+                ]),
         ];
     }
 

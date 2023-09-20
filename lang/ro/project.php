@@ -33,7 +33,7 @@ return [
     'heading' => [
         'pending' => 'Proiecte in curs de aprobare',
         'change_request' => 'Proiecte cu modificări',
-        'approved' => 'Proiecte active',
+        'approved' => 'Proiecte aprobate',
         'rejected' => 'Proiecte refuzate' ,
     ],
     'label' => [

@@ -10,6 +10,9 @@ use Illuminate\Support\Collection;
 
 trait HasProjectStatus
 {
+
+    //TODO
+    //Rename wherw Is panding is approve is rejected
     public function initializeHasProjectStatus()
     {
         $this->casts['status'] = ProjectStatus::class;
@@ -25,21 +28,11 @@ trait HasProjectStatus
         return $this->status === ProjectStatus::approved;
     }
 
-    public function isDisabled(): bool
+    public function isRejected(): bool
     {
         return $this->status === ProjectStatus::rejected;
     }
-
-    public function isPublished(): bool
-    {
-        return \in_array($this->status, [ProjectStatus::active, ProjectStatus::disabled]);
-    }
-
-    public function scopeStatus(Builder $query, array|string|Collection|ProjectStatus $statuses): void
-    {
-        $query->whereIn('status', collect($statuses));
-    }
-
+    
     public function scopeIsPending(Builder $query): void
     {
         $query->where('status', ProjectStatus::pending);
