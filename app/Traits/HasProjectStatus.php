@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasProjectStatus
 {
-    //TODO
-    //Rename wherw Is panding is approve is rejected
     public function initializeHasProjectStatus()
     {
         $this->casts['status'] = ProjectStatus::class;
@@ -31,23 +29,23 @@ trait HasProjectStatus
         return $this->status === ProjectStatus::rejected;
     }
 
-    public function scopeIsPending(Builder $query): void
+    public function scopeWhereIsPending(Builder $query): Builder
     {
-        $query->where('status', ProjectStatus::pending);
+        return $query->where('status', ProjectStatus::pending);
     }
 
-    public function scopeIsApproved(Builder $query): void
+    public function scopeWhereIsApproved(Builder $query): Builder
     {
-        $query->where('status', ProjectStatus::approved);
+        return $query->where('status', ProjectStatus::approved);
     }
 
-    public function scopeIsRejected(Builder $query): void
+    public function scopeWhereIsRejected(Builder $query): Builder
     {
-        $query->where('status', ProjectStatus::rejected);
+        return $query->where('status', ProjectStatus::rejected);
     }
 
     public function scopeWherePublished(Builder $query): Builder
     {
-        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
+        return $query->whereIn('status', [ProjectStatus::approved])->whereNull('archived_at');
     }
 }

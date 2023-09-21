@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('target_budget')->nullable();
             $table->date('start')->nullable();
             $table->date('end')->nullable();
+            $table->date('archived_at')->nullable();
             $table->text('description')->nullable();
             $table->text('scope')->nullable();
             $table->text('beneficiaries')->nullable();

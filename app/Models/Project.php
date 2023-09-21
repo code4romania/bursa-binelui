@@ -101,14 +101,6 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
-    /**
-     * @deprecated use `wherePublished` instead
-     */
-    public function scopePublish(Builder $query): Builder
-    {
-        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
-    }
-
     public function stages(): BelongsToMany
     {
         return $this->belongsToMany(ChampionshipStage::class);
@@ -165,7 +157,7 @@ class Project extends Model implements HasMedia
 
     public function getIsActiveAttribute(): bool
     {
-        return $this->status === ProjectStatus::active
+        return $this->status === ProjectStatus::approved
             && $this->start->isPast()
             && $this->end->isFuture();
     }
