@@ -52,4 +52,9 @@ return [
         'email' => 'Email',
         'role' => 'Rol',
     ],
+
+    'action' => [
+        'attach' => 'Alocă utilizator',
+        'detach' => 'Elimină',
+    ],
 ];

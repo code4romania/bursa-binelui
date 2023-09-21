@@ -61,14 +61,17 @@ class UsersRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->label(__('user.action.attach'))
+                    ->modalHeading(__('user.action.attach'))
+                    ->color('primary'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->label(__('user.action.detach')),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                //
             ]);
     }
 }
