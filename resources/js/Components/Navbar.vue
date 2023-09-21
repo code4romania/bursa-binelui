@@ -1,134 +1,121 @@
 <template>
     <Disclosure as="nav" class="relative bg-white shadow" v-slot="{ open }">
-        <div class="container">
-            <div class="flex justify-between h-16 gap-4 lg:gap-6 lg:my-2">
-                <Link href="/" class="flex items-center flex-shrink-0">
-                    <img class="block w-auto h-10 lg:h-full" src="/images/bursa_binelui_logo.png" />
-                </Link>
+        <div class="container flex items-center justify-between h-16 gap-4 lg:gap-6 lg:my-2">
+            <Link href="/" class="flex items-center flex-shrink-0">
+                <img class="block w-auto h-10 lg:h-full" src="/images/bursa_binelui_logo.png" />
+            </Link>
 
-                <!-- Desktop main links -->
-                <div class="hidden lg:flex lg:items-center sm:space-x-4 xl:space-x-8">
-                    <!-- Explore menu -->
-                    <FlyoutMenu :name="$t('explore_navbar_menu')" :links="explore" />
+            <!-- Desktop main links -->
+            <div class="hidden lg:flex lg:items-center sm:space-x-4 xl:space-x-8">
+                <!-- Explore menu -->
+                <FlyoutMenu :name="$t('explore_navbar_menu')" :links="explore" />
 
-                    <!-- Articles link -->
-                    <NavLink :href="route('articles')" :active="route().current('articles')">
-                        {{ $t('articles_link') }}
-                    </NavLink>
+                <!-- Articles link -->
+                <NavLink :href="route('articles')" :active="route().current('articles')">
+                    {{ $t('articles_link') }}
+                </NavLink>
 
-                    <!-- About menu -->
-                    <FlyoutMenu :name="$t('about_navbar_menu')" :links="about" />
+                <!-- About menu -->
+                <FlyoutMenu :name="$t('about_navbar_menu')" :links="about" />
 
-                    <!-- Contact link -->
-                    <NavLink :href="route('contact')" :active="route().current('contact')">
-                        {{ $t('contact_link') }}
-                    </NavLink>
-                </div>
+                <!-- Contact link -->
+                <NavLink :href="route('contact')" :active="route().current('contact')">
+                    {{ $t('contact_link') }}
+                </NavLink>
+            </div>
 
-                <!-- Desktop account links. -->
-                <div class="hidden lg:flex lg:items-center lg:space-x-4">
+            <div class="hidden lg:flex lg:items-center lg:space-x-4">
+                <!-- Auth -->
+                <Menu v-if="$page.props.auth?.user" as="div" class="relative">
+                    <MenuButton
+                        class="flex items-center text-sm font-medium text-gray-500 bg-white rounded-full gap-x-2 focus:outline-none"
+                    >
+                        <span v-text="$page.props.auth.user.name" />
+                        <UserCircleIcon class="w-8 h-8 text-gray-400" />
+                    </MenuButton>
+
+                    <transition
+                        enter-active-class="transition duration-200 ease-out"
+                        enter-from-class="transform scale-95 opacity-0"
+                        enter-to-class="transform scale-100 opacity-100"
+                        leave-active-class="transition duration-75 ease-in"
+                        leave-from-class="transform scale-100 opacity-100"
+                        leave-to-class="transform scale-95 opacity-0"
+                    >
+                        <MenuItems
+                            class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        >
+                            <!-- Administrate Link -->
+                            <NavLink
+                                class="w-full px-3 py-2 text-base"
+                                :href="route('donor.index')"
+                                :active="route().current('donor.index')"
+                            >
+                                {{ $t('dashbord') }}
+                            </NavLink>
+                            <NavLink
+                                v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
+                                class="w-full px-3 py-2 text-base"
+                                :href="route('dashboard.main')"
+                                :active="route().current('dashboard.main')"
+                            >
+                                {{ $t('administrate_link') }}
+                            </NavLink>
+
+                            <NavLink
+                                class="w-full px-3 py-2 text-base"
+                                :href="route('donor.donations')"
+                                :active="route().current('donor.donations')"
+                            >
+                                {{ $t('my_donations') }}
+                            </NavLink>
+
+                            <!-- Account settings -->
+                            <NavLink
+                                class="w-full px-3 py-2 text-base"
+                                :href="route('profile.edit')"
+                                :active="route().current('profile.edit')"
+                            >
+                                {{ $t('account_settings') }}
+                            </NavLink>
+
+                            <!-- Log out -->
+                            <NavLink
+                                class="w-full px-3 py-2 text-base"
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                            >
+                                {{ $t('log_out_link') }}
+                            </NavLink>
+                        </MenuItems>
+                    </transition>
+                </Menu>
+
+                <!-- Guest -->
+                <template v-else>
                     <!-- Login link -->
-                    <NavLink v-if="!$page.props.auth?.user" :href="route('login')" :active="route().current('login')">
+                    <NavLink :href="route('login')" :active="route().current('login')">
                         {{ $t('login_link') }}
                     </NavLink>
 
                     <!-- Register link -->
                     <Link
-                        v-if="!$page.props.auth?.user"
                         :href="route('register')"
                         class="relative inline-flex items-center gap-x-1.5 rounded-md bg-primary-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
                     >
                         {{ $t('register_link') }}
                     </Link>
+                </template>
 
-                    <!-- Notification icon -->
-                    <!-- <button
-                        v-if="$page.props.auth.user"
-                        type="button"
-                        class="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                    >
-                        <BellIcon class="w-6 h-6" aria-hidden="true" />
-                    </button> -->
-
-                    <!-- User links -->
-                    <Menu v-if="$page.props.auth?.user" as="div" class="relative">
-                        <MenuButton class="flex items-center gap-4 text-sm bg-white rounded-full focus:outline-none">
-                            {{ $page.props.auth.user.name }}
-                            <img
-                                v-if="$page.props.auth.user.avatar"
-                                class="w-8 h-8 rounded-full"
-                                :src="$page.props.auth.user.avatar"
-                                alt="avatar"
-                            />
-                            <SvgLoader class="shrink-0" name="default_avatar" />
-                        </MenuButton>
-
-                        <transition
-                            enter-active-class="transition duration-200 ease-out"
-                            enter-from-class="transform scale-95 opacity-0"
-                            enter-to-class="transform scale-100 opacity-100"
-                            leave-active-class="transition duration-75 ease-in"
-                            leave-from-class="transform scale-100 opacity-100"
-                            leave-to-class="transform scale-95 opacity-0"
-                        >
-                            <MenuItems
-                                class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            >
-                                <!-- Administrate Link -->
-                                <NavLink
-                                    class="w-full px-3 py-2"
-                                    :href="route('donor.index')"
-                                    :active="route().current('donor.index')"
-                                >
-                                    {{ $t('dashbord') }}
-                                </NavLink>
-                                <NavLink
-                                    v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
-                                    class="w-full px-3 py-2"
-                                    :href="route('dashboard.main')"
-                                    :active="route().current('dashboard.main')"
-                                >
-                                    {{ $t('administrate_link') }}
-                                </NavLink>
-
-                                <NavLink
-                                    class="w-full px-3 py-2"
-                                    :href="route('donor.donations')"
-                                    :active="route().current('donor.donations')"
-                                >
-                                    {{ $t('my_donations') }}
-                                </NavLink>
-
-                                <!-- Account settings -->
-                                <NavLink
-                                    class="w-full px-3 py-2"
-                                    :href="route('profile.edit')"
-                                    :active="route().current('profile.edit')"
-                                >
-                                    {{ $t('account_settings') }}
-                                </NavLink>
-
-                                <!-- Log out -->
-                                <NavLink class="w-full px-3 py-2" :href="route('logout')" method="post" as="button">
-                                    {{ $t('log_out_link') }}
-                                </NavLink>
-                            </MenuItems>
-                        </transition>
-                    </Menu>
-
-                    <LanguageSwitcher />
-                </div>
-
-                <div class="flex items-center -mr-2 lg:hidden">
-                    <!-- Mobile menu button -->
-                    <DisclosureButton
-                        class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
-                    >
-                        <MenuIcon v-if="!open" class="block w-6 h-6" aria-hidden="true" />
-                        <XIcon v-else class="block w-6 h-6" aria-hidden="true" />
-                    </DisclosureButton>
-                </div>
+                <LanguageSwitcher />
             </div>
+
+            <DisclosureButton
+                class="inline-flex justify-center p-2 -mr-2 text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
+            >
+                <component :is="!open ? MenuIcon : XIcon" class="block w-6 h-6" aria-hidden="true" />
+            </DisclosureButton>
         </div>
 
         <!-- Mobile links -->
@@ -165,15 +152,9 @@
 
             <div class="pt-4 pb-3 border-t border-gray-200">
                 <div v-if="$page.props.auth.user" class="flex items-center px-4">
-                    <div class="flex items-center gap-4">
-                        <p class="text-base font-medium text-gray-500">{{ $page.props.auth.user.name }}</p>
-                        <!-- <img
-                            v-if="$page.props.auth.user.avatar"
-                            class="w-4 h-4 rounded-full"
-                            :src="$page.props.auth.user.avatar"
-                            alt="avatar"
-                        />
-                        <SvgLoader class="w-4 h-4" name="default_avatar" /> -->
+                    <div class="flex items-center font-medium text-gray-500 gap-x-2">
+                        <UserCircleIcon class="w-8 h-8 text-gray-400" />
+                        <span v-text="$page.props.auth.user.name" />
                     </div>
                 </div>
 
@@ -240,11 +221,11 @@
 
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
     import { MenuIcon, BellIcon, XIcon } from '@heroicons/vue/outline';
+    import { UserCircleIcon } from '@heroicons/vue/solid';
 
     import NavLink from '@/Components/links/NavLink.vue';
     import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';
     import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
-    import SvgLoader from './SvgLoader.vue';
 
     /** Explore menu links. */
     const explore = [
