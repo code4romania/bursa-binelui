@@ -15,6 +15,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Organization>
@@ -87,10 +88,21 @@ class OrganizationFactory extends Factory
 
             $admin = User::factory()
                 ->for($organization)
-                ->ngoAdmin()
+                ->organizationAdmin()
                 ->state([
                     'email' => "admin-{$organization->id}@example.com",
                 ])
+                ->create();
+
+            $managers = User::factory()
+                ->count(3)
+                ->for($organization)
+                ->ngoManager()
+                ->state(new Sequence(
+                    ['email' => "manager-{$organization->id}@example.com"],
+                    ['email' => "manager-{$organization->id}@example.org"],
+                    ['email' => "manager-{$organization->id}@example.net"],
+                ))
                 ->create();
 
             if ($organization->isPending()) {

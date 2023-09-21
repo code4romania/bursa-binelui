@@ -24,7 +24,7 @@ class RegistrationRequest extends FormRequest
             'user.password' => ['string', 'required', 'confirmed'],
         ];
 
-        if ($this->type === 'ngo-admin') {
+        if ($this->type === 'organization') {
             $rules = array_merge($rules, [
                 'ngo' => ['array', 'required'],
                 'ngo.name' => ['string', 'required'],

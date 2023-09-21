@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\UserRole;
 use App\Models\Organization;
 use App\Models\User;
 
@@ -46,15 +45,7 @@ class OrganizationPolicy
          * An organization can be updated only by BB Admins, BB Managers
          *  and NGO Admins that belong to the organization.
          */
-        if (
-            (UserRole::bb_admin === $user->role) ||
-            (UserRole::bb_manager === $user->role) ||
-            ((UserRole::ngo_admin === $user->role) && ($user->organization_id === $organization->id))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return $user->isSuperUser() || $user->isOrganizationAdmin($organization);
     }
 
     /**
@@ -66,15 +57,7 @@ class OrganizationPolicy
          * An organization can be deleted only by BB Admins, BB Managers
          *  and NGO Admins that belong to the organization.
          */
-        if (
-            (UserRole::bb_admin === $user->role) ||
-            (UserRole::bb_manager === $user->role) ||
-            ((UserRole::ngo_admin === $user->role) && ($user->organization_id === $organization->id))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return $user->isSuperUser() || $user->isOrganizationAdmin($organization);
     }
 
     /**
@@ -85,11 +68,7 @@ class OrganizationPolicy
         /*
          * An organization can be restored only by BB Admins and BB Managers.
          */
-        if ((UserRole::bb_admin === $user->role) || (UserRole::bb_manager === $user->role)) {
-            return true;
-        } else {
-            return false;
-        }
+        return $user->isSuperUser();
     }
 
     /**

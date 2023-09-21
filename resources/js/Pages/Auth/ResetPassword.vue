@@ -23,15 +23,7 @@
 
             <!-- Action -->
             <div class="grid grid-cols-1">
-                <PrimaryButton
-                    background="primary-500"
-                    hover="primary-400"
-                    color="white"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    {{ $t('save') }}
-                </PrimaryButton>
+                <PrimaryButton type="submit" :disabled="form.processing" :label="$t('save')" />
             </div>
         </form>
     </AuthLayout>

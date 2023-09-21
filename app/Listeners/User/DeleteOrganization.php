@@ -15,7 +15,7 @@ class DeleteOrganization
     public function handle(UserDeleting $event): void
     {
         if (
-            ! $event->user->isNgoAdmin() ||
+            ! $event->user->isOrganizationAdmin() ||
             $event->user->organization->users()->count() > 1
         ) {
             return;

@@ -238,9 +238,7 @@
                         {{ $t('preview') }}
                     </SecondaryButton>
 
-                    <PrimaryButton background="primary-500" hover="primary-400" color="white" @click="createProject">
-                        {{ $t('save') }}
-                    </PrimaryButton>
+                    <PrimaryButton @click="createProject" :label="$t('save')" />
                 </div>
             </div>
         </form>

@@ -10,7 +10,6 @@ use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\VolunteersRelationManager;
 use App\Models\User;
-use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -30,6 +29,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     public static function getPluralLabel(): ?string
     {
         return __('user.label.plural');
@@ -47,55 +48,39 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema([
-            Fieldset::make(__('user.labels.general_data'))
-                ->columns(1)->schema([
-                    TextInput::make('name')
-                        ->label(__('user.name'))
-                        ->inlineLabel()
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('email')
-                        ->label(__('user.email'))
-                        ->email()
-                        ->unique('users', 'email')
-                        ->inlineLabel()
-                        ->required(),
-                    Select::make('role')
-                        ->label(__('user.role'))
-                        ->options(
-                            collect(
-                                UserRole::options()
-                            )->only(
-                                [
-                                    UserRole::bb_admin->value,
-                                    UserRole::bb_manager->value,
-                                    UserRole::ngo_admin->value,
-                                ]
-                            )->toArray()
-                        )->reactive()
-                        ->inlineLabel()
-                        ->visibleOn(['edit', 'create'])
-                        ->required(),
-                    Select::make('role')
-                        ->label(__('user.role'))
-                        ->options(UserRole::options())
-                        ->reactive()
-                        ->inlineLabel()
-                        ->visibleOn(['view'])
-                        ->required(),
-                    Select::make('organization')
-                        ->label(__('user.organization'))
-                        ->relationship('organization', 'name')
-                        ->hidden(function (callable $get) {
-                            return $get('role') !== UserRole::ngo_admin->value;
-                        })
-                        ->searchable()
-                        ->preload()
-                        ->required(),
-                ]),
+        return $form
+            ->columns(1)
+            ->schema([
+                TextInput::make('name')
+                    ->label(__('user.name'))
+                    ->inlineLabel()
+                    ->required()
+                    ->maxLength(255),
 
-        ]);
+                TextInput::make('email')
+                    ->label(__('user.email'))
+                    ->email()
+                    ->unique('users', 'email', ignoreRecord: true)
+                    ->inlineLabel()
+                    ->required(),
+
+                Select::make('role')
+                    ->label(__('user.role'))
+                    ->options(UserRole::options())
+                    ->enum(UserRole::class)
+                    ->reactive()
+                    ->inlineLabel()
+                    ->required(),
+
+                Select::make('organization')
+                    ->label(__('user.organization'))
+                    ->relationship('organization', 'name')
+                    ->hidden(fn (callable $get) => UserRole::ADMIN->is($get('role')))
+                    ->searchable()
+                    ->inlineLabel()
+                    ->preload()
+                    ->required(),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -148,15 +133,15 @@ class UserResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
+
     public static function getRelations(): array
     {
         return [
             DonationsRelationManager::class,
             VolunteersRelationManager::class,
-            BadgesRelationManager::class
+            BadgesRelationManager::class,
         ];
     }
-
 
     public static function getPages(): array
     {

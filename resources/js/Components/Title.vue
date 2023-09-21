@@ -19,8 +19,8 @@
             required: null,
         },
         icon: {
-            type: Object,
-            default: () => ViewListIcon,
+            type: Function,
+            default: ViewListIcon,
         },
     });
 </script>

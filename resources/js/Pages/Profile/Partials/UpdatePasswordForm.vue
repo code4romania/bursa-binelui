@@ -5,7 +5,6 @@
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 mb-16 space-y-6">
-
             <!-- Current password. -->
             <Input
                 :label="$t('current_password')"
@@ -37,26 +36,13 @@
 
             <!-- Actions. -->
             <div class="flex items-center justify-end gap-4">
-
                 <!-- Cancel button -->
-                <SecondaryButton
-                    class="py-2.5"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
+                <SecondaryButton class="py-2.5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <!-- Save button -->
-                <PrimaryButton
-                    background="primary-500"
-                    hover="primary-400"
-                    color="white"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    {{ $t('save') }}
-                </PrimaryButton>
+                <PrimaryButton type="submit" :disabled="form.processing" :label="$t('save')" />
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">{{ $t('saved') }}</p>

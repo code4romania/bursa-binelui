@@ -10,16 +10,18 @@ use Illuminate\Support\Str;
 
 abstract class ResourceCollection extends BaseCollection
 {
-    protected array $columns = [];
+    public string $model;
+
+    protected array $appends = [];
 
     public function toArray(Request $request): array
     {
-        return [
+        return array_merge([
             'columns' => $this->getColumns(),
             'filter' => $request->query('filter'),
             'sort' => $this->getSort($request),
             'data' => $this->collection,
-        ];
+        ], $this->appends);
     }
 
     abstract protected function getColumns(): array;
@@ -45,5 +47,19 @@ abstract class ResourceCollection extends BaseCollection
             'column' => $column,
             'direction' => $direction,
         ];
+    }
+
+    public function withPermissions(): static
+    {
+        $this->collects::withPermissions();
+
+        if (! \is_null($this->model)) {
+            $this->appends['can'] = collect(['viewAny', 'create'])
+                ->mapWithKeys(fn (string $ability) => [
+                    $ability => auth()->user()->can($ability, $this->model),
+                ]);
+        }
+
+        return $this;
     }
 }

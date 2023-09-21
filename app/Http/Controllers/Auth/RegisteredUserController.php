@@ -43,12 +43,13 @@ class RegisteredUserController extends Controller
             'name' => $attributes['user']['name'],
             'email' => $attributes['user']['email'],
             'password' => Hash::make($attributes['user']['password']),
-            'role' => UserRole::tryFrom($attributes['type']),
+            'role' => $attributes['type'] === 'organization' ? UserRole::ADMIN : UserRole::USER,
+
         ]);
 
         event(new Registered($user));
 
-        if ($user->isNgoAdmin()) {
+        if ($user->isOrganizationAdmin()) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
 
             $organization = $user->organization()->create($attributes['ngo']);
@@ -70,7 +71,7 @@ class RegisteredUserController extends Controller
     {
         try {
             $user = User::find($userId);
-            $user->source_of_information = $request->input('source_of_information');
+            $user->referrer = $request->input('referrer');
             $user->save();
 
             return redirect()->back()

@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\OrganizationController;
 use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Dashboard\RegionalProjectController;
 use App\Http\Controllers\Dashboard\TicketController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\VolunteerController;
 use App\Http\Controllers\Dashboard\WelcomeController;
 use App\Http\Controllers\DashboardController;
@@ -63,7 +64,21 @@ Route::group([
 
     Route::post('/{volunteerRequest}/approve', 'approve')->name('approve');
     Route::post('/{volunteerRequest}/reject', 'reject')->name('reject');
-    Route::post('/{volunteerRequest}/delete', 'delete')->name('delete');
+    Route::delete('/{volunteerRequest}', 'delete')->name('delete');
+});
+
+Route::group([
+    'prefix' => 'users',
+    'as' => 'users.',
+    'controller' => UserController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/', 'store')->name('store');
+
+    Route::delete('/{user}', 'destroy')->name('destroy');
+
+    // Route::post('/{volunteerRequest}/reject', 'reject')->name('reject');
+    // Route::post('/{volunteerRequest}/delete', 'delete')->name('delete');
 });
 
 Route::group([

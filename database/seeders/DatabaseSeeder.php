@@ -30,13 +30,13 @@ class DatabaseSeeder extends Seeder
 
         Mail::fake();
 
-        User::factory(['email' => 'bb-admin@example.com'])
-            ->bbAdmin()
+        User::factory(['email' => 'superadmin@example.com'])
+            ->superAdmin()
             ->create();
 
-        User::factory(['email' => 'bb-manager@example.com'])
+        User::factory(['email' => 'supermanager@example.com'])
             ->count(1)
-            ->bbManager()
+            ->superManager()
             ->create();
 
         User::factory()

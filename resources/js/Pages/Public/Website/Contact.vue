@@ -42,15 +42,7 @@
                             :error="form.errors.text"
                         />
 
-                        <PrimaryButton
-                            background="primary-500"
-                            hover="primary-400"
-                            color="white"
-                            :class="{ 'opacity-25': form.processing }"
-                            :disabled="form.processing"
-                        >
-                            {{ $t('send') }}
-                        </PrimaryButton>
+                        <PrimaryButton type="submit" :disabled="form.processing" :label="$t('send')" />
                     </form>
                 </div>
 

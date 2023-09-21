@@ -19,14 +19,14 @@ class SendTicketReplyReceivedNotification
     {
         Notification::send(
             User::query()
-                ->onlyBBAdmins()
+                ->onlySuperUsers()
                 ->get(),
             new Admin\TicketReceivedReplyNotification($event->message)
         );
 
         Notification::send(
             User::query()
-                ->onlyNGOAdmins($event->message->ticket->organization)
+                ->whereBelongsToOrganization($event->message->ticket->organization)
                 ->get(),
             new Ngo\TicketReceivedReplyNotification($event->message)
         );

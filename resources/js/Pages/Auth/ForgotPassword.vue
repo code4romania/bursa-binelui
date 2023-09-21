@@ -13,15 +13,7 @@
 
             <!-- Action -->
             <div class="grid grid-cols-1">
-                <PrimaryButton
-                    background="primary-500"
-                    hover="primary-400"
-                    color="white"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    {{ $t('password_reset') }}
-                </PrimaryButton>
+                <PrimaryButton type="submit" :disabled="form.processing" :label="$t('password_reset')" />
             </div>
         </form>
     </AuthLayout>

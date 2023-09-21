@@ -172,8 +172,8 @@
     "organization_logo_label": "Logo-ul organizației",
     "change_image_label": "Schimbă imaginea",
     "delete_image_label": "Sterge imagine",
-    "active": "Activ",
-    "inactive": "Inactiv",
+    "active": "Deschis",
+    "inactive": "Închis",
     "become_volunter": "Fii voluntar",
     "target_amount": "Suma target",
     "share_project": "Distribuie acest proiect pe",
@@ -224,12 +224,10 @@
     "back": "Inapoi",
     "open_tickets": "Tichete deschise",
     "closed_tickets": "Tichete închise",
-    "close": "Inchide",
+    "close": "Închide",
     "ticket": "Ticket",
     "subject": "Subiect",
     "date": "Data",
-    "close_ticket": "Închide ticket",
-    "reopen_ticket": "Redeschide ticket",
     "answer": "Raspunde",
     "message": "Mesaj",
     "add_ticket": "Deschide un tichet nou",
@@ -391,9 +389,6 @@
     "ticket_subject": "Subiect",
     "ticket_created_at": "Data",
     "ticket_closed_at": "Închis la data",
-    "ticket_reply_header": "Trimite un răspuns",
-    "confirm_close_ticket": "Ești sigur că vrei să închizi acest tichet?",
-    "confirm_reopen_ticket": "Ești sigur că vrei să redeschizi acest tichet?",
     "add_regional_project": "Adaugă un proiect regional",
     "field_has_pending_changes": "Acest câmp are modificări neaprobare. Dacă il editezi, modificările vor fi pierdute.",
     "verify_email_title": "Îți mulțumim că te-ai înregistrat pe platforma Bursa Binelui !",
@@ -405,5 +400,36 @@
     "sort.end_date": "Data sfârșit proiect",
     "sort.target": "Target",
     "sort.donations_total": "Suma donată",
-    "sort.donations_count": "Număr donații"
+    "sort.donations_count": "Număr donații",
+
+    "users.add_manager": "Adaugă manager",
+    "users.remove.title": "Șterge utilizator",
+    "users.remove.content": "Ești sigur că vrei să ștergi utilizatorul \":name\"?",
+
+    "volunteers.accept.trigger": "Acceptă",
+    "volunteers.accept.title": "Acceptă voluntar",
+    "volunteers.accept.content": "Ești sigur că vrei să accepți voluntarul \":name\"?",
+
+    "volunteers.reject.trigger": "Respinge",
+    "volunteers.reject.title": "Respinge voluntar",
+    "volunteers.reject.content": "Ești sigur că vrei să respingi voluntarul \":name\"?",
+
+    "volunteers.delete.trigger": "Șterge",
+    "volunteers.delete.title": "Șterge voluntar",
+    "volunteers.delete.content": "Ești sigur că vrei să ștergi voluntarul \":name\"?",
+
+    "tickets.reply.trigger": "Răspunde",
+    "tickets.reply.title": "Trimite un răspuns",
+
+    "tickets.close.title": "Închide ticket",
+    "tickets.close.content": "Ești sigur că vrei să închizi acest tichet?",
+
+    "tickets.reopen.title": "Redeschide ticket",
+    "tickets.reopen.content": "Ești sigur că vrei să redeschizi acest tichet?",
+
+    "navigation.users": "Utilizatori",
+    "navigation.volunteers": "Voluntari",
+
+    "locales.ro": "Română",
+    "locales.en": "English"
 }

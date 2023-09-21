@@ -18,10 +18,16 @@ return [
     ],
 
     'statuses' => [
-        'pending' => 'In asteptare',
+        'pending' => 'În așteptare',
         'approved' => 'Aprobat',
         'rejected' => 'Respins',
     ],
 
     'model' => 'Proiect',
+
+    'messages' => [
+        'approved' => 'Voluntarul a fost aprobat.',
+        'rejected' => 'Voluntarul a fost respins.',
+        'deleted' => 'Voluntarul a fost șters.',
+    ],
 ];

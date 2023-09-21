@@ -111,17 +111,15 @@
                 v-if="'admin' == cardType && 'pending' == project.status"
                 class="w-full mt-4 py-2.5"
                 @click="changeProjectStatus(project.id, 'draft', project.type)"
-            >
-                {{ $t('draft') }}
-            </SecondaryButton>
+                :label="$t('draft')"
+            />
 
             <SecondaryButton
                 v-if="'admin' == cardType && 'draft' == project.status"
                 class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
                 @click="changeProjectStatus(project.id, 'pending', project.type)"
-            >
-                {{ $t('publish') }}
-            </SecondaryButton>
+                :label="$t('publish')"
+            />
 
             <!-- Donate modal -->
             <DonateModal

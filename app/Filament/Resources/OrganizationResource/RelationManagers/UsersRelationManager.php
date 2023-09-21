@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\OrganizationResource\RelationManagers;
 
-use Filament\Forms;
+use App\Models\User;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\TextColumn;
 
 class UsersRelationManager extends RelationManager
 {
@@ -25,9 +27,16 @@ class UsersRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
+                    ->label(__('user.name'))
                     ->required()
                     ->maxLength(255),
+
+                TextInput::make('email')
+                    ->label(__('user.email'))
+                    ->email()
+                    ->unique('users', 'email')
+                    ->required(),
             ]);
     }
 
@@ -35,20 +44,34 @@ class UsersRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->label(__('user.name'))
+                    ->sortable(),
+
+                TextColumn::make('email')
+                    ->label(__('user.email'))
+                    ->sortable(),
+
+                TextColumn::make('role')
+                    ->label(__('user.role'))
+                    ->getStateUsing(fn (User $record) => $record->role?->label())
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->label(__('user.action.attach'))
+                    ->modalHeading(__('user.action.attach'))
+                    ->color('primary'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->label(__('user.action.detach')),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                //
             ]);
     }
 }

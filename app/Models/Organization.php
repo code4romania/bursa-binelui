@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Image\Manipulations;
@@ -187,13 +186,6 @@ class Organization extends Model implements HasMedia
     public function scopeWhereDoesntHaveDonations(Builder $query): Builder
     {
         return $query->whereDoesntHave('projects.donations');
-    }
-
-    public function getAdministrators(): Collection
-    {
-        return $this->users()
-            ->onlyNGOAdmins()
-            ->get();
     }
 
     public function getActivitylogOptions(): LogOptions
