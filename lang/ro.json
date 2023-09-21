@@ -428,5 +428,8 @@
     "tickets.reopen.content": "Ești sigur că vrei să redeschizi acest tichet?",
 
     "navigation.users": "Utilizatori",
-    "navigation.volunteers": "Voluntari"
+    "navigation.volunteers": "Voluntari",
+
+    "locales.ro": "Română",
+    "locales.en": "English"
 }

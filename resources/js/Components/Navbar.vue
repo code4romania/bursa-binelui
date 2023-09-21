@@ -1,14 +1,13 @@
 <template>
     <Disclosure as="nav" class="relative bg-white shadow" v-slot="{ open }">
-        <div class="px-4 mx-auto max-w-7xl xl:px-0 lg:py-2">
-            <div class="flex justify-between h-16">
-                <!-- Logo -->
+        <div class="container">
+            <div class="flex justify-between h-16 gap-4 lg:gap-6 lg:my-2">
                 <Link href="/" class="flex items-center flex-shrink-0">
                     <img class="block w-auto h-10 lg:h-full" src="/images/bursa_binelui_logo.png" />
                 </Link>
 
                 <!-- Desktop main links -->
-                <div class="hidden lg:ml-6 lg:flex lg:items-center sm:space-x-4 xl:space-x-8">
+                <div class="hidden lg:flex lg:items-center sm:space-x-4 xl:space-x-8">
                     <!-- Explore menu -->
                     <FlyoutMenu :name="$t('explore_navbar_menu')" :links="explore" />
 
@@ -27,7 +26,7 @@
                 </div>
 
                 <!-- Desktop account links. -->
-                <div class="hidden lg:ml-6 lg:flex lg:items-center lg:space-x-4">
+                <div class="hidden lg:flex lg:items-center lg:space-x-4">
                     <!-- Login link -->
                     <NavLink v-if="!$page.props.auth?.user" :href="route('login')" :active="route().current('login')">
                         {{ $t('login_link') }}
@@ -52,7 +51,7 @@
                     </button> -->
 
                     <!-- User links -->
-                    <Menu v-if="$page.props.auth?.user" as="div" class="relative ml-3">
+                    <Menu v-if="$page.props.auth?.user" as="div" class="relative">
                         <MenuButton class="flex items-center gap-4 text-sm bg-white rounded-full focus:outline-none">
                             {{ $page.props.auth.user.name }}
                             <img
@@ -117,7 +116,7 @@
                         </transition>
                     </Menu>
 
-                    <SelectNoBorder :options="languages" />
+                    <LanguageSwitcher />
                 </div>
 
                 <div class="flex items-center -mr-2 lg:hidden">
@@ -229,7 +228,7 @@
                     </NavLink>
                 </div>
 
-                <SelectNoBorder class="py-2" :options="languages" />
+                <LanguageSwitcher class="py-2" />
             </div>
         </DisclosurePanel>
     </Disclosure>
@@ -237,17 +236,14 @@
 
 <script setup>
     import { computed } from 'vue';
-    /** Import from inertia. */
-    import { Link, usePage } from '@inertiajs/vue3';
+    import { usePage } from '@inertiajs/vue3';
 
-    /** Import plugins. */
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
     import { MenuIcon, BellIcon, XIcon } from '@heroicons/vue/outline';
 
-    /** Import components. */
     import NavLink from '@/Components/links/NavLink.vue';
     import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';
-    import SelectNoBorder from '@/Components/form/SelectNoBorder.vue';
+    import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
     import SvgLoader from './SvgLoader.vue';
 
     /** Explore menu links. */
@@ -300,7 +296,7 @@
     ];
 
     const languages = computed(() =>
-        usePage().props.locales.map((locale) => ({
+        usePage().props.locales.available.map((locale) => ({
             name: locale,
             id: locale,
         }))
