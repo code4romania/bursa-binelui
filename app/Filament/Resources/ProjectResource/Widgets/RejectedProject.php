@@ -20,7 +20,7 @@ class RejectedProject extends BaseProjectWidget
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->isRejected();
+        return Project::query()->whereIsRejected();
     }
 
     protected function getTableQueryStringIdentifier(): ?string

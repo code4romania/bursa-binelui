@@ -8,6 +8,7 @@ use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ViewAction;
 use Illuminate\Database\Eloquent\Builder;
 
 class NewProject extends BaseProjectWidget
@@ -25,7 +26,7 @@ class NewProject extends BaseProjectWidget
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->isPending();
+        return Project::query()->whereIsPending();
     }
 
     protected function getTableQueryStringIdentifier(): ?string
@@ -36,6 +37,12 @@ class NewProject extends BaseProjectWidget
     protected function getTableActions(): array
     {
         return [
+
+            ViewAction::make()
+                ->label(__('project.actions.view'))
+                ->url(fn (Project $record) => route('filament.resources.projects.edit', $record))
+                ->icon(null)
+                ->size('sm'),
             Action::make('edit')
                 ->label(__('project.actions.edit'))
                 ->url(self::getTableRecordUrlUsing())
