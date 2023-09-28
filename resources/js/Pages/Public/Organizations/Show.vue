@@ -54,16 +54,16 @@
             <!-- Soacial share -->
             <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
                 <div class="w-full lg:w-6/12">
-                    <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_page') }}</h2>
+                    <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('share_page') }}</h2>
                     <SharePage class="mb-20" :pageRoute="route('organization', organization.id)" />
 
                     <div v-if="organization.activity_domains">
-                        <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('activity_domains') }}</h2>
+                        <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('activity_domains') }}</h2>
                         <div class="mb-12 text-lg text-gray-500" v-text="organization.activity_domains" />
                     </div>
 
                     <div v-if="organization.description">
-                        <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
+                        <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('description') }}</h2>
                         <div class="text-lg text-gray-500" v-html="organization.description"></div>
                     </div>
                 </div>

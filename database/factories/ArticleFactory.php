@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Article;
+use App\Models\ArticleCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ArticleFactory extends Factory
 {
-    protected $model = Article::class;
-
     public function definition(): array
     {
-        $title = $this->faker->sentence;
+        $title = fake()->sentence();
 
         return [
             'title' => $title,
-            'slug' => \Str::slug($title),
-            'content' => $this->faker->paragraph,
-            'is_active' => $this->faker->boolean,
-            'author' => $this->faker->name,
-            'article_category_id' => ArticleCategoryFactory::new(),
+            'slug' => Str::slug($title),
+            'content' => collect(fake()->paragraphs(10))
+                ->map(fn (string $paragraph) => "<p>{$paragraph}</p>")
+                ->implode(''),
+            'is_published' => fake()->boolean(75),
+            'author' => fake()->name(),
+            'article_category_id' => ArticleCategory::factory(),
         ];
     }
 }

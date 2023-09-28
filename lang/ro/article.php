@@ -1,11 +1,19 @@
 <?php
 
-return[
-  'article' => 'Articol',
+declare(strict_types=1);
+
+return [
+
+    'label' => [
+        'singular' => 'articol',
+        'plural' => 'Articole',
+    ],
+
+    'article' => 'Articol',
     'articles' => 'Articole',
     'title' => 'Titlu',
     'content' => 'Conținut',
-    'is_active' => 'Activ',
+    'is_published' => 'Publicat',
     'category' => 'Categorie articol',
     'author' => 'Autor',
     'created_at' => 'Creat la',
@@ -14,6 +22,15 @@ return[
     'gallery' => 'Galerie de imagini',
     'filter' => [
         'category' => 'Filtreați după categorie',
+    ],
+
+    'category' => [
+        'label' => [
+            'singular' => 'Categorie',
+            'plural' => 'Categorii',
+        ],
+
+        'articles_count' => 'Număr de articole',
     ],
 
 ];

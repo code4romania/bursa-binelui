@@ -1,5 +1,5 @@
 <template>
-    <Disclosure as="nav" class="relative bg-white shadow" v-slot="{ open }">
+    <Disclosure as="nav" class="relative z-10 bg-white shadow" v-slot="{ open }">
         <div class="container flex items-center justify-between h-16 gap-4 lg:gap-6 lg:my-2">
             <Link href="/" class="flex items-center flex-shrink-0">
                 <img class="block w-auto h-10 lg:h-full" src="/images/bursa_binelui_logo.png" />
@@ -11,7 +11,7 @@
                 <FlyoutMenu :name="$t('explore_navbar_menu')" :links="explore" />
 
                 <!-- Articles link -->
-                <NavLink :href="route('articles')" :active="route().current('articles')">
+                <NavLink :href="route('articles.index')" :active="route().current('articles.index')">
                     {{ $t('articles_link') }}
                 </NavLink>
 
@@ -128,9 +128,9 @@
                 <Link
                     :class="[
                         'p-3 flex items-center text-base font-medium leading-5',
-                        route().current('articles') ? 'text-primary-500 bg-primary-50' : 'text-gray-500',
+                        route().current('articles.index') ? 'text-primary-500 bg-primary-50' : 'text-gray-500',
                     ]"
-                    :href="route('articles')"
+                    :href="route('articles.index')"
                 >
                     {{ $t('articles_link') }}
                 </Link>

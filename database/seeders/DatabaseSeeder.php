@@ -34,49 +34,49 @@ class DatabaseSeeder extends Seeder
             ->superAdmin()
             ->create();
 
-        User::factory(['email' => 'supermanager@example.com'])
-            ->count(1)
-            ->superManager()
-            ->create();
+        // User::factory(['email' => 'supermanager@example.com'])
+        //     ->count(1)
+        //     ->superManager()
+        //     ->create();
 
-        User::factory()
-            ->count(50)
-            ->donor()
-            ->create();
+        // User::factory()
+        //     ->count(50)
+        //     ->donor()
+        //     ->create();
 
-        collect(ActivityDomainEnum::values())
-            ->map(fn ($domain) => [
-                'name' => $domain,
-                'slug' => Str::slug($domain),
-            ])
-            ->tap(function (Collection $collection) {
-                ActivityDomain::insert($collection->toArray());
-            });
+        // collect(ActivityDomainEnum::values())
+        //     ->map(fn ($domain) => [
+        //         'name' => $domain,
+        //         'slug' => Str::slug($domain),
+        //     ])
+        //     ->tap(function (Collection $collection) {
+        //         ActivityDomain::insert($collection->toArray());
+        //     });
 
-        $this->seedProjectCategories();
+        // $this->seedProjectCategories();
 
-        Championship::factory()
-            ->count(3)
-            ->create();
+        // Championship::factory()
+        //     ->count(3)
+        //     ->create();
 
-        Organization::factory()
-            ->count(50)
-            ->approved()
-            ->create();
+        // Organization::factory()
+        //     ->count(50)
+        //     ->approved()
+        //     ->create();
 
-        Organization::factory()
-            ->count(5)
-            ->rejected()
-            ->create();
+        // Organization::factory()
+        //     ->count(5)
+        //     ->rejected()
+        //     ->create();
 
-        Organization::factory()
-            ->count(5)
-            ->pending()
-            ->create();
+        // Organization::factory()
+        //     ->count(5)
+        //     ->pending()
+        //     ->create();
 
-        Badge::factory()
-            ->count(30)
-            ->create();
+        // Badge::factory()
+        //     ->count(30)
+        //     ->create();
 
         $this->seedArticleCategories();
     }

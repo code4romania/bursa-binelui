@@ -289,7 +289,7 @@
                     <ArticleCard
                         v-for="article in articles"
                         :key="article.id"
-                        :data="article"
+                        :article="article"
                         class="relative z-50 lg:-mt-12"
                     />
                 </ul>

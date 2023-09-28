@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Models\ArticleCategory;
+use App\Models\Championship;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,14 +17,15 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\ArticleCategory::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Championship::class)->nullable()->constrained()->cascadeOnDelete();
-            $table->string('title');
-            $table->string('slug');
-            $table->text('content');
-            $table->string('author');
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->json('title');
+            $table->json('slug');
+            $table->json('content');
+            $table->json('author');
+            $table->boolean('is_published')->default(true);
+
+            $table->foreignIdFor(ArticleCategory::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Championship::class)->nullable()->constrained()->cascadeOnDelete();
         });
     }
 
