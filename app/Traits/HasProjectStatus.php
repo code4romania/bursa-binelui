@@ -63,6 +63,4 @@ trait HasProjectStatus
             ->whereDate('start', '>=', now())
             ->orderBy('start');
     }
-
-
 }
