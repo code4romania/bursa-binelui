@@ -20,16 +20,16 @@ class EditProject extends EditRecord
             Actions\DeleteAction::make(),
             Action::make('Approve')
                 ->action(function () {
-                    $this->record->status = ProjectStatus::active->value;
+                    $this->record->status = ProjectStatus::approved->value;
                     $this->record->save();
                 })
-                ->requiresConfirmation()->hidden(fn () => $this->record->status == ProjectStatus::active->value),
+                ->requiresConfirmation()->hidden(fn () => $this->record->status == ProjectStatus::approved->value),
             Action::make('Reject')
                 ->action(function () {
-                    $this->record->status = ProjectStatus::disabled->value;
+                    $this->record->status = ProjectStatus::rejected->value;
                     $this->record->save();
                 })
-                ->requiresConfirmation()->hidden(fn () => $this->record->status == ProjectStatus::disabled->value),
+                ->requiresConfirmation()->hidden(fn () => $this->record->status == ProjectStatus::rejected->value),
         ];
     }
 }

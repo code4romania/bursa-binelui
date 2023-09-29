@@ -141,7 +141,7 @@ class ChampionshipController extends Controller
             ],
         ];
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
+        $projects = Project::whereIsOpen()->paginate(9)->withQueryString();
         $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Championship/Edition', [
@@ -162,7 +162,7 @@ class ChampionshipController extends Controller
         return auth()->user()?->organization
             ->projects()
 //            ->notInChampionship($request->championship_id)
-            ->publish()
+            ->whereIsOpen()
             ->offset($offset)->limit(8)->get();
     }
 

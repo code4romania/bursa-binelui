@@ -19,7 +19,7 @@ class HomeController extends Controller
 
         return Inertia::render('Public/Home', [
             'projects_count' => Project::query()
-                ->publish()
+                ->whereIsOpen()
                 ->count(),
 
             'organizations_count' => Organization::query()
@@ -27,14 +27,14 @@ class HomeController extends Controller
                 ->count(),
 
             'projects' => ProjectCardsResource::collection(
-                Project::publish()
+                Project::whereIsOpen()
                     ->inRandomOrder()
                     ->limit(12)
                     ->get()
             ),
 
             'bcr_projects' => BCRProjectCardsResource::collection(
-                Project::publish()
+                Project::whereIsOpen()
                     // TODO: ->whereOrganizationIsBCR()
                     ->limit(12)
                     ->get()

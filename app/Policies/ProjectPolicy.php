@@ -18,12 +18,10 @@ class ProjectPolicy
 
     public function view(User $user, Project $project): bool
     {
-        if ($user->organization_id !== $project->organization_id) {
-            return false;
+        if ($user->organization_id === $project->organization_id || $user->isBbAdmin()) {
+            return true;
         }
-
-        /* Anyone can see the details of an organization. */
-        return true;
+        return false;
     }
 
     public function editAsNgo(User $user, Project $project): bool

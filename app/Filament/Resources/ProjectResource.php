@@ -103,8 +103,8 @@ class ProjectResource extends Resource
                 Tables\Columns\IconColumn::make('status')->options([
                     'heroicon-o-x-circle',
                     'heroicon-o-pencil' => ProjectStatus::draft->value,
-                    'heroicon-o-clock' => ProjectStatus::disabled->value,
-                    'heroicon-o-check-circle' => ProjectStatus::active->value,
+                    'heroicon-o-clock' => ProjectStatus::rejected->value,
+                    'heroicon-o-check-circle' => ProjectStatus::approved->value,
                 ]),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('category'),

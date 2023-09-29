@@ -46,6 +46,23 @@ trait HasProjectStatus
 
     public function scopeWherePublished(Builder $query): Builder
     {
-        return $query->whereIn('status', [ProjectStatus::approved])->whereNull('archived_at');
+        return $query->where('status', ProjectStatus::approved)->whereNull('archived_at');
     }
+
+    public function scopeWhereIsOpen(Builder $query): Builder
+    {
+        return $query->wherePublished()
+            ->whereHas('organization', fn (Builder $query) => $query->whereHasEuPlatesc())
+            ->whereDate('start', '<=', now())
+            ->whereDate('end', '>=', now());
+    }
+
+    public function scopeStartSoon(): Builder
+    {
+        return $this->wherePublished()
+            ->whereDate('start', '>=', now())
+            ->orderBy('start');
+    }
+
+
 }
