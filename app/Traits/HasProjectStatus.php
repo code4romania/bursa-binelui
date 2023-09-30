@@ -44,9 +44,9 @@ trait HasProjectStatus
         return $query->where('status', ProjectStatus::rejected);
     }
 
-    public function scopeWherePublished(Builder $query): Builder
+    public function scopeWhereIsPublished(Builder $query): Builder
     {
-        return $query->where('status', ProjectStatus::approved)->whereNull('archived_at');
+        return $query->whereIsApproved()->whereNull('archived_at');
     }
 
     public function scopeWhereIsOpen(Builder $query): Builder
@@ -57,7 +57,7 @@ trait HasProjectStatus
             ->whereDate('end', '>=', now());
     }
 
-    public function scopeStartSoon(): Builder
+    public function scopeWhereStartsSoon(): Builder
     {
         return $this->wherePublished()
             ->whereDate('start', '>=', now())
