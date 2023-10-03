@@ -11,7 +11,6 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -29,15 +28,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::patch('usrupdate/{id}', [RegisteredUserController::class, 'update'])->name('user.update');
-Route::get('admin/welcome/{user}', Welcome::class)->name('filament.auth.welcome');
-Route::middleware(config('filament.middleware.base'))
-    ->domain(config('filament.domain'))
-    ->prefix(config('filament.path'))
-    ->group(function () {
-        Route::get('/welcome/{user}', Welcome::class)->name('filament.auth.welcome');
-    });
-Route::get('ngo/welcome/{user}', [PasswordController::class, 'setInitialPassword'])->name('ngo.user.welcome');
-Route::post('ngo/welcome/{user}', [PasswordController::class, 'storeInitialPassword'])->name('ngo.user.welcome.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');

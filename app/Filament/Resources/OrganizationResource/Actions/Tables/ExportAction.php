@@ -45,7 +45,6 @@ class ExportAction extends BaseAction
                         ->with([
                             'activityDomains',
                             'counties',
-                            'users' => fn ($q) => $q->onlyNGOAdmins(),
                             'projects' => fn ($q) => $q->select('id', 'organization_id', 'status')
                                 ->withCount('donations'),
                         ])

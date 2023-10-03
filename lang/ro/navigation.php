@@ -8,6 +8,7 @@ return [
         'championship' => 'Campionatul de bine',
         'gala' => 'Gale regionale',
         'content' => 'Conținut',
+        'articles' => 'Articole',
         'reports' => 'Rapoarte',
     ],
 ];

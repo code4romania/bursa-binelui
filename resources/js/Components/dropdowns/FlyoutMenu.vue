@@ -24,14 +24,15 @@
         >
             <PopoverPanel class="absolute z-50 flex w-screen px-4 -translate-x-1/2 left-1/2 lg:mt-5 max-w-max">
                 <div
-                    class="flex-auto w-screen max-w-sm p-4 text-sm leading-6 bg-white shadow-lg rounded-3xl ring-1 ring-gray-900/5"
+                    class="grid flex-auto w-screen max-w-sm gap-1 p-4 text-sm leading-6 bg-white shadow-lg rounded-3xl ring-1 ring-gray-900/5"
                 >
-                    <div v-for="link in links" :key="link.name" class="relative p-4 rounded-lg hover:bg-gray-50">
-                        <NavLink :href="link.href" class="flex-col items-start justify-start">
-                            <p class="w-full text-left">{{ link.name }}</p>
-                            <p v-if="link.description" :class="[`mt-2 text-gray-500 text-sm`]">
-                                {{ link.description }}
-                            </p>
+                    <div v-for="link in links" :key="link.name" class="relative">
+                        <NavLink
+                            :href="link.href"
+                            class="flex-col items-start justify-start block w-full gap-1 p-4 rounded-lg hover:bg-gray-50"
+                        >
+                            <p class="block w-full text-base font-medium text-left text-gray-900">{{ link.name }}</p>
+                            <p v-if="link.description" class="text-sm text-gray-500" v-text="link.description" />
                         </NavLink>
                     </div>
                 </div>

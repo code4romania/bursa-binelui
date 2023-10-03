@@ -35,13 +35,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        $redirect = RouteServiceProvider::HOME;
-        $redirect = match ($request->get('from', '')) {
-            'championship-page' => RouteServiceProvider::CHAMPIONSHIP,
-            default => $redirect ,
-        };
 
-        return redirect()->intended($redirect);
+        return redirect()->intended(RouteServiceProvider::getDashboardUrl());
     }
 
     /**

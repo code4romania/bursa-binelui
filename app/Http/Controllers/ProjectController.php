@@ -11,7 +11,9 @@ use App\Http\Filters\ProjectCategoriesFilter;
 use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Filters\ProjectStatusFilter;
 use App\Http\Filters\SearchFilter;
-use App\Http\Resources\ProjectCardsResource;
+use App\Http\Resources\Collections\ProjectCardCollection;
+use App\Http\Sorts\ProjectDonationsCountSort;
+use App\Http\Sorts\ProjectDonationsSumSort;
 use App\Models\Project;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
@@ -19,18 +21,29 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ProjectController extends Controller
 {
     public function index(Request $request): Response
     {
+        return $this->projectList($request, 'list');
+    }
+
+    public function map(Request $request): Response
+    {
+        return $this->projectList($request, 'map');
+    }
+
+    protected function projectList(Request $request, string $view): Response
+    {
         return Inertia::render('Public/Projects/Index', [
-            'view' => 'list',
-            'filter' => $request->query('filter'),
+            'view' => $view,
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
-            'resource' => ProjectCardsResource::collection(
+            'google_maps_api_key' => config('services.google_maps_api_key'),
+            'collection' => new ProjectCardCollection(
                 QueryBuilder::for(Project::class)
                     ->allowedFilters([
                         AllowedFilter::custom('county', new CountiesFilter),
@@ -41,32 +54,11 @@ class ProjectController extends Controller
                         AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->allowedSorts([
-
-                    ])
-                    ->whereIsPublished()
-                    ->paginate()
-                    ->withQueryString()
-            ),
-        ]);
-    }
-
-    public function map(Request $request): Response
-    {
-        return Inertia::render('Public/Projects/Index', [
-            'view' => 'map',
-            'filter' => $request->query('filter'),
-            'categories' => $this->getProjectCategories(),
-            'counties' => $this->getCounties(),
-            'google_maps_api_key' => config('services.google_maps_api_key'),
-            'resource' => ProjectCardsResource::collection(
-                QueryBuilder::for(Project::class)
-                    ->allowedFilters([
-                        AllowedFilter::custom('county', new CountiesFilter),
-                        AllowedFilter::custom('category', new ProjectCategoriesFilter),
-                        AllowedFilter::custom('date', new ProjectDatesFilter),
-                        AllowedFilter::custom('status', new ProjectStatusFilter),
-                        AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
-                        AllowedFilter::custom('search', new SearchFilter),
+                        AllowedSort::field('publish_date', 'start'),
+                        AllowedSort::field('end_date', 'end'),
+                        AllowedSort::field('target', 'target_budget'),
+                        AllowedSort::custom('donations_total', new ProjectDonationsSumSort),
+                        AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
                     ])
                     ->whereIsPublished()
                     ->paginate()

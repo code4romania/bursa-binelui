@@ -8,6 +8,7 @@ use App\Concerns\HasCounties;
 use App\Concerns\HasVolunteers;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -146,7 +147,7 @@ class Project extends Model implements HasMedia
 
     public function getActiveAttribute(): bool
     {
-        return $this->status === ProjectStatus::active;
+        return $this->status == ProjectStatus::approved;
     }
 
     public function getIsPeriodActiveAttribute(): bool
@@ -156,7 +157,7 @@ class Project extends Model implements HasMedia
 
     public function getIsActiveAttribute(): bool
     {
-        return $this->status === ProjectStatus::approved
+        return $this->status == ProjectStatus::approved
             && $this->start->isPast()
             && $this->end->isFuture();
     }

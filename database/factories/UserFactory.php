@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -44,37 +45,47 @@ class UserFactory extends Factory
     public function donor(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'donor',
+            'role' => UserRole::donor,
         ]);
     }
 
     /**
      * Make a NGO Admin user.
      */
-    public function ngoAdmin(): static
+    public function organizationAdmin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'ngo-admin',
+            'role' => UserRole::ADMIN,
+        ]);
+    }
+
+    /**
+     * Make a NGO Manager user.
+     */
+    public function ngoManager(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            // 'role' => UserRole::ngo_manager,
         ]);
     }
 
     /**
      * Make a BB Manager user.
      */
-    public function bbManager(): static
+    public function superManager(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'bb-manager',
+            'role' => UserRole::SUPERMANAGER,
         ]);
     }
 
     /**
      * Make a BB Admin user.
      */
-    public function bbAdmin(): static
+    public function superAdmin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'bb-admin',
+            'role' => UserRole::SUPERADMIN,
         ]);
     }
 }

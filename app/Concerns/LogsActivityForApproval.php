@@ -59,7 +59,7 @@ trait LogsActivityForApproval
             return;
         }
 
-        if (auth()->user()->isBbAdmin() || auth()->user()->isBbManager()) {
+        if (auth()->user()->isSuperUser()) {
             activity()->disableLogging();
 
             if (! $activity->description) {

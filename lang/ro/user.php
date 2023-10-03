@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 return [
     'roles' => [
+        'superadmin' => 'Administrator Bursa Binelui',
+        'supermanager' => 'Manager Bursa Binelui',
+        'admin' => 'Administrator ONG',
+        'manager' => 'Manager ONG',
+
         'donor' => 'Donator/Voluntar',
-        'ngo-admin' => 'Administrator ONG',
-        'bb-manager' => 'Manager Bursa Binelui',
-        'bb-admin' => 'Administrator Bursa Binelui',
     ],
+
     'label' => [
         'singular' => 'Utilizator',
-        'plural' => 'Utilizatori', ],
+        'plural' => 'Utilizatori',
+    ],
     'labels' => [
         'general_data' => 'Date generale',
         'volunteer_for_organization' => 'Voluntar in organizatie',
@@ -32,6 +36,8 @@ return [
     'role' => 'Rol',
     'organization' => 'Organizație',
     'messages' => [
+        'created' => 'Utilizatorul a fost adăugat.',
+        'deleted' => 'Utilizatorul a fost șters.',
         'set_initial_password_success' => 'Parola a fost setată cu succes!',
     ],
     'filters' => [
@@ -39,5 +45,16 @@ return [
         'placeholder' => 'Selectează tipul',
         'has_donations' => 'Are donații',
         'is_volunteer' => 'Este voluntar',
+    ],
+
+    'column' => [
+        'name' => 'Nume',
+        'email' => 'Email',
+        'role' => 'Rol',
+    ],
+
+    'action' => [
+        'attach' => 'Alocă utilizator',
+        'detach' => 'Elimină',
     ],
 ];

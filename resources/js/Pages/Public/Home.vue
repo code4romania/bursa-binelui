@@ -146,12 +146,12 @@
             </div>
         </section>
 
-        <div v-if="articles.length" class="w-full bg-primary-50 py-9">
+        <div v-if="articles.data.length" class="w-full bg-primary-50 py-9">
             <div class="w-full mx-auto rounded lg:max-w-7xl px-9">
                 <div class="flex items-center gap-6 mb-9">
                     <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">{{ $t('articles') }}</h2>
                     <Link
-                        :href="route('articles')"
+                        :href="route('articles.index')"
                         class="bg-primary-500 text-center w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                         {{ $t('see_all_articles') }}
@@ -159,7 +159,7 @@
                 </div>
 
                 <ul role="list" class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-                    <ArticleCard v-for="article in articles" :key="article.id" :data="article" class="relative" />
+                    <ArticleCard v-for="article,index in articles.data" :key="index" :article="article" class="relative" />
                 </ul>
             </div>
         </div>
@@ -248,7 +248,7 @@
         projects: Object,
         bcr_projects: Object,
         donate_projects: Object,
-        articles: Array,
+        articles: Object,
     });
 
     const bcr_projects_carousel = ref(null);

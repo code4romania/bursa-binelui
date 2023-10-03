@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
-use App\Http\Resources\ProjectCardsResource;
+use App\Http\Resources\ProjectCardResource;
 use App\Models\Activity;
 use App\Models\County;
 use App\Models\Project;
@@ -24,7 +24,7 @@ class ProjectController extends Controller
         $projectStatus = $request->get('project_status');
 
         return Inertia::render('AdminOng/Projects/Projects', [
-            'query' => ProjectCardsResource::collection(
+            'query' => ProjectCardResource::collection(
                 Project::query()
                     ->where('organization_id', auth()->user()->organization_id)
                     ->when($projectStatus, function (Builder $query, $projectStatus) {
@@ -39,17 +39,9 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name', 'id']);
-        });
-
-        $projectCategories = cache()->remember('projectCategories', 60 * 60 * 24, function () {
-            return ProjectCategory::get(['name', 'id']);
-        });
-
         return Inertia::render('AdminOng/Projects/AddProject', [
-            'counties' => $counties,
-            'projectCategories' => $projectCategories,
+            'counties' => $this->getCounties(),
+            'projectCategories' => $this->getProjectCategories(),
         ]);
     }
 

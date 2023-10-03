@@ -141,13 +141,10 @@
                                                 <!-- Actions -->
                                                 <div class="w-full pt-6">
                                                     <PrimaryButton
-                                                        background="primary-500"
-                                                        hover="primary-400"
-                                                        color="white"
+                                                        type="submit"
                                                         class="w-full"
-                                                    >
-                                                        {{ $t('register_as_volunteer') }}
-                                                    </PrimaryButton>
+                                                        :label="$t('register_as_volunteer')"
+                                                    />
 
                                                     <div v-if="!$page.props.auth.user">
                                                         <p class="py-1 text-sm font-medium text-center text-gray-900">

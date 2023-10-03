@@ -37,9 +37,8 @@
                 class="grid content-end grid-cols-2 gap-4 mx-2 my-2 w-60 h-60"
             >
                 <DangerButton @click="removeImage(index)">{{ $t('remove_image') }} </DangerButton>
-                <SecondaryButton class="col-start-2" @click="setCoverImage(index)"
-                    >{{ $t('set_cover_image') }}
-                </SecondaryButton>
+
+                <SecondaryButton class="col-start-2" @click="setCoverImage(index)" :label="$t('set_cover_image')" />
             </div>
         </div>
     </div>

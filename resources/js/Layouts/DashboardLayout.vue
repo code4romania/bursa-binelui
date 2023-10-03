@@ -6,7 +6,6 @@
 
         <div class="flex items-start flex-1 gap-y-10">
             <div class="p-4 mt-1 overflow-y-auto bg-white border-r border-gray-200 lg:w-72 shrink-0">
-                <p class="mb-5 text-base font-medium text-gray-500">Administrează</p>
                 <nav>
                     <ul class="space-y-1">
                         <li v-for="item in navigation" :key="item.name">
@@ -71,16 +70,17 @@
     import Notification from '@/Components/Notification.vue';
 
     import {
-        CurrencyEuroIcon,
         AnnotationIcon,
+        CurrencyEuroIcon,
         FolderIcon,
-        HomeIcon,
-        UsersIcon,
         FolderOpenIcon,
         FolderRemoveIcon,
-        UserRemoveIcon,
+        HomeIcon,
+        OfficeBuildingIcon,
         UserAddIcon,
+        UserCircleIcon,
         UserGroupIcon,
+        UserRemoveIcon,
     } from '@heroicons/vue/outline';
 
     const props = defineProps({
@@ -92,9 +92,14 @@
 
     const navigation = [
         {
+            name: 'Panou de control',
+            route: route('dashboard.main'),
+            icon: HomeIcon,
+        },
+        {
             name: 'Organizația mea',
             route: route('dashboard.organization.edit'),
-            icon: HomeIcon,
+            icon: OfficeBuildingIcon,
         },
         {
             name: 'Proiectele mele',
@@ -157,6 +162,11 @@
                     icon: UserRemoveIcon,
                 },
             ],
+        },
+        {
+            name: 'Utilizatori',
+            route: route('dashboard.users.index'),
+            icon: UserCircleIcon,
         },
         {
             name: 'Donații',

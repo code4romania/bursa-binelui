@@ -18,14 +18,14 @@ class SendOrganizationForApprovalListener
 
         Notification::send(
             User::query()
-                ->onlyBBAdmins()
+                ->onlySuperUsers()
                 ->get(),
             new OrganizationCreatedAdmin($event->organization)
         );
 
         Notification::send(
             User::query()
-                ->onlyNGOAdmins($event->organization)
+                ->whereBelongsToOrganization($event->organization)
                 ->get(),
             new OrganizationCreated($event->organization)
         );

@@ -4,46 +4,53 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Articles\ArticleCardResource;
+use App\Http\Resources\Articles\ArticleResource;
 use App\Models\Article;
 use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
-        // $query = Article::query();
-
-        $categories = ArticleCategory::whereHas('articles', function ($query) {
-            $query->where('is_active', true);
-        })->get();
-
-        $articles = Article::active()->with('category');
-        if ($request->get('category')) {
-            $category = $categories->search(function (ArticleCategory $item) use ($request) {
-                return $item['slug'] == $request->get('category');
-            });
-            $articles = $articles->where('article_category_id', $category);
-        }
-        $articles = $articles->paginate(10);
-
         return Inertia::render('Public/Articles/Articles', [
-            'categories' => $categories,
-            'query' => $articles,
+            'categories' => $this->getArticleCategories(),
+            'collection' => ArticleCardResource::collection(
+                Article::query()
+                    ->wherePublished()
+                    ->paginate(5)
+            ),
         ]);
     }
 
-    public function article(Article $article)
+    public function category(ArticleCategory $category, Request $request): Response
     {
-        $article->load('category');
-        $gallery = $article->getMedia('gallery');
+        return Inertia::render('Public/Articles/Articles', [
+            'category' => $category->only('name', 'slug'),
+            'categories' => $this->getArticleCategories(),
+            'collection' => ArticleCardResource::collection(
+                Article::query()
+                    ->whereBelongsTo($category, 'category')
+                    ->wherePublished()
+                    ->paginate(5)
+            ),
+        ]);
+    }
 
-        //dd($article->relatedArticles()->get());
-        return Inertia::render('Public/Articles/Article', [
-            'article' => $article,
-            'gallery' => $gallery,
-            'related' => $article->relatedArticles()->get(),
+    public function show(Article $article): Response
+    {
+        return Inertia::render('Public/Articles/Show', [
+            'resource' => ArticleResource::make($article),
+            'related' => [], /*  Article::query()
+                ->wherePublished()
+                ->whereBelongsTo('category', $article->category)
+                ->whereNot('id', $article->id)
+                ->inRandomOrder()
+                ->limit(3)
+                ->get(), */
         ]);
     }
 }

@@ -18,18 +18,11 @@ class ProjectPolicy
 
     public function view(User $user, Project $project): bool
     {
-        if ($user->organization_id === $project->organization_id || $user->isBbAdmin()) {
-            return true;
-        }
-        return false;
+        return $user->belongsToOrganization($project->organization);
     }
 
     public function editAsNgo(User $user, Project $project): bool
     {
-        if ($user->organization_id !== $project->organization_id && $user->role !== UserRole::ngo_admin) {
-            return false;
-        }
-
-        return true;
+        return $user->belongsToOrganization($project->organization);
     }
 }

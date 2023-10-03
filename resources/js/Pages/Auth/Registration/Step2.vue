@@ -1,10 +1,14 @@
 <template>
     <div class="space-y-6">
-        <h1 v-if="'ngo-admin' === form.type" class="text-2xl font-bold text-cyan-900" v-text="$t('account_details')" />
+        <h1
+            v-if="'organization' === form.type"
+            class="text-2xl font-bold text-cyan-900"
+            v-text="$t('account_details')"
+        />
 
         <!-- Name -->
         <Input
-            :label="'ngo-admin' === form.type ? $t('name_last_name_ong') : $t('name_last_name')"
+            :label="'organization' === form.type ? $t('name_last_name_ong') : $t('name_last_name')"
             id="name"
             type="text"
             v-model="form.user.name"
@@ -66,35 +70,19 @@
             <span class="text-sm text-gray-700">{{ $t('register_subscribe') }}</span>
         </label>
 
-        <div v-if="'ngo-admin' === form.type" class="flex items-center justify-between mt-6 gap-x-4">
+        <div v-if="'organization' === form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <SecondaryButton @click="$emit('prev', $event.target)">
                 {{ $t('back') }}
             </SecondaryButton>
 
-            <PrimaryButton
-                background="primary-500"
-                hover="primary-400"
-                color="white"
-                type="button"
-                @click="$emit('next', $event.target)"
-            >
-                {{ $t('continue') }}
-            </PrimaryButton>
+            <PrimaryButton @click="$emit('next', $event.target)" :label="$t('continue')" />
         </div>
 
         <div
             v-if="'donor' === form.type"
             :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']"
         >
-            <PrimaryButton
-                class="flex-1 w-full"
-                background="primary-500"
-                hover="primary-400"
-                color="white"
-                @click="$emit('next', $event.target)"
-            >
-                {{ $t('register_link') }}
-            </PrimaryButton>
+            <PrimaryButton class="flex-1 w-full" @click="$emit('next', $event.target)" :label="$t('register_link')" />
 
             <SecondaryButton
                 class="w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"
