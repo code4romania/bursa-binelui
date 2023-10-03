@@ -9,7 +9,6 @@ use App\Filament\Resources\OrganizationResource\Actions\Pages\ApproveOrganizatio
 use App\Filament\Resources\OrganizationResource\Actions\Pages\DeactivateOrganizationAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\ReactivateOrganizationAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\RejectOrganizationAction;
-use App\Filament\Resources\OrganizationResource\Widgets\OrganizationActivityWidget;
 use Filament\Pages\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 

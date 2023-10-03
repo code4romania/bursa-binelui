@@ -66,10 +66,10 @@ class BaseProjectWidget extends BaseWidget
         return ProjectResource::getWidgetFilters();
     }
 
-    protected function getTableFiltersLayout(): ?string
-    {
-        return  Layout::AboveContent;
-    }
+//    protected function getTableFiltersLayout(): ?string
+//    {
+//        return  Layout::AboveContent;
+//    }
 
     protected function getTableRecordUrlUsing(): \Closure
     {

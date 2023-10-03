@@ -16,7 +16,7 @@ class ChampionshipController extends Controller
     public function index()
     {
         $championship = Championship::current()->firstOrFail();
-        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn ($project) =>$project->project);
+        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn ($project) => $project->project);
         $projectAmount = $championship->activeStage()->projects()->sum('amount_of_donation');
         $projectDonationsNumber = $championship->activeStage()->projects()->sum('number_of_donation');
         $counties = County::get(['name', 'id']);
@@ -141,7 +141,7 @@ class ChampionshipController extends Controller
             ],
         ];
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
+        $projects = Project::whereIsOpen()->paginate(9)->withQueryString();
         $counties = County::get(['name', 'id']);
 
         return Inertia::render('Public/Championship/Edition', [
@@ -162,7 +162,7 @@ class ChampionshipController extends Controller
         return auth()->user()?->organization
             ->projects()
 //            ->notInChampionship($request->championship_id)
-            ->publish()
+            ->whereIsOpen()
             ->offset($offset)->limit(8)->get();
     }
 

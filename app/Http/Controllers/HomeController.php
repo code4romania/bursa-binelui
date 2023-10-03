@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Articles\ArticleCardResource;
-use App\Http\Resources\BCRProjectCardResource;
-use App\Http\Resources\ProjectCardResource;
 use App\Models\Article;
 use App\Models\Organization;
 use App\Models\Project;
@@ -20,22 +18,22 @@ class HomeController extends Controller
 
         return Inertia::render('Public/Home', [
             'projects_count' => Project::query()
-                ->publish()
+                ->whereIsOpen()
                 ->count(),
 
             'organizations_count' => Organization::query()
                 ->isApproved()
                 ->count(),
 
-            'projects' => ProjectCardResource::collection(
-                Project::publish()
+            'projects' => ProjectCardsResource::collection(
+                Project::whereIsOpen()
                     ->inRandomOrder()
                     ->limit(12)
                     ->get()
             ),
 
-            'bcr_projects' => BCRProjectCardResource::collection(
-                Project::publish()
+            'bcr_projects' => BCRProjectCardsResource::collection(
+                Project::whereIsOpen()
                     // TODO: ->whereOrganizationIsBCR()
                     ->limit(12)
                     ->get()

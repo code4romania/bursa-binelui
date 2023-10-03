@@ -60,7 +60,7 @@ class ProjectController extends Controller
                         AllowedSort::custom('donations_total', new ProjectDonationsSumSort),
                         AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
                     ])
-                    ->wherePublished()
+                    ->whereIsPublished()
                     ->paginate()
                     ->withQueryString()
             ),

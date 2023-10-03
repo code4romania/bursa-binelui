@@ -8,7 +8,6 @@ use App\Concerns\HasCounties;
 use App\Concerns\HasVolunteers;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -101,24 +100,6 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
-    /**
-     * @deprecated use `wherePublished` instead
-     */
-    public function scopePublish(Builder $query): Builder
-    {
-        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
-    }
-
-    /**
-     * Scope a query to include the searched text.
-     */
-    public function scopeSearch(Builder $query, string $searchedText): Builder
-    {
-        return $query->where('name', 'LIKE', "%{$searchedText}%")
-            ->orWhere('description', 'LIKE', "%{$searchedText}%")
-            ->orWhereRelation('organization', 'name', 'LIKE', "%{$searchedText}%");
-    }
-
     public function stages(): BelongsToMany
     {
         return $this->belongsToMany(ChampionshipStage::class);
@@ -165,7 +146,7 @@ class Project extends Model implements HasMedia
 
     public function getActiveAttribute(): bool
     {
-        return $this->status === ProjectStatus::active;
+        return $this->status == ProjectStatus::approved;
     }
 
     public function getIsPeriodActiveAttribute(): bool
@@ -175,7 +156,7 @@ class Project extends Model implements HasMedia
 
     public function getIsActiveAttribute(): bool
     {
-        return $this->status === ProjectStatus::active
+        return $this->status == ProjectStatus::approved
             && $this->start->isPast()
             && $this->end->isFuture();
     }

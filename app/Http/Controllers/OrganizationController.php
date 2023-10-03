@@ -48,7 +48,7 @@ class OrganizationController extends Controller
                 $organization->loadMissing([
                     'activityDomains',
                     'counties',
-                    'projects' => fn ($query) => $query->wherePublished(),
+                    'projects' => fn ($query) => $query->whereIsPublished(),
                 ]),
             ),
         ]);
