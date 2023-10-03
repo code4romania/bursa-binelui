@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 return[
-  'article' => 'Articol',
+    'article' => 'Articol',
     'articles' => 'Articole',
     'title' => 'Titlu',
     'content' => 'Conținut',

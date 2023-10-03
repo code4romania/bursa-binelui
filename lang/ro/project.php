@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 return [
-    'filters' =>[
+    'filters' => [
         'status' => 'Status',
         'organization' => 'Organizație',
         'category' => 'Categorie',
@@ -8,19 +11,18 @@ return [
         'created_from' => 'Creată de la',
         'created_until' => 'Creată până la',
     ],
-    'status_arr' =>
-        [
-            'draft' => 'Draft',
-            'pending' => 'În așteptare',
-            'active' => 'Activă',
-            'disabled' => 'Inactivă',
-        ],
+    'status_arr' => [
+        'draft' => 'Draft',
+        'pending' => 'În așteptare',
+        'active' => 'Activă',
+        'disabled' => 'Inactivă',
+    ],
     'actions' => [
-        'edit'=> 'Editează',
+        'edit' => 'Editează',
         'approve' => 'Aprobă',
         'reject' => 'Respinge',
-        ],
-    'categories'=>[
+    ],
+    'categories' => [
         'education' => 'Educație',
         'health' => 'Sănătate',
         'social' => 'Social',
@@ -34,14 +36,14 @@ return [
         'pending' => 'Proiecte in curs de aprobare',
         'change_request' => 'Proiecte cu modificări',
         'approved' => 'Proiecte aprobate',
-        'rejected' => 'Proiecte refuzate' ,
+        'rejected' => 'Proiecte refuzate',
     ],
     'label' => [
         'singular' => 'Proiect',
         'plural' => 'Proiecte',
     ],
 
-    'labels' =>[
+    'labels' => [
         'project' => 'Proiect',
         'category' => 'Categorie',
         'target_budget' => 'Target',
@@ -59,6 +61,6 @@ return [
         'accepting_comments' => 'Acceptă comentarii',
         'videos' => 'Video-uri',
         'external_links' => 'Link-uri externe',
-    ]
+    ],
 
 ];

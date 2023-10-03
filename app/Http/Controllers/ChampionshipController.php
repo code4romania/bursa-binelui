@@ -16,7 +16,7 @@ class ChampionshipController extends Controller
     public function index()
     {
         $championship = Championship::current()->firstOrFail();
-        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn ($project) =>$project->project);
+        $projects = $championship->activeStage()->projects()->paginate()->withQueryString()->through(fn ($project) => $project->project);
         $projectAmount = $championship->activeStage()->projects()->sum('amount_of_donation');
         $projectDonationsNumber = $championship->activeStage()->projects()->sum('number_of_donation');
         $counties = County::get(['name', 'id']);
