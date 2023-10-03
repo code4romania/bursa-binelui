@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Articles\ArticleCardResource;
+use App\Http\Resources\BCRProjectCardResource;
+use App\Http\Resources\ProjectCardResource;
 use App\Models\Article;
 use App\Models\Organization;
 use App\Models\Project;
@@ -25,14 +27,14 @@ class HomeController extends Controller
                 ->isApproved()
                 ->count(),
 
-            'projects' => ProjectCardsResource::collection(
+            'projects' => ProjectCardResource::collection(
                 Project::whereIsOpen()
                     ->inRandomOrder()
                     ->limit(12)
                     ->get()
             ),
 
-            'bcr_projects' => BCRProjectCardsResource::collection(
+            'bcr_projects' => BCRProjectCardResource::collection(
                 Project::whereIsOpen()
                     // TODO: ->whereOrganizationIsBCR()
                     ->limit(12)
