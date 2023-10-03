@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Enums\ProjectStatus;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasProjectStatus
@@ -42,7 +41,6 @@ trait HasProjectStatus
 
     public function scopeWhereIsRejected(Builder $query): Builder
     {
-
         return $query->where('status', ProjectStatus::rejected);
     }
 
