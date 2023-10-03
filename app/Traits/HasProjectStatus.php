@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Enums\ProjectStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasProjectStatus
@@ -41,6 +42,7 @@ trait HasProjectStatus
 
     public function scopeWhereIsRejected(Builder $query): Builder
     {
+
         return $query->where('status', ProjectStatus::rejected);
     }
 
@@ -51,7 +53,7 @@ trait HasProjectStatus
 
     public function scopeWhereIsOpen(Builder $query): Builder
     {
-        return $query->wherePublished()
+        return $query->whereIsPublished()
             ->whereHas('organization', fn (Builder $query) => $query->whereHasEuPlatesc())
             ->whereDate('start', '<=', now())
             ->whereDate('end', '>=', now());
@@ -59,7 +61,7 @@ trait HasProjectStatus
 
     public function scopeWhereStartsSoon(): Builder
     {
-        return $this->wherePublished()
+        return $this->whereIsPublished()
             ->whereDate('start', '>=', now())
             ->orderBy('start');
     }

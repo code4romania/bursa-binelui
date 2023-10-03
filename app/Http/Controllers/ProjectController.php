@@ -43,7 +43,7 @@ class ProjectController extends Controller
                     ->allowedSorts([
 
                     ])
-                    ->wherePublished()
+                    ->whereIsPublished()
                     ->paginate()
                     ->withQueryString()
             ),
@@ -68,7 +68,7 @@ class ProjectController extends Controller
                         AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
                         AllowedFilter::custom('search', new SearchFilter),
                     ])
-                    ->wherePublished()
+                    ->whereIsPublished()
                     ->paginate()
                     ->withQueryString()
             ),
