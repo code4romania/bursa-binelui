@@ -8,7 +8,6 @@ use App\Concerns\HasCounties;
 use App\Concerns\HasVolunteers;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
