@@ -1,5 +1,5 @@
 <template>
-    <footer class="mt-32 bg-gray-800">
+    <footer class="bg-gray-800">
         <div class="bg-gray-100">
             <div class="container py-4">
                 <a
@@ -116,15 +116,7 @@
                         />
 
                         <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
-                            <PrimaryButton
-                                background="primary-500"
-                                hover="primary-400"
-                                color="white"
-                                :class="{ 'opacity-25': form.processing }"
-                                :disabled="form.processing"
-                            >
-                                {{ $t('subscribe') }}
-                            </PrimaryButton>
+                            <PrimaryButton type="submit" :disabled="form.processing" :label="$t('subscribe')" />
                         </div>
                     </form>
                 </div>

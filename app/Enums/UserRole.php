@@ -4,17 +4,24 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-use App\Concerns\ArrayableEnum;
+use App\Concerns\Enums\Arrayable;
+use App\Concerns\Enums\Comparable;
+use App\Concerns\Enums\HasLabel;
 
 enum UserRole: string
 {
-    use ArrayableEnum;
-    case donor = 'donor';
-    case ngo_admin = 'ngo-admin';
-    case bb_manager = 'bb-manager';
-    case bb_admin = 'bb-admin';
+    use Arrayable;
+    use Comparable;
+    use HasLabel;
 
-    public function translationKeyPrefix(): string
+    case SUPERADMIN = 'superadmin';
+    case SUPERMANAGER = 'supermanager';
+    case ADMIN = 'admin';
+    case USER = 'user';
+
+    case donor = 'donor';
+
+    public function labelKeyPrefix(): string
     {
         return 'user.roles';
     }

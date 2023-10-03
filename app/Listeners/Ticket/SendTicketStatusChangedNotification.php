@@ -25,14 +25,14 @@ class SendTicketStatusChangedNotification
 
         Notification::send(
             User::query()
-                ->onlyBBAdmins()
+                ->onlySuperUsers()
                 ->get(),
             new Admin\TicketStatusChangedNotification($event->ticket, $ticketIsOpen)
         );
 
         Notification::send(
             User::query()
-                ->onlyNGOAdmins($event->ticket->organization)
+                ->whereBelongsToOrganization($event->ticket->organization)
                 ->get(),
             new Ngo\TicketStatusChangedNotification($event->ticket, $ticketIsOpen)
         );

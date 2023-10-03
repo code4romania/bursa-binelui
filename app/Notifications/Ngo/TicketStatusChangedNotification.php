@@ -57,7 +57,7 @@ class TicketStatusChangedNotification extends Notification
             ]))
             ->action(
                 __('ticket.action.view'),
-                route('admin.ong.tickets.view', $this->ticket)
+                route('dashboard.tickets.view', $this->ticket)
             );
     }
 
@@ -72,7 +72,7 @@ class TicketStatusChangedNotification extends Notification
             ]))
             ->action(
                 __('ticket.action.view'),
-                route('admin.ong.tickets.view', $this->ticket)
+                route('dashboard.tickets.view', $this->ticket)
             );
     }
 }

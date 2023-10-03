@@ -24,6 +24,7 @@
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-medialibrary": "^10.11",
         "spatie/laravel-query-builder": "^5.3",
+        "stevegrunwell/time-constants": "^1.1",
         "tightenco/ziggy": "^1.6"
     },
     "require-dev": {

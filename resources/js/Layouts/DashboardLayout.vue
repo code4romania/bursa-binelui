@@ -6,7 +6,6 @@
 
         <div class="flex items-start flex-1 gap-y-10">
             <div class="p-4 mt-1 overflow-y-auto bg-white border-r border-gray-200 lg:w-72 shrink-0">
-                <p class="mb-5 text-base font-medium text-gray-500">Administrează</p>
                 <nav>
                     <ul class="space-y-1">
                         <li v-for="item in navigation" :key="item.name">
@@ -56,12 +55,12 @@
                 </nav>
             </div>
 
-            <div class="grid items-start flex-1 gap-8 p-9">
+            <div class="grid items-start flex-1 p-9" :class="gridClass">
                 <slot />
             </div>
         </div>
 
-        <Footer />
+        <Footer class="mt-16" />
     </div>
 </template>
 
@@ -71,105 +70,112 @@
     import Notification from '@/Components/Notification.vue';
 
     import {
-        CurrencyEuroIcon,
         AnnotationIcon,
+        CurrencyEuroIcon,
         FolderIcon,
-        HomeIcon,
-        UsersIcon,
         FolderOpenIcon,
         FolderRemoveIcon,
-        UserRemoveIcon,
+        HomeIcon,
+        OfficeBuildingIcon,
         UserAddIcon,
+        UserCircleIcon,
         UserGroupIcon,
+        UserRemoveIcon,
     } from '@heroicons/vue/outline';
 
     const props = defineProps({
-        title: {
+        gridClass: {
             type: String,
-            default: null,
-        },
-        icon: {
-            type: String,
-            default: null,
+            default: 'gap-8',
         },
     });
 
     const navigation = [
         {
-            name: 'Organizația mea',
-            route: route('admin.ong.edit', 1),
+            name: 'Panou de control',
+            route: route('dashboard.main'),
             icon: HomeIcon,
         },
         {
+            name: 'Organizația mea',
+            route: route('dashboard.organization.edit'),
+            icon: OfficeBuildingIcon,
+        },
+        {
             name: 'Proiectele mele',
-            route: route('admin.ong.projects'),
+            route: route('dashboard.projects.index'),
+            icon: FolderIcon,
             subMenu: [
                 {
                     name: 'published_projects',
-                    route: route('admin.ong.projects', {
+                    route: route('dashboard.projects.index', {
                         project_status: 'published',
                     }),
                     icon: FolderOpenIcon,
                 },
                 {
                     name: 'draft_projects',
-                    route: route('admin.ong.projects', { project_status: 'draft' }),
+                    route: route('dashboard.projects.index', { project_status: 'draft' }),
                     icon: FolderRemoveIcon,
                 },
                 {
                     name: 'regional_projects',
-                    route: route('admin.ong.regional.project.add'),
+                    route: route('dashboard.projects.regional.create'),
                     icon: FolderRemoveIcon,
                 },
             ],
-            icon: FolderIcon,
         },
         {
             name: 'Proiectele mele regionale',
-            route: route('admin.ong.regional.projects'),
+            route: route('dashboard.projects.regional.index'),
+            icon: FolderIcon,
             subMenu: [
                 {
                     name: 'published_projects',
-                    route: route('admin.ong.regional.projects', {
+                    route: route('dashboard.projects.regional.index', {
                         project_status: 'published',
                     }),
                     icon: FolderOpenIcon,
                 },
                 {
                     name: 'draft_projects',
-                    route: route('admin.ong.regional.projects', {
+                    route: route('dashboard.projects.regional.index', {
                         project_status: 'draft',
                     }),
                     icon: FolderRemoveIcon,
                 },
             ],
-            icon: FolderIcon,
         },
         {
             name: 'Voluntari',
-            route: route('admin.ong.volunteers'),
+            route: route('dashboard.volunteers.index'),
             icon: UserGroupIcon,
             subMenu: [
                 {
                     name: 'volunteers_pending',
-                    route: route('admin.ong.volunteers', { status: 'pending' }),
+                    route: route('dashboard.volunteers.index', { status: 'pending' }),
                     icon: UserAddIcon,
                 },
                 {
                     name: 'volunteers_rejected',
-                    route: route('admin.ong.volunteers', { status: 'rejected' }),
+                    route: route('dashboard.volunteers.index', { status: 'rejected' }),
                     icon: UserRemoveIcon,
                 },
             ],
         },
         {
+            name: 'Utilizatori',
+            route: route('dashboard.users.index'),
+            icon: UserCircleIcon,
+        },
+        {
             name: 'Donații',
-            route: route('admin.ong.donations'),
+            route: route('dashboard.donations.index'),
             icon: CurrencyEuroIcon,
         },
         {
             name: 'Tickets',
-            route: route('admin.ong.tickets.index', { status: 'open' }),
+            route: route('dashboard.tickets.index', { status: 'open' }),
             icon: AnnotationIcon,
         },
     ];

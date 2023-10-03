@@ -7,24 +7,18 @@
         </h1>
         <div class="flex items-center justify-center gap-6">
             <PrimaryButton
-                :background="['time_evolution' === time_evolution_1 ? 'red-500' : 'gray-100']"
-                :hover="['time_evolution' === time_evolution_1 ? 'red-400' : 'gray-200']"
-                :color="['time_evolution' === time_evolution_1 ? 'white' : 'gray-700']"
+                :color="'time_evolution' === time_evolution_1 ? 'danger' : 'gray'"
                 class="px-6 py-1.5"
                 @click="time_evolution_1 = 'time_evolution'"
-            >
-                {{ $t('time_evolution') }}
-            </PrimaryButton>
+                :label="$t('time_evolution')"
+            />
 
             <PrimaryButton
-                :background="['donations_per_domain' === time_evolution_1 ? 'red-500' : 'gray-100']"
-                :hover="['donations_per_domain' === time_evolution_1 ? 'red-400' : 'gray-200']"
-                :color="['donations_per_domain' === time_evolution_1 ? 'white' : 'gray-700']"
+                :color="'donations_per_domain' === time_evolution_1 ? 'danger' : 'gray'"
                 class="px-6 py-1.5"
                 @click="time_evolution_1 = 'donations_per_domain'"
-            >
-                {{ $t('Donații per domenii') }}
-            </PrimaryButton>
+                :label="$t('donations_per_domain')"
+            />
         </div>
 
         <div v-if="'time_evolution' === time_evolution_1" class="border border-gray-200 rounded">
@@ -33,24 +27,18 @@
 
                 <div class="flex items-center justify-center gap-6">
                     <PrimaryButton
-                        :background="['nr_donations' === time_evolution_2 ? 'primary-500' : 'gray-100']"
-                        :hover="['nr_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
-                        :color="['nr_donations' === time_evolution_2 ? 'white' : 'gray-700']"
+                        :color="'nr_donations' === time_evolution_2 ? 'primary' : 'gray'"
                         class="px-6 py-1.5"
                         @click="time_evolution_2 = 'nr_donations'"
-                    >
-                        {{ $t('donation_number') }}
-                    </PrimaryButton>
+                        :label="$t('donation_number')"
+                    />
 
                     <PrimaryButton
-                        :background="['amount_donations' === time_evolution_2 ? 'primary-500' : 'gray-100']"
-                        :hover="['amount_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
-                        :color="['amount_donations' === time_evolution_2 ? 'white' : 'gray-700']"
+                        :color="'amount_donations' === time_evolution_2 ? 'primary' : 'gray'"
                         class="px-6 py-1.5"
                         @click="time_evolution_2 = 'amount_donations'"
-                    >
-                        {{ $t('donation_amount') }}
-                    </PrimaryButton>
+                        :label="$t('donation_amount')"
+                    />
                 </div>
             </div>
 
@@ -80,24 +68,18 @@
 
                 <div class="flex items-center justify-center gap-6">
                     <PrimaryButton
-                        :background="['nr_donations' === time_evolution_2 ? 'primary-500' : 'gray-100']"
-                        :hover="['nr_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
-                        :color="['nr_donations' === time_evolution_2 ? 'white' : 'gray-700']"
+                        :color="'nr_donations' === time_evolution_2 ? 'primary' : 'gray'"
                         class="px-6 py-1.5"
                         @click="time_evolution_2 = 'nr_donations'"
-                    >
-                        {{ $t('donation_number') }}
-                    </PrimaryButton>
+                        :label="$t('donation_number')"
+                    />
 
                     <PrimaryButton
-                        :background="['amount_donations' === time_evolution_2 ? 'primary-500' : 'gray-100']"
-                        :hover="['amount_donations' === time_evolution_2 ? 'primary-400' : 'gray-200']"
-                        :color="['amount_donations' === time_evolution_2 ? 'white' : 'gray-700']"
+                        :color="'amount_donations' === time_evolution_2 ? 'primary' : 'gray'"
                         class="px-6 py-1.5"
                         @click="time_evolution_2 = 'amount_donations'"
-                    >
-                        {{ $t('donation_amount') }}
-                    </PrimaryButton>
+                        :label="$t('donation_amount')"
+                    />
                 </div>
             </div>
 

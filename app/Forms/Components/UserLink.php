@@ -16,7 +16,7 @@ class UserLink extends Field
     public function getUsers(): Collection
     {
         return $this->getRecord()
-            ->getAdministrators()
+            ->users
             ->map(fn (User $user) => [
                 'name' => $user->name,
                 'url' => UserResource::getUrl('view', $user),

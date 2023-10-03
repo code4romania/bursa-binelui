@@ -16,17 +16,17 @@ class TicketPolicy
 
     public function view(User $user, Ticket $ticket): bool
     {
-        return $user->isBbAdmin() || $user->organization->is($ticket->organization);
+        return $user->isSuperUser() || $user->organization->is($ticket->organization);
     }
 
     public function create(User $user): bool
     {
-        return $user->isNgoAdmin();
+        return $user->belongsToOrganization();
     }
 
     public function update(User $user, Ticket $ticket): bool
     {
-        return $user->isBbAdmin() || ($user->isNgoAdmin() && $user->organization->is($ticket->organization));
+        return $user->isSuperUser() || $user->belongsToOrganization($ticket->organization);
     }
 
     public function reply(User $user, Ticket $ticket): bool

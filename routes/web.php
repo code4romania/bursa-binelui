@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +21,7 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Public/Home');
-// });
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,20 +44,24 @@ require __DIR__ . '/organizations.php';
 
 require __DIR__ . '/projects.php';
 
-require __DIR__ . '/volunteers.php';
-
-require __DIR__ . '/tickets.php';
-
 require __DIR__ . '/donations.php';
 
 require __DIR__ . '/championship.php';
 
 require __DIR__ . '/regional.php';
 
-require __DIR__ . '/articles.php';
-
 require __DIR__ . '/donor.php';
 
-require __DIR__ . '/evolution.php';
+Route::get('/evolutia-faptelor-bune', EvolutionController::class)->name('evolution');
+
+Route::group([
+    'prefix' => 'articles',
+    'as' => 'articles.',
+    'controller' => ArticleController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/category/{category:slug}', 'category')->name('category');
+    Route::get('/{article:slug}', 'show')->name('show');
+});
 
 Route::get('/{page:slug}', PageController::class)->name('page');

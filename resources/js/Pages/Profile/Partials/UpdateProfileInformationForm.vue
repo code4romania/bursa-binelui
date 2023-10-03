@@ -1,13 +1,11 @@
 <template>
     <section>
-
         <header class="flex items-center gap-4 mt-12">
-            <SvgLoader name="user" class="fill-white"/>
+            <SvgLoader name="user" class="fill-white" />
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
         </header>
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="space-y-6 mt-11">
-
             <!-- Name -->
             <Input
                 :label="$t('name_last_name')"
@@ -56,36 +54,20 @@
                     </Link>
                 </p>
 
-                <div
-                    v-show="status === 'verification-link-sent'"
-                    class="mt-2 text-sm font-medium text-green-600"
-                >
+                <div v-show="status === 'verification-link-sent'" class="mt-2 text-sm font-medium text-green-600">
                     {{ $t('verification_email') }}
                 </div>
             </div>
 
             <!-- Actions -->
             <div class="flex items-center justify-end gap-4">
-
                 <!-- Cancel button -->
-                <SecondaryButton
-                    class="py-2.5"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
+                <SecondaryButton class="py-2.5" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <!-- Save button -->
-                <PrimaryButton
-                    background="primary-500"
-                    hover="primary-400"
-                    color="white"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    {{ $t('save') }}
-                </PrimaryButton>
+                <PrimaryButton type="submit" :disabled="form.processing" :label="$t('save')" />
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">{{ $t('saved') }}</p>

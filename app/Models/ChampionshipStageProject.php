@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ChampionshipStageProject extends Model
 {
     protected $table = 'championship_stage_project';
+
     use HasFactory;
 
     protected $with = ['project'];

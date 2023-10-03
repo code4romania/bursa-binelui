@@ -21,7 +21,7 @@ module.exports = {
                 lg: '2rem',
             },
             screens: {
-                DEFAULT: theme('screens.xl')
+                DEFAULT: theme('screens.xl'),
             },
         }),
         extend: {
@@ -31,7 +31,17 @@ module.exports = {
 
             colors: {
                 red: {
-                    500: '#FA6F55'
+                    50: '#FFF2F0',
+                    100: '#FEE1DC',
+                    200: '#FDC4BA',
+                    300: '#FCA697',
+                    400: '#FB8D79',
+                    500: '#FA6F55',
+                    600: '#F83816',
+                    700: '#C12206',
+                    800: '#811704',
+                    900: '#400B02',
+                    950: '#230601',
                 },
                 primary: {
                     50: '#ECF8F8',
@@ -44,22 +54,23 @@ module.exports = {
                     700: '#2C7777',
                     800: '#1D4E4E',
                     900: '#0F2929',
+                    950: '#071313',
                 },
-                danger: colors.rose,
+                danger: colors.red,
                 success: colors.green,
                 warning: colors.yellow,
             },
             zIndex: {
-                '100': '1000',
-                '101': '1001',
-                '102': '1002',
-                '103': '1003',
-                '110': '1010',
-                '120': '1020'
+                100: '1000',
+                101: '1001',
+                102: '1002',
+                103: '1003',
+                110: '1010',
+                120: '1020',
             },
-            maxHeight: {
-                '128': '32rem',
-            }
+            spacing: {
+                128: '32rem',
+            },
         },
     },
 

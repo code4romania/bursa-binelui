@@ -20,7 +20,7 @@
             <slot />
         </div>
 
-        <Footer />
+        <Footer class="mt-32" />
     </div>
 </template>
 

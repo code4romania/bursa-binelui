@@ -30,55 +30,70 @@ class DatabaseSeeder extends Seeder
 
         Mail::fake();
 
-        User::factory(['email' => 'bb-admin@example.com'])
-            ->bbAdmin()
+        User::factory(['email' => 'superadmin@example.com'])
+            ->superAdmin()
             ->create();
 
-        User::factory(['email' => 'bb-manager@example.com'])
-            ->count(1)
-            ->bbManager()
-            ->create();
+        // User::factory(['email' => 'supermanager@example.com'])
+        //     ->count(1)
+        //     ->superManager()
+        //     ->create();
 
-        User::factory()
-            ->count(50)
-            ->donor()
-            ->create();
+        // User::factory()
+        //     ->count(50)
+        //     ->donor()
+        //     ->create();
 
-        collect(ActivityDomainEnum::values())
-            ->map(fn ($domain) => [
-                'name' => $domain,
-                'slug' => Str::slug($domain),
-            ])
-            ->tap(function (Collection $collection) {
-                ActivityDomain::insert($collection->toArray());
-            });
+        // collect(ActivityDomainEnum::values())
+        //     ->map(fn ($domain) => [
+        //         'name' => $domain,
+        //         'slug' => Str::slug($domain),
+        //     ])
+        //     ->tap(function (Collection $collection) {
+        //         ActivityDomain::insert($collection->toArray());
+        //     });
 
-        $this->seedProjectCategories();
+        // $this->seedProjectCategories();
 
-        Championship::factory()
-            ->count(3)
-            ->create();
+        // Championship::factory()
+        //     ->count(3)
+        //     ->create();
 
-        Organization::factory()
-            ->count(10)
-            ->approved()
-            ->create();
+        // Organization::factory()
+        //     ->count(50)
+        //     ->approved()
+        //     ->create();
 
-        Organization::factory()
-            ->count(10)
-            ->rejected()
-            ->create();
+        // Organization::factory()
+        //     ->count(5)
+        //     ->rejected()
+        //     ->create();
 
-        Organization::factory()
-            ->count(10)
-            ->pending()
-            ->create();
+        // Organization::factory()
+        //     ->count(5)
+        //     ->pending()
+        //     ->create();
 
-        Badge::factory()
-            ->count(30)
-            ->create();
+        // Badge::factory()
+        //     ->count(30)
+        //     ->create();
 
-        $articleCategories = ['Social', 'Educație', 'Sănătate', 'Cultură', 'Mediu', 'Sport', 'Animale', 'Altele'];
+        $this->seedArticleCategories();
+    }
+
+    private function seedArticleCategories(): void
+    {
+        $articleCategories = [
+            'Social',
+            'Educație',
+            'Sănătate',
+            'Cultură',
+            'Mediu',
+            'Sport',
+            'Animale',
+            'Altele',
+        ];
+
         foreach ($articleCategories as $category) {
             ArticleCategory::factory()
                 ->name($category)
@@ -87,7 +102,7 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function seedProjectCategories()
+    private function seedProjectCategories(): void
     {
         $projectCategories = [
             'Antreprenoriat social',
@@ -100,9 +115,11 @@ class DatabaseSeeder extends Seeder
             'Social',
             'Sport',
         ];
-        $projectCategories = collect($projectCategories)->transform(function ($category) {
-            return ['name' => $category, 'slug' => Str::slug($category)];
-        });
-        ProjectCategory::insert($projectCategories->toArray());
+
+        foreach ($projectCategories as $category) {
+            ProjectCategory::factory()
+                ->name($category)
+                ->create();
+        }
     }
 }

@@ -46,4 +46,9 @@ class Donation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function championshipStage(): BelongsTo
+    {
+        return $this->belongsTo(ChampionshipStage::class);
+    }
 }

@@ -13,19 +13,6 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * The path to your application's "home" route.
-     *
-     * Typically, users are redirected here after authentication.
-     *
-     * @var string
-     */
-    public const HOME = '/dashboard';
-
-    public const ONG = '/ong/organizatie';
-
-    public const CHAMPIONSHIP = '/campionatul-de-bine';
-
-    /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void
@@ -39,8 +26,34 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
+            Route::middleware(['web', 'auth', 'verified'])
+                ->prefix('dashboard')
+                ->name('dashboard.')
+                ->group(base_path('routes/dashboard.php'));
+
+            Route::middleware(config('filament.middleware.base'))
+                ->domain(config('filament.domain'))
+                ->prefix(config('filament.path'))
+                ->name('filament.')
+                ->group(base_path('routes/filament.php'));
+
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+    }
+
+    public static function getAdminUrl(): string
+    {
+        return route('filament.pages.dashboard');
+    }
+
+    public static function getDashboardUrl(): string
+    {
+        return route('dashboard.main');
+    }
+
+    public static function getChampionshipUrl(): string
+    {
+        return route('championship');
     }
 }

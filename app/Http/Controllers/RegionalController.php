@@ -99,7 +99,7 @@ class RegionalController extends Controller
             ],
         ];
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
+        $projects = Project::whereIsOpen()->paginate(9)->withQueryString();
 
         $countries = County::get(['name', 'id']);
 
@@ -194,7 +194,7 @@ class RegionalController extends Controller
             ],
         ];
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
+        $projects = Project::whereIsOpen()->paginate(9)->withQueryString();
 
         return Inertia::render('Public/Regional/Edition', [
             'query' => $projects,
@@ -293,7 +293,7 @@ class RegionalController extends Controller
             'status' => 'in-progress',
         ];
 
-        $projects = Project::publish()->paginate(9)->withQueryString();
+        $projects = Project::whereIsOpen()->paginate(9)->withQueryString();
 
         return Inertia::render('Public/Regional/Edition', [
             'query' => $projects,

@@ -1,12 +1,10 @@
 <template>
     <div>
-        <button :id="id" @click="open = !open" :class="triggerModalClasses">
-            {{ triggerModalText }}
-        </button>
+        <slot name="trigger" :open="open" />
 
         <Teleport to="body">
-            <TransitionRoot as="template" :show="open">
-                <Dialog as="div" class="relative z-101" @close="open = false">
+            <TransitionRoot as="template" :show="isOpen">
+                <Dialog as="div" class="relative" @close="close">
                     <TransitionChild
                         as="template"
                         enter="ease-out duration-300"
@@ -20,7 +18,10 @@
                     </TransitionChild>
 
                     <div class="fixed inset-0 z-50 overflow-y-auto">
-                        <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
+                        <form
+                            class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0"
+                            @submit.prevent="submit"
+                        >
                             <TransitionChild
                                 as="template"
                                 enter="ease-out duration-300"
@@ -31,30 +32,35 @@
                                 leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                             >
                                 <DialogPanel
-                                    :class="[
-                                        dialogClasses
-                                            ? `${dialogClasses}`
-                                            : 'bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6',
-                                        'relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform',
-                                    ]"
+                                    class="relative w-full overflow-hidden text-left transition-all transform bg-white divide-y divide-gray-100 rounded-lg shadow-xl sm:my-8 sm:max-w-lg"
                                 >
-                                    <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
-                                        <button
-                                            :id="closeId"
-                                            type="button"
-                                            class="text-gray-400 bg-white rounded-md hover:text-gray-500"
-                                            @click="open = false"
-                                        >
-                                            <span class="sr-only">Close</span>
-                                            <XIcon class="w-6 h-6" aria-hidden="true" />
-                                        </button>
-                                    </div>
-                                    <div class="sm:flex sm:items-start">
+                                    <button
+                                        type="button"
+                                        class="absolute text-gray-400 bg-white rounded-md top-4 right-4 hover:text-gray-500"
+                                        @click="close"
+                                    >
+                                        <span class="sr-only" v-text="$t('close')" />
+
+                                        <XIcon class="w-6 h-6" aria-hidden="true" />
+                                    </button>
+
+                                    <DialogTitle class="flex gap-4 px-4 py-3 sm:px-6">
+                                        <h3 class="text-lg font-semibold text-gray-900" v-text="title" />
+                                    </DialogTitle>
+
+                                    <div class="flex flex-col gap-4 px-4 py-3 bg-white sm:px-6 sm:pb-6">
                                         <slot />
+                                    </div>
+
+                                    <div
+                                        v-if="$slots.actions"
+                                        class="flex gap-4 px-4 py-3 bg-gray-50 sm:flex-row-reverse ssm:justify-end sm:px-6"
+                                    >
+                                        <slot name="actions" :close="close" />
                                     </div>
                                 </DialogPanel>
                             </TransitionChild>
-                        </div>
+                        </form>
                     </div>
                 </Dialog>
             </TransitionRoot>
@@ -63,27 +69,47 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
+    import { ref, nextTick } from 'vue';
+    import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
     import { XIcon } from '@heroicons/vue/outline';
 
-    const open = ref(false);
+    const isOpen = ref(false);
 
-    /** Component props. */
     const props = defineProps({
-        triggerModalText: String,
-        triggerModalClasses: String,
-        id: {
+        title: {
             type: String,
-            default: '',
+            required: true,
         },
-        closeId: {
-            type: String,
-            default: '',
+        form: {
+            type: Object,
+            required: true,
         },
-        dialogClasses: {
+        formUrl: {
             type: String,
-            default: '',
+            required: true,
+        },
+        formMethod: {
+            type: String,
+            default: 'post',
         },
     });
+
+    const emit = defineEmits(['submit']);
+
+    const open = () => {
+        isOpen.value = true;
+    };
+
+    const close = () => {
+        isOpen.value = false;
+
+        props.form.reset();
+    };
+
+    const submit = (event) => {
+        props.form.submit(props.formMethod, props.formUrl, {
+            preserveScroll: true,
+            onSuccess: close,
+        });
+    };
 </script>

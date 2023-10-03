@@ -6,7 +6,6 @@ namespace App\Traits;
 
 use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 
 trait HasProjectStatus
 {
@@ -25,38 +24,43 @@ trait HasProjectStatus
         return $this->status === ProjectStatus::approved;
     }
 
-    public function isDisabled(): bool
+    public function isRejected(): bool
     {
         return $this->status === ProjectStatus::rejected;
     }
 
-    public function isPublished(): bool
+    public function scopeWhereIsPending(Builder $query): Builder
     {
-        return \in_array($this->status, [ProjectStatus::active, ProjectStatus::disabled]);
+        return $query->where('status', ProjectStatus::pending);
     }
 
-    public function scopeStatus(Builder $query, array|string|Collection|ProjectStatus $statuses): void
+    public function scopeWhereIsApproved(Builder $query): Builder
     {
-        $query->whereIn('status', collect($statuses));
+        return $query->where('status', ProjectStatus::approved);
     }
 
-    public function scopeIsPending(Builder $query): void
+    public function scopeWhereIsRejected(Builder $query): Builder
     {
-        $query->where('status', ProjectStatus::pending);
+        return $query->where('status', ProjectStatus::rejected);
     }
 
-    public function scopeIsApproved(Builder $query): void
+    public function scopeWhereIsPublished(Builder $query): Builder
     {
-        $query->where('status', ProjectStatus::approved);
+        return $query->whereIsApproved()->whereNull('archived_at');
     }
 
-    public function scopeIsRejected(Builder $query): void
+    public function scopeWhereIsOpen(Builder $query): Builder
     {
-        $query->where('status', ProjectStatus::rejected);
+        return $query->whereIsPublished()
+            ->whereHas('organization', fn (Builder $query) => $query->whereHasEuPlatesc())
+            ->whereDate('start', '<=', now())
+            ->whereDate('end', '>=', now());
     }
 
-    public function scopeWherePublished(Builder $query): Builder
+    public function scopeWhereStartsSoon(): Builder
     {
-        return $query->whereIn('status', [ProjectStatus::active, ProjectStatus::disabled]);
+        return $this->whereIsPublished()
+            ->whereDate('start', '>=', now())
+            ->orderBy('start');
     }
 }

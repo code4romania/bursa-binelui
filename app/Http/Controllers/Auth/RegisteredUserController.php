@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Enums\OrganizationStatus;
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
-use App\Models\ActivityDomain;
-use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,20 +24,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        $activityDomains = cache()->remember('activityDomains', 60 * 60 * 24, function () {
-            return ActivityDomain::get(['name', 'id']);
-        });
-        $counties = cache()->remember('counties', 60 * 60 * 24, function () {
-            return \App\Models\County::get(['name', 'id']);
-        });
-
-        return Inertia::render(
-            'Auth/Register',
-            [
-                'activity_domains' => $activityDomains,
-                'counties' => $counties,
-            ]
-        );
+        return Inertia::render('Auth/Register', [
+            'counties' => $this->getCounties(),
+            'domains' => $this->getActivityDomains(),
+        ]);
     }
 
     /**
@@ -49,50 +37,41 @@ class RegisteredUserController extends Controller
      */
     public function store(RegistrationRequest $request): RedirectResponse
     {
-        try {
-            $data = $request->validated();
-            $user = $data['user'];
+        $attributes = $request->validated();
 
-            $user = User::create([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'password' => Hash::make($user['password']),
-                'role' => $data['type'],
-            ]);
+        $user = User::create([
+            'name' => $attributes['user']['name'],
+            'email' => $attributes['user']['email'],
+            'password' => Hash::make($attributes['user']['password']),
+            'role' => $attributes['type'] === 'organization' ? UserRole::ADMIN : UserRole::USER,
 
-            event(new Registered($user));
+        ]);
 
-            if ($data['type'] == 'ngo-admin') {
-                $ong = $data['ong'];
-                $ong['status'] = OrganizationStatus::draft;
-                $organization = Organization::create($ong);
-                $organization->addMediaFromRequest('ong.logo')->toMediaCollection('logo');
-                if ($request->hasFile('ong.statute')) {
-                    $organization->addMediaFromRequest('ong.statute')->toMediaCollection('statute');
-                }
-                $organization->activityDomains()->attach($ong['activity_domains_ids']);
-                $organization->counties()->attach($ong['counties_ids']);
-                $user->organization_id = $organization->id;
-                $user->save();
-            }
+        event(new Registered($user));
 
-            Auth::login($user);
+        if ($user->isOrganizationAdmin()) {
+            $attributes['ngo']['status'] = OrganizationStatus::draft;
 
-            return redirect()->route('register')
-                ->with('success', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
-        } catch(\Throwable $th) {
-            Log::log('error', $th->getMessage());
+            $organization = $user->organization()->create($attributes['ngo']);
 
-            return redirect()->back()
-                ->with('error', __('auth.failed'));
+            $organization->addMediaFromRequest('ngo.logo')->toMediaCollection('logo');
+            $organization->addMediaFromRequest('ngo.statute')->toMediaCollection('statute');
+
+            $organization->activityDomains()->attach($attributes['ngo']['domains']);
+            $organization->counties()->attach($attributes['ngo']['counties']);
         }
+
+        Auth::login($user);
+
+        return redirect()->route('register')
+            ->with('success', ['message' => 'Contul a fost creat', 'usrid' => $user['id']]);
     }
 
     public function update(Request $request, $userId): RedirectResponse
     {
         try {
             $user = User::find($userId);
-            $user->source_of_information = $request->input('source_of_information');
+            $user->referrer = $request->input('referrer');
             $user->save();
 
             return redirect()->back()

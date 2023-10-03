@@ -41,7 +41,7 @@ class MessagesRelationManager extends RelationManager
                             ->translateLabel()
                             ->weight('bold')
                             ->color(function (Component $livewire, TicketMessage $record) {
-                                if ($record->user->isBbAdmin()) {
+                                if ($record->user->isSuperUser()) {
                                     return 'warning';
                                 }
 

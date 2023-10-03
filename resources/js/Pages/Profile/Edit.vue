@@ -5,8 +5,7 @@
             {{ status }}
         </div>
 
-        <div class="px-6 mx-auto space-y-6 max-w-7xl lg:px-12">
-
+        <div class="container">
             <UpdateProfileInformationForm
                 :must-verify-email="mustVerifyEmail"
                 :status="status"
@@ -16,7 +15,6 @@
             <div class="w-full my-4 border-t border-gray-300"></div>
 
             <UpdatePasswordForm class="max-w-xl" />
-
         </div>
     </PageLayout>
 </template>

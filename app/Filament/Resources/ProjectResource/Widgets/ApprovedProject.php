@@ -20,7 +20,7 @@ class ApprovedProject extends BaseProjectWidget
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->isApproved();
+        return Project::query()->whereIsApproved();
     }
 
     protected function getTableQueryStringIdentifier(): ?string

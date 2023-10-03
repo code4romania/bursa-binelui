@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Concerns;
 
-use App\Enums\UserRole;
-use App\Notifications\Admin\WelcomeNotification as AdminWelcomeNotification;
-use App\Notifications\Ngo\WelcomeNotification;
+use App\Notifications\Admin;
+use App\Notifications\Ngo;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -21,10 +20,8 @@ trait MustSetInitialPassword
         });
 
         static::created(function (self $user) {
-            if (! app()->runningInConsole()) {
-                if (! empty($user->created_by)) {
-                    $user->sendWelcomeNotification();
-                }
+            if (filled($user->created_by)) {
+                $user->sendWelcomeNotification();
             }
         });
     }
@@ -34,9 +31,10 @@ trait MustSetInitialPassword
         return ! \is_null($this->password_set_at);
     }
 
-    public function markPasswordAsSet(): bool
+    public function setPassword(string $password): bool
     {
         return $this->forceFill([
+            'password' => Hash::make($password),
             'email_verified_at' => now(),
             'password_set_at' => now(),
         ])->save();
@@ -44,11 +42,10 @@ trait MustSetInitialPassword
 
     public function sendWelcomeNotification(): void
     {
-        if ($this->role === UserRole::ngo_admin) {
-            $this->notify(new WelcomeNotification());
-
-            return;
-        }
-        $this->notify(new AdminWelcomeNotification());
+        $this->notify(
+            $this->isSuperUser()
+                ? new Admin\WelcomeNotification
+                : new Ngo\WelcomeNotification
+        );
     }
 }

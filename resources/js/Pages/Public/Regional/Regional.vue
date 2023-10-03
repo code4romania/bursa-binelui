@@ -55,15 +55,11 @@
                             <div class="space-y-6">
                                 <!-- Log in button -->
                                 <PrimaryButton
-                                    background="primary-500"
-                                    hover="primary-400"
-                                    color="white"
+                                    type="submit"
                                     class="w-full"
-                                    :class="{ 'opacity-25': form.processing }"
                                     :disabled="form.processing"
-                                >
-                                    {{ $t('log_in') }}
-                                </PrimaryButton>
+                                    :label="$t('log_in')"
+                                />
 
                                 <SecondaryButton
                                     class="flex items-center w-full justify-center gap-x-2 py-2.5"
@@ -88,7 +84,7 @@
                     <ChampionshipModal v-if="$page.props.auth.user">
                         <div class="px-9">
                             <Link
-                                :href="route('admin.ong.regional.project.add')"
+                                :href="route('dashboard.projects.regional.create')"
                                 class="flex w-fit items-center gap-x-2 py-2.5 my-10 rounded-md bg-white px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
                                 <SvgLoader name="add" />

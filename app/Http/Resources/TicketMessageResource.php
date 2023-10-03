@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class TicketMessageResource extends JsonResource
+class TicketMessageResource extends Resource
 {
     public static $wrap = null;
 
@@ -21,7 +20,7 @@ class TicketMessageResource extends JsonResource
             'user' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,
-                'is_bb_admin' => $this->user->isBbAdmin(),
+                'is_superuser' => $this->user->isSuperUser(),
             ],
         ];
     }

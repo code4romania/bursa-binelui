@@ -1,45 +1,49 @@
 <template>
-    <li class="flex flex-col col-span-1 bg-white rounded-lg shadow-md">
-        <div class="flex flex-col flex-1">
-            <Link :href="route('article', data.slug)" class="relative sm:h-52">
-                <img class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full" :src="data.cover_image ? data.cover_image : '/images/no_image.jpg'" alt="aticle image" />
-            </Link>
+    <article class="relative flex flex-col col-span-1 bg-white rounded-lg drop-shadow-lg">
+        <div class="relative">
+            <figure class="aspect-w-2 aspect-h-1">
+                <img class="object-cover" :src="article.cover" alt="" />
+            </figure>
 
-            <div class="p-4 space-y-6">
-                <div class="flex items-center text-sm text-gray-500">
-                    <span v-if="data.author">{{ data.author }} </span>
-                    <span v-if="data.team">&nbsp;|&nbsp;{{ data.team }}</span>
-                </div>
+            <ArticleCategory
+                v-if="article.category !== null"
+                :category="article.category"
+                class="absolute z-10 left-4 bottom-4 drop-shadow"
+            />
+        </div>
 
-                <h3 class="text-2xl font-bold text-gray-700 line-clamp-2">{{ data.title }}</h3>
+        <div class="p-6">
+            <div v-if="article.author" class="flex mb-6 text-sm text-gray-500" v-text="article.author" />
 
-                <div class="text-base text-gray-500 line-clamp-4" v-html="data.content"/>
+            <h3 class="mb-3 text-xl font-bold text-gray-900 line-clamp-2" v-text="article.title" />
 
-                <div class="flex items-center justify-between">
-                    <p class="text-sm text-gray-500">{{ data.date }}</p>
-                    <Link
-                        :href="route('article', data.slug)"
-                        class="flex items-center text-sm font-semibold gap-x-2 text-primary-500"
-                    >
-                        {{ $t('read_article') }}
-                        <SvgLoader name="arrow_right" class="fill-primary-500 shrink-0" />
-                    </Link>
-                </div>
+            <div class="text-gray-500 line-clamp-4" v-html="article.description" />
+
+            <div class="flex items-center justify-between mt-6">
+                <time class="text-sm text-gray-500" v-text="article.date" />
+
+                <Link
+                    :href="route('articles.show', article)"
+                    class="flex items-center text-sm font-semibold gap-x-1 text-primary-500 hover:underline"
+                >
+                    <span class="absolute inset-0" />
+
+                    <span v-text="$t('read_article')" />
+                    <ArrowNarrowRightIcon class="w-4 h-4 shrink-0" />
+                </Link>
             </div>
         </div>
-    </li>
+    </article>
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Link } from '@inertiajs/vue3';
+    import ArticleCategory from '@/Components/ArticleCategory.vue';
+    import { ArrowNarrowRightIcon } from '@heroicons/vue/solid';
 
-    /** Import components. */
-    import SvgLoader from '@/Components/SvgLoader.vue';
-
-   /** Component props. */
-   defineProps({
-        data: { type: Object }
+    defineProps({
+        article: {
+            type: Object,
+            required: true,
+        },
     });
-
 </script>

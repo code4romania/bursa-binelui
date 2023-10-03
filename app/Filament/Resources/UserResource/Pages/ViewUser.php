@@ -15,7 +15,17 @@ class ViewUser extends ViewRecord
     protected function getActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()->hidden(fn () => $this->getRecord()->isDonor()),
         ];
+    }
+
+    public function hasCombinedRelationManagerTabsWithForm(): bool
+    {
+        return true;
+    }
+
+    public function getFormTabLabel(): ?string
+    {
+        return __('user.label.singular');
     }
 }

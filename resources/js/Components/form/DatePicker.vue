@@ -6,7 +6,7 @@
         </label>
 
         <VueDatePicker
-            v-model="date"
+            v-model="value"
             v-bind="$attrs"
             format="yyyy-MM-dd"
             model-type="yyyy-MM-dd"
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-    import { ref, computed, watch } from 'vue';
+    import { computed } from 'vue';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
@@ -35,14 +35,16 @@
             type: String,
             default: null,
         },
+        modelValue: {
+            required: false,
+        },
     });
-
-    const date = ref(null);
 
     const emit = defineEmits(['update:modelValue']);
 
-    watch(date, (value) => {
-        emit('update:modelValue', value);
+    const value = computed({
+        get: () => props.modelValue,
+        set: (value) => emit('update:modelValue', value),
     });
 </script>
 

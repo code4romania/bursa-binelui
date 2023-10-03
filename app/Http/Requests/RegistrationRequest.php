@@ -24,23 +24,23 @@ class RegistrationRequest extends FormRequest
             'user.password' => ['string', 'required', 'confirmed'],
         ];
 
-        if ($this->type === 'ngo-admin') {
+        if ($this->type === 'organization') {
             $rules = array_merge($rules, [
-                'ong' => ['array', 'required'],
-                'ong.name' => ['string', 'required'],
-                'ong.description' => ['string', 'required'],
-                'ong.logo' => ['required', 'file'],
-                'ong.statute' => ['required', 'file'],
-                'ong.street_address' => ['string', 'required'],
-                'ong.cif' => ['string', 'required', 'unique:organizations,cif', new ValidCIF],
-                'ong.contact_email' => ['required', 'email'],
-                'ong.contact_phone' => ['string', 'required'],
-                'ong.contact_person' => ['string', 'required'],
-                'ong.activity_domains_ids' => ['array', 'required'],
-                'ong.counties_ids' => ['array', 'required'],
-                'ong.volunteer' => ['boolean'],
-                'ong.why_volunteer' => ['string', 'nullable'],
-                'ong.website' => ['string', 'nullable'],
+                'ngo' => ['array', 'required'],
+                'ngo.name' => ['string', 'required'],
+                'ngo.description' => ['string', 'required'],
+                'ngo.logo' => ['required', 'image'],
+                'ngo.statute' => ['required', 'file'],
+                'ngo.street_address' => ['string', 'required'],
+                'ngo.cif' => ['string', 'required', 'unique:organizations,cif', new ValidCIF],
+                'ngo.contact_email' => ['required', 'email'],
+                'ngo.contact_phone' => ['string', 'required'],
+                'ngo.contact_person' => ['string', 'required'],
+                'ngo.domains' => ['array', 'required'],
+                'ngo.counties' => ['array', 'required'],
+                'ngo.volunteer' => ['boolean'],
+                'ngo.why_volunteer' => ['string', 'nullable'],
+                'ngo.website' => ['string', 'nullable'],
             ]);
         }
 
@@ -50,8 +50,8 @@ class RegistrationRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'ong.activity_domains_ids' => __('custom_validation.activity_domains_ids'),
-            'ong.counties_ids' => __('custom_validation.counties_ids'),
+            'ngo.domains' => __('custom_validation.activity_domains_ids'),
+            'ngo.counties' => __('custom_validation.counties_ids'),
         ];
     }
 }

@@ -1,8 +1,6 @@
 <template>
     <DashboardLayout>
-        <Title :title="$t('ticket')">
-            <AnnotationIcon />
-        </Title>
+        <Title :title="$t('ticket')" :icon="AnnotationIcon" />
 
         <dl class="my-8 divide-y divide-gray-200">
             <div class="grid px-4 py-3 text-gray-700 md:grid-cols-12">
@@ -35,7 +33,7 @@
                     <p
                         class="text-sm font-semibold"
                         :class="{
-                            'text-warning-600': message.user.is_bb_admin,
+                            'text-warning-600': message.user.is_superuser,
                         }"
                         v-text="message.user.name"
                     />
@@ -53,41 +51,52 @@
 
         <div class="flex items-center justify-end w-full gap-4 mt-8">
             <Modal
-                triggerModalClasses="whitespace-nowrap px-3 py-4 text-sm text-blue-500"
-                :triggerModalText="$t('answer')"
-                id="ticket-answer"
                 v-if="ticket.is_open"
+                :title="$t('tickets.reply.title')"
+                :form="form"
+                :formUrl="route('dashboard.tickets.reply', ticket.id)"
             >
-                <form class="w-full space-y-4" @submit.prevent="reply">
-                    <h3>
-                        <span class="block text-lg font-semibold to-gray-900">
-                            {{ $t('ticket_reply_header') }}
-                        </span>
-                        <span class="block text-base text-gray-500">{{ ticket.subject }}</span>
-                    </h3>
-
-                    <Textarea
-                        class="w-full"
-                        :label="$t('message')"
-                        id="project-scope"
-                        color="gray-700"
-                        v-model="form.content"
+                <template #trigger="{ open }">
+                    <button
+                        @click="open"
+                        class="block text-sm font-medium leading-5 text-blue-500 hover:underline whitespace-nowrap"
+                        v-text="$t('tickets.reply.trigger')"
                     />
+                </template>
 
-                    <!-- Actions -->
-                    <div class="flex items-center justify-end w-full gap-6 pt-6">
-                        <SecondaryButton @click="closeModal" class="py-2.5">
-                            {{ $t('cancel') }}
-                        </SecondaryButton>
+                <Textarea
+                    class="w-full"
+                    :label="$t('message')"
+                    color="gray-700"
+                    v-model="form.content"
+                    :error="form.errors.content"
+                    is-required
+                />
 
-                        <PrimaryButton background="primary-500" hover="primary-400" color="white" class="w-auto">
-                            {{ $t('save') }}
-                        </PrimaryButton>
-                    </div>
-                </form>
+                <template #actions="{ close }">
+                    <PrimaryButton type="submit" :label="$t('tickets.reply.trigger')" />
+
+                    <SecondaryButton @click="close" class="py-2.5" :label="$t('cancel')" />
+                </template>
             </Modal>
 
-            <ToggleTicketStatusModal :ticket="ticket" />
+            <ConfirmationModal
+                v-if="ticket.is_open"
+                :title="$t('tickets.close.title')"
+                :content="$t('tickets.close.content')"
+                :trigger="$t('tickets.close.title')"
+                :confirmActionUrl="route('dashboard.tickets.status', ticket.id)"
+                color="danger"
+            />
+
+            <ConfirmationModal
+                v-else
+                :title="$t('tickets.reopen.title')"
+                :content="$t('tickets.reopen.content')"
+                :trigger="$t('tickets.reopen.title')"
+                :confirmActionUrl="route('dashboard.tickets.status', ticket.id)"
+                color="warning"
+            />
         </div>
     </DashboardLayout>
 </template>
@@ -99,8 +108,8 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import ToggleTicketStatusModal from '@/Components/modals/ToggleTicketStatusModal.vue';
     import Modal from '@/Components/modals/Modal.vue';
+    import ConfirmationModal from '@/Components/modals/ConfirmationModal.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
@@ -125,16 +134,4 @@
     });
 
     const isMessageHighlighted = (message) => window.location.hash === `#reply-${message.id}`;
-
-    const closeModal = () => document.getElementById('ticket-answer').click();
-
-    const reply = () => {
-        closeModal();
-        form.post(route('admin.ong.tickets.reply', props.ticket.id), {
-            preserveScroll: true,
-            onSuccess: () => {
-                form.reset();
-            },
-        });
-    };
 </script>

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -43,15 +45,34 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        $credentials = $this->only('email', 'password');
+        $remember = $this->boolean('remember');
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+        if (Auth::attempt($credentials, $remember)) {
+            RateLimiter::clear($this->throttleKey());
+
+            return;
         }
 
-        RateLimiter::clear($this->throttleKey());
+        RateLimiter::hit($this->throttleKey());
+
+        $user = User::firstWhere('email', $this->email);
+
+        if ($this->hasValidOldCredentials($user, $credentials)) {
+            Auth::login($user);
+
+            $user->forceFill([
+                'password' => Hash::make($this->password),
+                'old_password' => null,
+                'old_salt' => null,
+            ])->save();
+
+            return;
+        }
+
+        throw ValidationException::withMessages([
+            'email' => trans('auth.failed'),
+        ]);
     }
 
     /**
@@ -83,5 +104,26 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->input('email')) . '|' . $this->ip());
+    }
+
+    protected function hasValidOldCredentials(?User $user, array $credentials): bool
+    {
+        return auth()->guard()->getTimebox()->call(function ($timebox) use ($user, $credentials) {
+            $validated = (
+                ! \is_null($user) &&
+                ! \is_null($plain = $credentials['password']) &&
+                ! \is_null($user->old_password) &&
+                ! \is_null($user->old_salt) &&
+                false !== ($old_hash = base64_decode($user->old_password, true)) &&
+                false !== ($old_salt = base64_decode($user->old_salt, true)) &&
+                hash_equals($old_hash, hash('sha256', $plain . $old_salt, true))
+            );
+
+            if ($validated) {
+                $timebox->returnEarly();
+            }
+
+            return $validated;
+        }, 200 * 1000);
     }
 }

@@ -6,24 +6,18 @@
         </h1>
         <div class="flex items-center justify-center gap-6">
             <PrimaryButton
-                :background="['time_evolution' === time_evolution_2 ? 'red-500' : 'gray-100']"
-                :hover="['time_evolution' === time_evolution_2 ? 'red-400' : 'gray-200']"
-                :color="['time_evolution' === time_evolution_2 ? 'white' : 'gray-700']"
+                :color="'time_evolution' === time_evolution_2 ? 'danger' : 'gray'"
                 class="px-6 py-1.5"
                 @click="time_evolution_2 = 'time_evolution'"
-            >
-                {{ $t('time_evolution') }}
-            </PrimaryButton>
+                :label="$t('time_evolution')"
+            />
 
             <PrimaryButton
-                :background="['projects_per_domain' === time_evolution_2 ? 'red-500' : 'gray-100']"
-                :hover="['projects_per_domain' === time_evolution_2 ? 'red-400' : 'gray-200']"
-                :color="['projects_per_domain' === time_evolution_2 ? 'white' : 'gray-700']"
+                :color="'projects_per_domain' === time_evolution_2 ? 'danger' : 'gray'"
                 class="px-6 py-1.5"
                 @click="time_evolution_2 = 'projects_per_domain'"
-            >
-                {{ $t('projects_per_domain') }}
-            </PrimaryButton>
+                :label="$t('projects_per_domain')"
+            />
         </div>
 
         <div v-if="'time_evolution' === time_evolution_2" class="border border-gray-200 rounded">

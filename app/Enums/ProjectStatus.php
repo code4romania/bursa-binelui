@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-use App\Concerns\ArrayableEnum;
+use App\Concerns\Enums\Arrayable;
+use App\Concerns\Enums\Comparable;
+use App\Concerns\Enums\HasLabel;
 
 enum ProjectStatus: string
 {
-    use ArrayableEnum;
+    use Arrayable;
+    use Comparable;
+    use HasLabel;
+
     case draft = 'draft';
     case pending = 'pending';
-    case change_request = 'change_request';
     case approved = 'approved';
     case rejected = 'rejected';
-    case active = 'active';
-    case disabled = 'disabled';
 
-    protected function translationKeyPrefix(): ?string
+    protected function labelKeyPrefix(): ?string
     {
         return 'project.status_arr';
     }
