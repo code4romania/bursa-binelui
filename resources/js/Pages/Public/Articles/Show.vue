@@ -1,47 +1,41 @@
 <template>
     <PageLayout>
-        <!-- Inertia page head -->
-        <Head :title="$t('article_title')" />
+        <Head :title="resource.title" :description="resource.description" />
 
-        <div class="mx-auto mb-10 max-w-7xl">
-            <div class="aspect-w-16 aspect-h-9">
-                <img
-                    :src="
-                        article.cover_image !== ''
-                            ? article.cover_image
-                            : 'https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
-                    "
-                    alt="imagine proiect"
-                    class="object-cover w-full h-full"
-                />
+        <figure class="container">
+            <div class="aspect-w-2 aspect-h-1">
+                <img class="object-cover" :src="resource.cover" alt="" />
             </div>
+        </figure>
 
+        <div class="container">
             <div
                 class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
             >
-                {{ article.category.name }}
+                {{ resource.category.name }}
             </div>
 
-            <h1 v-if="article.title" class="mt-6 text-6xl font-extrabold text-left text-gray-900">
-                {{ article.title }}
-            </h1>
+            <div class="prose-sm prose max-w-none sm:prose-lg xl:prose-xl">
+                <h1 class="font-extrabold text-gray-900" v-text="resource.title" />
 
-            <div class="mt-6">
-                <h2 class="text-2xl font-bold text-cyan-900">{{ $t('share_article') }}</h2>
-                <SharePage class="mt-4" :pageRoute="route('article', article.id)" />
+                <div class="">
+                    <h2 class="!text-3xl text-primary-900">{{ $t('share_page') }}</h2>
+                    <SharePage class="mt-4" :pageRoute="route('articles.show', resource.id)" />
+                </div>
+
+                <div v-html="resource.content" />
             </div>
-
-            <div id="article" class="mt-6 text-sm text-gray-500" v-html="article.content"></div>
         </div>
 
         <div class="w-full bg-gray-100">
             <div class="mx-auto max-w-7xl">
-                <Gallery v-if="gallery.length" :gallery="gallery" />
+                <Gallery v-if="resource.gallery.length" :gallery="resource.gallery" />
+
                 <div class="flex items-center justify-between pt-6 pb-10 border-t border-gray-300">
                     <div class="flex items-center justify-start w-full text-gray-500 f">
-                        <p>{{ article.author }}</p>
+                        <p>{{ resource.author }}</p>
                     </div>
-                    <p class="text-gray-500">{{ article.created_at }}</p>
+                    <p class="text-gray-500">{{ resource.created_at }}</p>
                 </div>
             </div>
         </div>
@@ -61,7 +55,7 @@
                     role="list"
                     class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
                 >
-                    <ArticleCard :data="article" class="relative z-50 lg:-mt-12" v-for="article in related" />
+                    <ArticleCard :article="article" class="relative z-50 lg:-mt-12" v-for="article in related" />
                 </ul>
                 <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden lg:block fill-primary-200" />
             </div>
@@ -82,9 +76,14 @@
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
-    const props = defineProps({
-        article: Object,
-        gallery: Array,
-        related: Array,
+    defineProps({
+        resource: {
+            type: Object,
+            required: true,
+        },
+        related: {
+            type: Array,
+            default: () => [],
+        },
     });
 </script>

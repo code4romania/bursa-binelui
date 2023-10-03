@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Articles\ArticleCardResource;
 use App\Http\Resources\BCRProjectCardResource;
 use App\Http\Resources\ProjectCardResource;
 use App\Models\Article;
@@ -40,7 +41,13 @@ class HomeController extends Controller
                     ->get()
             ),
 
-            'articles' => $articles,
+            'articles' => ArticleCardResource::collection(
+                Article::query()
+                    ->wherePublished()
+                    ->inRandomOrder()
+                    ->limit(3)
+                    ->get()
+            ),
         ]);
     }
 }

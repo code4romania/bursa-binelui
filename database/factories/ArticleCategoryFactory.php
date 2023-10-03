@@ -14,12 +14,11 @@ class ArticleCategoryFactory extends Factory
 
     public function definition(): array
     {
-        $name = $this->faker->word;
+        $name = fake()->word();
 
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'is_active' => $this->faker->boolean,
         ];
     }
 

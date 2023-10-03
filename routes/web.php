@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
@@ -49,10 +50,18 @@ require __DIR__ . '/championship.php';
 
 require __DIR__ . '/regional.php';
 
-require __DIR__ . '/articles.php';
-
 require __DIR__ . '/donor.php';
 
 Route::get('/evolutia-faptelor-bune', EvolutionController::class)->name('evolution');
+
+Route::group([
+    'prefix' => 'articles',
+    'as' => 'articles.',
+    'controller' => ArticleController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/category/{category:slug}', 'category')->name('category');
+    Route::get('/{article:slug}', 'show')->name('show');
+});
 
 Route::get('/{page:slug}', PageController::class)->name('page');

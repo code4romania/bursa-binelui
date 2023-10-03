@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class DonationResource extends JsonResource
+class DonationResource extends Resource
 {
     public static $wrap = null;
 

@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Vite;
 
-class BCRProjectCardResource extends JsonResource
+class BCRProjectCardResource extends Resource
 {
     public static $wrap = null;
 

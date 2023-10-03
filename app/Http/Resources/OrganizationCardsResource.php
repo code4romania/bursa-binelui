@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationCardsResource extends JsonResource
+class OrganizationCardsResource extends Resource
 {
     public static $wrap = null;
 

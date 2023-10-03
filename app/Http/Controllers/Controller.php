@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\ActivityDomain;
+use App\Models\ArticleCategory;
 use App\Models\County;
 use App\Models\ProjectCategory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -46,6 +47,16 @@ class Controller extends BaseController
                 ->addSelect('id as value')
                 ->addSelect('name as label')
                 ->get()
+                ->toArray();
+        });
+    }
+
+    public function getArticleCategories(): array
+    {
+        return Cache::remember('article-categories', static::optionsCacheTTL(), function () {
+            return ArticleCategory::query()
+                ->get()
+                ->map->only('name', 'slug')
                 ->toArray();
         });
     }

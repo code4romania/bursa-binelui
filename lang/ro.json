@@ -395,6 +395,9 @@
     "verify_email_description": "Te rugăm să îți validezi adresa de email pentru a-ți accesa contul. Dacă nu ai primit un email pentru validare, te rugăm să ne contactezi la email@example.com.",
     "verify_email_warning": "Dacă adresa de email nu va fi validată în 48 de ore, datele tale vor fi șterse și nu vor putea fi recuperate",
 
+    "articles.index": "Articole",
+    "articles.category": "Articole din domeniul \":category\"",
+
     "sort.trigger": "Sortează",
     "sort.publish_date": "Data publicării",
     "sort.end_date": "Data sfârșit proiect",

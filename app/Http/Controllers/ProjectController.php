@@ -42,6 +42,7 @@ class ProjectController extends Controller
             'view' => $view,
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
+            'google_maps_api_key' => config('services.google_maps_api_key'),
             'collection' => new ProjectCardCollection(
                 QueryBuilder::for(Project::class)
                     ->allowedFilters([
