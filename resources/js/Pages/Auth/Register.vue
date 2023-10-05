@@ -45,7 +45,6 @@
             contact_person: '',
             domains: [],
             counties: [],
-            domains: [],
             volunteer: false,
             why_volunteer: '',
             logo: '',
@@ -112,7 +111,7 @@
 
     /** Next step. */
     const next = () => {
-        if ('donor' === form.type && current.value === 1) {
+        if ('user' === form.type && current.value === 1) {
             submit();
         } else if ('organization' === form.type && current.value === 4) {
             submit();

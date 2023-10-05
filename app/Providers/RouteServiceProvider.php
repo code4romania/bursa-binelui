@@ -49,7 +49,11 @@ class RouteServiceProvider extends ServiceProvider
 
     public static function getDashboardUrl(): string
     {
-        return route('dashboard.main');
+        if (auth()->user()->isOrganizationAdmin()) {
+            return route('dashboard.main');
+        }
+        return route('donor.index');
+
     }
 
     public static function getChampionshipUrl(): string

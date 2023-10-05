@@ -48,8 +48,8 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
-        if ($user->isOrganizationAdmin()) {
+//       $user = User::find($user->id);
+        if ($user->role===UserRole::ADMIN) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
 
             $organization = $user->organization()->create($attributes['ngo']);
@@ -59,6 +59,8 @@ class RegisteredUserController extends Controller
 
             $organization->activityDomains()->attach($attributes['ngo']['domains']);
             $organization->counties()->attach($attributes['ngo']['counties']);
+            $user->organization_id = $organization->id;
+            $user->save();
         }
 
         Auth::login($user);

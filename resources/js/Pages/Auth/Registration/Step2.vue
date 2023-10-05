@@ -53,7 +53,7 @@
         />
 
         <!-- Terms -->
-        <label v-if="'donor' === form.type" class="flex items-center space-x-2">
+        <label v-if="'user' === form.type" class="flex items-center space-x-2">
             <Checkbox name="terms" v-model:checked="form.terms" />
             <div class="flex items-center space-x-2 text-sm">
                 <span class="text-gray-700">{{ $t('i_agree') }}</span>
@@ -65,7 +65,7 @@
         </label>
 
         <!-- Subscribe -->
-        <label v-if="'donor' === form.type" class="flex items-center space-x-2">
+        <label v-if="'user' === form.type" class="flex items-center space-x-2">
             <Checkbox name="subscribe" v-model:checked="form.subscribe" />
             <span class="text-sm text-gray-700">{{ $t('register_subscribe') }}</span>
         </label>
@@ -79,7 +79,7 @@
         </div>
 
         <div
-            v-if="'donor' === form.type"
+            v-if="'user' === form.type"
             :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']"
         >
             <PrimaryButton class="flex-1 w-full" @click="$emit('next', $event.target)" :label="$t('register_link')" />
