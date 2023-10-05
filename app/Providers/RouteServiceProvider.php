@@ -52,8 +52,8 @@ class RouteServiceProvider extends ServiceProvider
         if (auth()->user()->isOrganizationAdmin()) {
             return route('dashboard.main');
         }
-        return route('donor.index');
 
+        return route('donor.index');
     }
 
     public static function getChampionshipUrl(): string
