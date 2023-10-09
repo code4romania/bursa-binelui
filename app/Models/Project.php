@@ -141,6 +141,9 @@ class Project extends Model implements HasMedia
 
     public function getPercentageAttribute(): float
     {
+        if ($this->target_budget == 0) {
+            return 0;
+        }
         return min(100, $this->total_donations / $this->target_budget * 100);
     }
 
@@ -163,6 +166,9 @@ class Project extends Model implements HasMedia
 
     public function getIsEndingSoonAttribute(): bool
     {
+        if (empty($this->end)) {
+            return false;
+        }
         return $this->end->diffInDays(today()) <= 5;
     }
 }

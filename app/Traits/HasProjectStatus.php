@@ -63,10 +63,11 @@ trait HasProjectStatus
             ->whereDate('start', '>=', now())
             ->orderBy('start');
     }
+
     public function scopeStatusIs($status): Builder
     {
 //        dd($status);
-        return match ($status){
+        return match ($status) {
             'pending' => $this->whereIsPending(),
             'approved' => $this->whereIsApproved(),
             'rejected' => $this->whereIsRejected(),
