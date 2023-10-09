@@ -102,7 +102,7 @@
             icon: OfficeBuildingIcon,
         },
         {
-            name: 'Proiectele mele',
+            name: 'Proiecte',
             route: route('dashboard.projects.index'),
             icon: FolderIcon,
             subMenu: [
@@ -118,15 +118,10 @@
                     route: route('dashboard.projects.index', { project_status: 'draft' }),
                     icon: FolderRemoveIcon,
                 },
-                {
-                    name: 'regional_projects',
-                    route: route('dashboard.projects.regional.create'),
-                    icon: FolderRemoveIcon,
-                },
             ],
         },
         {
-            name: 'Proiectele mele regionale',
+            name: 'Proiectele regionale',
             route: route('dashboard.projects.regional.index'),
             icon: FolderIcon,
             subMenu: [

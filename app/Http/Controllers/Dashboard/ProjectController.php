@@ -22,13 +22,14 @@ class ProjectController extends Controller
     {
         // TODO: fix issue with approved projects not being displayed
         $projectStatus = $request->get('project_status');
+//        dd($projectStatus);
 
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => ProjectCardResource::collection(
                 Project::query()
                     ->where('organization_id', auth()->user()->organization_id)
-                    ->when($projectStatus, function (Builder $query, $projectStatus) {
-                        return $query->status($projectStatus);
+                    ->when($projectStatus, function (Builder $query) use ($projectStatus) {
+                        return $query->statusIs($projectStatus);
                     })
                     ->paginate(16)
                     ->withQueryString()
