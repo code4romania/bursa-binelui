@@ -64,10 +64,15 @@ trait HasProjectStatus
             ->orderBy('start');
     }
 
-    public function scopeStatusIs($status): Builder
+    public function scopeWhereIsDraft(Builder $query): Builder
     {
-//        dd($status);
+        return $query->where('status', ProjectStatus::draft);
+    }
+
+    public function scopeStatusIs(Builder $query, $status): Builder
+    {
         return match ($status) {
+            'draft' => $this->whereIsDraft(),
             'pending' => $this->whereIsPending(),
             'approved' => $this->whereIsApproved(),
             'rejected' => $this->whereIsRejected(),

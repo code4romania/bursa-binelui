@@ -22,7 +22,7 @@ class ProjectController extends Controller
     {
         // TODO: fix issue with approved projects not being displayed
         $projectStatus = $request->get('project_status');
-//        dd($projectStatus);
+
 
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => ProjectCardResource::collection(

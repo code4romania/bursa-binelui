@@ -37,7 +37,6 @@ class ShowOrganizationResource extends JsonResource
                     $project->setRelation('organization', $this);
 
                     return $project;
-                    // dump(\func_get_args());
                 })
             ),
         ];

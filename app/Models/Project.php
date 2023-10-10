@@ -144,12 +144,18 @@ class Project extends Model implements HasMedia
         if ($this->target_budget == 0) {
             return 0;
         }
+
         return min(100, $this->total_donations / $this->target_budget * 100);
     }
 
     public function getActiveAttribute(): bool
     {
         return $this->status == ProjectStatus::approved;
+    }
+
+    public function getIsPendingAttribute(): bool
+    {
+        return $this->status == ProjectStatus::pending;
     }
 
     public function getIsPeriodActiveAttribute(): bool
@@ -169,6 +175,7 @@ class Project extends Model implements HasMedia
         if (empty($this->end)) {
             return false;
         }
+
         return $this->end->diffInDays(today()) <= 5;
     }
 }

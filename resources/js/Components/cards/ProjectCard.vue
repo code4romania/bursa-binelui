@@ -108,14 +108,15 @@
             </div>
 
             <SecondaryButton
-                v-if="'admin' == cardType && 'pending' == project.status"
+                v-if="'admin' == cardType && project.is_active"
                 class="w-full mt-4 py-2.5"
                 @click="changeProjectStatus(project.id, 'draft', project.type)"
                 :label="$t('draft')"
             />
 
             <SecondaryButton
-                v-if="'admin' == cardType && 'draft' == project.status"
+
+                v-if="'admin' == cardType && (!project.is_active)"
                 class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
                 @click="changeProjectStatus(project.id, 'pending', project.type)"
                 :label="$t('publish')"
@@ -175,14 +176,7 @@
         project: Object,
         cardType: String,
     });
-
-    const percentage = computed(() => {
-        if (props.project.total_donations > props.project.target_budget) {
-            return 100;
-        }
-
-        return (props.project.total_donations / props.project.target_budget) * 100;
-    });
+    console.log(props.project,props.cardType);
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {
@@ -198,7 +192,7 @@
             status: status,
             id: id,
         });
-        console.log(type);
+        console.log(form);
         let tmpRoute =
             type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
         if (confirm('Are you sure you want to change the status of this project?')) {

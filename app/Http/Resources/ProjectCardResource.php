@@ -29,8 +29,9 @@ class ProjectCardResource extends Resource
                 'total' => money_format($this->total_donations),
                 'percentage' => $this->percentage,
             ],
-            'is_active' => $this->is_active,
+            'is_active' => $this->is_active || $this->is_pending,
             'is_ending_soon' => $this->is_ending_soon,
+
             'championship' => [
                 'troffees_count' => 2,
                 'score' => 100,
