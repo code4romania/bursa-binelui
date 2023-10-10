@@ -57,9 +57,9 @@ trait HasProjectStatus
             ->whereDate('end', '>=', now());
     }
 
-    public function scopeWhereStartsSoon(): Builder
+    public function scopeWhereStartsSoon(Builder $query): Builder
     {
-        return $this->whereIsPublished()
+        return $query->whereIsPublished()
             ->whereDate('start', '>=', now())
             ->orderBy('start');
     }
@@ -72,14 +72,14 @@ trait HasProjectStatus
     public function scopeStatusIs(Builder $query, $status): Builder
     {
         return match ($status) {
-            'draft' => $this->whereIsDraft(),
-            'pending' => $this->whereIsPending(),
-            'approved' => $this->whereIsApproved(),
-            'rejected' => $this->whereIsRejected(),
-            'published' => $this->whereIsPublished(),
-            'open' => $this->whereIsOpen(),
-            'starts_soon' => $this->whereStartsSoon(),
-            default => $this->newQuery(),
+            'draft' => $query->whereIsDraft(),
+            'pending' => $query->whereIsPending(),
+            'approved' => $query->whereIsApproved(),
+            'rejected' => $query->whereIsRejected(),
+            'published' => $query->whereIsPublished(),
+            'open' => $query->whereIsOpen(),
+            'starts_soon' => $query->whereStartsSoon(),
+            default => $query,
         };
     }
 }

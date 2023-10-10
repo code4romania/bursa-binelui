@@ -28,7 +28,7 @@ class RegistrationRequest extends FormRequest
             $rules = array_merge($rules, [
                 'ngo' => ['array', 'required'],
                 'ngo.name' => ['string', 'required'],
-                'ngo.description' => ['string', 'required'],
+                'ngo.description' => ['string', 'required', 'max:1000'],
                 'ngo.logo' => ['required', 'image'],
                 'ngo.statute' => ['required', 'file'],
                 'ngo.street_address' => ['string', 'required'],
@@ -39,8 +39,8 @@ class RegistrationRequest extends FormRequest
                 'ngo.domains' => ['array', 'required'],
                 'ngo.counties' => ['array', 'required'],
                 'ngo.volunteer' => ['boolean'],
-                'ngo.why_volunteer' => ['string', 'nullable'],
-                'ngo.website' => ['string', 'nullable'],
+                'ngo.why_volunteer' => ['string', 'nullable', 'max:1000'],
+                'ngo.website' => ['string', 'nullable', 'url'],
             ]);
         }
 
