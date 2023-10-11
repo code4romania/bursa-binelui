@@ -18,6 +18,8 @@ class RegistrationRequest extends FormRequest
     {
         $rules = [
             'type' => ['required', 'string'],
+            'terms' => ['required', 'accepted'],
+            'subscribe' => ['boolean'],
             'user' => ['required', 'array'],
             'user.name' => ['required', 'string'],
             'user.email' => ['required', 'email', 'unique:users,email'],

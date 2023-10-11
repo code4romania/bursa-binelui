@@ -213,5 +213,9 @@ return [
         'updated_at' => 'actualizat la',
         'username' => 'nume de utilizator',
         'year' => 'an',
+
+        'user.name' => 'nume',
+        'user.email' => 'email',
+        'user.password' => 'parolă',
     ],
 ];
