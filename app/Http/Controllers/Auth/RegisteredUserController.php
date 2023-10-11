@@ -44,12 +44,11 @@ class RegisteredUserController extends Controller
             'email' => $attributes['user']['email'],
             'password' => Hash::make($attributes['user']['password']),
             'role' => $attributes['type'] === 'organization' ? UserRole::ADMIN : UserRole::USER,
-
         ]);
 
         event(new Registered($user));
-//       $user = User::find($user->id);
-        if ($user->role===UserRole::ADMIN) {
+
+        if ($user->hasRole(UserRole::ADMIN)) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
 
             $organization = $user->organization()->create($attributes['ngo']);
