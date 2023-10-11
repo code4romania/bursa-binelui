@@ -9,6 +9,7 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Services\NewsletterService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -60,6 +61,10 @@ class RegisteredUserController extends Controller
             $organization->counties()->attach($attributes['ngo']['counties']);
             $user->organization_id = $organization->id;
             $user->save();
+        }
+
+        if ($attributes['subscribe']) {
+            NewsletterService::subscribe($user->email, $user->name);
         }
 
         Auth::login($user);

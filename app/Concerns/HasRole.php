@@ -15,7 +15,7 @@ trait HasRole
         $this->casts['role'] = UserRole::class;
     }
 
-    private function hasRole(UserRole $role): bool
+    public function hasRole(UserRole $role): bool
     {
         return $this->role === $role;
     }
