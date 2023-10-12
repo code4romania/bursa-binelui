@@ -177,7 +177,6 @@ class Project extends Model implements HasMedia
 
     public function getCanBeArchivedAttribute(): bool
     {
-
         return $this->status == ProjectStatus::approved
             && now()->subDays(30)->gte($this->end);
     }
