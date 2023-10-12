@@ -29,6 +29,7 @@ class ProjectService
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = ProjectStatus::draft->value;
+
         $project = $this->createDraftProject($data);
         if (! empty($data['categories'])) {
             $project->categories()->attach($data['categories']);
@@ -53,7 +54,7 @@ class ProjectService
     private function sendCreateNotifications($project): void
     {
         auth()->user()->notify(new ProjectCreated($project));
-        $adminUsers = User::whereRole(UserRole::bb_admin)->get();
+        $adminUsers = User::whereRole(UserRole::SUPERADMIN)->get();
         Notification::send($adminUsers, new ProjectCreatedAdmin($project));
     }
 

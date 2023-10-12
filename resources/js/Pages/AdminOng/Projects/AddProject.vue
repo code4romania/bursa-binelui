@@ -29,16 +29,15 @@
                     :error="form.errors.target_budget"
                 />
 
-                <SelectMultiple
-                    class="w-full xl:w-1/2"
+                <Select
+                    class="w-full z-101"
                     :label="$t('project_category_label')"
-                    use-translation="true"
+                    type="object"
                     :options="projectCategories"
-                    v-model="selectedCategories"
-                    type="singleValue"
-                    :error="form.errors.categories"
+                    v-model="form.categories"
+                    :error="form.errors['categories']"
+                    multiple
                 />
-
                 <!-- Date period. -->
                 <div class="flex gap-6">
                     <!-- Date start -->
@@ -72,14 +71,15 @@
                 </label>
 
                 <!-- County -->
-                <SelectMultiple
-                    class="w-full xl:w-1/2"
+                <Select
+                    class="w-full z-101"
                     :label="$t('counties_label')"
-                    :options="counties"
                     type="object"
-                    v-model="selectedCounties"
                     v-if="!form.is_national"
-                    :error="form.errors.counties"
+                    :options="counties"
+                    v-model="form.counties"
+                    :error="form.errors['counties']"
+                    multiple
                 />
 
                 <!-- Project description -->
@@ -92,8 +92,9 @@
                     v-model="form.description"
                     :error="form.errors.description"
                 >
-                </Textarea>
                 <p class="text-sm font-normal text-gray-500">{{ $t('project_description_extra') }}</p>
+
+                </Textarea>
 
                 <!-- Project scope -->
                 <Textarea
@@ -104,8 +105,9 @@
                     v-model="form.scope"
                     :error="form.errors.scope"
                 >
-                </Textarea>
                 <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
+
+                </Textarea>
 
                 <!-- Project beneficiary -->
                 <Textarea
@@ -116,8 +118,9 @@
                     v-model="form.beneficiaries"
                     :error="form.errors.beneficiaries"
                 >
-                </Textarea>
                 <p class="text-sm font-normal text-gray-500">{{ $t('project_beneficiary_extra') }}</p>
+
+                </Textarea>
 
                 <!-- Why to donate -->
                 <Textarea
@@ -128,8 +131,9 @@
                     v-model="form.reason_to_donate"
                     :error="form.errors.reason_to_donate"
                 >
-                </Textarea>
                 <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
+
+                </Textarea>
 
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.accepting_volunteers" />
@@ -286,26 +290,10 @@
         project_links: [{ url: '' }],
         project_articles: [{ url: '' }],
     });
-    let selectedCounties = ref([]);
-    let selectedCategories = ref([]);
     const props = defineProps(['projectCategories', 'counties']);
-    let projectLinks = ref(form.project_links);
-    let projectArticles = ref(form.project_articles);
-
-    function prepareProjectLinks() {
-        form.project_links = projectLinks.value.filter((item) => item.url !== '').map((item) => item.url);
-    }
-    function prepareExternalLinks() {
-        form.project_articles = projectArticles.value.filter((item) => item.url !== '').map((item) => item.url);
-    }
-
     /** Create project. */
     const createProject = () => {
-        form.counties = selectedCounties.value.map((item) => item.id);
-        form.categories = selectedCategories.value.map((item) => item.id);
 
-        prepareProjectLinks();
-        prepareExternalLinks();
         form.post(route('dashboard.projects.store'), {
             preserveScroll: true,
             onError: () => {},
