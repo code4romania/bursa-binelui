@@ -78,10 +78,7 @@ class ProjectService
     public function changeStatus($id, string $status): void
     {
         $this->project = $this->project::findOrFail($id);
-        match ($status) {
-            ProjectStatus::draft->value => $this->project->update(['status' => $status]),
-            ProjectStatus::pending->value => $this->createPendingProject($this->project->toArray()),
-        };
+
         if ($this->project->status === ProjectStatus::draft && $status === ProjectStatus::pending->value) {
             $fields = $this->project->toArray();
             $requiredFields = $this->project->getRequiredFieldsForApproval();
@@ -95,7 +92,9 @@ class ProjectService
                 throw new ('Project is missing required fields for approval, please fill in all required fields . Please fill: ' . implode(', ', $missingFields));
             }
         }
-        $this->project->update(['status' => $status]);
+        $this->project->status = ProjectStatus::pending->value;
+        $this->project->save();
+//        dd($this->project);
         if ($status === ProjectStatus::approved->value) {
             $this->sendCreateNotifications($this->project);
         }
