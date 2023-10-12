@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
 use App\Http\Resources\ProjectCardResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Activity;
 use App\Models\County;
 use App\Models\Project;
@@ -47,8 +48,14 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project = (new ProjectService(Project::class))->create($data);
-        $project->addAllMediaFromRequest()->each(function ($fileAdder) {
-            $fileAdder->toMediaCollection('project_files');
+        $project->addAllMediaFromRequest()->each(function ($fileAdder,$index) {
+            if ($index == 0)
+            {
+                $fileAdder->toMediaCollection('preview');
+            }else{
+
+                $fileAdder->toMediaCollection('gallery');
+            }
         });
 
         return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
@@ -61,7 +68,7 @@ class ProjectController extends Controller
         $counties = County::get(['name', 'id']);
 
         return Inertia::render('AdminOng/Projects/EditProject', [
-            'project' => $project,
+            'project' => new ProjectResource($project),
             'counties' => $counties,
             'projectCategories' => ProjectCategory::get(['name', 'id']),
             'changes' => Activity::pendingChangesFor($project)

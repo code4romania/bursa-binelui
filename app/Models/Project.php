@@ -71,15 +71,17 @@ class Project extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('cover_image')
-            ->singleFile()
+        $this->addMediaCollection('preview')
             ->useFallbackUrl(Vite::image('placeholder.png'))
+            ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this
-                    ->addMediaConversion('thumb')
-                    ->fit(Manipulations::FIT_CROP, 300, 300)
+                    ->addMediaConversion('preview')
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
                     ->nonQueued();
             });
+
+        $this->addMediaCollection('gallery');
     }
 
     public function getActivitylogOptions(): LogOptions
