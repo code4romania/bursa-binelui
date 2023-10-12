@@ -46,7 +46,12 @@ class ProjectService
         if (empty($data['name'])) {
             $data['name'] = 'Draft-' . date('Y-m-d H:i:s') . '-' . auth()->user()->name;
         }
-        $data['slug'] = \Str::slug($data['name']);
+        $slug = \Str::slug($data['name']);
+        $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        $data['slug'] = $slug;
+        if ($count > 0) {
+            $data['slug'] .= '-' . ($count + 1);
+        }
 
         return  $this->project::create($data);
     }

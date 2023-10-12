@@ -5,7 +5,6 @@
             <span v-if="label">{{ label }}</span>
             <span v-else><slot /></span>
             <slot />
-
         </label>
 
         <div>
