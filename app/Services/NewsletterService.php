@@ -11,20 +11,24 @@ class NewsletterService
     public static function subscribe(string $email, ?string $name = null)
     {
         $mergeFields = [
-            // TODO: add field for full name
-            'NAME' => $name,
+            'MERGE1' => $name,
         ];
 
         $options = [
             'pending' => true,
         ];
 
-        $response = Newsletter::subscribe($email, $mergeFields, options: $options);
+        $response = rescue(
+            fn () => Newsletter::subscribe($email, $mergeFields, options: $options),
+            false
+        );
 
         if (false !== $response) {
             // TODO: check if email registered as user
             // and assign subscriber badge if the
             // user doesn't already have one.
         }
+
+        return $response;
     }
 }
