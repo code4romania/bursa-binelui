@@ -313,7 +313,7 @@
                     {{ $t('video_link_label') }}
                 </dt>
                 <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                    {{ project.image }}
+                    {{ project.video }}
                 </dt>
                 <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                     {{ project.project_links }}

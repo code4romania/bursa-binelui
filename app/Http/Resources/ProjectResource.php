@@ -12,14 +12,14 @@ class ProjectResource extends Resource
 
     public function toArray(Request $request): array
     {
-//        dd($this);
+//        dd($this->counties);
 
         return [
             'id' => $this->id,
             // 'type' => $this->type,
             'name' => $this->name,
             'slug' => $this->slug,
-            'county' => $this->counties->pluck('name')->join(', '),
+            'counties' => $this->counties->pluck('name')->join(', '),
             'image' => $this->getFirstMediaUrl('preview'),
             'target_budget' => $this->target_budget,
             'gallery' => $this->getMedia('gallery')->map(function ($media) {
@@ -33,6 +33,7 @@ class ProjectResource extends Resource
                 'id' => $this->organization->id,
             ],
             'is_national' => \boolval($this->is_national),
+            'beneficiaries' => $this->beneficiaries,
             'start' => $this->start,
             'end' => $this->end,
             'description' => $this->description,
@@ -40,7 +41,7 @@ class ProjectResource extends Resource
             'reason_to_donate' => $this->reason_to_donate,
             'accepting_volunteers' => \boolval($this->accepting_volunteers),
             'accepting_comments' => \boolval($this->accepting_comments),
-            'videos' => $this->videos,
+            'videos' => '',
             'external_links' => $this->external_links,
             'categories' => $this->categories->pluck('name')->join(', '),
             'championship' => [
