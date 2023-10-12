@@ -158,6 +158,11 @@ class Project extends Model implements HasMedia
         return $this->status == ProjectStatus::pending;
     }
 
+    public function getIsDraftAttribute(): bool
+    {
+        return $this->status == ProjectStatus::draft;
+    }
+
     public function getIsPeriodActiveAttribute(): bool
     {
         return $this->start->isPast() && $this->end->isFuture();
@@ -168,6 +173,13 @@ class Project extends Model implements HasMedia
         return $this->status == ProjectStatus::approved
             && $this->start->isPast()
             && $this->end->isFuture();
+    }
+
+    public function getCanBeArchivedAttribute(): bool
+    {
+
+        return $this->status == ProjectStatus::approved
+            && now()->subDays(30)->gte($this->end);
     }
 
     public function getIsEndingSoonAttribute(): bool

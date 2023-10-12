@@ -424,7 +424,7 @@
 
     const editField = (field) => {
         const form = useForm({
-            [field]: organization.value[field],
+            [field]: project.value[field],
         });
 
         form.post(route('dashboard.projects.update', project.value.id), {

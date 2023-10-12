@@ -39,7 +39,7 @@ Route::group([
     Route::post('/', 'store')->name('store');
     Route::get('/{project}/edit', 'edit')->name('edit');
     Route::post('/{project}/status', 'changeStatus')->name('status');
-    Route::put('/{project}', 'update')->name('update');
+    Route::post('/{project}', 'update')->name('update');
 
     Route::group([
         'prefix' => 'regional',

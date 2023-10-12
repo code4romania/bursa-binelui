@@ -88,6 +88,7 @@
                     :label="$t('project_description_label')"
                     id="about-project"
                     color="gray-700"
+                    numberOfCharacters=800
                     v-model="form.description"
                     :error="form.errors.description"
                 >

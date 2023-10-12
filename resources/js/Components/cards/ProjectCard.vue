@@ -14,7 +14,13 @@
             />
 
             <div class="flex flex-col items-start justify-end gap-2 p-3">
-                <ProjectTag v-if="!project.is_active" :label="$t('project_closed')" />
+                <ProjectTag
+                    v-if="project.is_pending"
+                    :label="$t('project_waiting_for_approval')"
+                />
+                <ProjectTag v-else-if="project.is_draft" :label="$t('project_draft')" />
+
+                <ProjectTag v-else-if="!project.is_active" :label="$t('project_closed')" />
 
                 <div v-if="project.is_active && project.championship" class="flex flex-wrap items-center gap-1">
                     <ProjectTag
@@ -35,6 +41,8 @@
                     :label="$t('project_ending_soon')"
                     icon="clock"
                 />
+
+
             </div>
         </Link>
 
@@ -108,15 +116,15 @@
             </div>
 
             <SecondaryButton
-                v-if="'admin' == cardType && project.is_active"
+                v-if="'admin' == cardType && project.can_be_archived"
                 class="w-full mt-4 py-2.5"
-                @click="changeProjectStatus(project.id, 'draft', project.type)"
-                :label="$t('draft')"
+                @click="changeProjectStatus(project.id, 'archive', project.type)"
+                :label="$t('can.be.archived')"
             />
 
             <SecondaryButton
 
-                v-if="'admin' == cardType && (!project.is_active)"
+                v-if="'admin' == cardType && !project.is_active && !project.is_pending && !project.can_be_archived"
                 class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
                 @click="changeProjectStatus(project.id, 'pending', project.type)"
                 :label="$t('publish')"

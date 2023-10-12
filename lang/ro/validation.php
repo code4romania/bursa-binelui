@@ -213,5 +213,6 @@ return [
         'updated_at' => 'actualizat la',
         'username' => 'nume de utilizator',
         'year' => 'an',
+        'end' => "Data finală perioada de donații",
     ],
 ];

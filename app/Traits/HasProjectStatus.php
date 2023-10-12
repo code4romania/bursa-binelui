@@ -66,7 +66,7 @@ trait HasProjectStatus
 
     public function scopeWhereIsDraft(Builder $query): Builder
     {
-        return $query->where('status', ProjectStatus::draft);
+        return $query->whereIn('status', [ProjectStatus::draft, ProjectStatus::pending]);
     }
 
     public function scopeStatusIs(Builder $query, $status): Builder

@@ -24,10 +24,10 @@ class ProjectController extends Controller
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => ProjectCardResource::collection(
                 Project::query()
+                    ->where('organization_id', auth()->user()->organization_id)
                     ->when($projectStatus, function (Builder $query) use ($projectStatus) {
                         return $query->statusIs($projectStatus);
                     })
-                    ->where('organization_id', auth()->user()->organization_id)
                     ->paginate(16)
                     ->withQueryString()
             ),

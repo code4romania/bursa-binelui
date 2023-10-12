@@ -25,42 +25,16 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-//        if ($this->project_status === ProjectStatus::pending->value) {
-//            return [
-//                'name' => ['required', 'string', 'max:255'],
-//                'target_budget' => ['required', 'numeric'],
-//                'start' => ['required', 'date'],
-//                'end' => ['required', 'date'],
-//                'categories' => ['required', 'array'],
-//                'categories.*' => ['required', 'exists:project_categories,id'],
-//                'counties' => ['array'],
-//                'counties.*' => ['required', 'exists:counties,id'],
-//                'description' => ['required', 'string'],
-//                'scope' => ['required', 'string'],
-//                'reason_to_donate' => ['required', 'string'],
-//                'beneficiaries' => ['required', 'string'],
-//                'accepting_volunteers' => ['required', 'boolean'],
-//                'accepting_comments' => ['required', 'boolean'],
-//                'videos' => ['nullable', 'array'],
-//                'videos.*' => ['nullable', 'url'],
-//                'external_links' => ['nullable', 'array'],
-//                'external_links.*' => ['nullable', 'url'],
-//                'is_national' => ['required', 'boolean'],
-//                'file_group' => ['required', 'array'],
-//                'file_group.*.file' => ['required', 'file'],
-//            ];
-//        }
-
         return [
             'name' => ['string', 'max:255', 'nullable'],
             'target_budget' => ['numeric', 'nullable'],
             'categories' => ['array'],
             'categories.*' => ['nullable', 'exists:project_categories,id'],
-            'start' => ['date', 'nullable'],
-            'end' => ['date', 'nullable'],
+            'start' => ['date', 'nullable','after_or_equal:today'],
+            'end' => ['date', 'nullable', 'after:tomorrow'],
             'counties' => ['array', 'nullable'],
             'counties.*' => ['exists:counties,id', 'nullable'],
-            'description' => ['string', 'nullable'],
+            'description' => ['string', 'nullable', 'max:800'],
             'scope' => ['string', 'nullable'],
             'reason_to_donate' => ['string', 'nullable'],
             'beneficiaries' => ['nullable', 'string'],
