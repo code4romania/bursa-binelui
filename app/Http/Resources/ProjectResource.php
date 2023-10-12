@@ -21,9 +21,8 @@ class ProjectResource extends Resource
             'slug' => $this->slug,
             'county' => $this->counties->pluck('name')->join(', '),
             'image' => $this->getFirstMediaUrl('preview'),
-            'target_budget'=> $this->target_budget,
+            'target_budget' => $this->target_budget,
             'gallery' => $this->getMedia('gallery')->map(function ($media) {
-
                 return [
                     'id' => $media->id,
                     'url' => $media->getFullUrl(),
@@ -33,14 +32,14 @@ class ProjectResource extends Resource
                 'name' => $this->organization->name,
                 'id' => $this->organization->id,
             ],
-            'is_national' => boolval($this->is_national),
+            'is_national' => \boolval($this->is_national),
             'start' => $this->start,
             'end' => $this->end,
             'description' => $this->description,
             'scope' => $this->scope,
             'reason_to_donate' => $this->reason_to_donate,
-            'accepting_volunteers' => boolval($this->accepting_volunteers),
-            'accepting_comments' => boolval($this->accepting_comments),
+            'accepting_volunteers' => \boolval($this->accepting_volunteers),
+            'accepting_comments' => \boolval($this->accepting_comments),
             'videos' => $this->videos,
             'external_links' => $this->external_links,
             'categories' => $this->categories->pluck('name')->join(', '),
