@@ -29,6 +29,36 @@ trait HasProjectStatus
         return $this->status === ProjectStatus::rejected;
     }
 
+    public function isDraft(): bool
+    {
+        return $this->status === ProjectStatus::draft;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->isApproved() && $this->archived_at === null;
+    }
+
+    public function isOpen(): bool
+    {
+        return $this->isPublished() && $this->start->isPast() && $this->end->isFuture();
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->isApproved() && ! empty($this->archived_at);
+    }
+
+    public function isStartingSoon(): bool
+    {
+        return $this->isPublished() && ($this->start->isFuture() || ! $this->organization->EuPlatescIsActive());
+    }
+
+    public function isClose(): bool
+    {
+        return $this->isPublished() && $this->end->isPast();
+    }
+
     public function scopeWhereIsPending(Builder $query): Builder
     {
         return $query->where('status', ProjectStatus::pending);
@@ -61,6 +91,12 @@ trait HasProjectStatus
     {
         return $query->whereIsPublished()
             ->whereDate('start', '>=', now())
+            ->orWhere(
+                fn (Builder $query) => $query->whereHas(
+                    'organization',
+                    fn (Builder $query) => $query->whereDoesntHaveEuPlatesc()
+                )
+            )
             ->orderBy('start');
     }
 

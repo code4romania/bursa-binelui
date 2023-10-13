@@ -193,4 +193,24 @@ class Project extends Model implements HasMedia
 
         return $this->end->diffInDays(today()) <= 5;
     }
+
+    public function getVisibleStatusAttribute(): string
+    {
+        if ($this->isStartingSoon()) {
+            return 'starting_soon';
+        }
+        if ($this->isOpen()) {
+            return 'open';
+        }
+        if ($this->isClose())
+        {
+            return 'close';
+        }
+        if ($this->isArchived()) {
+            return 'archived';
+        }
+
+        return $this->status->value;
+
+    }
 }

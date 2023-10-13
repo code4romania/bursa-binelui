@@ -13,12 +13,15 @@ use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Actions\Position;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 
@@ -41,25 +44,38 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('organization_id')
+                Select::make('organization_id')
                     ->label(__('project.labels.organization'))
                     ->inlineLabel()
                     ->columnSpanFull()
                     ->relationship('organization', 'name')
                     ->disabled()
                     ->required(),
-                Forms\Components\Select::make('status')->options(ProjectStatus::options())->disabled()
+                Select::make('status')->options(ProjectStatus::options())->disabled()
                     ->label(__('project.labels.status'))
                     ->inlineLabel()
                     ->columnSpanFull()
                     ->required(),
+                TextInput::make('visible_status')
+                    ->label(__('project.labels.visible_status'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
+                    ->formatStateUsing(function (Project $record) {
+                        return __(sprintf('project.visible_status.%s', $record->visible_status));
+                    })
+                    ->hidden(
+                        function (callable $get) {
+                            return $get('status') != ProjectStatus::approved;
+                        }
+                    )
+                    ->disabled(),
                 Forms\Components\Toggle::make('is_national')
                     ->label(__('project.labels.is_national'))
                     ->inlineLabel()
                     ->columnSpanFull()
                     ->reactive()
                     ->required(),
-                Forms\Components\Select::make('counties')
+                Select::make('counties')
                     ->relationship('counties', 'name')
                     ->label(__('project.labels.counties'))
                     ->inlineLabel()
@@ -70,7 +86,7 @@ class ProjectResource extends Resource
                     ->hidden(function (callable $get) {
                         return $get('is_national') === true;
                     }),
-                Forms\Components\Select::make('categories')
+                Select::make('categories')
                     ->relationship('categories', 'name')
                     ->label(__('project.labels.category'))
                     ->inlineLabel()
@@ -78,10 +94,10 @@ class ProjectResource extends Resource
                     ->multiple()
                     ->preload()
                     ->required(),
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('target_budget')
+                TextInput::make('target_budget')
                     ->required(),
                 Forms\Components\DatePicker::make('start')
                     ->required(),
@@ -112,10 +128,10 @@ class ProjectResource extends Resource
                     ->multiple()
                     ->maxFiles(20),
                 Forms\Components\Repeater::make('videos')->schema([
-                    Forms\Components\TextInput::make('url'),
+                    TextInput::make('url'),
                 ]),
                 Forms\Components\Repeater::make('external_links')->schema([
-                    Forms\Components\TextInput::make('url'),
+                    TextInput::make('url'),
                 ]),
             ]);
     }
@@ -130,10 +146,10 @@ class ProjectResource extends Resource
                     'heroicon-o-clock' => ProjectStatus::rejected->value,
                     'heroicon-o-check-circle' => ProjectStatus::approved->value,
                 ]),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('category'),
+                TextColumn::make('name'),
+                TextColumn::make('category'),
 
-                Tables\Columns\TextColumn::make('created_at')->date(),
+                TextColumn::make('created_at')->date(),
             ]);
     }
 
@@ -186,16 +202,16 @@ class ProjectResource extends Resource
     public static function getWidgetColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('id')
+            TextColumn::make('id')
                 ->formatStateUsing(function (Project $record) {
                     return sprintf('#%d', $record->id);
                 })
                 ->label(__('project.labels.id'))
                 ->sortable(),
-            Tables\Columns\TextColumn::make('name')->description(fn (Project $record) => $record->organization->name)->searchable(),
-            Tables\Columns\TextColumn::make('category')->formatStateUsing(fn (Project $record) => $record->categories->pluck('name')->join(', '))
+            TextColumn::make('name')->description(fn (Project $record) => $record->organization->name)->searchable(),
+            TextColumn::make('category')->formatStateUsing(fn (Project $record) => $record->categories->pluck('name')->join(', '))
                 ->label(__('project.labels.category')),
-            Tables\Columns\TextColumn::make('counties')->formatStateUsing(function (Project $record) {
+            TextColumn::make('counties')->formatStateUsing(function (Project $record) {
                 if ($record->is_national) {
                     return __('project.labels.national');
                 }
@@ -203,13 +219,13 @@ class ProjectResource extends Resource
                 return $record->counties->pluck('name')->join(', ');
             })
                 ->label(__('project.labels.counties')),
-            Tables\Columns\TextColumn::make('target_budget')->formatStateUsing(function (Project $record) {
+            TextColumn::make('target_budget')->formatStateUsing(function (Project $record) {
                 return number_format($record->target_budget, 2, ',', '.');
             })
                 ->label(__('project.labels.target_budget')),
-            Tables\Columns\TextColumn::make('status_updated_at')->date('d-m-Y H:i:s')
+            TextColumn::make('status_updated_at')->date('d-m-Y H:i:s')
                 ->label(__('project.labels.status_updated_at')),
-            Tables\Columns\TextColumn::make('created_at')->date('d-m-Y H:i:s')
+            TextColumn::make('created_at')->date('d-m-Y H:i:s')
                 ->label(__('project.labels.created_at')),
         ];
     }

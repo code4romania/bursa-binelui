@@ -9,15 +9,15 @@ return [
         'category' => 'Categorie',
         'counties' => 'Județe',
         'created_from' => 'Creată de la',
-        'status_updated_at_from' => 'Trimis spre apr. de la',
+        'status_updated_at_from' => 'Status schimbat  de la',
         'created_until' => 'Creată până la',
-        'status_updated_at_until' => 'Trimis spre apr. pana la',
+        'status_updated_at_until' => 'Status schimbat pana la',
     ],
     'status_arr' => [
         'draft' => 'Draft',
         'pending' => 'În așteptare',
-        'active' => 'Activă',
-        'disabled' => 'Inactivă',
+        'approved' => 'Aprobat',
+        'rejected' => 'Dezactivat',
     ],
     'actions' => [
         'view' => 'Vezi',
@@ -66,9 +66,18 @@ return [
         'accepting_comments' => 'Acceptă comentarii',
         'videos' => 'Video-uri',
         'external_links' => 'Link-uri externe',
-        'status_updated_at' => 'Trimis spre apr.',
+        'status_updated_at' => 'Status schimbat la data',
         'preview_image' => 'Imagine de prezentare',
         'gallery' => 'Galerie',
+        'visible_status' => 'Status in platforma public',
+
     ],
+    'visible_status'=>[
+        'published' => 'Publicat',
+        'archived' => 'Arhivat',
+        'open' => 'Deschis',
+        'close' => 'Închis',
+        'starting_soon' => 'Începe în curând',
+    ]
 
 ];
