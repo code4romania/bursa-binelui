@@ -67,6 +67,8 @@ return [
         'videos' => 'Video-uri',
         'external_links' => 'Link-uri externe',
         'status_updated_at' => 'Trimis spre apr.',
+        'preview_image' => 'Imagine de prezentare',
+        'gallery' => 'Galerie',
     ],
 
 ];

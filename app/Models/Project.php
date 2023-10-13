@@ -42,6 +42,7 @@ class Project extends Model implements HasMedia
         'scope',
         'reason_to_donate',
         'beneficiaries',
+        'is_national',
         'start',
         'end',
         'accepting_volunteers',

@@ -13,6 +13,7 @@ use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -45,6 +46,7 @@ class ProjectResource extends Resource
                     ->inlineLabel()
                     ->columnSpanFull()
                     ->relationship('organization', 'name')
+                    ->disabled()
                     ->required(),
                 Forms\Components\Select::make('status')->options(ProjectStatus::options())->disabled()
                     ->label(__('project.labels.status'))
@@ -68,12 +70,14 @@ class ProjectResource extends Resource
                     ->hidden(function (callable $get) {
                         return $get('is_national') === true;
                     }),
-                Forms\Components\TextInput::make('category')
+                Forms\Components\Select::make('categories')
+                    ->relationship('categories', 'name')
                     ->label(__('project.labels.category'))
                     ->inlineLabel()
                     ->columnSpanFull()
-                    ->required()
-                    ->maxLength(255),
+                    ->multiple()
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -95,8 +99,24 @@ class ProjectResource extends Resource
                     ->required(),
                 Forms\Components\Toggle::make('accepting_comments')
                     ->required(),
-                Forms\Components\TextInput::make('videos'),
-                Forms\Components\TextInput::make('external_links'),
+                SpatieMediaLibraryFileUpload::make('preview')
+                    ->collection('preview')
+                    ->label(__('project.labels.preview_image'))
+                    ->mediaName('preview')
+                    ->image()
+                    ->maxFiles(1),
+                SpatieMediaLibraryFileUpload::make('gallery')
+                    ->collection('gallery')
+                    ->label(__('project.labels.gallery'))
+                    ->image()
+                    ->multiple()
+                    ->maxFiles(20),
+                Forms\Components\Repeater::make('videos')->schema([
+                    Forms\Components\TextInput::make('url'),
+                ]),
+                Forms\Components\Repeater::make('external_links')->schema([
+                    Forms\Components\TextInput::make('url'),
+                ]),
             ]);
     }
 
