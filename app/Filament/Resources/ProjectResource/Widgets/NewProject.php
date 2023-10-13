@@ -21,7 +21,7 @@ class NewProject extends BaseProjectWidget
 
     protected function getTableHeading(): string
     {
-        return __('project.heading.pending');
+        return __('project.heading.pending',['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
@@ -40,7 +40,7 @@ class NewProject extends BaseProjectWidget
 
             ViewAction::make()
                 ->label(__('project.actions.view'))
-                ->url(fn (Project $record) => route('filament.resources.projects.edit', $record))
+                ->url(fn (Project $record) => route('filament.resources.projects.view', $record))
                 ->icon(null)
                 ->size('sm'),
             Action::make('edit')

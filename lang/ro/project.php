@@ -18,6 +18,7 @@ return [
         'disabled' => 'Inactivă',
     ],
     'actions' => [
+        'view' => 'Vezi',
         'edit' => 'Editează',
         'approve' => 'Aprobă',
         'reject' => 'Respinge',
@@ -33,10 +34,10 @@ return [
         'other' => 'Altele',
     ],
     'heading' => [
-        'pending' => 'Proiecte in curs de aprobare',
-        'change_request' => 'Proiecte cu modificări',
-        'approved' => 'Proiecte aprobate',
-        'rejected' => 'Proiecte refuzate',
+        'pending' => 'Proiecte in curs de aprobare (:number)',
+        'change_request' => 'Proiecte cu modificări (:number)',
+        'approved' => 'Proiecte aprobate (:number)',
+        'rejected' => 'Proiecte refuzate (:number)',
     ],
     'label' => [
         'singular' => 'Proiect',
@@ -44,8 +45,10 @@ return [
     ],
 
     'labels' => [
+        'id' => 'ID',
         'project' => 'Proiect',
         'category' => 'Categorie',
+        'national' => 'Național',
         'target_budget' => 'Target',
         'created_at' => 'Data creării',
         'organization' => 'Organizație',

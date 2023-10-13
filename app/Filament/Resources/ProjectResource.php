@@ -32,6 +32,12 @@ class ProjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static function getNavigationBadge(): ?string
+    {
+
+        return (string) static::$model::whereIsPublished()->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -108,7 +114,7 @@ class ProjectResource extends Resource
                 ]),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('category'),
-                Tables\Columns\TextColumn::make('target_budget'),
+
                 Tables\Columns\TextColumn::make('created_at')->date(),
             ]);
     }
@@ -162,11 +168,27 @@ class ProjectResource extends Resource
     public static function getWidgetColumns(): array
     {
         return [
+            Tables\Columns\TextColumn::make('id')->formatStateUsing(function (Project $record) {
+                return sprintf('#%d',$record->id);
+            })
+                ->label(__('project.labels.id')),
             ResourceNameColumn::make('project_info')
                 ->label(__('project.labels.project')),
-            Tables\Columns\TextColumn::make('category')
+            Tables\Columns\TextColumn::make('category')->formatStateUsing(fn (Project $record)=> $record->categories->pluck('name')->join(', '))
                 ->label(__('project.labels.category')),
-            Tables\Columns\TextColumn::make('target_budget')
+            Tables\Columns\TextColumn::make('counties')->formatStateUsing(function (Project $record){
+//                dd($record->is_national);
+                if ($record->is_national)
+                {
+                    return __('project.labels.national');
+                }
+                return $record->counties->pluck('name')->join(', ');
+
+            })
+                ->label(__('project.labels.counties')),
+            Tables\Columns\TextColumn::make('target_budget')->formatStateUsing(function (Project $record) {
+                return number_format($record->target_budget, 2, ',', '.');
+            })
                 ->label(__('project.labels.target_budget')),
             Tables\Columns\TextColumn::make('created_at')->date('d-m-Y')
                 ->label(__('project.labels.created_at')),

@@ -15,7 +15,7 @@ class RejectedProject extends BaseProjectWidget
 
     protected function getTableHeading(): string
     {
-        return __('project.heading.rejected');
+        return __('project.heading.rejected', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder

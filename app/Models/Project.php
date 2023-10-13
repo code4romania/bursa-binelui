@@ -55,6 +55,7 @@ class Project extends Model implements HasMedia
         'videos' => 'array',
         'external_links' => 'array',
         'start' => 'date:Y-m-d',
+        'is_national' => 'boolean',
         'end' => 'date:Y-m-d',
         'accepting_volunteers' => 'boolean',
         'accepting_comments' => 'boolean',

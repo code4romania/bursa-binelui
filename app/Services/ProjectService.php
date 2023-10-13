@@ -94,7 +94,6 @@ class ProjectService
         }
         $this->project->status = ProjectStatus::pending->value;
         $this->project->save();
-//        dd($this->project);
         if ($status === ProjectStatus::approved->value) {
             $this->sendCreateNotifications($this->project);
         }

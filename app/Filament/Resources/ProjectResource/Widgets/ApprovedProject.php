@@ -15,7 +15,7 @@ class ApprovedProject extends BaseProjectWidget
 
     protected function getTableHeading(): string
     {
-        return __('project.heading.approved');
+        return __('project.heading.approved',['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
