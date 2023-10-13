@@ -35,6 +35,10 @@
         <span class="block">
             {{ $getState() }}
         </span>
+        <span class="block">
+            {{ $getOrganization() }}
+        </span>
+
         <span class="block text-xs text-gray-500 empty:hidden">
             {{ $getDescription() }}
         </span>

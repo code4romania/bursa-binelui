@@ -10,7 +10,6 @@ use App\Filament\Resources\ProjectResource\Widgets\ApprovedProject;
 use App\Filament\Resources\ProjectResource\Widgets\NewProject;
 use App\Filament\Resources\ProjectResource\Widgets\RejectedProject;
 use App\Models\Project;
-use App\Tables\Columns\ResourceNameColumn;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
@@ -34,7 +33,6 @@ class ProjectResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-
         return (string) static::$model::whereIsPublished()->count();
     }
 
@@ -134,11 +132,11 @@ class ProjectResource extends Resource
                 ->multiple()
                 ->relationship('counties', 'name')
                 ->label(__('project.filters.counties')),
-            Filter::make('created_at')
+            Filter::make('status_updated_at')
                 ->form([
                     Grid::make()->schema([
-                        DatePicker::make('created_at')->label(__('project.filters.created_from')),
-                        DatePicker::make('created_at')->label(__('project.filters.created_until')),
+                        DatePicker::make('status_updated_at')->label(__('project.filters.status_updated_at_from')),
+                        DatePicker::make('status_updated_at')->label(__('project.filters.status_updated_at_until')),
                     ]),
                 ]),
         ];
@@ -168,29 +166,30 @@ class ProjectResource extends Resource
     public static function getWidgetColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('id')->formatStateUsing(function (Project $record) {
-                return sprintf('#%d',$record->id);
-            })
-                ->label(__('project.labels.id')),
-            ResourceNameColumn::make('project_info')
-                ->label(__('project.labels.project')),
-            Tables\Columns\TextColumn::make('category')->formatStateUsing(fn (Project $record)=> $record->categories->pluck('name')->join(', '))
+            Tables\Columns\TextColumn::make('id')
+                ->formatStateUsing(function (Project $record) {
+                    return sprintf('#%d', $record->id);
+                })
+                ->label(__('project.labels.id'))
+                ->sortable(),
+            Tables\Columns\TextColumn::make('name')->description(fn (Project $record) => $record->organization->name)->searchable(),
+            Tables\Columns\TextColumn::make('category')->formatStateUsing(fn (Project $record) => $record->categories->pluck('name')->join(', '))
                 ->label(__('project.labels.category')),
-            Tables\Columns\TextColumn::make('counties')->formatStateUsing(function (Project $record){
-//                dd($record->is_national);
-                if ($record->is_national)
-                {
+            Tables\Columns\TextColumn::make('counties')->formatStateUsing(function (Project $record) {
+                if ($record->is_national) {
                     return __('project.labels.national');
                 }
-                return $record->counties->pluck('name')->join(', ');
 
+                return $record->counties->pluck('name')->join(', ');
             })
                 ->label(__('project.labels.counties')),
             Tables\Columns\TextColumn::make('target_budget')->formatStateUsing(function (Project $record) {
                 return number_format($record->target_budget, 2, ',', '.');
             })
                 ->label(__('project.labels.target_budget')),
-            Tables\Columns\TextColumn::make('created_at')->date('d-m-Y')
+            Tables\Columns\TextColumn::make('status_updated_at')->date('d-m-Y H:i:s')
+                ->label(__('project.labels.status_updated_at')),
+            Tables\Columns\TextColumn::make('created_at')->date('d-m-Y H:i:s')
                 ->label(__('project.labels.created_at')),
         ];
     }

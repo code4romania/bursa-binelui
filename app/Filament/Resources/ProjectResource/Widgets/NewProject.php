@@ -26,7 +26,7 @@ class NewProject extends BaseProjectWidget
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->whereIsPending();
+        return Project::query()->select(['id','organization_id','name','target_budget','is_national','created_at','status_updated_at','status'])->whereIsPending();
     }
 
     protected function getTableQueryStringIdentifier(): ?string

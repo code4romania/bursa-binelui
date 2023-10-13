@@ -9,7 +9,9 @@ return [
         'category' => 'Categorie',
         'counties' => 'Județe',
         'created_from' => 'Creată de la',
+        'status_updated_at_from' => 'Trimis spre apr. de la',
         'created_until' => 'Creată până la',
+        'status_updated_at_until' => 'Trimis spre apr. pana la',
     ],
     'status_arr' => [
         'draft' => 'Draft',
@@ -64,6 +66,7 @@ return [
         'accepting_comments' => 'Acceptă comentarii',
         'videos' => 'Video-uri',
         'external_links' => 'Link-uri externe',
+        'status_updated_at' => 'Trimis spre apr.',
     ],
 
 ];
