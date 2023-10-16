@@ -8,5 +8,9 @@ return [
     'updated_at' => 'Actualizată la',
     'id' => 'ID',
     'id_format' => '#:number',
+    'boolean'=>[
+        'true'=>'Da',
+        'false'=>'Nu',
+    ],
 
 ];

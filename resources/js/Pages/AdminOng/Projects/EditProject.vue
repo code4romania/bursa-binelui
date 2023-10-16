@@ -259,6 +259,77 @@
                     </EditModal>
                 </template>
             </Field>
+            <Field :label="$t('accepting_volunteers')" :hasPendingChanges="changes.includes('accepting_volunteers')" alt :errors="formChangeStatus.errors.accepting_volunteers">
+                <template #value>
+                    {{ originalProject.accepting_volunteers }}
+                </template>
+
+                <template #action>
+                    <EditModal
+                        @action="editField('accepting_volunteers')"
+                        @cancel="resetField('accepting_volunteers')"
+                        class="flex justify-end col-span-1"
+                    >
+                        <fieldset>
+                            <legend class="text-sm font-semibold leading-6 text-gray-900">  {{ $t('accepting_volunteers') }}</legend>
+                            <div class="mt-6 space-y-6">
+                                <div class="relative flex gap-x-3">
+                                    <div class="flex h-6 items-center">
+                                        <Checkbox
+                                            class="form-checkbox"
+                                            id="accepting_comments"
+                                            color="gray-700"
+                                            v-model="project.accepting_volunteers"
+                                            :checked="project.accepting_volunteers==='Da'"
+                                            :error="errors.accepting_volunteers"
+                                        />
+                                    </div>
+                                    <div class="text-sm leading-6">
+                                        <label for="accepting_comments" class="font-medium text-gray-900">{{$t('accepting_volunteers')}}</label>
+                                        <p class="text-gray-500">{{ $t('accepting_volunteers_extra') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('accepting_comments')" :hasPendingChanges="changes.includes('accepting_comments')" alt :errors="formChangeStatus.errors.accepting_comments">
+                <template #value>
+                    {{ originalProject.accepting_comments }}
+                </template>
+
+                <template #action>
+                    <EditModal
+                        @action="editField('accepting_comments')"
+                        @cancel="resetField('accepting_comments')"
+                        class="flex justify-end col-span-1"
+                    >
+                        <fieldset>
+                            <legend class="text-sm font-semibold leading-6 text-gray-900">  {{ $t('accepting_comments') }}</legend>
+                            <div class="mt-6 space-y-6">
+                                <div class="relative flex gap-x-3">
+                                    <div class="flex h-6 items-center">
+                                        <Checkbox
+                                            class="form-checkbox"
+                                            id="accepting_comments"
+                                            color="gray-700"
+                                            v-model="project.accepting_comments"
+                                            :checked="project.accepting_comments==='Da'"
+                                            :error="errors.accepting_comments"
+                                        />
+                                    </div>
+                                    <div class="text-sm leading-6">
+                                        <label for="accepting_comments" class="font-medium text-gray-900">{{$t('accepting_comments')}}</label>
+                                        <p class="text-gray-500">{{ $t('accepting_comments_extra') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </EditModal>
+                </template>
+            </Field>
 
             <!-- Edit main image -->
             <Field :label="$t('main_image')" :errors="formChangeStatus.errors.preview">
@@ -300,7 +371,7 @@
                         >
                             <DangerButton @click="removeImage(index)">{{ $t('remove_image') }} </DangerButton>
                             <SecondaryButton class="col-start-2" @click="setCoverImage(index)"
-                                >{{ $t('set_cover_image') }}
+                            >{{ $t('set_cover_image') }}
                             </SecondaryButton>
                         </div>
                     </div>
@@ -406,70 +477,71 @@
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
-    import { useForm } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
-    /** Import components. */
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
-    import Field from '@/Components/Field.vue';
-    import EditModal from '@/Components/modals/EditModal.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import FileInput from '@/Components/form/FileInput.vue';
-    import Repeater from '@/Components/form/Repeater.vue';
-    import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DangerButton from '@/Components/buttons/DangerButton.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
-    import Select from "@/Components/form/Select.vue";
+/** Import components. */
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import SvgLoader from '@/Components/SvgLoader.vue';
+import Field from '@/Components/Field.vue';
+import EditModal from '@/Components/modals/EditModal.vue';
+import Input from '@/Components/form/Input.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import FileInput from '@/Components/form/FileInput.vue';
+import Repeater from '@/Components/form/Repeater.vue';
+import InputWithIcon from '@/Components/form/InputWithIcon.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import DangerButton from '@/Components/buttons/DangerButton.vue';
+import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+import Select from "@/Components/form/Select.vue";
+import Checkbox from "@/Components/form/Checkbox.vue";
 
-    const props = defineProps({
-        project: Object,
-        errors: Object,
-        counties: Array,
-        projectCategories: Array,
-        flash: Object,
-        changes: Array,
+const props = defineProps({
+    project: Object,
+    errors: Object,
+    counties: Array,
+    projectCategories: Array,
+    flash: Object,
+    changes: Array,
+});
+
+const project = ref(props.project);
+const originalProject = computed(() => props.project);
+
+const resetField = (field) => {
+    project.value[field] = originalProject.value[field];
+};
+
+const formChangeStatus = useForm({
+    status: 'pending',
+    id: project.value.id,
+});
+
+const changeProjectStatus = (id, status, type) => {
+    let tmpRoute =
+        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+    if (confirm('Are you sure you want to change the status of this project?')) {
+        formChangeStatus.post(tmpRoute);
+    }
+};
+
+const editField = (field) => {
+    const form = useForm({
+        [field]: project.value[field],
     });
 
-    const project = ref(props.project);
-    const originalProject = computed(() => props.project);
+    // if (field ==='counties') {
+    //     console.log(props.counties.find(form.counties));
+    //     project.counties_names = props.counties.find(form.counties);
+    // }
+    // console.log(form,field);
 
-    const resetField = (field) => {
-        project.value[field] = originalProject.value[field];
-    };
-
-    const formChangeStatus = useForm({
-        status: 'pending',
-        id: project.value.id,
+    form.post(route('dashboard.projects.update', project.value.id), {
+        preserveScroll: true,
+        onSuccess: (response) => {
+            //
+        },
     });
-
-    const changeProjectStatus = (id, status, type) => {
-        let tmpRoute =
-            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        if (confirm('Are you sure you want to change the status of this project?')) {
-            formChangeStatus.post(tmpRoute);
-        }
-    };
-
-    const editField = (field) => {
-        const form = useForm({
-            [field]: project.value[field],
-        });
-
-        // if (field ==='counties') {
-        //     console.log(props.counties.find(form.counties));
-        //     project.counties_names = props.counties.find(form.counties);
-        // }
-        // console.log(form,field);
-
-        form.post(route('dashboard.projects.update', project.value.id), {
-            preserveScroll: true,
-            onSuccess: (response) => {
-                //
-            },
-        });
-    };
+};
 </script>
