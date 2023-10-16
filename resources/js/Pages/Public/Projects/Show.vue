@@ -23,7 +23,7 @@
                             />
                         </div>
                         <p class="text-base font-semibold leading-6 text-gray-900">
-                            {{ $t('projects.status.'+project.status)}}
+                            {{ $t('projects.status.' + project.status) }}
                         </p>
                     </div>
 
@@ -96,7 +96,7 @@
 
         <!-- Target amount -->
         <div class="py-10 mb-20 bg-gray-100">
-            <div class="w-full mx-auto lg:max-w-7xl px-9">
+            <div class="container">
                 <div class="flex items-center gap-4">
                     <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
                         <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
@@ -132,8 +132,8 @@
         </div>
 
         <!-- Social share -->
-        <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
-            <div class="w-full lg:w-6/12">
+        <div class="container grid mx-auto mb-8 gap-y-8 gap-x-20 lg:grid-cols-5">
+            <div class="lg:col-span-3">
                 <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
 
                 <SharePage class="mb-20" :pageRoute="route('project', project.slug)" />
@@ -144,81 +144,87 @@
                 </div>
             </div>
 
-            <div class="w-full mt-4 lg:w-6/12 lg:mt-0 lg:px-10">
-                <div class="bg-white shadow-lg">
-                    <div class="px-10 pt-10 pb-8 border-b border-gray-200">
-                        <h3 class="text-4xl font-bold leading-6 text-gray-900">{{ $t('project_details') }}</h3>
+            <div class="bg-white shadow-lg drop-shadow-sm lg:col-span-2">
+                <div class="px-10 pt-10 pb-8 border-b border-gray-200">
+                    <h3 class="text-4xl font-bold leading-6 text-gray-900">{{ $t('project_details') }}</h3>
+                </div>
+
+                <div class="px-10 py-8 space-y-8 bg-gray-50">
+                    <div class="flex justify-start gap-x-4">
+                        <Icon class="w-5 h-5 mt-1 shrink-0 fill-primary-500" name="location" />
+                        <div>
+                            <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
+                            <p class="mt-2 text-base font-normal text-gray-500">
+                                {{ project.counties }}
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="px-10 py-8 space-y-8 bg-gray-50">
-                        <div class="flex justify-start gap-x-4">
-                            <Icon class="w-5 h-5 mt-1 shrink-0 fill-primary-500" name="location" />
-                            <div>
-                                <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
-                                <p class="mt-2 text-base font-normal text-gray-500">
-                                    {{ project.counties}}
-                                </p>
-                            </div>
+                    <div class="flex justify-start gap-x-4">
+                        <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" />
+                        <div>
+                            <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
+                            <p class="mt-2 text-base font-normal text-gray-500">
+                                {{ project.start }} - {{ project.end }}
+                            </p>
+                            <p
+                                v-if="5 >= project.end && 0 < project.end"
+                                class="mt-1 text-base font-semibold text-primary-500"
+                            >
+                                {{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!
+                            </p>
                         </div>
-
-                        <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" />
-                            <div>
-                                <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
-                                <p class="mt-2 text-base font-normal text-gray-500">
-                                    {{ project.start }} - {{ project.end }}
-                                </p>
-                                <p
-                                    v-if="5 >= project.end && 0 < project.end"
-                                    class="mt-1 text-base font-semibold text-primary-500"
-                                >
-                                    {{ $t('project_ends') }} {{ project.end }} {{ $t('days') }}!
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Donate modal -->
-                        <DonateModal
-                            triggerModalClasses="bg-primary-500 w-full hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                            :triggerModalText="$t('donate_btn')"
-                            :data="project"
-                        />
                     </div>
+
+                    <!-- Donate modal -->
+                    <DonateModal
+                        triggerModalClasses="bg-primary-500 w-full hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        :triggerModalText="$t('donate_btn')"
+                        :data="project"
+                    />
                 </div>
             </div>
         </div>
 
         <!-- Project info -->
-        <div class="mx-auto mb-8 max-w-7xl px-9">
-            <div class="mb-10" v-if="project.scope">
+        <div class="container space-y-10">
+            <div v-if="project.scope">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_scope_label') }}</h2>
                 <div class="text-lg text-gray-500" v-html="project.scope"></div>
             </div>
 
-            <div class="mb-10" v-if="project.beneficiaries">
+            <div v-if="project.beneficiaries">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_beneficiary_label') }}</h2>
                 <div class="text-lg text-gray-500" v-html="project.beneficiaries"></div>
             </div>
 
-            <div class="mb-10" v-if="project.reason_to_donate">
+            <div v-if="project.reason_to_donate">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('why_to_donate') }}</h2>
                 <div class="text-lg text-gray-500" v-html="project.reason_to_donate"></div>
             </div>
 
-            <div class="mb-10" v-if="project.external_links.length>0">
-                <div class="pt-12 pb-20 mt-16 bg-primary-500 px-9 lg:px-0">
-                    <div class="flex items-center gap-4 mx-auto max-w-7xl">
-                        <div class="flex items-center justify-center w-10 h-10 p-2 text-white rounded-lg bg-primary-100">
-                            <SpeakerphoneIcon />
-                        </div>
-                        <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('external_links') }}</h3>
+            <div v-if="project.external_links.length">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="flex items-center justify-center w-10 h-10 p-2 text-white rounded-lg bg-primary-500">
+                        <ExternalLinkIcon />
                     </div>
+                    <h3 class="text-3xl font-bold text-cyan-900">{{ $t('external_links_title') }}</h3>
                 </div>
 
-                <div class=""  v-for="item in project.external_links">
-                    <p v-html="item.title"/>
-                    <a :href="item.url"  target="_blank" v-html="item.url"/>
-                </div>
+                <ul class="pl-8 leading-relaxed border-l-8 border-primary-500">
+                    <li
+                        v-for="({ url, title, source }, index) in project.external_links"
+                        :key="index"
+                        class="overflow-hidden text-gray-800"
+                    >
+                        <a :href="url" class="inline group" target="_blank" rel="noopener">
+                            <span v-text="title" class="text-blue-500 underline group-hover:no-underline" />
+                        </a>
+
+                        <span> &ndash; </span>
+                        <span v-text="source" />
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -234,7 +240,7 @@
 
         <!-- Gallery -->
         <div class="mb-24 bg-gray-100">
-            <div class="flex flex-col w-full gap-8 py-10 mx-auto sm:flex-row lg:max-w-7xl px-9">
+            <div class="container flex flex-col gap-8 py-10 mx-auto sm:flex-row">
                 <div class="flex-col justify-between w-full sm:flex">
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
@@ -307,11 +313,11 @@
             </div>
         </div>
 
-        <div class="flex flex-col-reverse items-center w-full py-10 mx-auto mb-24 sm:flex-row sm:max-w-7xl sm:pr-20">
+        <div class="container flex flex-col-reverse items-center py-10 sm:flex-row sm:pr-20">
             <div class="w-10/12 sm:w-3/12">
                 <img
                     class="relative z-50 flex-shrink-0 w-full mx-auto shadow-lg -mt-36 sm:mt-0 sm:-mr-36 rounded-xl"
-                    :src="project.organization.cover_image"
+                    :src="project.organization.logo"
                     alt=""
                 />
             </div>
@@ -330,9 +336,9 @@
                     </Link>
                 </div>
 
-                <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden sm:block" />
+                <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden sm:block fill-primary-600" />
 
-                <LargeSquarePattern class="absolute left-0 z-10 -bottom-20" />
+                <LargeSquarePattern class="absolute left-0 z-10 -bottom-20 fill-primary-600" />
             </div>
         </div>
     </PageLayout>
@@ -356,7 +362,7 @@
     import SharePage from '@/Components/SharePage.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import {SpeakerphoneIcon} from "@heroicons/vue/outline";
+    import { ExternalLinkIcon } from '@heroicons/vue/outline';
 
     const props = defineProps({
         project: {
@@ -368,7 +374,6 @@
         console.log(project);
     });
     const project = ref(props.project);
-
 
     /**
      * Copy embed code.

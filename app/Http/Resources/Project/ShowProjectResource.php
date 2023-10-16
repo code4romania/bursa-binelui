@@ -28,9 +28,10 @@ class ShowProjectResource extends Resource
                 ];
             })->toArray(),
             'organization' => [
-                'name' => $this->organization->name,
                 'id' => $this->organization->id,
+                'name' => $this->organization->name,
                 'description' => $this->organization->description,
+                'logo' => $this->organization->getFirstMediaUrl('logo', 'preview'),
             ],
             'is_national' => \boolval($this->is_national),
             'beneficiaries' => $this->beneficiaries,
@@ -43,7 +44,11 @@ class ShowProjectResource extends Resource
             'accepting_comments' => \boolval($this->accepting_comments),
             'videos' => '',
             'is_active' => $this->is_active,
-            'external_links' => $this->external_links,
+            'external_links' => collect($this->external_links)->map(function (array $link) {
+                $link['source'] = parse_url($link['url'], \PHP_URL_HOST);
+
+                return $link;
+            }),
             'categories' => $this->categories->pluck('name')->join(', '),
             'donations' => [
                 'target' => money_format($this->target_budget),

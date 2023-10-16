@@ -140,8 +140,12 @@ class ProjectResource extends Resource
                     TextInput::make('url'),
                 ]),
                 Forms\Components\Repeater::make('external_links')->schema([
-                    TextInput::make('title'),
-                    TextInput::make('url'),
+                    TextInput::make('title')
+                        ->required(),
+
+                    TextInput::make('url')
+                        ->url()
+                        ->required(),
                 ]),
             ]);
     }
