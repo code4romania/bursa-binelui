@@ -264,7 +264,7 @@
             <Field :label="$t('main_image')" :hasPendingChanges="changes.includes('cover_image')" :errors="formChangeStatus.errors.image">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
-                        <img class="object-contain w-32 h-32 shrink-0" :src="project.image" alt="" />
+                        <img class="object-contain w-32 h-32 shrink-0" :src="originalProject.image" alt="" />
 
                         <div>
                             <EditModal
@@ -274,7 +274,7 @@
                             >
                                 <FileInput
                                     :label="$t('upload_image')"
-                                    @upload="(file) => (project.image = file)"
+                                    @upload="(file) =>(project.image = file)"
                                     :form="project.image"
                                     accept="image/png, image/jpeg"
                                     previewable

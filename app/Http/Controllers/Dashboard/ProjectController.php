@@ -7,12 +7,9 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
 use App\Http\Resources\Project\EditProjectResource;
-use App\Http\Resources\Project\ShowProjectResource;
 use App\Http\Resources\ProjectCardResource;
 use App\Models\Activity;
-use App\Models\County;
 use App\Models\Project;
-use App\Models\ProjectCategory;
 use App\Services\ProjectService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -83,17 +80,16 @@ class ProjectController extends Controller
     {
         $this->authorize('editAsNgo', $project);
 
-
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties')));
         }
         if ($request->has('categories')) {
             $project->categories()->sync(collect($request->get('categories')));
         }
+//        dd($request->all());
         if ($request->has('image')) {
             $project->addMediaFromRequest('image')->toMediaCollection('preview');
         }
-//        dd($request->all());
         $project->update($request->all());
 
         return redirect()->back()
