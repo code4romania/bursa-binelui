@@ -15,10 +15,10 @@ class ShowProjectResource extends Resource
     {
         return [
             'id' => $this->id,
-            // 'type' => $this->type,
             'name' => $this->name,
             'slug' => $this->slug,
             'counties' => $this->counties->pluck('name')->join(', '),
+            'status' =>$this->visible_status,
             'image' => $this->getFirstMediaUrl('preview'),
             'target_budget' => $this->target_budget,
             'gallery' => $this->getMedia('gallery')->map(function ($media) {
@@ -43,6 +43,11 @@ class ShowProjectResource extends Resource
             'videos' => '',
             'external_links' => $this->external_links,
             'categories' => $this->categories->pluck('name')->join(', '),
+            'donations' => [
+                'target' => money_format($this->target_budget),
+                'total' => money_format($this->total_donations),
+                'percentage' => $this->percentage,
+            ],
             'championship' => [
                 'troffees_count' => 2,
                 'score' => 100,

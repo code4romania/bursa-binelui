@@ -444,6 +444,12 @@
     "navigation.volunteers": "Voluntari",
 
     "locales.ro": "Română",
-    "locales.en": "English"
+    "locales.en": "English",
+    "projects.status.open" : "Deschis",
+    "projects.status.close" : "Închis",
+    "projects.status.starting_soon" : "Incepe in curand",
+    "projects.status.ending_soon" : "Se incheie in curand"
+
+
 
 }

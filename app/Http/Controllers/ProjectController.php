@@ -12,6 +12,7 @@ use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Filters\ProjectStatusFilter;
 use App\Http\Filters\SearchFilter;
 use App\Http\Resources\Collections\ProjectCardCollection;
+use App\Http\Resources\Project\ShowProjectResource;
 use App\Http\Sorts\ProjectDonationsCountSort;
 use App\Http\Sorts\ProjectDonationsSumSort;
 use App\Models\Project;
@@ -70,9 +71,8 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         // TODO: prevent display of unpublished projects
-
         return Inertia::render('Public/Projects/Show', [
-            'project' => $project,
+            'project' => new ShowProjectResource($project),
         ]);
     }
 

@@ -23,16 +23,16 @@
                             />
                         </div>
                         <p class="text-base font-semibold leading-6 text-gray-900">
-                            {{ project.is_period_active ? $t('active') : $t('inactive') }}
+                            {{ $t('projects.status.'+project.status)}}
                         </p>
                     </div>
 
-                    <div v-if="project.category" class="flex items-center gap-2">
+                    <div v-if="project.categories" class="flex items-center gap-2">
                         <div class="flex items-center justify-center rounded-lg bg-primary-50 w-9 h-9">
                             <SvgLoader class="shrink-0 fill-primary-50 stroke-primary-500" name="badge" />
                         </div>
                         <p class="w-40 text-base font-semibold leading-6 text-gray-900 truncate lg:w-60">
-                            {{ project.category }}
+                            {{ project.categories }}
                         </p>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="flex flex-col w-full gap-4 sm:flex-row">
                     <!-- Donate modal -->
                     <DonateModal
-                        v-if="project.is_period_active"
+                        v-if="project.is_active"
                         triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         :data="project"
@@ -50,7 +50,7 @@
 
                     <!-- Donate Error modal -->
                     <Modal
-                        v-if="project.is_period_active === false"
+                        v-if="!project.is_active"
                         triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         id="project-donation-expired"
@@ -86,7 +86,7 @@
                 <LargeSquarePattern class="absolute bottom-0 right-0 fill-primary-500" />
 
                 <div class="relative flex items-center p-8 bg-white rounded shadow w-fit">
-                    <img class="mx-auto" src="/images/project_img.png" alt="" />
+                    <img class="mx-auto" :src="project.image" alt="" />
                 </div>
             </div>
         </div>
@@ -103,29 +103,29 @@
 
                 <div class="mt-8">
                     <div class="flex items-center justify-between mb-1 text-xl font-bold">
-                        <p class="text-cyan-900">{{ project.total_donations }} {{ $t('currency') }}</p>
-                        <p class="text-primary-500">{{ project.target_budget }} {{ $t('currency') }}</p>
+                        <p class="text-cyan-900">{{ project.donations.total }} {{ $t('currency') }}</p>
+                        <p class="text-primary-500">{{ project.donations.target }} {{ $t('currency') }}</p>
                     </div>
 
                     <div class="w-full h-6 bg-gray-300">
                         <div
                             :class="[
                                 `h-6`,
-                                project.total_donations == project.target_budget ? 'bg-primary-500' : 'bg-cyan-900',
+                                project.donations.total === project.donations.target ? 'bg-primary-500' : 'bg-cyan-900',
                             ]"
-                            :style="`width: ${percentage}%`"
+                            :style="`width: ${project.donations.percentage}%`"
                         ></div>
                     </div>
 
                     <p class="mt-1 text-xl font-bold text-cyan-900">
-                        {{ project.donations.length }} {{ $t('donations') }}
+                        {{ project.donations.total }} {{ $t('donations') }}
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="relative flex items-center w-full mb-20 bg-white rounded shadow sm:hidden">
-            <img class="mx-auto" src="/images/project_img.png" alt="" />
+            <img class="mx-auto" :src="project.image" alt="" />
         </div>
 
         <!-- Social share -->
@@ -153,7 +153,7 @@
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">
-                                    {{ project.counties.map((county) => county.name).join(', ') }}
+                                    {{ project.counties}}
                                 </p>
                             </div>
                         </div>
@@ -349,24 +349,6 @@
     });
     const project = ref(props.project);
 
-    /** Percentage */
-    const percentage = computed(() => {
-        if (props.project.total_donations > props.project.target_budget) {
-            return 100;
-        }
-
-        return (props.project.total_donations / props.project.target_budget) * 100;
-    });
-
-    /** Get days till project ends. */
-    // const project_end_date = computed(() => {
-    //     const targetDate = new Date(project.period_end);
-    //     const today = new Date();
-    //     const timeDiff = targetDate.getTime() - today.getTime();
-    //     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-    //     return daysDiff;
-    // })
 
     /**
      * Copy embed code.
