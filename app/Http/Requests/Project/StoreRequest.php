@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Project;
 
-use App\Enums\ProjectStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -30,7 +29,7 @@ class StoreRequest extends FormRequest
             'target_budget' => ['numeric', 'nullable'],
             'categories' => ['array'],
             'categories.*' => ['nullable', 'exists:project_categories,id'],
-            'start' => ['date', 'nullable','after_or_equal:today'],
+            'start' => ['date', 'nullable', 'after_or_equal:today'],
             'end' => ['date', 'nullable', 'after:tomorrow'],
             'counties' => ['array', 'nullable'],
             'counties.*' => ['exists:counties,id', 'nullable'],

@@ -21,12 +21,12 @@ class NewProject extends BaseProjectWidget
 
     protected function getTableHeading(): string
     {
-        return __('project.heading.pending',['number' => $this->getTableQuery()->count()]);
+        return __('project.heading.pending', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->select(['id','organization_id','name','target_budget','is_national','created_at','status_updated_at','status'])->whereIsPending();
+        return Project::query()->select(['id', 'organization_id', 'name', 'target_budget', 'is_national', 'created_at', 'status_updated_at', 'status'])->whereIsPending();
     }
 
     protected function getTableQueryStringIdentifier(): ?string

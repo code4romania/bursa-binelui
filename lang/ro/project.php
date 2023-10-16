@@ -57,6 +57,8 @@ return [
         'is_national' => 'Național',
         'counties' => 'Județe',
         'status' => 'Status',
+        'start' => 'Data de începere donatii',
+        'end' => 'Data de încheiere donatii',
         'name' => 'Nume',
         'description' => 'Descriere',
         'scope' => 'Scop',

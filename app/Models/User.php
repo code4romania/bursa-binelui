@@ -42,7 +42,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'phone',
         'referrer',
         'created_by',
-        'organization_id'
+        'organization_id',
     ];
 
     /**

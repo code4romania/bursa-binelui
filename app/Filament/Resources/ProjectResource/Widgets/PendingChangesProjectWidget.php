@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
-use App\Filament\Resources\OrganizationResource\Widgets\BaseOrganizationsWidget;
 use App\Models\Activity;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;

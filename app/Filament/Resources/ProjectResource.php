@@ -6,10 +6,14 @@ namespace App\Filament\Resources;
 
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\RelationManagers\ActivitiesRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\DonationsRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\VolunteersRelationManager;
 use App\Filament\Resources\ProjectResource\Widgets\ApprovedProject;
 use App\Filament\Resources\ProjectResource\Widgets\NewProject;
 use App\Filament\Resources\ProjectResource\Widgets\PendingChangesProjectWidget;
 use App\Filament\Resources\ProjectResource\Widgets\RejectedProject;
+use App\Forms\Components\Link;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -45,6 +49,10 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
+                Link::make('organizatii')->type('organization')
+                    ->label(__('organization.labels.administrator'))
+                    ->inlineLabel()
+                    ->columnSpanFull(),
                 Select::make('organization_id')
                     ->label(__('project.labels.organization'))
                     ->inlineLabel()
@@ -187,7 +195,9 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            VolunteersRelationManager::class,
+            DonationsRelationManager::class,
+            ActivitiesRelationManager::class,
         ];
     }
 

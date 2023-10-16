@@ -12,7 +12,7 @@ use App\Filament\Resources\OrganizationResource\RelationManagers\ProjectsRelatio
 use App\Filament\Resources\OrganizationResource\RelationManagers\TicketsRelationManager;
 use App\Filament\Resources\OrganizationResource\RelationManagers\UsersRelationManager;
 use App\Filament\Resources\OrganizationResource\RelationManagers\VolunteersRelationManager;
-use App\Forms\Components\UserLink;
+use App\Forms\Components\Link;
 use App\Models\Organization;
 use App\Rules\ValidCIF;
 use Filament\Forms\Components\Fieldset;
@@ -56,7 +56,7 @@ class OrganizationResource extends Resource
     {
         return $form
             ->schema([
-                UserLink::make('administator')
+                Link::make('administator')
                     ->label(__('organization.labels.administrator'))
                     ->inlineLabel()
                     ->columnSpanFull(),

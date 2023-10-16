@@ -11,9 +11,7 @@ use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Validator;
 
 class ProjectService
 {
@@ -102,7 +100,7 @@ class ProjectService
             'activity_domains' => $project->categories()->sync($value),
             'preview' => $project->addMedia($value)->toMediaCollection('preview'),
 
-            default => ($project->status===ProjectStatus::approved &&\in_array($key, $project->requiresApproval))
+            default => ($project->status === ProjectStatus::approved && \in_array($key, $project->requiresApproval))
                 ? $project->fill($attributes->all())->saveForApproval()
                 : $project->update($attributes->all()),
         };

@@ -90,13 +90,11 @@ class ProjectController extends Controller
 //        if ($request->has('categories')) {
 //            $project->categories()->sync(collect($request->get('categories')));
 //        }
-////        dd($request->all());
+        ////        dd($request->all());
 //        if ($request->has('image')) {
 //            $project->addMediaFromRequest('image')->toMediaCollection('preview');
 //        }
 //        $project->update($request->all());
-
-
     }
 
     public function changeStatus($id, Request $request)

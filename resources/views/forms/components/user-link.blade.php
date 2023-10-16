@@ -11,12 +11,12 @@
     :required="$isRequired()"
     :state-path="$getStatePath()">
     <div class="flex flex-wrap gap-2">
-        @foreach ($getUsers() as $user)
+        @foreach ($getLinks() as $link)
             <a
                 class="inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-sm shadow-sm hover:bg-gray-50 ring-1 ring-inset ring-gray-300 text-gray-900 bg-white truncate"
-                href="{{ $user['url'] }}">
+                href="{{ $link['url'] }}">
                 <span class="overflow-hidden truncate">
-                    {{ $user['name'] }}
+                    {{ $link['name'] }}
                 </span>
 
                 <x-heroicon-o-external-link class="-mr-0.5 h-4 w-4 shrink-0" />
