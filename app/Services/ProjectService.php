@@ -97,7 +97,7 @@ class ProjectService
 
         return match ($key) {
             'counties' => $project->counties()->sync($value),
-            'activity_domains' => $project->categories()->sync($value),
+            'categories' => $project->categories()->sync($value),
             'preview' => $project->addMedia($value)->toMediaCollection('preview'),
 
             default => ($project->status === ProjectStatus::approved && \in_array($key, $project->requiresApproval))
