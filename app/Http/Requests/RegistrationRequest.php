@@ -17,27 +17,29 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'type' => ['string', 'required'],
-            'user' => ['array', 'required'],
-            'user.name' => ['string', 'required'],
-            'user.email' => ['email', 'required', 'unique:users,email'],
-            'user.password' => ['string', 'required', 'confirmed'],
+            'type' => ['required', 'string'],
+            'terms' => ['required', 'accepted'],
+            'subscribe' => ['boolean'],
+            'user' => ['required', 'array'],
+            'user.name' => ['required', 'string'],
+            'user.email' => ['required', 'email', 'unique:users,email'],
+            'user.password' => ['required', 'string', 'confirmed'],
         ];
 
         if ($this->type === 'organization') {
             $rules = array_merge($rules, [
-                'ngo' => ['array', 'required'],
-                'ngo.name' => ['string', 'required'],
-                'ngo.description' => ['string', 'required', 'max:1000'],
+                'ngo' => ['required', 'array'],
+                'ngo.name' => ['required', 'string'],
+                'ngo.description' => ['required', 'string', 'max:1000'],
                 'ngo.logo' => ['required', 'image'],
                 'ngo.statute' => ['required', 'file'],
-                'ngo.street_address' => ['string', 'required'],
-                'ngo.cif' => ['string', 'required', 'unique:organizations,cif', new ValidCIF],
+                'ngo.street_address' => ['required', 'string'],
+                'ngo.cif' => ['required', 'string', 'unique:organizations,cif', new ValidCIF],
                 'ngo.contact_email' => ['required', 'email'],
-                'ngo.contact_phone' => ['string', 'required'],
-                'ngo.contact_person' => ['string', 'required'],
-                'ngo.domains' => ['array', 'required'],
-                'ngo.counties' => ['array', 'required'],
+                'ngo.contact_phone' => ['required', 'string'],
+                'ngo.contact_person' => ['required', 'string'],
+                'ngo.domains' => ['required', 'array'],
+                'ngo.counties' => ['required', 'array'],
                 'ngo.volunteer' => ['boolean'],
                 'ngo.why_volunteer' => ['string', 'nullable', 'max:1000'],
                 'ngo.website' => ['string', 'nullable', 'url'],

@@ -53,20 +53,23 @@
         />
 
         <!-- Terms -->
-        <label v-if="'user' === form.type" class="flex items-center space-x-2">
-            <Checkbox name="terms" v-model:checked="form.terms" />
-            <div class="flex items-center space-x-2 text-sm">
-                <span class="text-gray-700">{{ $t('i_agree') }}</span>
-                <Link :href="route('terms')" class="text-primary-500">
-                    {{ $t('terms_link') }}
-                </Link>
-                <span class="text-red-500">*</span>
-            </div>
-        </label>
+        <div class="mt-6">
+            <label class="flex items-center space-x-2">
+                <Checkbox name="terms" v-model:checked="form.terms" required />
+                <div class="flex items-center space-x-1 text-sm">
+                    <span class="text-gray-700">{{ $t('i_agree') }}</span>
+                    <Link :href="route('terms')" class="text-primary-500">
+                        {{ $t('terms_link') }}
+                    </Link>.
+                </div>
+            </label>
+
+            <p v-show="form.errors.terms" class="mb-2 text-sm text-red-600" v-text="form.errors.terms" />
+        </div>
 
         <!-- Subscribe -->
-        <label v-if="'user' === form.type" class="flex items-center space-x-2">
-            <Checkbox name="subscribe" v-model:checked="form.subscribe" />
+        <label class="flex items-center space-x-2">
+            <Checkbox name="subscribe" v-model:checked="form.subscribe" required />
             <span class="text-sm text-gray-700">{{ $t('register_subscribe') }}</span>
         </label>
 
@@ -100,8 +103,8 @@
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Checkbox from '@/Components/form/Checkbox.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
 
     const props = defineProps({
         form: Object,

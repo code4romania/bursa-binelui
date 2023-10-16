@@ -51,6 +51,8 @@
             statute: '',
         },
         type: '',
+        terms: false,
+        subscribe: false,
     });
 
     const social = useForm({
@@ -135,6 +137,7 @@
             onError: (error) => {
                 /** Set active component in case of validation errors. */
                 if (
+                    error['terms'] ||
                     error['user.name'] ||
                     error['user.password'] ||
                     error['user.email'] ||

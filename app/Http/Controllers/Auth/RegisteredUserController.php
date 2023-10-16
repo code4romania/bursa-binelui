@@ -9,6 +9,7 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Services\NewsletterService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,12 +45,11 @@ class RegisteredUserController extends Controller
             'email' => $attributes['user']['email'],
             'password' => Hash::make($attributes['user']['password']),
             'role' => $attributes['type'] === 'organization' ? UserRole::ADMIN : UserRole::USER,
-
         ]);
 
         event(new Registered($user));
-//       $user = User::find($user->id);
-        if ($user->role===UserRole::ADMIN) {
+
+        if ($user->hasRole(UserRole::ADMIN)) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
 
             $organization = $user->organization()->create($attributes['ngo']);
@@ -61,6 +61,10 @@ class RegisteredUserController extends Controller
             $organization->counties()->attach($attributes['ngo']['counties']);
             $user->organization_id = $organization->id;
             $user->save();
+        }
+
+        if ($attributes['subscribe']) {
+            NewsletterService::subscribe($user->email, $user->name);
         }
 
         Auth::login($user);
