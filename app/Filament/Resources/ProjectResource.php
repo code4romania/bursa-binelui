@@ -8,6 +8,7 @@ use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\Widgets\ApprovedProject;
 use App\Filament\Resources\ProjectResource\Widgets\NewProject;
+use App\Filament\Resources\ProjectResource\Widgets\PendingChangesProjectWidget;
 use App\Filament\Resources\ProjectResource\Widgets\RejectedProject;
 use App\Models\Project;
 use Filament\Forms;
@@ -234,6 +235,7 @@ class ProjectResource extends Resource
     {
         return [
             NewProject::class,
+            PendingChangesProjectWidget::class,
             ApprovedProject::class,
             RejectedProject::class,
         ];

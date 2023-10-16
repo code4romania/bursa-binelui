@@ -79,21 +79,24 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $this->authorize('editAsNgo', $project);
-
-        if ($request->has('counties')) {
-            $project->counties()->sync(collect($request->get('counties')));
-        }
-        if ($request->has('categories')) {
-            $project->categories()->sync(collect($request->get('categories')));
-        }
-//        dd($request->all());
-        if ($request->has('image')) {
-            $project->addMediaFromRequest('image')->toMediaCollection('preview');
-        }
-        $project->update($request->all());
+        ProjectService::update($project, $request->all());
 
         return redirect()->back()
             ->with('success', 'Project updated.');
+
+//        if ($request->has('counties')) {
+//            $project->counties()->sync(collect($request->get('counties')));
+//        }
+//        if ($request->has('categories')) {
+//            $project->categories()->sync(collect($request->get('categories')));
+//        }
+////        dd($request->all());
+//        if ($request->has('image')) {
+//            $project->addMediaFromRequest('image')->toMediaCollection('preview');
+//        }
+//        $project->update($request->all());
+
+
     }
 
     public function changeStatus($id, Request $request)
@@ -125,6 +128,7 @@ class ProjectController extends Controller
             (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
         } catch (\Exception $exception) {
             dd($exception->getMessage());
+
             return redirect()->back()
                 ->with('error', $exception->getMessage());
         }

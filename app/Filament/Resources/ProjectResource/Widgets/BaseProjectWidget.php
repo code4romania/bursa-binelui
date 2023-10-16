@@ -74,7 +74,7 @@ class BaseProjectWidget extends BaseWidget
     protected function getTableRecordUrlUsing(): \Closure
     {
         return function (Project $record) {
-            return route('filament.resources.projects.edit', $record);
+            return route('filament.resources.projects.view', $record);
         };
     }
 

@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Concerns\HasCounties;
 use App\Concerns\HasVolunteers;
+use App\Concerns\LogsActivityForApproval;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +33,7 @@ class Project extends Model implements HasMedia
     use InteractsWithMedia;
     use HasProjectStatus;
     use LogsActivity;
+    use LogsActivityForApproval;
 
     protected $fillable = [
         'name',
@@ -120,18 +122,12 @@ class Project extends Model implements HasMedia
             ->withTimestamps();
     }
 
-    public function getRequiredFieldsForApproval(): array
-    {
-        return[
-            'name',
-            'description',
-            'start',
-            'end',
-            'categories',
-            'reason_to_donate',
-            'beneficiaries',
-        ];
-    }
+    public array $requiresApproval = [
+        'name',
+        'target_budget',
+        'start',
+        'end',
+    ];
 
     public function getTotalDonationsAttribute(): int
     {
@@ -202,8 +198,7 @@ class Project extends Model implements HasMedia
         if ($this->isOpen()) {
             return 'open';
         }
-        if ($this->isClose())
-        {
+        if ($this->isClose()) {
             return 'close';
         }
         if ($this->isArchived()) {
@@ -211,6 +206,5 @@ class Project extends Model implements HasMedia
         }
 
         return $this->status->value;
-
     }
 }

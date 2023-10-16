@@ -89,4 +89,22 @@ class ProjectService
             $this->sendCreateNotifications($this->project);
         }
     }
+
+    public static function update(Project $project, array $attributes)
+    {
+        $attributes = collect($attributes);
+
+        $key = $attributes->keys()->first();
+        $value = $attributes->get($key);
+
+        return match ($key) {
+            'counties' => $project->counties()->sync($value),
+            'activity_domains' => $project->categories()->sync($value),
+            'preview' => $project->addMedia($value)->toMediaCollection('preview'),
+
+            default => \in_array($key, $project->requiresApproval)
+                ? $project->fill($attributes->all())->saveForApproval()
+                : $project->update($attributes->all()),
+        };
+    }
 }

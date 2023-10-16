@@ -54,7 +54,7 @@
             </Field>
 
             <!-- Edit period -->
-            <Field :label="$t('period_start_donation')" alt :errors="formChangeStatus.errors.start">
+            <Field :label="$t('period_start_donation')" alt :hasPendingChanges="changes.includes('start')" :errors="formChangeStatus.errors.start">
                 <template #value> {{ project.start }} </template>
 
                 <template #action>
@@ -77,7 +77,7 @@
                     </EditModal>
                 </template>
             </Field>
-            <Field :label="$t('period_end_donation')" alt :errors="formChangeStatus.errors.end">
+            <Field :label="$t('period_end_donation')" alt :hasPendingChanges="changes.includes('end')" :errors="formChangeStatus.errors.end">
                 <template #value>{{ project.end }} </template>
 
                 <template #action>
@@ -286,7 +286,7 @@
             </Field>
 
             <!-- Edit Photo gallery -->
-            <Field :label="$t('photo_gallery')" :hasPendingChanges="changes.includes('name')" alt :errors="formChangeStatus.errors.photo_gallery">
+            <Field :label="$t('photo_gallery')" alt :errors="formChangeStatus.errors.photo_gallery">
                 <template #value>
                     <div>Images</div>
 
