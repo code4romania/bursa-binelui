@@ -90,6 +90,10 @@ class ProjectController extends Controller
         if ($request->has('categories')) {
             $project->categories()->sync(collect($request->get('categories')));
         }
+        if ($request->has('image')) {
+            $project->addMediaFromRequest('image')->toMediaCollection('preview');
+        }
+//        dd($request->all());
         $project->update($request->all());
 
         return redirect()->back()

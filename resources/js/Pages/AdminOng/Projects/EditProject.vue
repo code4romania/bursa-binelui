@@ -268,13 +268,13 @@
 
                         <div>
                             <EditModal
-                                @action="editField('cover_image')"
-                                @cancel="resetField('cover_image')"
+                                @action="editField('image')"
+                                @cancel="resetField('image')"
                                 :text="$t('change_image_label')"
                             >
                                 <FileInput
                                     :label="$t('upload_image')"
-                                    @upload="(file) => (form.cover_image = file)"
+                                    @upload="(file) => (project.image = file)"
                                     :form="project.image"
                                     accept="image/png, image/jpeg"
                                     previewable
