@@ -11,7 +11,9 @@ use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectService
 {
@@ -77,21 +79,7 @@ class ProjectService
      */
     public function changeStatus($id, string $status): void
     {
-        $this->project = $this->project::findOrFail($id);
 
-        if ($this->project->status === ProjectStatus::draft && $status === ProjectStatus::pending->value) {
-            $fields = $this->project->toArray();
-            $requiredFields = $this->project->getRequiredFieldsForApproval();
-            $missingFields = [];
-            foreach ($fields as $key => $value) {
-                if (\in_array($key, $requiredFields) && empty($value)) {
-                    $missingFields[] = $key;
-                }
-            }
-            if (! empty($missingFields)) {
-                throw new ('Project is missing required fields for approval, please fill in all required fields . Please fill: ' . implode(', ', $missingFields));
-            }
-        }
         $this->project->status = ProjectStatus::pending->value;
         $this->project->status_updated_at = now();
         $this->project->save();

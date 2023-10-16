@@ -72,12 +72,15 @@ return [
         'visible_status' => 'Status in platforma public',
 
     ],
-    'visible_status'=>[
+    'visible_status' => [
         'published' => 'Publicat',
         'archived' => 'Arhivat',
         'open' => 'Deschis',
         'close' => 'Închis',
         'starting_soon' => 'Începe în curând',
-    ]
+    ],
+    'errors' => [
+        'start_date_in_past' => 'Data de începere nu poate fi în trecut',
+    ],
 
 ];

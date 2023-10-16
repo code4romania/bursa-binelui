@@ -60,4 +60,9 @@ class Volunteer extends Model
                 fn ($query) => $query->where('organization_id', $organizationId)
             );
     }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

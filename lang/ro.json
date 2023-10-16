@@ -76,6 +76,8 @@
     "projects_map": "Hartă proiecte",
     "status": "Status",
     "period": "Perioada donații",
+    "period_start_donation": "Data început perioada de donații",
+    "period_end_donation": "Data sfârșit perioada de donații",
     "add_project_title": "Adaugă proiect",
     "project_name_label": "Denumire proiect",
     "amount_target_label": "Suma target (RON)",

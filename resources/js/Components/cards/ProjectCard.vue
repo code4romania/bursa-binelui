@@ -121,15 +121,6 @@
                 @click="changeProjectStatus(project.id, 'archive', project.type)"
                 :label="$t('can.be.archived')"
             />
-
-            <SecondaryButton
-
-                v-if="'admin' == cardType && !project.is_active && !project.is_pending && !project.can_be_archived"
-                class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
-                @click="changeProjectStatus(project.id, 'pending', project.type)"
-                :label="$t('publish')"
-            />
-
             <!-- Donate modal -->
             <DonateModal
                 v-if="'client' == cardType && 0 < project_end_date"
@@ -195,16 +186,4 @@
 
         return daysDiff;
     });
-    const changeProjectStatus = (id, status, type) => {
-        let form = useForm({
-            status: status,
-            id: id,
-        });
-        console.log(form);
-        let tmpRoute =
-            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        if (confirm('Are you sure you want to change the status of this project?')) {
-            form.post(tmpRoute);
-        }
-    };
 </script>

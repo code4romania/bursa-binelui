@@ -2,9 +2,16 @@
     <DashboardLayout>
         <Title :title="$t('edit_project_title')" />
 
+        <SecondaryButton
+
+            v-if="!project.is_active && !project.is_pending && !project.can_be_archived"
+            class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
+            @click="changeProjectStatus(project.id, 'pending', project.type)"
+            :label="$t('publish')"
+        />
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
             <!-- Edit project name -->
-            <Field :label="$t('project_name_label')" :hasPendingChanges="changes.includes('name')" alt>
+            <Field :label="$t('project_name_label')" :hasPendingChanges="changes.includes('name')" alt :errors="formChangeStatus.errors.name">
                 <template #value>
                     {{ project.name }}
                 </template>
@@ -30,7 +37,7 @@
             </Field>
 
             <!-- Edit target amount -->
-            <Field :label="$t('amount_target_label')" :hasPendingChanges="changes.includes('target_budget')">
+            <Field :label="$t('amount_target_label')" :hasPendingChanges="changes.includes('target_budget')" :errors="formChangeStatus.errors.target_amount">
                 <template #value>
                     {{ project.target_budget }}
                 </template>
@@ -55,8 +62,8 @@
             </Field>
 
             <!-- Edit period -->
-            <Field :label="$t('period')" alt>
-                <template #value> {{ project.start }} - {{ project.end }} </template>
+            <Field :label="$t('period_start_donation')" alt :errors="formChangeStatus.errors.start">
+                <template #value> {{ project.start }} </template>
 
                 <template #action>
                     <EditModal
@@ -74,8 +81,21 @@
                                 v-model="project.start"
                                 :error="errors.start"
                             />
+                        </div>
+                    </EditModal>
+                </template>
+            </Field>
+            <Field :label="$t('period_end_donation')" alt :errors="formChangeStatus.errors.end">
+                <template #value>{{ project.end }} </template>
 
-                            <!-- Date end -->
+                <template #action>
+                    <EditModal
+                        @action="editField('end')"
+                        @cancel="resetField('end')"
+                        class="flex justify-end col-span-1"
+                    >
+                        <div class="flex w-full gap-6">
+                            <!-- Date start -->
                             <Input
                                 class="w-full xl:w-1/2"
                                 :label="$t('project_date_end_label')"
@@ -90,9 +110,9 @@
             </Field>
 
             <!-- Edit project category -->
-            <Field :label="$t('project_category_label')" :hasPendingChanges="changes.includes('categories')">
+            <Field :label="$t('project_category_label')" :hasPendingChanges="changes.includes('categories')" :errors="formChangeStatus.errors.categories">
                 <template #value>
-                    {{ project.categories }}
+                    {{ project.categories_names }}
                 </template>
 
                 <template #action>
@@ -101,21 +121,21 @@
                         @cancel="resetField('categories')"
                         class="flex justify-end col-span-1"
                     >
-                        <SelectMultiple
-                            class="w-full"
+                        <Select
                             :label="$t('project_category_label')"
                             :options="projectCategories"
                             v-model="project.categories"
                             :error="errors.categories"
+                            :multiple="true"
                         />
                     </EditModal>
                 </template>
             </Field>
 
             <!-- Edit project county -->
-            <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" alt>
+            <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" :errors="formChangeStatus.errors.counties">
                 <template #value>
-                    {{ project.counties}}
+                    {{ project.counties_names}}
                 </template>
 
                 <template #action>
@@ -124,19 +144,20 @@
                         @cancel="resetField('counties')"
                         class="flex justify-end col-span-1"
                     >
-                        <SelectMultiple
-                            class="w-full xl:w-1/2"
-                            :label="$t('counties_label')"
-                            :options="counties"
+                        <Select
+                            :label="$t('project_category_label')"
+                            type="singleValue"
+                            :options="props.counties"
                             v-model="project.counties"
                             :error="errors.counties"
+                            :multiple="true"
                         />
                     </EditModal>
                 </template>
             </Field>
 
             <!-- Edit project description -->
-            <Field :label="$t('project_description_label')" :hasPendingChanges="changes.includes('description')">
+            <Field :label="$t('project_description_label')" :hasPendingChanges="changes.includes('description')" :errors="formChangeStatus.errors.description">
                 <template #value>
                     {{ project.description }}
                 </template>
@@ -164,7 +185,7 @@
             </Field>
 
             <!-- Edit project scope -->
-            <Field :label="$t('project_scope_label')" :hasPendingChanges="changes.includes('scope')" alt>
+            <Field :label="$t('project_scope_label')" :hasPendingChanges="changes.includes('scope')" alt  :errors="formChangeStatus.errors.scope">
                 <template #value>
                     {{ project.scope }}
                 </template>
@@ -190,7 +211,7 @@
             </Field>
 
             <!-- Edit project beneficiary -->
-            <Field :label="$t('project_beneficiary_label')" :hasPendingChanges="changes.includes('beneficiaries')">
+            <Field :label="$t('project_beneficiary_label')" :hasPendingChanges="changes.includes('beneficiaries')" :errors="formChangeStatus.errors.beneficiaries">
                 <template #value>
                     {{ project.beneficiaries }}
                 </template>
@@ -215,10 +236,13 @@
                         </Textarea>
                     </EditModal>
                 </template>
+                <template #error>
+                    <p class="mt-2 text-sm text-red-600" v-if="errors.beneficiaries" v-text="errors.beneficiaries"></p>
+                </template>
             </Field>
 
             <!-- Edit project why to donate -->
-            <Field :label="$t('why_to_donate')" :hasPendingChanges="changes.includes('reason_to_donate')" alt>
+            <Field :label="$t('why_to_donate')" :hasPendingChanges="changes.includes('reason_to_donate')" alt :errors="formChangeStatus.errors.reason_to_donate">
                 <template #value>
                     {{ project.reason_to_donate }}
                 </template>
@@ -244,7 +268,7 @@
             </Field>
 
             <!-- Edit main image -->
-            <Field :label="$t('main_image')" :hasPendingChanges="changes.includes('cover_image')">
+            <Field :label="$t('main_image')" :hasPendingChanges="changes.includes('cover_image')" :errors="formChangeStatus.errors.image">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <img class="object-contain w-32 h-32 shrink-0" :src="project.image" alt="" />
@@ -269,7 +293,7 @@
             </Field>
 
             <!-- Edit Photo gallery -->
-            <Field :label="$t('photo_gallery')" :hasPendingChanges="changes.includes('name')" alt>
+            <Field :label="$t('photo_gallery')" :hasPendingChanges="changes.includes('name')" alt :errors="formChangeStatus.errors.photo_gallery">
                 <template #value>
                     <div>Images</div>
 
@@ -318,7 +342,7 @@
                 <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                     {{ project.project_links }}
                 </dt>
-                <EditModal @action="editField('project_links')" class="flex justify-end col-span-1">
+                <EditModal @action="editField('project_links')" class="flex justify-end col-span-1" :errors="formChangeStatus.errors.project_links">
                     <Repeater class="w-full xl:w-1/2">
                         <InputWithIcon
                             class="w-full"
@@ -340,7 +364,7 @@
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
         </div>
 
-        <EditModal @action="editField()" btnClasses="" class="mt-9">
+        <EditModal @action="editField()" btnClasses="" class="mt-9" :errors="formChangeStatus.errors.project_articles">
             <InputWithIcon
                 class="w-full"
                 :label="$t('articles_link_label')"
@@ -390,21 +414,17 @@
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Alert from '@/Components/Alert.vue';
     import Field from '@/Components/Field.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import FileInput from '@/Components/form/FileInput.vue';
-    import FileGroup from '@/Components/form/FileGroup.vue';
     import Repeater from '@/Components/form/Repeater.vue';
     import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-
     import DangerButton from '@/Components/buttons/DangerButton.vue';
     import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import Select from "@/Components/form/Select.vue";
 
     const props = defineProps({
         project: Object,
@@ -417,15 +437,25 @@
 
     const project = ref(props.project);
     const originalProject = computed(() => props.project);
-    console.log(project.value)
+
+    console.log(props.projectCategories, props.counties);
 
     const resetField = (field) => {
         project.value[field] = originalProject.value[field];
     };
 
-    function urlImage (image){
-        return window.location.origin+image.original_url
-    }
+    const formChangeStatus = useForm({
+        status: 'pending',
+        id: project.value.id,
+    });
+
+    const changeProjectStatus = (id, status, type) => {
+        let tmpRoute =
+            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+        if (confirm('Are you sure you want to change the status of this project?')) {
+            formChangeStatus.post(tmpRoute);
+        }
+    };
 
     const editField = (field) => {
         const form = useForm({

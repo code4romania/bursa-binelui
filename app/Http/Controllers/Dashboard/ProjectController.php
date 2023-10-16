@@ -6,8 +6,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreRequest;
+use App\Http\Resources\Project\EditProjectResource;
+use App\Http\Resources\Project\ShowProjectResource;
 use App\Http\Resources\ProjectCardResource;
-use App\Http\Resources\ProjectResource;
 use App\Models\Activity;
 use App\Models\County;
 use App\Models\Project;
@@ -15,6 +16,7 @@ use App\Models\ProjectCategory;
 use App\Services\ProjectService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -22,6 +24,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projectStatus = $request->get('project_status');
+
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => ProjectCardResource::collection(
                 Project::query()
@@ -48,12 +51,10 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project = (new ProjectService(Project::class))->create($data);
-        $project->addAllMediaFromRequest()->each(function ($fileAdder,$index) {
-            if ($index == 0)
-            {
+        $project->addAllMediaFromRequest()->each(function ($fileAdder, $index) {
+            if ($index == 0) {
                 $fileAdder->toMediaCollection('preview');
-            }else{
-
+            } else {
                 $fileAdder->toMediaCollection('gallery');
             }
         });
@@ -65,12 +66,11 @@ class ProjectController extends Controller
     {
         $this->authorize('view', $project);
         $project->load('media');
-        $counties = County::get(['name', 'id']);
 
         return Inertia::render('AdminOng/Projects/EditProject', [
-            'project' => new ProjectResource($project),
-            'counties' => $counties,
-            'projectCategories' => ProjectCategory::get(['name', 'id']),
+            'project' => new EditProjectResource($project),
+            'counties' => $this->getCounties(),
+            'projectCategories' => $this->getProjectCategories(),
             'changes' => Activity::pendingChangesFor($project)
                 ->get()
                 ->flatMap(fn (Activity $activity) => $activity->properties->keys())
@@ -83,11 +83,12 @@ class ProjectController extends Controller
     {
         $this->authorize('editAsNgo', $project);
 
+
         if ($request->has('counties')) {
-            $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
+            $project->counties()->sync(collect($request->get('counties')));
         }
         if ($request->has('categories')) {
-            $project->categories()->sync(collect($request->get('categories'))->pluck('id'));
+            $project->categories()->sync(collect($request->get('categories')));
         }
         $project->update($request->all());
 
@@ -97,6 +98,24 @@ class ProjectController extends Controller
 
     public function changeStatus($id, Request $request)
     {
+        $project = Project::findOrFail($id);
+        $projectArray = $project->toArray();
+        $project['preview'] = $project->getFirstMediaUrl('preview') ?? null;
+
+        Validator::make($projectArray, [
+            'name' => ['required', 'max:255'],
+            'start' => ['required', 'date', 'after_or_equal:today'],
+            'end' => ['required', 'date', 'after:start'],
+            'target_amount' => ['required', 'numeric', 'min:1'],
+            'categories' => ['required', 'array', 'min:1'],
+            'counties' => ['required_if:is_national,0', 'array', 'min:1'],
+            'description' => ['required', 'min:100', 'max:1000'],
+            'scope' => ['required', 'min:100', 'max:1000'],
+            'beneficiaries' => ['required', 'min:100', 'max:1000'],
+            'reason_to_donate' => ['required', 'min:100', 'max:1000'],
+            'preview' => ['required'],
+        ])->validate();
+
         try {
             (new ProjectService(Project::class))->changeStatus($id, $request->get('status'));
         } catch (\Exception $exception) {

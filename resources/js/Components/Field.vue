@@ -15,15 +15,23 @@
             <slot name="value" />
 
             <p v-show="hasPendingChanges" class="mt-2 text-sm text-red-600" v-text="$t('field_has_pending_changes')" />
+            <p v-show="hasErrors" class="mt-2 text-sm text-red-600" v-text="errors" />
         </dd>
 
         <div class="flex md:justify-end">
             <slot name="action" />
         </div>
+
     </div>
 </template>
 
 <script setup>
+import {computed, onMounted} from "vue";
+    onMounted(() => {
+        console.log('mounted')
+        console.log(props.errors)
+    });
+
     const props = defineProps({
         label: String,
         hasPendingChanges: {
@@ -34,5 +42,13 @@
             type: Boolean,
             default: false,
         },
+        errors:{
+            type: String,
+            default: null,
+        }
+    });
+
+    const hasErrors = computed(() => {
+        return props.errors !== null;
     });
 </script>
