@@ -13,7 +13,6 @@ class EditProjectResource extends Resource
 
     public function toArray(Request $request): array
     {
-
         return [
             'id' => $this->id,
             // 'type' => $this->type,
@@ -39,8 +38,8 @@ class EditProjectResource extends Resource
             'description' => $this->description ?? '',
             'scope' => $this->scope ?? '',
             'reason_to_donate' => $this->reason_to_donate ?? '',
-            'accepting_volunteers' =>$this->accepting_volunteers ? __('field.boolean.true'): __('field.boolean.false'),
-            'accepting_comments' => $this->accepting_comments ? __('field.boolean.true'): __('field.boolean.false'),
+            'accepting_volunteers' => $this->accepting_volunteers ? __('field.boolean.true') : __('field.boolean.false'),
+            'accepting_comments' => $this->accepting_comments ? __('field.boolean.true') : __('field.boolean.false'),
             'videos' => '',
             'external_links' => $this->external_links,
             'counties' => $this->counties->pluck('id')->toArray(),

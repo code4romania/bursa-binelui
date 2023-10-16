@@ -21,26 +21,38 @@
                 <ProjectTag v-else-if="project.is_draft" :label="$t('project_draft')" />
 
                 <ProjectTag v-else-if="!project.is_active" :label="$t('project_closed')" />
-
-                <div v-if="project.is_active && project.championship" class="flex flex-wrap items-center gap-1">
-                    <ProjectTag
-                        v-if="project.championship.troffees_count"
-                        :label="project.championship.troffees_count"
-                        icon="troffee"
-                        accent
-                    />
-
-                    <ProjectTag v-if="project.championship.score" accent>
-                        <span class="font-bold" v-text="$t('scor')" />
-                        <span class="font-extrabold" v-text="project.championship.score" />
-                    </ProjectTag>
-                </div>
-
                 <ProjectTag
-                    v-if="project.is_active && project.is_ending_soon"
+                    v-else-if="project.is_active && project.is_starting_soon"
+                    :label="$t('project_starting_soon')"
+                    icon="clock"
+                />
+                <ProjectTag
+                    v-else-if="project.is_active && project.is_ending_soon"
                     :label="$t('project_ending_soon')"
                     icon="clock"
                 />
+
+                <ProjectTag
+                    v-else-if="project.is_active"
+                    :label="$t('project_active')"
+                    icon="clock"
+                />
+
+<!--                <div v-if="project.is_active && project.championship" class="flex flex-wrap items-center gap-1">-->
+<!--                    <ProjectTag-->
+<!--                        v-if="project.championship.troffees_count"-->
+<!--                        :label="project.championship.troffees_count"-->
+<!--                        icon="troffee"-->
+<!--                        accent-->
+<!--                    />-->
+
+<!--                    <ProjectTag v-if="project.championship.score" accent>-->
+<!--                        <span class="font-bold" v-text="$t('scor')" />-->
+<!--                        <span class="font-extrabold" v-text="project.championship.score" />-->
+<!--                    </ProjectTag>-->
+<!--                </div>-->
+
+
 
 
             </div>
