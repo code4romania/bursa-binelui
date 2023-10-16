@@ -30,6 +30,7 @@ class ShowProjectResource extends Resource
             'organization' => [
                 'name' => $this->organization->name,
                 'id' => $this->organization->id,
+                'description' => $this->organization->description,
             ],
             'is_national' => \boolval($this->is_national),
             'beneficiaries' => $this->beneficiaries,

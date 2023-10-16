@@ -204,6 +204,22 @@
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('why_to_donate') }}</h2>
                 <div class="text-lg text-gray-500" v-html="project.reason_to_donate"></div>
             </div>
+
+            <div class="mb-10" v-if="project.external_links.length>0">
+                <div class="pt-12 pb-20 mt-16 bg-primary-500 px-9 lg:px-0">
+                    <div class="flex items-center gap-4 mx-auto max-w-7xl">
+                        <div class="flex items-center justify-center w-10 h-10 p-2 text-white rounded-lg bg-primary-100">
+                            <SpeakerphoneIcon />
+                        </div>
+                        <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('external_links') }}</h3>
+                    </div>
+                </div>
+
+                <div class=""  v-for="item in project.external_links">
+                    <p v-html="item.title"/>
+                    <a :href="item.url"  target="_blank" v-html="item.url"/>
+                </div>
+            </div>
         </div>
 
         <!-- How can you help -->
@@ -340,6 +356,7 @@
     import SharePage from '@/Components/SharePage.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import {SpeakerphoneIcon} from "@heroicons/vue/outline";
 
     const props = defineProps({
         project: {

@@ -22,6 +22,7 @@ class ProjectCardResource extends Resource
             'organization' => [
                 'name' => $this->organization->name,
                 'id' => $this->organization->id,
+
             ],
             'categories' => $this->categories->pluck('name')->join(', '),
             'donations' => [
