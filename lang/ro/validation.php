@@ -217,5 +217,10 @@ return [
         'user.email' => 'email',
         'user.password' => 'parolă',
         'end' => "Data finală perioada de donații",
+        'start' => "Data început perioada de donații",
+        'today' => "Data de azi",
+        'target_budget' => "Bugetul țintă",
+        'categories' => "Categorii",
+        'counties' => "Județe",
     ],
 ];

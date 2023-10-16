@@ -29,7 +29,7 @@
             </Field>
 
             <!-- Edit target amount -->
-            <Field :label="$t('amount_target_label')" :hasPendingChanges="changes.includes('target_budget')" :errors="formChangeStatus.errors.target_amount">
+            <Field :label="$t('amount_target_label')" :hasPendingChanges="changes.includes('target_budget')" :errors="formChangeStatus.errors.target_budget">
                 <template #value>
                     {{ project.target_budget }}
                 </template>

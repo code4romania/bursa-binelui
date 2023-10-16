@@ -101,20 +101,27 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $projectArray = $project->toArray();
         $project['preview'] = $project->getFirstMediaUrl('preview') ?? null;
+//        dd($project);
 
-        Validator::make($projectArray, [
-            'name' => ['required', 'max:255'],
-            'start' => ['required', 'date', 'after_or_equal:today'],
-            'end' => ['required', 'date', 'after:start'],
-            'target_amount' => ['required', 'numeric', 'min:1'],
-            'categories' => ['required', 'array', 'min:1'],
-            'counties' => ['required_if:is_national,0', 'array', 'min:1'],
-            'description' => ['required', 'min:100', 'max:1000'],
-            'scope' => ['required', 'min:100', 'max:1000'],
-            'beneficiaries' => ['required', 'min:100', 'max:1000'],
-            'reason_to_donate' => ['required', 'min:100', 'max:1000'],
-            'preview' => ['required'],
-        ])->validate();
+        Validator::make(
+            $projectArray,
+            [
+                'name' => ['required', 'max:255'],
+                'start' => ['required', 'date', 'after_or_equal:tomorrow'],
+                'end' => ['required', 'date', 'after:start'],
+                'target_budget' => ['required', 'numeric', 'min:1'],
+                'categories' => ['required', 'array', 'min:1'],
+                'counties' => ['required_if:is_national,0', 'array', 'min:1'],
+                'description' => ['required', 'min:100', 'max:1000'],
+                'scope' => ['required', 'min:100', 'max:1000'],
+                'beneficiaries' => ['required', 'min:100', 'max:1000'],
+                'reason_to_donate' => ['required', 'min:100', 'max:1000'],
+                'preview' => ['required'],
+            ],
+            [
+                'start.after_or_equal' => __('custom_validation.start_date.after_or_equal'),
+            ]
+        )->validate();
 
         try {
             (new ProjectService(Project::class))->changeStatus($id, $request->get('status'));
