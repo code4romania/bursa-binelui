@@ -15,12 +15,12 @@ class RejectedProject extends BaseProjectWidget
 
     protected function getTableHeading(): string
     {
-        return __('project.heading.rejected');
+        return __('project.heading.rejected', ['number' => $this->getTableQuery()->count()]);
     }
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->whereIsRejected();
+        return Project::query()->select(['id','organization_id','name','target_budget','is_national','created_at','status_updated_at','status'])->whereIsRejected();
     }
 
     protected function getTableQueryStringIdentifier(): ?string

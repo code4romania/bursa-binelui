@@ -188,6 +188,11 @@ class Organization extends Model implements HasMedia
         return $query->whereDoesntHave('projects.donations');
     }
 
+    public function EuPlatescIsActive(): bool
+    {
+        return $this->eu_platesc_merchant_id !== null && $this->eu_platesc_private_key !== null;
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

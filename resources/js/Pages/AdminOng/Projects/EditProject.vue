@@ -92,7 +92,7 @@
             <!-- Edit project category -->
             <Field :label="$t('project_category_label')" :hasPendingChanges="changes.includes('categories')">
                 <template #value>
-                    {{ project.categories.map((item) => item.name).join(', ') }}
+                    {{ project.categories }}
                 </template>
 
                 <template #action>
@@ -115,7 +115,7 @@
             <!-- Edit project county -->
             <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" alt>
                 <template #value>
-                    {{ project.counties.map((item) => item.name).join(', ') }}
+                    {{ project.counties}}
                 </template>
 
                 <template #action>
@@ -247,7 +247,7 @@
             <Field :label="$t('main_image')" :hasPendingChanges="changes.includes('cover_image')">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
-                        <img class="object-contain w-32 h-32 shrink-0" :src="project.cover_image" alt="" />
+                        <img class="object-contain w-32 h-32 shrink-0" :src="project.image" alt="" />
 
                         <div>
                             <EditModal
@@ -258,7 +258,7 @@
                                 <FileInput
                                     :label="$t('upload_image')"
                                     @upload="(file) => (form.cover_image = file)"
-                                    :form="project.cover_image"
+                                    :form="project.image"
                                     accept="image/png, image/jpeg"
                                     previewable
                                 />
@@ -275,9 +275,9 @@
 
                     <div class="flex flex-wrap">
                         <div
-                            :style="{ backgroundImage: 'url(' + image.preview_url + ')' }"
+                            :style="{backgroundImage: `url(${image.url})` }"
                             style="background-size: contain"
-                            v-for="(image, index) in project.media"
+                            v-for="(image, index) in project.gallery"
                             :key="index"
                             class="grid content-end grid-cols-2 gap-4 mx-2 my-2 w-60 h-60"
                         >
@@ -313,7 +313,7 @@
                     {{ $t('video_link_label') }}
                 </dt>
                 <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                    {{ project.image }}
+                    {{ project.video }}
                 </dt>
                 <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                     {{ project.project_links }}
@@ -417,14 +417,19 @@
 
     const project = ref(props.project);
     const originalProject = computed(() => props.project);
+    console.log(project.value)
 
     const resetField = (field) => {
         project.value[field] = originalProject.value[field];
     };
 
+    function urlImage (image){
+        return window.location.origin+image.original_url
+    }
+
     const editField = (field) => {
         const form = useForm({
-            [field]: organization.value[field],
+            [field]: project.value[field],
         });
 
         form.post(route('dashboard.projects.update', project.value.id), {

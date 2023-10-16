@@ -29,6 +29,7 @@ class ProjectService
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = ProjectStatus::draft->value;
+
         $project = $this->createDraftProject($data);
         if (! empty($data['categories'])) {
             $project->categories()->attach($data['categories']);
@@ -45,7 +46,12 @@ class ProjectService
         if (empty($data['name'])) {
             $data['name'] = 'Draft-' . date('Y-m-d H:i:s') . '-' . auth()->user()->name;
         }
-        $data['slug'] = \Str::slug($data['name']);
+        $slug = \Str::slug($data['name']);
+        $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        $data['slug'] = $slug;
+        if ($count > 0) {
+            $data['slug'] .= '-' . ($count + 1);
+        }
 
         return  $this->project::create($data);
     }
@@ -53,7 +59,7 @@ class ProjectService
     private function sendCreateNotifications($project): void
     {
         auth()->user()->notify(new ProjectCreated($project));
-        $adminUsers = User::whereRole(UserRole::bb_admin)->get();
+        $adminUsers = User::whereRole(UserRole::SUPERADMIN)->get();
         Notification::send($adminUsers, new ProjectCreatedAdmin($project));
     }
 
@@ -72,6 +78,7 @@ class ProjectService
     public function changeStatus($id, string $status): void
     {
         $this->project = $this->project::findOrFail($id);
+
         if ($this->project->status === ProjectStatus::draft && $status === ProjectStatus::pending->value) {
             $fields = $this->project->toArray();
             $requiredFields = $this->project->getRequiredFieldsForApproval();
@@ -82,10 +89,12 @@ class ProjectService
                 }
             }
             if (! empty($missingFields)) {
-                throw new \Exception('Project is missing required fields for approval, please fill in all required fields . Please fill: ' . implode(', ', $missingFields));
+                throw new ('Project is missing required fields for approval, please fill in all required fields . Please fill: ' . implode(', ', $missingFields));
             }
         }
-        $this->project->update(['status' => $status]);
+        $this->project->status = ProjectStatus::pending->value;
+        $this->project->status_updated_at = now();
+        $this->project->save();
         if ($status === ProjectStatus::approved->value) {
             $this->sendCreateNotifications($this->project);
         }

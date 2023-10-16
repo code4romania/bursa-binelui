@@ -125,6 +125,8 @@
     "donate_btn": "Donează",
     "publish": "Publică",
     "project_closed": "Proiect închis",
+    "project_draft": "Proiect draft",
+    "project_waiting_for_approval": "Proiect în aprobare",
     "code4_solution": "O solutie Code for Romania.",
     "find_more": "Afla mai multe",
     "util_links": "LINKURI UTILE",
@@ -394,7 +396,7 @@
     "verify_email_title": "Îți mulțumim că te-ai înregistrat pe platforma Bursa Binelui !",
     "verify_email_description": "Te rugăm să îți validezi adresa de email pentru a-ți accesa contul. Dacă nu ai primit un email pentru validare, te rugăm să ne contactezi la email@example.com.",
     "verify_email_warning": "Dacă adresa de email nu va fi validată în 48 de ore, datele tale vor fi șterse și nu vor putea fi recuperate",
-
+    "can.be.archived": "Arhivează",
     "articles.index": "Articole",
     "articles.category": "Articole din domeniul \":category\"",
 
@@ -435,4 +437,5 @@
 
     "locales.ro": "Română",
     "locales.en": "English"
+
 }

@@ -73,7 +73,7 @@
         props.modelValue.splice(index, 1);
     };
     const setCoverImage = (index) => {
-        //TODO set cover image
+      console.log(index)
     };
 
     /** Component emits. */

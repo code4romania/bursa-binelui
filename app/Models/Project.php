@@ -42,6 +42,7 @@ class Project extends Model implements HasMedia
         'scope',
         'reason_to_donate',
         'beneficiaries',
+        'is_national',
         'start',
         'end',
         'accepting_volunteers',
@@ -55,6 +56,7 @@ class Project extends Model implements HasMedia
         'videos' => 'array',
         'external_links' => 'array',
         'start' => 'date:Y-m-d',
+        'is_national' => 'boolean',
         'end' => 'date:Y-m-d',
         'accepting_volunteers' => 'boolean',
         'accepting_comments' => 'boolean',
@@ -71,15 +73,17 @@ class Project extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('cover_image')
-            ->singleFile()
+        $this->addMediaCollection('preview')
             ->useFallbackUrl(Vite::image('placeholder.png'))
+            ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this
-                    ->addMediaConversion('thumb')
-                    ->fit(Manipulations::FIT_CROP, 300, 300)
+                    ->addMediaConversion('preview')
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
                     ->nonQueued();
             });
+
+        $this->addMediaCollection('gallery');
     }
 
     public function getActivitylogOptions(): LogOptions
@@ -158,6 +162,11 @@ class Project extends Model implements HasMedia
         return $this->status == ProjectStatus::pending;
     }
 
+    public function getIsDraftAttribute(): bool
+    {
+        return $this->status == ProjectStatus::draft;
+    }
+
     public function getIsPeriodActiveAttribute(): bool
     {
         return $this->start->isPast() && $this->end->isFuture();
@@ -170,6 +179,12 @@ class Project extends Model implements HasMedia
             && $this->end->isFuture();
     }
 
+    public function getCanBeArchivedAttribute(): bool
+    {
+        return $this->status == ProjectStatus::approved
+            && now()->subDays(30)->gte($this->end);
+    }
+
     public function getIsEndingSoonAttribute(): bool
     {
         if (empty($this->end)) {
@@ -177,5 +192,25 @@ class Project extends Model implements HasMedia
         }
 
         return $this->end->diffInDays(today()) <= 5;
+    }
+
+    public function getVisibleStatusAttribute(): string
+    {
+        if ($this->isStartingSoon()) {
+            return 'starting_soon';
+        }
+        if ($this->isOpen()) {
+            return 'open';
+        }
+        if ($this->isClose())
+        {
+            return 'close';
+        }
+        if ($this->isArchived()) {
+            return 'archived';
+        }
+
+        return $this->status->value;
+
     }
 }

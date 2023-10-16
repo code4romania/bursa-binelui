@@ -22,6 +22,8 @@ class TitleWithImageColumn extends Column
 
     protected string | Closure | null $description = null;
 
+    protected string | Closure | null $organization = null;
+
     public function image(string | Closure | null $image): static
     {
         $this->image = $image;
@@ -41,6 +43,13 @@ class TitleWithImageColumn extends Column
         return $this;
     }
 
+    public function organization(string | Closure | null $organization): static
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
     public function getTitle(): ?string
     {
         return $this->evaluate($this->title);
@@ -56,5 +65,10 @@ class TitleWithImageColumn extends Column
     public function getDescription(): ?string
     {
         return $this->evaluate($this->description);
+    }
+
+    public function getOrganization(): ?string
+    {
+        return $this->evaluate($this->organization);
     }
 }

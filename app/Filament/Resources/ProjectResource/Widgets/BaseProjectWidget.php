@@ -107,8 +107,5 @@ class BaseProjectWidget extends BaseWidget
         ];
     }
 
-    protected function getTableRecordsPerPage(): int
-    {
-        return 5;
-    }
+
 }

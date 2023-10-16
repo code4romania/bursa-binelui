@@ -16,6 +16,10 @@ class ProjectPolicy
 
     public function view(User $user, Project $project): bool
     {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
         return $user->belongsToOrganization($project->organization);
     }
 
