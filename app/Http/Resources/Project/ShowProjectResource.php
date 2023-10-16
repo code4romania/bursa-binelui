@@ -18,7 +18,7 @@ class ShowProjectResource extends Resource
             'name' => $this->name,
             'slug' => $this->slug,
             'counties' => $this->counties->pluck('name')->join(', '),
-            'status' =>$this->visible_status,
+            'status' => $this->visible_status,
             'image' => $this->getFirstMediaUrl('preview'),
             'target_budget' => $this->target_budget,
             'gallery' => $this->getMedia('gallery')->map(function ($media) {
@@ -41,6 +41,7 @@ class ShowProjectResource extends Resource
             'accepting_volunteers' => \boolval($this->accepting_volunteers),
             'accepting_comments' => \boolval($this->accepting_comments),
             'videos' => '',
+            'is_active' => $this->is_active,
             'external_links' => $this->external_links,
             'categories' => $this->categories->pluck('name')->join(', '),
             'donations' => [

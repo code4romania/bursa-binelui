@@ -38,6 +38,9 @@
                 </div>
 
                 <h1 v-if="project.name" class="py-12 text-6xl font-extrabold text-gray-900">{{ project.name }}</h1>
+                <h2 v-if="project.organization.name" class="mb-8 text-3xl font-bold text-cyan-900">
+                    {{ project.organization.name }}
+                </h2>
 
                 <div class="flex flex-col w-full gap-4 sm:flex-row">
                     <!-- Donate modal -->
