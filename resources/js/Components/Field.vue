@@ -26,12 +26,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted} from "vue";
-    onMounted(() => {
-        console.log('mounted')
-        console.log(props.errors)
-    });
-
+import {computed} from "vue";
     const props = defineProps({
         label: String,
         hasPendingChanges: {

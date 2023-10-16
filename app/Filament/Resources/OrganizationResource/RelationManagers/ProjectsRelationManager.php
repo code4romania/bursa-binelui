@@ -16,7 +16,6 @@ class ProjectsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-
     public static function getTitle(): string
     {
         return __('project.label.plural');

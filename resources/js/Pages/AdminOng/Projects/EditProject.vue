@@ -1,14 +1,6 @@
 <template>
     <DashboardLayout>
         <Title :title="$t('edit_project_title')" />
-
-        <SecondaryButton
-
-            v-if="!project.is_active && !project.is_pending && !project.can_be_archived"
-            class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
-            @click="changeProjectStatus(project.id, 'pending', project.type)"
-            :label="$t('publish')"
-        />
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
             <!-- Edit project name -->
             <Field :label="$t('project_name_label')" :hasPendingChanges="changes.includes('name')" alt :errors="formChangeStatus.errors.name">
@@ -112,7 +104,7 @@
             <!-- Edit project category -->
             <Field :label="$t('project_category_label')" :hasPendingChanges="changes.includes('categories')" :errors="formChangeStatus.errors.categories">
                 <template #value>
-                    {{ project.categories_names }}
+                    {{ originalProject.categories_names }}
                 </template>
 
                 <template #action>
@@ -135,7 +127,8 @@
             <!-- Edit project county -->
             <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" :errors="formChangeStatus.errors.counties">
                 <template #value>
-                    {{ project.counties_names}}
+                    {{ originalProject.counties_names}}
+
                 </template>
 
                 <template #action>
@@ -145,7 +138,7 @@
                         class="flex justify-end col-span-1"
                     >
                         <Select
-                            :label="$t('project_category_label')"
+                            :label="$t('counties_label')"
                             type="singleValue"
                             :options="props.counties"
                             v-model="project.counties"
@@ -403,6 +396,12 @@
                 </div>
             </dl>
         </div>
+        <SecondaryButton
+            v-if="!project.is_active && !project.is_pending && !project.can_be_archived"
+            class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
+            @click="changeProjectStatus(project.id, 'pending', project.type)"
+            :label="$t('publish')"
+        />
     </DashboardLayout>
 </template>
 
@@ -438,8 +437,6 @@
     const project = ref(props.project);
     const originalProject = computed(() => props.project);
 
-    console.log(props.projectCategories, props.counties);
-
     const resetField = (field) => {
         project.value[field] = originalProject.value[field];
     };
@@ -461,6 +458,12 @@
         const form = useForm({
             [field]: project.value[field],
         });
+
+        // if (field ==='counties') {
+        //     console.log(props.counties.find(form.counties));
+        //     project.counties_names = props.counties.find(form.counties);
+        // }
+        // console.log(form,field);
 
         form.post(route('dashboard.projects.update', project.value.id), {
             preserveScroll: true,
