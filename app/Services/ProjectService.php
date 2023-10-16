@@ -50,6 +50,7 @@ class ProjectService
         }
         $slug = \Str::slug($data['name']);
         $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        $data['organization_id'] = auth()->user()->organization_id;
         $data['slug'] = $slug;
         if ($count > 0) {
             $data['slug'] .= '-' . ($count + 1);
@@ -68,6 +69,7 @@ class ProjectService
     private function createPendingProject(array $data): Project|RegionalProject
     {
         $data['slug'] = \Str::slug($data['name']);
+        $data['organization_id'] = auth()->user()->organization_id;
         $project = $this->project::create($data);
         $this->sendCreateNotifications($project);
 
@@ -77,9 +79,9 @@ class ProjectService
     /**
      * @throws \Exception
      */
-    public function changeStatus($id, string $status): void
+    public function changeStatus(Project|RegionalProject $project, string $status): void
     {
-
+        $this->project = $project;
         $this->project->status = ProjectStatus::pending->value;
         $this->project->status_updated_at = now();
         $this->project->save();

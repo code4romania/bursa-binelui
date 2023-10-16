@@ -100,14 +100,12 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $projectArray = $project->toArray();
-        $project['preview'] = $project->getFirstMediaUrl('preview') ?? null;
-//        dd($project);
-
+        $projectArray['preview'] = $project->getFirstMediaUrl('preview') ?? null;
         Validator::make(
             $projectArray,
             [
                 'name' => ['required', 'max:255'],
-                'start' => ['required', 'date', 'after_or_equal:tomorrow'],
+                'start' => ['required', 'date', 'after_or_equal:today'],
                 'end' => ['required', 'date', 'after:start'],
                 'target_budget' => ['required', 'numeric', 'min:1'],
                 'categories' => ['required', 'array', 'min:1'],
@@ -124,8 +122,9 @@ class ProjectController extends Controller
         )->validate();
 
         try {
-            (new ProjectService(Project::class))->changeStatus($id, $request->get('status'));
+            (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             return redirect()->back()
                 ->with('error', $exception->getMessage());
         }

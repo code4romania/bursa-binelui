@@ -50,6 +50,9 @@ class EditProjectResource extends Resource
                 'troffees_count' => 2,
                 'score' => 100,
             ],
+            'is_active' => $this->is_active,
+            'is_pending' => $this->is_pending,
+            'can_be_archived' => $this->can_be_archived,
         ];
     }
 }
