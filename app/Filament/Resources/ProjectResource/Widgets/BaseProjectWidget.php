@@ -106,6 +106,4 @@ class BaseProjectWidget extends BaseWidget
                 ->icon(null),
         ];
     }
-
-
 }
