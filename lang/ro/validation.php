@@ -222,5 +222,6 @@ return [
         'target_budget' => 'Bugetul țintă',
         'categories' => 'Categorii',
         'counties' => 'Județe',
+        'preview' => 'Imaginea principala'
     ],
 ];

@@ -261,7 +261,7 @@
             </Field>
 
             <!-- Edit main image -->
-            <Field :label="$t('main_image')" :hasPendingChanges="changes.includes('cover_image')" :errors="formChangeStatus.errors.image">
+            <Field :label="$t('main_image')" :errors="formChangeStatus.errors.preview">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <img class="object-contain w-32 h-32 shrink-0" :src="originalProject.image" alt="" />

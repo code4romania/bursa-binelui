@@ -101,7 +101,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $projectArray = $project->toArray();
-        $projectArray['preview'] = $project->getFirstMediaUrl('preview') ?? null;
+        $projectArray['preview'] = $project->getFirstMedia('preview');
         Validator::make(
             $projectArray,
             [
