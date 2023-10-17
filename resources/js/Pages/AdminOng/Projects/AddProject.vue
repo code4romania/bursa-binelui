@@ -16,7 +16,6 @@
                     :error="form.errors.name"
                 />
 
-                <!-- Project main image -->
 
                 <!-- Project amount target -->
                 <Input
@@ -61,13 +60,9 @@
                     />
                 </div>
                 <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.is_national" />
-                    <span class="ml-2 text-sm text-gray-700">{{ $t('is_national') }}</span>
-
-                    <!-- Error -->
-                    <p v-show="form.errors.is_national" class="mt-2 text-sm text-red-600">
-                        {{ form.errors.is_national }}
-                    </p>
+                    <Checkbox name="remember" v-model:checked="form.is_national"  />
+                    <span class="ml-2 text-sm text-gray-700" v-html="$t('is_national') "/>
+                    <p v-show="form.errors.is_national" class="mt-2 text-sm text-red-600" v-html="form.errors.is_national"/>
                 </label>
 
                 <!-- County -->
@@ -82,7 +77,6 @@
                     multiple
                 />
 
-                <!-- Project description -->
                 <Textarea
                     class="w-full"
                     :label="$t('project_description_label')"
@@ -91,12 +85,9 @@
                     numberOfCharacters=800
                     v-model="form.description"
                     :error="form.errors.description"
-                >
-                <p class="text-sm font-normal text-gray-500">{{ $t('project_description_extra') }}</p>
+                    :more-info="$t('project_description_extra')"
+                />
 
-                </Textarea>
-
-                <!-- Project scope -->
                 <Textarea
                     class="w-full"
                     :label="$t('project_scope_label')"
@@ -104,10 +95,8 @@
                     color="gray-700"
                     v-model="form.scope"
                     :error="form.errors.scope"
-                >
-                <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
-
-                </Textarea>
+                    :more-info="$t('project_scope_extra')"
+                />
 
                 <!-- Project beneficiary -->
                 <Textarea
@@ -117,10 +106,8 @@
                     color="gray-700"
                     v-model="form.beneficiaries"
                     :error="form.errors.beneficiaries"
-                >
-                <p class="text-sm font-normal text-gray-500">{{ $t('project_beneficiary_extra') }}</p>
-
-                </Textarea>
+                    :more-info="$t('project_beneficiary_extra')"
+                />
 
                 <!-- Why to donate -->
                 <Textarea
@@ -130,33 +117,31 @@
                     color="gray-700"
                     v-model="form.reason_to_donate"
                     :error="form.errors.reason_to_donate"
-                >
-                <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
-
-                </Textarea>
+                    :more-info="$t('why_to_donate_extra')"
+                />
 
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.accepting_volunteers" />
-                    <span class="ml-2 text-sm text-gray-700">{{ $t('has_volunteers_label') }}</span>
-
-                    <!-- Error -->
-                    <p v-show="form.errors.accepting_volunteers" class="mt-2 text-sm text-red-600">
-                        {{ form.errors.accepting_volunteers }}
-                    </p>
+                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_volunteers_label')"/>
+                    <p v-show="form.errors.accepting_volunteers" class="mt-2 text-sm text-red-600" v-html="form.errors.accepting_volunteers"/>
                 </label>
 
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.accepting_comments" />
-                    <span class="ml-2 text-sm text-gray-700">{{ $t('has_comments_label') }}</span>
-
-                    <!-- Error -->
-                    <p v-show="form.errors.accepting_comments" class="mt-2 text-sm text-red-600">
-                        {{ form.errors.accepting_comments }}
-                    </p>
+                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_comments_label')"/>
+                    <p v-show="form.errors.accepting_comments" class="mt-2 text-sm text-red-600" v-html="form.errors.accepting_comments"/>
                 </label>
 
-                <!-- File group -->
-                <FileGroup v-model="form.file_group" />
+                <label class="flex items-center">
+                    <FileInput  v-model="form.preview"  :label="$t('project.labels.preview_image')" accept=""
+                                @upload="(file)=>form.preview=file"
+                                previewable
+                    />
+                    <p v-show="form.errors.preview" class="mt-2 text-sm text-red-600" v-html="form.errors.preview"/>
+
+                </label>
+
+                <FileGroup v-model="form.gallery" :label="$t('photo_gallery')" />
 
                 <div class="flex w-full border-t border-gray-300" v-for="(item, index) in projectLinks" :key="index">
                     <InputWithIcon
@@ -270,6 +255,7 @@
     import DangerButton from '@/Components/buttons/DangerButton.vue';
     import { ref } from 'vue';
     import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import FileInput from "@/Components/form/FileInput.vue";
 
     /** Initialize inertia from Object. */
     const form = useForm({
@@ -286,7 +272,8 @@
         is_national: false,
         accepting_comments: false,
         accepting_volunteers: false,
-        file_group: [],
+        preview: null,
+        gallery: [],
         project_links: [{ url: '' }],
         project_articles: [{ url: '' }],
     });

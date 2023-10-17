@@ -29,13 +29,22 @@ class ProjectService
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = ProjectStatus::draft->value;
-
         $project = $this->createDraftProject($data);
         if (! empty($data['categories'])) {
             $project->categories()->attach($data['categories']);
         }
         if (! empty($data['counties'])) {
             $project->counties()->attach($data['counties']);
+        }
+        if (!empty($data['preview']))
+        {
+            $project->addMedia($data['preview'])->toMediaCollection('preview');
+        }
+        if (!empty($data['gallery']))
+        {
+            collect($data['gallery'])->map(function ($image) use ($project) {
+                $project->addMedia($image)->toMediaCollection('gallery');
+            });
         }
 
         return $project;

@@ -448,7 +448,9 @@
     "projects.status.open" : "Deschis",
     "projects.status.close" : "Închis",
     "projects.status.starting_soon" : "Incepe in curand",
-    "projects.status.ending_soon" : "Se incheie in curand"
+    "projects.status.ending_soon" : "Se incheie in curand",
+
+    "project.labels.preview_image": "Imagine de prezentare"
 
 
 

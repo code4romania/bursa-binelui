@@ -48,14 +48,6 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project = (new ProjectService(Project::class))->create($data);
-        $project->addAllMediaFromRequest()->each(function ($fileAdder, $index) {
-            if ($index == 0) {
-                $fileAdder->toMediaCollection('preview');
-            } else {
-                $fileAdder->toMediaCollection('gallery');
-            }
-        });
-
         return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
     }
 

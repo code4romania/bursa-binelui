@@ -4,7 +4,9 @@
         <label :for="id" :class="[`block text-sm font-medium leading-6 text-${color}`]">
             <span v-if="label">{{ label }}</span>
             <span v-else><slot /></span>
-            <slot />
+            <br/>
+            <span v-show="moreInfo" class="text-sm font-normal text-gray-500" v-html="moreInfo"/>
+            <slot/>
         </label>
 
         <div>
@@ -39,6 +41,10 @@
         color: String,
         isRequired: Boolean,
         error: String,
+        moreInfo: {
+            type: String,
+            default: null,
+        },
         numberOfCharacters: {
             type: Number,
             default: 1000,
@@ -50,6 +56,7 @@
         }
         return props.numberOfCharacters - props.modelValue.length;
     })
+
 
     /** Component emits. */
     defineEmits(['update:modelValue']);
