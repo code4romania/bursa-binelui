@@ -455,7 +455,9 @@
     "project.labels.videos_extra" : "Aici puteti adauga link-uri de pe diverse platforme de streaming (youtube, vimeo, etc.)",
 
     "project.labels.external_links_title": "Titlu link extern",
-    "project.labels.external_links_url": "URL link extern"
+    "project.labels.external_links_url": "URL link extern",
+    "project.labels.change_gallery_label": "Schimbă galeria de imagini"
+
 
 
 
