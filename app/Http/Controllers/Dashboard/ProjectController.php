@@ -113,24 +113,15 @@ class ProjectController extends Controller
                 'counties' => ['required_if:is_national,0', 'array', 'min:1'],
                 'description' => ['required', 'min:100', 'max:1000'],
                 'scope' => ['required', 'min:100', 'max:1000'],
-                'beneficiaries' => ['required', 'min:100', 'max:1000'],
-                'reason_to_donate' => ['required', 'min:100', 'max:1000'],
+                'beneficiaries' => ['required', 'min:50', 'max:1000'],
+                'reason_to_donate' => ['required', 'min:50', 'max:1000'],
                 'preview' => ['required'],
             ],
             [
                 'start.after_or_equal' => __('custom_validation.start_date.after_or_equal'),
             ]
         )->validate();
-
-        try {
-            (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
-        } catch (\Exception $exception) {
-            dd($exception->getMessage());
-
-            return redirect()->back()
-                ->with('error', $exception->getMessage());
-        }
-
+        (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
         return redirect()->back()
             ->with('success', 'Project status changed.');
     }

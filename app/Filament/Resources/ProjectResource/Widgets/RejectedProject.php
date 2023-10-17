@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
 use App\Enums\ProjectStatus;
+use App\Filament\Resources\ProjectResource\Actions\Tables\Projects\ApproveProjectAction;
+use App\Filament\Resources\ProjectResource\Actions\Tables\Projects\RejectProjectAction;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Illuminate\Database\Eloquent\Builder;
 
 class RejectedProject extends BaseProjectWidget
@@ -40,29 +44,10 @@ class RejectedProject extends BaseProjectWidget
     protected function getTableActions(): array
     {
         return [
-            Action::make('edit')
-                ->label(__('project.actions.edit'))
-                ->url(self::getTableRecordUrlUsing())
-                ->size('sm')
-                ->icon(null),
-            Action::make('accept')
-                ->label(__('project.actions.approve'))
-                ->size('sm')
-                ->icon(null)
-                ->action(function (Project $record) {
-                    $record->status = ProjectStatus::approved->value;
-                    $record->save();
-                })
-                ->requiresConfirmation(),
-            Action::make('reject')
-                ->label(__('project.actions.reject'))
-                ->action(function (Project $record) {
-                    $record->status = ProjectStatus::rejected->value;
-                    $record->save();
-                })
-                ->requiresConfirmation()
-                ->size('sm')
-                ->icon(null),
+            ViewAction::make()->label(__('project.actions.view'))
+                ->url($this->getTableRecordUrlUsing()),
+            EditAction::make(),
+            ApproveProjectAction::make(),
         ];
     }
 }
