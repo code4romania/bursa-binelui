@@ -37,7 +37,7 @@ return [
     ],
     'heading' => [
         'pending' => 'Proiecte in curs de aprobare (:number)',
-        'change_request' => 'Proiecte cu modificări (:number)',
+        'pending_changes' => 'Proiecte cu modificări (:number)',
         'approved' => 'Proiecte aprobate (:number)',
         'rejected' => 'Proiecte refuzate (:number)',
     ],
