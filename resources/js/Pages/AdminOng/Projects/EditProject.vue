@@ -355,112 +355,64 @@
                     </div>
                 </template>
             </Field>
+            <FileGroup v-model="originalProject.gallery" sync :label="$t('photo_gallery')" @removeImage="removeGalleryImage(id)"/>
 
-            <!-- Edit Photo gallery -->
-            <Field :label="$t('photo_gallery')" alt :errors="formChangeStatus.errors.photo_gallery">
-                <template #value>
-                    <div>Images</div>
-
-                    <div class="flex flex-wrap">
-                        <div
-                            :style="{backgroundImage: `url(${image.url})` }"
-                            style="background-size: contain"
-                            v-for="(image, index) in project.gallery"
-                            :key="index"
-                            class="grid content-end grid-cols-2 gap-4 mx-2 my-2 w-60 h-60"
-                        >
-                            <DangerButton @click="removeImage(index)">{{ $t('remove_image') }} </DangerButton>
-                            <SecondaryButton class="col-start-2" @click="setCoverImage(index)"
-                            >{{ $t('set_cover_image') }}
-                            </SecondaryButton>
-                        </div>
-                    </div>
-                </template>
-
-                <template #action>
-                    <EditModal
-                        @action="editField('gallery')"
-                        @cancel="resetField('gallery')"
-                        :text="$t('change_images_label')"
-                    >
-                        <FileInput
-                            :label="$t('upload_image')"
-                            @upload="(file) => (project.gallery = file)"
-                            :form="project.gallery"
-                            accept="image/png, image/jpeg"
-                            previewable
-                            multiple
-                        />
-                    </EditModal>
-                </template>
-            </Field>
-
-            <!-- Edit video links -->
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5">
-                    {{ $t('video_link_label') }}
-                </dt>
-                <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                    {{ project.video }}
-                </dt>
-                <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                    {{ project.project_links }}
-                </dt>
-                <EditModal @action="editField('project_links')" class="flex justify-end col-span-1" :errors="formChangeStatus.errors.project_links">
-                    <Repeater class="w-full xl:w-1/2">
-                        <InputWithIcon
-                            class="w-full"
-                            :label="$t('video_link_label')"
-                            color="gray-700"
-                            icon="https://"
-                            type="text"
-                            v-model="project.project_links"
-                        />
-                    </Repeater>
-                </EditModal>
-            </div>
         </dl>
-
-        <div class="flex items-center gap-4 mt-9">
-            <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                <SvgLoader class="shrink-0 fill-primary-500" name="book" />
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
-        </div>
-
-        <EditModal @action="editField()" btnClasses="" class="mt-9" :errors="formChangeStatus.errors.project_articles">
-            <InputWithIcon
-                class="w-full"
-                :label="$t('articles_link_label')"
-                color="gray-700"
-                icon="https://"
-                type="text"
-                v-model="project.project_articles"
-            />
-        </EditModal>
 
         <div class="mt-6 border-t border-gray-100">
             <dl class="divide-y divide-gray-100">
                 <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
                     <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        {{ $t('articles_link_label') }}
+                        {{ $t('video_link_label') }}
                     </dt>
                     <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        {{ project.project_articles }}
+                        <a v-for="link in originalProject.videos"
+                           :href="link.url"
+                           target="_blank"
+                           class="mx-2 border-2 p-2"
+                           v-text="link.url"
+                        />
                     </dt>
-                    <dt
-                        class="flex items-center justify-end col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-4"
-                    >
-                        <button class="block text-sm font-medium text-blue-500">{{ $t('delete') }}</button>
+                    <dt class="flex items-center justify-end col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-4">
+                        <EditModal @action="editField('videos')" class="flex justify-end col-span-1" :errors="formChangeStatus.errors.project_links">
+                            <RepeaterComponent
+                                :elements="originalProject.videos"
+                                :label="$t('project.labels.videos')"
+                                :description="$t('project.labels.videos_extra')"
+                                :structure="[{label:$t('video_link_label'),key:'url',error:arrayError('videos.0.url')}]"
+                                :error="arrayError('videos.0.url')"
+                                name="videos"
+                            />
+                        </EditModal>
+                    </dt>
+                </div>
+            </dl>
+        </div>
 
-                        <EditModal @action="editField()">
-                            <InputWithIcon
-                                class="w-full"
-                                :label="$t('articles_link_label')"
-                                color="gray-700"
-                                icon="https://"
-                                type="text"
-                                v-model="project.project_articles"
+        <div class="mt-6 border-t border-gray-100">
+            <dl class="divide-y divide-gray-100">
+                <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
+                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
+                        {{ $t('external_links_title') }}
+                    </dt>
+                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
+                        <a v-for="link in originalProject.external_links"
+                           :href="link.url"
+                           v-text="link.title"
+                           target="_blank"
+                           class="mx-2 border-2 p-2"
+                        />
+                    </dt>
+                    <dt class="flex items-center justify-end col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-4">
+                        <EditModal @action="editField('external_links')">
+                            <RepeaterComponent
+                                :elements="originalProject.external_links"
+                                :label="$t('external_links_title')"
+                                :description="$t('external_links_text')"
+                                :structure="[
+                        {label:$t('project.labels.external_links_title'),key:'title',error:arrayError('external_links.0.title')},
+                        {label:$t('project.labels.external_links_url'),key:'url',error:arrayError('external_links.0.url')}
+                        ]" name="external_links"
                             />
                         </EditModal>
                     </dt>
@@ -496,6 +448,8 @@ import DangerButton from '@/Components/buttons/DangerButton.vue';
 import SelectMultiple from '@/Components/form/SelectMultiple.vue';
 import Select from "@/Components/form/Select.vue";
 import Checkbox from "@/Components/form/Checkbox.vue";
+import RepeaterComponent from "@/Components/RepeaterComponent.vue";
+import FileGroup from "@/Components/form/FileGroup.vue";
 
 const props = defineProps({
     project: Object,
@@ -530,18 +484,19 @@ const editField = (field) => {
     const form = useForm({
         [field]: project.value[field],
     });
-
-    // if (field ==='counties') {
-    //     console.log(props.counties.find(form.counties));
-    //     project.counties_names = props.counties.find(form.counties);
-    // }
-    // console.log(form,field);
-
     form.post(route('dashboard.projects.update', project.value.id), {
         preserveScroll: true,
         onSuccess: (response) => {
             //
         },
     });
+
 };
+function arrayError(key) {
+    if (props?.errors[key]) {
+        return props?.errors[key];
+    }
+    return null;
+}
+
 </script>

@@ -77,10 +77,10 @@
 
     const files = ref(props.modelValue);
     const previewImage = (e) => {
-        console.log(e.target.files);
         Object.keys(e.target.files).forEach((key) => {
             files.value.push(e.target.files[key]);
         });
+
     };
     const removeImage = (index) => {
         files.value.splice(index, 1);
@@ -88,6 +88,12 @@
     function src(file) {
         if (typeof file === 'string') {
             return file;
+        }
+        if (typeof file === 'object' && file instanceof File) {
+            return URL.createObjectURL(file);
+        }
+        if (typeof file === 'object' && file.url!==undefined) {
+            return file.url
         }
         return URL.createObjectURL(file);
     }

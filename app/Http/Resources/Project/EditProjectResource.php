@@ -15,7 +15,6 @@ class EditProjectResource extends Resource
     {
         return [
             'id' => $this->id,
-            // 'type' => $this->type,
             'name' => $this->name,
             'slug' => $this->slug,
 
@@ -40,7 +39,7 @@ class EditProjectResource extends Resource
             'reason_to_donate' => $this->reason_to_donate ?? '',
             'accepting_volunteers' => $this->accepting_volunteers ? __('field.boolean.true') : __('field.boolean.false'),
             'accepting_comments' => $this->accepting_comments ? __('field.boolean.true') : __('field.boolean.false'),
-            'videos' => '',
+            'videos' => $this->videos,
             'external_links' => $this->external_links,
             'counties' => $this->counties->pluck('id')->toArray(),
             'counties_names' => $this->counties->pluck('name')->join(', '),

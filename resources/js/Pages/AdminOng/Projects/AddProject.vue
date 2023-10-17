@@ -142,85 +142,27 @@
                 </label>
 
                 <FileGroup v-model="form.gallery" :label="$t('photo_gallery')" />
-                <div>
-                    <p class="text-lg font-medium leading-5 text-gray-900">{{ $t('project.labels.videos') }}</p>
-                    <p class="text-sm leading-5 text-gray-700">{{ $t('project.labels.videos_extra') }}</p>
-                </div>
-                <div>
-                    <div class="flex w-full border-t border-gray-300 pb-1.5" v-for="(item, index) in videos" :key="index">
-                        <Input
-                            class="w-1/2"
-                            :label="$t('video_link_label')"
-                            color="gray-700"
-                            type="text"
-                            v-model="item.url"
-                            :error = "arrayError('videos.'+index+'.url')"
-                        />
-                        <DangerButton
-                            class="mt-8 ml-4"
-                            type="button"
-                            hover="red-400"
-                            color="white"
-                            @click="() => {videos.pop();}"
-                            v-text="$t('remove')"
-                        />
-                    </div>
-                    <SecondaryButton
-                        class="mt-8 ml-4"
-                        hover="primary-400"
-                        color="white"
-                        @click="() => {videos.push({ url: '' });}"
-                        v-text="$t('add')"
-                    />
 
-                </div>
+                <RepeaterComponent
+                    :elements="form.videos"
+                    :label="$t('project.labels.videos')"
+                    :description="$t('project.labels.videos_extra')"
+                    :structure="[{label:$t('video_link_label'),key:'url',error:arrayError('videos.0.url')}]"
+                    :error="arrayError('videos.0.url')"
+                    name="videos"
+                />
                 <div class="w-full border-t border-gray-300"></div>
 
-
-                <div>
-                    <p class="text-lg font-medium leading-5 text-gray-900">{{ $t('external_links_title') }}</p>
-                    <p class="text-sm leading-5 text-gray-700">{{ $t('external_links_text') }}</p>
-                </div>
-                <div>
-                    <div class="flex w-full border-t border-gray-300" v-for="(item, index) in external_links" :key="index">
-                        <Input
-                            class="w-1/3"
-                            :label="$t('project.labels.external_links_title')"
-                            color="gray-700"
-                            type="text"
-                            :error = "arrayError('external_links.'+index+'.title')"
-                            v-model="item.title"
-                        />
-                        <Input
-                            class="w-1/3 ml-1.5"
-                            :label="$t('project.labels.external_links_url')"
-                            color="gray-700"
-                            icon="https://"
-                            type="text"
-                            :error = "arrayError('external_links.'+index+'.url')"
-                            v-model="item.url"
-                        />
-                        <DangerButton
-                            class="mt-8 ml-4"
-                            background="red-500"
-                            hover="red-400"
-                            color="white"
-                            @click="() => external_links.pop()"
-                            v-text="$t('remove')"
-                        />
-                    </div>
-                    <SecondaryButton
-                        class="mt-8 ml-4"
-                        hover="primary-400"
-                        color="white"
-                        @click="() => external_links.push({ url: '',title:'' })"
-                        v-text="$t('add')"
-                    />
-                    <div class="w-full border-t border-gray-300" />
-                </div>
-
-
-
+                <RepeaterComponent
+                    :elements="form.external_links"
+                    :label="$t('external_links_title')"
+                    :description="$t('external_links_text')"
+                    :structure="[
+                        {label:$t('project.labels.external_links_title'),key:'title',error:arrayError('external_links.0.title')},
+                        {label:$t('project.labels.external_links_url'),key:'url',error:arrayError('external_links.0.url')}
+                        ]"
+                    name="external_links"
+                />
                 <div class="flex items-center justify-end gap-6">
                     <SecondaryButton class="py-2.5">
                         {{ $t('cancel') }}
@@ -239,25 +181,22 @@
 
 <script setup>
 /** Import from inertia. */
-import { useForm } from '@inertiajs/vue3';
+import {useForm} from '@inertiajs/vue3';
 
 /** Import components. */
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 import Title from '@/Components/Title.vue';
-import SvgLoader from '@/Components/SvgLoader.vue';
 import Input from '@/Components/form/Input.vue';
 import Select from '@/Components/form/Select.vue';
 import Textarea from '@/Components/form/Textarea.vue';
 import Checkbox from '@/Components/form/Checkbox.vue';
 import FileGroup from '@/Components/form/FileGroup.vue';
-import Repeater from '@/Components/form/Repeater.vue';
-import InputWithIcon from '@/Components/form/InputWithIcon.vue';
 import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
 import DangerButton from '@/Components/buttons/DangerButton.vue';
-import { ref } from 'vue';
-import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+import {ref} from 'vue';
 import FileInput from "@/Components/form/FileInput.vue";
+import RepeaterComponent from "@/Components/RepeaterComponent.vue";
 
 /** Initialize inertia from Object. */
 const form = useForm({
