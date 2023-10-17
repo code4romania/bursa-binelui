@@ -11,7 +11,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RejectedProject extends BaseProjectWidget
 {
-//    protected static string $view = 'filament.resources.project-resource.widgets.new-project';
+
+    protected $listeners = [
+        'refreshRejectedProjectWidget' => '$refresh',
+    ];
 
     protected function getTableHeading(): string
     {

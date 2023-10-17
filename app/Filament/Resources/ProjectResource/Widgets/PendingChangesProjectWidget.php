@@ -6,6 +6,7 @@ namespace App\Filament\Resources\ProjectResource\Widgets;
 
 use App\Models\Activity;
 use App\Models\Organization;
+use App\Models\Project;
 use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -47,32 +48,40 @@ class PendingChangesProjectWidget extends BaseProjectWidget
         return 'pending_changes';
     }
 
-//    protected function getTableColumns(): array
-//    {
-//        return [
-//            TextColumn::make('id')
-//                ->label(__('field.id'))
-//                ->formatStateUsing(
-//                    fn ($state) => __('field.id_format', ['number' => $state])
-//                )
-//                ->sortable(),
-//
-//            TitleWithImageColumn::make('name')
-//                ->label(__('project.project'))
-//                ->image(fn (Organization $record) => $record->getFirstMediaUrl('logo'))
-//                ->searchable()
-//                ->sortable(),
-//
-//            TextColumn::make('activities_count')
-//                ->label(__('project.labels.changes_count'))
-//                ->sortable(),
-//
-//            TextColumn::make('latest_updated_at')
-//                ->label(__('project.labels.latest_updated_at'))
-//                ->dateTime()
-//                ->sortable(),
-//        ];
-//    }
+    protected function getTableColumns(): array
+    {
+        return [
+            TextColumn::make('id')
+                ->label(__('field.id'))
+                ->formatStateUsing(
+                    fn ($state) => __('field.id_format', ['number' => $state])
+                )
+                ->sortable(),
+            TextColumn::make('id')
+                ->formatStateUsing(function (Project $record) {
+                    return sprintf('#%d', $record->id);
+                })
+                ->label(__('project.labels.id'))
+                ->sortable(),
+            TextColumn::make('name')->description(fn (Project $record) => $record->organization->name)->searchable(),
+
+            TextColumn::make('activities_count')
+                ->label(__('project.labels.changes_count'))
+                ->sortable(),
+
+            TextColumn::make('latest_updated_at')
+                ->label(__('project.labels.latest_updated_at'))
+                ->dateTime()
+                ->sortable(),
+        ];
+    }
+    protected function getTableRecordUrlUsing(): \Closure
+    {
+        return function (Project $record) {
+            return  route('filament.resources.projects.view',['record'=> $record, 'activeRelationManager' => 2]);
+        };
+    }
+
 
     protected function getTableActions(): array
     {

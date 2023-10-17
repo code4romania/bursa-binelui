@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
+use App\Filament\Resources\OrganizationResource;
 use App\Models\Activity;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
@@ -72,6 +73,11 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
                 ->dateTime()
                 ->sortable(),
         ];
+    }
+
+    protected function getTableRecordUrlUsing(): \Closure
+    {
+        return fn (Organization $record) => OrganizationResource::getUrl('view', ['record'=>$record,'activeRelationManager'=>5]);
     }
 
     protected function getTableActions(): array

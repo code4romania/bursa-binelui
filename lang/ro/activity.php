@@ -40,4 +40,10 @@ return[
         'changed_field' => 'Câmpul editat',
     ],
 
+    'reject_modal' => [
+        'heading' => 'Respinge modificarile ',
+        'subheading' => 'Sunteți sigur că doriți să respingeți modificarile campului ":name" pe resursa ":resource"? ',
+        'reason' => 'Motiv respingere',
+    ],
+
 ];

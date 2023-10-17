@@ -43,11 +43,11 @@ class ProjectFactory extends Factory
             'accepting_volunteers' => fake()->boolean(),
             'accepting_comments' => fake()->boolean(),
             'videos' => fake()->randomElements([
-                'https://www.youtube.com/watch?v=9bZkp7q19f0',
-                'https://www.youtube.com/watch?v=2Vv-BfVoq4g',
-                'https://www.youtube.com/watch?v=JGwWNGJdvx8',
+                ['url'=>'https://www.youtube.com/watch?v=9bZkp7q19f0'],
+                ['url'=>'https://www.youtube.com/watch?v=2Vv-BfVoq4g'],
+                ['url'=>'https://www.youtube.com/watch?v=JGwWNGJdvx8'],
             ], 2),
-            'external_links' => fake()->url(),
+            'external_links' => [['title'=>$this->faker->name, 'url'=>$this->faker->url]],
         ];
     }
 

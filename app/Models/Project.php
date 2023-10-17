@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -99,6 +100,11 @@ class Project extends Model implements HasMedia
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function tickets(): HasManyThrough
+    {
+        return $this->hasManyThrough(Ticket::class, Organization::class);
     }
 
     public function donations(): HasMany
@@ -206,5 +212,27 @@ class Project extends Model implements HasMedia
         }
 
         return $this->status->value;
+    }
+
+    public function markAsApproved(): bool
+    {
+        return $this->update([
+            'status' => ProjectStatus::approved,
+            'status_updated_at' => $this->freshTimestamp(),
+        ]);
+    }
+
+    public function markAsRejected(?string $reason = null): void
+    {
+        $this->update([
+            'status' => ProjectStatus::rejected,
+            'status_updated_at' => $this->freshTimestamp(),
+        ]);
+
+        $this->organization->tickets()->create([
+            'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
+            'content' => $reason,
+            'user_id' => auth()->user()->id,
+        ]);
     }
 }

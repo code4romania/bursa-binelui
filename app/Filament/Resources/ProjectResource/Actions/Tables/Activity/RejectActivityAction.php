@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Resources\OrganizationResource\Actions\Tables\Activity;
+namespace App\Filament\Resources\ProjectResource\Actions\Tables\Activity;
 
 use App\Models\Activity;
 use Filament\Forms\Components\Textarea;

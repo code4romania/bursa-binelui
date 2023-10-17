@@ -72,6 +72,8 @@ return [
         'preview_image' => 'Imagine de prezentare',
         'gallery' => 'Galerie',
         'visible_status' => 'Status in platforma public',
+        'changes_count' => 'Număr modificări în așteptare',
+        'latest_updated_at' => 'Data ultimei modificări',
 
     ],
     'visible_status' => [
@@ -84,5 +86,32 @@ return [
     'errors' => [
         'start_date_in_past' => 'Data de începere nu poate fi în trecut',
     ],
+
+    'ticket_rejected' => [
+        'subject' => 'Proiectul :project a fost respinsă de către un administrator.',
+    ],
+
+    'approve_modal' => [
+        'heading' => 'Aprobă proiectul',
+        'subheading' => 'Sunteți sigur că doriți să aprobați proiectul ":name"?',
+    ],
+
+    'reject_modal' => [
+        'heading' => 'Respinge proiectul',
+        'subheading' => 'Sunteți sigur că doriți să respingeți proiectul ":name"?',
+        'reason' => 'Motiv respingere',
+    ],
+
+    'deactivate_modal' => [
+        'heading' => 'Dezactivează proiectul',
+        'subheading' => 'Sunteți sigur că doriți să dezactivați proiectul ":name"?',
+        'reason' => 'Motiv respingere',
+    ],
+
+    'reactivate_modal' => [
+        'heading' => 'Reactivează proiectul',
+        'subheading' => 'Sunteți sigur că doriți să reactivați proiectul ":name"?',
+    ],
+
 
 ];

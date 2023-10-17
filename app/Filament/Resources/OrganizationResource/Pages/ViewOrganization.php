@@ -6,9 +6,10 @@ namespace App\Filament\Resources\OrganizationResource\Pages;
 
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\ApproveOrganizationAction;
+use App\Filament\Resources\OrganizationResource\Actions\Pages\ApproveProjectAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\DeactivateOrganizationAction;
 use App\Filament\Resources\OrganizationResource\Actions\Pages\ReactivateOrganizationAction;
-use App\Filament\Resources\OrganizationResource\Actions\Pages\RejectOrganizationAction;
+use App\Filament\Resources\OrganizationResource\Actions\Pages\RejectProjectAction;
 use Filament\Pages\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -25,7 +26,7 @@ class ViewOrganization extends ViewRecord
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isPending()),
 
-            RejectOrganizationAction::make()
+            ApproveOrganizationAction::make()
                 ->record($this->getRecord())
                 ->visible($this->getRecord()->isPending()),
 

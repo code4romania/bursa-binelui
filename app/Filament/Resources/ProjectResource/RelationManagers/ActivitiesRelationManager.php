@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
-use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ApproveActivityAction;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\RejectActivityAction;
-use App\Filament\Resources\OrganizationResource\Actions\Tables\Activity\ViewActivityAction;
+use App\Filament\Resources\ProjectResource\Actions\Tables\Activity\ApproveActivityAction;
+use App\Filament\Resources\ProjectResource\Actions\Tables\Activity\RejectActivityAction;
+use App\Filament\Resources\ProjectResource\Actions\Tables\Activity\ViewActivityAction;
 use App\Filament\Resources\UserResource;
 use App\Models\Activity;
 use Carbon\Carbon;
