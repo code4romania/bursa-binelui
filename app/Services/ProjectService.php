@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Support\Facades\Notification;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProjectService
 {
@@ -23,6 +24,21 @@ class ProjectService
             $projectClass = new $projectClass;
             $this->project = $projectClass;
         }
+    }
+
+    private static function updateGallery(Project $project, ?array $value): void
+    {
+        $mediaIds = collect($value)
+            ->filter(fn ($item) => \is_array($item))
+            ->pluck('id');
+        $project->getMedia('gallery')
+            ->map(function (Media $media) use ($mediaIds) {
+                if (! $mediaIds->contains($media->id)) {
+                    $media->delete();
+                }
+            });
+        collect($value)->filter(fn ($image) => ! \is_array($image))
+            ->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery'));
     }
 
     public function create(array $data): Project|RegionalProject
@@ -103,11 +119,13 @@ class ProjectService
         $key = $attributes->keys()->first();
         $value = $attributes->get($key);
 
+//        dd($attributes,$value);
+
         return match ($key) {
             'counties' => $project->counties()->sync($value),
             'categories' => $project->categories()->sync($value),
             'image' => $project->addMedia($value)->toMediaCollection('preview'),
-            'gallery' => collect($value)->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery')),
+            'gallery' => self::updateGallery($project, $value),
 
             default => ($project->status === ProjectStatus::approved && \in_array($key, $project->requiresApproval))
                 ? $project->fill($attributes->all())->saveForApproval()
