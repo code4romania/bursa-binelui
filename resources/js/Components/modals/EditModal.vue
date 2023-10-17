@@ -40,6 +40,7 @@
                                                 class="text-base font-semibold leading-6 text-gray-900"
                                             >
                                                 {{ $t('edit') }}
+                                                <span v-show="label" v-text="label" />
                                             </DialogTitle>
                                             <div class="mt-2">
                                                 <slot />
@@ -95,6 +96,7 @@
     /** Component props. */
     const props = defineProps({
         text: String,
+        label: String,
     });
 
     /** Local state. */

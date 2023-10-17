@@ -2,8 +2,11 @@
     <DashboardLayout>
         <Title :title="$t('edit_project_title')" />
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
-            <!-- Edit project name -->
-            <Field :label="$t('project_name_label')" :hasPendingChanges="changes.includes('name')" alt :errors="formChangeStatus.errors.name">
+
+            <Field :label="$t('project_name_label')"
+                :hasPendingChanges="changes.includes('name')"
+                :errors="formChangeStatus.errors.name"
+            >
                 <template #value>
                     {{ project.name }}
                 </template>
@@ -28,8 +31,7 @@
                 </template>
             </Field>
 
-            <!-- Edit target amount -->
-            <Field :label="$t('amount_target_label')" :hasPendingChanges="changes.includes('target_budget')" :errors="formChangeStatus.errors.target_budget">
+            <Field :label="$t('amount_target_label')" alt :hasPendingChanges="changes.includes('target_budget')" :errors="formChangeStatus.errors.target_budget">
                 <template #value>
                     {{ project.target_budget }}
                 </template>
@@ -53,8 +55,7 @@
                 </template>
             </Field>
 
-            <!-- Edit period -->
-            <Field :label="$t('period_start_donation')" alt :hasPendingChanges="changes.includes('start')" :errors="formChangeStatus.errors.start">
+            <Field :label="$t('period_start_donation')"  :hasPendingChanges="changes.includes('start')" :errors="formChangeStatus.errors.start">
                 <template #value> {{ project.start }} </template>
 
                 <template #action>
@@ -77,7 +78,8 @@
                     </EditModal>
                 </template>
             </Field>
-            <Field :label="$t('period_end_donation')" alt :hasPendingChanges="changes.includes('end')" :errors="formChangeStatus.errors.end">
+
+            <Field :label="$t('period_end_donation')" alt :hasPendingChanges="changes.includes('end')"  :errors="formChangeStatus.errors.end">
                 <template #value>{{ project.end }} </template>
 
                 <template #action>
@@ -101,7 +103,6 @@
                 </template>
             </Field>
 
-            <!-- Edit project category -->
             <Field :label="$t('project_category_label')" :hasPendingChanges="changes.includes('categories')" :errors="formChangeStatus.errors.categories">
                 <template #value>
                     {{ originalProject.categories_names }}
@@ -124,8 +125,7 @@
                 </template>
             </Field>
 
-            <!-- Edit project county -->
-            <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" :errors="formChangeStatus.errors.counties">
+            <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" alt :errors="formChangeStatus.errors.counties">
                 <template #value>
                     {{ originalProject.counties_names}}
 
@@ -149,7 +149,6 @@
                 </template>
             </Field>
 
-            <!-- Edit project description -->
             <Field :label="$t('project_description_label')" :hasPendingChanges="changes.includes('description')" :errors="formChangeStatus.errors.description">
                 <template #value>
                     {{ project.description }}
@@ -177,7 +176,6 @@
                 </template>
             </Field>
 
-            <!-- Edit project scope -->
             <Field :label="$t('project_scope_label')" :hasPendingChanges="changes.includes('scope')" alt  :errors="formChangeStatus.errors.scope">
                 <template #value>
                     {{ project.scope }}
@@ -203,7 +201,6 @@
                 </template>
             </Field>
 
-            <!-- Edit project beneficiary -->
             <Field :label="$t('project_beneficiary_label')" :hasPendingChanges="changes.includes('beneficiaries')" :errors="formChangeStatus.errors.beneficiaries">
                 <template #value>
                     {{ project.beneficiaries }}
@@ -234,7 +231,6 @@
                 </template>
             </Field>
 
-            <!-- Edit project why to donate -->
             <Field :label="$t('why_to_donate')" :hasPendingChanges="changes.includes('reason_to_donate')" alt :errors="formChangeStatus.errors.reason_to_donate">
                 <template #value>
                     {{ project.reason_to_donate }}
@@ -259,7 +255,8 @@
                     </EditModal>
                 </template>
             </Field>
-            <Field :label="$t('accepting_volunteers')" :hasPendingChanges="changes.includes('accepting_volunteers')" alt :errors="formChangeStatus.errors.accepting_volunteers">
+
+            <Field :label="$t('accepting_volunteers')" :hasPendingChanges="changes.includes('accepting_volunteers')"  :errors="formChangeStatus.errors.accepting_volunteers">
                 <template #value>
                     {{ originalProject.accepting_volunteers }}
                 </template>
@@ -331,7 +328,6 @@
                 </template>
             </Field>
 
-            <!-- Edit main image -->
             <Field :label="$t('main_image')" :errors="formChangeStatus.errors.preview">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
@@ -355,6 +351,7 @@
                     </div>
                 </template>
             </Field>
+
             <Field :label="$t('photo_gallery')" :errors="formChangeStatus.errors.gallery">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
@@ -374,74 +371,71 @@
                 </template>
             </Field>
 
-        </dl>
-
-        <div class="mt-6 border-t border-gray-100">
-            <dl class="divide-y divide-gray-100">
-                <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        {{ $t('video_link_label') }}
-                    </dt>
-                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        <a v-for="link in originalProject.videos"
-                           :href="link.url"
-                           target="_blank"
-                           class="mx-2 border-2 p-2"
-                           v-text="link.url"
-                        />
-                    </dt>
-                    <dt class="flex items-center justify-end col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        <EditModal @action="editField('videos')" class="flex justify-end col-span-1" :errors="formChangeStatus.errors.project_links">
-                            <RepeaterComponent
-                                :elements="originalProject.videos"
-                                :label="$t('project.labels.videos')"
-                                :description="$t('project.labels.videos_extra')"
-                                :structure="[{label:$t('video_link_label'),key:'url',error:arrayError('videos.0.url')}]"
-                                :error="arrayError('videos.0.url')"
-                                name="videos"
+            <Field :label="$t('video_link_label')" alt :errors="formChangeStatus.errors.videos">
+                <template #value>
+                    <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
+                        <div class="grid gap-4">
+                            <a v-for="link in originalProject.videos"
+                               :href="link.url"
+                               target="_blank"
+                               v-text="link.url"
                             />
-                        </EditModal>
-                    </dt>
-                </div>
-            </dl>
-        </div>
-
-        <div class="mt-6 border-t border-gray-100">
-            <dl class="divide-y divide-gray-100">
-                <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        {{ $t('external_links_title') }}
-                    </dt>
-                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        <a v-for="link in originalProject.external_links"
-                           :href="link.url"
-                           v-text="link.title"
-                           target="_blank"
-                           class="mx-2 border-2 p-2"
+                        </div>
+                    </div>
+                </template>
+                <template #action>
+                    <EditModal @action="editField('videos')" class="flex justify-end col-span-1"
+                               :errors="formChangeStatus.errors.videos"
+                               :label="$t('project.labels.videos')"
+                               :description="$t('project.labels.videos_extra')">
+                        <RepeaterComponent
+                            :elements="originalProject.videos"
+                            :structure="[{label:$t('video_link_label'),key:'url',error:arrayError('videos.0.url')}]"
+                            :error="arrayError('videos.0.url')"
+                            name="videos"
                         />
-                    </dt>
-                    <dt class="flex items-center justify-end col-span-12 gap-6 text-base font-medium leading-6 text-gray-700 md:col-span-4">
-                        <EditModal @action="editField('external_links')">
-                            <RepeaterComponent
-                                :elements="originalProject.external_links"
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('external_links_title')"   :errors="formChangeStatus.errors.external_links">
+                <template #value>
+                    <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
+                        <div class="grid gap-4">
+                            <a v-for="link in originalProject.external_links"
+                               :href="link.url"
+                               v-text="link.title"
+                               target="_blank"
+                               class="mx-2 border-2 p-2"
+                            />
+
+                        </div>
+                    </div>
+                </template>
+                <template #action>
+                    <EditModal  @action="editField('external_links')"
+                                class="flex justify-end col-span-1"
+                                :errors="arrayError('external_links.0.url')"
                                 :label="$t('external_links_title')"
-                                :description="$t('external_links_text')"
-                                :structure="[
+                    >
+                        <RepeaterComponent
+                            :elements="originalProject.external_links"
+                            :structure="[
                         {label:$t('project.labels.external_links_title'),key:'title',error:arrayError('external_links.0.title')},
                         {label:$t('project.labels.external_links_url'),key:'url',error:arrayError('external_links.0.url')}
                         ]" name="external_links"
-                            />
-                        </EditModal>
-                    </dt>
-                </div>
-            </dl>
-        </div>
-        <SecondaryButton
-            v-if="!project.is_active && !project.is_pending && !project.can_be_archived"
-            class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
-            @click="changeProjectStatus(project.id, 'pending', project.type)"
-            :label="$t('publish')"
-        />
+                        />
+                    </EditModal>
+                </template>
+            </Field>
+            <SecondaryButton
+                v-if="!project.is_active && !project.is_pending && !project.can_be_archived"
+                class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
+                @click="changeProjectStatus(project.id, 'pending', project.type)"
+                :label="$t('publish')"
+            />
+
+        </dl>
     </DashboardLayout>
 </template>
 

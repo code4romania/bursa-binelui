@@ -73,21 +73,8 @@ class ProjectController extends Controller
     {
         $this->authorize('editAsNgo', $project);
         ProjectService::update($project, $request->all());
-
         return redirect()->back()
             ->with('success', 'Project updated.');
-
-//        if ($request->has('counties')) {
-//            $project->counties()->sync(collect($request->get('counties')));
-//        }
-//        if ($request->has('categories')) {
-//            $project->categories()->sync(collect($request->get('categories')));
-//        }
-        ////        dd($request->all());
-//        if ($request->has('image')) {
-//            $project->addMediaFromRequest('image')->toMediaCollection('preview');
-//        }
-//        $project->update($request->all());
     }
 
     public function changeStatus($id, Request $request)
@@ -109,6 +96,10 @@ class ProjectController extends Controller
                 'beneficiaries' => ['required', 'min:50', 'max:1000'],
                 'reason_to_donate' => ['required', 'min:50', 'max:1000'],
                 'preview' => ['required'],
+                'videos' => ['nullable', 'array'],
+                'videos.*.url' => ['nullable', 'url'],
+                'external_links' => ['nullable', 'array'],
+                'external_links.*.url' => ['nullable', 'url'],
             ],
             [
                 'start.after_or_equal' => __('custom_validation.start_date.after_or_equal'),
