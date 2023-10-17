@@ -71,6 +71,7 @@ const props = defineProps({
 console.log(props.elements);
 const tmpElements = ref(props.elements);
 console.log(tmpElements.value);
+emit('upload', tmpElements);
 
 
 

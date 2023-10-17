@@ -434,7 +434,6 @@
                 @click="changeProjectStatus(project.id, 'pending', project.type)"
                 :label="$t('publish')"
             />
-
         </dl>
     </DashboardLayout>
 </template>
@@ -487,7 +486,26 @@ const changeProjectStatus = (id, status, type) => {
     let tmpRoute =
         type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
     if (confirm('Are you sure you want to change the status of this project?')) {
-        formChangeStatus.post(tmpRoute);
+        formChangeStatus.post(tmpRoute, {
+            preserveScroll: true,
+            onSuccess: (response) => {
+                //
+            },
+            onError: (error) => {
+                Object.keys(error).forEach((key) => {
+                    if (key.includes('external_links'))
+                    {
+                        formChangeStatus.errors['external_links'] = error[key];
+                    }
+                    if (key.includes('videos'))
+                    {
+                        formChangeStatus.errors['videos'] = error[key];
+                    }
+                });
+                console.log(error)
+            },
+        });
+
     }
 };
 

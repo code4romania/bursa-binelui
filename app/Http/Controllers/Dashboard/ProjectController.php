@@ -73,6 +73,7 @@ class ProjectController extends Controller
     {
         $this->authorize('editAsNgo', $project);
         ProjectService::update($project, $request->all());
+
         return redirect()->back()
             ->with('success', 'Project updated.');
     }
