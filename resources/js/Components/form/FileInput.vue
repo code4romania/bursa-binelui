@@ -10,7 +10,7 @@
             :accept="accept"
         />
 
-        <img v-if="src" :src="src" alt="File Preview" class="object-contain max-w-xs mt-2 aspect-square" />
+        <img v-if="src" :src="src" alt="File Preview" class="object-contain max-w-xs mt-2 aspect-1" />
     </div>
 </template>
 
