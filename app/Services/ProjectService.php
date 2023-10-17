@@ -29,6 +29,7 @@ class ProjectService
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = ProjectStatus::draft->value;
+//        dd($data);
         $project = $this->createDraftProject($data);
         if (! empty($data['categories'])) {
             $project->categories()->attach($data['categories']);

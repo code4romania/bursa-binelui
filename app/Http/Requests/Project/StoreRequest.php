@@ -44,8 +44,8 @@ class StoreRequest extends FormRequest
             'external_links' => ['nullable', 'array'],
             'external_links.*' => ['nullable', 'url'],
             'is_national' => ['boolean', 'nullable'],
-            'file_group' => ['array', 'nullable'],
-            'file_group.*.file' => ['file', 'nullable'],
+            'gallery' => ['array', 'nullable'],
+            'gallery.*.file' => ['file', 'nullable'],
             'preview' => ['file', 'nullable'],
         ];
     }

@@ -48,6 +48,7 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project = (new ProjectService(Project::class))->create($data);
+
         return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
     }
 
@@ -114,6 +115,7 @@ class ProjectController extends Controller
             ]
         )->validate();
         (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
+
         return redirect()->back()
             ->with('success', 'Project status changed.');
     }
