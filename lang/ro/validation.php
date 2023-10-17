@@ -223,5 +223,10 @@ return [
         'categories' => 'Categorii',
         'counties' => 'Județe',
         'preview' => 'Imaginea principala',
+        'external_links.*.title' => 'Titlu link extern',
+        'external_links.*.url' => 'URL link extern',
+
+        'videos.*.url' => 'link video',
+
     ],
 ];

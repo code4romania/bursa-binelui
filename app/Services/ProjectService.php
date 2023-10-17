@@ -37,12 +37,10 @@ class ProjectService
         if (! empty($data['counties'])) {
             $project->counties()->attach($data['counties']);
         }
-        if (!empty($data['preview']))
-        {
+        if (! empty($data['preview'])) {
             $project->addMedia($data['preview'])->toMediaCollection('preview');
         }
-        if (!empty($data['gallery']))
-        {
+        if (! empty($data['gallery'])) {
             collect($data['gallery'])->map(function ($image) use ($project) {
                 $project->addMedia($image)->toMediaCollection('gallery');
             });
@@ -109,6 +107,7 @@ class ProjectService
             'counties' => $project->counties()->sync($value),
             'categories' => $project->categories()->sync($value),
             'image' => $project->addMedia($value)->toMediaCollection('preview'),
+            'gallery' => collect($value)->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery')),
 
             default => ($project->status === ProjectStatus::approved && \in_array($key, $project->requiresApproval))
                 ? $project->fill($attributes->all())->saveForApproval()

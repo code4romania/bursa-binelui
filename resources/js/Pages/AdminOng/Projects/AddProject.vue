@@ -142,82 +142,84 @@
                 </label>
 
                 <FileGroup v-model="form.gallery" :label="$t('photo_gallery')" />
-
-                <div class="flex w-full border-t border-gray-300" v-for="(item, index) in projectLinks" :key="index">
-                    <InputWithIcon
-                        class="w-1/2"
-                        :label="$t('video_link_label')"
-                        color="gray-700"
-                        icon="https://"
-                        type="text"
-                        v-model="item.url"
-                    />
-                    <DangerButton
-                        v-if="index > 0"
-                        class="mt-8 ml-4"
-                        background="red-500"
-                        hover="red-400"
-                        color="white"
-                        @click="
-                            () => {
-                                projectLinks.pop();
-                            }
-                        "
-                    >
-                        {{ $t('remove') }}
-                    </DangerButton>
+                <div>
+                    <p class="text-lg font-medium leading-5 text-gray-900">{{ $t('project.labels.videos') }}</p>
+                    <p class="text-sm leading-5 text-gray-700">{{ $t('project.labels.videos_extra') }}</p>
+                </div>
+                <div>
+                    <div class="flex w-full border-t border-gray-300 pb-1.5" v-for="(item, index) in videos" :key="index">
+                        <Input
+                            class="w-1/2"
+                            :label="$t('video_link_label')"
+                            color="gray-700"
+                            type="text"
+                            v-model="item.url"
+                            :error = "arrayError('videos.'+index+'.url')"
+                        />
+                        <DangerButton
+                            class="mt-8 ml-4"
+                            type="button"
+                            hover="red-400"
+                            color="white"
+                            @click="() => {videos.pop();}"
+                            v-text="$t('remove')"
+                        />
+                    </div>
                     <SecondaryButton
                         class="mt-8 ml-4"
-                        background="primary-500"
                         hover="primary-400"
                         color="white"
-                        @click="
-                            () => {
-                                projectLinks.push({ url: '' });
-                            }
-                        "
-                    >
-                        {{ $t('add') }}
-                    </SecondaryButton>
-                </div>
+                        @click="() => {videos.push({ url: '' });}"
+                        v-text="$t('add')"
+                    />
 
+                </div>
                 <div class="w-full border-t border-gray-300"></div>
+
 
                 <div>
                     <p class="text-lg font-medium leading-5 text-gray-900">{{ $t('external_links_title') }}</p>
                     <p class="text-sm leading-5 text-gray-700">{{ $t('external_links_text') }}</p>
                 </div>
-                <div class="flex w-full border-t border-gray-300" v-for="(item, index) in projectArticles" :key="index">
-                    <InputWithIcon
-                        class="w-1/2"
-                        :label="$t('video_link_label')"
-                        color="gray-700"
-                        icon="https://"
-                        type="text"
-                        v-model="item.url"
-                    />
-                    <DangerButton
-                        v-if="index > 0"
-                        class="mt-8 ml-4"
-                        background="red-500"
-                        hover="red-400"
-                        color="white"
-                        @click="() => projectArticles.pop()"
-                    >
-                        {{ $t('remove') }}
-                    </DangerButton>
+                <div>
+                    <div class="flex w-full border-t border-gray-300" v-for="(item, index) in external_links" :key="index">
+                        <Input
+                            class="w-1/3"
+                            :label="$t('project.labels.external_links_title')"
+                            color="gray-700"
+                            type="text"
+                            :error = "arrayError('external_links.'+index+'.title')"
+                            v-model="item.title"
+                        />
+                        <Input
+                            class="w-1/3 ml-1.5"
+                            :label="$t('project.labels.external_links_url')"
+                            color="gray-700"
+                            icon="https://"
+                            type="text"
+                            :error = "arrayError('external_links.'+index+'.url')"
+                            v-model="item.url"
+                        />
+                        <DangerButton
+                            class="mt-8 ml-4"
+                            background="red-500"
+                            hover="red-400"
+                            color="white"
+                            @click="() => external_links.pop()"
+                            v-text="$t('remove')"
+                        />
+                    </div>
                     <SecondaryButton
                         class="mt-8 ml-4"
-                        background="primary-500"
                         hover="primary-400"
                         color="white"
-                        @click="() => projectArticles.push({ url: '' })"
-                    >
-                        {{ $t('add') }}
-                    </SecondaryButton>
+                        @click="() => external_links.push({ url: '',title:'' })"
+                        v-text="$t('add')"
+                    />
+                    <div class="w-full border-t border-gray-300" />
                 </div>
 
-                <div class="w-full border-t border-gray-300" />
+
 
                 <div class="flex items-center justify-end gap-6">
                     <SecondaryButton class="py-2.5">
@@ -236,54 +238,63 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { useForm } from '@inertiajs/vue3';
+/** Import from inertia. */
+import { useForm } from '@inertiajs/vue3';
 
-    /** Import components. */
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import FileGroup from '@/Components/form/FileGroup.vue';
-    import Repeater from '@/Components/form/Repeater.vue';
-    import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DangerButton from '@/Components/buttons/DangerButton.vue';
-    import { ref } from 'vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
-    import FileInput from "@/Components/form/FileInput.vue";
+/** Import components. */
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import SvgLoader from '@/Components/SvgLoader.vue';
+import Input from '@/Components/form/Input.vue';
+import Select from '@/Components/form/Select.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import FileGroup from '@/Components/form/FileGroup.vue';
+import Repeater from '@/Components/form/Repeater.vue';
+import InputWithIcon from '@/Components/form/InputWithIcon.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import DangerButton from '@/Components/buttons/DangerButton.vue';
+import { ref } from 'vue';
+import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+import FileInput from "@/Components/form/FileInput.vue";
 
-    /** Initialize inertia from Object. */
-    const form = useForm({
-        name: '',
-        target_budget: '',
-        categories: [],
-        start: '',
-        end: '',
-        counties: [],
-        description: '',
-        scope: '',
-        beneficiaries: '',
-        reason_to_donate: '',
-        is_national: false,
-        accepting_comments: false,
-        accepting_volunteers: false,
-        preview: null,
-        gallery: [],
-        project_links: [{ url: '' }],
-        project_articles: [{ url: '' }],
+/** Initialize inertia from Object. */
+const form = useForm({
+    name: '',
+    target_budget: '',
+    categories: [],
+    start: '',
+    end: '',
+    counties: [],
+    description: '',
+    scope: '',
+    beneficiaries: '',
+    reason_to_donate: '',
+    is_national: false,
+    accepting_comments: false,
+    accepting_volunteers: false,
+    preview: null,
+    gallery: [],
+    videos: [],
+    external_links: [],
+});
+const props = defineProps(['projectCategories', 'counties']);
+const  external_links = ref(form.external_links)
+const  videos = ref(form.videos)
+
+/** Create project. */
+const createProject = () => {
+
+    form.post(route('dashboard.projects.store'), {
+        preserveScroll: true,
+        onError: () => {},
     });
-    const props = defineProps(['projectCategories', 'counties']);
-    /** Create project. */
-    const createProject = () => {
-
-        form.post(route('dashboard.projects.store'), {
-            preserveScroll: true,
-            onError: () => {},
-        });
-    };
+};
+function arrayError(key) {
+    if (form.errors[key]) {
+        return form.errors[key];
+    }
+    return null;
+}
 </script>

@@ -450,7 +450,13 @@
     "projects.status.starting_soon" : "Incepe in curand",
     "projects.status.ending_soon" : "Se incheie in curand",
 
-    "project.labels.preview_image": "Imagine de prezentare"
+    "project.labels.preview_image": "Imagine de prezentare",
+    "project.labels.videos" : "Videoclipuri externe ale proiectului",
+    "project.labels.videos_extra" : "Aici puteti adauga link-uri de pe diverse platforme de streaming (youtube, vimeo, etc.)",
+
+    "project.labels.external_links_title": "Titlu link extern",
+    "project.labels.external_links_url": "URL link extern"
+
 
 
 

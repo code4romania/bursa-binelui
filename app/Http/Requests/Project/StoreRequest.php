@@ -40,9 +40,11 @@ class StoreRequest extends FormRequest
             'accepting_volunteers' => ['boolean', 'nullable'],
             'accepting_comments' => ['boolean', 'nullable'],
             'videos' => ['nullable', 'array'],
-            'videos.*' => ['nullable', 'url'],
+            'videos.*.url' => ['required', 'url'],
             'external_links' => ['nullable', 'array'],
-            'external_links.*' => ['nullable', 'url'],
+            'external_links.*.title' => ['required', 'string'],
+            'external_links.*.url' => ['required', 'url'],
+
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
             'gallery.*.file' => ['file', 'nullable'],
