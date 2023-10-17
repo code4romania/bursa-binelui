@@ -5,9 +5,10 @@
           <p class="text-sm leading-5 text-gray-700" v-show="description" v-text="description"/>
       </div>
     <div class="flex w-full border-t border-gray-300 pb-1.5" v-for="(item, index) in tmpElements" :key="index">
-        <template v-for="(struct, indexStruct) in structure">
-            <Input
-                class="w-1/3"
+        <Input
+                v-for="(struct, indexStruct) in structure"
+                :key="indexStruct"
+                class="w-1/3 mx-2"
                 :label="$t(struct.label)"
                 color="gray-700"
                 type="text"
@@ -15,10 +16,8 @@
                 :error = "struct.error"
             />
 
-        </template>
-
       <DangerButton
-          class="mt-8 ml-4"
+          class="mt-6"
           type="button"
           hover="red-400"
           color="white"
@@ -27,7 +26,7 @@
       />
     </div>
     <SecondaryButton
-        class="mt-8 ml-4"
+        class="mt-4"
         hover="primary-400"
         color="white"
         @click="() => {tmpElements.push({ url: '' });}"
@@ -68,12 +67,6 @@ const props = defineProps({
         required: true,
     },
 });
-console.log(props.elements);
 const tmpElements = ref(props.elements);
-console.log(tmpElements.value);
-emit('upload', tmpElements);
-
-
-
 
 </script>
