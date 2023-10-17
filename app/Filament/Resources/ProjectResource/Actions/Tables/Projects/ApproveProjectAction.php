@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Actions\Tables\Projects;
 
-use App\Models\Organization;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
 use Livewire\Component;

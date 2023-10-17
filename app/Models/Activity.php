@@ -141,8 +141,6 @@ class Activity extends BaseActivity
 
     public function reject(?string $reason): void
     {
-
-
         if ($this->isApproved()) {
             return;
         }
@@ -154,8 +152,7 @@ class Activity extends BaseActivity
                 'content' => $reason,
                 'user_id' => auth()->user()->id,
             ]);
-        }
-        else{
+        } else {
             $this->subject->tickets()->create([
                 'subject' => __('project.ticket_rejected.subject', ['project' => $this->subject->name]),
                 'content' => $reason,
@@ -165,8 +162,6 @@ class Activity extends BaseActivity
         $this->update([
             'rejected_at' => now(),
         ]);
-
-
 
         $this->organization->tickets()->create([
             'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),

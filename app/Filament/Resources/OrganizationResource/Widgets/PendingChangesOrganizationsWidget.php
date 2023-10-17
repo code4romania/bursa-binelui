@@ -77,7 +77,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
 
     protected function getTableRecordUrlUsing(): \Closure
     {
-        return fn (Organization $record) => OrganizationResource::getUrl('view', ['record'=>$record,'activeRelationManager'=>5]);
+        return fn (Organization $record) => OrganizationResource::getUrl('view', ['record' => $record, 'activeRelationManager' => 5]);
     }
 
     protected function getTableActions(): array

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
-use App\Filament\Resources\ProjectResource\Actions\Tables\Projects\ApproveProjectAction;
 use App\Filament\Resources\ProjectResource\Actions\Tables\Projects\RejectProjectAction;
 use App\Models\Project;
 use Filament\Tables\Actions\EditAction;

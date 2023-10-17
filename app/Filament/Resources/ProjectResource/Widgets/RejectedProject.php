@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class RejectedProject extends BaseProjectWidget
 {
-
     protected $listeners = [
         'refreshRejectedProjectWidget' => '$refresh',
     ];

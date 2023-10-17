@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Actions\Pages;
 
-use App\Models\Organization;
 use App\Models\Project;
 use Filament\Forms\Components\Textarea;
 use Filament\Pages\Actions\Action;

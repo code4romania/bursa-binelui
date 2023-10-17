@@ -113,5 +113,4 @@ return [
         'subheading' => 'Sunteți sigur că doriți să reactivați proiectul ":name"?',
     ],
 
-
 ];

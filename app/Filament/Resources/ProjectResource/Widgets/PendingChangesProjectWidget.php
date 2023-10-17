@@ -7,7 +7,6 @@ namespace App\Filament\Resources\ProjectResource\Widgets;
 use App\Models\Activity;
 use App\Models\Organization;
 use App\Models\Project;
-use App\Tables\Columns\TitleWithImageColumn;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -75,13 +74,13 @@ class PendingChangesProjectWidget extends BaseProjectWidget
                 ->sortable(),
         ];
     }
+
     protected function getTableRecordUrlUsing(): \Closure
     {
         return function (Project $record) {
-            return  route('filament.resources.projects.view',['record'=> $record, 'activeRelationManager' => 2]);
+            return  route('filament.resources.projects.view', ['record' => $record, 'activeRelationManager' => 2]);
         };
     }
-
 
     protected function getTableActions(): array
     {
