@@ -21,12 +21,12 @@
         <div class="flex md:justify-end">
             <slot name="action" />
         </div>
-
     </div>
 </template>
 
 <script setup>
-import {computed} from "vue";
+    import { computed } from 'vue';
+
     const props = defineProps({
         label: String,
         hasPendingChanges: {
@@ -37,10 +37,10 @@ import {computed} from "vue";
             type: Boolean,
             default: false,
         },
-        errors:{
+        errors: {
             type: String,
             default: null,
-        }
+        },
     });
 
     const hasErrors = computed(() => {

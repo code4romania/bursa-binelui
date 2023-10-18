@@ -86,7 +86,13 @@ class Project extends Model implements HasMedia
                     ->nonQueued();
             });
 
-        $this->addMediaCollection('gallery');
+        $this->addMediaCollection('gallery')
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('preview')
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
+                    ->nonQueued();
+            });
     }
 
     public function getActivitylogOptions(): LogOptions

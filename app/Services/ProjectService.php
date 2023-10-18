@@ -31,12 +31,14 @@ class ProjectService
         $mediaIds = collect($value)
             ->filter(fn ($item) => \is_array($item))
             ->pluck('id');
+
         $project->getMedia('gallery')
             ->map(function (Media $media) use ($mediaIds) {
                 if (! $mediaIds->contains($media->id)) {
                     $media->delete();
                 }
             });
+
         collect($value)->filter(fn ($image) => ! \is_array($image))
             ->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery'));
     }
@@ -45,17 +47,21 @@ class ProjectService
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = ProjectStatus::draft->value;
-//        dd($data);
+
         $project = $this->createDraftProject($data);
+
         if (! empty($data['categories'])) {
             $project->categories()->attach($data['categories']);
         }
+
         if (! empty($data['counties'])) {
             $project->counties()->attach($data['counties']);
         }
+
         if (! empty($data['preview'])) {
             $project->addMedia($data['preview'])->toMediaCollection('preview');
         }
+
         if (! empty($data['gallery'])) {
             collect($data['gallery'])->map(function ($image) use ($project) {
                 $project->addMedia($image)->toMediaCollection('gallery');

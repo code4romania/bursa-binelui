@@ -14,50 +14,32 @@
             />
 
             <div class="flex flex-col items-start justify-end gap-2 p-3">
-                <ProjectTag
-                    v-if="project.is_pending"
-                    :label="$t('project_waiting_for_approval')"
-                />
+                <ProjectTag v-if="project.is_pending" :label="$t('project_waiting_for_approval')" />
                 <ProjectTag v-else-if="project.is_draft" :label="$t('project_draft')" />
 
-                <ProjectTag
-                    v-else-if="project.is_starting_soon"
-                    :label="$t('project_starting_soon')"
-                    icon="clock"
-                />
+                <ProjectTag v-else-if="project.is_starting_soon" :label="$t('project_starting_soon')" icon="clock" />
                 <ProjectTag
                     v-else-if="project.is_active && project.is_ending_soon"
                     :label="$t('project_ending_soon')"
                     icon="clock"
                 />
 
-                <ProjectTag
-                    v-else-if="project.is_active"
-                    :label="$t('project_active')"
-                    icon="clock"
-                />
+                <ProjectTag v-else-if="project.is_active" :label="$t('project_active')" icon="clock" />
                 <ProjectTag v-else-if="!project.is_active" :label="$t('project_closed')" />
 
+                <!--                <div v-if="project.is_active && project.championship" class="flex flex-wrap items-center gap-1">-->
+                <!--                    <ProjectTag-->
+                <!--                        v-if="project.championship.troffees_count"-->
+                <!--                        :label="project.championship.troffees_count"-->
+                <!--                        icon="troffee"-->
+                <!--                        accent-->
+                <!--                    />-->
 
-
-
-<!--                <div v-if="project.is_active && project.championship" class="flex flex-wrap items-center gap-1">-->
-<!--                    <ProjectTag-->
-<!--                        v-if="project.championship.troffees_count"-->
-<!--                        :label="project.championship.troffees_count"-->
-<!--                        icon="troffee"-->
-<!--                        accent-->
-<!--                    />-->
-
-<!--                    <ProjectTag v-if="project.championship.score" accent>-->
-<!--                        <span class="font-bold" v-text="$t('scor')" />-->
-<!--                        <span class="font-extrabold" v-text="project.championship.score" />-->
-<!--                    </ProjectTag>-->
-<!--                </div>-->
-
-
-
-
+                <!--                    <ProjectTag v-if="project.championship.score" accent>-->
+                <!--                        <span class="font-bold" v-text="$t('scor')" />-->
+                <!--                        <span class="font-extrabold" v-text="project.championship.score" />-->
+                <!--                    </ProjectTag>-->
+                <!--                </div>-->
             </div>
         </Link>
 
@@ -105,7 +87,7 @@
 
             <div
                 v-if="'admin' == cardType"
-                class="flex mt-4 border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
+                class="flex mt-4 overflow-hidden border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
             >
                 <Link
                     :href="route('project', project.slug)"
@@ -190,7 +172,6 @@
         project: Object,
         cardType: String,
     });
-    console.log(props.project,props.cardType);
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {

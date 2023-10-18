@@ -2,8 +2,8 @@
     <DashboardLayout>
         <Title :title="$t('edit_project_title')" />
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
-
-            <Field :label="$t('project_name_label')"
+            <Field
+                :label="$t('project_name_label')"
                 :hasPendingChanges="changes.includes('name')"
                 :errors="formChangeStatus.errors.name"
             >
@@ -31,7 +31,12 @@
                 </template>
             </Field>
 
-            <Field :label="$t('amount_target_label')" alt :hasPendingChanges="changes.includes('target_budget')" :errors="formChangeStatus.errors.target_budget">
+            <Field
+                :label="$t('amount_target_label')"
+                :hasPendingChanges="changes.includes('target_budget')"
+                :errors="formChangeStatus.errors.target_budget"
+                alt
+            >
                 <template #value>
                     {{ project.target_budget }}
                 </template>
@@ -55,7 +60,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('period_start_donation')"  :hasPendingChanges="changes.includes('start')" :errors="formChangeStatus.errors.start">
+            <Field
+                :label="$t('period_start_donation')"
+                :hasPendingChanges="changes.includes('start')"
+                :errors="formChangeStatus.errors.start"
+            >
                 <template #value> {{ project.start }} </template>
 
                 <template #action>
@@ -79,7 +88,12 @@
                 </template>
             </Field>
 
-            <Field :label="$t('period_end_donation')" alt :hasPendingChanges="changes.includes('end')"  :errors="formChangeStatus.errors.end">
+            <Field
+                :label="$t('period_end_donation')"
+                :hasPendingChanges="changes.includes('end')"
+                :errors="formChangeStatus.errors.end"
+                alt
+            >
                 <template #value>{{ project.end }} </template>
 
                 <template #action>
@@ -103,7 +117,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('project_category_label')" :hasPendingChanges="changes.includes('categories')" :errors="formChangeStatus.errors.categories">
+            <Field
+                :label="$t('project_category_label')"
+                :hasPendingChanges="changes.includes('categories')"
+                :errors="formChangeStatus.errors.categories"
+            >
                 <template #value>
                     {{ originalProject.categories_names }}
                 </template>
@@ -125,10 +143,14 @@
                 </template>
             </Field>
 
-            <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" alt :errors="formChangeStatus.errors.counties">
+            <Field
+                :label="$t('counties_label')"
+                :hasPendingChanges="changes.includes('counties')"
+                :errors="formChangeStatus.errors.counties"
+                alt
+            >
                 <template #value>
-                    {{ originalProject.counties_names}}
-
+                    {{ originalProject.counties_names }}
                 </template>
 
                 <template #action>
@@ -149,7 +171,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('project_description_label')" :hasPendingChanges="changes.includes('description')" :errors="formChangeStatus.errors.description">
+            <Field
+                :label="$t('project_description_label')"
+                :hasPendingChanges="changes.includes('description')"
+                :errors="formChangeStatus.errors.description"
+            >
                 <template #value>
                     {{ project.description }}
                 </template>
@@ -176,7 +202,12 @@
                 </template>
             </Field>
 
-            <Field :label="$t('project_scope_label')" :hasPendingChanges="changes.includes('scope')" alt  :errors="formChangeStatus.errors.scope">
+            <Field
+                :label="$t('project_scope_label')"
+                :hasPendingChanges="changes.includes('scope')"
+                :errors="formChangeStatus.errors.scope"
+                alt
+            >
                 <template #value>
                     {{ project.scope }}
                 </template>
@@ -201,7 +232,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('project_beneficiary_label')" :hasPendingChanges="changes.includes('beneficiaries')" :errors="formChangeStatus.errors.beneficiaries">
+            <Field
+                :label="$t('project_beneficiary_label')"
+                :hasPendingChanges="changes.includes('beneficiaries')"
+                :errors="formChangeStatus.errors.beneficiaries"
+            >
                 <template #value>
                     {{ project.beneficiaries }}
                 </template>
@@ -231,7 +266,12 @@
                 </template>
             </Field>
 
-            <Field :label="$t('why_to_donate')" :hasPendingChanges="changes.includes('reason_to_donate')" alt :errors="formChangeStatus.errors.reason_to_donate">
+            <Field
+                :label="$t('why_to_donate')"
+                :hasPendingChanges="changes.includes('reason_to_donate')"
+                :errors="formChangeStatus.errors.reason_to_donate"
+                alt
+            >
                 <template #value>
                     {{ project.reason_to_donate }}
                 </template>
@@ -256,7 +296,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('accepting_volunteers')" :hasPendingChanges="changes.includes('accepting_volunteers')"  :errors="formChangeStatus.errors.accepting_volunteers">
+            <Field
+                :label="$t('accepting_volunteers')"
+                :hasPendingChanges="changes.includes('accepting_volunteers')"
+                :errors="formChangeStatus.errors.accepting_volunteers"
+            >
                 <template #value>
                     {{ originalProject.accepting_volunteers }}
                 </template>
@@ -268,21 +312,25 @@
                         class="flex justify-end col-span-1"
                     >
                         <fieldset>
-                            <legend class="text-sm font-semibold leading-6 text-gray-900">  {{ $t('accepting_volunteers') }}</legend>
+                            <legend class="text-sm font-semibold leading-6 text-gray-900">
+                                {{ $t('accepting_volunteers') }}
+                            </legend>
                             <div class="mt-6 space-y-6">
                                 <div class="relative flex gap-x-3">
-                                    <div class="flex h-6 items-center">
+                                    <div class="flex items-center h-6">
                                         <Checkbox
                                             class="form-checkbox"
                                             id="accepting_comments"
                                             color="gray-700"
                                             v-model="project.accepting_volunteers"
-                                            :checked="project.accepting_volunteers==='Da'"
+                                            :checked="project.accepting_volunteers === 'Da'"
                                             :error="errors.accepting_volunteers"
                                         />
                                     </div>
                                     <div class="text-sm leading-6">
-                                        <label for="accepting_comments" class="font-medium text-gray-900">{{$t('accepting_volunteers')}}</label>
+                                        <label for="accepting_comments" class="font-medium text-gray-900">
+                                            {{ $t('accepting_volunteers') }}
+                                        </label>
                                         <p class="text-gray-500">{{ $t('accepting_volunteers_extra') }}</p>
                                     </div>
                                 </div>
@@ -292,7 +340,12 @@
                 </template>
             </Field>
 
-            <Field :label="$t('accepting_comments')" :hasPendingChanges="changes.includes('accepting_comments')" alt :errors="formChangeStatus.errors.accepting_comments">
+            <Field
+                :label="$t('accepting_comments')"
+                :hasPendingChanges="changes.includes('accepting_comments')"
+                :errors="formChangeStatus.errors.accepting_comments"
+                alt
+            >
                 <template #value>
                     {{ originalProject.accepting_comments }}
                 </template>
@@ -304,21 +357,25 @@
                         class="flex justify-end col-span-1"
                     >
                         <fieldset>
-                            <legend class="text-sm font-semibold leading-6 text-gray-900">  {{ $t('accepting_comments') }}</legend>
+                            <legend class="text-sm font-semibold leading-6 text-gray-900">
+                                {{ $t('accepting_comments') }}
+                            </legend>
                             <div class="mt-6 space-y-6">
                                 <div class="relative flex gap-x-3">
-                                    <div class="flex h-6 items-center">
+                                    <div class="flex items-center h-6">
                                         <Checkbox
                                             class="form-checkbox"
                                             id="accepting_comments"
                                             color="gray-700"
                                             v-model="project.accepting_comments"
-                                            :checked="project.accepting_comments==='Da'"
+                                            :checked="project.accepting_comments === 'Da'"
                                             :error="errors.accepting_comments"
                                         />
                                     </div>
                                     <div class="text-sm leading-6">
-                                        <label for="accepting_comments" class="font-medium text-gray-900">{{$t('accepting_comments')}}</label>
+                                        <label for="accepting_comments" class="font-medium text-gray-900">{{
+                                            $t('accepting_comments')
+                                        }}</label>
                                         <p class="text-gray-500">{{ $t('accepting_comments_extra') }}</p>
                                     </div>
                                 </div>
@@ -341,7 +398,7 @@
                             >
                                 <FileInput
                                     :label="$t('upload_image')"
-                                    @upload="(file) =>(project.image = file)"
+                                    @upload="(file) => (project.image = file)"
                                     :form="project.image"
                                     accept="image/png, image/jpeg"
                                     previewable
@@ -354,20 +411,17 @@
 
             <Field :label="$t('photo_gallery')" :errors="formChangeStatus.errors.gallery">
                 <template #value>
-                    <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
-                        <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            <img class="object-contain w-32 h-32 shrink-0" v-for="image in originalProject.gallery" :src="image.url"  alt="" />
-                        </div>
-                        <div>
-                            <EditModal
-                                @action="editField('gallery')"
-                                @cancel="resetField('gallery')"
-                                :text="$t('project.labels.change_gallery_label')"
-                            >
-                                <FileGroup v-model="originalProject.gallery" :label="$t('photo_gallery')"/>
-                            </EditModal>
+                    <div class="flex flex-wrap items-center gap-6 md:gap-8">
+                        <div class="aspect-1 shrink-0" v-for="(image, index) in originalProject.gallery" :key="index">
+                            <img class="object-cover w-32 h-32" :src="image.url" alt="" />
                         </div>
                     </div>
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('gallery')" @cancel="resetField('gallery')">
+                        <FileGroup v-model="project.gallery" :label="$t('photo_gallery')" />
+                    </EditModal>
                 </template>
             </Field>
 
@@ -375,22 +429,33 @@
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">
-                            <a v-for="link in originalProject.videos"
-                               :href="link.url"
-                               target="_blank"
-                               v-text="link.url"
+                            <a
+                                v-for="(link, index) in originalProject.videos"
+                                :key="index"
+                                :href="link.url"
+                                target="_blank"
+                                v-text="link.url"
                             />
                         </div>
                     </div>
                 </template>
                 <template #action>
-                    <EditModal @action="editField('videos')" class="flex justify-end col-span-1"
-                               :errors="formChangeStatus.errors.videos"
-                               :label="$t('project.labels.videos')"
-                               :description="$t('project.labels.videos_extra')">
+                    <EditModal
+                        @action="editField('videos')"
+                        class="flex justify-end col-span-1"
+                        :errors="formChangeStatus.errors.videos"
+                        :label="$t('project.labels.videos')"
+                        :description="$t('project.labels.videos_extra')"
+                    >
                         <RepeaterComponent
-                            :elements="originalProject.videos"
-                            :structure="[{label:$t('video_link_label'),key:'url',error:arrayError('videos.0.url')}]"
+                            :elements="project.videos"
+                            :structure="[
+                                {
+                                    label: $t('video_link_label'),
+                                    key: 'url',
+                                    error: arrayError('videos.0.url'),
+                                },
+                            ]"
                             :error="arrayError('videos.0.url')"
                             name="videos"
                         />
@@ -398,32 +463,43 @@
                 </template>
             </Field>
 
-            <Field :label="$t('external_links_title')"   :errors="formChangeStatus.errors.external_links">
+            <Field :label="$t('external_links_title')" :errors="formChangeStatus.errors.external_links">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">
-                            <a v-for="link in originalProject.external_links"
-                               :href="link.url"
-                               v-text="link.title"
-                               target="_blank"
-                               class="mx-2 border-2 p-2"
+                            <a
+                                v-for="(link, index) in originalProject.external_links"
+                                :key="index"
+                                :href="link.url"
+                                v-text="link.title"
+                                target="_blank"
+                                class="p-2 mx-2 border-2"
                             />
-
                         </div>
                     </div>
                 </template>
                 <template #action>
-                    <EditModal  @action="editField('external_links')"
-                                class="flex justify-end col-span-1"
-                                :errors="arrayError('external_links.0.url')"
-                                :label="$t('external_links_title')"
+                    <EditModal
+                        @action="editField('external_links')"
+                        class="flex justify-end col-span-1"
+                        :errors="arrayError('external_links.0.url')"
+                        :label="$t('external_links_title')"
                     >
                         <RepeaterComponent
                             :elements="originalProject.external_links"
+                            name="external_links"
                             :structure="[
-                        {label:$t('project.labels.external_links_title'),key:'title',error:arrayError('external_links.0.title')},
-                        {label:$t('project.labels.external_links_url'),key:'url',error:arrayError('external_links.0.url')}
-                        ]" name="external_links"
+                                {
+                                    label: $t('project.labels.external_links_title'),
+                                    key: 'title',
+                                    error: arrayError('external_links.0.title'),
+                                },
+                                {
+                                    label: $t('project.labels.external_links_url'),
+                                    key: 'url',
+                                    error: arrayError('external_links.0.url'),
+                                },
+                            ]"
                         />
                     </EditModal>
                 </template>
@@ -439,93 +515,88 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+    import { ref, computed } from 'vue';
+    import { useForm } from '@inertiajs/vue3';
 
-/** Import components. */
-import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-import Title from '@/Components/Title.vue';
-import SvgLoader from '@/Components/SvgLoader.vue';
-import Field from '@/Components/Field.vue';
-import EditModal from '@/Components/modals/EditModal.vue';
-import Input from '@/Components/form/Input.vue';
-import Textarea from '@/Components/form/Textarea.vue';
-import FileInput from '@/Components/form/FileInput.vue';
-import Repeater from '@/Components/form/Repeater.vue';
-import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-import DangerButton from '@/Components/buttons/DangerButton.vue';
-import SelectMultiple from '@/Components/form/SelectMultiple.vue';
-import Select from "@/Components/form/Select.vue";
-import Checkbox from "@/Components/form/Checkbox.vue";
-import RepeaterComponent from "@/Components/RepeaterComponent.vue";
-import FileGroup from "@/Components/form/FileGroup.vue";
+    /** Import components. */
+    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+    import Title from '@/Components/Title.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import Field from '@/Components/Field.vue';
+    import EditModal from '@/Components/modals/EditModal.vue';
+    import Input from '@/Components/form/Input.vue';
+    import Textarea from '@/Components/form/Textarea.vue';
+    import FileInput from '@/Components/form/FileInput.vue';
+    import Repeater from '@/Components/form/Repeater.vue';
+    import InputWithIcon from '@/Components/form/InputWithIcon.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import DangerButton from '@/Components/buttons/DangerButton.vue';
+    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+    import Select from '@/Components/form/Select.vue';
+    import Checkbox from '@/Components/form/Checkbox.vue';
+    import RepeaterComponent from '@/Components/RepeaterComponent.vue';
+    import FileGroup from '@/Components/form/FileGroup.vue';
 
-const props = defineProps({
-    project: Object,
-    errors: Object,
-    counties: Array,
-    projectCategories: Array,
-    flash: Object,
-    changes: Array,
-});
+    const props = defineProps({
+        project: Object,
+        errors: Object,
+        counties: Array,
+        projectCategories: Array,
+        flash: Object,
+        changes: Array,
+    });
 
-const project = ref(props.project);
-const originalProject = computed(() => props.project);
+    const project = ref(props.project);
+    const originalProject = computed(() => props.project);
 
-const resetField = (field) => {
-    project.value[field] = originalProject.value[field];
-};
+    const resetField = (field) => {
+        project.value[field] = originalProject.value[field];
+    };
 
-const formChangeStatus = useForm({
-    status: 'pending',
-    id: project.value.id,
-});
+    const formChangeStatus = useForm({
+        status: 'pending',
+        id: project.value.id,
+    });
 
-const changeProjectStatus = (id, status, type) => {
-    let tmpRoute =
-        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-    if (confirm('Are you sure you want to change the status of this project?')) {
-        formChangeStatus.post(tmpRoute, {
+    const changeProjectStatus = (id, status, type) => {
+        let tmpRoute =
+            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+        if (confirm('Are you sure you want to change the status of this project?')) {
+            formChangeStatus.post(tmpRoute, {
+                preserveScroll: true,
+                onSuccess: (response) => {
+                    //
+                },
+                onError: (error) => {
+                    Object.keys(error).forEach((key) => {
+                        if (key.includes('external_links')) {
+                            formChangeStatus.errors['external_links'] = error[key];
+                        }
+                        if (key.includes('videos')) {
+                            formChangeStatus.errors['videos'] = error[key];
+                        }
+                    });
+                    console.log(error);
+                },
+            });
+        }
+    };
+
+    const editField = (field) => {
+        const form = useForm({
+            [field]: project.value[field],
+        });
+        form.post(route('dashboard.projects.update', project.value.id), {
             preserveScroll: true,
             onSuccess: (response) => {
                 //
             },
-            onError: (error) => {
-                Object.keys(error).forEach((key) => {
-                    if (key.includes('external_links'))
-                    {
-                        formChangeStatus.errors['external_links'] = error[key];
-                    }
-                    if (key.includes('videos'))
-                    {
-                        formChangeStatus.errors['videos'] = error[key];
-                    }
-                });
-                console.log(error)
-            },
         });
-
+    };
+    function arrayError(key) {
+        if (props?.errors[key]) {
+            return props?.errors[key];
+        }
+        return null;
     }
-};
-
-const editField = (field) => {
-    const form = useForm({
-        [field]: project.value[field],
-    });
-    form.post(route('dashboard.projects.update', project.value.id), {
-        preserveScroll: true,
-        onSuccess: (response) => {
-            //
-        },
-    });
-
-};
-function arrayError(key) {
-    if (props?.errors[key]) {
-        return props?.errors[key];
-    }
-    return null;
-}
-
 </script>

@@ -6,6 +6,7 @@ namespace App\Http\Resources\Project;
 
 use App\Http\Resources\Resource;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EditProjectResource extends Resource
 {
@@ -20,10 +21,10 @@ class EditProjectResource extends Resource
 
             'image' => $this->getFirstMediaUrl('preview'),
             'target_budget' => $this->target_budget,
-            'gallery' => $this->getMedia('gallery')->map(function ($media) {
+            'gallery' => $this->getMedia('gallery')->map(function (Media $media) {
                 return [
                     'id' => $media->id,
-                    'url' => $media->getFullUrl(),
+                    'url' => $media->getFullUrl('preview'),
                 ];
             })->toArray(),
             'organization' => [
