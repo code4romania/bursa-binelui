@@ -159,7 +159,7 @@
                     error['ngo.contact_person'] ||
                     error['ngo.contact_phone'] ||
                     error['ngo.contact_email'] ||
-                    error['ngo.webiste']
+                    error['ngo.website']
                 ) {
                     current.value = 3;
                 } else if (error['ngo.volunteer'] || error['ngo.cif'] || error['ngo.why_volunteer']) {

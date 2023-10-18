@@ -50,8 +50,6 @@ require __DIR__ . '/championship.php';
 
 require __DIR__ . '/regional.php';
 
-require __DIR__ . '/donor.php';
-
 Route::get('/evolutia-faptelor-bune', EvolutionController::class)->name('evolution');
 
 Route::group([

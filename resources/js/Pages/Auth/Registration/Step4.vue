@@ -77,7 +77,7 @@
             :isRequired="true"
             color="gray-700"
             hasAutocomplete="organization_website_label"
-            :error="form.errors['ngo.webiste']"
+            :error="form.errors['ngo.website']"
         />
 
         <div v-if="'organization' == form.type" class="flex items-center justify-between mt-6 gap-x-4">

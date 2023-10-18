@@ -24,6 +24,7 @@ class Controller extends BaseController
             return ActivityDomain::query()
                 ->addSelect('id as value')
                 ->addSelect('name as label')
+                ->orderBy('label', 'asc')
                 ->get()
                 ->toArray();
         });
@@ -46,6 +47,7 @@ class Controller extends BaseController
             return ProjectCategory::query()
                 ->addSelect('id as value')
                 ->addSelect('name as label')
+                ->orderBy('label', 'asc')
                 ->get()
                 ->toArray();
         });

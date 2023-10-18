@@ -6,15 +6,20 @@
         </div>
 
         <div class="container">
+            <div class="flex justify-center">
             <UpdateProfileInformationForm
                 :must-verify-email="mustVerifyEmail"
                 :status="status"
-                class="max-w-xl"
+                class="w-1/2"
             />
+            </div>
 
             <div class="w-full my-4 border-t border-gray-300"></div>
 
-            <UpdatePasswordForm class="max-w-xl" />
+            <div class="flex justify-center">
+
+                <UpdatePasswordForm class="w-1/2" />
+            </div>
         </div>
     </PageLayout>
 </template>

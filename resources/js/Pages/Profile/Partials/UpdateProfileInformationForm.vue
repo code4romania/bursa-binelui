@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section >
         <header class="flex items-center gap-4 mt-12">
             <SvgLoader name="user" class="fill-white" />
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
@@ -33,7 +33,6 @@
                 type="number"
                 pattern="[0-9]{10}"
                 v-model="form.phone"
-                :isRequired="true"
                 :error="form.errors.phone"
                 :min="0"
                 :maxlength="10"
