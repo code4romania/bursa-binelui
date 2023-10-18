@@ -3,6 +3,7 @@
         <Navbar />
 
         <Notification />
+        <OrganizationStatus />
 
         <div class="flex items-start flex-1 gap-y-10">
             <div class="p-4 mt-1 overflow-y-auto bg-white border-r border-gray-200 lg:w-72 shrink-0">
@@ -82,6 +83,7 @@
         UserGroupIcon,
         UserRemoveIcon,
     } from '@heroicons/vue/outline';
+    import OrganizationStatus from "@/Components/OrganizationStatus.vue";
 
     const props = defineProps({
         gridClass: {

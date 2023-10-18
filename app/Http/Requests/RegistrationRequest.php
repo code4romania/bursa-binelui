@@ -32,7 +32,7 @@ class RegistrationRequest extends FormRequest
                 'ngo.name' => ['required', 'string'],
                 'ngo.description' => ['required', 'string', 'max:1000'],
                 'ngo.logo' => ['required', 'image'],
-                'ngo.statute' => ['required', 'file', 'mimes:pdf','max:15240'],
+                'ngo.statute' => ['required', 'file', 'mimes:pdf', 'max:15240'],
                 'ngo.street_address' => ['required', 'string'],
                 'ngo.cif' => ['required', 'string', 'unique:organizations,cif', new ValidCIF],
                 'ngo.contact_email' => ['required', 'email'],

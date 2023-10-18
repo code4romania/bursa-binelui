@@ -456,7 +456,10 @@
 
     "project.labels.external_links_title": "Titlu link extern",
     "project.labels.external_links_url": "URL link extern",
-    "project.labels.change_gallery_label": "Schimbă galeria de imagini"
+    "project.labels.change_gallery_label": "Schimbă galeria de imagini",
+
+    "organization_status_disabled" : "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
+    "organization_status_pending" : "Organizația este în așteptare"
 
 
 
