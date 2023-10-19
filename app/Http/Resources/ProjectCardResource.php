@@ -17,7 +17,7 @@ class ProjectCardResource extends Resource
             // 'type' => $this->type,
             'name' => $this->name,
             'slug' => $this->slug,
-            'county' => 'Replace me', // $this->county?->name,
+            'county' => $this->counties->pluck('name')->join(', '), // $this->county?->name,
             'image' => $this->getFirstMediaUrl('preview'),
             'organization' => [
                 'name' => $this->organization->name,

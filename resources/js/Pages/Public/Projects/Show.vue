@@ -45,35 +45,11 @@
                 <div class="flex flex-col w-full gap-4 sm:flex-row">
                     <!-- Donate modal -->
                     <DonateModal
-                        v-if="project.is_active"
+                        v-if="project.is_active && !project.staring_soon"
                         triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         :data="project"
                     />
-
-                    <!-- Donate Error modal -->
-                    <Modal
-                        v-if="!project.is_active"
-                        triggerModalClasses="bg-primary-500 w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :triggerModalText="$t('donate_btn')"
-                        id="project-donation-expired"
-                    >
-                        <div class="w-full mt-6">
-                            <h3 class="text-xl font-semibold text-center text-gray-800">
-                                {{ $t('donation_period_ended') }}
-                            </h3>
-                            <h3 class="text-xl font-semibold text-center text-primary-500">
-                                {{ $t('donate_to_other_projects') }}
-                            </h3>
-                            <Link
-                                :href="route('projects')"
-                                class="rounded-md block mt-6 text-center bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
-                            >
-                                {{ $t('see_other_projects') }}
-                            </Link>
-                        </div>
-                    </Modal>
-
                     <!-- Volunteer modal -->
                     <VolunteerModal
                         v-if="project.accepting_volunteers"
@@ -106,8 +82,8 @@
 
                 <div class="mt-8">
                     <div class="flex items-center justify-between mb-1 text-xl font-bold">
-                        <p class="text-cyan-900">{{ project.donations.total }} {{ $t('currency') }}</p>
-                        <p class="text-primary-500">{{ project.donations.target }} {{ $t('currency') }}</p>
+                        <p class="text-cyan-900">{{ project.donations.total }}</p>
+                        <p class="text-primary-500">{{ project.donations.target }}</p>
                     </div>
 
                     <div class="w-full h-6 bg-gray-300">
@@ -121,7 +97,7 @@
                     </div>
 
                     <p class="mt-1 text-xl font-bold text-cyan-900">
-                        {{ project.donations.total }} {{ $t('donations') }}
+                        {{ project.donations.count }} {{ $t('donations') }}
                     </p>
                 </div>
             </div>
@@ -178,6 +154,7 @@
 
                     <!-- Donate modal -->
                     <DonateModal
+                        v-if="project.is_active && !project.staring_soon"
                         triggerModalClasses="bg-primary-500 w-full hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         :triggerModalText="$t('donate_btn')"
                         :data="project"

@@ -63,6 +63,7 @@ class ProjectController extends Controller
                         AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
                     ])
                     ->whereIsPublished()
+                    ->orderBy('status_updated_at', 'desc')
                     ->paginate()
                     ->withQueryString()
             ),
@@ -71,7 +72,10 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-//        dd($project->embedded_videos);
+        if (!$project->isApproved() && !auth()->check())
+        {
+                abort(403);
+        }
         return Inertia::render('Public/Projects/Show', [
             'project' => new ShowProjectResource($project),
         ]);

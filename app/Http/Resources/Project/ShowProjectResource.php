@@ -62,6 +62,7 @@ class ShowProjectResource extends Resource
             'donations' => [
                 'target' => money_format($this->target_budget),
                 'total' => money_format($this->total_donations),
+                'count' => $this->donations_count,
                 'percentage' => $this->percentage,
             ],
             'championship' => [

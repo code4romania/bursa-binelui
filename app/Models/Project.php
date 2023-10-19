@@ -75,6 +75,10 @@ class Project extends Model implements HasMedia
         'categories',
     ];
 
+    protected $withCount = [
+        'donations',
+    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('preview')
@@ -230,10 +234,11 @@ class Project extends Model implements HasMedia
     {
         $slug = \Str::slug($this->name);
 //        dd($this);
-        $count = Project::whereRaw("slug RLIKE '^{$this->slug}(-[0-9]+)?$'")->count();
+        $count = self::whereRaw("slug RLIKE '^{$this->slug}(-[0-9]+)?$'")->count();
         if ($count > 0) {
-           $slug .= '-' . ($count + 1);
+            $slug .= '-' . ($count + 1);
         }
+
         return $this->update([
             'status' => ProjectStatus::approved,
             'status_updated_at' => $this->freshTimestamp(),
@@ -248,15 +253,13 @@ class Project extends Model implements HasMedia
             'status_updated_at' => $this->freshTimestamp(),
         ]);
 
-        if ($reason)
-        {
+        if ($reason) {
             $this->organization->tickets()->create([
                 'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
                 'content' => $reason,
                 'user_id' => auth()->user()->id,
             ]);
         }
-
     }
 
     public function getEmbeddedVideosAttribute(): array

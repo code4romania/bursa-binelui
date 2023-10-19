@@ -19,7 +19,6 @@ class ProjectPolicy
         if ($user->isSuperAdmin()) {
             return true;
         }
-
         return $user->belongsToOrganization($project->organization);
     }
 
