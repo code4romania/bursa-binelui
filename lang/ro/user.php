@@ -39,6 +39,7 @@ return [
         'created' => 'Utilizatorul a fost adăugat.',
         'deleted' => 'Utilizatorul a fost șters.',
         'set_initial_password_success' => 'Parola a fost setată cu succes!',
+        'password_updated_successfully'=> 'Parola a fost actualizată cu succes!',
     ],
     'filters' => [
         'type' => 'Tip',

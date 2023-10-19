@@ -24,7 +24,11 @@
                 v-model="form.email"
                 :isRequired="true"
                 :error="form.errors.email"
-            />
+                disabled
+            >
+                <p class="pt-1 text-sm text-gray-500">{{ $t("denied_change_email") }}</p>
+
+            </Input>
 
             <!-- Phone -->
             <Input

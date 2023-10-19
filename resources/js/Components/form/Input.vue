@@ -19,6 +19,7 @@
             :pattern="pattern"
             :min="min"
             :max="max"
+            :disabled="disabled"
             :maxlength="maxlength"
         />
 
@@ -78,6 +79,10 @@
         maxlength: {
             type: Number,
             default: null
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     });
 

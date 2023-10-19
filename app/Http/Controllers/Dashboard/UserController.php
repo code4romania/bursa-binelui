@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collections\UserCollection;
 use App\Models\User;
+use App\Notifications\Ngo\UserRemovedFromOrganizationNotification;
 use App\Rules\UserDoesntBelongToAnOrganization;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -62,6 +63,7 @@ class UserController extends Controller
         $user->organization()
             ->dissociate()
             ->save();
+        $user->notify(new UserRemovedFromOrganizationNotification());
 
         return redirect()->back()
             ->with('success', __('user.messages.deleted'));

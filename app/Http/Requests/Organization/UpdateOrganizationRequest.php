@@ -20,7 +20,7 @@ class UpdateOrganizationRequest extends FormRequest
             'name' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'logo' => ['nullable', 'file', 'mimes:jpg,png'],
-            'statute' => ['nullable', 'file'],
+            'statute' => ['nullable', 'file', 'mimes:pdf'],
             'street_address' => ['nullable', 'string'],
             'cif' => ['nullable', 'string', 'unique:organizations,cif', new ValidCIF],
             'contact_email' => ['nullable', 'email'],

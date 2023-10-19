@@ -7,6 +7,7 @@
     "retype_password": "Reintroduceți parola nouă",
     "name_last_name": "Nume și prenume",
     "email": "Email",
+    "denied_change_email": "Nu poți schimba adresa de email. Daca vrei sa o schimbi contactează-ne la: contact@bursabinelui.ro",
     "phone": "Telefon",
     "phone_input_info": "*Numarul de telefon nu va fi facut public.",
     "unverified_email": "Your email address is unverified.",
