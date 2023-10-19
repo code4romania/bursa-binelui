@@ -78,11 +78,12 @@ class ProjectService
         }
         $slug = \Str::slug($data['name']);
         $count = Project::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
-        $data['organization_id'] = auth()->user()->organization_id;
         $data['slug'] = $slug;
         if ($count > 0) {
             $data['slug'] .= '-' . ($count + 1);
         }
+        $data['organization_id'] = auth()->user()->organization_id;
+
 
         return  $this->project::create($data);
     }

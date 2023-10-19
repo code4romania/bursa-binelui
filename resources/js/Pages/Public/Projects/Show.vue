@@ -253,7 +253,7 @@
                         <div class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1"
                              v-for="(video,index) in project.embedded_videos"
                              :key="index"
-                             v-html="video.html"
+                             v-html="video?.html"
                         />
                     </div>
 

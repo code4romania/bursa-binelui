@@ -84,6 +84,7 @@
         UserRemoveIcon,
     } from '@heroicons/vue/outline';
     import OrganizationStatus from "@/Components/OrganizationStatus.vue";
+    import {trans} from "laravel-vue-i18n";
 
     const props = defineProps({
         gridClass: {
@@ -104,7 +105,7 @@
             icon: OfficeBuildingIcon,
         },
         {
-            name: 'Proiecte',
+            name: trans('projects_all'),
             route: route('dashboard.projects.index'),
             icon: FolderIcon,
             subMenu: [

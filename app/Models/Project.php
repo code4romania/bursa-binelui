@@ -203,6 +203,11 @@ class Project extends Model implements HasMedia
         return $this->end->diffInDays(today()) <= 5;
     }
 
+    public function getIsRejectedAttribute(): bool
+    {
+        return $this->status == ProjectStatus::rejected;
+    }
+
     public function getVisibleStatusAttribute(): string
     {
         if ($this->isStartingSoon()) {
@@ -223,9 +228,16 @@ class Project extends Model implements HasMedia
 
     public function markAsApproved(): bool
     {
+        $slug = \Str::slug($this->name);
+//        dd($this);
+        $count = Project::whereRaw("slug RLIKE '^{$this->slug}(-[0-9]+)?$'")->count();
+        if ($count > 0) {
+           $slug .= '-' . ($count + 1);
+        }
         return $this->update([
             'status' => ProjectStatus::approved,
             'status_updated_at' => $this->freshTimestamp(),
+            'slug' => $slug,
         ]);
     }
 
@@ -236,11 +248,15 @@ class Project extends Model implements HasMedia
             'status_updated_at' => $this->freshTimestamp(),
         ]);
 
-        $this->organization->tickets()->create([
-            'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
-            'content' => $reason,
-            'user_id' => auth()->user()->id,
-        ]);
+        if ($reason)
+        {
+            $this->organization->tickets()->create([
+                'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
+                'content' => $reason,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
+
     }
 
     public function getEmbeddedVideosAttribute(): array

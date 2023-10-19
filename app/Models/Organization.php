@@ -221,6 +221,7 @@ class Organization extends Model implements HasMedia
             'content' => $reason,
             'user_id' => auth()->user()->id,
         ]);
+        $this->projects->each->markAsRejected();
     }
 
     public function markAsPending(): bool

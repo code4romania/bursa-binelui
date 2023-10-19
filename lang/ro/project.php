@@ -39,7 +39,7 @@ return [
         'pending' => 'Proiecte in curs de aprobare (:number)',
         'pending_changes' => 'Proiecte cu modificări (:number)',
         'approved' => 'Proiecte aprobate (:number)',
-        'rejected' => 'Proiecte refuzate (:number)',
+        'rejected' => 'Proiecte respinse (:number)',
     ],
     'label' => [
         'singular' => 'Proiect',

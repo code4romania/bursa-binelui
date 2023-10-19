@@ -131,21 +131,18 @@ class Activity extends BaseActivity
                 $this->subject->setAttribute($key, $value['new']);
             });
 
-            if ($this->subject instanceof Organization)
-            {
+            if ($this->subject instanceof Organization) {
                 $value = data_get($this->properties, $this->changed_field . '.new');
                 if ($this->description === 'statute') {
-                  $this->subject->getMedia('statute')->map(function(Media $media) use ($value){
-                      if ($media->id != $value)
-                      {
-                          $media->delete();
-                      }
-                  });
-                  $media = Media::find($value);
-                  $this->subject->media->add($media);
+                    $this->subject->getMedia('statute')->map(function (Media $media) use ($value) {
+                        if ($media->id != $value) {
+                            $media->delete();
+                        }
+                    });
+                    $media = Media::find($value);
+                    $this->subject->media->add($media);
                 }
-            }
-            else{
+            } else {
                 $this->subject->save();
             }
 

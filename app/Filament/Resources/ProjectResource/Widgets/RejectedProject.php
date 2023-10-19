@@ -23,7 +23,17 @@ class RejectedProject extends BaseProjectWidget
 
     protected function getTableQuery(): Builder
     {
-        return Project::query()->select(['id', 'organization_id', 'name', 'target_budget', 'is_national', 'created_at', 'status_updated_at', 'status'])->whereIsRejected();
+        return Project::query()->select([
+            'id',
+            'organization_id',
+            'slug',
+            'name',
+            'target_budget',
+            'is_national',
+            'created_at',
+            'status_updated_at',
+            'status',
+        ])->whereIsRejected();
     }
 
     protected function getTableQueryStringIdentifier(): ?string

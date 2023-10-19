@@ -36,6 +36,7 @@ class ProjectCardResource extends Resource
             'is_draft' => $this->is_draft,
             'is_starting_soon' => $this->isStartingSoon(),
             'can_be_archived' => $this->can_be_archived,
+            'is_rejected' => $this->is_rejected,
             'championship' => [
                 'troffees_count' => 2,
                 'score' => 100,

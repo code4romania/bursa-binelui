@@ -47,7 +47,7 @@ class EditRequest extends FormRequest
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
             'gallery.*.file' => ['file', 'nullable'],
-            'preview' => ['file', 'nullable'],
+            'image' => ['file', 'nullable'],
         ];
     }
 }

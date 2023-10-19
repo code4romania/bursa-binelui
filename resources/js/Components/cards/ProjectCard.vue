@@ -25,7 +25,8 @@
                 />
 
                 <ProjectTag v-else-if="project.is_active" :label="$t('project_active')" icon="clock" />
-                <ProjectTag v-else-if="!project.is_active" :label="$t('project_closed')" />
+                <ProjectTag v-else-if="!project.is_active && !project.is_rejected" :label="$t('project_closed')" />
+                <ProjectTag v-if="project.is_rejected" :label="$t('project_rejected')" />
 
                 <!--                <div v-if="project.is_active && project.championship" class="flex flex-wrap items-center gap-1">-->
                 <!--                    <ProjectTag-->

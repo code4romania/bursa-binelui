@@ -30,6 +30,17 @@
                     </EditModal>
                 </template>
             </Field>
+            <Field
+                :label="$t('project_slug_label')"
+                :errors="formChangeStatus.errors.slug"
+            >
+                <template #value>
+                    <a :href="route('project',project.slug)" target="_blank" v-text="project.slug" />
+                </template>
+
+                <template #action>
+                </template>
+            </Field>
 
             <Field
                 :label="$t('amount_target_label')"
@@ -331,7 +342,7 @@
                                         <label for="accepting_comments" class="font-medium text-gray-900">
                                             {{ $t('accepting_volunteers') }}
                                         </label>
-                                        <p class="text-gray-500">{{ $t('accepting_volunteers_extra') }}</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -376,7 +387,6 @@
                                         <label for="accepting_comments" class="font-medium text-gray-900">{{
                                             $t('accepting_comments')
                                         }}</label>
-                                        <p class="text-gray-500">{{ $t('accepting_comments_extra') }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -34,6 +34,7 @@ class ApprovedProject extends BaseProjectWidget
             'archived_at',
             'start',
             'end',
+            'slug',
             'status',
         ])->whereIsApproved();
     }
