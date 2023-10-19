@@ -53,7 +53,16 @@
     </div>
 </template>
 
+<script>
+export default {
+    name: 'FileGroup',
+    inheritAttrs: false,
+    customOptions: {}
+}
+</script>
 <script setup>
+
+
     /** Import plugins. */
     import { PhotographIcon, UserCircleIcon } from '@heroicons/vue/solid';
     import DangerButton from '@/Components/buttons/DangerButton.vue';

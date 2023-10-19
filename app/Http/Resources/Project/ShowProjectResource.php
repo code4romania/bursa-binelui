@@ -43,6 +43,15 @@ class ShowProjectResource extends Resource
             'accepting_volunteers' => \boolval($this->accepting_volunteers),
             'accepting_comments' => \boolval($this->accepting_comments),
             'videos' => '',
+            'embedded_videos'=> $this->embedded_videos,
+            'swipe_gallery' => $this->getMedia('gallery')->map(function ($media) {
+                return [
+                    'src' => $media->getFullUrl(),
+                    'thumbnail' => $media->getFullUrl('preview'),
+                    'w' => 1200,
+                    'h' => 800,
+                    ];
+            })->toArray(),
             'is_active' => $this->is_active,
             'external_links' => collect($this->external_links)->map(function (array $link) {
                 $link['source'] = parse_url($link['url'], \PHP_URL_HOST);

@@ -17,6 +17,7 @@ use App\Http\Sorts\ProjectDonationsCountSort;
 use App\Http\Sorts\ProjectDonationsSumSort;
 use App\Models\Project;
 use App\Models\Volunteer;
+use Embed\Embed;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -70,7 +71,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        // TODO: prevent display of unpublished projects
+//        dd($project->embedded_videos);
         return Inertia::render('Public/Projects/Show', [
             'project' => new ShowProjectResource($project),
         ]);

@@ -9,6 +9,7 @@ use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
+use Embed\Embed;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -240,5 +241,17 @@ class Project extends Model implements HasMedia
             'content' => $reason,
             'user_id' => auth()->user()->id,
         ]);
+    }
+
+    public function getEmbeddedVideosAttribute(): array
+    {
+        $videos = $this->videos;
+        $embeddedVideos = [];
+        foreach ($videos as $video) {
+            $embeddedUrl = rescue(fn () => (new Embed())->get($video['url'])->code, '');
+            $embeddedVideos[] = $embeddedUrl;
+        }
+
+        return $embeddedVideos;
     }
 }

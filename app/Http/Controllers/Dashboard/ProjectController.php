@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\EditRequest;
 use App\Http\Requests\Project\StoreRequest;
 use App\Http\Resources\Project\EditProjectResource;
 use App\Http\Resources\ProjectCardResource;
@@ -69,10 +70,11 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(Request $request, Project $project)
+    public function update(EditRequest $request, Project $project)
     {
+
         $this->authorize('editAsNgo', $project);
-        ProjectService::update($project, $request->all());
+        ProjectService::update($project, $request->validated());
 
         return redirect()->back()
             ->with('success', 'Project updated.');

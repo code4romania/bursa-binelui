@@ -10,15 +10,15 @@
                     <div class="flex items-center gap-2">
                         <div
                             :class="[
-                                'w-8 h-8 rounded-lg flex items-center justify-center',
-                                project.is_period_active ? 'bg-red-500' : 'bg-cyan-900',
-                            ]"
+                                    'w-8 h-8 rounded-lg flex items-center justify-center',
+                                    project.is_period_active ? 'bg-red-500' : 'bg-cyan-900',
+                                ]"
                         >
                             <SvgLoader
                                 :class="[
-                                    'shrink-0 stroke-white',
-                                    project.is_period_active ? 'fill-red-500' : 'fill-cyan-900',
-                                ]"
+                                        'shrink-0 stroke-white',
+                                        project.is_period_active ? 'fill-red-500' : 'fill-cyan-900',
+                                    ]"
                                 name="thunder"
                             />
                         </div>
@@ -113,9 +113,9 @@
                     <div class="w-full h-6 bg-gray-300">
                         <div
                             :class="[
-                                `h-6`,
-                                project.donations.total === project.donations.target ? 'bg-primary-500' : 'bg-cyan-900',
-                            ]"
+                                    `h-6`,
+                                    project.donations.total === project.donations.target ? 'bg-primary-500' : 'bg-cyan-900',
+                                ]"
                             :style="`width: ${project.donations.percentage}%`"
                         ></div>
                     </div>
@@ -248,67 +248,41 @@
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900">{{ $t('gallery') }}</h3>
                     </div>
+                    <div class="grid grid-cols-2 gap-3">
 
-                    <div class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1">
-                        <img
-                            src="https://images.unsplash.com/photo-1508779544523-dd1b27685be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                            alt=""
-                            class="object-cover object-center group-hover:opacity-75"
+                        <div class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1"
+                             v-for="(video,index) in project.embedded_videos"
+                             :key="index"
+                             v-html="video.html"
                         />
-                        <div
-                            aria-hidden="true"
-                            class="bg-gradient-to-b from-transparent to-black opacity-90 sm:absolute sm:inset-0"
-                        />
-                        <div class="flex items-center justify-center p-6 sm:absolute sm:inset-0">
-                            <h3 class="flex items-center gap-4 font-semibold text-center text-white">
-                                <SvgLoader name="play" />
-                                {{ $t('play_video') }}
-                            </h3>
-                        </div>
                     </div>
-                </div>
 
-                <div class="w-full">
-                    <div class="grid grid-cols-1 mt-6 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
-                        <div
-                            class="h-full overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-h-3 sm:row-span-2"
-                        >
-                            <img
-                                src="https://images.unsplash.com/photo-1523115191856-c203e76215a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80"
-                                alt=""
-                                class="object-cover object-center group-hover:opacity-75"
-                            />
-                        </div>
+                    <Vue3PictureSwipe :items="project.swipe_gallery" :options="{mainClass:'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10'}" class="mt-10"></Vue3PictureSwipe>
+                    <!--                            <div-->
+                    <!--                                v-for="(image, index) in project.gallery"-->
+                    <!--                                :class="{-->
+                    <!--                            'h-full overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-h-3 sm:row-span-2' : ((index+1)%2===0),-->
+                    <!--                            'overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full' : ((index)+1%2===1),-->
+                    <!--                            }"-->
+                    <!--                                :key="index"-->
+                    <!--                            >-->
+                    <!--                                <img-->
+                    <!--                                    :src="image.url"-->
+                    <!--                                    alt=""-->
+                    <!--                                    :class="{-->
+                    <!--                                    'object-cover object-center group-hover:opacity-75': (index+1)%2===0,-->
+                    <!--                                    'object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full': (index+1)%2===1-->
+                    <!--                                }"-->
+                    <!--                                />-->
+                    <!--                            </div>-->
 
-                        <div
-                            class="overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full"
-                        >
-                            <img
-                                src="https://images.unsplash.com/photo-1617450365226-9bf28c04e130?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                                alt=""
-                                class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full"
-                            />
-                        </div>
+                    <!--                            <img v-for="(images,index) in project.gallery"-->
+                    <!--                                 :key="index"-->
+                    <!--                                 :src="images.url"-->
+                    <!--                                 alt=""-->
+                    <!--                                 class="object-cover object-center group-hover:opacity-75"-->
+                    <!--                            />-->
 
-                        <div
-                            class="overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full"
-                        >
-                            <img
-                                src="https://images.unsplash.com/photo-1535090467336-9501f96eef89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80"
-                                alt=""
-                                class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full"
-                            />
-                            <div
-                                aria-hidden="true"
-                                class="bg-gradient-to-b from-transparent to-black opacity-90 sm:absolute sm:inset-0"
-                            />
-                            <div class="flex items-center justify-center p-6 sm:absolute sm:inset-0">
-                                <Link class="font-semibold text-center text-white" :href="route('gallery', project.id)">
-                                    {{ $t('see_more') }}
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -345,82 +319,84 @@
 </template>
 
 <script setup>
-    /** Import form vue */
-    import { computed, onMounted, ref } from 'vue';
+/** Import form vue */
+import { computed, onMounted, ref } from 'vue';
 
-    /** Import from inertia. */
-    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+/** Import from inertia. */
+import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
 
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
-    import Modal from '@/Components/modals/Modal.vue';
-    import DonateModal from '@/Components/modals/DonateModal.vue';
-    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
-    import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
-    import SharePage from '@/Components/SharePage.vue';
 
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import { ExternalLinkIcon } from '@heroicons/vue/outline';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Icon from '@/Components/Icon.vue';
+import SvgLoader from '@/Components/SvgLoader.vue';
+import Modal from '@/Components/modals/Modal.vue';
+import DonateModal from '@/Components/modals/DonateModal.vue';
+import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
+import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+import SharePage from '@/Components/SharePage.vue';
+import Vue3PictureSwipe from "vue3-picture-swipe";
 
-    const props = defineProps({
-        project: {
-            type: Object,
-            required: true,
-        },
-    });
-    onMounted(() => {
-        console.log(project);
-    });
-    const project = ref(props.project);
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import { ExternalLinkIcon } from '@heroicons/vue/outline';
 
-    /**
-     * Copy embed code.
-     */
-    const copyEmbed = () => {
-        /** Embed iframe. */
-        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
+const props = defineProps({
+    project: {
+        type: Object,
+        required: true,
+    },
+});
+onMounted(() => {
+    console.log(project);
+});
+const project = ref(props.project);
 
-        /** Check if navigator object exists and copy iframe. */
-        if (navigator.clipboard) {
-            navigator.clipboard
-                .writeText(embedCode)
-                .then(() => alert('Embed code copied to clipboard!'))
-                .catch(() => alert('Failed to copy embed code to clipboard!'));
-        } else {
-            /** Create textarea element. */
-            const tempInput = document.createElement('textarea');
+/**
+ * Copy embed code.
+ */
+const copyEmbed = () => {
+    /** Embed iframe. */
+    const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
 
-            /** Set textarea value as embed code. */
-            tempInput.value = embedCode;
+    /** Check if navigator object exists and copy iframe. */
+    if (navigator.clipboard) {
+        navigator.clipboard
+            .writeText(embedCode)
+            .then(() => alert('Embed code copied to clipboard!'))
+            .catch(() => alert('Failed to copy embed code to clipboard!'));
+    } else {
+        /** Create textarea element. */
+        const tempInput = document.createElement('textarea');
 
-            /** Apend textarea to body. */
-            document.body.appendChild(tempInput);
+        /** Set textarea value as embed code. */
+        tempInput.value = embedCode;
 
-            /** Select textarea text. */
-            tempInput.select();
+        /** Apend textarea to body. */
+        document.body.appendChild(tempInput);
 
-            /** Copy textarea content. */
-            document.execCommand('copy');
+        /** Select textarea text. */
+        tempInput.select();
 
-            /** Remove textarea. */
-            document.body.removeChild(tempInput);
-        }
-    };
+        /** Copy textarea content. */
+        document.execCommand('copy');
 
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = () => {
-        document.getElementById('volunteer-active-modal').click();
-    };
+        /** Remove textarea. */
+        document.body.removeChild(tempInput);
+    }
+};
 
-    /** Trigger donate modal from card. */
-    const triggerDonate = () => {
-        if (false === props.project.is_period_active) {
-            document.getElementById('project-donation-expired').click();
-            return;
-        }
+/** Trigger volunteer modal from card. */
+const triggerVolunteer = () => {
+    document.getElementById('volunteer-active-modal').click();
+};
 
-        document.getElementById('donate-active-modal').click();
-    };
+/** Trigger donate modal from card. */
+const triggerDonate = () => {
+    if (false === props.project.is_period_active) {
+        document.getElementById('project-donation-expired').click();
+        return;
+    }
+
+    document.getElementById('donate-active-modal').click();
+};
 </script>
