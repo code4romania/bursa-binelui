@@ -20,7 +20,6 @@ enum UserRole: string
     case MANAGER = 'manager';
     case USER = 'user';
 
-
     public function labelKeyPrefix(): string
     {
         return 'user.roles';
