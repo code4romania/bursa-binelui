@@ -45,7 +45,7 @@ class UserFactory extends Factory
     public function donor(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => UserRole::donor,
+            'role' => UserRole::USER,
         ]);
     }
 

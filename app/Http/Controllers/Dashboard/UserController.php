@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collections\UserCollection;
 use App\Models\User;
@@ -45,6 +46,7 @@ class UserController extends Controller
             [
                 'name' => $attributes['name'],
                 'created_by' => auth()->user()->id,
+                'role' => UserRole::MANAGER,
             ]
         );
 
@@ -63,6 +65,7 @@ class UserController extends Controller
         $user->organization()
             ->dissociate()
             ->save();
+        $user->role=UserRole::USER;
         $user->notify(new UserRemovedFromOrganizationNotification());
 
         return redirect()->back()

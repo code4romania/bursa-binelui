@@ -78,6 +78,6 @@ trait HasRole
 
     public function isDonor(): bool
     {
-        return $this->role === UserRole::donor;
+        return $this->role === UserRole::USER;
     }
 }

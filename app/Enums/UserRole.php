@@ -17,9 +17,9 @@ enum UserRole: string
     case SUPERADMIN = 'superadmin';
     case SUPERMANAGER = 'supermanager';
     case ADMIN = 'admin';
+    case MANAGER = 'manager';
     case USER = 'user';
 
-    case donor = 'donor';
 
     public function labelKeyPrefix(): string
     {
