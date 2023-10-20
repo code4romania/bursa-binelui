@@ -175,7 +175,7 @@ class VolunteerResource extends Resource
     {
         if ($record->model_type === 'App\Models\Project') {
             $url = route('filament.resources.projects.view', $record->model_id);
-            $name = Str::words($record->model->name, 3, '...');
+            $name = Str::words($record->model?->name, 3, '...');
 
             return new HtmlString(sprintf('<a href="%s">%s</a>', $url, $name));
         }
