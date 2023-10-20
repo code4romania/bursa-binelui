@@ -114,7 +114,7 @@ class OrganizationFactory extends Factory
                 ->count(2)
                 ->hasAttached(
                     Volunteer::factory()
-                        ->count(17),
+                        ->count(1),
                     fn () => [
                         'status' => fake()->randomElement(VolunteerStatus::cases()),
                     ]
@@ -122,7 +122,7 @@ class OrganizationFactory extends Factory
                 ->hasAttached(
                     Volunteer::factory()
                         ->withUser()
-                        ->count(3),
+                        ->count(2),
                     fn () => [
                         'status' => fake()->randomElement(VolunteerStatus::cases()),
                     ]
@@ -143,14 +143,14 @@ class OrganizationFactory extends Factory
 
             $organization->volunteers()->attach(
                 Volunteer::factory()
-                    ->count(10)
+                    ->count(1)
                     ->create(),
                 ['status' => VolunteerStatus::PENDING]
             );
 
             $organization->volunteers()->attach(
                 Volunteer::factory()
-                    ->count(10)
+                    ->count(1)
                     ->withUser()
                     ->create(),
                 ['status' => VolunteerStatus::PENDING]

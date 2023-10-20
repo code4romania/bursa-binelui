@@ -43,6 +43,8 @@ class OrganizationController extends Controller
 
     public function show(Organization $organization)
     {
+        $this->authorize('view', $organization);
+
         return Inertia::render('Public/Organizations/Show', [
             'organization' => new ShowOrganizationResource(
                 $organization->loadMissing([

@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         User::factory()
-            ->count(50)
+            ->count(5)
             ->donor()
             ->create();
 
@@ -65,12 +65,12 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         Organization::factory()
-            ->count(5)
+            ->count(1)
             ->rejected()
             ->create();
 
         Organization::factory()
-            ->count(5)
+            ->count(1)
             ->pending()
             ->create();
 
