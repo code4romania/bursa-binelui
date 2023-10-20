@@ -11,7 +11,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 
 class BadgesRelationManager extends RelationManager
 {
@@ -27,11 +26,6 @@ class BadgesRelationManager extends RelationManager
     protected function getTableHeading(): string
     {
         return __('user.relations.heading.badges', ['count' => $this->getTableQuery()->count()]);
-    }
-
-    public static function canViewForRecord(Model $record): bool
-    {
-        return $record->isDonor();
     }
 
     public static function form(Form $form): Form

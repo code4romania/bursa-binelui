@@ -71,10 +71,10 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        if (!$project->isApproved() && !auth()->check())
-        {
-                abort(403);
+        if (! $project->isApproved() && ! auth()->check()) {
+            abort(403);
         }
+
         return Inertia::render('Public/Projects/Show', [
             'project' => new ShowProjectResource($project),
         ]);

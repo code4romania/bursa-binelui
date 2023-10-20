@@ -13,7 +13,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Model;
 
 class DonationsRelationManager extends RelationManager
 {
@@ -29,11 +28,6 @@ class DonationsRelationManager extends RelationManager
     protected function getTableHeading(): string | Htmlable | Closure | null
     {
         return __('user.relations.heading.donations', ['count' => $this->getTableQuery()->count(), 'total' => $this->getTableQuery()->sum('amount')]);
-    }
-
-    public static function canViewForRecord(Model $record): bool
-    {
-        return $record->isDonor();
     }
 
     public static function form(Form $form): Form

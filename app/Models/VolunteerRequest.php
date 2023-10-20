@@ -20,6 +20,10 @@ class VolunteerRequest extends MorphPivot
         'status',
     ];
 
+    protected $with = [
+        'model',
+    ];
+
     protected $casts = [
         'status' => VolunteerStatus::class,
     ];

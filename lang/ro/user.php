@@ -8,8 +8,7 @@ return [
         'supermanager' => 'Manager Bursa Binelui',
         'admin' => 'Administrator ONG',
         'manager' => 'Manager ONG',
-
-        'donor' => 'Donator/Voluntar',
+        'user' => 'Donator/Voluntar',
     ],
 
     'label' => [
@@ -20,6 +19,7 @@ return [
         'general_data' => 'Date generale',
         'volunteer_for_organization' => 'Voluntar in organizatie',
         'volunteer_for_project' => 'Proiect din organizatia: :organization',
+        'organization' => 'Organizatie',
     ],
     'relations' => [
         'donations' => 'Donatii',
@@ -39,13 +39,14 @@ return [
         'created' => 'Utilizatorul a fost adăugat.',
         'deleted' => 'Utilizatorul a fost șters.',
         'set_initial_password_success' => 'Parola a fost setată cu succes!',
-        'password_updated_successfully'=> 'Parola a fost actualizată cu succes!',
+        'password_updated_successfully' => 'Parola a fost actualizată cu succes!',
     ],
     'filters' => [
         'type' => 'Tip',
         'placeholder' => 'Selectează tipul',
         'has_donations' => 'Are donații',
         'is_volunteer' => 'Este voluntar',
+        'has_verified_email' => 'Are email verificat',
     ],
 
     'column' => [

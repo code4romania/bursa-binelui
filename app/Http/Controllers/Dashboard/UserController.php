@@ -49,7 +49,7 @@ class UserController extends Controller
             ]
         );
 
-        $user->role=UserRole::MANAGER;
+        $user->role = UserRole::MANAGER;
         $user->organization()
             ->associate(auth()->user()->organization)
             ->save();
@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->organization()
             ->dissociate()
             ->save();
-        $user->role=UserRole::USER;
+        $user->role = UserRole::USER;
         $user->notify(new UserRemovedFromOrganizationNotification());
 
         return redirect()->back()

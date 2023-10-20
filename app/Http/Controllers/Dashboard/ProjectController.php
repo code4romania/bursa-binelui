@@ -72,7 +72,6 @@ class ProjectController extends Controller
 
     public function update(EditRequest $request, Project $project)
     {
-
         $this->authorize('editAsNgo', $project);
 //        dd($request->validated());
         ProjectService::update($project, $request->validated());

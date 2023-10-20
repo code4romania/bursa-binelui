@@ -10,18 +10,12 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 
 class VolunteersRelationManager extends RelationManager
 {
     protected static string $relationship = 'volunteerRequest';
 
     protected static ?string $recordTitleAttribute = 'name';
-
-    public static function canViewForRecord(Model $record): bool
-    {
-        return $record->isDonor();
-    }
 
     public static function getTitle(): string
     {

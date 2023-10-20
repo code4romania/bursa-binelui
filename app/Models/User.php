@@ -109,4 +109,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             ->whereNull('email_verified_at')
             ->whereNull('password_set_at');
     }
+
+    public function scopeWhereHasVerifiedEmail(Builder $query): Builder
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
+
+    public function scopeWhereDoesntHaveVerifiedEmail(Builder $query): Builder
+    {
+        return $query->whereNull('email_verified_at');
+    }
 }

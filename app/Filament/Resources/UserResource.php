@@ -9,6 +9,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\VolunteersRelationManager;
+use App\Forms\Components\Link;
 use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -51,6 +52,15 @@ class UserResource extends Resource
         return $form
             ->columns(1)
             ->schema([
+                Link::make('organizatii')->type('organization')
+                    ->label(__('user.labels.organization'))
+                    ->inlineLabel()
+                    ->hidden(
+                        fn (callable $get) => UserRole::SUPERMANAGER->is($get('role')) ||
+                        UserRole::SUPERADMIN->is($get('role')) ||
+                        UserRole::USER->is($get('role'))
+                    )
+                    ->columnSpanFull(),
                 TextInput::make('name')
                     ->label(__('user.name'))
                     ->inlineLabel()
@@ -75,7 +85,11 @@ class UserResource extends Resource
                 Select::make('organization')
                     ->label(__('user.organization'))
                     ->relationship('organization', 'name')
-                    ->hidden(fn (callable $get) => UserRole::ADMIN->is($get('role')))
+                    ->hidden(
+                        fn (callable $get) => UserRole::SUPERMANAGER->is($get('role')) ||
+                        UserRole::SUPERADMIN->is($get('role')) ||
+                        UserRole::USER->is($get('role'))
+                    )
                     ->searchable()
                     ->inlineLabel()
                     ->preload()
@@ -87,6 +101,12 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->formatStateUsing(function (User $record) {
+                        return sprintf('#%d', $record->id);
+                    })
+                    ->label(__('project.labels.id'))
+                    ->sortable(),
                 TextColumn::make('name')
                     ->label(__('user.name'))
                     ->searchable()
@@ -123,6 +143,12 @@ class UserResource extends Resource
                         true: fn (Builder $query) => $query->has('volunteer'),
                         false: fn (Builder $query) => $query->doesntHave('volunteer'),
                     ),
+                TernaryFilter::make('has_verified_email')
+                    ->label(__('user.filters.has_verified_email'))
+                    ->queries(
+                        true: fn (Builder $query) => $query->whereHasVerifiedEmail(),
+                        false: fn (Builder $query) => $query->whereDoesntHaveVerifiedEmail(),
+                    ),
 
             ])
             ->actions([
@@ -151,5 +177,10 @@ class UserResource extends Resource
             'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::whereHasVerifiedEmail()->count();
     }
 }

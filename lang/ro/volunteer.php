@@ -12,9 +12,24 @@ return [
     'column' => [
         'name' => 'Nume',
         'phone' => 'Telefon',
+        'email' => 'Email',
+        'status' => 'Status',
         'project' => 'Proiect',
         'created_at' => 'Dată înscriere',
         'has_user' => 'Utilizator',
+        'organization' => 'Organizație',
+    ],
+
+    'form' => [
+        'name' => 'Nume',
+        'phone' => 'Telefon',
+        'email' => 'Email',
+        'status' => 'Status',
+        'project' => 'Proiect',
+        'created_at' => 'Dată înscriere',
+        'has_user' => 'Utilizator',
+        'organization' => 'Organizație',
+        'model_type' => 'Voluntar pe:',
     ],
 
     'statuses' => [
@@ -29,5 +44,11 @@ return [
         'approved' => 'Voluntarul a fost aprobat.',
         'rejected' => 'Voluntarul a fost respins.',
         'deleted' => 'Voluntarul a fost șters.',
+    ],
+    'filters' => [
+        'status' => 'Status',
+        'has_user' => 'Este utilizator inregistrat',
+        'user' => 'Utilizator',
+
     ],
 ];
