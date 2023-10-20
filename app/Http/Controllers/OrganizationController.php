@@ -43,7 +43,14 @@ class OrganizationController extends Controller
 
     public function show(Organization $organization)
     {
-        $this->authorize('view', $organization);
+        if (!$organization->isActive()) {
+            if (!auth()->check() ) {
+                abort(404);
+            }
+            if (!auth()->user()->belongsToOrganization($organization)) {
+                abort(404);
+            }
+        }
 
         return Inertia::render('Public/Organizations/Show', [
             'organization' => new ShowOrganizationResource(

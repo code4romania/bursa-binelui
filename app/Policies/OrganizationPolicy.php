@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\OrganizationStatus;
 use App\Models\Organization;
 use App\Models\User;
 
@@ -25,11 +24,7 @@ class OrganizationPolicy
     public function view(User $user, Organization $organization): bool
     {
         /* Anyone can see the details of an organization. */
-        if ($organization->isActive())
-        {
-            return true;
-        }
-        return $user->isSuperUser() || $user->isOrganizationAdmin($organization);
+        return true;
     }
 
     /**
