@@ -42,7 +42,7 @@
 
         <HowCanYouHelp
             class="mb-20"
-            :pageRoute="route('project', data.slug)"
+            :pageRoute="route('project', 1)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
@@ -68,6 +68,7 @@
     const props = defineProps({
         flash: Object,
     });
+
 
     /** Trigger volunteer modal from card. */
     const triggerVolunteer = () => {

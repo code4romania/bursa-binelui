@@ -43,11 +43,11 @@ class OrganizationController extends Controller
 
     public function show(Organization $organization)
     {
-        if (!$organization->isActive()) {
-            if (!auth()->check() ) {
+        if (! $organization->isActive()) {
+            if (! auth()->check()) {
                 abort(404);
             }
-            if (!auth()->user()->belongsToOrganization($organization)) {
+            if (! auth()->user()->belongsToOrganization($organization)) {
                 abort(404);
             }
         }
