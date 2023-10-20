@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasUuid;
+use App\Enums\EuPlatescStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,12 @@ class Donation extends Model
         'charge_date',
         'updated_without_correct_e_pid',
     ];
+    protected $casts = [
+        'status' => EuPlatescStatus::class,
+        'updated_without_correct_e_pid' => 'boolean',
+        'approval_date' => 'datetime',
+        'charge_date' => 'datetime',
+    ];
 
     public function project(): BelongsTo
     {
@@ -50,5 +57,10 @@ class Donation extends Model
     public function championshipStage(): BelongsTo
     {
         return $this->belongsTo(ChampionshipStage::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

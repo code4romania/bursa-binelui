@@ -10,6 +10,7 @@ return [
     ],
 
     'column' => [
+        'id' => 'ID',
         'name' => 'Nume',
         'phone' => 'Telefon',
         'email' => 'Email',

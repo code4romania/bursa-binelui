@@ -267,6 +267,9 @@ class Project extends Model implements HasMedia
     {
         $videos = $this->videos;
         $embeddedVideos = [];
+        if (empty($videos)) {
+            return [];
+        }
         foreach ($videos as $video) {
             $embeddedUrl = rescue(fn () => (new Embed())->get($video['url'])->code, '');
             $embeddedVideos[] = $embeddedUrl;

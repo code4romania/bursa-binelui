@@ -4,9 +4,25 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
+use App\Concerns\Enums\Arrayable;
+use App\Concerns\Enums\Comparable;
+use App\Concerns\Enums\HasLabel;
+
 enum EuPlatescStatus: string
 {
-    case padding = 'padding';
-    case in_progress = 'in-progress';
-    case succeeded = 'succeeded';
+    use Arrayable;
+    use HasLabel;
+    case INITIALIZE = 'initialize';
+    case AUTHORIZED = 'authorized';
+    case UNAUTHORIZED = 'unauthorized';
+    case CANCELED = 'canceled';
+    case ABORTED = 'aborted';
+    case PAYMENT_DECLINED = 'payment_declined';
+    case POSSIBLE_FRAUD = 'possible_fraud';
+    case CHARGED = 'charged';
+
+    public function labelKeyPrefix(): string
+    {
+        return 'donation.statuses';
+    }
 }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\EuPlatescStatus;
 use App\Models\Organization;
 use App\Models\Project;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -22,6 +24,10 @@ class DonationFactory extends Factory
     public function definition(): array
     {
         $amount = fake()->numberBetween(20, 10_000);
+        $start = CarbonImmutable::createFromInterface(
+            fake()->dateTimeBetween('-1 days', 'today')
+        );
+
 
         return [
             'organization_id' => Organization::factory(),
@@ -32,7 +38,8 @@ class DonationFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->safeEmail(),
-            'status' => 'TBD',
+            'status' => fake()->randomElement(EuPlatescStatus::values()),
+            'charge_date' => $start,
             'updated_without_correct_e_pid' => fake()->boolean(),
         ];
     }

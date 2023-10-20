@@ -28,8 +28,8 @@ return new class extends Migration
             $table->string('status');
             $table->string('card_status')->nullable();
             $table->string('card_holder_status_message')->nullable();
-            $table->timestamp('approval_date')->nullable();
-            $table->timestamp('charge_date')->nullable();
+            $table->dateTime('approval_date')->nullable();
+            $table->dateTime('charge_date')->nullable();
             $table->boolean('updated_without_correct_e_pid');
             $table->timestamps();
         });

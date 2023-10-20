@@ -90,7 +90,7 @@ class VolunteerResource extends Resource
                     ->formatStateUsing(function (VolunteerRequest $record) {
                         return sprintf('#%d', $record->id);
                     })
-                    ->label(__('project.labels.id'))
+                    ->label(__('volunteer.column.id'))
                     ->sortable(),
                 TextColumn::make('volunteer.name')
                     ->label(__('volunteer.column.name'))
