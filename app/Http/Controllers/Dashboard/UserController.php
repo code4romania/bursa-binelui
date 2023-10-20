@@ -46,10 +46,10 @@ class UserController extends Controller
             [
                 'name' => $attributes['name'],
                 'created_by' => auth()->user()->id,
-                'role' => UserRole::MANAGER,
             ]
         );
 
+        $user->role=UserRole::MANAGER;
         $user->organization()
             ->associate(auth()->user()->organization)
             ->save();

@@ -275,12 +275,14 @@ class Project extends Model implements HasMedia
         return $embeddedVideos;
     }
 
-    public function scopeSearch(Builder $query, ?string $search): Builder {
+    public function scopeSearch(Builder $query, ?string $search): Builder
+    {
         if (empty($search)) {
             return $query;
         }
         $search = trim($search);
         $search = strip_tags($search);
+
         return $query->where('name', 'like', "%{$search}%");
     }
 }
