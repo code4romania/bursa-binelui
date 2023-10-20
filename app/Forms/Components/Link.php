@@ -54,6 +54,7 @@ class Link extends Field
         if ($this->type === 'user') {
             return $this->getUsers();
         }
+
         return match ($this->type) {
             'user' => $this->getUsers(),
             'organization' => $this->getOrganization(),
