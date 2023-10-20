@@ -87,6 +87,12 @@ trait HasProjectStatus
             ->whereDate('end', '>=', now());
     }
 
+    public function scopeWhereIsClosed(Builder $query): Builder
+    {
+        return $query->whereIsPublished()
+            ->whereDate('end', '<', now());
+    }
+
     public function scopeWhereStartsSoon(Builder $query): Builder
     {
         return $query->whereIsPublished()

@@ -11,12 +11,13 @@ class ProjectStatusFilter implements Filter
 {
     public function __invoke(Builder $query, $status, string $property): Builder
     {
+//        dd($status, $property, $query);
         if ($status === 'active') {
-            return $query->isApproved();
+            return $query->whereIsOpen();
         }
 
         if ($status === 'inactive') {
-            return $query->isRejected();
+            return $query->whereIsClosed();
         }
 
         return $query;
