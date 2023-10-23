@@ -65,7 +65,7 @@ class UserFactory extends Factory
     public function ngoManager(): static
     {
         return $this->state(fn (array $attributes) => [
-            // 'role' => UserRole::ngo_manager,
+             'role' => UserRole::MANAGER,
         ]);
     }
 

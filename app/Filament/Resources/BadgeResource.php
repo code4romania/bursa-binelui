@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\BadgeType;
 use App\Filament\Resources\BadgeResource\Pages;
 use App\Filament\Resources\BadgeResource\RelationManagers\UsersRelationManager;
 use App\Models\Badge;
@@ -67,6 +68,15 @@ class BadgeResource extends Resource
                     ->relationship('badgeCategory', 'title')
                     ->required(),
 
+                Select::make('type')
+                    ->label(__('badge.type'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
+                    ->options(BadgeType::options())
+                    ->default(BadgeType::MANUAL)
+                    ->disabled()
+                    ->required(),
+
                 Textarea::make('description')
                     ->label(__('badge.description'))
                     ->inlineLabel()
@@ -94,6 +104,10 @@ class BadgeResource extends Resource
                 TextColumn::make('title')
                     ->label(__('badge.title'))
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('type')
+                    ->formatStateUsing(fn (Badge $record) => $record->type->label())
+                    ->label(__('badge.type'))
                     ->sortable(),
 
                 TextColumn::make('users_count')

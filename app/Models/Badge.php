@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\BadgeType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,11 @@ class Badge extends Model implements HasMedia
     protected $fillable = [
         'title',
         'description',
+        'type'
+    ];
+
+    protected $casts =[
+      'type' => BadgeType::class
     ];
 
     protected $appends = [
@@ -51,8 +57,10 @@ class Badge extends Model implements HasMedia
     {
         return $this->getFirstMediaUrl(conversionName: 'thumb');
     }
+
     public function badgeCategory(): BelongsTo
     {
         return $this->belongsTo(BadgeCategory::class);
     }
+
 }

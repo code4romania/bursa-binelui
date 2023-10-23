@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\BadgeType;
 use App\Models\Badge;
 use App\Models\BadgeCategory;
 use App\Models\User;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(BadgeCategory::class)->constrained()->cascadeOnDelete();
             $table->string('title');
+            $table->string('type')->default(BadgeType::MANUAL->value);
             $table->text('description')->nullable();
         });
 

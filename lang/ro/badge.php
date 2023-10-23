@@ -8,6 +8,7 @@ return [
     'description' => 'Descriere badge',
     'image' => 'Imagine badge',
     'users_count' => 'Număr de utilizatori cu accest badge',
+    'type' => 'Tip de badge',
 
     'donor_count' => ':count donatori cu accest badge',
 
@@ -33,5 +34,9 @@ return [
     'labels' => [
         'singular' => 'Badge',
         'plural' => 'Badge-uri',
+    ],
+    'types' => [
+        'automated' => 'Automat',
+        'manual' => 'Manual',
     ],
 ];

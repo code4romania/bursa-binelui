@@ -72,7 +72,7 @@ class BadgeCategoryResource extends Resource
             ])
             ->filters([
                 TernaryFilter::make('has_badges')
-                    ->label(__('badges.filters.has_badges'))
+                    ->label(__('badge.filters.has_badges'))
                     ->queries(
                         true: fn (Builder $query) => $query->whereHas('badges'),
                         false: fn (Builder $query) => $query->whereDoesntHave('badges')
