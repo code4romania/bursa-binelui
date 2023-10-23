@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(BadgeCategory::class)->constrained()->cascadeOnDelete();
             $table->string('title');
+            $table->string('rule')->nullable();
             $table->string('type')->default(BadgeType::MANUAL->value);
             $table->text('description')->nullable();
         });

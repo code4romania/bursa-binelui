@@ -16,6 +16,7 @@ enum BadgeType: string
 
     case AUTOMATED = 'automated';
     case MANUAL = 'manual';
+
     public function labelKeyPrefix(): string
     {
         return 'badge.types';
