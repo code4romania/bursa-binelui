@@ -32,8 +32,6 @@ enum BadgeRules: string
     case SHARING_FIRST_SHARE = 'sharing_first_share';
     case SHARING_FIVE_SHARES = 'sharing_five_shares';
 
-
-
     public function labelKeyPrefix(): string
     {
         return 'badge.types';

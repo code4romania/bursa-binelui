@@ -9,6 +9,7 @@ use App\Models\ActivityDomain;
 use App\Models\ArticleCategory;
 use App\Models\Badge;
 use App\Models\BadgeCategory;
+use App\Models\BCRProject;
 use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\ProjectCategory;
@@ -74,6 +75,8 @@ class DatabaseSeeder extends Seeder
             ->count(1)
             ->pending()
             ->create();
+
+        BCRProject::factory()->count(10)->create();
 
         $this->seedBadges();
 

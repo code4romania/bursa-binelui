@@ -20,7 +20,9 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -78,7 +80,7 @@ class ProjectResource extends Resource
                         }
                     )
                     ->disabled(),
-                Forms\Components\Toggle::make('is_national')
+                Toggle::make('is_national')
                     ->label(__('project.labels.is_national'))
                     ->inlineLabel()
                     ->columnSpanFull()
@@ -108,21 +110,21 @@ class ProjectResource extends Resource
                     ->maxLength(255),
                 TextInput::make('target_budget')
                     ->required(),
-                Forms\Components\DatePicker::make('start')
+                DatePicker::make('start')
                     ->required(),
-                Forms\Components\DatePicker::make('end')
+                DatePicker::make('end')
                     ->required(),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(65535),
-                Forms\Components\Textarea::make('scope')
+                Textarea::make('scope')
                     ->maxLength(65535),
-                Forms\Components\Textarea::make('beneficiaries')
+                Textarea::make('beneficiaries')
                     ->maxLength(65535),
-                Forms\Components\Textarea::make('reason_to_donate')
+                Textarea::make('reason_to_donate')
                     ->maxLength(65535),
-                Forms\Components\Toggle::make('accepting_volunteers')
+                Toggle::make('accepting_volunteers')
                     ->required(),
-                Forms\Components\Toggle::make('accepting_comments')
+                Toggle::make('accepting_comments')
                     ->required(),
                 SpatieMediaLibraryFileUpload::make('preview')
                     ->collection('preview')
