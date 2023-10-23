@@ -148,13 +148,6 @@ class VolunteerResource extends Resource
             ])->defaultSort('id', 'desc');
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
@@ -183,7 +176,7 @@ class VolunteerResource extends Resource
         return new HtmlString('General');
     }
 
-    private static function getOrganizationLink(VolunteerRequest $record)
+    private static function getOrganizationLink(VolunteerRequest $record): HtmlString
     {
         if ($record->model_type === 'App\Models\Organization') {
             $url = route('filament.resources.organizations.view', $record->model->id);
