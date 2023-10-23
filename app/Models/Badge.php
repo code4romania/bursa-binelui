@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Vite;
 use Spatie\Image\Manipulations;
@@ -49,5 +50,9 @@ class Badge extends Model implements HasMedia
     public function getImageAttribute(): string
     {
         return $this->getFirstMediaUrl(conversionName: 'thumb');
+    }
+    public function badgeCategory(): BelongsTo
+    {
+        return $this->belongsTo(BadgeCategory::class);
     }
 }

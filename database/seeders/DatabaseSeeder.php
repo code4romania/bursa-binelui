@@ -8,6 +8,7 @@ use App\Enums\ActivityDomain as ActivityDomainEnum;
 use App\Models\ActivityDomain;
 use App\Models\ArticleCategory;
 use App\Models\Badge;
+use App\Models\BadgeCategory;
 use App\Models\Championship;
 use App\Models\Organization;
 use App\Models\ProjectCategory;
@@ -74,9 +75,7 @@ class DatabaseSeeder extends Seeder
             ->pending()
             ->create();
 
-        Badge::factory()
-            ->count(30)
-            ->create();
+        $this->seedBadges();
 
         $this->seedArticleCategories();
     }
@@ -119,6 +118,23 @@ class DatabaseSeeder extends Seeder
         foreach ($projectCategories as $category) {
             ProjectCategory::factory()
                 ->name($category)
+                ->create();
+        }
+    }
+
+    private function seedBadges(): void
+    {
+        $oldCategories = [
+            'Donatii',
+            'Voluntariat',
+            'Sharing',
+            'Proiect ONG',
+            'Activitate lunara',
+        ];
+        foreach ($oldCategories as $category) {
+            BadgeCategory::factory()
+                ->state(['title' => $category])
+                ->has(Badge::factory()->count(5))
                 ->create();
         }
     }

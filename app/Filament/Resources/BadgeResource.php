@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BadgeResource\Pages;
 use App\Filament\Resources\BadgeResource\RelationManagers\UsersRelationManager;
 use App\Models\Badge;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -16,16 +17,37 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class BadgeResource extends Resource
 {
     protected static ?string $model = Badge::class;
 
-    protected static ?string $navigationGroup = 'Administrează';
-
     protected static ?int $navigationSort = 5;
 
     protected static ?string $navigationIcon = 'heroicon-o-badge-check';
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('badge.labels.plural');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('badge.labels.singular');
+    }
+
+    protected static function getNavigationGroup(): ?string
+    {
+        return __('navigation.group.manage');
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return (string) Badge::query()->whereHas('users')->count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -36,6 +58,13 @@ class BadgeResource extends Resource
                     ->inlineLabel()
                     ->columnSpanFull()
                     ->maxLength(200)
+                    ->required(),
+
+                Select::make('badge_category_id')
+                    ->label(__('badge.category.title'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
+                    ->relationship('badgeCategory', 'title')
                     ->required(),
 
                 Textarea::make('description')
@@ -59,18 +88,30 @@ class BadgeResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('image')
+                    ->label(__('badge.image'))
                     ->square(),
 
                 TextColumn::make('title')
+                    ->label(__('badge.title'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('users_count')
+                    ->label(__('badge.users_count'))
                     ->counts('users')
                     ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('badge_category_id')
+                    ->label(__('badge.filters.category'))
+                    ->relationship('badgeCategory', 'title')
+                    ->multiple(),
+                TernaryFilter::make('has_users')
+                    ->label(__('badge.filters.has_users'))
+                    ->queries(
+                        true: fn (Builder $query) => $query->whereHas('users'),
+                        false: fn (Builder $query) => $query->whereDoesntHave('users')
+                    ),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
