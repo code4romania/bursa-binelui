@@ -41,6 +41,11 @@ class CategoryResource extends Resource
         return __('article.category.label.plural');
     }
 
+    protected static function getNavigationBadge(): ?string
+    {
+        return (string) ArticleCategory::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form

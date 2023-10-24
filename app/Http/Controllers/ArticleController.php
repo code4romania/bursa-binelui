@@ -20,9 +20,16 @@ class ArticleController extends Controller
             'categories' => $this->getArticleCategories(),
             'collection' => ArticleCardResource::collection(
                 Article::query()
+                    ->orderByDesc('id')
                     ->wherePublished()
                     ->paginate(5)
             ),
+            'topArticles' => ArticleCardResource::collection(
+                Article::query()
+                    ->wherePublished()
+                    ->inRandomOrder()
+                    ->limit(3)
+                    ->get())
         ]);
     }
 
@@ -35,6 +42,7 @@ class ArticleController extends Controller
                 Article::query()
                     ->whereBelongsTo($category, 'category')
                     ->wherePublished()
+                    ->orderByDesc('id')
                     ->paginate(5)
             ),
         ]);
@@ -44,13 +52,13 @@ class ArticleController extends Controller
     {
         return Inertia::render('Public/Articles/Show', [
             'resource' => ArticleResource::make($article),
-            'related' => [], /*  Article::query()
+            'related' =>  ArticleCardResource::collection(Article::query()
                 ->wherePublished()
-                ->whereBelongsTo('category', $article->category)
+                ->whereBelongsTo($article->category, 'category')
                 ->whereNot('id', $article->id)
                 ->inRandomOrder()
                 ->limit(3)
-                ->get(), */
+                ->get()),
         ]);
     }
 }

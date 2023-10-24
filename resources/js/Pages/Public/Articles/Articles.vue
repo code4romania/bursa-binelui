@@ -84,24 +84,17 @@
 
             <aside class="col-span-12 lg:col-span-4">
                 <div>
-                    <h2 class="mb-5 text-3xl font-bold text-cyan-900">{{ $t('other_categories') }}</h2>
+                    <h2 class="mb-5 text-3xl font-bold text-cyan-900">{{ $t('categories') }}</h2>
 
                     <div class="flex flex-wrap gap-2">
                         <ArticleCategory v-for="(category, index) in categories" :key="index" :category="category" />
-                        <!-- <div
-                            v-for="(category, index) in categories"
-                            class="inline-flex items-center px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
-                            @click="filterArticles(category)"
-                        >
-                            {{ category.name }}
-                        </div> -->
                     </div>
                 </div>
 
                 <div class="w-full mt-10">
-                    <h2 class="mb-5 text-3xl font-bold text-cyan-900">{{ $t('other_categories') }}</h2>
+                    <h2 class="mb-5 text-3xl font-bold text-cyan-900">{{ $t('other_articles_label') }}</h2>
                     <div
-                        v-for="(article, index) in collection.data"
+                        v-for="(article, index) in topArticles.data"
                         :key="index"
                         class="w-full p-6 mb-6 space-y-6 border-l-8 rounded shadow border-primary-500"
                     >
@@ -151,6 +144,10 @@
 
     const props = defineProps({
         collection: {
+            type: Object,
+            required: true,
+        },
+      topArticles: {
             type: Object,
             required: true,
         },

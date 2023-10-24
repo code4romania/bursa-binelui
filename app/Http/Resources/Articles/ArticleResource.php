@@ -24,8 +24,16 @@ class ArticleResource extends Resource
             'content' => $this->content,
             'author' => $this->author,
             'category' => $this->category?->name,
-            'cover' => $this->getFirstMediaUrl('cover', 'large'),
+            'cover' => $this->getFirstMediaUrl('preview', 'large'),
             'gallery' => $this->getMedia('gallery')->map(fn (Media $media) => $media->getUrl('large')),
+            'swipe_gallery' => $this->getMedia('gallery')->map(function ($media) {
+                return [
+                    'src' => $media->getFullUrl('large'),
+                    'thumbnail' => $media->getFullUrl('thumb'),
+                    'w' => 1200,
+                    'h' => 600,
+                ];
+            })->toArray(),
         ];
     }
 }

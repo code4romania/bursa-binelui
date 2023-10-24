@@ -50,6 +50,10 @@ class ArticleResource extends Resource
     {
         return __('article.label.plural');
     }
+    protected static function getNavigationBadge(): ?string
+    {
+        return (string) Article::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -98,7 +102,7 @@ class ArticleResource extends Resource
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('cover')
                                     ->label(__('article.cover_image'))
-                                    ->collection('cover')
+                                    ->collection('preview')
                                     ->required()
                                     ->image()
                                     ->maxFiles(1),
@@ -107,12 +111,12 @@ class ArticleResource extends Resource
                         Card::make()
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('gallery')
-                                    ->label(__('article.gallery'))
                                     ->collection('gallery')
+                                    ->label(__('article.gallery'))
                                     ->image()
-                                    ->multiple()
                                     ->enableReordering()
-                                    ->columnSpanFull(),
+                                    ->multiple()
+                                    ->maxFiles(20),
                             ]),
                     ]),
 
@@ -139,6 +143,12 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->formatStateUsing(function (Article $record) {
+                        return sprintf('#%d', $record->id);
+                    })
+                    ->label(__('volunteer.column.id'))
+                    ->sortable(),
                 TextColumn::make('title')
                     ->label(__('article.title'))
                     ->searchable(),
@@ -161,18 +171,12 @@ class ArticleResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
-            ->filtersLayout(Layout::AboveContent)
+            ->defaultSort('id', 'desc')
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
 
     public static function getPages(): array
     {

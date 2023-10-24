@@ -46,7 +46,7 @@ class Article extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('cover')
+        $this->addMediaCollection('preview')
             ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
@@ -63,7 +63,6 @@ class Article extends Model implements HasMedia
 
         $this->addMediaCollection('gallery')
             ->useFallbackUrl(Vite::image('placeholder.png'))
-            ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('thumb')

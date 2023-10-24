@@ -46,8 +46,8 @@ class BCRProject extends Model implements HasMedia
         'is_national' => 'boolean',
     ];
 
-    protected $with =[
-        'county','category'
+    protected $with = [
+        'county', 'category',
     ];
 
     public function registerMediaCollections(): void
