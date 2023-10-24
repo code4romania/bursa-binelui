@@ -15,18 +15,20 @@ class BCRProjectCardResource extends Resource
     {
         return [
             'id' => $this->id,
-            // 'type' => $this->type,
+            'type' => 'bcr_project',
             'name' => $this->name,
             'slug' => $this->slug,
-            'county' => 'Replace me', // $this->county?->name,
-            'image' => Vite::asset('resources/images/placeholder.png'),
-            'organization' => [
-                'name' => $this->organization->name,
-                'id' => $this->organization->id,
-            ],
+            'county' => $this->county?->name,
+            'image' => $this->getFirstMediaUrl('preview') ?? Vite::image('placeholder.png'),
+            'description' => $this->description,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'facebook_link' => $this->facebook_link,
+            'is_national' => $this->is_national,
+            'accepting_comments' => $this->accepting_comments,
+            'videos' => $this->videos,
+            'external_links' => $this->external_links,
 
-            'is_active' => $this->is_active,
-            'is_ending_soon' => $this->is_ending_soon,
         ];
     }
 }

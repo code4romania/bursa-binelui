@@ -8,6 +8,7 @@ use App\Http\Resources\Articles\ArticleCardResource;
 use App\Http\Resources\BCRProjectCardResource;
 use App\Http\Resources\ProjectCardResource;
 use App\Models\Article;
+use App\Models\BCRProject;
 use App\Models\Organization;
 use App\Models\Project;
 use Inertia\Inertia;
@@ -35,8 +36,8 @@ class HomeController extends Controller
             ),
 
             'bcr_projects' => BCRProjectCardResource::collection(
-                Project::whereIsOpen()
-                    // TODO: ->whereOrganizationIsBCR()
+                BCRProject::query()
+                    ->with('county')
                     ->limit(12)
                     ->get()
             ),

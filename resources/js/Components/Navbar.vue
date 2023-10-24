@@ -242,7 +242,7 @@
         {
             name: 'BCR pentru comunitate',
             description: 'Descoperă proiectele organizate de BCR.',
-            href: route('bcr.projects'),
+            href: route('bcr.index'),
         },
         {
             name: 'Campionatul de Bine',

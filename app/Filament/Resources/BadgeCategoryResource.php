@@ -1,13 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
-use App\Enums\VolunteerStatus;
 use App\Filament\Resources\BadgeCategoryResource\Pages;
-use App\Filament\Resources\BadgeCategoryResource\RelationManagers;
 use App\Models\BadgeCategory;
-use App\Models\VolunteerRequest;
-use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -16,7 +14,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BadgeCategoryResource extends Resource
 {
@@ -46,14 +43,13 @@ class BadgeCategoryResource extends Resource
         return (string) BadgeCategory::query()->whereHas('badges')->count();
     }
 
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('title')
                     ->label(__('badge.category.title'))
-                    ->required()
+                    ->required(),
             ]);
     }
 

@@ -23,11 +23,11 @@ class Badge extends Model implements HasMedia
     protected $fillable = [
         'title',
         'description',
-        'type'
+        'type',
     ];
 
-    protected $casts =[
-      'type' => BadgeType::class
+    protected $casts = [
+        'type' => BadgeType::class,
     ];
 
     protected $appends = [
@@ -62,5 +62,4 @@ class Badge extends Model implements HasMedia
     {
         return $this->belongsTo(BadgeCategory::class);
     }
-
 }

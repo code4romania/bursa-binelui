@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BcrProjectController;
 use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
@@ -34,9 +35,10 @@ Route::inertia('/politica-de-confidentialitate', 'Public/Website/Policy')->name(
 Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
 Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
 Route::inertia('/multumim', 'Public/VolunteerThankYou')->name('volunteer.thanks');
-
-Route::inertia('/gallery/{project}', 'Public/Projects/Gallery')->name('gallery');
-Route::inertia('/bcr/proiecte', 'Public/Bcr/Projects')->name('bcr.projects');
+Route::group(['prefix' => 'proiect-bcr', 'as' => 'bcr.'], function () {
+    Route::get('/', [BcrProjectController::class, 'index'])->name('index');
+    Route::get('/{project:slug}', [BcrProjectController::class, 'show'])->name('show');
+});
 
 require __DIR__ . '/auth.php';
 

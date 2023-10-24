@@ -14,7 +14,7 @@ class ProjectCardResource extends Resource
     {
         return [
             'id' => $this->id,
-            // 'type' => $this->type,
+            'type' => 'project',
             'name' => $this->name,
             'slug' => $this->slug,
             'county' => $this->counties->pluck('name')->join(', '), // $this->county?->name,

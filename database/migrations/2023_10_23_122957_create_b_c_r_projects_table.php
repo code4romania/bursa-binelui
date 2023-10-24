@@ -30,7 +30,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->string('title');
+            $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
             $table->date('start_date');

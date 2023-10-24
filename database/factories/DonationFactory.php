@@ -28,7 +28,6 @@ class DonationFactory extends Factory
             fake()->dateTimeBetween('-1 days', 'today')
         );
 
-
         return [
             'organization_id' => Organization::factory(),
             'project_id' => Project::factory(),

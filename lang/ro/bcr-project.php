@@ -9,7 +9,7 @@ return [
     ],
 
     'labels' => [
-        'title' => 'Titlu',
+        'name' => 'Titlu',
         'description' => 'Descriere',
         'category' => 'Categorie',
         'start_date' => 'Data de inceput',
@@ -18,6 +18,7 @@ return [
         'accepting_comments' => 'Accepta comentarii',
         'county' => 'Judet',
         'city' => 'Oras',
+        'national' => 'National',
         'videos' => 'Galerie video',
         'external_links' => [
             'title' => 'Titlu',

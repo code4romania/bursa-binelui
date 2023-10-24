@@ -53,8 +53,8 @@ class BCRProjectResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')
-                    ->label(__('bcr-project.labels.title'))
+                TextInput::make('name')
+                    ->label(__('bcr-project.labels.name'))
                     ->inlineLabel()
                     ->columnSpanFull()
                     ->required(),
@@ -152,10 +152,10 @@ class BCRProjectResource extends Resource
                     ->formatStateUsing(function (BcrProject $record) {
                         return sprintf('#%d', $record->id);
                     })
-                    ->label(__('volunteer.column.id'))
+                    ->label(__('bcr-project.labels.id'))
                     ->sortable(),
-                TextColumn::make('title')
-                    ->label(__('bcr-project.labels.title'))
+                TextColumn::make('name')
+                    ->label(__('bcr-project.labels.name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('start_date')

@@ -26,7 +26,7 @@ return [
         'created_at' => 'Data donației',
         'approved_at' => 'Data aprobării',
         'charged_date' => 'Data încasării',
-        'in_championship' => "Este înscrisă în Campionat",
+        'in_championship' => 'Este înscrisă în Campionat',
         'has_user' => 'Este utilizator inregistrat',
         'full_name' => 'Donator',
         'email' => 'Email',

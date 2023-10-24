@@ -32,6 +32,7 @@ class Donation extends Model
         'charge_date',
         'updated_without_correct_e_pid',
     ];
+
     protected $casts = [
         'status' => EuPlatescStatus::class,
         'updated_without_correct_e_pid' => 'boolean',

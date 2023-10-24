@@ -32,7 +32,7 @@ class BCRProjectFactory extends Factory
         $title = $this->faker->sentence();
 
         return [
-            'title' => $title,
+            'name' => $title,
             'slug' => Str::slug($title),
             'description' => $this->faker->paragraph(),
             'start_date' => $this->faker->dateTimeBetween('-1 day', 'now'),
