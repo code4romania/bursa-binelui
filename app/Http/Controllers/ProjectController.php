@@ -103,7 +103,7 @@ class ProjectController extends Controller
             'first_name' => $firstName,
             'last_name' => $lastName,
             'email' => $request->email,
-            'status' => EuPlatescStatus::in_progress->value,
+            'status' => EuPlatescStatus::INITIALIZE,
             'card_status' => null,
             'card_holder_status_message' => null,
             'approval_date' => null,

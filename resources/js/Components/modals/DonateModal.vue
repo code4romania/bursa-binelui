@@ -210,25 +210,24 @@
     /** Initialize inertia from Object. */
     const authForm = useForm({
         amount: '',
+
     });
 
     /** Donate action */
     const donate = () => {
-        console.log(guestForm);
-
         /** Trigger donate post method. */
-        if (!usePage().props.auth.user) {
-            guestForm.post(route('project.donation', props.data.slug), {
-                onSuccess: () => (open.value = false),
-                onError: (errors) => {
-                    console.log('error', errors);
-                },
-                onFinish: () => guestForm.reset(),
-            });
-        } else {
-            // authForm.post(route('ruta', data.id), {
-            //     onFinish: () => form.reset(),
-            // });
+        if (usePage().props.auth.user) {
+          guestForm.name = usePage().props.auth.user.name;
+          guestForm.email = usePage().props.auth.user.email;
+          guestForm.terms = true;
+          guestForm.amount = authForm.amount;
         }
+      guestForm.post(route('project.donation', props.data.slug), {
+        onSuccess: () => (open.value = false),
+        onError: (errors) => {
+          console.log('error', errors);
+        },
+        onFinish: () => guestForm.reset(),
+      });
     };
 </script>
