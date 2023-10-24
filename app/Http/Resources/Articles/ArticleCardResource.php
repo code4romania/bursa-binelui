@@ -24,7 +24,7 @@ class ArticleCardResource extends Resource
                 ->limit(200),
             'author' => $this->author,
             'category' => $this->category?->only('name', 'slug'),
-            'cover' => $this->getFirstMediaUrl('cover', 'large'),
+            'cover' => $this->getFirstMediaUrl('preview', 'large'),
         ];
     }
 }

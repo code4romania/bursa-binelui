@@ -29,7 +29,8 @@ class ArticleController extends Controller
                     ->wherePublished()
                     ->inRandomOrder()
                     ->limit(3)
-                    ->get())
+                    ->get()
+            ),
         ]);
     }
 
@@ -50,7 +51,8 @@ class ArticleController extends Controller
                     ->wherePublished()
                     ->inRandomOrder()
                     ->limit(3)
-                    ->get())
+                    ->get()
+            ),
         ]);
     }
 
@@ -58,7 +60,7 @@ class ArticleController extends Controller
     {
         return Inertia::render('Public/Articles/Show', [
             'resource' => ArticleResource::make($article),
-            'related' =>  ArticleCardResource::collection(Article::query()
+            'related' => ArticleCardResource::collection(Article::query()
                 ->wherePublished()
                 ->whereBelongsTo($article->category, 'category')
                 ->whereNot('id', $article->id)
