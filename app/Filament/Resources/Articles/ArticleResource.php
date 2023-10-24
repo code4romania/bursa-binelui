@@ -20,7 +20,6 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 use FilamentTiptapEditor\TiptapEditor;
 
@@ -50,6 +49,7 @@ class ArticleResource extends Resource
     {
         return __('article.label.plural');
     }
+
     protected static function getNavigationBadge(): ?string
     {
         return (string) Article::count();
@@ -176,7 +176,6 @@ class ArticleResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
 
     public static function getPages(): array
     {

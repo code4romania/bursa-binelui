@@ -181,6 +181,51 @@
                     </EditModal>
                 </template>
             </Field>
+            <Field
+                :label="$t('is_national')"
+                :hasPendingChanges="changes.includes('is_national')"
+                :errors="formChangeStatus.errors.is_national"
+                alt
+            >
+                <template #value>
+                    {{ originalProject.is_national }}
+                </template>
+
+                <template #action>
+                    <EditModal
+                        @action="editField('is_national')"
+                        @cancel="resetField('is_national')"
+                        class="flex justify-end col-span-1"
+                    >
+                      <fieldset>
+                        <legend class="text-sm font-semibold leading-6 text-gray-900">
+                          {{ $t('accepting_volunteers') }}
+                        </legend>
+                        <div class="mt-6 space-y-6">
+                          <div class="relative flex gap-x-3">
+                            <div class="flex items-center h-6">
+                              <Checkbox
+                                  class="form-checkbox"
+                                  id="accepting_comments"
+                                  color="gray-700"
+                                  v-model="project.is_national"
+                                  :checked="project.is_national === 'Da'"
+                                  :error="errors.is_national"
+                              />
+                            </div>
+                            <div class="text-sm leading-6">
+                              <label for="accepting_comments" class="font-medium text-gray-900">
+                                {{ $t('is_national') }}
+                              </label>
+
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+
+                    </EditModal>
+                </template>
+            </Field>
 
             <Field
                 :label="$t('project_description_label')"

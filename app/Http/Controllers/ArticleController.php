@@ -45,6 +45,12 @@ class ArticleController extends Controller
                     ->orderByDesc('id')
                     ->paginate(5)
             ),
+            'topArticles' => ArticleCardResource::collection(
+                Article::query()
+                    ->wherePublished()
+                    ->inRandomOrder()
+                    ->limit(3)
+                    ->get())
         ]);
     }
 

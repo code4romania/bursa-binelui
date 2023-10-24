@@ -27,7 +27,7 @@ class Article extends Model implements HasMedia
         'title',
         'slug',
         'content',
-        'is_active',
+        'is_published',
         'article_category_id',
         'author',
     ];
