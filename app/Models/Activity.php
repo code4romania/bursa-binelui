@@ -142,6 +142,7 @@ class Activity extends BaseActivity
                     $media = Media::find($value);
                     $this->subject->media->add($media);
                 }
+                $this->subject->save();
             } else {
                 $this->subject->save();
             }

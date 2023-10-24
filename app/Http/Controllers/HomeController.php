@@ -17,8 +17,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $articles = Article::latest()->take(3)->get();
-
         return Inertia::render('Public/Home', [
             'projects_count' => Project::query()
                 ->whereIsOpen()
@@ -30,13 +28,14 @@ class HomeController extends Controller
 
             'projects' => ProjectCardResource::collection(
                 Project::whereIsOpen()
-                    ->inRandomOrder()
+                    ->latest()
                     ->limit(12)
                     ->get()
             ),
 
             'bcr_projects' => BCRProjectCardResource::collection(
                 BCRProject::query()
+                    ->latest()
                     ->with('county')
                     ->limit(12)
                     ->get()
@@ -44,8 +43,8 @@ class HomeController extends Controller
 
             'articles' => ArticleCardResource::collection(
                 Article::query()
+                    ->latest()
                     ->wherePublished()
-                    ->inRandomOrder()
                     ->limit(3)
                     ->get()
             ),
