@@ -4,7 +4,6 @@ import useSort from '@/Helpers/useSort.js';
 
 export default function (props, sort, url) {
     const { sortValue } = useSort(sort);
-
     const applyFilters = () => {
         return router.get(url, pickBy({
             filter: pickBy(props.value),

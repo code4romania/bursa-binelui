@@ -4,7 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\EuPlatescStatus;
+use App\Http\Filters\DonationDatesFilter;
+use App\Http\Filters\ProjectDatesFilter;
+use App\Http\Resources\Collections\DonationCollection;
+use App\Models\Donation;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class DonorController extends Controller
 {
@@ -30,82 +39,48 @@ class DonorController extends Controller
         ]);
     }
 
-    public function donations()
+    public function donations(Request $request)
     {
-        $donations = [
-            'current_page' => 2,
-            'data' => [
-                [
-                    'id' => 1,
-                    'organization' => 'Asociația Un Zâmbet pentru copilul tău',
-                    'project' => 'Zambet pentru copiii noștri',
-                    'created_at' => '12.08.2022',
-                    'amount' => '300',
-                ],
-                [
-                    'id' => 2,
-                    'organization' => 'Asociația Un Zâmbet pentru copilul tău',
-                    'project' => 'Zambet pentru copiii noștri',
-                    'created_at' => '12.08.2022',
-                    'amount' => '300',
-                ],
+        $donations = auth()->user()->donations()->with(['project:id,name,organization_id', 'organization:id,name'])->get();
 
-                [
-                    'id' => 3,
-                    'organization' => 'Asociația Un Zâmbet pentru copilul tău',
-                    'project' => 'Zambet pentru copiii noștri',
-                    'created_at' => '12.08.2022',
-                    'amount' => '300',
-                ],
-                [
-                    'id' => 4,
-                    'organization' => 'Asociația Un Zâmbet pentru copilul tău',
-                    'project' => 'Zambet pentru copiii noștri',
-                    'created_at' => '12.08.2022',
-                    'amount' => '300',
-                ],
-            ],
-            'first_page_url' => 'http=>//bursabinelui.test/proiecte?page=1',
-            'from' => 1,
-            'last_page' => 2,
-            'last_page_url' => 'http://bursabinelui.test/proiecte?page=2',
-            'links' => [
-                [
-                    'url' => 'http://bursabinelui.test/proiecte?page=1',
-                    'label' => '1',
-                    'active' => true,
-                ],
-                [
-                    'url' => 'http://bursabinelui.test/proiecte?page=1',
-                    'label' => '1',
-                    'active' => true,
-                ],
-                [
-                    'url' => 'http://bursabinelui.test/proiecte?page=2',
-                    'label' => '2',
-                    'active' => false,
-                ],
-                [
-                    'url' => 'http://bursabinelui.test/proiecte?page=3',
-                    'label' => '3',
-                    'active' => false,
-                ],
-                [
-                    'url' => 'http://bursabinelui.test/proiecte?page=1',
-                    'label' => '1',
-                    'active' => true,
-                ],
-            ],
-            'next_page_url' => 'http://bursabinelui.test/proiecte?page=3',
-            'path' => 'http://bursabinelui.test/proiecte',
-            'per_page' => 15,
-            'prev_page_url' => 'http://bursabinelui.test/proiecte?page=1',
-            'to' => 15,
-            'total' => 20,
-        ];
+        $organizations = collect([]);
+        $projects = collect([]);
+
+        $donations->map(function ($donation) use (&$organizations, &$projects) {
+            $organizations->push($donation->project->organization);
+            $projects->push($donation->project);
+        });
+        $dates = $donations->pluck('created_at')->map(fn ($date) => $date->format('Y-m'))->unique();
+
 
         return Inertia::render('Donor/Donations', [
-            'donations' => $donations,
+            'filter' => $request->query('filter'),
+            'collection' => new DonationCollection(
+                QueryBuilder::for(Donation::class)
+                    ->where('user_id', auth()->user()->id)
+                    ->with('project:id,name,organization_id')
+                    ->allowedFilters([
+
+                        AllowedFilter::custom('date', new DonationDatesFilter),
+                        AllowedFilter::exact('organization', 'project.organization_id'),
+                        AllowedFilter::exact('project', 'project_id'),
+                        AllowedFilter::exact('status', 'status'),
+
+
+                    ])
+                    ->allowedSorts([
+                        AllowedSort::field('publish_date', 'start'),
+                        AllowedSort::field('end_date', 'end'),
+                    ])
+                    ->defaultSorts('-created_at')
+                    ->paginate()
+                    ->withQueryString()
+            ),
+            'organizations' => $organizations->pluck('name', 'id'),
+            'projects' => $projects->pluck('name', 'id'),
+            'statuses' => EuPlatescStatus::options(),
+            'dates' => $dates,
+
         ]);
     }
 }

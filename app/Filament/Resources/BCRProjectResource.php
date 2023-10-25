@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BCRProjectResource\Pages;
+use App\Models\Article;
 use App\Models\BCRProject;
+use Camya\Filament\Forms\Components\TitleWithSlugInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -53,11 +56,14 @@ class BCRProjectResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('bcr-project.labels.name'))
-                    ->inlineLabel()
-                    ->columnSpanFull()
-                    ->required(),
+                TitleWithSlugInput::make(
+                    fieldTitle: 'name',
+                    fieldSlug: 'slug',
+                    urlPath: '/bcr-projects/',
+                    urlVisitLinkRoute: fn (?BCRProject $record) => $record?->slug
+                        ? route('bcr.show', $record)
+                        : null,
+                )->inlineLabel()->columnSpanFull()->label(__('bcr-project.labels.title')),
 
                 Select::make('category_id')
                     ->label(__('bcr-project.labels.category'))
@@ -94,8 +100,7 @@ class BCRProjectResource extends Resource
                 TextInput::make('facebook_link')
                     ->label(__('bcr-project.labels.facebook_link'))
                     ->inlineLabel()
-                    ->columnSpanFull()
-                    ->required(),
+                    ->columnSpanFull()->url(),
 
                 SpatieMediaLibraryFileUpload::make('preview')
                     ->collection('preview')
@@ -120,12 +125,10 @@ class BCRProjectResource extends Resource
                         TextInput::make('title')
                             ->label(__('bcr-project.labels.external_links.title'))
                             ->inlineLabel()
-                            ->columnSpanFull()
-                            ->required(),
+                            ->columnSpanFull(),
                         TextInput::make('link')->label(__('bcr-project.labels.external_links.link'))
                             ->inlineLabel()
-                            ->columnSpanFull()
-                            ->required(),
+                            ->columnSpanFull()->url(),
                     ])
                     ->label(__('bcr-project.labels.external_links.label'))
                     ->inlineLabel()
@@ -136,7 +139,7 @@ class BCRProjectResource extends Resource
                         TextInput::make('link')->label(__('bcr-project.labels.videos'))
                             ->inlineLabel()
                             ->columnSpanFull()
-                            ->required(),
+                            ->url(),
                     ])
                     ->inlineLabel()
                     ->columnSpanFull(),

@@ -1,44 +1,130 @@
 <template>
-    <PageLayout>
-        <!-- Inertia page head -->
-        <Head :title="$t('my_donations')" />
+  <PageLayout>
+    <div class="mx-auto my-10 space-y-10 max-w-7xl">
+      <!-- Header -->
+      <Title :title="$t('my_donations')" />
+      <div class="grid grid-cols-12 gap-6">
+        <div class="grid grid-cols-12 col-span-12 gap-6">
+          <SearchFilter
+              class="col-span-4"
+              v-model="filter.search"
+              :placeholder="$t('search')"
+              @keydown.enter="applyFilters"
+          />
 
-        <div class="mx-auto my-10 space-y-10 max-w-7xl">
-            <!-- Header -->
-            <header class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ $t('my_donations') }}</h2>
-            </header>
+          <SecondaryButton @click="applyFilters" class="col-span-2 py-2 text-center">
+            {{ $t('search') }}
+          </SecondaryButton>
 
-            <Table
-                class="mb-24"
-                :columns="[$t('organization'), $t('project'), $t('date'), $t('amount')]"
-                :currentPage="donations.current_page"
-                :prev="donations.prev_page_url"
-                :next="donations.next_page_url"
-                :links="donations.links"
-            >
-                <tr v-for="donation in donations.data" :key="donation.id">
-                    <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.organization }}</td>
-                    <td class="px-3 py-4 text-sm text-gray-900 whitespace-nowrap">{{ donation.project }}</td>
-                    <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.created_at }}</td>
-                    <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{{ donation.amount }}</td>
-                </tr>
-            </Table>
+          <SecondaryButton
+              v-if="hasValues"
+              @click="clearFilters"
+              class="flex items-center justify-center col-span-2 gap-2 py-2 text-center"
+          >
+            <SvgLoader name="close" />
+            {{ $t('empty_filters') }}
+          </SecondaryButton>
+
+          <div :class="['col-span-12 flex justify-end', hasValues ? 'sm:col-span-4' : 'sm:col-span-6']">
+            <SecondaryButton class="flex items-center justify-center gap-4 py-2">
+              <SvgLoader class="shrink-0" name="download" />
+              {{ $t('download_table') }}
+            </SecondaryButton>
+          </div>
         </div>
-    </PageLayout>
+
+        <Select
+            class="col-span-12 sm:col-span-6 lg:col-span-4"
+            :label="$t('donation_status')"
+            v-model="filter.status"
+            :options="statuses"
+            @update:modelValue="applyFilters"
+        />
+
+        <Select
+            class="col-span-12 sm:col-span-6 lg:col-span-4"
+            :label="$t('project')"
+            v-model="filter.project"
+            :options="projects"
+            @update:modelValue="applyFilters"
+        />
+        <Select
+            class="col-span-12 sm:col-span-6 lg:col-span-4"
+            :label="$t('organization')"
+            v-model="filter.organization"
+            :options="organizations"
+            @update:modelValue="applyFilters"
+        />
+
+        <Select
+            class="col-span-12 sm:col-span-6 lg:col-span-4"
+            :label="$t('start_date')"
+            v-model="filter.start_date"
+            :options="dates"
+            @update:modelValue="applyFilters"
+        />
+
+        <Select
+            class="col-span-12 sm:col-span-6 lg:col-span-4"
+            :label="$t('start_date')"
+            v-model="filter.end_date"
+            :options="dates"
+            @update:modelValue="applyFilters"
+
+        />
+      </div>
+      <Table :collection="collection" />
+    </div>
+  </PageLayout>
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, Link } from '@inertiajs/vue3';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
-    import Table from '@/Components/Table.vue';
+import { ref } from 'vue';
+import { CurrencyEuroIcon } from '@heroicons/vue/outline';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import SvgLoader from '@/Components/SvgLoader.vue';
+import Table from '@/Components/tables/Table.vue';
+import Select from '@/Components/form/Select.vue';
+import SearchFilter from '@/Components/filters/SearchFilter.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import useFilters from '@/Helpers/useFilters.js';
+import {Head} from "@inertiajs/vue3";
+import PageLayout from "@/Layouts/PageLayout.vue";
 
-    const props = defineProps({
-        donations: Array,
-    });
+const props = defineProps({
+  collection: {
+    type: Object,
+    required: true,
+  },
+  filter: {
+    type: Object,
+    required: false,
+  },
+  projects: Array,
+  organizations: Array,
+  statuses: Array,
+  amounts: Array,
+  dates : Array,
+  //     start_dates: Array,
+  //     end_dates: Array
+});
+
+/** Active filter state. */
+const hasValues = ref(false);
+
+/** Filter values. */
+const filter = ref({
+  search: props.filter?.search || null,
+  status: props.filter?.status || null,
+  amount: props.filter?.amount || null,
+  project: props.filter?.project || null,
+  organization: props.filter?.organization || null,
+  start_date: props.filter?.start_date || null,
+  end_date: props.filter?.end_date || null,
+});
+
+const sort = ref(null);
+const { applyFilters, clearFilters } = useFilters(filter, sort, route('donor.donations'));
 </script>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasLocation;
+use App\Concerns\HasSlug;
 use Embed\Embed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,7 @@ class BCRProject extends Model implements HasMedia
     use HasFactory;
     use HasLocation;
     use InteractsWithMedia;
+    use HasSlug;
 
     protected $fillable = [
         'name',
