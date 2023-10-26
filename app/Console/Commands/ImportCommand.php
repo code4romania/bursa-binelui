@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Enums\UserRole;
+use App\Models\Organization;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -40,6 +41,7 @@ class ImportCommand extends Command
 
         $this->truncateTables();
 
+        $this->importOrganizations();
         $this->importUsers();
 
         $this->progressBar->setMessage('Done!');
@@ -65,13 +67,14 @@ class ImportCommand extends Command
 
         Schema::withoutForeignKeyConstraints(function () {
             User::truncate();
+            Organization::truncate();
         });
     }
 
-    private function addMaxSteps(int $count): void
+    private function addMaxSteps(int|float $count): void
     {
         $this->progressBar->setMaxSteps(
-            $this->progressBar->getMaxSteps() + $count
+            $this->progressBar->getMaxSteps() + (int) ceil($count)
         );
     }
 
@@ -108,38 +111,109 @@ class ImportCommand extends Command
 
         $this->addMaxSteps($total / $this->chunk);
 
-        $this->getSourceConnection()
-            ->table('user.Users')
-            ->where('IsActivated', 1)
-            ->orderBy('Id')
-            ->chunk($this->chunk, function (Collection $items, int $page) use ($total) {
-                $this->progressBar->setMessage(sprintf(
-                    'Importing users %d/%d',
-                    $page * $this->chunk,
-                    $total
-                ));
+        $query->chunk($this->chunk, function (Collection $items, int $page) use ($total) {
+            $this->progressBar->setMessage(sprintf(
+                'Importing users %d/%d',
+                $page * $this->chunk,
+                $total
+            ));
 
-                $this->progressBar->advance($this->chunk);
+            $this->progressBar->advance($this->chunk);
 
-                User::upsert(
-                    $items->map(fn (object $row) => [
-                        'id' => $row->Id,
-                        'name' => $row->FirstName . ' ' . $row->LastName,
-                        'email' => $row->Email,
-                        'old_password' => $row->Password,
-                        'old_salt' => $row->PasswordSalt,
-                        'created_at' => Carbon::parse($row->CreationDate),
-                        'updated_at' => $row->ActivationCodeGeneratedDate,
-                        'password_set_at' => $row->ActivationCodeGeneratedDate,
-                        'email_verified_at' => $row->IsActivated ? $row->ActivationCodeGeneratedDate : null,
-                        'role' => match ($row->RoleId) {
-                            1 => UserRole::USER,
-                            2 => UserRole::ADMIN,
-                            3 => UserRole::SUPERADMIN,
-                        },
-                    ])->all(),
-                    'email'
-                );
-            });
+            User::upsert(
+                $items->map(fn (object $row) => [
+                    'id' => $row->Id,
+                    'name' => $row->FirstName . ' ' . $row->LastName,
+                    'email' => $row->Email,
+                    'old_password' => $row->Password,
+                    'old_salt' => $row->PasswordSalt,
+                    'created_at' => Carbon::parse($row->CreationDate),
+                    'updated_at' => $row->ActivationCodeGeneratedDate,
+                    'password_set_at' => $row->ActivationCodeGeneratedDate,
+                    'email_verified_at' => $row->IsActivated ? $row->ActivationCodeGeneratedDate : null,
+                    'role' => match ($row->RoleId) {
+                        1 => UserRole::USER,
+                        2 => UserRole::ADMIN,
+                        3 => UserRole::SUPERADMIN,
+                    },
+                ])->all(),
+                'email'
+            );
+        });
+    }
+
+    /**
+     * Import organizations.
+     *
+     * - [Id] => id
+     * - [Name] => name
+     * - [LogoImageId] => ...
+     * - [Description] => description
+     * - [AnualReportFileId] => ?
+     * - [Recommendations] => ?
+     * - [CIF] => cif
+     * - [Address] => street_address
+     * - [PhoneNb] => contact_phone
+     * - [Email] => contact_email
+     * - [ContactPerson] => contact_person
+     * - [WebSite] => website
+     * - [HasVolunteering] => accepts_volunteers
+     * - [WhyVolunteer] => why_volunteer
+     * - [ONGStatusId] => {
+     *      1	Approval -> X
+     *      2	Active   -> OrganizationStatus::approved
+     *      3	Inactive -> OrganizationStatus::rejected
+     *   }
+     * - [ONGApprovalStatusTypeId] => ?
+     * - [CreationDate] => created_at
+     * - [HasChanges] => ?
+     * - [MerchantId] => eu_platesc_merchant_id
+     * - [MerchantKey] => eu_platesc_private_key
+     * - [AllCounties] => X
+     * - [OrganizationalStatusId] => ?
+     * - [Tags] => x
+     * - [FacebookPageLink] => facebook
+     * - [DynamicUrl] => slug
+     *
+     * @return void
+     * @throws \InvalidArgumentException
+     */
+    protected function importOrganizations(): void
+    {
+        $this->progressBar->setMessage('Importing organizations...');
+        $this->progressBar->advance();
+
+        $query = $this->getSourceConnection()
+            ->table('dbo.ONGs')
+            ->where('ONGStatusId', 2)
+            ->orderBy('Id');
+
+        $total = $query->count();
+
+        $this->addMaxSteps($total / $this->chunk);
+
+        $query->chunk($this->chunk, function (Collection $items, int $page) use ($total) {
+            $this->progressBar->setMessage(sprintf(
+                'Importing organizations %d/%d',
+                $page * $this->chunk,
+                $total
+            ));
+
+            $items->map(fn (object $row) => Organization::create([
+                'id' => $row->Id,
+                'name' => $row->Name,
+                'description' => $row->Description,
+                'cif' => $row->CIF,
+                'street_address' => $row->Address,
+                'contact_phone' => $row->PhoneNb,
+                'contact_email' => $row->Email,
+                'contact_person' => $row->ContactPerson,
+                'website' => $row->WebSite,
+                'accepts_volunteers' => $row->HasVolunteering,
+                'why_volunteer' => $row->WhyVolunteer,
+            ]));
+
+            $this->progressBar->advance($this->chunk);
+        });
     }
 }

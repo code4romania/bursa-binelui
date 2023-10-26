@@ -16,8 +16,8 @@ enum OrganizationStatus: string
 
     case draft = 'draft';
     case pending = 'pending';
-    case approved = 'active';
-    case rejected = 'disabled';
+    case approved = 'approved';
+    case rejected = 'rejected';
     case pending_changes = 'pending_changes';
 
     protected function labelKeyPrefix(): ?string

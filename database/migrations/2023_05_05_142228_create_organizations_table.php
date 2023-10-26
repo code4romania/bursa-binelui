@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('contact_phone');
             $table->string('contact_email');
             $table->string('website')->nullable();
+            $table->string('facebook')->nullable();
             $table->boolean('accepts_volunteers')->default(true);
             $table->text('why_volunteer')->nullable();
             $table->string('status')->default(OrganizationStatus::pending->value);

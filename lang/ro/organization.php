@@ -12,6 +12,8 @@ return [
         'pending' => 'În așteptare',
         'active' => 'Activă',
         'disabled' => 'Inactivă',
+        'approved' => 'Aprobată',
+        'rejected' => 'Respinsă',
     ],
     'actions' => [
         'view' => 'Vizualizează',
