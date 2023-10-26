@@ -20,11 +20,11 @@
                 :label="$t('ong_address')"
                 id="ong_address"
                 type="text"
-                v-model="form.ngo.street_address"
+                v-model="form.ngo.address"
                 :isRequired="true"
                 color="gray-700"
                 hasAutocomplete="ong_address"
-                :error="form.errors['ngo.street_address']"
+                :error="form.errors['ngo.address']"
             />
             <p class="text-xs text-gray-500">{{ $t('complete_address') }}</p>
         </div>

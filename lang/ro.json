@@ -177,7 +177,7 @@
     "organization_contact_person_label": "Persoana de contact",
     "organization_email_label": "Email contact organizație (public)",
     "organization_address_label": "Adresă sediu",
-    "street_address_label": "Strada",
+    "address_label": "Strada",
     "payment_gateway_data": "Date EuPlătesc",
     "merchant_id": "Merchant ID",
     "key_label": "Key",
@@ -385,7 +385,7 @@
     "currency": "RON",
     "bcr_for_community": "BCR pentru comunitate",
     "articles": "Articole",
-    "project_period" : "Perioada proiect",
+    "project_period": "Perioada proiect",
     "categories": "Categorii",
     "other_articles_label": "Alte articole",
     "donate_to_a_project": "Donează către un proiect",
@@ -452,24 +452,19 @@
 
     "locales.ro": "Română",
     "locales.en": "English",
-    "projects.status.open" : "Deschis",
-    "projects.status.close" : "Închis",
-    "projects.status.starting_soon" : "Incepe in curand",
-    "projects.status.ending_soon" : "Se incheie in curand",
+    "projects.status.open": "Deschis",
+    "projects.status.close": "Închis",
+    "projects.status.starting_soon": "Incepe in curand",
+    "projects.status.ending_soon": "Se incheie in curand",
 
     "project.labels.preview_image": "Imagine de prezentare",
-    "project.labels.videos" : "Videoclipuri externe ale proiectului",
-    "project.labels.videos_extra" : "Aici puteti adauga link-uri de pe diverse platforme de streaming (youtube, vimeo, etc.)",
+    "project.labels.videos": "Videoclipuri externe ale proiectului",
+    "project.labels.videos_extra": "Aici puteti adauga link-uri de pe diverse platforme de streaming (youtube, vimeo, etc.)",
 
     "project.labels.external_links_title": "Titlu link extern",
     "project.labels.external_links_url": "URL link extern",
     "project.labels.change_gallery_label": "Schimbă galeria de imagini",
 
-    "organization_status_disabled" : "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
-    "organization_status_pending" : "Organizația este în așteptare"
-
-
-
-
-
+    "organization_status_disabled": "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
+    "organization_status_pending": "Organizația este în așteptare"
 }

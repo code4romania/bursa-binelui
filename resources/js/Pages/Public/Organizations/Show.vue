@@ -80,8 +80,8 @@
                                 <div>
                                     <h3 class="text-base font-semibold text-gray-600">{{ $t('ong_address') }}</h3>
                                     <p class="mt-2 text-base font-normal text-gray-500">
-                                        {{ organization.street_address }}<br/>  {{ organization.location }} <br />
-
+                                        {{ organization.address }}<br />
+                                        {{ organization.location }}
                                     </p>
                                 </div>
                             </div>

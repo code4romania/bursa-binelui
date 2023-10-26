@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name')->index();
             $table->string('cif')->unique();
             $table->text('description');
-            $table->string('street_address');
+            $table->string('address');
             $table->string('contact_person');
             $table->string('contact_phone');
             $table->string('contact_email');

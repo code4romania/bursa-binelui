@@ -38,7 +38,7 @@
         ngo: {
             name: '',
             description: '',
-            street_address: '',
+            address: '',
             cif: '',
             contact_email: '',
             contact_phone: '',
@@ -155,7 +155,7 @@
                     current.value = 2;
                 } else if (
                     error['ngo.counties_ids'] ||
-                    error['ngo.street_address'] ||
+                    error['ngo.address'] ||
                     error['ngo.contact_person'] ||
                     error['ngo.contact_phone'] ||
                     error['ngo.contact_email'] ||

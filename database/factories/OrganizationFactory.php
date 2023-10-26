@@ -33,7 +33,7 @@ class OrganizationFactory extends Factory
             'name' => fake()->company(),
             'cif' => fake()->unixTime(),
             'description' => fake()->text(500),
-            'street_address' => fake()->streetName(),
+            'address' => fake()->address(),
             'contact_person' => fake()->name(),
             'contact_phone' => fake()->phoneNumber(),
             'contact_email' => fake()->companyEmail(),

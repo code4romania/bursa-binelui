@@ -43,11 +43,12 @@ class Organization extends Model implements HasMedia
         'name',
         'cif',
         'description',
-        'street_address',
+        'address',
         'contact_person',
         'contact_phone',
         'contact_email',
         'website',
+        'facebook',
         'accepts_volunteers',
         'why_volunteer',
         'status',
@@ -72,7 +73,7 @@ class Organization extends Model implements HasMedia
     public array $requiresApproval = [
         'name',
         'cif',
-        'street_address',
+        'address',
         'statute',
     ];
 

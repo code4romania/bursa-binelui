@@ -162,8 +162,8 @@ class OrganizationResource extends Resource
                             ->required()
                             ->maxLength(255),
 
-                        TextInput::make('street_address')
-                            ->label(__('organization.labels.street_address'))
+                        TextInput::make('address')
+                            ->label(__('organization.labels.address'))
                             ->inlineLabel()
                             ->required()
                             ->maxLength(255),

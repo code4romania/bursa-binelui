@@ -24,7 +24,7 @@ class EditOrganizationResource extends JsonResource
             'logo' => $this->getFirstMediaUrl('logo', 'preview'),
             'statute_link' => $this->getFirstMediaUrl('statute'),
             'description' => $this->description,
-            'street_address' => $this->street_address,
+            'address' => $this->address,
             'contact_person' => $this->contact_person,
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,

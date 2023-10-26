@@ -20,12 +20,12 @@ trait HasOrganizationStatus
         return $this->status === OrganizationStatus::pending;
     }
 
-    public function isActive(): bool
+    public function isApproved(): bool
     {
         return $this->status === OrganizationStatus::approved;
     }
 
-    public function isDisabled(): bool
+    public function isRejected(): bool
     {
         return $this->status === OrganizationStatus::rejected;
     }

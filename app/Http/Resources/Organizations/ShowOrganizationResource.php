@@ -22,7 +22,7 @@ class ShowOrganizationResource extends JsonResource
             'activity_domains' => $this->activityDomains->pluck('name')->join(', '),
             'logo' => $this->getFirstMediaUrl('logo', 'preview'),
             'description' => $this->description,
-            'street_address' => $this->street_address,
+            'address' => $this->address,
             'contact_person' => $this->contact_person,
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,
