@@ -63,8 +63,7 @@ class RegionalProject extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+            ->fit(Manipulations::FIT_CROP, 300, 300);
     }
 
     public function getActivitylogOptions(): LogOptions

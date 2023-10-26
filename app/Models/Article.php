@@ -52,13 +52,11 @@ class Article extends Model implements HasMedia
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('thumb')
-                    ->fit(Manipulations::FIT_CONTAIN, 400, 200)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 400, 200);
 
                 $this
                     ->addMediaConversion('large')
-                    ->fit(Manipulations::FIT_CONTAIN, 1200, 600)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 1200, 600);
             });
 
         $this->addMediaCollection('gallery')
@@ -66,13 +64,11 @@ class Article extends Model implements HasMedia
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('thumb')
-                    ->fit(Manipulations::FIT_CONTAIN, 400, 200)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 400, 200);
 
                 $this
                     ->addMediaConversion('large')
-                    ->fit(Manipulations::FIT_CONTAIN, 1200, 600)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 1200, 600);
             });
     }
 

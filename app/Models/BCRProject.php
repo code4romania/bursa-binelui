@@ -60,16 +60,14 @@ class BCRProject extends Model implements HasMedia
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('preview')
-                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300);
             });
 
         $this->addMediaCollection('gallery')
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('preview')
-                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300);
             });
     }
 
