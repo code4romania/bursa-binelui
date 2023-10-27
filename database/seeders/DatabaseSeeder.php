@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             return;
         }
 
+        return;
+
         Mail::fake();
 
         User::factory(['email' => 'superadmin@example.com'])

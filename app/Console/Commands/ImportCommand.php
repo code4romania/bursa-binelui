@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Enums\OrganizationStatus;
 use App\Enums\UserRole;
+use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\User;
 use App\Services\Sanitize;
@@ -15,6 +16,7 @@ use Illuminate\Database\Connection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -56,8 +58,9 @@ class ImportCommand extends Command
     {
         $this->truncate();
 
-        $this->importOrganizations();
-        $this->importUsers();
+//        $this->importOrganizations();
+        $this->importActivityDomains();
+//        $this->importUsers();
 
         return static::SUCCESS;
     }
@@ -69,6 +72,7 @@ class ImportCommand extends Command
                 Media::class,
                 User::class,
                 Organization::class,
+                ActivityDomain::class,
             ];
 
             $progressBar = $this->createProgressBar('Truncating tables...', \count($models));
@@ -262,5 +266,34 @@ class ImportCommand extends Command
         });
 
         $progressBar->finish();
+    }
+
+    /**
+     * Import activity domains.
+     * - Id => id
+     * - Name => name
+     * - Slug => slug.
+     */
+    private function importActivityDomains(int $chunk = 100): void
+    {
+        $query = $this->db
+            ->table('lkp.ActivityDomains')
+            ->orderBy('Id');
+
+        $total = $query->count();
+
+        $progressBar = $this->createProgressBar('Importing activity domains...', $total);
+        $query->chunk($chunk, function (Collection $items) use ($total, $chunk, $progressBar) {
+            $progressBar->advance($chunk);
+            ActivityDomain::upsert(
+                $items->map(fn (object $row) => [
+                    'id' => $row->Id,
+                    'name' => $row->Name,
+                    'slug' => Str::slug($row->Name),
+                ])->all(),
+                'id'
+            );
+            $progressBar->finish();
+        });
     }
 }
