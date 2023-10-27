@@ -12,9 +12,12 @@ use App\Services\Sanitize;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Spatie\MediaLibrary\MediaCollections\Commands\CleanCommand;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -36,25 +39,12 @@ class ImportCommand extends Command
         parent::__construct();
     }
 
-    private function createProgressBar(string $status, int $max): ProgressBar
-    {
-        $progressBar = $this->output->createProgressBar($max);
-        $progressBar->setFormat("\n<options=bold>%status:-30s% %current%/%max%</>\n[%bar%] %remaining%\n");
-        $progressBar->setMessage($status, 'status');
-        $progressBar->setBarCharacter('<fg=green>=</>');
-        $progressBar->setEmptyBarCharacter('-');
-        $progressBar->setProgressCharacter('<fg=green>></>');
-        $progressBar->start();
-
-        return $progressBar;
-    }
-
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
-        $this->truncate();
+        $this->cleanup();
 
         $this->importOrganizations();
         $this->importUsers();
@@ -62,7 +52,7 @@ class ImportCommand extends Command
         return static::SUCCESS;
     }
 
-    protected function truncate(): void
+    protected function cleanup(): void
     {
         Schema::withoutForeignKeyConstraints(function () {
             $models = [
@@ -71,11 +61,13 @@ class ImportCommand extends Command
                 Organization::class,
             ];
 
-            $progressBar = $this->createProgressBar('Truncating tables...', \count($models));
+            $progressBar = $this->createProgressBar('Removing old data...', \count($models));
 
             foreach ($progressBar->iterate($models) as $model) {
                 $model::truncate();
             }
+
+            Artisan::call(CleanCommand::class);
 
             $progressBar->finish();
         });
@@ -86,9 +78,9 @@ class ImportCommand extends Command
      *
      * - [Id] => id
      * - [Name] => name
-     * - [LogoImageId] => ...
+     * - [LogoImageId] => media library -> logo collection
      * - [Description] => description
-     * - [AnualReportFileId] => ?
+     * - [AnualReportFileId] => media library -> default collection
      * - [Recommendations] => ?
      * - [CIF] => cif
      * - [Address] => address
@@ -99,7 +91,7 @@ class ImportCommand extends Command
      * - [HasVolunteering] => accepts_volunteers
      * - [WhyVolunteer] => why_volunteer
      * - [ONGStatusId] => {
-     *      1	Approval -> X
+     *      1	Approval -> OrganizationStatus::pending
      *      2	Active   -> OrganizationStatus::approved
      *      3	Inactive -> OrganizationStatus::rejected
      *   }
@@ -109,7 +101,7 @@ class ImportCommand extends Command
      * - [MerchantId] => eu_platesc_merchant_id
      * - [MerchantKey] => eu_platesc_private_key
      * - [AllCounties] => X
-     * - [OrganizationalStatusId] => ?
+     * - [OrganizationalStatusId] => media library -> statute collection
      * - [Tags] => x
      * - [FacebookPageLink] => facebook
      * - [DynamicUrl] => slug
@@ -137,8 +129,8 @@ class ImportCommand extends Command
             ->groupBy('CIF')
             ->reject(fn ($collection) => $collection->count() < 2);
 
-        $query->chunk($chunk, function (Collection $items, int $page) use ($total, $chunk, $progressBar, $duplicates) {
-            $items->map(function (object $row) use ($duplicates) {
+        $query->chunk($chunk, function (Collection $items) use ($progressBar, $duplicates) {
+            $items->map(function (object $row) use ($duplicates, $progressBar) {
                 if ($duplicates->has($row->CIF)) {
                     $organization = $duplicates->get($row->CIF)
                         ->sortBy([
@@ -152,7 +144,9 @@ class ImportCommand extends Command
                     }
                 }
 
-                $organization = Organization::create([
+                $created_at = Carbon::parse($row->CreationDate);
+
+                $organization = Organization::forceCreate([
                     'id' => $row->Id,
                     'cif' => Sanitize::text($row->CIF),
                     'name' => Sanitize::text($row->Name),
@@ -171,42 +165,47 @@ class ImportCommand extends Command
                         2 => OrganizationStatus::approved,
                         3 => OrganizationStatus::rejected,
                     },
-                    'created_at' => Carbon::parse($row->CreationDate),
-                    'updated_at' => Carbon::parse($row->CreationDate),
+                    'status_updated_at' => $created_at,
+                    'created_at' => $created_at,
+                    'updated_at' => $created_at,
                     'eu_platesc_merchant_id' => Sanitize::text($row->MerchantId),
                     'eu_platesc_private_key' => Sanitize::text($row->MerchantKey),
                 ]);
 
                 // Add logo
-                $logo = $this->db
-                    ->table('dbo.Files')
-                    ->join('dbo.FilesData', 'dbo.FilesData.Id', 'dbo.Files.Id')
-                    ->where('dbo.Files.Id', $row->LogoImageId)
-                    ->first();
-
-                if ($logo) {
-                    $organization->addMediaFromString($logo->Data)
-                        ->usingFileName($logo->FileName . $logo->FileExtension)
-                        ->usingName($logo->FileName . $logo->FileExtension)
-                        ->toMediaCollection('logo');
-                }
+                $this->addFileToCollection(
+                    $this->db
+                        ->table('dbo.Files')
+                        ->join('dbo.FilesData', 'dbo.FilesData.Id', 'dbo.Files.Id')
+                        ->where('dbo.Files.Id', $row->LogoImageId)
+                        ->first(),
+                    $organization,
+                    'logo'
+                );
 
                 // Add statute
-                $statute = $this->db
-                    ->table('dbo.Files')
-                    ->join('dbo.FilesData', 'dbo.FilesData.Id', 'dbo.Files.Id')
-                    ->where('dbo.Files.Id', $row->OrganizationalStatusId)
-                    ->first();
+                $this->addFileToCollection(
+                    $this->db
+                        ->table('dbo.Files')
+                        ->join('dbo.FilesData', 'dbo.FilesData.Id', 'dbo.Files.Id')
+                        ->where('dbo.Files.Id', $row->OrganizationalStatusId)
+                        ->first(),
+                    $organization,
+                    'statute'
+                );
 
-                if ($statute) {
-                    $organization->addMediaFromString($statute->Data)
-                        ->usingFileName($statute->FileName . $statute->FileExtension)
-                        ->usingName($statute->FileName . $statute->FileExtension)
-                        ->toMediaCollection('statute');
-                }
+                // Add annual report
+                $this->addFileToCollection(
+                    $this->db
+                        ->table('dbo.Files')
+                        ->join('dbo.FilesData', 'dbo.FilesData.Id', 'dbo.Files.Id')
+                        ->where('dbo.Files.Id', $row->AnualReportFileId)
+                        ->first(),
+                    $organization,
+                );
+
+                $progressBar->advance();
             });
-
-            $progressBar->advance($chunk);
         });
     }
 
@@ -237,9 +236,7 @@ class ImportCommand extends Command
 
         $progressBar = $this->createProgressBar('Importing users...', $total);
 
-        $query->chunk($chunk, function (Collection $items, int $page) use ($total, $chunk, $progressBar) {
-            $progressBar->advance($chunk);
-
+        $query->chunk($chunk, function (Collection $items) use ($chunk, $progressBar) {
             User::upsert(
                 $items->map(fn (object $row) => [
                     'id' => $row->Id,
@@ -259,8 +256,37 @@ class ImportCommand extends Command
                 ])->all(),
                 'email'
             );
+
+            $progressBar->advance($chunk);
         });
 
         $progressBar->finish();
+    }
+
+    private function createProgressBar(string $status, int $max): ProgressBar
+    {
+        $progressBar = $this->output->createProgressBar($max);
+        $progressBar->setFormat("\n<options=bold>%status:-30s% %current%/%max%</>\n[%bar%] %remaining%\n");
+        $progressBar->setMessage($status, 'status');
+        $progressBar->setBarCharacter('<fg=green>=</>');
+        $progressBar->setEmptyBarCharacter('-');
+        $progressBar->setProgressCharacter('<fg=green>></>');
+        $progressBar->start();
+
+        return $progressBar;
+    }
+
+    private function addFileToCollection(object|null $file, Model $model, string $collection = 'default'): void
+    {
+        if (! $file) {
+            return;
+        }
+
+        $filename = rtrim($file->FileName, '.') . '.' . ltrim($file->FileExtension, '.');
+
+        $model->addMediaFromString($file->Data)
+            ->usingFileName($filename)
+            ->usingName($filename)
+            ->toMediaCollection($collection);
     }
 }
