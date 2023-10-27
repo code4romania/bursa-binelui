@@ -42,36 +42,33 @@ class ImportUsersCommand extends Command
 
         $this->createProgressBar('Importing users...', $query->count());
 
-        $chunk = (int) $this->option('chunk');
+        $query->chunk((int) $this->option('chunk'), function (Collection $items) {
+            $values = $items
+                ->reject(fn (object $row) => $this->getRejectedOrganizations()->contains($row->ONGId))
+                ->map(fn (object $row) => [
+                    'id' => $row->Id,
+                    'name' => $row->FirstName . ' ' . $row->LastName,
+                    'email' => $row->Email,
+                    'old_password' => $row->Password,
+                    'old_salt' => $row->PasswordSalt,
+                    'created_at' => Carbon::parse($row->CreationDate),
+                    'updated_at' => $row->ActivationCodeGeneratedDate,
+                    'password_set_at' => $row->ActivationCodeGeneratedDate,
+                    'email_verified_at' => $row->IsActivated ? $row->ActivationCodeGeneratedDate : null,
+                    'role' => match ($row->RoleId) {
+                        1 => UserRole::USER,
+                        2 => UserRole::ADMIN,
+                        3 => UserRole::SUPERADMIN,
+                    },
+                    'organization_id' => match ($row->RoleId) {
+                        2 => $row->ONGId,
+                        default => null,
+                    },
+                ]);
 
-        $query->chunk($chunk, function (Collection $items) use ($chunk) {
-            User::upsert(
-                $items
-                    ->reject(fn (object $row) => $this->getRejectedOrganizations()->contains($row->ONGId))
-                    ->map(fn (object $row) => [
-                        'id' => $row->Id,
-                        'name' => $row->FirstName . ' ' . $row->LastName,
-                        'email' => $row->Email,
-                        'old_password' => $row->Password,
-                        'old_salt' => $row->PasswordSalt,
-                        'created_at' => Carbon::parse($row->CreationDate),
-                        'updated_at' => $row->ActivationCodeGeneratedDate,
-                        'password_set_at' => $row->ActivationCodeGeneratedDate,
-                        'email_verified_at' => $row->IsActivated ? $row->ActivationCodeGeneratedDate : null,
-                        'role' => match ($row->RoleId) {
-                            1 => UserRole::USER,
-                            2 => UserRole::ADMIN,
-                            3 => UserRole::SUPERADMIN,
-                        },
-                        'organization_id' => match ($row->RoleId) {
-                            2 => $row->ONGId,
-                            default => null,
-                        },
-                    ])->all(),
-                'email'
-            );
+            User::upsert($values->all(), 'email');
 
-            $this->progressBar->advance($chunk);
+            $this->progressBar->advance($values->count());
         });
 
         $this->progressBar->finish();
