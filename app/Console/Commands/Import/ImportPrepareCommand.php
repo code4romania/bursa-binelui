@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Import;
 
+use App\Models\ActivityDomain;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
@@ -33,6 +34,7 @@ class ImportPrepareCommand extends Command
      * @var array
      */
     private array $models = [
+        ActivityDomain::class,
         Media::class,
         Organization::class,
         User::class,

@@ -32,6 +32,7 @@ class ImportCommand extends Command
 
         $this->call(ImportOrganizationsCommand::class);
         $this->call(ImportUsersCommand::class);
+        $this->call(ImportActivityDomainsCommand::class);
 
         return static::SUCCESS;
     }
