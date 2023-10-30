@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Console\Commands\Import;
 
 use App\Models\ActivityDomain;
+use App\Models\Organization;
 use App\Services\Sanitize;
-use Illuminate\Support\Collection;
 
 class ImportActivityDomainsCommand extends Command
 {
@@ -15,7 +15,7 @@ class ImportActivityDomainsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import:activity-domains {--chunk=100 : The number of records to process at a time}';
+    protected $signature = 'app:import:activity-domains';
 
     /**
      * The console command description.
@@ -29,25 +29,37 @@ class ImportActivityDomainsCommand extends Command
      */
     public function handle(): int
     {
-        $query = $this->db
+        $activityDomains = $this->db
             ->table('lkp.ActivityDomains')
-            ->orderBy('lkp.ActivityDomains.Id');
+            ->addSelect([
+                'ONGsIds' => $this->db
+                    ->table('dbo.ONGActivityDomains')
+                    ->selectRaw("STRING_AGG(ONGId,',')")
+                    ->whereColumn('dbo.ONGActivityDomains.ActivityDomainId', 'lkp.ActivityDomains.Id'),
+            ])
+            ->orderBy('lkp.ActivityDomains.Id')
+            ->get();
 
-        $this->createProgressBar('Importing activity domains...', $query->count());
+        $this->createProgressBar('Importing activity domains...', $activityDomains->count());
 
-        $chunk = (int) $this->option('chunk');
+        $organizations = Organization::query()
+            ->orderBy('id')
+            ->pluck('id');
 
-        $query->chunk($chunk, function (Collection $items) {
-            $values = $items
-                ->map(fn (object $row) => [
-                    'id' => (int) $row->Id,
-                    'name' => Sanitize::text($row->Name),
-                    'slug' => Sanitize::slug($row->Name),
-                ]);
+        $activityDomains->each(function (object $row) use ($organizations) {
+            $activityDomain = ActivityDomain::forceCreate([
+                'id' => (int) $row->Id,
+                'name' => Sanitize::text($row->Name),
+                'slug' => Sanitize::slug($row->Name),
+            ]);
 
-            ActivityDomain::upsert($values->all(), 'id');
+            if ($row->ONGsIds) {
+                $activityDomain->organizations()->sync(
+                    $organizations->intersect(explode(',', $row->ONGsIds))
+                );
+            }
 
-            $this->progressBar->advance($values->count());
+            $this->progressBar->advance();
         });
 
         $this->progressBar->finish();
