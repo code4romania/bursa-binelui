@@ -4,6 +4,8 @@
 ## Model mappings
 
 ### Organization
+Table: `dbo.ONGs`
+
 ```ini
 [Id] => id
 [Name] => name
@@ -34,6 +36,15 @@
 [Tags] => x
 [FacebookPageLink] => facebook
 [DynamicUrl] => slug
+```
+
+### Activity Domain
+Table: `lkp.ActivityDomains`
+
+```ini
+[Id] => id
+[Name] => name
+slug([Name]) => slug
 ```
 
 ### User
