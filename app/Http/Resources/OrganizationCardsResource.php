@@ -20,6 +20,7 @@ class OrganizationCardsResource extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'logo' => $this->getFirstMediaUrl('logo'),
             'activity_domains' => $this->activityDomains->pluck('name')->join(', '),
         ];
