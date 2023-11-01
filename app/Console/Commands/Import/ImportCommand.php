@@ -30,9 +30,10 @@ class ImportCommand extends Command
     {
         $this->call(ImportPrepareCommand::class);
 
-        $this->call(ImportOrganizationsCommand::class);
+        $this->call(ImportOrganizationsCommand::class, [
+            '--skip-files' => true,
+        ]);
         $this->call(ImportUsersCommand::class);
-        $this->call(ImportActivityDomainsCommand::class);
 
         return static::SUCCESS;
     }
