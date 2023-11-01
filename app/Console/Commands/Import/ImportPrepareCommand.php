@@ -33,7 +33,7 @@ class ImportPrepareCommand extends Command
         $this->callSilent(FreshCommand::class);
         $this->progressBar->advance();
 
-        $this->call(CleanCommand::class);
+        $this->callSilent(CleanCommand::class);
 
         $this->finishProgressBar('Removed old data');
 

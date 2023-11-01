@@ -87,13 +87,13 @@ class ImportOrganizationsCommand extends Command
 
                         if (! $this->option('skip-files')) {
                             // Add logo
-                            $this->addFileToCollection($organization, $row->LogoImageId, 'logo');
+                            $this->addFilesToCollection($organization, $row->LogoImageId, 'logo');
 
                             // Add statute
-                            $this->addFileToCollection($organization, $row->OrganizationalStatusId, 'statute');
+                            $this->addFilesToCollection($organization, $row->OrganizationalStatusId, 'statute');
 
                             // Add annual report
-                            $this->addFileToCollection($organization, $row->AnualReportFileId);
+                            $this->addFilesToCollection($organization, $row->AnualReportFileId);
                         }
                     } catch (Throwable $th) {
                         $this->logError('Error importing organization #' . $row->Id, [$th->getMessage()]);

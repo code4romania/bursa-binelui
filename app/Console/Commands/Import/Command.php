@@ -101,27 +101,25 @@ abstract class Command extends BaseCommand
             );
     }
 
-    public function addFileToCollection(Model $model, ?int $fileId, string $collection = 'default'): void
+    public function addFilesToCollection(Model $model, int|array|null $fileIds, string $collection = 'default'): void
     {
-        if (\is_null($fileId)) {
-            return;
-        }
-
-        $file = $this->db
+        $this->db
             ->table('dbo.Files')
             ->join('dbo.FilesData', 'dbo.FilesData.Id', 'dbo.Files.Id')
-            ->where('dbo.Files.Id', $fileId)
-            ->first();
+            ->whereIn(
+                'dbo.Files.Id',
+                collect($fileIds)
+                    ->filter()
+                    ->all()
+            )
+            ->get()
+            ->each(function (object $file) use ($model, $collection) {
+                $filename = rtrim($file->FileName, '.') . '.' . ltrim($file->FileExtension, '.');
 
-        if (\is_null($file)) {
-            return;
-        }
-
-        $filename = rtrim($file->FileName, '.') . '.' . ltrim($file->FileExtension, '.');
-
-        $model->addMediaFromString($file->Data)
-            ->usingFileName($filename)
-            ->usingName($filename)
-            ->toMediaCollection($collection);
+                $model->addMediaFromString($file->Data)
+                    ->usingFileName($filename)
+                    ->usingName($filename)
+                    ->toMediaCollection($collection);
+            });
     }
 }

@@ -14,7 +14,7 @@ class ImportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import';
+    protected $signature = 'app:import {--skip-files : Skip importing files}';
 
     /**
      * The console command description.
@@ -31,8 +31,12 @@ class ImportCommand extends Command
         $this->call(ImportPrepareCommand::class);
 
         $this->call(ImportOrganizationsCommand::class, [
-            '--skip-files' => true,
+            '--skip-files' => $this->option('skip-files'),
         ]);
+        $this->call(ImportProjectsCommand::class, [
+            '--skip-files' => $this->option('skip-files'),
+        ]);
+
         $this->call(ImportUsersCommand::class);
 
         return static::SUCCESS;

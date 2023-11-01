@@ -62,3 +62,34 @@ slug([Name]) => slug
   3 => UserRole::SUPERADMIN
 }
 ```
+
+### Project
+Table: `dbo.ONGProjects` + `dbo.Projects`
+```ini
+[Id] => id
+[ONGId] => organization_id
+[Name] => name
+[DynamicUrl] => slug
+[Description] => description
+[TargetAmmount] => target_budget
+[StartDate] => start
+[EndDate] => end
+[HasVolunteering] => accepting_volunteers
+[AcceptComments] => accepting_comments
+[CreationDate] => created_at
+[ProjectStatusTypeId] => status {
+  1 => ProjectStatus::approved
+  2 => ProjectStatus::approved
+  3 => ProjectStatus::approved
+  4 => ProjectStatus::rejected
+  default => ProjectStatus::draft
+}
+```
+
+### Project Categories
+Table: `lkp.ProjectCategories`
+```ini
+[Id] => id
+[Name] => name
+slug([Name]) => slug
+```
