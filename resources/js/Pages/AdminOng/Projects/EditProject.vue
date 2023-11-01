@@ -30,16 +30,12 @@
                     </EditModal>
                 </template>
             </Field>
-            <Field
-                :label="$t('project_slug_label')"
-                :errors="formChangeStatus.errors.slug"
-            >
+            <Field :label="$t('project_slug_label')" :errors="formChangeStatus.errors.slug">
                 <template #value>
-                    <a :href="route('project',project.slug)" target="_blank" v-text="project.slug" />
+                    <a :href="route('projects.show', project.slug)" target="_blank" v-text="project.slug" />
                 </template>
 
-                <template #action>
-                </template>
+                <template #action> </template>
             </Field>
 
             <Field
@@ -197,32 +193,30 @@
                         @cancel="resetField('is_national')"
                         class="flex justify-end col-span-1"
                     >
-                      <fieldset>
-                        <legend class="text-sm font-semibold leading-6 text-gray-900">
-                          {{ $t('accepting_volunteers') }}
-                        </legend>
-                        <div class="mt-6 space-y-6">
-                          <div class="relative flex gap-x-3">
-                            <div class="flex items-center h-6">
-                              <Checkbox
-                                  class="form-checkbox"
-                                  id="accepting_comments"
-                                  color="gray-700"
-                                  v-model="project.is_national"
-                                  :checked="project.is_national === 'Da'"
-                                  :error="errors.is_national"
-                              />
+                        <fieldset>
+                            <legend class="text-sm font-semibold leading-6 text-gray-900">
+                                {{ $t('accepting_volunteers') }}
+                            </legend>
+                            <div class="mt-6 space-y-6">
+                                <div class="relative flex gap-x-3">
+                                    <div class="flex items-center h-6">
+                                        <Checkbox
+                                            class="form-checkbox"
+                                            id="accepting_comments"
+                                            color="gray-700"
+                                            v-model="project.is_national"
+                                            :checked="project.is_national === 'Da'"
+                                            :error="errors.is_national"
+                                        />
+                                    </div>
+                                    <div class="text-sm leading-6">
+                                        <label for="accepting_comments" class="font-medium text-gray-900">
+                                            {{ $t('is_national') }}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-sm leading-6">
-                              <label for="accepting_comments" class="font-medium text-gray-900">
-                                {{ $t('is_national') }}
-                              </label>
-
-                            </div>
-                          </div>
-                        </div>
-                      </fieldset>
-
+                        </fieldset>
                     </EditModal>
                 </template>
             </Field>
@@ -387,7 +381,6 @@
                                         <label for="accepting_comments" class="font-medium text-gray-900">
                                             {{ $t('accepting_volunteers') }}
                                         </label>
-
                                     </div>
                                 </div>
                             </div>

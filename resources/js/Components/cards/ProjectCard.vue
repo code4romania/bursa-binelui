@@ -1,8 +1,7 @@
 <template>
-
     <article class="flex flex-col overflow-hidden bg-white divide-y divide-gray-200 rounded-lg drop-shadow-lg">
         <Link
-            :href="project.type==='project' ? route('project', project.slug):route('bcr.show', project.slug)"
+            :href="project.type === 'project' ? route('projects.show', project) : route('bcr.show', project)"
             class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3"
         >
             <img
@@ -14,7 +13,7 @@
                 alt=""
             />
 
-            <div class="flex flex-col items-start justify-end gap-2 p-3" v-show="project.type==='project'">
+            <div class="flex flex-col items-start justify-end gap-2 p-3" v-show="project.type === 'project'">
                 <ProjectTag v-if="project.is_pending" :label="$t('project_waiting_for_approval')" />
                 <ProjectTag v-else-if="project.is_draft" :label="$t('project_draft')" />
 
@@ -47,15 +46,15 @@
 
         <div class="p-6 text-left">
             <Link
-                v-if="project.type==='project'"
-                :href="route('organization', project.organization.id)"
+                v-if="project.type === 'project'"
+                :href="route('organizations.show', project.organization)"
                 class="inline-block mb-4 font-medium text-black/75 hover:underline"
             >
                 {{ project.organization.name }}
             </Link>
 
             <h1 class="text-xl font-extrabold text-gray-700 sm:text-2xl md:text-xl 2xl:text-2xl line-clamp-2">
-                <Link :href="project.type==='project' ? route('project', project.slug) : route('bcr.show', project.slug)">
+                <Link :href="project.type === 'project' ? route('projects.show', project) : route('bcr.show', project)">
                     {{ project.name }}
                 </Link>
             </h1>
@@ -93,7 +92,7 @@
                 class="flex mt-4 overflow-hidden border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
             >
                 <Link
-                    :href="route('project', project.slug)"
+                    :href="route('projects.show', project)"
                     class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                 >
                     {{ $t('view') }}
@@ -144,7 +143,7 @@
                         {{ $t('donate_to_other_projects') }}
                     </h3>
                     <Link
-                        :href="route('projects')"
+                        :href="route('projects.index')"
                         class="rounded-md block mt-6 text-center bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
                     >
                         {{ $t('see_other_projects') }}

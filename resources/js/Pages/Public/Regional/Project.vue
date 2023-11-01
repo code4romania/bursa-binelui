@@ -68,7 +68,7 @@
             <div class="w-full lg:w-6/12">
                 <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
 
-                <SharePage class="mb-20" :pageRoute="route('project', project.slug)" />
+                <SharePage class="mb-20" :pageRoute="route('projects.show', project.slug)" />
 
                 <div class="mb-10" v-if="project.description">
                     <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_description_label') }}</h2>
@@ -190,7 +190,7 @@
         <!-- How can you help -->
         <HowCanYouHelp
             class="mb-20"
-            :pageRoute="route('project', project.slug)"
+            :pageRoute="route('projects.show', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
@@ -221,7 +221,7 @@
                 <div class="relative z-30 mt-8">
                     <Link
                         class="bg-white block sm:inline text-center text-gray-900 focus-visible:outline-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :href="route('organization', project.organization.id)"
+                        :href="route('organizations.show', project.organization.slug)"
                     >
                         {{ $t('find_organization') }}
                     </Link>

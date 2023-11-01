@@ -10,15 +10,15 @@
                     <div class="flex items-center gap-2">
                         <div
                             :class="[
-                                    'w-8 h-8 rounded-lg flex items-center justify-center',
-                                    project.is_period_active ? 'bg-red-500' : 'bg-cyan-900',
-                                ]"
+                                'w-8 h-8 rounded-lg flex items-center justify-center',
+                                project.is_period_active ? 'bg-red-500' : 'bg-cyan-900',
+                            ]"
                         >
                             <SvgLoader
                                 :class="[
-                                        'shrink-0 stroke-white',
-                                        project.is_period_active ? 'fill-red-500' : 'fill-cyan-900',
-                                    ]"
+                                    'shrink-0 stroke-white',
+                                    project.is_period_active ? 'fill-red-500' : 'fill-cyan-900',
+                                ]"
                                 name="thunder"
                             />
                         </div>
@@ -56,7 +56,7 @@
                         triggerModalClasses="rounded-md w-full sm:w-auto bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 px-3.5 py-2.5"
                         :triggerModalText="$t('become_volunter')"
                         :data="project"
-                        :postUrl="route('project.volunteer', project.slug)"
+                        :postUrl="route('projects.volunteer', project.slug)"
                     />
                 </div>
             </div>
@@ -89,9 +89,9 @@
                     <div class="w-full h-6 bg-gray-300">
                         <div
                             :class="[
-                                    `h-6`,
-                                    project.donations.total === project.donations.target ? 'bg-primary-500' : 'bg-cyan-900',
-                                ]"
+                                `h-6`,
+                                project.donations.total === project.donations.target ? 'bg-primary-500' : 'bg-cyan-900',
+                            ]"
                             :style="`width: ${project.donations.percentage}%`"
                         ></div>
                     </div>
@@ -112,7 +112,7 @@
             <div class="lg:col-span-3">
                 <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
 
-                <SharePage class="mb-20" :pageRoute="route('project', project.slug)" />
+                <SharePage class="mb-20" :pageRoute="route('projects.show', project.slug)" />
 
                 <div class="mb-10" v-if="project.description">
                     <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
@@ -208,7 +208,7 @@
         <!-- How can you help -->
         <HowCanYouHelp
             class="mb-20"
-            :pageRoute="route('project', project.slug)"
+            :pageRoute="route('projects.show', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
@@ -226,15 +226,19 @@
                         <h3 class="text-2xl font-bold text-gray-900">{{ $t('gallery') }}</h3>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
-
-                        <div class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1"
-                             v-for="(video,index) in project.embedded_videos"
-                             :key="index"
-                             v-html="video?.html"
+                        <div
+                            class="mt-10 overflow-hidden rounded-lg group aspect-w-2 aspect-h-1"
+                            v-for="(video, index) in project.embedded_videos"
+                            :key="index"
+                            v-html="video?.html"
                         />
                     </div>
 
-                    <Vue3PictureSwipe :items="project.swipe_gallery" :options="{mainClass:'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10'}" class="mt-10"></Vue3PictureSwipe>
+                    <Vue3PictureSwipe
+                        :items="project.swipe_gallery"
+                        :options="{ mainClass: 'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10' }"
+                        class="mt-10"
+                    ></Vue3PictureSwipe>
                     <!--                            <div-->
                     <!--                                v-for="(image, index) in project.gallery"-->
                     <!--                                :class="{-->
@@ -259,7 +263,6 @@
                     <!--                                 alt=""-->
                     <!--                                 class="object-cover object-center group-hover:opacity-75"-->
                     <!--                            />-->
-
                 </div>
             </div>
         </div>
@@ -281,7 +284,7 @@
                 <div class="relative z-30 mt-8">
                     <Link
                         class="bg-white block sm:inline text-center text-gray-900 focus-visible:outline-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        :href="route('organization', project.organization.id)"
+                        :href="route('organizations.show', project.organization)"
                     >
                         {{ $t('find_organization') }}
                     </Link>
@@ -296,84 +299,81 @@
 </template>
 
 <script setup>
-/** Import form vue */
-import { computed, onMounted, ref } from 'vue';
+    /** Import form vue */
+    import { computed, ref } from 'vue';
 
-/** Import from inertia. */
-import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+    /** Import from inertia. */
+    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
 
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import Icon from '@/Components/Icon.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import Modal from '@/Components/modals/Modal.vue';
+    import DonateModal from '@/Components/modals/DonateModal.vue';
+    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
+    import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+    import SharePage from '@/Components/SharePage.vue';
+    import Vue3PictureSwipe from 'vue3-picture-swipe';
 
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-import Icon from '@/Components/Icon.vue';
-import SvgLoader from '@/Components/SvgLoader.vue';
-import Modal from '@/Components/modals/Modal.vue';
-import DonateModal from '@/Components/modals/DonateModal.vue';
-import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
-import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
-import SharePage from '@/Components/SharePage.vue';
-import Vue3PictureSwipe from "vue3-picture-swipe";
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import { ExternalLinkIcon } from '@heroicons/vue/outline';
 
-import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-import { ExternalLinkIcon } from '@heroicons/vue/outline';
+    const props = defineProps({
+        project: {
+            type: Object,
+            required: true,
+        },
+    });
 
-const props = defineProps({
-    project: {
-        type: Object,
-        required: true,
-    },
-});
-onMounted(() => {
-    console.log(project);
-});
-const project = ref(props.project);
+    const project = ref(props.project);
 
-/**
- * Copy embed code.
- */
-const copyEmbed = () => {
-    /** Embed iframe. */
-    const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
+    /**
+     * Copy embed code.
+     */
+    const copyEmbed = () => {
+        /** Embed iframe. */
+        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
 
-    /** Check if navigator object exists and copy iframe. */
-    if (navigator.clipboard) {
-        navigator.clipboard
-            .writeText(embedCode)
-            .then(() => alert('Embed code copied to clipboard!'))
-            .catch(() => alert('Failed to copy embed code to clipboard!'));
-    } else {
-        /** Create textarea element. */
-        const tempInput = document.createElement('textarea');
+        /** Check if navigator object exists and copy iframe. */
+        if (navigator.clipboard) {
+            navigator.clipboard
+                .writeText(embedCode)
+                .then(() => alert('Embed code copied to clipboard!'))
+                .catch(() => alert('Failed to copy embed code to clipboard!'));
+        } else {
+            /** Create textarea element. */
+            const tempInput = document.createElement('textarea');
 
-        /** Set textarea value as embed code. */
-        tempInput.value = embedCode;
+            /** Set textarea value as embed code. */
+            tempInput.value = embedCode;
 
-        /** Apend textarea to body. */
-        document.body.appendChild(tempInput);
+            /** Apend textarea to body. */
+            document.body.appendChild(tempInput);
 
-        /** Select textarea text. */
-        tempInput.select();
+            /** Select textarea text. */
+            tempInput.select();
 
-        /** Copy textarea content. */
-        document.execCommand('copy');
+            /** Copy textarea content. */
+            document.execCommand('copy');
 
-        /** Remove textarea. */
-        document.body.removeChild(tempInput);
-    }
-};
+            /** Remove textarea. */
+            document.body.removeChild(tempInput);
+        }
+    };
 
-/** Trigger volunteer modal from card. */
-const triggerVolunteer = () => {
-    document.getElementById('volunteer-active-modal').click();
-};
+    /** Trigger volunteer modal from card. */
+    const triggerVolunteer = () => {
+        document.getElementById('volunteer-active-modal').click();
+    };
 
-/** Trigger donate modal from card. */
-const triggerDonate = () => {
-    if (false === props.project.is_period_active) {
-        document.getElementById('project-donation-expired').click();
-        return;
-    }
+    /** Trigger donate modal from card. */
+    const triggerDonate = () => {
+        if (false === props.project.is_period_active) {
+            document.getElementById('project-donation-expired').click();
+            return;
+        }
 
-    document.getElementById('donate-active-modal').click();
-};
+        document.getElementById('donate-active-modal').click();
+    };
 </script>

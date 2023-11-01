@@ -17,7 +17,7 @@
                     <p class="mt-8 text-lg font-medium text-gray-500">{{ $t('reward_auth') }}</p>
 
                     <div v-if="badge" class="flex items-center col-span-12 gap-6 md:col-span-6">
-                        <img :src="`/images/badges/${badge.name}.png`" alt="">
+                        <img :src="`/images/badges/${badge.name}.png`" alt="" />
                         <div class="pr-4 space-y-6 text-gray-500">
                             <h3 class="text-lg font-bold">{{ $t(`${badge.title}`) }}</h3>
                             <p class="text-sm">{{ $t(`${badge.description}`) }}</p>
@@ -27,18 +27,23 @@
 
                 <div class="w-full lg:w-1/2 lg:px-10">
                     <div class="bg-white shadow-lg">
-
                         <div class="p-8 space-y-8">
-                            <div class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50">
+                            <div
+                                class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50"
+                            >
                                 {{ $t('woohoo') }}
                             </div>
                             <h3 class="text-6xl font-bold leading-6 text-gray-900">{{ donation.place }}</h3>
-                            <p class="text-lg text-gray-500">{{ $t('donations_place_1') }} {{ donation.place }} {{ $t('donations_place_2') }}</p>
+                            <p class="text-lg text-gray-500">
+                                {{ $t('donations_place_1') }} {{ donation.place }} {{ $t('donations_place_2') }}
+                            </p>
                         </div>
 
                         <div class="px-10 py-8 space-y-6 bg-gray-50">
-
-                            <div v-for="info in profile.donations_status" class="flex items-center justify-start gap-x-4">
+                            <div
+                                v-for="info in profile.donations_status"
+                                class="flex items-center justify-start gap-x-4"
+                            >
                                 <SvgLoader class="shrink-0 fill-gray-50" name="check" />
                                 <p class="text-base font-normal text-gray-500">{{ info }}</p>
                             </div>
@@ -60,7 +65,6 @@
         <div v-else class="mx-auto mb-10 p-9 max-w-7xl">
             <div class="flex flex-col w-full gap-6 sm:flex-row">
                 <div class="w-full sm:w-6/12">
-
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
                             <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
@@ -89,7 +93,7 @@
         <HowCanYouHelp
             v-if="project"
             class="mb-20"
-            :pageRoute="route('project', project.slug)"
+            :pageRoute="route('projects.show', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"
@@ -97,18 +101,10 @@
         />
 
         <!-- Donate modal -->
-        <DonateModal
-            triggerModalClasses="h-0"
-            triggerModalText=""
-            :data="project"
-        />
+        <DonateModal triggerModalClasses="h-0" triggerModalText="" :data="project" />
 
         <!-- Volunteer modal -->
-        <VolunteerModal
-            triggerModalClasses="h-0"
-            triggerModalText=""
-            :data="project"
-        />
+        <VolunteerModal triggerModalClasses="h-0" triggerModalText="" :data="project" />
     </PageLayout>
 </template>
 
@@ -124,22 +120,22 @@
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
 
     const props = defineProps({
-        project: Object
-    })
+        project: Object,
+    });
 
     /**
      * Copy embed code.
      */
-     const copyEmbed = () => {
-
+    const copyEmbed = () => {
         /** Embed iframe. */
         const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
 
         /** Check if navigator object exists and copy iframe. */
         if (navigator.clipboard) {
-            navigator.clipboard.writeText(embedCode)
-            .then(() => alert('Embed code copied to clipboard!'))
-            .catch(() => alert('Failed to copy embed code to clipboard!'));
+            navigator.clipboard
+                .writeText(embedCode)
+                .then(() => alert('Embed code copied to clipboard!'))
+                .catch(() => alert('Failed to copy embed code to clipboard!'));
         } else {
             /** Create textarea element. */
             const tempInput = document.createElement('textarea');
@@ -159,11 +155,15 @@
             /** Remove textarea. */
             document.body.removeChild(tempInput);
         }
-    }
+    };
 
     /** Trigger volunteer modal from card. */
-    const triggerVolunteer = (() => { document.getElementById('volunteer-active-modal').click(); });
+    const triggerVolunteer = () => {
+        document.getElementById('volunteer-active-modal').click();
+    };
 
     /** Trigger donate modal from card. */
-    const triggerDonate = (() => { document.getElementById('donate-active-modal').click(); });
+    const triggerDonate = () => {
+        document.getElementById('donate-active-modal').click();
+    };
 </script>

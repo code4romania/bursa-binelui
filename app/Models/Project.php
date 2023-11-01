@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasCounties;
+use App\Concerns\HasSlug;
 use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\ProjectStatus;
@@ -35,6 +36,7 @@ class Project extends Model implements HasMedia
     use HasVolunteers;
     use InteractsWithMedia;
     use HasProjectStatus;
+    use HasSlug;
     use LogsActivity;
     use LogsActivityForApproval;
 

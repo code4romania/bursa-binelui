@@ -80,7 +80,7 @@
                                 </li>
                                 <li>
                                     <Link
-                                        :href="route('organizations')"
+                                        :href="route('organizations.index')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
                                     >
                                         {{ $t('organizations_link') }}
@@ -88,7 +88,7 @@
                                 </li>
                                 <li>
                                     <Link
-                                        :href="route('projects')"
+                                        :href="route('projects.index')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
                                     >
                                         {{ $t('projects_link') }}

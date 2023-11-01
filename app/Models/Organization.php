@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasCounties;
+use App\Concerns\HasSlug;
 use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
@@ -32,6 +33,7 @@ class Organization extends Model implements HasMedia
     use HasCounties;
     use HasVolunteers;
     use HasOrganizationStatus;
+    use HasSlug;
     use LogsActivityForApproval;
 
     /**

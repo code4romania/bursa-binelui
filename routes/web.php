@@ -6,8 +6,10 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BcrProjectController;
 use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
@@ -42,10 +44,6 @@ Route::group(['prefix' => 'proiect-bcr', 'as' => 'bcr.'], function () {
 
 require __DIR__ . '/auth.php';
 
-require __DIR__ . '/organizations.php';
-
-require __DIR__ . '/projects.php';
-
 require __DIR__ . '/donations.php';
 
 require __DIR__ . '/championship.php';
@@ -62,6 +60,28 @@ Route::group([
     Route::get('/', 'index')->name('index');
     Route::get('/category/{category:slug}', 'category')->name('category');
     Route::get('/{article:slug}', 'show')->name('show');
+});
+
+Route::group([
+    'prefix' => 'organizations',
+    'as' => 'organizations.',
+    'controller' => OrganizationController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{organization:slug}', 'show')->name('show');
+    Route::post('/{organization:slug}/volunteer', 'volunteer')->name('volunteer');
+});
+
+Route::group([
+    'prefix' => 'projects',
+    'as' => 'projects.',
+    'controller' => ProjectController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/map', 'map')->name('map');
+    Route::get('/{project:slug}', 'show')->name('show');
+    Route::post('/{project:slug}/donate', 'donate')->name('donate');
+    Route::post('/{project:slug}/volunteer', 'volunteer')->name('volunteer');
 });
 
 Route::get('/{page:slug}', PageController::class)->name('page');

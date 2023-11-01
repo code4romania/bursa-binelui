@@ -14,7 +14,7 @@
                 <!-- Links -->
                 <div class="relative flex flex-wrap items-center gap-6 pb-10 my-10">
                     <Link
-                        :href="route('projects')"
+                        :href="route('projects.index')"
                         class="bg-primary-500 text-center w-full md:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     >
                         {{ $t('donate_to_a_project') }}
@@ -95,7 +95,7 @@
 
                 <div class="lg:flex-1">
                     <Link
-                        :href="route('projects')"
+                        :href="route('projects.index')"
                         class="w-full inline-block font-semibold leading-6 text-center text-white bg-red-500 rounded-md shadow-sm lg:px-6 lg:py-4 lg:text-lg sm:w-auto hover:bg-red-400 focus-visible:outline-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 px-3.5 py-2.5 text-sm"
                     >
                         {{ $t('find_projects') }}
@@ -174,7 +174,7 @@
 
                 <div class="lg:flex-1">
                     <Link
-                        :href="route('projects')"
+                        :href="route('projects.index')"
                         class="w-full inline-block font-semibold leading-6 text-center text-white bg-primary-500 rounded-md shadow-sm lg:px-6 lg:py-4 lg:text-lg sm:w-auto hover:bg-primary-400 focus-visible:outline-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 px-3.5 py-2.5 text-sm"
                     >
                         {{ $t('see_bcr_projects') }}

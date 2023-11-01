@@ -16,22 +16,22 @@ trait HasProjectStatus
 
     public function isPending(): bool
     {
-        return $this->status === ProjectStatus::pending;
+        return ProjectStatus::pending->is($this->status);
     }
 
     public function isApproved(): bool
     {
-        return $this->status === ProjectStatus::approved;
+        return ProjectStatus::approved->is($this->status);
     }
 
     public function isRejected(): bool
     {
-        return $this->status === ProjectStatus::rejected;
+        return ProjectStatus::rejected->is($this->status);
     }
 
     public function isDraft(): bool
     {
-        return $this->status === ProjectStatus::draft;
+        return ProjectStatus::draft->is($this->status);
     }
 
     public function isPublished(): bool
