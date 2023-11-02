@@ -9,11 +9,11 @@ use App\Filament\Resources\Articles\ArticleResource\Pages;
 use App\Models\Article;
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -22,6 +22,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use FilamentTiptapEditor\TiptapEditor;
+use Illuminate\Database\Eloquent\Builder;
 
 class ArticleResource extends Resource
 {
@@ -53,6 +54,12 @@ class ArticleResource extends Resource
     protected static function getNavigationBadge(): ?string
     {
         return (string) Article::count();
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withDrafted();
     }
 
     public static function form(Form $form): Form
@@ -132,8 +139,9 @@ class ArticleResource extends Resource
                             ->label(__('article.updated_at'))
                             ->withTime(),
 
-                        Toggle::make('is_published')
-                            ->label(__('article.is_published')),
+                        DateTimePicker::make('published_at')
+                            ->label(__('article.published_at'))
+                            ->withoutSeconds(),
                     ]),
 
             ]);

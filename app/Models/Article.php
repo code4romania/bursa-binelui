@@ -6,7 +6,7 @@ namespace App\Models;
 
 use App\Concerns\HasSlug;
 use App\Concerns\HasTranslations;
-use Illuminate\Database\Eloquent\Builder;
+use App\Concerns\Publishable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,12 +22,12 @@ class Article extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
     use HasTranslations;
+    use Publishable;
 
     protected $fillable = [
         'title',
         'slug',
         'content',
-        'is_published',
         'article_category_id',
         'author',
     ];
@@ -75,10 +75,5 @@ class Article extends Model implements HasMedia
     public function category(): BelongsTo
     {
         return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');
-    }
-
-    public function scopeWherePublished(Builder $query): Builder
-    {
-        return $query->where('is_published', true);
     }
 }

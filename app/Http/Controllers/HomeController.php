@@ -44,7 +44,6 @@ class HomeController extends Controller
             'articles' => ArticleCardResource::collection(
                 Article::query()
                     ->latest()
-                    ->wherePublished()
                     ->limit(3)
                     ->get()
             ),

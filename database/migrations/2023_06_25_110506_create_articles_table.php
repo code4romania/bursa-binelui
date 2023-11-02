@@ -18,11 +18,11 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->timestamp('published_at')->nullable();
             $table->json('title');
             $table->json('slug');
             $table->json('content');
             $table->json('author');
-            $table->boolean('is_published')->default(true);
 
             $table->foreignIdFor(ArticleCategory::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Championship::class)->nullable()->constrained()->cascadeOnDelete();

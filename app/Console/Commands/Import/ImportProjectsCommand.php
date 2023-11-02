@@ -102,8 +102,8 @@ class ImportProjectsCommand extends Command
                             'slug' => Sanitize::text($row->DynamicUrl),
                             'description' => $row->Description,
                             'target_budget' => (int) $row->TargetAmmount,
-                            'start' => Carbon::createFromFormat('M d Y H:i:s:A', $row->StartDate),
-                            'end' => Carbon::createFromFormat('M d Y H:i:s:A', $row->EndDate),
+                            'start' => $this->parseDate($row->StartDate),
+                            'end' => $this->parseDate($row->EndDate),
                             'accepting_volunteers' => (bool) $row->HasVolunteering,
                             'accepting_comments' => (bool) $row->AcceptComments,
 

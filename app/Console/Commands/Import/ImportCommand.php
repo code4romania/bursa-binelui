@@ -39,6 +39,10 @@ class ImportCommand extends Command
 
         $this->call(ImportUsersCommand::class);
 
+        $this->call(ImportArticlesCommand::class, [
+            '--skip-files' => $this->option('skip-files'),
+        ]);
+
         return static::SUCCESS;
     }
 }

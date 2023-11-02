@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Import;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command as BaseCommand;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
@@ -121,5 +122,14 @@ abstract class Command extends BaseCommand
                     ->usingName($filename)
                     ->toMediaCollection($collection);
             });
+    }
+
+    public function parseDate(?string $input): ?Carbon
+    {
+        if ($input === null) {
+            return null;
+        }
+
+        return Carbon::createFromFormat('M d Y H:i:s:A', $input);
     }
 }

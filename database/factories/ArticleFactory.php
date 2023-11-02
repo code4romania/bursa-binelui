@@ -20,7 +20,7 @@ class ArticleFactory extends Factory
             'content' => collect(fake()->paragraphs(10))
                 ->map(fn (string $paragraph) => "<p>{$paragraph}</p>")
                 ->implode(''),
-            'is_published' => fake()->boolean(75),
+            'published_at' => fake()->boolean(95) ? fake()->dateTimeThisYear() : null,
             'author' => fake()->name(),
             'article_category_id' => ArticleCategory::factory(),
         ];
