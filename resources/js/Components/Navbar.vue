@@ -218,9 +218,10 @@
 <script setup>
     import { computed } from 'vue';
     import { usePage } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
 
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-    import { MenuIcon, BellIcon, XIcon } from '@heroicons/vue/outline';
+    import { MenuIcon, XIcon } from '@heroicons/vue/outline';
     import { UserCircleIcon } from '@heroicons/vue/solid';
 
     import NavLink from '@/Components/links/NavLink.vue';

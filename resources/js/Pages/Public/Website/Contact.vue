@@ -72,6 +72,7 @@
 <script setup>
     /** Import from inertia. */
     import { Head, useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

@@ -81,6 +81,7 @@
 
 <script setup>
     import { ref } from 'vue';
+    import route from '@/Helpers/useRoute';
     import { CurrencyEuroIcon } from '@heroicons/vue/outline';
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';

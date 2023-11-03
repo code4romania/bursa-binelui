@@ -1,8 +1,7 @@
 <template>
-
     <article class="flex flex-col overflow-hidden bg-white divide-y divide-gray-200 rounded-lg drop-shadow-lg">
         <Link
-            :href="project.type==='project' ? route('project', project.slug):route('bcr.show', project.slug)"
+            :href="project.type === 'project' ? route('project', project.slug) : route('bcr.show', project.slug)"
             class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3"
         >
             <img
@@ -14,7 +13,7 @@
                 alt=""
             />
 
-            <div class="flex flex-col items-start justify-end gap-2 p-3" v-show="project.type==='project'">
+            <div class="flex flex-col items-start justify-end gap-2 p-3" v-show="project.type === 'project'">
                 <ProjectTag v-if="project.is_pending" :label="$t('project_waiting_for_approval')" />
                 <ProjectTag v-else-if="project.is_draft" :label="$t('project_draft')" />
 
@@ -47,7 +46,7 @@
 
         <div class="p-6 text-left">
             <Link
-                v-if="project.type==='project'"
+                v-if="project.type === 'project'"
                 :href="route('organization', project.organization.id)"
                 class="inline-block mb-4 font-medium text-black/75 hover:underline"
             >
@@ -55,7 +54,11 @@
             </Link>
 
             <h1 class="text-xl font-extrabold text-gray-700 sm:text-2xl md:text-xl 2xl:text-2xl line-clamp-2">
-                <Link :href="project.type==='project' ? route('project', project.slug) : route('bcr.show', project.slug)">
+                <Link
+                    :href="
+                        project.type === 'project' ? route('project', project.slug) : route('bcr.show', project.slug)
+                    "
+                >
                     {{ project.name }}
                 </Link>
             </h1>
@@ -157,9 +160,6 @@
 
 <script setup>
     import { computed, onMounted } from 'vue';
-
-    /** Import from inertia. */
-    import { Link, useForm } from '@inertiajs/vue3';
 
     /** Import components. */
     import Icon from '@/Components/Icon.vue';

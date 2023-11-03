@@ -29,9 +29,13 @@
 
         <div class="w-full bg-gray-100">
             <div class="mx-auto max-w-7xl">
-              <Vue3PictureSwipe :items="resource.swipe_gallery" :options="{mainClass:'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10'}" class="mt-10"></Vue3PictureSwipe>
+                <Vue3PictureSwipe
+                    :items="resource.swipe_gallery"
+                    :options="{ mainClass: 'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10' }"
+                    class="mt-10"
+                ></Vue3PictureSwipe>
 
-                <div class="flex items-center justify-between pt-6 pb-20 ">
+                <div class="flex items-center justify-between pt-6 pb-20">
                     <div class="flex items-center justify-start w-full text-gray-500 f">
                         <p>{{ resource.author }}</p>
                     </div>
@@ -75,7 +79,7 @@
     import SharePage from '@/Components/SharePage.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import Vue3PictureSwipe from "vue3-picture-swipe";
+    // import Vue3PictureSwipe from 'vue3-picture-swipe';
 
     defineProps({
         resource: {

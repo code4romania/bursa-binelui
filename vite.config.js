@@ -28,4 +28,7 @@ export default defineConfig({
             symbolId: 'icon-[name]',
         }),
     ],
+    ssr: {
+        noExternal: ['@inertiajs/server'],
+    },
 });

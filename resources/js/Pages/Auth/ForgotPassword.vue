@@ -21,6 +21,7 @@
 
 <script setup>
     import { useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
     import AuthLayout from '@/Layouts/AuthLayout.vue';
     import Auth from '@/Components/templates/Auth.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';

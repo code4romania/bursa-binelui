@@ -159,7 +159,12 @@
                 </div>
 
                 <ul role="list" class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-                    <ArticleCard v-for="article,index in articles.data" :key="index" :article="article" class="relative" />
+                    <ArticleCard
+                        v-for="(article, index) in articles.data"
+                        :key="index"
+                        :article="article"
+                        class="relative"
+                    />
                 </ul>
             </div>
         </div>
@@ -225,6 +230,7 @@
 <script setup>
     /** Import from vue */
     import { ref } from 'vue';
+    import route from '@/Helpers/useRoute';
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';

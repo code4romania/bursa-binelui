@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-    import { ref, nextTick } from 'vue';
+    import { ref } from 'vue';
     import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
     import { XIcon } from '@heroicons/vue/outline';
 

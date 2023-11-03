@@ -27,9 +27,7 @@
                 <Sort class="w-full md:w-auto" :sort="collection.sort" />
             </div>
 
-            <div class="flex flex-col justify-end gap-6 md:col-span-6 lg:col-span-4 md:flex-row">
-
-            </div>
+            <div class="flex flex-col justify-end gap-6 md:col-span-6 lg:col-span-4 md:flex-row"></div>
 
             <Select
                 class="relative md:col-span-6 lg:col-span-3"
@@ -75,6 +73,7 @@
 
 <script setup>
     import { ref } from 'vue';
+    import route from '@/Helpers/useRoute';
     import { ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Sort from '@/Components/filters/Sort.vue';

@@ -45,6 +45,7 @@
     /** Import plugins. */
     import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
     import { ChevronDownIcon } from '@heroicons/vue/solid';
+    import route from '@/Helpers/useRoute';
 
     /** Import components. */
     import NavLink from '@/Components/links/NavLink.vue';
