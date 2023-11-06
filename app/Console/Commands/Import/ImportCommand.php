@@ -52,6 +52,10 @@ class ImportCommand extends Command
             '--force' => $this->option('force'),
         ]);
 
+        $this->call(ImportDonationsCommand::class, [
+            '--force' => $this->option('force'),
+        ]);
+
         $this->call(ImportArticlesCommand::class, [
             '--skip-files' => $this->option('skip-files'),
             '--force' => $this->option('force'),
