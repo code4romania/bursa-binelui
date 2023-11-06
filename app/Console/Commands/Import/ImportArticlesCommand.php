@@ -18,7 +18,10 @@ class ImportArticlesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import:articles {--chunk=100 : The number of records to process at a time} {--skip-files : Skip importing files}';
+    protected $signature = 'app:import:articles
+        {--chunk=100 : The number of records to process at a time}
+        {--skip-files : Skip importing files}
+        {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.
@@ -32,6 +35,10 @@ class ImportArticlesCommand extends Command
      */
     public function handle(): int
     {
+        if (! $this->confirmToProceed()) {
+            return static::FAILURE;
+        }
+
         $this->importArticleCategories();
         $this->importArticles();
 

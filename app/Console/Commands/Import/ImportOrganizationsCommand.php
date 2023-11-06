@@ -19,7 +19,10 @@ class ImportOrganizationsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import:organizations {--chunk=20 : The number of records to process at a time} {--skip-files : Skip importing files}';
+    protected $signature = 'app:import:organizations
+        {--chunk=20 : The number of records to process at a time}
+        {--skip-files : Skip importing files}
+        {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.
@@ -33,6 +36,10 @@ class ImportOrganizationsCommand extends Command
      */
     public function handle(): int
     {
+        if (! $this->confirmToProceed()) {
+            return static::FAILURE;
+        }
+
         $this->importOrganizations();
         $this->importActivityDomains();
 
@@ -64,7 +71,7 @@ class ImportOrganizationsCommand extends Command
                             'cif' => Sanitize::text($row->CIF),
                             'name' => Sanitize::text($row->Name),
                             'slug' => Sanitize::text($row->DynamicUrl),
-                            'description' => $row->Description,
+                            'description' => Sanitize::text($row->Description),
                             'address' => Sanitize::text($row->Address, 255),
                             'contact_phone' => Sanitize::text($row->PhoneNb),
                             'contact_email' => Sanitize::email($row->Email),
@@ -72,7 +79,7 @@ class ImportOrganizationsCommand extends Command
                             'website' => Sanitize::url($row->WebSite),
                             'facebook' => Sanitize::url($row->FacebookPageLink),
                             'accepts_volunteers' => Sanitize::truthy($row->HasVolunteering),
-                            'why_volunteer' => $row->WhyVolunteer,
+                            'why_volunteer' => Sanitize::text($row->WhyVolunteer),
                             'status' => match ($row->ONGStatusId) {
                                 1 => OrganizationStatus::pending,
                                 2 => OrganizationStatus::approved,

@@ -17,7 +17,9 @@ class ImportUsersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import:users {--chunk=300 : The number of records to process at a time}';
+    protected $signature = 'app:import:users
+        {--chunk=300 : The number of records to process at a time}
+        {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.
@@ -31,6 +33,10 @@ class ImportUsersCommand extends Command
      */
     public function handle(): int
     {
+        if (! $this->confirmToProceed()) {
+            return static::FAILURE;
+        }
+
         $query = $this->db
             ->table('user.Users')
             ->where('user.Users.IsActivated', 1)

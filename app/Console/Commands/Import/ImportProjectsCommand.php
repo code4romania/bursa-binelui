@@ -19,7 +19,10 @@ class ImportProjectsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import:projects {--chunk=100 : The number of records to process at a time} {--skip-files : Skip importing files}';
+    protected $signature = 'app:import:projects
+        {--chunk=100 : The number of records to process at a time}
+        {--skip-files : Skip importing files}
+        {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.
@@ -33,6 +36,10 @@ class ImportProjectsCommand extends Command
      */
     public function handle(): int
     {
+        if (! $this->confirmToProceed()) {
+            return static::FAILURE;
+        }
+
         $this->importProjectCategories();
         $this->importProjects();
 
@@ -100,7 +107,7 @@ class ImportProjectsCommand extends Command
                             'organization_id' => (int) $row->ONGId,
                             'name' => Sanitize::text($row->Name),
                             'slug' => Sanitize::text($row->DynamicUrl),
-                            'description' => $row->Description,
+                            'description' => Sanitize::text($row->Description),
                             'target_budget' => (int) $row->TargetAmmount,
                             'start' => $this->parseDate($row->StartDate),
                             'end' => $this->parseDate($row->EndDate),

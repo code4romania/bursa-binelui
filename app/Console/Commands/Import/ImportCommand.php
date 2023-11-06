@@ -14,7 +14,9 @@ class ImportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import {--skip-files : Skip importing files}';
+    protected $signature = 'app:import
+        {--skip-files : Skip importing files}
+        {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.
@@ -28,19 +30,31 @@ class ImportCommand extends Command
      */
     public function handle(): int
     {
-        $this->call(ImportPrepareCommand::class);
+        if (! $this->confirmToProceed()) {
+            return static::FAILURE;
+        }
+
+        $this->call(ImportPrepareCommand::class, [
+            '--force' => $this->option('force'),
+        ]);
 
         $this->call(ImportOrganizationsCommand::class, [
             '--skip-files' => $this->option('skip-files'),
-        ]);
-        $this->call(ImportProjectsCommand::class, [
-            '--skip-files' => $this->option('skip-files'),
+            '--force' => $this->option('force'),
         ]);
 
-        $this->call(ImportUsersCommand::class);
+        $this->call(ImportUsersCommand::class, [
+            '--force' => $this->option('force'),
+        ]);
+
+        $this->call(ImportProjectsCommand::class, [
+            '--skip-files' => $this->option('skip-files'),
+            '--force' => $this->option('force'),
+        ]);
 
         $this->call(ImportArticlesCommand::class, [
             '--skip-files' => $this->option('skip-files'),
+            '--force' => $this->option('force'),
         ]);
 
         return static::SUCCESS;

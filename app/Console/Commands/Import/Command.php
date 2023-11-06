@@ -6,6 +6,7 @@ namespace App\Console\Commands\Import;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command as BaseCommand;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -15,6 +16,8 @@ use Symfony\Component\Console\Helper\ProgressBar;
 
 abstract class Command extends BaseCommand
 {
+    use ConfirmableTrait;
+
     protected readonly Connection $db;
 
     protected ?ProgressBar $progressBar = null;

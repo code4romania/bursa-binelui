@@ -14,7 +14,7 @@ class ImportPrepareCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import:prepare';
+    protected $signature = 'app:import:prepare {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.
@@ -28,6 +28,10 @@ class ImportPrepareCommand extends Command
      */
     public function handle(): int
     {
+        if (! $this->confirmToProceed()) {
+            return static::FAILURE;
+        }
+
         $this->createProgressBar('Removing old data...', 2);
 
         $this->callSilent(FreshCommand::class);
