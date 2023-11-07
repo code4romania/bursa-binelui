@@ -118,9 +118,9 @@ class ImportProjectsCommand extends Command
                             'updated_at' => $created_at,
 
                             'status' => match ($row->ProjectStatusTypeId) {
-                                1 => ProjectStatus::approved,
+                                1 => ProjectStatus::pending,
                                 2 => ProjectStatus::approved,
-                                3 => ProjectStatus::approved,
+                                3 => ProjectStatus::approved,//set arhivat
                                 4 => ProjectStatus::approved,
                                 default => ProjectStatus::draft,
                             },
