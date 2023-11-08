@@ -233,35 +233,7 @@
                         />
                     </div>
 
-                    <Vue3PictureSwipe
-                        :items="project.swipe_gallery"
-                        :options="{ mainClass: 'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10' }"
-                        class="mt-10"
-                    ></Vue3PictureSwipe>
-                    <!--                            <div-->
-                    <!--                                v-for="(image, index) in project.gallery"-->
-                    <!--                                :class="{-->
-                    <!--                            'h-full overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-h-3 sm:row-span-2' : ((index+1)%2===0),-->
-                    <!--                            'overflow-hidden rounded-lg group aspect-h-1 aspect-w-2 sm:aspect-none sm:relative sm:h-full' : ((index)+1%2===1),-->
-                    <!--                            }"-->
-                    <!--                                :key="index"-->
-                    <!--                            >-->
-                    <!--                                <img-->
-                    <!--                                    :src="image.url"-->
-                    <!--                                    alt=""-->
-                    <!--                                    :class="{-->
-                    <!--                                    'object-cover object-center group-hover:opacity-75': (index+1)%2===0,-->
-                    <!--                                    'object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full': (index+1)%2===1-->
-                    <!--                                }"-->
-                    <!--                                />-->
-                    <!--                            </div>-->
-
-                    <!--                            <img v-for="(images,index) in project.gallery"-->
-                    <!--                                 :key="index"-->
-                    <!--                                 :src="images.url"-->
-                    <!--                                 alt=""-->
-                    <!--                                 class="object-cover object-center group-hover:opacity-75"-->
-                    <!--                            />-->
+                    <Gallery :images="project.swipe_gallery" class="mt-10" />
                 </div>
             </div>
         </div>
@@ -314,7 +286,7 @@
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
-    // import Vue3PictureSwipe from 'vue3-picture-swipe';
+    import Gallery from '@/Components/Gallery.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import { ExternalLinkIcon } from '@heroicons/vue/outline';

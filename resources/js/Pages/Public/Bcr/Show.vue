@@ -117,11 +117,7 @@
                         />
                     </div>
 
-                    <Vue3PictureSwipe
-                        :items="project.swipe_gallery"
-                        :options="{ mainClass: 'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10' }"
-                        class="mt-10"
-                    ></Vue3PictureSwipe>
+                    <Gallery :images="project.swipe_gallery" class="mt-10" />
                 </div>
             </div>
         </div>
@@ -145,7 +141,7 @@
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
-    // import Vue3PictureSwipe from 'vue3-picture-swipe';
+    import Gallery from '@/Components/Gallery.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import { ExternalLinkIcon } from '@heroicons/vue/outline';
