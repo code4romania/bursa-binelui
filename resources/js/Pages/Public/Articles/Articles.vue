@@ -1,5 +1,7 @@
 <template>
     <PageLayout>
+        <Head title="Articole" />
+
         <Carousel
             v-if="query?.data?.length"
             class="w-full"
@@ -130,7 +132,6 @@
 <script setup>
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Head from '@/Components/Head.vue';
-    import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Pagination from '@/Components/pagination/Pagination.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
@@ -147,7 +148,7 @@
             type: Object,
             required: true,
         },
-      topArticles: {
+        topArticles: {
             type: Object,
             required: true,
         },

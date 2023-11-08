@@ -1,7 +1,6 @@
 <template>
     <PageLayout>
-        <!-- Inertia page head -->
-        <Head title="Proiect" />
+        <Head :title="project.name" :description="project.description" :image="project.image" />
 
         <!-- Header -->
         <div class="flex flex-col-reverse w-full mx-auto mt-2 mb-8 lg:flex-row lg:max-w-7xl sm:mt-0 px-9">
@@ -303,7 +302,8 @@
     import { computed, onMounted, ref } from 'vue';
 
     /** Import from inertia. */
-    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+    import { Link, usePage, useForm } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

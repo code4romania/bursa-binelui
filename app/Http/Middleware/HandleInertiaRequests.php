@@ -56,7 +56,7 @@ class HandleInertiaRequests extends Middleware
         }
 
         return [
-            'ziggy' => new Ziggy(group: null, url: $request->url()),
+            'ziggy' => new Ziggy(group: null),
         ];
     }
 

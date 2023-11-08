@@ -242,7 +242,8 @@
     import { computed, onMounted, ref } from 'vue';
 
     /** Import from inertia. */
-    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+    import { Link, usePage, useForm } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

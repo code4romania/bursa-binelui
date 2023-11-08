@@ -1,6 +1,6 @@
 <template>
     <DashboardLayout gridClass="gap-10">
-        <Title :title="$t('ong_description')" />
+        <Head :title="$t('administrate_link')" />
 
         <FieldSection>
             <!-- Edit organization name -->
@@ -417,11 +417,9 @@
 
 <script setup>
     import { ref, computed } from 'vue';
-    /** Import from inertia. */
     import { router, useForm } from '@inertiajs/vue3';
     import route from '@/Helpers/useRoute';
-
-    /** Import components. */
+    import Head from '@/Components/Head.vue';
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
     import Alert from '@/Components/Alert.vue';

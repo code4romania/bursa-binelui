@@ -1,6 +1,6 @@
 <template>
     <PageLayout>
-        <Head :title="resource.title" :description="resource.description" />
+        <Head :title="resource.title" :description="resource.description" :image="resource.cover" />
 
         <figure class="container">
             <div class="aspect-w-2 aspect-h-1">
@@ -68,17 +68,13 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head } from '@inertiajs/vue3';
-
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import Gallery from '@/Components/gallery/Gallery.vue';
-    import SharePage from '@/Components/SharePage.vue';
-
+    import Head from '@/Components/Head.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import SharePage from '@/Components/SharePage.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
     // import Vue3PictureSwipe from 'vue3-picture-swipe';
 
     defineProps({

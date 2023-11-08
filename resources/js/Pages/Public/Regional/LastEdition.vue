@@ -201,7 +201,8 @@
     import route from '@/Helpers/useRoute';
 
     /** Import from inertia. */
-    import { Head, Link, useForm, router } from '@inertiajs/vue3';
+    import { Link, useForm, router } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

@@ -1,6 +1,6 @@
 <template>
     <PageLayout>
-        <Head title="Acasa" />
+        <Head />
 
         <!-- Header -->
         <header class="container grid items-center lg:gap-10 xl:gap-20 lg:grid-cols-2">
@@ -238,6 +238,7 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import Head from '@/Components/Head.vue';
     import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';

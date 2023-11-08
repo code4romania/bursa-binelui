@@ -29,10 +29,8 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, Link } from '@inertiajs/vue3';
-
-    /** Import components. */
+    import { Link } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Faqs from '@/Components/faqs/Faqs.vue';
     import Icon from '@/Components/Icon.vue';

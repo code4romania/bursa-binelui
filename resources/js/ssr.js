@@ -1,6 +1,6 @@
 import { createSSRApp, h } from 'vue';
 import { renderToString } from '@vue/server-renderer';
-import { createInertiaApp, Head, Link } from '@inertiajs/vue3';
+import { createInertiaApp, Link } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { i18nVue } from 'laravel-vue-i18n';
@@ -29,7 +29,6 @@ createServer((page) =>
                     }
                 })
                 .use(plugin)
-                .component('Head', Head)
                 .component('Link', Link)
         },
     })

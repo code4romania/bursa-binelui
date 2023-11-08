@@ -1,6 +1,5 @@
 <template>
     <PageLayout>
-        <!-- Inertia page head -->
         <Head :title="$t('championship_title')" />
 
         <!-- Header -->
@@ -240,7 +239,8 @@
     import route from '@/Helpers/useRoute';
 
     /** Import from inertia. */
-    import { Head, Link, useForm, router } from '@inertiajs/vue3';
+    import { Link, useForm, router } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';

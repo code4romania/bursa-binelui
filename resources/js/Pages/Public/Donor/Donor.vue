@@ -3,32 +3,21 @@
         <!-- Inertia page head -->
         <Head :title="$t('thank_you')" />
 
-        <div class="p-9 mx-auto max-w-7xl mb-10">
+        <div class="mx-auto mb-10 p-9 max-w-7xl">
             <form :action="props.data.payment_url" method="post" id="paymentForm">
                 <div v-for="(value, key) in props.data">
-                    <input type="hidden" :name="key" :value="value">
+                    <input type="hidden" :name="key" :value="value" />
                 </div>
             </form>
-
         </div>
     </PageLayout>
 </template>
 
 <script setup>
+    import Head from '@/Components/Head.vue';
+    import PageLayout from '@/Layouts/PageLayout.vue';
 
-    /** Import from inertia. */
-    import {Head, Link, useForm} from '@inertiajs/vue3';
-    const  props = defineProps({
+    const props = defineProps({
         data: Object,
     });
-    onMounted(() => {
-        // console.log(props.data);
-        document.getElementById('paymentForm').submit();
-
-    });
-
-
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import {onMounted} from "vue";
 </script>

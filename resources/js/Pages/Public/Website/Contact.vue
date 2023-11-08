@@ -70,11 +70,9 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, useForm } from '@inertiajs/vue3';
+    import { useForm } from '@inertiajs/vue3';
     import route from '@/Helpers/useRoute';
-
-    /** Import components. */
+    import Head from '@/Components/Head.vue';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import Input from '@/Components/form/Input.vue';
