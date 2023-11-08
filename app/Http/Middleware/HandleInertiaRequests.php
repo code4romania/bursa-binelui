@@ -56,7 +56,7 @@ class HandleInertiaRequests extends Middleware
         }
 
         return [
-            'ziggy' => new Ziggy(group: null),
+            'ziggy' => new Ziggy,
         ];
     }
 
