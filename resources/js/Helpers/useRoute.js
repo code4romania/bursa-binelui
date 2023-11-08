@@ -17,8 +17,6 @@ export const ZiggyVue = {
             },
         });
 
-        if (parseInt(app.version) > 2) {
-            app.provide('route', route);
-        }
+        app.provide('route', route);
     },
 }

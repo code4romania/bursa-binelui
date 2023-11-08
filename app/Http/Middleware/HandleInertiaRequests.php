@@ -28,12 +28,17 @@ class HandleInertiaRequests extends Middleware
             parent::share($request),
             $this->shareOnce($request),
             [
+                'appName' => config('app.name'),
                 'flash' => fn () => $this->flash($request),
                 'auth' => fn () => [
                     'user' => $request->user(),
                     'organization' => [
                         'status' => $request->user()?->organization?->status,
                     ],
+                ],
+                'locales' => [
+                    'available' => locales(),
+                    'current' => app()->getLocale(),
                 ],
             ]
         );
@@ -51,10 +56,6 @@ class HandleInertiaRequests extends Middleware
         }
 
         return [
-            'locales' => [
-                'available' => locales(),
-                'current' => app()->getLocale(),
-            ],
             'ziggy' => new Ziggy(group: null, url: $request->url()),
         ];
     }
