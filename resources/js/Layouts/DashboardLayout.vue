@@ -69,6 +69,7 @@
     import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
     import Notification from '@/Components/Notification.vue';
+    import route from '@/Helpers/useRoute';
 
     import {
         AnnotationIcon,
@@ -83,8 +84,8 @@
         UserGroupIcon,
         UserRemoveIcon,
     } from '@heroicons/vue/outline';
-    import OrganizationStatus from "@/Components/OrganizationStatus.vue";
-    import {trans} from "laravel-vue-i18n";
+    import OrganizationStatus from '@/Components/OrganizationStatus.vue';
+    import { trans } from 'laravel-vue-i18n';
 
     const props = defineProps({
         gridClass: {

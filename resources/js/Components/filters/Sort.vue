@@ -48,7 +48,7 @@
     import { computed } from 'vue';
     import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
     import { MenuAlt1Icon, SortAscendingIcon, SortDescendingIcon } from '@heroicons/vue/solid';
-    import route from 'ziggy-js';
+    import route from '@/Helpers/useRoute';
     import useSort from '@/Helpers/useSort.js';
 
     const props = defineProps({

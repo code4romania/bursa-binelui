@@ -31,6 +31,7 @@
 
 <script setup>
     import { Head, useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
     import AuthLayout from '@/Layouts/AuthLayout.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import Input from '@/Components/form/Input.vue';

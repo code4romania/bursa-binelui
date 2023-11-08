@@ -1,7 +1,6 @@
 <template>
     <PageLayout>
-        <!-- Inertia page head -->
-        <Head title="Organizatie" />
+        <Head :title="organization.name" :description="organization.description" :image="organization.image" />
 
         <div class="mt-4 mb-20 bg-white">
             <!-- Header -->
@@ -80,8 +79,8 @@
                                 <div>
                                     <h3 class="text-base font-semibold text-gray-600">{{ $t('ong_address') }}</h3>
                                     <p class="mt-2 text-base font-normal text-gray-500">
-                                        {{ organization.street_address }}<br/>  {{ organization.location }} <br />
-
+                                        {{ organization.street_address }}<br />
+                                        {{ organization.location }} <br />
                                     </p>
                                 </div>
                             </div>
@@ -158,8 +157,7 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, Link } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

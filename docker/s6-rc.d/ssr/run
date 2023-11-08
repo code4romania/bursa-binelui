@@ -1,0 +1,5 @@
+#!/command/with-contenv sh
+
+cd /var/www
+
+php artisan inertia:start-ssr

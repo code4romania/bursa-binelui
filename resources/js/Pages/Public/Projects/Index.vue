@@ -114,6 +114,7 @@
 <script setup>
     import { ref } from 'vue';
     import { ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
+    import route from '@/Helpers/useRoute';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Sort from '@/Components/filters/Sort.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';

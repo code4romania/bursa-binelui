@@ -3,7 +3,6 @@
         <Title :title="$t('donations')" :icon="CurrencyEuroIcon" />
 
         <!-- Filters -->
-
         <div class="grid grid-cols-12 gap-6">
             <div class="grid grid-cols-12 col-span-12 gap-6">
                 <SearchFilter
@@ -81,6 +80,7 @@
 
 <script setup>
     import { ref } from 'vue';
+    import route from '@/Helpers/useRoute';
     import { CurrencyEuroIcon } from '@heroicons/vue/outline';
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';

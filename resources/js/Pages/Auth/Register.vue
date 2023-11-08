@@ -18,6 +18,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import { useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
     import AuthLayout from '@/Layouts/AuthLayout.vue';
     import Auth from '@/Components/templates/Auth.vue';
     import Step1 from '@/Pages/Auth/Registration/Step1.vue';

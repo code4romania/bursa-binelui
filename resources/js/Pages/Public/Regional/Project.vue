@@ -242,7 +242,8 @@
     import { computed, onMounted, ref } from 'vue';
 
     /** Import from inertia. */
-    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+    import { Link, usePage, useForm } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -251,7 +252,7 @@
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
-    import Gallery from '@/Components/gallery/Gallery.vue';
+    import Gallery from '@/Components/Gallery.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
