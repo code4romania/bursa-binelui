@@ -70,6 +70,8 @@ class Organization extends Model implements HasMedia
         'deleted_at' => 'datetime',
         'status_updated_at' => 'datetime',
         'accepts_volunteers' => 'boolean',
+        'eu_platesc_merchant_id' => 'encrypted',
+        'eu_platesc_private_key' => 'encrypted',
     ];
 
     public array $requiresApproval = [

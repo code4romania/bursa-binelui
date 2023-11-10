@@ -16,7 +16,6 @@
                     :error="form.errors.name"
                 />
 
-
                 <!-- Project amount target -->
                 <Input
                     class="w-full xl:w-1/2"
@@ -60,9 +59,13 @@
                     />
                 </div>
                 <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.is_national"  />
-                    <span class="ml-2 text-sm text-gray-700" v-html="$t('is_national') "/>
-                    <p v-show="form.errors.is_national" class="mt-2 text-sm text-red-600" v-html="form.errors.is_national"/>
+                    <Checkbox name="remember" v-model:checked="form.is_national" />
+                    <span class="ml-2 text-sm text-gray-700" v-html="$t('is_national')" />
+                    <p
+                        v-show="form.errors.is_national"
+                        class="mt-2 text-sm text-red-600"
+                        v-html="form.errors.is_national"
+                    />
                 </label>
 
                 <!-- County -->
@@ -82,7 +85,7 @@
                     :label="$t('project_description_label')"
                     id="about-project"
                     color="gray-700"
-                    numberOfCharacters=800
+                    numberOfCharacters="800"
                     v-model="form.description"
                     :error="form.errors.description"
                     :more-info="$t('project_description_extra')"
@@ -122,23 +125,33 @@
 
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.accepting_volunteers" />
-                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_volunteers_label')"/>
-                    <p v-show="form.errors.accepting_volunteers" class="mt-2 text-sm text-red-600" v-html="form.errors.accepting_volunteers"/>
+                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_volunteers_label')" />
+                    <p
+                        v-show="form.errors.accepting_volunteers"
+                        class="mt-2 text-sm text-red-600"
+                        v-html="form.errors.accepting_volunteers"
+                    />
                 </label>
 
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.accepting_comments" />
-                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_comments_label')"/>
-                    <p v-show="form.errors.accepting_comments" class="mt-2 text-sm text-red-600" v-html="form.errors.accepting_comments"/>
+                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_comments_label')" />
+                    <p
+                        v-show="form.errors.accepting_comments"
+                        class="mt-2 text-sm text-red-600"
+                        v-html="form.errors.accepting_comments"
+                    />
                 </label>
 
                 <label class="flex items-center">
-                    <FileInput  v-model="form.preview"  :label="$t('project.labels.preview_image')" accept=""
-                                @upload="(file)=>form.preview=file"
-                                previewable
+                    <FileInput
+                        v-model="form.preview"
+                        :label="$t('project.labels.preview_image')"
+                        accept=""
+                        @upload="(file) => (form.preview = file)"
+                        previewable
                     />
-                    <p v-show="form.errors.preview" class="mt-2 text-sm text-red-600" v-html="form.errors.preview"/>
-
+                    <p v-show="form.errors.preview" class="mt-2 text-sm text-red-600" v-html="form.errors.preview" />
                 </label>
 
                 <FileGroup v-model="form.gallery" :label="$t('photo_gallery')" />
@@ -147,7 +160,7 @@
                     :elements="form.videos"
                     :label="$t('project.labels.videos')"
                     :description="$t('project.labels.videos_extra')"
-                    :structure="[{label:$t('video_link_label'),key:'url',error:arrayError('videos.0.url')}]"
+                    :structure="[{ label: $t('video_link_label'), key: 'url', error: arrayError('videos.0.url') }]"
                     :error="arrayError('videos.0.url')"
                     name="videos"
                 />
@@ -158,9 +171,17 @@
                     :label="$t('external_links_title')"
                     :description="$t('external_links_text')"
                     :structure="[
-                        {label:$t('project.labels.external_links_title'),key:'title',error:arrayError('external_links.0.title')},
-                        {label:$t('project.labels.external_links_url'),key:'url',error:arrayError('external_links.0.url')}
-                        ]"
+                        {
+                            label: $t('project.labels.external_links_title'),
+                            key: 'title',
+                            error: arrayError('external_links.0.title'),
+                        },
+                        {
+                            label: $t('project.labels.external_links_url'),
+                            key: 'url',
+                            error: arrayError('external_links.0.url'),
+                        },
+                    ]"
                     name="external_links"
                 />
                 <div class="flex items-center justify-end gap-6">
@@ -180,60 +201,60 @@
 </template>
 
 <script setup>
-/** Import from inertia. */
-import {useForm} from '@inertiajs/vue3';
+    /** Import from inertia. */
+    import { useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
 
-/** Import components. */
-import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-import Title from '@/Components/Title.vue';
-import Input from '@/Components/form/Input.vue';
-import Select from '@/Components/form/Select.vue';
-import Textarea from '@/Components/form/Textarea.vue';
-import Checkbox from '@/Components/form/Checkbox.vue';
-import FileGroup from '@/Components/form/FileGroup.vue';
-import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-import DangerButton from '@/Components/buttons/DangerButton.vue';
-import {ref} from 'vue';
-import FileInput from "@/Components/form/FileInput.vue";
-import RepeaterComponent from "@/Components/RepeaterComponent.vue";
+    /** Import components. */
+    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+    import Title from '@/Components/Title.vue';
+    import Input from '@/Components/form/Input.vue';
+    import Select from '@/Components/form/Select.vue';
+    import Textarea from '@/Components/form/Textarea.vue';
+    import Checkbox from '@/Components/form/Checkbox.vue';
+    import FileGroup from '@/Components/form/FileGroup.vue';
+    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import DangerButton from '@/Components/buttons/DangerButton.vue';
+    import { ref } from 'vue';
+    import FileInput from '@/Components/form/FileInput.vue';
+    import RepeaterComponent from '@/Components/RepeaterComponent.vue';
 
-/** Initialize inertia from Object. */
-const form = useForm({
-    name: '',
-    target_budget: '',
-    categories: [],
-    start: '',
-    end: '',
-    counties: [],
-    description: '',
-    scope: '',
-    beneficiaries: '',
-    reason_to_donate: '',
-    is_national: false,
-    accepting_comments: false,
-    accepting_volunteers: false,
-    preview: null,
-    gallery: [],
-    videos: [],
-    external_links: [],
-});
-const props = defineProps(['projectCategories', 'counties']);
-const  external_links = ref(form.external_links)
-const  videos = ref(form.videos)
-
-/** Create project. */
-const createProject = () => {
-
-    form.post(route('dashboard.projects.store'), {
-        preserveScroll: true,
-        onError: () => {},
+    /** Initialize inertia from Object. */
+    const form = useForm({
+        name: '',
+        target_budget: '',
+        categories: [],
+        start: '',
+        end: '',
+        counties: [],
+        description: '',
+        scope: '',
+        beneficiaries: '',
+        reason_to_donate: '',
+        is_national: false,
+        accepting_comments: false,
+        accepting_volunteers: false,
+        preview: null,
+        gallery: [],
+        videos: [],
+        external_links: [],
     });
-};
-function arrayError(key) {
-    if (form.errors[key]) {
-        return form.errors[key];
+    const props = defineProps(['projectCategories', 'counties']);
+    const external_links = ref(form.external_links);
+    const videos = ref(form.videos);
+
+    /** Create project. */
+    const createProject = () => {
+        form.post(route('dashboard.projects.store'), {
+            preserveScroll: true,
+            onError: () => {},
+        });
+    };
+    function arrayError(key) {
+        if (form.errors[key]) {
+            return form.errors[key];
+        }
+        return null;
     }
-    return null;
-}
 </script>

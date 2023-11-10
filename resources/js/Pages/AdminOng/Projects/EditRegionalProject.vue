@@ -451,6 +451,7 @@
 <script setup>
     /** Import from inertia. */
     import { Head, Link, useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
 
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';

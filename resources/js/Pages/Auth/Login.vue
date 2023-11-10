@@ -57,13 +57,13 @@
                     :label="$t('log_in')"
                 />
 
-<!--                <SecondaryButton-->
-<!--                    class="col-span-2 md:col-span-1 w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"-->
-<!--                    @click="googleLogin"-->
-<!--                >-->
-<!--                    <SvgLoader name="google" />-->
-<!--                    {{ $t('google_login') }}-->
-<!--                </SecondaryButton>-->
+                <!--                <SecondaryButton-->
+                <!--                    class="col-span-2 md:col-span-1 w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"-->
+                <!--                    @click="googleLogin"-->
+                <!--                >-->
+                <!--                    <SvgLoader name="google" />-->
+                <!--                    {{ $t('google_login') }}-->
+                <!--                </SecondaryButton>-->
             </div>
         </form>
     </AuthLayout>
@@ -71,6 +71,7 @@
 
 <script setup>
     import { useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute';
     import AuthLayout from '@/Layouts/AuthLayout.vue';
     import Input from '@/Components/form/Input.vue';
     import Checkbox from '@/Components/form/Checkbox.vue';

@@ -29,8 +29,8 @@ return new class extends Migration
             $table->boolean('accepts_volunteers')->default(true);
             $table->text('why_volunteer')->nullable();
             $table->string('status')->default(OrganizationStatus::pending->value);
-            $table->string('eu_platesc_merchant_id')->nullable();
-            $table->string('eu_platesc_private_key')->nullable();
+            $table->text('eu_platesc_merchant_id')->nullable();
+            $table->text('eu_platesc_private_key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

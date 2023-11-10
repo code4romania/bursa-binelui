@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import route from 'ziggy-js';
+import route from '@/Helpers/useRoute';
 
 export default function (sort) {
     const isSortingBy = (column, direction = null) => {

@@ -1,6 +1,6 @@
 <template>
     <PageLayout>
-        <Head title="Acasa" />
+        <Head />
 
         <!-- Header -->
         <header class="container grid items-center lg:gap-10 xl:gap-20 lg:grid-cols-2">
@@ -159,7 +159,12 @@
                 </div>
 
                 <ul role="list" class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-                    <ArticleCard v-for="article,index in articles.data" :key="index" :article="article" class="relative" />
+                    <ArticleCard
+                        v-for="(article, index) in articles.data"
+                        :key="index"
+                        :article="article"
+                        class="relative"
+                    />
                 </ul>
             </div>
         </div>
@@ -225,6 +230,7 @@
 <script setup>
     /** Import from vue */
     import { ref } from 'vue';
+    import route from '@/Helpers/useRoute';
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';
@@ -232,6 +238,7 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import Head from '@/Components/Head.vue';
     import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';

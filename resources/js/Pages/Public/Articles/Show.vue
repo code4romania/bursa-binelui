@@ -1,6 +1,6 @@
 <template>
     <PageLayout>
-        <Head :title="resource.title" :description="resource.description" />
+        <Head :title="resource.title" :description="resource.description" :image="resource.cover" />
 
         <figure class="container">
             <div class="aspect-w-2 aspect-h-1">
@@ -29,9 +29,9 @@
 
         <div class="w-full bg-gray-100">
             <div class="mx-auto max-w-7xl">
-              <Vue3PictureSwipe :items="resource.swipe_gallery" :options="{mainClass:'grid sm:grid-cols-1 gap-2 lg:grid-cols-4 mt-10'}" class="mt-10"></Vue3PictureSwipe>
+                <Gallery :images="resource.swipe_gallery" class="mt-10" />
 
-                <div class="flex items-center justify-between pt-6 pb-20 ">
+                <div class="flex items-center justify-between pt-6 pb-20">
                     <div class="flex items-center justify-start w-full text-gray-500 f">
                         <p>{{ resource.author }}</p>
                     </div>
@@ -64,18 +64,13 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head } from '@inertiajs/vue3';
-
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
-    import Gallery from '@/Components/gallery/Gallery.vue';
-    import SharePage from '@/Components/SharePage.vue';
-
+    import Head from '@/Components/Head.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import Vue3PictureSwipe from "vue3-picture-swipe";
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import SharePage from '@/Components/SharePage.vue';
+    import SvgLoader from '@/Components/SvgLoader.vue';
+    import Gallery from '@/Components/Gallery.vue';
 
     defineProps({
         resource: {

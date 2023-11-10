@@ -89,7 +89,6 @@
 <script setup>
     import { computed, ref } from 'vue';
     import { useForm } from '@inertiajs/vue3';
-    import { wTrans, trans } from 'laravel-vue-i18n';
     import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
     import { ExclamationIcon } from '@heroicons/vue/outline';
 

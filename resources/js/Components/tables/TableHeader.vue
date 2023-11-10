@@ -38,7 +38,7 @@
 <script setup>
     import { computed } from 'vue';
     import { usePage } from '@inertiajs/vue3';
-    import route from 'ziggy-js';
+    import route from '@/Helpers/useRoute';
     import { SortAscendingIcon, SortDescendingIcon } from '@heroicons/vue/solid';
 
     const props = defineProps({

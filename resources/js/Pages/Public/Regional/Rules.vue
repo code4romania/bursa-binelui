@@ -11,13 +11,10 @@
 </template>
 
 <script setup>
-/** Import from inertia. */
-import { Head } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
+    import PageLayout from '@/Layouts/PageLayout.vue';
 
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-
-const props = defineProps({
-    content: Object
-})
+    const props = defineProps({
+        content: Object,
+    });
 </script>

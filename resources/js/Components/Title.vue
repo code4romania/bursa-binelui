@@ -12,6 +12,7 @@
 
 <script setup>
     import { ViewListIcon } from '@heroicons/vue/solid';
+    import Head from '@/Components/Head.vue';
 
     const props = defineProps({
         title: {

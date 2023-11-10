@@ -1,7 +1,6 @@
 <template>
     <PageLayout>
-        <!-- Inertia page head -->
-        <Head title="Organizatie" />
+        <Head :title="organization.name" :description="organization.description" :image="organization.image" />
 
         <div class="mt-4 mb-20 bg-white">
             <!-- Header -->
@@ -158,8 +157,7 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head, Link } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

@@ -14,7 +14,7 @@
 
                 <h1 class="text-2xl font-bold leading-none text-gray-900 md:text-3xl" v-text="title" />
 
-                <Head :title="title" />
+                <Head v-if="title" :title="title" />
             </header>
 
             <slot />
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+    import Head from '@/Components/Head.vue';
     import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
     import Notification from '@/Components/Notification.vue';

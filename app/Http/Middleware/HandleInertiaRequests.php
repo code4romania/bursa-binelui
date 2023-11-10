@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -23,17 +24,40 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
-            'flash' => fn () => $this->flash($request),
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'organization_status' => fn () => $request->user()?->organization?->status,
-            'locales' => fn () => [
-                'available' => locales(),
-                'current' => app()->getLocale(),
-            ],
-        ]);
+        return array_merge(
+            parent::share($request),
+            $this->shareOnce($request),
+            [
+                'appName' => config('app.name'),
+                'flash' => fn () => $this->flash($request),
+                'auth' => fn () => [
+                    'user' => $request->user(),
+                    'organization' => [
+                        'status' => $request->user()?->organization?->status,
+                    ],
+                ],
+                'locales' => [
+                    'available' => locales(),
+                    'current' => app()->getLocale(),
+                ],
+            ]
+        );
+    }
+
+    /**
+     * Define the props that are shared on first load only.
+     *
+     * @return array<string, mixed>
+     */
+    public function shareOnce(Request $request): array
+    {
+        if ($request->inertia()) {
+            return [];
+        }
+
+        return [
+            'ziggy' => new Ziggy,
+        ];
     }
 
     protected function flash(Request $request): ?array

@@ -157,9 +157,6 @@
 <script setup>
     import { computed, onMounted } from 'vue';
 
-    /** Import from inertia. */
-    import { Link, useForm } from '@inertiajs/vue3';
-
     /** Import components. */
     import Icon from '@/Components/Icon.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
