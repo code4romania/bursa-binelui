@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\HasCounties;
+use App\Concerns\HasSlug;
 use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
 use App\Enums\OrganizationStatus;
@@ -32,6 +33,7 @@ class Organization extends Model implements HasMedia
     use HasCounties;
     use HasVolunteers;
     use HasOrganizationStatus;
+    use HasSlug;
     use LogsActivityForApproval;
 
     /**
@@ -43,11 +45,12 @@ class Organization extends Model implements HasMedia
         'name',
         'cif',
         'description',
-        'street_address',
+        'address',
         'contact_person',
         'contact_phone',
         'contact_email',
         'website',
+        'facebook',
         'accepts_volunteers',
         'why_volunteer',
         'status',
@@ -74,7 +77,7 @@ class Organization extends Model implements HasMedia
     public array $requiresApproval = [
         'name',
         'cif',
-        'street_address',
+        'address',
         'statute',
     ];
 
@@ -96,8 +99,7 @@ class Organization extends Model implements HasMedia
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('preview')
-                    ->fit(Manipulations::FIT_CONTAIN, 300, 300)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300);
             });
 
         $this->addMediaCollection('statute')

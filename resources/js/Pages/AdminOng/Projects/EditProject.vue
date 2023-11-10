@@ -32,7 +32,7 @@
             </Field>
             <Field :label="$t('project_slug_label')" :errors="formChangeStatus.errors.slug">
                 <template #value>
-                    <a :href="route('project', project.slug)" target="_blank" v-text="project.slug" />
+                    <a :href="route('projects.show', project.slug)" target="_blank" v-text="project.slug" />
                 </template>
 
                 <template #action> </template>

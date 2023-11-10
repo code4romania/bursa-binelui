@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Organization>
@@ -29,11 +30,14 @@ class OrganizationFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->company();
+
         return [
-            'name' => fake()->company(),
+            'name' => $name,
+            'slug' => Str::slug($name),
             'cif' => fake()->unixTime(),
             'description' => fake()->text(500),
-            'street_address' => fake()->streetName(),
+            'address' => fake()->address(),
             'contact_person' => fake()->name(),
             'contact_phone' => fake()->phoneNumber(),
             'contact_email' => fake()->companyEmail(),

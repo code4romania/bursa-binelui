@@ -80,7 +80,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function donation(Project $project, Request $request)
+    public function donate(Project $project, Request $request)
     {
         $request->validate([
             'amount' => 'required|numeric|min:1',

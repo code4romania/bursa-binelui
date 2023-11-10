@@ -29,7 +29,7 @@
 
             <div class="flex flex-col justify-end gap-6 md:col-span-6 lg:col-span-4 md:flex-row">
                 <Link
-                    :href="route('projects')"
+                    :href="route('projects.index')"
                     class="flex items-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
                     :class="{
                         'text-white bg-primary-500 hover:bg-primary-400': view === 'list',
@@ -150,7 +150,7 @@
         search: props.collection.filter?.search || null,
     });
 
-    const url = route(props.view === 'map' ? 'projects.map' : 'projects');
+    const url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
 
     const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
 </script>

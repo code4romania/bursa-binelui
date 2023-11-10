@@ -222,7 +222,7 @@
             guestForm.terms = true;
             guestForm.amount = authForm.amount;
         }
-        guestForm.post(route('project.donation', props.data.slug), {
+        guestForm.post(route('projects.donate', props.data.slug), {
             onSuccess: () => (open.value = false),
             onError: (errors) => {
                 console.log('error', errors);

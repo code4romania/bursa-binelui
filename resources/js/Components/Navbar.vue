@@ -233,12 +233,12 @@
         {
             name: 'Proiecte',
             description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
-            href: route('projects'),
+            href: route('projects.index'),
         },
         {
             name: 'Organizatii',
             description: 'Descoperă toate organizațiile înscrise pe Bursa Binelui și alege cauza pe care vrei să o susții.',
-            href: route('organizations'),
+            href: route('organizations.index'),
         },
         {
             name: 'BCR pentru comunitate',

@@ -93,7 +93,7 @@
         <HowCanYouHelp
             v-if="project"
             class="mb-20"
-            :pageRoute="route('project', project.slug)"
+            :pageRoute="route('projects.show', project.slug)"
             @donate="triggerDonate"
             @volunteer="triggerVolunteer"
             @copyCode="copyEmbed"

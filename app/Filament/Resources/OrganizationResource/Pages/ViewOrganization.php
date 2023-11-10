@@ -30,11 +30,11 @@ class ViewOrganization extends ViewRecord
 
             ReactivateOrganizationAction::make()
                 ->record($this->getRecord())
-                ->visible($this->getRecord()->isDisabled()),
+                ->visible($this->getRecord()->isRejected()),
 
             DeactivateOrganizationAction::make()
                 ->record($this->getRecord())
-                ->visible($this->getRecord()->isActive()),
+                ->visible($this->getRecord()->isApproved()),
 
         ];
     }

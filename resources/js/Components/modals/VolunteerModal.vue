@@ -179,7 +179,7 @@
                 <h3 class="text-xl font-semibold text-center text-gray-800">{{ $t('donation_period_ended') }}</h3>
                 <h3 class="text-xl font-semibold text-center text-primary-500">{{ $t('donate_to_other_projects') }}</h3>
                 <Link
-                    :href="route('projects')"
+                    :href="route('projects.index')"
                     class="rounded-md block mt-6 text-center bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm"
                 >
                     {{ $t('see_other_projects') }}

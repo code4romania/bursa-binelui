@@ -21,8 +21,8 @@ class ProjectCardResource extends Resource
             'image' => $this->getFirstMediaUrl('preview'),
             'organization' => [
                 'name' => $this->organization->name,
+                'slug' => $this->organization->slug,
                 'id' => $this->organization->id,
-
             ],
             'categories' => $this->categories->pluck('name')->join(', '),
             'donations' => [

@@ -45,7 +45,7 @@ class EuPlatescService
         $data['lname'] = $donation->last_name;
         $data['ExtraData[silenturl]'] = route('donation.callback', $donation->uuid);
         $data['ExtraData[successurl]'] = route('donation.thanks', $donation->uuid);
-        $data['ExtraData[backtosite]'] = route('project', $donation->project->slug);
+        $data['ExtraData[backtosite]'] = route('projects.show', $donation->project->slug);
         $data['payment_url'] = $this->url;
 
         return $data;

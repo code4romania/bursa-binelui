@@ -34,7 +34,7 @@
                             triggerModalClasses="rounded-md bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 px-3.5 py-2.5"
                             :triggerModalText="$t('become_volunter')"
                             :data="organization"
-                            :postUrl="route('organization.volunteer', organization.id)"
+                            :postUrl="route('organizations.volunteer', organization)"
                         />
                     </div>
                 </div>
@@ -54,7 +54,7 @@
             <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
                 <div class="w-full lg:w-6/12">
                     <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('share_page') }}</h2>
-                    <SharePage class="mb-20" :pageRoute="route('organization', organization.id)" />
+                    <SharePage class="mb-20" :pageRoute="route('organizations.show', organization)" />
 
                     <div v-if="organization.activity_domains">
                         <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('activity_domains') }}</h2>
@@ -79,8 +79,8 @@
                                 <div>
                                     <h3 class="text-base font-semibold text-gray-600">{{ $t('ong_address') }}</h3>
                                     <p class="mt-2 text-base font-normal text-gray-500">
-                                        {{ organization.street_address }}<br />
-                                        {{ organization.location }} <br />
+                                        {{ organization.address }}<br />
+                                        {{ organization.location }}
                                     </p>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
             <!-- How can you help -->
             <HowCanYouHelp
                 class="mb-20"
-                :pageRoute="route('organization', organization.id)"
+                :pageRoute="route('organizations.show', organization)"
                 @volunteer="triggerVolunteer"
                 :acceptsVolunteers="organization.accepting_volunteers"
             />

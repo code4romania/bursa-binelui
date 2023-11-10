@@ -38,6 +38,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/filament.php'));
 
             Route::middleware('web')
+                ->group(base_path('routes/redirects.php'));
+
+            Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
     }

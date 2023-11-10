@@ -12,6 +12,8 @@ return [
         'pending' => 'În așteptare',
         'active' => 'Activă',
         'disabled' => 'Inactivă',
+        'approved' => 'Aprobată',
+        'rejected' => 'Respinsă',
     ],
     'actions' => [
         'view' => 'Vizualizează',
@@ -58,7 +60,7 @@ return [
         'email_contact_organization' => 'Email contact organizație (public)',
         'phone_contact_organization' => 'Telefon contact organizație (public)',
         'contact_person' => 'Persoană de contact',
-        'street_address' => 'Adresă sediu',
+        'address' => 'Adresă sediu',
         'eu_platesc_data' => 'Date EuPlătesc',
         'eu_platesc_merchant_id' => 'Merchant ID',
         'eu_platesc_private_key' => 'Key',

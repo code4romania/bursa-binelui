@@ -82,8 +82,8 @@ class ExportAction extends BaseAction
                     Column::make('website')
                         ->heading(__('organization.labels.website')),
 
-                    Column::make('street_address')
-                        ->heading(__('organization.labels.street_address')),
+                    Column::make('address')
+                        ->heading(__('organization.labels.address')),
 
                     Column::make('counties')
                         ->heading(__('organization.labels.counties'))

@@ -115,5 +115,5 @@
 
     const sort = ref(null);
 
-    const { applyFilters, clearFilters } = useFilters(filter, sort, route('organizations'));
+    const { applyFilters, clearFilters } = useFilters(filter, sort, route('organizations.index'));
 </script>

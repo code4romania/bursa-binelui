@@ -41,8 +41,7 @@ class Badge extends Model implements HasMedia
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
                 $this->addMediaConversion('thumb')
-                    ->fit(Manipulations::FIT_CROP, 300, 300)
-                    ->nonQueued();
+                    ->fit(Manipulations::FIT_CROP, 300, 300);
             });
     }
 
