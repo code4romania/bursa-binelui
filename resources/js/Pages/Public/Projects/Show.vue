@@ -279,13 +279,10 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Icon from '@/Components/Icon.vue';
     import SvgLoader from '@/Components/SvgLoader.vue';
-    import Modal from '@/Components/modals/Modal.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
-    import Vue3PictureSwipe from 'vue3-picture-swipe';
-
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import { ExternalLinkIcon } from '@heroicons/vue/outline';
     import Gallery from "@/Components/Gallery.vue";
