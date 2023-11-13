@@ -16,6 +16,7 @@
         <div class="hidden md:-mt-px md:flex">
             <template v-for="(link, index) in paginationLinks" :key="index">
                 <Link
+                    v-if="link.url"
                     :href="link.url"
                     :class="[
                         'inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium',
@@ -26,6 +27,12 @@
                 >
                     {{ link.label }}
                 </Link>
+
+                <span
+                    v-else
+                    class="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-500 border-t-2 border-transparent hover:border-gray-300 hover:text-gray-700"
+                    v-text="link.label"
+                />
             </template>
         </div>
 
