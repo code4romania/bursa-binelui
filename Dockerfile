@@ -67,6 +67,7 @@ COPY docker/php/www.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY docker/s6-rc.d /etc/s6-overlay/s6-rc.d
 
 COPY --from=assets --chown=www-data:www-data /build/public/build /var/www/public/build
+COPY --from=assets /build/bootstrap/ssr /var/www/bootstrap/ssr
 COPY --from=assets /build/node_modules /var/www/node_modules
 COPY --from=assets /usr/lib /usr/lib
 COPY --from=assets /usr/local/share /usr/local/share
