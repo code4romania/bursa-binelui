@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
+const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -78,5 +79,9 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/typography'),
+        plugin(function ({ addVariant }) {
+            addVariant('progress-unfilled', ['&::-webkit-progress-bar', '&']);
+            addVariant('progress-filled', ['&::-webkit-progress-value', '&::-moz-progress-bar', '&']);
+        })
     ],
 };

@@ -1,8 +1,8 @@
 <template>
-    <article class="flex flex-col overflow-hidden bg-white divide-y divide-gray-200 rounded-lg drop-shadow-lg">
+    <article class="flex flex-col overflow-hidden bg-white rounded-lg drop-shadow-lg">
         <Link
             :href="project.type === 'project' ? route('projects.show', project) : route('bcr.show', project)"
-            class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3"
+            class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3 drop-shadow-sm"
         >
             <img
                 :src="project.image"
@@ -44,7 +44,7 @@
             </div>
         </Link>
 
-        <div class="p-6 text-left">
+        <div class="flex-1 p-6 text-left">
             <Link
                 v-if="project.type === 'project'"
                 :href="route('organizations.show', project.organization)"
@@ -68,22 +68,6 @@
                 <div v-if="project.categories" class="flex items-center gap-1 truncate">
                     <BookmarkIcon class="w-4 h-4 text-gray-500 shrink-0" />
                     <span class="text-gray-700 truncate">{{ project.categories }}</span>
-                </div>
-            </div>
-
-            <div class="mt-8" v-if="project.donations">
-                <div class="flex items-center justify-between mb-1 text-lg font-bold">
-                    <p class="text-cyan-900" v-text="project.donations.total" />
-                    <p class="text-primary-500" v-text="project.donations.target" />
-                </div>
-
-                <div class="w-full h-5 bg-gray-200">
-                    <div
-                        :class="[`h-5`, project.donations.percentage >= 100 ? 'bg-primary-500' : 'bg-cyan-900']"
-                        :style="{
-                            width: `${project.donations.percentage}%`,
-                        }"
-                    ></div>
                 </div>
             </div>
 
@@ -151,14 +135,31 @@
                 </div>
             </Modal>
         </div>
+
+        <div class="px-6 pb-6" v-if="project.donations">
+            <div class="flex items-center justify-between mb-1 text-lg font-bold">
+                <p class="text-cyan-900" v-text="project.donations.total" />
+                <p class="text-primary-500" v-text="project.donations.target" />
+            </div>
+
+            <progress
+                class="w-full h-5 progress-unfilled:bg-gray-200"
+                :class="[
+                    project.donations.percentage >= 100
+                        ? 'progress-filled:bg-primary-500'
+                        : 'progress-filled:bg-cyan-900',
+                ]"
+                :value="project.donations.percentage"
+                max="100"
+            >
+                {{ project.donations.percentage }}%
+            </progress>
+        </div>
     </article>
 </template>
 
 <script setup>
-    import { computed, onMounted } from 'vue';
-
-    /** Import components. */
-    import Icon from '@/Components/Icon.vue';
+    import { computed } from 'vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import Modal from '@/Components/modals/Modal.vue';

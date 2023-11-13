@@ -3,8 +3,8 @@
         <slot />
 
         <template v-if="list.data?.length">
-            <ul class="grid mb-10" :class="classes">
-                <li v-for="item in list.data" :key="item.id">
+            <div class="grid mb-10" :class="classes">
+                <template v-for="item in list.data" :key="item.id">
                     <ProjectCard v-if="'project' === type" :project="item" :cardType="cardType" />
 
                     <OrganizationCard v-else-if="'ong' === type" :organization="item" />
@@ -14,8 +14,8 @@
                     <RegionalProject v-else-if="'project-regional' === cardType" :data="item" />
 
                     <ChampionshipProject v-else-if="'project-championship' === cardType" :data="item" />
-                </li>
-            </ul>
+                </template>
+            </div>
 
             <!-- Pagination -->
             <Pagination v-if="list.links && list.links.first !== list.links.last" :resource="list" />

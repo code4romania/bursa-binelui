@@ -163,7 +163,7 @@ class Project extends Model implements HasMedia
             return 0;
         }
 
-        return min(100, $this->total_donations / $this->target_budget * 100);
+        return min(100, round($this->total_donations / $this->target_budget * 100, 2));
     }
 
     public function getActiveAttribute(): bool
