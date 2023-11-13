@@ -82,7 +82,7 @@ return [
     |--------------------------------------------------------------------------
     | Path to registration Livewire component.
     */
-    'registration_component_path' => Register::class,
+    'registration_component_path' => \JeffGreco13\FilamentBreezy\Http\Livewire\Auth\Register::class,
     /*
     |--------------------------------------------------------------------------
     | Path to password reset Livewire component.
