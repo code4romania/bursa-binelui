@@ -76,7 +76,6 @@
 
 <script setup>
     import { ref } from 'vue';
-    import { router } from '@inertiajs/vue3';
     import { XIcon } from '@heroicons/vue/solid';
     import route from '@/Helpers/useRoute';
 
