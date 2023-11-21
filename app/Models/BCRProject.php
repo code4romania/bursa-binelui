@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Vite;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class BCRProject extends Model implements HasMedia
 {
