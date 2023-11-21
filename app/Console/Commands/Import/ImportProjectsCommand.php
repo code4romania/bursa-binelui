@@ -116,7 +116,7 @@ class ImportProjectsCommand extends Command
                             'end' => $this->parseDate($row->EndDate),
                             'accepting_volunteers' => (bool) $row->HasVolunteering,
                             'accepting_comments' => (bool) $row->AcceptComments,
-                            'why_donate' => Sanitize::text($row->WhyDonate),
+                            //                            'why_donate' => Sanitize::text($row->WhyDonate),
 
                             'created_at' => $created_at,
                             'updated_at' => $created_at,
@@ -132,8 +132,9 @@ class ImportProjectsCommand extends Command
                         ]);
 
                         $project->categories()->attach($row->ProjectCategoryId);
-                        $project->counties()->attach(explode(',', $row->Counties));
-
+                        $mappedCounties = collect(explode(',', $row->Counties ?? ''))
+                            ->map(fn ($county) => $this->mapCounty($county))->all();
+                        $project->counties()->attach($mappedCounties);
 
                         if (! $this->option('skip-files')) {
                             // Add main image
