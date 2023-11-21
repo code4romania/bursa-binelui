@@ -57,7 +57,7 @@
                             class="relative flex-1 p-6 border border-gray-300 skew-x-[29deg] origin-top-left overflow-hidden"
                         >
                             <a
-                                href="https://code4.ro/en/civic-tech-911"
+                                href="https://code4.ro/civic-tech-911"
                                 target="_blank"
                                 class="flex items-center justify-center gap-x-2 -skew-x-[29deg]"
                             >
@@ -179,11 +179,10 @@
 
                 <div class="lg:flex-1">
                     <Link
-                        :href="route('projects.index')"
+                        :href="route('bcr.index')"
                         class="w-full inline-block font-semibold leading-6 text-center text-white bg-primary-500 rounded-md shadow-sm lg:px-6 lg:py-4 lg:text-lg sm:w-auto hover:bg-primary-400 focus-visible:outline-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 px-3.5 py-2.5 text-sm"
-                    >
-                        {{ $t('see_bcr_projects') }}
-                    </Link>
+                        v-text="$t('see_bcr_projects')"
+                    />
                 </div>
 
                 <div class="flex items-center gap-6">

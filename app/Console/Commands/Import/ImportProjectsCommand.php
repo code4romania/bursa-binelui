@@ -84,6 +84,10 @@ class ImportProjectsCommand extends Command
                     ->selectRaw("STRING_AGG(ImageId,',')")
                     ->whereColumn('dbo.ProjectImages.ProjectId', 'dbo.ONGProjects.Id')
                     ->where('dbo.ProjectImages.IsMainImage', 0),
+                'Counties' => $this->db
+                    ->table('dbo.ProjectCounties')
+                    ->selectRaw("STRING_AGG(CountyId,',')")
+                    ->whereColumn('dbo.ProjectCounties.ProjectId', 'dbo.ONGProjects.Id'),
             ])
             ->join('dbo.Projects', 'dbo.Projects.Id', 'dbo.ONGProjects.Id')
             ->orderBy('dbo.ONGProjects.Id');
@@ -100,7 +104,6 @@ class ImportProjectsCommand extends Command
                 ->reject(fn (object $row) => $this->getRejectedOrganizations()->contains($row->ONGId))
                 ->each(function (object $row) {
                     $created_at = Carbon::parse($row->CreationDate);
-
                     try {
                         $project = Project::forceCreate([
                             'id' => (int) $row->Id,
@@ -113,9 +116,11 @@ class ImportProjectsCommand extends Command
                             'end' => $this->parseDate($row->EndDate),
                             'accepting_volunteers' => (bool) $row->HasVolunteering,
                             'accepting_comments' => (bool) $row->AcceptComments,
+                            'why_donate' => Sanitize::text($row->WhyDonate),
 
                             'created_at' => $created_at,
                             'updated_at' => $created_at,
+                            'archived_at' => $row->ProjectStatusTypeId === 3 ? $created_at : null,
 
                             'status' => match ($row->ProjectStatusTypeId) {
                                 1 => ProjectStatus::pending,
@@ -127,6 +132,8 @@ class ImportProjectsCommand extends Command
                         ]);
 
                         $project->categories()->attach($row->ProjectCategoryId);
+                        $project->counties()->attach(explode(',', $row->Counties));
+
 
                         if (! $this->option('skip-files')) {
                             // Add main image

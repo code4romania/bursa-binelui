@@ -57,14 +57,14 @@ class BCRProject extends Model implements HasMedia
         $this->addMediaCollection('preview')
             ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
-            ->registerMediaConversions(function (Media $media) {
+            ->registerMediaConversions(function () {
                 $this
                     ->addMediaConversion('preview')
                     ->fit(Manipulations::FIT_CONTAIN, 300, 300);
             });
 
         $this->addMediaCollection('gallery')
-            ->registerMediaConversions(function (Media $media) {
+            ->registerMediaConversions(function () {
                 $this
                     ->addMediaConversion('preview')
                     ->fit(Manipulations::FIT_CONTAIN, 300, 300);

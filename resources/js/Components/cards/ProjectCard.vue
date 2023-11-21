@@ -4,11 +4,12 @@
             :href="project.type === 'project' ? route('projects.show', project) : route('bcr.show', project)"
             class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3 drop-shadow-sm"
         >
+
             <img
                 :src="project.image"
                 class="object-cover object-center w-full transition-opacity duration-150 group-hover:opacity-75"
                 :class="{
-                    grayscale: !project.is_active,
+                    grayscale: (!project.is_active && project.type !== 'bcr_project'),
                 }"
                 alt=""
             />
@@ -159,7 +160,7 @@
 </template>
 
 <script setup>
-    import { computed } from 'vue';
+import {computed, onMounted} from 'vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import Modal from '@/Components/modals/Modal.vue';
@@ -171,6 +172,10 @@
     const props = defineProps({
         project: Object,
         cardType: String,
+    });
+    onMounted(() => {
+        console.log(props.project);
+        console.log(props.cardType);
     });
 
     /** Get days till project ends. */

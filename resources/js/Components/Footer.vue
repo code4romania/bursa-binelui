@@ -24,7 +24,7 @@
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
                                     <Link
-                                        href="route('page', { slug: 'about' })"
+                                        :href="route('page', { slug: 'about' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
                                     >
                                         {{ $t('about_link') }}
@@ -32,27 +32,24 @@
                                 </li>
                                 <li>
                                     <Link
-                                        :href="route('terms')"
+                                        :href="route('page', { slug: 'terms' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                    >
-                                        {{ $t('terms_link') }}
-                                    </Link>
+                                        v-text="$t('terms_link')"
+                                    />
                                 </li>
                                 <li>
                                     <Link
-                                        :href="route('policy')"
+                                        :href="route('page', { slug: 'policy' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                    >
-                                        {{ $t('policy_link') }}
-                                    </Link>
+                                        v-text="$t('policy_link')"
+                                    />
                                 </li>
                                 <li>
                                     <Link
                                         :href="route('contact')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                    >
-                                        {{ $t('contact_link') }}
-                                    </Link>
+                                        v-text=" $t('contact_link') "
+                                    />
                                 </li>
                             </ul>
                         </div>
@@ -60,19 +57,18 @@
 
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                            <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('navigate') }}</h3>
+                            <h3 class="text-sm font-semibold leading-5 text-gray-400" v-text="$t('navigate')"/>
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
                                     <Link
                                         :href="route('login')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                    >
-                                        {{ $t('register_ong_link') }}
-                                    </Link>
+                                        v-text="$t('register_ong_link')"
+                                    />
                                 </li>
                                 <li>
                                     <Link
-                                        :href="route('donor')"
+                                        :href="route('register')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
                                     >
                                         {{ $t('donor_link') }}
