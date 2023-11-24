@@ -136,7 +136,7 @@ abstract class Command extends BaseCommand
         return Carbon::createFromFormat('M d Y H:i:s:A', $input);
     }
 
-    public function mapCounty($oldCountyId): int
+    public function mapCounty(int $oldCountyId): int
     {
         $countiesMap = [
             1 => 1,//Alba

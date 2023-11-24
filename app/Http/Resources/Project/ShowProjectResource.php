@@ -48,8 +48,6 @@ class ShowProjectResource extends Resource
                 return [
                     'src' => $media->getFullUrl(),
                     'thumbnail' => $media->getFullUrl('preview'),
-                    'w' => 1200,
-                    'h' => 800,
                 ];
             })->toArray(),
             'is_active' => $this->is_active,

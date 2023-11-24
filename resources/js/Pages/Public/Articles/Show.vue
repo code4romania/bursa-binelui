@@ -12,7 +12,7 @@
             <div
                 class="inline-flex items-center justify-start px-3 py-1 mt-10 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
             >
-                {{ resource.category.name }}
+                {{ resource.category }}
             </div>
 
             <div class="prose-sm prose max-w-none sm:prose-lg xl:prose-xl">

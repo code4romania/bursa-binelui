@@ -54,7 +54,7 @@
         </Carousel>
 
         <section class="container grid grid-cols-12 gap-12">
-            <div class="grid col-span-8 gap-10">
+            <div class="grid col-span-8 gap-10 mt-2">
                 <header v-if="!category">
                     <Head :title="$t('articles.index')" />
                     <h1 v-text="$t('articles.index')" class="text-3xl font-bold text-cyan-900" />
