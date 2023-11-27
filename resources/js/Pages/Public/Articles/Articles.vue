@@ -2,56 +2,54 @@
     <PageLayout>
         <Head title="Articole" />
 
-        <Carousel
-            v-if="query?.data?.length"
-            class="w-full"
-            :items-to-show="1"
-            :autoplay="4000"
-            :pauseAutoplayOnHover="true"
-            :wrapAround="true"
-            :transition="300"
-        >
-            <Slide
-                v-for="(article, index) in query.data"
-                :key="index"
-                class="flex flex-col-reverse w-full px-9 lg:flex-row lg:items-start lg:justify-start"
+        <ClientOnly>
+            <Carousel
+                class="w-full"
+                :items-to-show="1"
+                :autoplay="40000"
+                :pauseAutoplayOnHover="true"
+                :wrapAround="true"
+                :transition="300"
             >
-                <div class="w-full lg:w-6/12">
-                    <div class="flex justify-start w-full pt-4 mb-6">
-                        <div
-                            class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50 gap-x-1"
-                        >
-                            {{ article.category.name }}
+                <Slide v-for="article in collection.data" :key="article.id" class="">
+                    <div class="container flex flex-col-reverse items-start justify-start lg:items-center lg:flex-row">
+                        <div class="w-full text-left lg:w-1/2">
+                            <div class="flex justify-start w-full pt-4 mb-6">
+                                <ArticleCategory v-if="article.category !== null" :category="article.category" />
+                            </div>
+
+                            <h1
+                                class="text-3xl font-extrabold text-gray-900 md:text-4xl line-clamp-3"
+                                v-text="article.title"
+                            />
+
+                            <div
+                                class="w-full mt-5 text-2xl font-bold text-cyan-900"
+                                v-if="article.author"
+                                v-text="article.author"
+                            />
+
+                            <div class="flex flex-col w-full gap-4 mt-10 sm:flex-row">
+                                <Link
+                                    :href="route('articles.show', article.slug)"
+                                    class="rounded-md px-3.5 py-2.5 text-sm text-white font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500"
+                                >
+                                    {{ $t('read_article') }}
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div class="relative items-center justify-end hidden w-full translate-x-20 lg:w-1/2 sm:flex">
+                            <LargeSquarePattern class="absolute bottom-0 right-0 fill-primary-500" />
+
+                            <div class="relative flex items-center p-20 w-fit">
+                                <img class="mx-auto rounded-md shadow" :src="article.cover" alt="" />
+                            </div>
                         </div>
                     </div>
-
-                    <h1 v-if="article.title" class="text-6xl font-extrabold text-left text-gray-900">
-                        {{ article.title }}
-                    </h1>
-
-                    <div class="flex items-center justify-start w-full mt-4 text-2xl font-bold text-cyan-900">
-                        <p class="">{{ article.author }}</p>
-                    </div>
-
-                    <div class="flex flex-col w-full gap-4 mt-10 sm:flex-row">
-                        <Link
-                            :href="route('articles.show', article.slug)"
-                            class="rounded-md px-3.5 py-2.5 text-sm text-white font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500"
-                        >
-                            {{ $t('read_article') }}
-                        </Link>
-                    </div>
-                </div>
-
-                <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
-                    <LargeSquarePattern class="absolute bottom-0 right-0 fill-primary-500" />
-
-                    <div class="relative flex items-center w-fit">
-                        <img class="mx-auto rounded-md shadow" :src="article.cover_image" alt="" />
-                    </div>
-                </div>
-            </Slide>
-        </Carousel>
+                </Slide>
+            </Carousel>
+        </ClientOnly>
 
         <section class="container grid grid-cols-12 gap-12">
             <div class="grid col-span-8 gap-10 mt-2">
@@ -136,10 +134,10 @@
     import Pagination from '@/Components/pagination/Pagination.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import ArticleCategory from '@/Components/ArticleCategory.vue';
+    import ClientOnly from '@/Components/ClientOnly.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
-    /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';
     import { Carousel, Slide } from 'vue3-carousel';
 
