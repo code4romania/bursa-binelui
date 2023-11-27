@@ -23,6 +23,8 @@ class BCRProject extends Model implements HasMedia
     use InteractsWithMedia;
     use HasSlug;
 
+    protected $table='bcr_projects';
+
     protected $fillable = [
         'name',
         'description',

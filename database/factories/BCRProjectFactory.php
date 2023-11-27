@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\ProjectStatus;
 use App\Models\City;
 use App\Models\ProjectCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -37,6 +38,7 @@ class BCRProjectFactory extends Factory
             'description' => $this->faker->paragraph(),
             'start_date' => $this->faker->dateTimeBetween('-1 day', 'now'),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 day'),
+            'status' => $this->faker->randomElement(ProjectStatus::options()),
             'external_links' => [
                 [
                     'title' => $this->faker->sentence(),

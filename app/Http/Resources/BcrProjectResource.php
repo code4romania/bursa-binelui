@@ -13,11 +13,12 @@ class BcrProjectResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'county' => $this->county->name,
+            'county' => $this?->county?->name,
             'image' => $this->getFirstMediaUrl('preview'),
             'gallery' => $this->getMedia('gallery')->map(function ($media) {
                 return [
@@ -26,7 +27,7 @@ class BcrProjectResource extends JsonResource
                 ];
             })->toArray(),
             'is_national' => \boolval($this->is_national),
-            'area' => $this->is_national ? __('bcr-project.labels.national') : $this->county->name,
+            'area' => $this->is_national ? __('bcr-project.labels.national') : $this?->county?->name,
             'start' => $this->start_date?->format('d.m.Y'),
             'end' => $this->end_date?->format('d.m.Y'),
             'description' => $this->description,

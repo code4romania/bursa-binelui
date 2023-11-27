@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProjectStatus;
 use App\Filament\Resources\BCRProjectResource\Pages;
-use App\Models\Article;
 use App\Models\BCRProject;
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -77,6 +76,11 @@ class BCRProjectResource extends Resource
                     ->relationship('county', 'name')
                     ->inlineLabel()
                     ->columnSpanFull()
+                    ->required(),
+                Select::make('status')
+                    ->label('bcr-project.labels.status')
+                    ->inlineLabel()
+                    ->options(ProjectStatus::options())
                     ->required(),
 
                 Textarea::make('description')

@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('b_c_r_projects', function (Blueprint $table) {
+        Schema::create('bcr_projects', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(ProjectCategory::class)
                 ->nullable()
@@ -32,6 +32,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('status');
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date');
