@@ -79,17 +79,17 @@ class ImportProjectsCommand extends Command
                 'MainImageId' => $this->db
                     ->table('dbo.ProjectImages')
                     ->select('ImageId')
-                    ->whereColumn('dbo.ProjectImages.ProjectId', 'dbo.ONGProjects.Id')
+                    ->whereColumn('dbo.ProjectImages.ProjectId', 'dbo.Projects.Id')
                     ->where('dbo.ProjectImages.IsMainImage', 1),
                 'GalleryImageIds' => $this->db
                     ->table('dbo.ProjectImages')
                     ->selectRaw("STRING_AGG(ImageId,',')")
-                    ->whereColumn('dbo.ProjectImages.ProjectId', 'dbo.ONGProjects.Id')
+                    ->whereColumn('dbo.ProjectImages.ProjectId', 'dbo.Projects.Id')
                     ->where('dbo.ProjectImages.IsMainImage', 0),
                 'Counties' => $this->db
                     ->table('dbo.ProjectCounties')
                     ->selectRaw("STRING_AGG(CountyId,',')")
-                    ->whereColumn('dbo.ProjectCounties.ProjectId', 'dbo.ONGProjects.Id'),
+                    ->whereColumn('dbo.ProjectCounties.ProjectId', 'dbo.Projects.Id'),
             ])
             ->rightJoin('dbo.Projects', 'dbo.Projects.Id', 'dbo.ONGProjects.Id')
             ->orderBy('dbo.ONGProjects.Id');
@@ -184,30 +184,27 @@ class ImportProjectsCommand extends Command
 
         $countyID = $mappedCounties?->first() ?? null;
 
+        return BCRProject::forceCreate([
+            'id' => (int) $row->Id,
+            'name' => Sanitize::text($row->Name),
+            'slug' => Sanitize::text($row->DynamicUrl),
+            'description' => Sanitize::text($row->Description),
+            'project_category_id' => $row->ProjectCategoryId,
+            'county_id' => $countyID,
+            'start_date' => $this->parseDate($row->StartDate),
+            'end_date' => $this->parseDate($row->EndDate),
+            'is_national' => (bool) $row->AllCounties,
+            'facebook_link' => $row->FacebookPageLink,
+            'created_at' => $created_at,
+            'updated_at' => $created_at,
 
-        return BCRProject::forceCreate(
-            [
-                'id' => (int) $row->Id,
-                'name' => Sanitize::text($row->Name),
-                'slug' => Sanitize::text($row->DynamicUrl),
-                'description' => Sanitize::text($row->Description),
-                'project_category_id' => $row->ProjectCategoryId,
-                'county_id' => $countyID,
-                'start_date' => $this->parseDate($row->StartDate),
-                'end_date' => $this->parseDate($row->EndDate),
-                'is_national' => (bool) $row->AllCounties,
-                'facebook_link' => $row->FacebookPageLink,
-                'created_at' => $created_at,
-                'updated_at' => $created_at,
-
-                'status' => match ($row->ProjectStatusTypeId) {
-                    1 => ProjectStatus::pending,
-                    2 => ProjectStatus::approved,
-                    3 => ProjectStatus::approved,//set arhivat
-                    4 => ProjectStatus::approved,
-                    default => ProjectStatus::draft,
-                },
-            ]
-        );
+            'status' => match ($row->ProjectStatusTypeId) {
+                1 => ProjectStatus::pending,
+                2 => ProjectStatus::approved,
+                3 => ProjectStatus::approved,//set arhivat
+                4 => ProjectStatus::approved,
+                default => ProjectStatus::draft,
+            },
+        ]);
     }
 }
