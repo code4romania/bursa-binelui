@@ -33,10 +33,16 @@
         </div>
 
         <!-- Social share -->
-        <div class="container grid mx-auto mb-8 gap-y-8 gap-x-20 lg:grid-cols-5">
+        <div class="container grid items-start mx-auto mb-8 gap-y-8 gap-x-20 lg:grid-cols-5">
             <div class="lg:col-span-3">
                 <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
+
                 <SharePage class="mb-20" :pageRoute="route('bcr.show', project.slug)" />
+
+                <div class="mb-10" v-if="project.description">
+                    <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
+                    <div class="text-lg text-gray-500" v-html="project.description"></div>
+                </div>
             </div>
 
             <div class="bg-white shadow-lg drop-shadow-sm lg:col-span-2">
@@ -67,12 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="container grid mx-auto mb-8 gap-y-8 gap-x-20">
-            <div class="mb-10" v-if="project.description">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.description"></div>
-            </div>
-        </div>
+
         <div class="container space-y-10">
             <div v-if="project.external_links.length">
                 <div class="flex items-center gap-4 mb-8">

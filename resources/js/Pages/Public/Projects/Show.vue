@@ -107,7 +107,7 @@
         </div>
 
         <!-- Social share -->
-        <div class="container grid mx-auto mb-8 gap-y-8 gap-x-20 lg:grid-cols-5">
+        <div class="container grid items-start mx-auto mb-8 gap-y-8 gap-x-20 lg:grid-cols-5">
             <div class="lg:col-span-3">
                 <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
 
@@ -285,7 +285,7 @@
     import SharePage from '@/Components/SharePage.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import { ExternalLinkIcon } from '@heroicons/vue/outline';
-    import Gallery from "@/Components/Gallery.vue";
+    import Gallery from '@/Components/Gallery.vue';
 
     const props = defineProps({
         project: {
