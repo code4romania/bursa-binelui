@@ -31,6 +31,7 @@ class ShowProjectResource extends Resource
                 'id' => $this->organization->id,
                 'name' => $this->organization->name,
                 'description' => $this->organization->description,
+                'slug' => $this->organization->slug,
                 'logo' => $this->organization->getFirstMediaUrl('logo', 'preview'),
             ],
             'is_national' => \boolval($this->is_national),

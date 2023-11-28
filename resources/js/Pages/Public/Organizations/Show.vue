@@ -110,6 +110,7 @@
                             <a
                                 v-if="organization.website"
                                 :href="organization.website"
+                                target="_blank"
                                 class="block text-center text-white bg-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                             >
                                 {{ $t('see_website') }}

@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -51,6 +52,7 @@ class RegisteredUserController extends Controller
 
         if ($user->hasRole(UserRole::ADMIN)) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
+            $attributes['ngo']['slug'] = Str::slug($attributes['ngo']['name']);
 
             $organization = $user->organization()->create($attributes['ngo']);
 
