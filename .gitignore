@@ -30,3 +30,5 @@ npm-debug.log
 phpunit.xml
 yarn-error.log
 .DS_Store
+/.scannerwork/.sonar_lock
+/.scannerwork/report-task.txt
