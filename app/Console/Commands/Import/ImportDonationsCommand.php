@@ -63,13 +63,13 @@ class ImportDonationsCommand extends Command
                                 'organization_id' => (int) $row->ONGId,
                                 'amount' => (float) $row->Amount,
                                 'charge_amount' => (float) $row->ChargedAmount,
-                                'first_name' => $row->FirstName??'',
-                                'last_name' => $row->LastName??'',
-                                'email' => $row->Email??'',
+                                'first_name' => $row->FirstName ?? '',
+                                'last_name' => $row->LastName ?? '',
+                                'email' => $row->Email ?? '',
                                 'card_holder_status_message' => $row->CaldHolderStatusMessage,
                                 'created_at' => $created_at,
-                                'approval_date' => Carbon::parse(Str::replace(':AM','',$row->ApprovedDate)),
-                                'charge_date' => Carbon::parse(Str::replace(':AM','',$row->ChargedDate)),
+                                'approval_date' => Carbon::parse(Str::replace(':AM', '', $row->ApprovedDate)),
+                                'charge_date' => Carbon::parse(Str::replace(':AM', '', $row->ChargedDate)),
                                 'updated_without_correct_e_pid' => (bool) $row->UpdatedWithoutCorrectEpId,
                                 'status' => match ($row->DonationStatusTypeId) {
                                     1 => EuPlatescStatus::INITIALIZE,
@@ -83,12 +83,8 @@ class ImportDonationsCommand extends Command
                                     default => throw new \Exception('Invalid status: ' . $row->Status),
                                 },
 
-
-
-
                             ]
                         );
-
                     } catch (Throwable $th) {
                         $this->logError('Error importing donation #' . $row->Id, [$th->getMessage()]);
                     }
