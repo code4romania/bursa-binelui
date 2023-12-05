@@ -8,6 +8,7 @@ use App\Enums\OrganizationStatus;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
+use App\Models\Organization;
 use App\Models\User;
 use App\Services\NewsletterService;
 use Illuminate\Auth\Events\Registered;
@@ -53,8 +54,9 @@ class RegisteredUserController extends Controller
         if ($user->hasRole(UserRole::ADMIN)) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
             $attributes['ngo']['slug'] = Str::slug($attributes['ngo']['name']);
+            $attributes['ngo']['user_id'] = $user->id;
 
-            $organization = $user->organization()->create($attributes['ngo']);
+            $organization = Organization::create($attributes['ngo']);
 
             $organization->addMediaFromRequest('ngo.logo')->toMediaCollection('logo');
             $organization->addMediaFromRequest('ngo.statute')->toMediaCollection('statute');
