@@ -30,6 +30,7 @@ class BCRProject extends Model implements HasMedia
         'description',
         'start_date',
         'end_date',
+        'status',
         'external_articles',
         'facebook_link',
         'accepting_comments',
