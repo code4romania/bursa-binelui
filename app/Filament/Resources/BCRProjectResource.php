@@ -78,7 +78,7 @@ class BCRProjectResource extends Resource
                     ->columnSpanFull()
                     ->required(),
                 Select::make('status')
-                    ->label('bcr-project.labels.status')
+                    ->label(__('bcr-project.labels.status'))
                     ->inlineLabel()
                     ->options(ProjectStatus::options())
                     ->columnSpanFull()
