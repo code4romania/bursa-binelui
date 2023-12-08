@@ -4,9 +4,9 @@
 
         <!-- Filters -->
         <div class="grid grid-cols-12 gap-6">
-            <div class="grid grid-cols-12 col-span-12 gap-6">
+            <div class="grid grid-cols-12 col-span-12 gap-3">
                 <SearchFilter
-                    class="col-span-4"
+                    class="col-span-2"
                     v-model="filter.search"
                     :placeholder="$t('search')"
                     @keydown.enter="applyFilters"
@@ -17,7 +17,6 @@
                 </SecondaryButton>
 
                 <SecondaryButton
-                    v-if="hasValues"
                     @click="clearFilters"
                     class="flex items-center justify-center col-span-2 gap-2 py-2 text-center"
                 >
@@ -43,36 +42,28 @@
 
             <Select
                 class="col-span-12 sm:col-span-6 lg:col-span-4"
-                :label="$t('amount')"
-                v-model="filter.amount"
-                :options="amounts"
-                @update:modelValue="applyFilters"
-            />
-
-            <Select
-                class="col-span-12 sm:col-span-6 lg:col-span-4"
                 :label="$t('project')"
                 v-model="filter.project"
                 :options="projects"
                 @update:modelValue="applyFilters"
             />
-
             <Select
                 class="col-span-12 sm:col-span-6 lg:col-span-4"
                 :label="$t('start_date')"
-                v-model="filter.start_date"
-                :options="start_dates"
+                v-model="filter.dates[0]"
+                :options="dates"
                 @update:modelValue="applyFilters"
             />
 
             <Select
                 class="col-span-12 sm:col-span-6 lg:col-span-4"
                 :label="$t('start_date')"
-                v-model="filter.end_date"
-                :options="end_dates"
+                v-model="filter.dates[1]"
+                :options="dates"
                 @update:modelValue="applyFilters"
             />
         </div>
+
 
         <Table :collection="collection" />
     </DashboardLayout>
@@ -101,11 +92,10 @@
             type: Object,
             required: false,
         },
-        //     projects: Array,
-        //     statuses: Array,
-        //     amounts: Array,
-        //     start_dates: Array,
-        //     end_dates: Array
+        projects: Array,
+        statuses: Array,
+        dates: Array,
+
     });
 
     /** Active filter state. */
@@ -117,18 +107,11 @@
         status: props.filter?.status || null,
         amount: props.filter?.amount || null,
         project: props.filter?.project || null,
-        start_date: props.filter?.start_date || null,
-        end_date: props.filter?.end_date || null,
+        dates: props.filter?.dates || [],
     });
 
-    /** Statuses */
-    const statuses = ['Active', 'Inactive'];
-    const projects = ['Project 1', 'Project 2', 'Project 3'];
-    const amounts = ['0 - 500', '500 - 1000', '1000 - 2000'];
-    const start_dates = ['2023-05-17', '2023-06-07', '2023-03-19'];
-    const end_dates = ['2023-05-17', '2023-06-07', '2023-03-19'];
-
     const sort = ref(null);
+
 
     const { applyFilters, clearFilters } = useFilters(filter, sort, route('dashboard.donations.index'));
 </script>

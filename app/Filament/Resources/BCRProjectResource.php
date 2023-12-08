@@ -81,6 +81,7 @@ class BCRProjectResource extends Resource
                     ->label('bcr-project.labels.status')
                     ->inlineLabel()
                     ->options(ProjectStatus::options())
+                    ->columnSpanFull()
                     ->required(),
 
                 Textarea::make('description')

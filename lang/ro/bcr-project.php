@@ -17,6 +17,7 @@ return [
         'facebook_link' => 'Link-ul catre pagina de Facebook',
         'accepting_comments' => 'Accepta comentarii',
         'county' => 'Judet',
+        'status' => 'Status',
         'city' => 'Oras',
         'national' => 'National',
         'videos' => 'Galerie video',

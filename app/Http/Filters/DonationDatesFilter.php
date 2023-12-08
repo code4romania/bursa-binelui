@@ -12,10 +12,13 @@ class DonationDatesFilter implements Filter
 {
     public function __invoke(Builder $query, $dates, string $property): void
     {
-        $start = Carbon::createFromFormat('Y-m-d', $dates[0]);
-        $end = Carbon::createFromFormat('Y-m-d', $dates[1]);
-
-        $query->whereDate('created_at', '>=', $start)
-            ->whereDate('created_at', '<=', $end);
+        if (! empty($dates[0])) {
+            $start = Carbon::createFromFormat('Y-m', $dates[0])->startOfDay();
+            $query->whereDate('created_at', '>=', $start);
+        }
+        if (! empty($dates[1])) {
+            $end = Carbon::createFromFormat('Y-m', $dates[1])->endOfDay();
+            $query->whereDate('created_at', '<=', $end);
+        }
     }
 }

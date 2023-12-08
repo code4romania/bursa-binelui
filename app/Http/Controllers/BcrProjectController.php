@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProjectStatus;
 use App\Http\Filters\BcrProjectDatesFilter;
 use App\Http\Filters\SearchFilter;
 use App\Http\Resources\BcrProjectResource;
@@ -34,6 +35,7 @@ class BcrProjectController extends Controller
                         AllowedSort::field('publish_date', 'start_date'),
                         AllowedSort::field('end_date', 'end_date'),
                     ])
+                    ->where('status', ProjectStatus::approved)
                     ->orderBy('id', 'desc')
                     ->paginate()
                     ->withQueryString()

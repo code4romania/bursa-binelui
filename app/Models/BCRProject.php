@@ -6,6 +6,8 @@ namespace App\Models;
 
 use App\Concerns\HasLocation;
 use App\Concerns\HasSlug;
+use App\Enums\ProjectStatus;
+use App\Traits\HasProjectStatus;
 use Embed\Embed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,9 +23,10 @@ class BCRProject extends Model implements HasMedia
     use HasFactory;
     use HasLocation;
     use InteractsWithMedia;
+    use HasProjectStatus;
     use HasSlug;
 
-    protected $table='bcr_projects';
+    protected $table = 'bcr_projects';
 
     protected $fillable = [
         'name',
@@ -48,6 +51,7 @@ class BCRProject extends Model implements HasMedia
         'end_date' => 'datetime',
         'accepting_comments' => 'boolean',
         'is_national' => 'boolean',
+        'status' => ProjectStatus::class,
     ];
 
     protected $with = [

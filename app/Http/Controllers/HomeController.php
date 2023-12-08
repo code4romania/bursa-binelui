@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProjectStatus;
 use App\Http\Resources\Articles\ArticleCardResource;
 use App\Http\Resources\BCRProjectCardResource;
 use App\Http\Resources\ProjectCardResource;
@@ -35,6 +36,7 @@ class HomeController extends Controller
 
             'bcr_projects' => BCRProjectCardResource::collection(
                 BCRProject::query()
+                    ->where('status', ProjectStatus::approved)
                     ->latest()
                     ->with('county')
                     ->limit(12)
