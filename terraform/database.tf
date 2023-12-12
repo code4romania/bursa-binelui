@@ -52,13 +52,6 @@ resource "aws_security_group" "database" {
     protocol    = "tcp"
     cidr_blocks = [local.networking.cidr_block]
   }
-
-  egress {
-    from_port = 3306
-    to_port   = 3306
-    protocol  = "tcp"
-    self      = true
-  }
 }
 
 resource "random_password" "database" {

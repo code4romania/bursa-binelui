@@ -52,114 +52,59 @@ module "ecs_app" {
 
   environment = [
     {
-      name  = "DEBUG"
+      name  = "APP_ENV"
+      value = var.env
+    },
+    {
+      name  = "APP_DEBUG"
       value = tostring(false)
     },
     {
-      name  = "ENABLE_2FA"
-      value = var.enable_2fa
+      name  = "APP_URL"
+      value = "https://www.${var.domain_name}"
     },
-    {
-      name  = "ENABLE_DJANGO_ADMIN"
-      value = tostring(true)
-    },
-    {
-      name  = "USE_S3"
-      value = tostring(true)
-    },
-    {
-      name  = "PROXY_SSL_HEADER"
-      value = "HTTP_CLOUDFRONT_FORWARDED_PROTO"
-    },
-    {
-      name  = "AWS_S3_CUSTOM_DOMAIN"
-      value = "www.${var.domain_name}"
-    },
-    {
-      name  = "AWS_STORAGE_DEFAULT_BUCKET_NAME"
-      value = module.s3_public.bucket
-    },
-    {
-      name  = "AWS_STORAGE_STATIC_BUCKET_NAME"
-      value = module.s3_static.bucket
-    },
-    {
-      name  = "AWS_STORAGE_PRIVATE_BUCKET_NAME"
-      value = module.s3_private.bucket
-    },
-    {
-      name  = "AWS_REGION_NAME"
-      value = var.region
-    },
-    {
-      name  = "EMAIL_BACKEND"
-      value = "django_ses.SESBackend"
-    },
-    {
-      name  = "DEFAULT_FROM_EMAIL"
-      value = "no-reply@${var.domain_name}"
-    },
-    {
-      name  = "DEFAULT_RECEIVE_EMAIL"
-      value = var.receive_email
-    },
-    {
-      name  = "SENTRY_TRACES_SAMPLE_RATE"
-      value = 0.3
-    },
-    {
-      name  = "SENTRY_PROFILES_SAMPLE_RATE"
-      value = 0.5
-    },
-    {
-      name  = "GOOGLE_ANALYTICS_ID"
-      value = var.google_analytics_id
-    },
-    {
-      name  = "RECAPTCHA_REQUIRED_SCORE"
-      value = var.recaptcha_required_score
-    }
+
   ]
 
   secrets = [
     {
-      name      = "SECRET_KEY"
+      name      = "APP_KEY"
       valueFrom = aws_secretsmanager_secret.app_secret_key.arn
     },
     {
-      name      = "DATABASE_ENGINE"
+      name      = "DB_CONNECTION"
       valueFrom = "${aws_secretsmanager_secret.rds.arn}:engine::"
     },
     {
-      name      = "DATABASE_NAME"
-      valueFrom = "${aws_secretsmanager_secret.rds.arn}:database::"
-    },
-    {
-      name      = "DATABASE_USER"
-      valueFrom = "${aws_secretsmanager_secret.rds.arn}:username::"
-    },
-    {
-      name      = "DATABASE_PASSWORD"
-      valueFrom = "${aws_secretsmanager_secret.rds.arn}:password::"
-    },
-    {
-      name      = "DATABASE_HOST"
+      name      = "DB_HOST"
       valueFrom = "${aws_secretsmanager_secret.rds.arn}:host::"
     },
     {
-      name      = "DATABASE_PORT"
+      name      = "DB_PORT"
       valueFrom = "${aws_secretsmanager_secret.rds.arn}:port::"
+    },
+    {
+      name      = "DB_DATABASE"
+      valueFrom = "${aws_secretsmanager_secret.rds.arn}:database::"
+    },
+    {
+      name      = "DB_USERNAME"
+      valueFrom = "${aws_secretsmanager_secret.rds.arn}:username::"
+    },
+    {
+      name      = "DB_PASSWORD"
+      valueFrom = "${aws_secretsmanager_secret.rds.arn}:password::"
     },
     {
       name      = "SENTRY_DSN"
       valueFrom = aws_secretsmanager_secret.sentry_dsn.arn
     },
     {
-      name      = "RECAPTCHA_PUBLIC_KEY"
+      name      = "GOOGLE_RECAPTCHA_SITE_KEY"
       valueFrom = "${aws_secretsmanager_secret.recaptcha.arn}:public_key::"
     },
     {
-      name      = "RECAPTCHA_PRIVATE_KEY"
+      name      = "GOOGLE_RECAPTCHA_SECRET_SITE_KEY"
       valueFrom = "${aws_secretsmanager_secret.recaptcha.arn}:private_key::"
     },
   ]
