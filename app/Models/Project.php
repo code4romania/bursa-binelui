@@ -8,6 +8,7 @@ use App\Concerns\HasCounties;
 use App\Concerns\HasSlug;
 use App\Concerns\HasVolunteers;
 use App\Concerns\LogsActivityForApproval;
+use App\Enums\EuPlatescStatus;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
 use Embed\Embed;
@@ -80,6 +81,7 @@ class Project extends Model implements HasMedia
 
     protected $withCount = [
         'donations',
+        'approvedDonations',
     ];
 
     public function registerMediaCollections(): void
@@ -124,6 +126,11 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
+    public function approvedDonations(): HasMany
+    {
+        return $this->donations()->where('status', EuPlatescStatus::CHARGED);
+    }
+
     public function stages(): BelongsToMany
     {
         return $this->belongsToMany(ChampionshipStage::class);
@@ -149,7 +156,7 @@ class Project extends Model implements HasMedia
 
     public function getTotalDonationsAttribute(): int
     {
-        return (int) $this->donations->sum('amount');
+        return (int) $this->approvedDonations->sum('amount');
     }
 
     public function getCoverImageAttribute(): string
