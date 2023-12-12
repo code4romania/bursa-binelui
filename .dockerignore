@@ -20,6 +20,8 @@
 /storage/framework/sessions/*
 /storage/framework/testing/*
 /storage/framework/views/*
+/storage/framework/down
+/storage/framework/maintenance.php
 /storage/logs/*
 /.scannerwork
 /vendor
