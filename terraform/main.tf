@@ -37,7 +37,7 @@ module "ecs_app" {
   enable_execute_command = var.enable_execute_command
 
   predefined_metric_type = "ECSServiceAverageCPUUtilization"
-  target_value           = 80
+  target_value           = 70
 
   ordered_placement_strategy = [
     {
