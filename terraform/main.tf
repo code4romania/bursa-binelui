@@ -115,6 +115,10 @@ module "ecs_app" {
       name  = "MAIL_FROM_ADDRESS"
       value = "no-reply@${var.domain_name}"
     },
+    {
+      name  = "AWS_PUBLIC_BUCKET_ROOT"
+      value = "media"
+    },
   ]
 
   secrets = [
