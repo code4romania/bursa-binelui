@@ -140,6 +140,14 @@ resource "aws_cloudfront_origin_request_policy" "default" {
   }
 }
 
+resource "aws_cloudfront_origin_access_control" "oac" {
+  name                              = module.s3_public.id
+  description                       = ""
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 resource "aws_cloudfront_origin_access_control" "s3" {
   name                              = module.s3_public.id
   description                       = ""
