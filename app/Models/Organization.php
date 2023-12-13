@@ -238,4 +238,9 @@ class Organization extends Model implements HasMedia
             'status' => OrganizationStatus::pending,
         ]);
     }
+
+    public function getHasStatuteAttribute(): bool
+    {
+        return $this->getMedia('statute')->isNotEmpty();
+    }
 }
