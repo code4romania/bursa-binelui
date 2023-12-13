@@ -110,6 +110,7 @@ class ArticleResource extends Resource
                                 SpatieMediaLibraryFileUpload::make('cover')
                                     ->label(__('article.cover_image'))
                                     ->collection('preview')
+                                    ->disk(config('filesystems.default_public'))
                                     ->required()
                                     ->image()
                                     ->maxFiles(1),
@@ -118,8 +119,9 @@ class ArticleResource extends Resource
                         Card::make()
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('gallery')
-                                    ->collection('gallery')
                                     ->label(__('article.gallery'))
+                                    ->collection('gallery')
+                                    ->disk(config('filesystems.default_public'))
                                     ->image()
                                     ->enableReordering()
                                     ->multiple()
