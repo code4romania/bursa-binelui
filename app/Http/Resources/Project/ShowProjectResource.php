@@ -52,6 +52,7 @@ class ShowProjectResource extends Resource
                 ];
             })->toArray(),
             'is_active' => $this->is_active,
+            'is_starting_soon' => $this->isStartingSoon(),
             'external_links' => collect($this->external_links)->map(function (array $link) {
                 $link['source'] = parse_url($link['url'], \PHP_URL_HOST);
 
