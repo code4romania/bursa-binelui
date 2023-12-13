@@ -68,6 +68,10 @@ module "ecs_app" {
       value = tostring(true)
     },
     {
+      name  = "AWS_DEFAULT_REGION"
+      value = var.region
+    },
+    {
       name  = "MAIL_MAILER"
       value = "ses"
     },
