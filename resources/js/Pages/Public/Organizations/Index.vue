@@ -51,7 +51,7 @@
                         label: $t('yes'),
                     },
                     {
-                        value: 0,
+                        value: '0',
                         label: $t('no'),
                     },
                 ]"
