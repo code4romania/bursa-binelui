@@ -37,6 +37,7 @@ class Badge extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')
+            ->useDisk(config('filesystems.default_public'))
             ->useFallbackUrl(Vite::asset('resources/images/badge.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {

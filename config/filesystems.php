@@ -17,6 +17,8 @@ return [
 
     'default' => env('FILESYSTEM_DISK', 'local'),
 
+    'default_public' => env('FILESYSTEM_DISK_PUBLIC', 'public'),
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -46,7 +48,22 @@ return [
             'throw' => false,
         ],
 
-        's3' => [
+        's3public' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'token' => env('AWS_SESSION_TOKEN'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_PUBLIC_BUCKET'),
+            'url' => env('AWS_PUBLIC_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+            'root' => env('AWS_PUBLIC_BUCKET_ROOT'),
+            'visibility' => 'private',
+        ],
+
+        's3private' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
@@ -57,8 +74,8 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
-            'root' => env('AWS_BUCKET_ROOT'),
-            'visibility' => 'public',
+            'root' => env('AWS_PUBLIC_BUCKET_ROOT'),
+            'visibility' => 'private',
         ],
 
     ],

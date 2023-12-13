@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
         $this->registerCarbonMacros();
 
         Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
+
+        config([
+            'filament.default_filesystem_disk' => config('filesystems.default_public'),
+        ]);
     }
 
     /**

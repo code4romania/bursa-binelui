@@ -95,6 +95,7 @@ class Organization extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')
+            ->useDisk(config('filesystems.default_public'))
             ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
@@ -104,9 +105,11 @@ class Organization extends Model implements HasMedia
             });
 
         $this->addMediaCollection('statute')
+            ->useDisk(config('filesystems.default'))
             ->singleFile();
 
-        $this->addMediaCollection('statute_pending');
+        $this->addMediaCollection('statute_pending')
+            ->useDisk(config('filesystems.default'));
     }
 
     public function users(): HasMany

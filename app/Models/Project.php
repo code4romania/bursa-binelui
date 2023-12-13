@@ -88,6 +88,7 @@ class Project extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('preview')
+            ->useDisk(config('filesystems.default_public'))
             ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
@@ -97,6 +98,7 @@ class Project extends Model implements HasMedia
             });
 
         $this->addMediaCollection('gallery')
+            ->useDisk(config('filesystems.default_public'))
             ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('preview')

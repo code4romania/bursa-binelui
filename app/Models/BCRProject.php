@@ -61,6 +61,7 @@ class BCRProject extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('preview')
+            ->useDisk(config('filesystems.default_public'))
             ->useFallbackUrl(Vite::image('placeholder.png'))
             ->singleFile()
             ->registerMediaConversions(function () {
@@ -70,6 +71,7 @@ class BCRProject extends Model implements HasMedia
             });
 
         $this->addMediaCollection('gallery')
+            ->useDisk(config('filesystems.default_public'))
             ->registerMediaConversions(function () {
                 $this
                     ->addMediaConversion('preview')
