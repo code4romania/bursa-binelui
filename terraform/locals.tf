@@ -17,7 +17,7 @@ locals {
   }
 
   db = {
-    name           = "bursa-binelui"
+    name           = "bursa_binelui"
     instance_class = var.env == "production" ? "db.t4g.micro" : "db.t4g.small"
   }
 
