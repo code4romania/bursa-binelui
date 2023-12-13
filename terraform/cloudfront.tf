@@ -18,8 +18,9 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   origin {
-    domain_name = module.s3_public.bucket_regional_domain_name
-    origin_id   = module.s3_public.id
+    domain_name              = module.s3_public.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3.id
+    origin_id                = module.s3_public.id
   }
 
   # Static
@@ -139,7 +140,7 @@ resource "aws_cloudfront_origin_request_policy" "default" {
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "oac" {
+resource "aws_cloudfront_origin_access_control" "s3" {
   name                              = module.s3_public.id
   description                       = ""
   origin_access_control_origin_type = "s3"
