@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "main" {
     cached_methods           = ["GET", "HEAD", "OPTIONS"]
     target_origin_id         = aws_lb.main.dns_name
     cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
-    origin_request_policy_id = aws_cloudfront_origin_request_policy.default.id
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc" #Managed-AllViewerAndCloudFrontHeaders-2022-06
     viewer_protocol_policy   = "redirect-to-https"
     compress                 = true
 
@@ -61,7 +61,7 @@ resource "aws_cloudfront_distribution" "main" {
     cached_methods           = ["GET", "HEAD", "OPTIONS"]
     target_origin_id         = aws_lb.main.dns_name
     cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" #Managed-CachingDisabled
-    origin_request_policy_id = aws_cloudfront_origin_request_policy.default.id
+    origin_request_policy_id = "33f36d7e-f396-46d9-90e0-52428a34d9dc" #Managed-AllViewerAndCloudFrontHeaders-2022-06
     viewer_protocol_policy   = "redirect-to-https"
     compress                 = true
 
@@ -114,28 +114,6 @@ resource "aws_cloudfront_cache_policy" "default" {
     query_strings_config {
       query_string_behavior = "all"
     }
-  }
-}
-
-resource "aws_cloudfront_origin_request_policy" "default" {
-  name = "${local.namespace}-origin-request-policy"
-
-  cookies_config {
-    cookie_behavior = "all"
-  }
-
-  headers_config {
-    header_behavior = "allViewerAndWhitelistCloudFront"
-
-    headers {
-      items = [
-        "CloudFront-Forwarded-Proto",
-      ]
-    }
-  }
-
-  query_strings_config {
-    query_string_behavior = "all"
   }
 }
 
