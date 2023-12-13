@@ -41,6 +41,7 @@ class RegistrationRequest extends FormRequest
                 'ngo.domains' => ['required', 'array'],
                 'ngo.counties' => ['required', 'array'],
                 'ngo.volunteer' => ['boolean'],
+                'ngo.accepts_volunteers' => ['nullable', 'boolean'],
                 'ngo.why_volunteer' => ['string', 'nullable', 'max:1000'],
                 'ngo.website' => ['string', 'nullable', 'url'],
             ]);

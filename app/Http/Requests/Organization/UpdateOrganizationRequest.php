@@ -29,6 +29,7 @@ class UpdateOrganizationRequest extends FormRequest
             'activity_domains' => ['nullable', 'array'],
             'counties' => ['nullable', 'array'],
             'volunteer' => ['nullable', 'boolean'],
+            'accepts_volunteers' => ['nullable', 'boolean'],
             'why_volunteer' => ['nullable', 'string'],
             'website' => ['nullable', 'string'],
         ];
