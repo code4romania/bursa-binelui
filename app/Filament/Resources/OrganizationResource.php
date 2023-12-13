@@ -79,9 +79,10 @@ class OrganizationResource extends Resource
                             ->maxLength(255),
 
                         SpatieMediaLibraryFileUpload::make('logo')
-                            ->collection('logo')
                             ->label(__('organization.labels.logo'))
                             ->inlineLabel()
+                            ->collection('logo')
+                            ->disk(config('filesystems.default_public'))
                             ->image()
                             ->maxFiles(1),
 

@@ -86,6 +86,7 @@ class BadgeResource extends Resource
                 SpatieMediaLibraryFileUpload::make('image')
                     ->label(__('badge.image'))
                     ->inlineLabel()
+                    ->disk(config('filesystems.default_public'))
                     ->required()
                     ->maxFiles(1)
                     ->image()

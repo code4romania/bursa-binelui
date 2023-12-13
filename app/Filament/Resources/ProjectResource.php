@@ -127,14 +127,16 @@ class ProjectResource extends Resource
                 Toggle::make('accepting_comments')
                     ->required(),
                 SpatieMediaLibraryFileUpload::make('preview')
-                    ->collection('preview')
                     ->label(__('project.labels.preview_image'))
+                    ->collection('preview')
                     ->mediaName('preview')
+                    ->disk(config('filesystems.default_public'))
                     ->image()
                     ->maxFiles(1),
                 SpatieMediaLibraryFileUpload::make('gallery')
-                    ->collection('gallery')
                     ->label(__('project.labels.gallery'))
+                    ->collection('gallery')
+                    ->disk(config('filesystems.default_public'))
                     ->image()
                     ->multiple()
                     ->maxFiles(20),

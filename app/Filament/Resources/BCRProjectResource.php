@@ -108,17 +108,19 @@ class BCRProjectResource extends Resource
                     ->columnSpanFull()->url(),
 
                 SpatieMediaLibraryFileUpload::make('preview')
-                    ->collection('preview')
                     ->label(__('project.labels.preview_image'))
+                    ->collection('preview')
                     ->mediaName('preview')
+                    ->disk(config('filesystems.default_public'))
                     ->image()
                     ->maxFiles(1)
                     ->inlineLabel()
                     ->columnSpanFull(),
 
                 SpatieMediaLibraryFileUpload::make('gallery')
-                    ->collection('gallery')
                     ->label(__('project.labels.gallery'))
+                    ->collection('gallery')
+                    ->disk(config('filesystems.default_public'))
                     ->image()
                     ->multiple()
                     ->maxFiles(20)
