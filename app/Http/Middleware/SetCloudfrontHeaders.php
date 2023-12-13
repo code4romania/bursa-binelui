@@ -22,6 +22,7 @@ class SetCloudfrontHeaders
         if ($request->hasHeader($this->header)) {
             $request->headers->add([
                 'X-Forwarded-Proto' => $request->header($this->header),
+                'X-Forwarded-Port' => 'https',
             ]);
         }
 
