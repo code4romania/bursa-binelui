@@ -49,7 +49,7 @@
     import { ExclamationCircleIcon, CheckCircleIcon, XIcon } from '@heroicons/vue/solid';
     import ClientOnly from '@/Components/ClientOnly.vue';
 
-    const isSuccess = computed(() => new Boolean(usePage().props.flash?.success));
+    const isSuccess = computed(() => Boolean(usePage().props.flash?.success));
     const message = computed(() => usePage().props.flash?.message || null);
 
     const isVisible = ref(false);
@@ -61,7 +61,6 @@
             hide();
         } else {
             show();
-
             setTimeout(hide, 5000);
         }
     });

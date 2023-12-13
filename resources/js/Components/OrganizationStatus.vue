@@ -36,7 +36,7 @@
 <script setup>
     import { ref, computed, onMounted } from 'vue';
     import { usePage } from '@inertiajs/vue3';
-    import { ExclamationCircleIcon, CheckCircleIcon, XIcon } from '@heroicons/vue/solid';
+    import { ExclamationCircleIcon, XIcon } from '@heroicons/vue/solid';
     import { trans } from 'laravel-vue-i18n';
 
     const status = computed(() => usePage().props.auth.organization.status || null);
@@ -47,7 +47,8 @@
     const show = () => (isVisible.value = true);
     const hide = () => (isVisible.value = false);
     onMounted(() => {
-        if (!status || status.value === 'active') {
+
+        if (!status || status.value === 'approved') {
             hide();
         } else {
             message = trans('organization_status_' + status.value);
