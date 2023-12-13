@@ -77,6 +77,7 @@ class Project extends Model implements HasMedia
         'donations',
         'counties',
         'categories',
+        'approvedDonations',
     ];
 
     protected $withCount = [
