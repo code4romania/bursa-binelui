@@ -27,21 +27,9 @@
 
                 <div class="w-full lg:w-1/2 lg:px-10">
                     <div class="bg-white shadow-lg">
-                        <div class="p-8 space-y-8">
-                            <div
-                                class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50"
-                            >
-                                {{ $t('woohoo') }}
-                            </div>
-                            <h3 class="text-6xl font-bold leading-6 text-gray-900">{{ donation.place }}</h3>
-                            <p class="text-lg text-gray-500">
-                                {{ $t('donations_place_1') }} {{ donation.place }} {{ $t('donations_place_2') }}
-                            </p>
-                        </div>
-
                         <div class="px-10 py-8 space-y-6 bg-gray-50">
                             <div
-                                v-for="info in profile.donations_status"
+                                v-for="info in profile"
                                 class="flex items-center justify-start gap-x-4"
                             >
                                 <SvgLoader class="shrink-0 fill-gray-50" name="check" />

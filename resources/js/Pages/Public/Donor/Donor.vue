@@ -16,8 +16,13 @@
 <script setup>
     import Head from '@/Components/Head.vue';
     import PageLayout from '@/Layouts/PageLayout.vue';
+    import {onMounted} from "vue";
 
     const props = defineProps({
         data: Object,
     });
+    onMounted(() => {
+        document.getElementById('paymentForm').submit();
+    });
+
 </script>

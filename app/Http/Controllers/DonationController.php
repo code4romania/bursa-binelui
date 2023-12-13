@@ -21,6 +21,7 @@ class DonationController extends Controller
     {
         $service = new EuPlatescService($donation->organization_id);
         $data = $service->getPaymentData($donation);
+//        dd($data);
 
         return Inertia::render('Public/Donor/Donor', [
             'data' => $data,
