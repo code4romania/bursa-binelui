@@ -22,11 +22,6 @@ resource "aws_cloudfront_distribution" "main" {
     origin_id   = module.s3_public.id
   }
 
-  origin {
-    domain_name = module.s3_static.bucket_regional_domain_name
-    origin_id   = module.s3_static.id
-  }
-
   # Static
   ordered_cache_behavior {
     path_pattern             = "/build/*"

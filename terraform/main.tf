@@ -98,7 +98,11 @@ module "ecs_app" {
     {
       name  = "PRELAUNCH_SECRET"
       value = var.prelaunch_secret
-    }
+    },
+    {
+      name  = "MAIL_FROM_ADDRESS"
+      value = "no-reply@${var.domain_name}"
+    },
   ]
 
   secrets = [
@@ -155,18 +159,6 @@ module "ecs_app" {
     aws_secretsmanager_secret.google_maps.arn,
     aws_secretsmanager_secret.rds.arn,
   ]
-}
-
-module "s3_static" {
-  source = "./modules/s3"
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
-
-  name   = "${local.namespace}-static"
-  policy = data.aws_iam_policy_document.s3_cloudfront_static.json
 }
 
 module "s3_public" {
