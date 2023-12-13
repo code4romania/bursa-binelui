@@ -149,7 +149,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 }
 
 resource "aws_cloudfront_origin_access_control" "s3" {
-  name                              = module.s3_public.id
+  name                              = "s3-always-signv4"
   description                       = ""
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
