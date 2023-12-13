@@ -40,11 +40,6 @@ variable "sentry_dsn" {
   default     = null
 }
 
-variable "enable_2fa" {
-  type    = bool
-  default = false
-}
-
 variable "use_load_balancer" {
   type    = bool
   default = true
@@ -54,12 +49,6 @@ variable "create_iam_service_linked_role" {
   description = "Whether to create `AWSServiceRoleForECS` service-linked role. Set it to `false` if you already have an ECS cluster created in the AWS account and AWSServiceRoleForECS already exists."
   type        = bool
   default     = true
-}
-
-variable "receive_email" {
-  description = "Email address used to receive emails from the application."
-  type        = string
-  default     = "infrastructure@code4.ro"
 }
 
 variable "enable_execute_command" {
@@ -73,6 +62,12 @@ variable "google_analytics_id" {
   default = null
 }
 
+variable "google_maps_api_key" {
+  type      = string
+  default   = null
+  sensitive = true
+}
+
 variable "recaptcha_required_score" {
   type    = number
   default = 0.5
@@ -84,6 +79,12 @@ variable "recaptcha_public_key" {
 }
 
 variable "recaptcha_private_key" {
+  type      = string
+  default   = null
+  sensitive = true
+}
+
+variable "prelaunch_secret" {
   type    = string
   default = null
 }

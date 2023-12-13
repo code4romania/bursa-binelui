@@ -71,7 +71,34 @@ module "ecs_app" {
       name  = "MAIL_MAILER"
       value = "ses"
     },
-
+    {
+      name  = "FILESYSTEM_DISK"
+      value = "s3"
+    },
+    {
+      name  = "MEDIA_DISK"
+      value = "s3"
+    },
+    {
+      name  = "FILAMENT_FILESYSTEM_DRIVER"
+      value = "s3"
+    },
+    {
+      name  = "SENTRY_TRACES_SAMPLE_RATE"
+      value = 0.3
+    },
+    {
+      name  = "SENTRY_PROFILES_SAMPLE_RATE"
+      value = 0.5
+    },
+    {
+      name  = "GOOGLE_RECAPTCHA_THRESHOLD"
+      value = 0.5
+    },
+    {
+      name  = "PRELAUNCH_SECRET"
+      value = var.prelaunch_secret
+    }
   ]
 
   secrets = [
@@ -182,7 +209,7 @@ resource "aws_secretsmanager_secret_version" "app_key" {
 }
 
 resource "aws_secretsmanager_secret" "sentry_dsn" {
-  name = "${local.namespace}-sentry_dns-${random_string.secrets_suffix.result}"
+  name = "${local.namespace}-sentry_dsn-${random_string.secrets_suffix.result}"
 }
 
 resource "aws_secretsmanager_secret_version" "sentry_dsn" {
@@ -212,4 +239,13 @@ resource "aws_secretsmanager_secret_version" "recaptcha" {
     public_key  = var.recaptcha_public_key
     private_key = var.recaptcha_private_key
   })
+}
+
+resource "aws_secretsmanager_secret" "google_maps" {
+  name = "${local.namespace}-google_maps-${random_string.secrets_suffix.result}"
+}
+
+resource "aws_secretsmanager_secret_version" "google_maps" {
+  secret_id     = aws_secretsmanager_secret.google_maps.id
+  secret_string = var.google_maps_api_key
 }
