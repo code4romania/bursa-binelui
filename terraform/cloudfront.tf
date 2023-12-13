@@ -29,12 +29,12 @@ resource "aws_cloudfront_distribution" "main" {
 
   # Static
   ordered_cache_behavior {
-    path_pattern             = "/static/*"
+    path_pattern             = "/build/*"
     allowed_methods          = ["GET", "HEAD", "OPTIONS"]
     cached_methods           = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id         = module.s3_static.id
+    target_origin_id         = aws_lb.main.dns_name
     cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
-    origin_request_policy_id = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" #Managed-CORS-S3Origin
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.default.id
     viewer_protocol_policy   = "redirect-to-https"
     compress                 = true
 
@@ -64,11 +64,8 @@ resource "aws_cloudfront_distribution" "main" {
   # Logged in container
   dynamic "ordered_cache_behavior" {
     for_each = [
-      "applicants",
       "dashboard",
-      "organizations",
-      "projects",
-      "staff",
+      "filament-excel",
       "admin",
     ]
 

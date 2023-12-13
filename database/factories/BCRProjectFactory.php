@@ -38,7 +38,7 @@ class BCRProjectFactory extends Factory
             'description' => $this->faker->paragraph(),
             'start_date' => $this->faker->dateTimeBetween('-1 day', 'now'),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 day'),
-            'status' => $this->faker->randomElement(ProjectStatus::options()),
+            'status' => $this->faker->randomElement(ProjectStatus::values()),
             'external_links' => [
                 [
                     'title' => $this->faker->sentence(),

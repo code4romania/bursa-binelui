@@ -63,13 +63,21 @@ module "ecs_app" {
       name  = "APP_URL"
       value = "https://www.${var.domain_name}"
     },
+    {
+      name  = "EU_PLATESC_TEST_MODE"
+      value = tostring(true)
+    },
+    {
+      name  = "MAIL_MAILER"
+      value = "ses"
+    },
 
   ]
 
   secrets = [
     {
       name      = "APP_KEY"
-      valueFrom = aws_secretsmanager_secret.app_secret_key.arn
+      valueFrom = aws_secretsmanager_secret.app_key.arn
     },
     {
       name      = "DB_CONNECTION"
@@ -107,12 +115,17 @@ module "ecs_app" {
       name      = "GOOGLE_RECAPTCHA_SECRET_SITE_KEY"
       valueFrom = "${aws_secretsmanager_secret.recaptcha.arn}:private_key::"
     },
+    {
+      name      = "GOOGLE_MAPS_API_KEY"
+      valueFrom = aws_secretsmanager_secret.google_maps.arn # TODO:
+    },
   ]
 
   allowed_secrets = [
-    aws_secretsmanager_secret.app_secret_key.arn,
+    aws_secretsmanager_secret.app_key.arn,
     aws_secretsmanager_secret.sentry_dsn.arn,
     aws_secretsmanager_secret.recaptcha.arn,
+    aws_secretsmanager_secret.google_maps.arn,
     aws_secretsmanager_secret.rds.arn,
   ]
 }
@@ -159,13 +172,13 @@ module "s3_private" {
   policy = data.aws_iam_policy_document.s3_cloudfront_private.json
 }
 
-resource "aws_secretsmanager_secret" "app_secret_key" {
+resource "aws_secretsmanager_secret" "app_key" {
   name = "${local.namespace}-secret_key-${random_string.secrets_suffix.result}"
 }
 
-resource "aws_secretsmanager_secret_version" "app_secret_key" {
-  secret_id     = aws_secretsmanager_secret.app_secret_key.id
-  secret_string = random_password.app_secret_key.result
+resource "aws_secretsmanager_secret_version" "app_key" {
+  secret_id     = aws_secretsmanager_secret.app_key.id
+  secret_string = random_password.app_key.result
 }
 
 resource "aws_secretsmanager_secret" "sentry_dsn" {
@@ -177,8 +190,8 @@ resource "aws_secretsmanager_secret_version" "sentry_dsn" {
   secret_string = var.sentry_dsn
 }
 
-resource "random_password" "app_secret_key" {
-  length  = 50
+resource "random_password" "app_key" {
+  length  = 32
   special = true
 
   lifecycle {

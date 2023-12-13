@@ -46,6 +46,6 @@ return [
         'url' => 'https://www.google.com/recaptcha/api/siteverify',
         'site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
         'secret_key' => env('GOOGLE_RECAPTCHA_SECRET_SITE_KEY'),
-        'threshold' => max(0.0, min(1.0, floatval(env('GOOGLE_RECAPTCHA_SECRET_SITE_KEY', 0.5)))),
+        'threshold' => max(0.0, min(1.0, floatval(env('GOOGLE_RECAPTCHA_THRESHOLD', 0.5)))),
     ],
 ];
