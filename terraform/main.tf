@@ -77,15 +77,23 @@ module "ecs_app" {
     },
     {
       name  = "FILESYSTEM_DISK"
-      value = "s3"
+      value = "s3private"
     },
     {
-      name  = "MEDIA_DISK"
-      value = "s3"
+      name  = "FILESYSTEM_DISK_PUBLIC"
+      value = "s3public"
     },
     {
-      name  = "FILAMENT_FILESYSTEM_DRIVER"
-      value = "s3"
+      name  = "AWS_BUCKET"
+      value = module.s3_private.bucket
+    },
+    {
+      name  = "AWS_PUBLIC_BUCKET"
+      value = module.s3_public.bucket
+    },
+    {
+      name  = "AWS_PUBLIC_URL"
+      value = "https://www.${var.domain_name}/media"
     },
     {
       name  = "SENTRY_TRACES_SAMPLE_RATE"
