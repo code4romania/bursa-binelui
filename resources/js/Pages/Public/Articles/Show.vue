@@ -55,7 +55,12 @@
                     role="list"
                     class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
                 >
-                    <ArticleCard :article="article" class="relative z-50 lg:-mt-12" v-for="article in related.data" />
+                    <ArticleCard
+                        :article="article"
+                        class="relative z-50 lg:-mt-12"
+                        v-for="article in related.data"
+                        :key="article.id"
+                    />
                 </ul>
                 <LargeSquarePattern class="absolute top-0 right-0 z-10 hidden lg:block fill-primary-200" />
             </div>
@@ -78,8 +83,8 @@
             required: true,
         },
         related: {
-            type: Array,
-            default: () => [],
+            type: Object,
+            default: () => ({}),
         },
     });
 </script>
