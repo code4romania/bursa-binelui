@@ -110,6 +110,7 @@ class OrganizationResource extends Resource
 
                         SpatieMediaLibraryFileUpload::make('statute')
                             ->label(__('organization.labels.statute'))
+                            ->disk(config('filesystems.default'))
                             ->inlineLabel()
                             ->disablePreview()
                             ->collection('statute')
