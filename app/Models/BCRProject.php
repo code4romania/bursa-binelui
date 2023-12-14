@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Vite;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -86,17 +87,17 @@ class BCRProject extends Model implements HasMedia
 
     public function getEmbeddedVideosAttribute(): array
     {
-        $videos = $this->videos;
-        $embeddedVideos = [];
-        if (empty($videos)) {
-            return [];
-        }
-        foreach ($videos as $video) {
-            $embeddedUrl = rescue(fn () => (new Embed())->get($video['link'])->code, null);
-            $embeddedVideos[] = $embeddedUrl;
-        }
-
-        return collect($embeddedVideos)->filter(fn ($item) => ! empty($item))->toArray();
+        return collect($this->videos)
+            ->pluck('link')
+            ->map(
+                fn (string $videoUrl) => Cache::remember(
+                    'video-' . hash('sha256', $videoUrl),
+                    MONTH_IN_SECONDS,
+                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, '', false)
+                )
+            )
+            ->filter()
+            ->all();
     }
 
     //TODO MOVE IN TRAIT

@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Vite;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -275,17 +276,17 @@ class Project extends Model implements HasMedia
 
     public function getEmbeddedVideosAttribute(): array
     {
-        $videos = $this->videos;
-        $embeddedVideos = [];
-        if (empty($videos)) {
-            return [];
-        }
-        foreach ($videos as $video) {
-            $embeddedUrl = rescue(fn () => (new Embed())->get($video['url'])->code, '');
-            $embeddedVideos[] = $embeddedUrl;
-        }
-
-        return $embeddedVideos;
+        return collect($this->videos)
+            ->pluck('url')
+            ->map(
+                fn (string $videoUrl) => Cache::remember(
+                    'video-' . hash('sha256', $videoUrl),
+                    MONTH_IN_SECONDS,
+                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, '', false)
+                )
+            )
+            ->filter()
+            ->all();
     }
 
     public function scopeSearch(Builder $query, ?string $search): Builder
