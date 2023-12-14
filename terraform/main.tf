@@ -52,6 +52,10 @@ module "ecs_app" {
 
   environment = [
     {
+      name  = "APP_NAME"
+      value = "Bursa Binelui"
+    },
+    {
       name  = "APP_ENV"
       value = var.env
     },
@@ -93,7 +97,7 @@ module "ecs_app" {
     },
     {
       name  = "AWS_PUBLIC_URL"
-      value = "https://www.${var.domain_name}/media"
+      value = "https://www.${var.domain_name}"
     },
     {
       name  = "SENTRY_TRACES_SAMPLE_RATE"
