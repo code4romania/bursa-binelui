@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function __invoke(): Response|RedirectResponse
     {
         if (auth()->user()->belongsToOrganization()) {
-           return  $this->ongDashboard();
+            return  $this->ongDashboard();
         }
         if (auth()->user()->isDonor()) {
             return $this->donorDashboard();
@@ -47,9 +47,9 @@ class DashboardController extends Controller
     private function ongDashboard()
     {
         $organization = auth()->user()->organization;
-        $data =  Cache::remember('organization_id_stats', 60, function () use ($organization) {
+        $data = Cache::remember('organization_id_stats', 60, function () use ($organization) {
             return [
-                'organization' =>[
+                'organization' => [
                     'status' => $organization->status,
                     'name' => $organization->name,
                     'has_statute' => $organization->has_statute,
@@ -65,12 +65,17 @@ class DashboardController extends Controller
                     'closed' => $organization->projects()->whereIsClosed()->count(),
                     'starts_soon' => $organization->projects()->whereStartsSoon()->count(),
                 ],
+                'tickets' => [
+                    'total' => $organization->tickets->count(),
+                    'open' => $organization->tickets()->whereOpen()->count(),
+                    'closed' => $organization->tickets()->whereClosed()->count(),
+                ],
             ];
         });
 
-        dd($data);
-        return Inertia::render('Ong/Dashboard', [
-            'data'=> $data,
+
+        return Inertia::render('AdminOng/Dashboard', [
+            'data' => $data,
         ]);
     }
 }

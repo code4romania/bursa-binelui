@@ -444,6 +444,13 @@
     "tickets.close.title": "Închide ticket",
     "tickets.close.content": "Ești sigur că vrei să închizi acest tichet?",
 
+    "tickets.stats.open": "Tichete deschis",
+    "tickets.stats.closed": "Tichete inchise",
+    "tickets.stats.total": "Total tichete",
+
+
+
+
     "tickets.reopen.title": "Redeschide ticket",
     "tickets.reopen.content": "Ești sigur că vrei să redeschizi acest tichet?",
 
@@ -456,6 +463,30 @@
     "projects.status.close": "Închis",
     "projects.status.starting_soon": "Incepe in curand",
     "projects.status.ending_soon": "Se incheie in curand",
+    "projects.status.rejected": "Respinse",
+    "projects.status.draft": "Draft",
+    "projects.status.pending": "In asteptare",
+    "projects.status.approved": "Aprobate",
+    "projects.status.closed": "Inchise",
+    "projects.status.published": "Publicate",
+    "projects.status.starts_soon": "Incepe in curand",
+    "projects.status.total": "Total proiecte",
+
+    "projects.stats.open": "Deschis",
+    "projects.stats.close": "Închis",
+    "projects.stats.starting_soon": "Incepe in curand",
+    "projects.stats.ending_soon": "Se incheie in curand",
+    "projects.stats.rejected": "Respinse",
+    "projects.stats.draft": "Draft",
+    "projects.stats.pending": "In asteptare",
+    "projects.stats.approved": "Aprobate",
+    "projects.stats.closed": "Inchise",
+    "projects.stats.published": "Publicate",
+    "projects.stats.starts_soon": "Incepe in curand",
+    "projects.stats.total": "Total proiecte",
+
+
+
 
     "project.labels.preview_image": "Imagine de prezentare",
     "project.labels.videos": "Videoclipuri externe ale proiectului",
@@ -466,5 +497,6 @@
     "project.labels.change_gallery_label": "Schimbă galeria de imagini",
 
     "organization_status_disabled": "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
-    "organization_status_pending": "Organizația este în așteptare"
+    "organization_status_pending": "Organizația este în așteptare",
+    "organization_status_approved": "Organizația este aprobată"
 }
