@@ -73,7 +73,6 @@ class DashboardController extends Controller
             ];
         });
 
-
         return Inertia::render('AdminOng/Dashboard', [
             'data' => $data,
         ]);

@@ -46,7 +46,6 @@
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
     import {ChartBarIcon} from '@heroicons/vue/outline';
-    import {organization} from "../../../../public/build/assets/ro-adfdc2c4.js";
 
 
     const props = defineProps({
