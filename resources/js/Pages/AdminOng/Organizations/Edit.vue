@@ -352,9 +352,8 @@
             </Field>
 
             <!-- Edit organizaton address -->
-            <Field :label="$t('organization_address_label')" :hasPendingChanges="changes.includes('address')" alt>
+            <Field :label="$t('organization_address_county_label')" :hasPendingChanges="changes.includes('counties')" alt>
                 <template #value>
-                    {{ organization.address }},
                     {{ originalOrganization.county_names.join(', ') }}
                 </template>
 
@@ -363,7 +362,6 @@
                         @action="editField('counties')"
                         @cancel="
                             organization.counties = originalOrganization.counties;
-                            organization.address = originalOrganization.address;
                         "
                         class="flex justify-end col-span-1"
                     >
@@ -378,7 +376,22 @@
                                 multiple
                             />
                         </div>
+                    </EditModal>
+                </template>
+            </Field>
+            <Field :label="$t('organization_address_street_address_label')" :hasPendingChanges="changes.includes('address')" alt>
+                <template #value>
+                    {{ organization.address }},
+                </template>
 
+                <template #action>
+                    <EditModal
+                        @action="editField('address')"
+                        @cancel="
+                            organization.address = originalOrganization.address;
+                        "
+                        class="flex justify-end col-span-1"
+                    >
                         <Input
                             class="w-full mt-4"
                             :label="$t('address_label')"
