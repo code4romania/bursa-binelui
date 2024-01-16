@@ -140,9 +140,12 @@ class Activity extends BaseActivity
                         }
                     });
                     $media = Media::find($value);
+                    $media->collection_name = 'statute';
+                    $media->save();
                     $this->subject->media->add($media);
+                } else {
+                    $this->subject->save();
                 }
-                $this->subject->save();
             } else {
                 $this->subject->save();
             }
