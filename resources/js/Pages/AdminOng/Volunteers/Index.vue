@@ -48,8 +48,8 @@
                     :title="$t('volunteers.reject.title')"
                     :content="$t('volunteers.reject.content', { name: row.name })"
                     :trigger="$t('volunteers.reject.trigger')"
-                    :confirmActionUrl="route('dashboard.volunteers.delete', row.id)"
-                    confirmActionMethod="delete"
+                    :confirmActionUrl="route('dashboard.volunteers.reject', row.id)"
+                    confirmActionMethod="post"
                     color="danger"
                 />
             </template>
