@@ -498,5 +498,6 @@
 
     "organization_status_disabled": "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
     "organization_status_pending": "Organizația este în așteptare",
-    "organization_status_approved": "Organizația este aprobată"
+    "organization_status_approved": "Organizația este aprobată",
+    "project_change_status_archived": "Vrei să arhivezi proiectul?"
 }
