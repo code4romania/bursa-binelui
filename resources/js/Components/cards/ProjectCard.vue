@@ -102,7 +102,7 @@
             <SecondaryButton
                 v-if="'admin' == cardType && project.can_be_archived"
                 class="w-full mt-4 py-2.5"
-                @click="changeProjectStatus(project.id, 'archive', project.type)"
+                @click="changeProjectStatus(project.id, 'archived', project.type)"
                 :label="$t('can.be.archived')"
             />
             <!-- Donate modal -->
@@ -167,16 +167,34 @@ import {computed, onMounted} from 'vue';
     import ProjectTag from '@/Components/projects/Tag.vue';
 
     import { BookmarkIcon, LocationMarkerIcon } from '@heroicons/vue/solid';
+import {trans} from "laravel-vue-i18n";
+import {useForm} from "@inertiajs/vue3";
+import route from "@/Helpers/useRoute.js";
 
     /** Component props. */
     const props = defineProps({
         project: Object,
         cardType: String,
     });
-    onMounted(() => {
-        console.log(props.project);
-        console.log(props.cardType);
+    const form = useForm({
+        status: null,
     });
+
+const changeProjectStatus = (id, status, type) => {
+    let tmpRoute =
+        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+    form.status = status;
+    console.log(form);
+    if (confirm(trans('project_change_status_'+status))) {
+        form.post(tmpRoute, {
+            preserveScroll: true,
+            onSuccess: (response) => {
+                //
+            },
+        });
+    }
+};
+
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {

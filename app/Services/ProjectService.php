@@ -11,6 +11,7 @@ use App\Models\RegionalProject;
 use App\Models\User;
 use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -109,13 +110,11 @@ class ProjectService
      */
     public function changeStatus(Project|RegionalProject $project, string $status): void
     {
-        $this->project = $project;
-        $this->project->status = ProjectStatus::pending->value;
-        $this->project->status_updated_at = now();
-        $this->project->save();
-        if ($status === ProjectStatus::approved->value) {
-            $this->sendCreateNotifications($this->project);
-        }
+        match ($status) {
+            ProjectStatus::pending->value => $this->pending($project),
+            ProjectStatus::archived->value => $this->archive($project),
+            default => Log::error('Invalid status  on change project status [# %s ]: %s', $project->id, $status),
+        };
     }
 
     public static function update(Project $project, array $attributes)
@@ -124,8 +123,6 @@ class ProjectService
 
         $key = $attributes->keys()->first();
         $value = $attributes->get($key);
-
-//        dd($attributes,$value);
 
         return match ($key) {
             'counties' => $project->counties()->sync($value),
@@ -137,5 +134,22 @@ class ProjectService
                 ? $project->fill($attributes->all())->saveForApproval()
                 : $project->update($attributes->all()),
         };
+    }
+
+    private function pending(Project|RegionalProject $project)
+    {
+        $this->project = $project;
+        $this->project->status = ProjectStatus::pending->value;
+        $this->project->status_updated_at = now();
+        $this->project->save();
+        $this->sendCreateNotifications($this->project);
+    }
+
+    private function archive(Project|RegionalProject $project): void
+    {
+        $this->project = $project;
+        $this->project->status = ProjectStatus::archived->value;
+        $this->project->status_updated_at = now();
+        $this->project->save();
     }
 }

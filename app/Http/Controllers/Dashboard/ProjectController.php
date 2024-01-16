@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Enums\ProjectStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\EditRequest;
 use App\Http\Requests\Project\StoreRequest;
@@ -30,6 +31,7 @@ class ProjectController extends Controller
                     ->when($projectStatus, function (Builder $query) use ($projectStatus) {
                         return $query->statusIs($projectStatus);
                     })
+                    ->orderBy('status_updated_at')
                     ->paginate(16)
                     ->withQueryString()
             ),
@@ -85,29 +87,31 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $projectArray = $project->toArray();
         $projectArray['preview'] = $project->getFirstMedia('preview');
-        Validator::make(
-            $projectArray,
-            [
-                'name' => ['required', 'max:255'],
-                'start' => ['required', 'date', 'after_or_equal:today'],
-                'end' => ['required', 'date', 'after:start'],
-                'target_budget' => ['required', 'numeric', 'min:1'],
-                'categories' => ['required', 'array', 'min:1'],
-                'counties' => ['required_if:is_national,0', 'array', 'min:1'],
-                'description' => ['required', 'min:100', 'max:1000'],
-                'scope' => ['required', 'min:100', 'max:1000'],
-                'beneficiaries' => ['required', 'min:50', 'max:1000'],
-                'reason_to_donate' => ['required', 'min:50', 'max:1000'],
-                'preview' => ['required'],
-                'videos' => ['nullable', 'array'],
-                'videos.*.url' => ['nullable', 'url'],
-                'external_links' => ['nullable', 'array'],
-                'external_links.*.url' => ['nullable', 'url'],
-            ],
-            [
-                'start.after_or_equal' => __('custom_validation.start_date.after_or_equal'),
-            ]
-        )->validate();
+        if ($request->get('status') !== ProjectStatus::archived->value) {
+            Validator::make(
+                $projectArray,
+                [
+                    'name' => ['required', 'max:255'],
+                    'start' => ['required', 'date', 'after_or_equal:today'],
+                    'end' => ['required', 'date', 'after:start'],
+                    'target_budget' => ['required', 'numeric', 'min:1'],
+                    'categories' => ['required', 'array', 'min:1'],
+                    'counties' => ['required_if:is_national,0', 'array', 'min:1'],
+                    'description' => ['required', 'min:100', 'max:1000'],
+                    'scope' => ['required', 'min:100', 'max:1000'],
+                    'beneficiaries' => ['required', 'min:50', 'max:1000'],
+                    'reason_to_donate' => ['required', 'min:50', 'max:1000'],
+                    'preview' => ['required'],
+                    'videos' => ['nullable', 'array'],
+                    'videos.*.url' => ['nullable', 'url'],
+                    'external_links' => ['nullable', 'array'],
+                    'external_links.*.url' => ['nullable', 'url'],
+                ],
+                [
+                    'start.after_or_equal' => __('custom_validation.start_date.after_or_equal'),
+                ]
+            )->validate();
+        }
         (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
 
         return redirect()->back()

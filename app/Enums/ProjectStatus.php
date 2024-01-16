@@ -18,6 +18,7 @@ enum ProjectStatus: string
     case pending = 'pending';
     case approved = 'approved';
     case rejected = 'rejected';
+    case archived = 'archived';
 
     protected function labelKeyPrefix(): ?string
     {
