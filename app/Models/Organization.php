@@ -44,7 +44,6 @@ class Organization extends Model implements HasMedia
     protected $fillable = [
         'name',
         'cif',
-        //        'slug',
         'description',
         'address',
         'contact_person',
@@ -81,6 +80,8 @@ class Organization extends Model implements HasMedia
         'address',
         'statute',
     ];
+
+    private string $slugFieldSource = 'name';
 
     public function projects(): HasMany
     {
@@ -166,12 +167,12 @@ class Organization extends Model implements HasMedia
 
     public function scopeWhereHasActiveProjects(Builder $query): Builder
     {
-        return $query->whereRelation('projects', 'status', ProjectStatus::active);
+        return $query->whereRelation('projects', 'status', ProjectStatus::approved);
     }
 
     public function scopeWhereDoesntHaveActiveProjects(Builder $query): Builder
     {
-        return $query->whereRelation('projects', 'status', '!=', ProjectStatus::active);
+        return $query->whereRelation('projects', 'status', '!=', ProjectStatus::approved);
     }
 
     public function scopeWhereHasEuPlatesc(Builder $query): Builder

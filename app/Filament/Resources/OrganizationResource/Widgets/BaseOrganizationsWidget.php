@@ -95,7 +95,7 @@ abstract class BaseOrganizationsWidget extends BaseWidget
 
     protected function paginateTableQuery(Builder $query): Paginator
     {
-        return $query->simplePaginate(
+        return $query->paginate(
             $this->getTableRecordsPerPage() == -1 ? $query->count() : $this->getTableRecordsPerPage(),
             ['*'],
             $this->getTablePaginationPageName(),

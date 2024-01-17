@@ -157,6 +157,7 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
 
             ])
+            ->defaultSort('id', 'desc')
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ])
