@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\UserRole;
+use App\Filament\Resources\UserResource\Actions\ExportAction;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
@@ -154,9 +155,13 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make(),
             ]);
     }
 

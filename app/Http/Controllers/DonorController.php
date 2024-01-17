@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\EuPlatescStatus;
 use App\Http\Filters\DonationDatesFilter;
-use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Resources\Collections\DonationCollection;
 use App\Models\Donation;
 use Illuminate\Http\Request;
@@ -52,7 +51,6 @@ class DonorController extends Controller
         });
         $dates = $donations->pluck('created_at')->map(fn ($date) => $date->format('Y-m'))->unique();
 
-
         return Inertia::render('Donor/Donations', [
             'filter' => $request->query('filter'),
             'collection' => new DonationCollection(
@@ -65,7 +63,6 @@ class DonorController extends Controller
                         AllowedFilter::exact('organization', 'project.organization_id'),
                         AllowedFilter::exact('project', 'project_id'),
                         AllowedFilter::exact('status', 'status'),
-
 
                     ])
                     ->allowedSorts([

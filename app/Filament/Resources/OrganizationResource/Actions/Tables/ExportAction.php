@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
 
 use App\Enums\OrganizationStatus;
-use App\Enums\ProjectStatus;
 use App\Filament\Resources\OrganizationResource;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Builder;
@@ -120,7 +119,7 @@ class ExportAction extends BaseAction
                     Column::make('has_active_projects')
                         ->heading(__('organization.labels.has_active_projects'))
                         ->formatStateUsing(
-                            fn (Organization $record) => $record->projects->where('status', ProjectStatus::active)->count()
+                            fn (Organization $record) => $record->projects()->whereIsOpen()->count()
                                 ? __('forms::components.select.boolean.true')
                                 : __('forms::components.select.boolean.false')
                         ),
