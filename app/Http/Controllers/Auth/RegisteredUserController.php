@@ -42,11 +42,13 @@ class RegisteredUserController extends Controller
     {
         $attributes = $request->validated();
 
+        $subscribe = $attributes['subscribe'];
         $user = User::create([
             'name' => $attributes['user']['name'],
             'email' => $attributes['user']['email'],
             'password' => Hash::make($attributes['user']['password']),
             'role' => $attributes['type'] === 'organization' ? UserRole::ADMIN : UserRole::USER,
+            'newsletter' => (bool)$subscribe
         ]);
 
         event(new Registered($user));
@@ -66,7 +68,7 @@ class RegisteredUserController extends Controller
             $user->save();
         }
 
-        if ($attributes['subscribe']) {
+        if ($subscribe) {
             NewsletterService::subscribe($user->email, $user->name);
         }
 

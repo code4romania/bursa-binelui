@@ -43,6 +43,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'referrer',
         'created_by',
         'organization_id',
+        'newsletter'
     ];
 
     /**
