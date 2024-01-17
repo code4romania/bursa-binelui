@@ -78,5 +78,4 @@ class ApprovedOrganizationsWidget extends BaseOrganizationsWidget
             DeactivateOrganizationAction::make(),
         ];
     }
-
 }

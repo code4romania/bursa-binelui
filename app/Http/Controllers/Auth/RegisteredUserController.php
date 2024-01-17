@@ -56,7 +56,6 @@ class RegisteredUserController extends Controller
         if ($user->hasRole(UserRole::ADMIN)) {
             $attributes['ngo']['status'] = OrganizationStatus::draft;
             $attributes['ngo']['slug'] = Str::slug($attributes['ngo']['name']);
-            dd(collect($attributes['ngo'])->toJson());
 
             $organization = Organization::create($attributes['ngo']);
 
