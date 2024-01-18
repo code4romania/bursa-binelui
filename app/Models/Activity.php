@@ -163,27 +163,19 @@ class Activity extends BaseActivity
         }
         //TODO move add tickets as a relationship in project model
 
-        if ($this->subject instanceof Project) {
-            $this->subject->organization->tickets()->create([
-                'subject' => __('project.ticket_rejected.subject', ['project' => $this->subject->name]),
-                'content' => $reason,
-                'user_id' => auth()->user()->id,
-            ]);
-        } else {
-            $this->subject->tickets()->create([
-                'subject' => __('project.ticket_rejected.subject', ['project' => $this->subject->name]),
-                'content' => $reason,
-                'user_id' => auth()->user()->id,
-            ]);
+        $organization = $this->subject;
+        if ($organization instanceof Project) {
+            $organization = $this->subject->organization;
         }
+        $organization->tickets()->create([
+            'subject' => __('project.ticket_rejected.subject', ['project' => $this->subject->name]),
+            'content' => $reason,
+            'user_id' => auth()->user()->id,
+        ]);
+
         $this->update([
             'rejected_at' => now(),
         ]);
 
-        $this->organization->tickets()->create([
-            'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
-            'content' => $reason,
-            'user_id' => auth()->user()->id,
-        ]);
     }
 }
