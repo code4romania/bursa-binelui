@@ -40,11 +40,13 @@ class BcrProjectResource extends JsonResource
                     'h' => 800,
                 ];
             })->toArray(),
-            'external_links' => collect($this->external_links)->map(function (array $link) {
-                $link['source'] = parse_url($link['link'], \PHP_URL_HOST);
+            'external_links' => collect($this->external_links)
+                ->filter(fn ($link) => !blank($link['link']))
+                ->map(function (array $link) {
+                    $link['source'] = parse_url($link['link'], \PHP_URL_HOST);
 
-                return $link;
-            }),
+                    return $link;
+                }),
             'category' => $this->category->name,
         ];
     }

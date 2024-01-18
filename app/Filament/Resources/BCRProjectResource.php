@@ -132,10 +132,13 @@ class BCRProjectResource extends Resource
                         TextInput::make('title')
                             ->label(__('bcr-project.labels.external_links.title'))
                             ->inlineLabel()
+                            ->required()
                             ->columnSpanFull(),
                         TextInput::make('link')->label(__('bcr-project.labels.external_links.link'))
                             ->inlineLabel()
-                            ->columnSpanFull()->url(),
+                            ->columnSpanFull()
+                            ->required()
+                            ->url(),
                     ])
                     ->label(__('bcr-project.labels.external_links.label'))
                     ->inlineLabel()
@@ -146,6 +149,7 @@ class BCRProjectResource extends Resource
                         TextInput::make('link')->label(__('bcr-project.labels.videos'))
                             ->inlineLabel()
                             ->columnSpanFull()
+                            ->required()
                             ->url(),
                     ])
                     ->inlineLabel()
