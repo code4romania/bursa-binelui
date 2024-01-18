@@ -68,7 +68,7 @@ class RegisteredUserController extends Controller
             $user->save();
         }
 
-        if ($subscribe) {
+        if ($subscribe && !blank(config('newsletter.driver_arguments.api_key'))) {
             NewsletterService::subscribe($user->email, $user->name);
         }
 
