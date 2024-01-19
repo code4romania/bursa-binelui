@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\OrganizationResource\Actions\Tables\Organizations\ApproveOrganizationAction;
 use App\Filament\Resources\OrganizationResource\Actions\Tables\Organizations\RejectOrganizationAction;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
-use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 
 class PendingOrganizationsWidget extends BaseOrganizationsWidget
@@ -82,41 +81,6 @@ class PendingOrganizationsWidget extends BaseOrganizationsWidget
 
     protected function getTableFilters(): array
     {
-        $createdFilter = [
-            Filter::make('created_at')
-                ->columns()
-                ->form([
-                    DatePicker::make('created_from')
-                        ->label(__('activity.filter.logged_from'))
-                        ->placeholder(
-                            fn ($state): string => today()
-                                ->setDay(17)
-                                ->setMonth(11)
-                                ->subYear()
-                                ->toFormattedDate()
-                        ),
-
-                    DatePicker::make('created_until')
-                        ->label(__('activity.filter.logged_until'))
-                        ->after('created_from')
-                        ->placeholder(
-                            fn ($state): string => today()
-                                ->toFormattedDate()
-                        ),
-                ])
-                ->query(function (Builder $query, array $data) {
-                    return $query
-                        ->when(
-                            $data['created_from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                        )
-                        ->when(
-                            $data['created_until'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                        );
-                })
-        ];
-
-        return array_merge($createdFilter, parent::getTableFilters());
+        return array_merge([DateFilter::make('created_at')], parent::getTableFilters());
     }
 }

@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\EuPlatescStatus;
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\DonationResource\Pages;
 use App\Forms\Components\Link;
 use App\Models\Donation;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -151,38 +150,7 @@ class DonationResource extends Resource
                         true: fn (Builder $query) => $query->whereHas('championshipStage'),
                         false: fn (Builder $query) => $query->whereDoesntHave('championshipStage'),
                     ),
-                Filter::make('created_at')
-                    ->form([
-                        DatePicker::make('created_from')
-                            ->label(__('activity.filter.logged_from'))
-                            ->placeholder(
-                                fn ($state): string => today()
-                                    ->setDay(17)
-                                    ->setMonth(11)
-                                    ->subYear()
-                                    ->toFormattedDate()
-                            ),
-
-                        DatePicker::make('created_until')
-                            ->label(__('activity.filter.logged_until'))
-                            ->after('created_from')
-                            ->placeholder(
-                                fn ($state): string => today()
-                                    ->toFormattedDate()
-                            ),
-                    ])
-                    ->query(function (Builder $query, array $data) {
-                        return $query
-                            ->when(
-                                $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
-                            );
-                    })
-
+                DateFilter::make('created_at')
             ])
             ->actions([
                 ViewAction::make(),
