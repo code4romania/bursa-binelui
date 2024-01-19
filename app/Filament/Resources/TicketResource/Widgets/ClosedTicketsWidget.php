@@ -7,8 +7,10 @@ namespace App\Filament\Resources\TicketResource\Widgets;
 use App\Filament\Resources\TicketResource;
 use App\Models\Ticket;
 use Closure;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Widgets\TableWidget;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,5 +78,41 @@ class ClosedTicketsWidget extends TableWidget
             ['*'],
             $this->getTablePaginationPageName()
         );
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [Filter::make('updated_at')
+            ->columns()
+            ->form([
+                DatePicker::make('updated_from')
+                    ->label(__('activity.filter.logged_from'))
+                    ->placeholder(
+                        fn ($state): string => today()
+                            ->setDay(17)
+                            ->setMonth(11)
+                            ->subYear()
+                            ->toFormattedDate()
+                    ),
+
+                DatePicker::make('updated_until')
+                    ->label(__('activity.filter.logged_until'))
+                    ->after('updated_from')
+                    ->placeholder(
+                        fn ($state): string => today()
+                            ->toFormattedDate()
+                    ),
+            ])
+            ->query(function (Builder $query, array $data) {
+                return $query
+                    ->when(
+                        $data['updated_from'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('updated_at', '>=', $date),
+                    )
+                    ->when(
+                        $data['updated_until'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('updated_at', '<=', $date),
+                    );
+            })];
     }
 }

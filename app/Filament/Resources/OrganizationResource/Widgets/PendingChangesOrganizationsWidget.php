@@ -8,8 +8,10 @@ use App\Filament\Resources\OrganizationResource;
 use App\Models\Activity;
 use App\Models\Organization;
 use App\Tables\Columns\TitleWithImageColumn;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 
 class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
@@ -87,5 +89,45 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
                 ->label(__('organization.actions.view'))
                 ->url($this->getTableRecordUrlUsing()),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        $statusUpdateFilter = [
+            Filter::make('status_updated_at')
+                ->columns()
+                ->form([
+                    DatePicker::make('latest_updated_from')
+                        ->label(__('activity.filter.logged_from'))
+                        ->placeholder(
+                            fn ($state): string => today()
+                                ->setDay(17)
+                                ->setMonth(11)
+                                ->subYear()
+                                ->toFormattedDate()
+                        ),
+
+                    DatePicker::make('latest_updated_until')
+                        ->label(__('activity.filter.logged_until'))
+                        ->after('latest_updated_from')
+                        ->placeholder(
+                            fn ($state): string => today()
+                                ->toFormattedDate()
+                        ),
+                ])
+                ->query(function (Builder $query, array $data) {
+                    return $query
+                        ->when(
+                            $data['latest_updated_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('latest_updated_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['latest_updated_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('latest_updated_at', '<=', $date),
+                        );
+                })
+        ];
+
+        return array_merge($statusUpdateFilter, parent::getTableFilters());
     }
 }

@@ -7,12 +7,15 @@ namespace App\Filament\Resources\Articles;
 use App\Filament\Resources\Articles\CategoryResource\Pages;
 use App\Models\ArticleCategory;
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
+use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoryResource extends Resource
 {
@@ -81,7 +84,38 @@ class CategoryResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Filter::make('updated_at')
+                    ->columns()
+                    ->form([
+                        DatePicker::make('updated_from')
+                            ->label(__('activity.filter.logged_from'))
+                            ->placeholder(
+                                fn ($state): string => today()
+                                    ->setDay(17)
+                                    ->setMonth(11)
+                                    ->subYear()
+                                    ->toFormattedDate()
+                            ),
+
+                        DatePicker::make('updated_until')
+                            ->label(__('activity.filter.logged_until'))
+                            ->after('updated_from')
+                            ->placeholder(
+                                fn ($state): string => today()
+                                    ->toFormattedDate()
+                            ),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['updated_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('updated_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['updated_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('updated_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

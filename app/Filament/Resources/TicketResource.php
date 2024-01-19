@@ -10,8 +10,11 @@ use App\Filament\Resources\TicketResource\RelationManagers\MessagesRelationManag
 use App\Filament\Resources\TicketResource\Widgets\ClosedTicketsWidget;
 use App\Filament\Resources\TicketResource\Widgets\OpenTicketsWidget;
 use App\Models\Ticket;
+use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 
 class TicketResource extends Resource
@@ -96,5 +99,40 @@ class TicketResource extends Resource
             'create' => Pages\CreateTicket::route('/create'),
             'view' => Pages\ViewTicket::route('/{record}'),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [Filter::make('created_at')
+            ->form([
+                DatePicker::make('created_from')
+                    ->label(__('activity.filter.logged_from'))
+                    ->placeholder(
+                        fn ($state): string => today()
+                            ->setDay(17)
+                            ->setMonth(11)
+                            ->subYear()
+                            ->toFormattedDate()
+                    ),
+
+                DatePicker::make('created_until')
+                    ->label(__('activity.filter.logged_until'))
+                    ->after('created_from')
+                    ->placeholder(
+                        fn ($state): string => today()
+                            ->toFormattedDate()
+                    ),
+            ])
+            ->query(function (Builder $query, array $data) {
+                return $query
+                    ->when(
+                        $data['created_from'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                    )
+                    ->when(
+                        $data['created_until'],
+                        fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                    );
+            })];
     }
 }
