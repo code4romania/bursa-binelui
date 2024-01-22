@@ -9,6 +9,7 @@ use App\Filament\Resources\ProjectResource;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 
 class BaseProjectWidget extends BaseWidget
@@ -99,5 +100,14 @@ class BaseProjectWidget extends BaseWidget
                 ->size('sm')
                 ->icon(null),
         ];
+    }
+
+    protected function paginateTableQuery(Builder $query): Paginator
+    {
+        return $query->paginate(
+            $this->getTableRecordsPerPage() == -1 ? $query->count() : $this->getTableRecordsPerPage(),
+            ['*'],
+            $this->getTablePaginationPageName(),
+        );
     }
 }
