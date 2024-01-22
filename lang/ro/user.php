@@ -73,4 +73,5 @@ return [
         'attach' => 'Alocă utilizator',
         'detach' => 'Elimină',
     ],
+    'header' => 'Utilizatori (:number)'
 ];

@@ -28,4 +28,6 @@ return [
         ],
 
     ],
+
+    'header' => 'Proiecte BCR (:number)',
 ];

@@ -70,4 +70,8 @@ return[
         ],
     ],
 
+    'header' => [
+        'open' => 'Tichete deschise (:number)',
+        'close' => 'Tichete închise (:number)',
+    ],
 ];

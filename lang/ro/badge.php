@@ -39,4 +39,9 @@ return [
         'automated' => 'Automat',
         'manual' => 'Manual',
     ],
+
+    'header' => [
+        'badge' =>  'Badge-uri (:number)',
+        'category_badge' => 'Categorii de badge (:number)',
+        ],
 ];

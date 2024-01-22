@@ -52,4 +52,6 @@ return [
         'user' => 'Utilizator',
 
     ],
+
+    'header' => 'Voluntari (:number)',
 ];
