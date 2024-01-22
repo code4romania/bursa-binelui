@@ -91,7 +91,6 @@ trait HasSlug
         $base = $slug = Str::slug($this->{$this->getSlugFieldSource()});
         $suffix = 1;
 
-
         while ($this->slugAlreadyUsed($slug)) {
             $slug = Str::slug($base . '_' . $suffix++);
         }

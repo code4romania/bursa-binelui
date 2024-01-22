@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Actions\Tables;
 
-use App\Enums\OrganizationStatus;
 use App\Enums\ProjectStatus;
-use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\ProjectResource;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Builder;
@@ -45,7 +43,7 @@ class ExportAction extends BaseAction
                         ->status($this->status)
                         ->with([
                             'counties',
-                            'donations'
+                            'donations',
                         ])
                         ->withCount([
                             'donations',

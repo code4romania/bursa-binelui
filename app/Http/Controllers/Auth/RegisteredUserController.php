@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
             'email' => $attributes['user']['email'],
             'password' => Hash::make($attributes['user']['password']),
             'role' => $attributes['type'] === 'organization' ? UserRole::ADMIN : UserRole::USER,
-            'newsletter' => (bool)$subscribe
+            'newsletter' => (bool) $subscribe,
         ]);
 
         event(new Registered($user));
