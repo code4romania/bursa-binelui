@@ -45,4 +45,5 @@ return [
         'charged' => 'Incasata',
     ],
 
+    'header' => 'Donatii (:number)',
 ];

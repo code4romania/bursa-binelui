@@ -33,4 +33,9 @@ return [
         'articles_count' => 'Număr de articole',
     ],
 
+    'header' => [
+        'article' => 'Articole (:number)',
+        'category' => 'Categorii (:number)'
+    ],
+
 ];

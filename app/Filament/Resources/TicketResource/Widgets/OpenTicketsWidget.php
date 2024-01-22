@@ -92,4 +92,9 @@ class OpenTicketsWidget extends TableWidget
     {
         return [DateFilter::make('created_at')];
     }
+
+    protected function getTableHeading(): string
+    {
+        return __('ticket.header.open', ['number' => Ticket::query()->whereOpen()->count()]) ;
+    }
 }

@@ -83,4 +83,9 @@ class ClosedTicketsWidget extends TableWidget
     {
         return [DateFilter::make('updated_at')];
     }
+
+    protected function getTableHeading(): string
+    {
+        return __('ticket.header.close', ['number' => Ticket::query()->whereClosed()->count()]) ;
+    }
 }
