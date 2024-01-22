@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Articles;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Forms\Components\Value;
 use App\Filament\Resources\Articles\ArticleResource\Pages;
 use App\Models\Article;
@@ -177,6 +178,7 @@ class ArticleResource extends Resource
                     ->multiple()
                     ->relationship('category', 'name')
                     ->label(__('article.filter.category')),
+                DateFilter::make('created_at')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

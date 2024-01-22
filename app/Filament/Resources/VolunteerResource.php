@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\VolunteerStatus;
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\VolunteerResource\Pages;
 use App\Models\VolunteerRequest;
 use Filament\Forms\Components\Select;
@@ -139,6 +140,7 @@ class VolunteerResource extends Resource
                             fn (Builder $query) => $query->whereNull('user_id')
                         ),
                     ),
+                DateFilter::make('created_at')
 
             ])
             ->actions([

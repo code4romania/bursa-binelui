@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\OrganizationResource;
 use App\Models\Activity;
 use App\Models\Organization;
@@ -87,5 +88,10 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
                 ->label(__('organization.actions.view'))
                 ->url($this->getTableRecordUrlUsing()),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return array_merge([DateFilter::make('latest_updated_at')], parent::getTableFilters());
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\EuPlatescStatus;
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\DonationResource\Pages;
 use App\Forms\Components\Link;
 use App\Models\Donation;
@@ -149,7 +150,7 @@ class DonationResource extends Resource
                         true: fn (Builder $query) => $query->whereHas('championshipStage'),
                         false: fn (Builder $query) => $query->whereDoesntHave('championshipStage'),
                     ),
-
+                DateFilter::make('created_at')
             ])
             ->actions([
                 ViewAction::make(),

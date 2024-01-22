@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\TicketResource\Widgets;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\TicketResource;
 use App\Models\Ticket;
@@ -85,5 +86,10 @@ class OpenTicketsWidget extends TableWidget
             ['*'],
             $this->getTablePaginationPageName()
         );
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [DateFilter::make('created_at')];
     }
 }

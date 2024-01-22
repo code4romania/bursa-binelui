@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\UserRole;
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\UserResource\Actions\ExportAction;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
@@ -150,6 +151,7 @@ class UserResource extends Resource
                         true: fn (Builder $query) => $query->whereHasVerifiedEmail(),
                         false: fn (Builder $query) => $query->whereDoesntHaveVerifiedEmail(),
                     ),
+                DateFilter::make('created_at')
 
             ])
             ->actions([

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Widgets;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\OrganizationResource;
 use App\Filament\Resources\OrganizationResource\Actions\Tables\Organizations\ApproveOrganizationAction;
 use App\Filament\Resources\OrganizationResource\Actions\Tables\Organizations\RejectOrganizationAction;
@@ -76,5 +77,10 @@ class PendingOrganizationsWidget extends BaseOrganizationsWidget
 
             RejectOrganizationAction::make(),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return array_merge([DateFilter::make('created_at')], parent::getTableFilters());
     }
 }

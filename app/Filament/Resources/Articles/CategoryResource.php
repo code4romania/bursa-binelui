@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Articles;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\Articles\CategoryResource\Pages;
 use App\Models\ArticleCategory;
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
@@ -81,7 +82,7 @@ class CategoryResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                DateFilter::make('updated_at')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

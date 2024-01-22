@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Filament\Filters\DateFilter;
 use App\Filament\Forms\Components\Value;
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers\MessagesRelationManager;
@@ -96,5 +97,10 @@ class TicketResource extends Resource
             'create' => Pages\CreateTicket::route('/create'),
             'view' => Pages\ViewTicket::route('/{record}'),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [DateFilter::make('created_at')];
     }
 }
