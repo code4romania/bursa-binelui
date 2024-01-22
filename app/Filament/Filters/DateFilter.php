@@ -59,7 +59,7 @@ class DateFilter extends BaseFilter
                     $value = data_get($state, $filter);
 
                     if (! \is_null($value)) {
-                        $value = __('general.filter.date_from', [
+                        $value = __('activity.filter.' . $filter, [
                             'date' => Carbon::parse($value)->toFormattedDate(),
                         ]);
                     }

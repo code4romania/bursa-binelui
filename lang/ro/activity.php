@@ -36,6 +36,8 @@ return[
     'filter' => [
         'logged_from' => 'Dată început',
         'logged_until' => 'Dată sfârșit',
+        'date_from' => 'Dată început',
+        'date_until' => 'Dată sfârșit',
         'caused_by' => 'Editat de către',
         'changed_field' => 'Câmpul editat',
     ],
