@@ -49,10 +49,14 @@ class NewProject extends BaseProjectWidget
     {
         return [
             ViewAction::make()->label(__('project.actions.view'))
+                ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
-            EditAction::make(),
-            ApproveProjectAction::make(),
-            RejectProjectAction::make(),
+            EditAction::make()
+                ->iconButton(),
+            ApproveProjectAction::make()
+                ->iconButton(),
+            RejectProjectAction::make()
+                ->iconButton(),
         ];
     }
 }

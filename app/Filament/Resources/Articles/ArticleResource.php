@@ -181,7 +181,8 @@ class ArticleResource extends Resource
                 DateFilter::make('created_at')
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->defaultSort('id', 'desc')
             ->bulkActions([

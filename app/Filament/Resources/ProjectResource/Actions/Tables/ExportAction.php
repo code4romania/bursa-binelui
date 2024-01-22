@@ -7,6 +7,7 @@ namespace App\Filament\Resources\ProjectResource\Actions\Tables;
 use App\Enums\OrganizationStatus;
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\OrganizationResource;
+use App\Filament\Resources\ProjectResource;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -18,7 +19,7 @@ class ExportAction extends BaseAction
 {
     protected string | null $status = null;
 
-    public function status(OrganizationStatus | string | null $status): static
+    public function status(ProjectStatus | string | null $status): static
     {
         $this->status = $status?->value ?? $status;
 
@@ -36,20 +37,18 @@ class ExportAction extends BaseAction
                 ->withFilename(fn () => sprintf(
                     '%s-%s-%s',
                     now()->format('Y_m_d-H_i_s'),
-                    Str::slug(OrganizationResource::getPluralModelLabel()),
+                    Str::slug(ProjectResource::getPluralModelLabel()),
                     $this->status
                 ))
                 ->modifyQueryUsing(function (Builder $query) {
                     return $query
                         ->status($this->status)
                         ->with([
-                            'activityDomains',
                             'counties',
-                            'projects' => fn ($q) => $q->select('id', 'organization_id', 'status')
-                                ->withCount('donations'),
+                            'donations'
                         ])
                         ->withCount([
-                            'volunteers',
+                            'donations',
                         ]);
                 })
                 ->withColumns([
@@ -57,13 +56,13 @@ class ExportAction extends BaseAction
                         ->heading('ID'),
 
                     Column::make('name')
-                        ->heading(__('organization.labels.name')),
+                        ->heading(__('project.labels.name')),
 
                     Column::make('cif')
-                        ->heading(__('organization.labels.cif')),
+                        ->heading(__('project.labels.cif')),
 
                     Column::make('activity_domains')
-                        ->heading(__('organization.labels.activity_domains'))
+                        ->heading(__('project.labels.activity_domains'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->activityDomains
                                 ->pluck('name')
@@ -71,22 +70,22 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('contact_person')
-                        ->heading(__('organization.labels.contact_person')),
+                        ->heading(__('project.labels.contact_person')),
 
                     Column::make('contact_phone')
-                        ->heading(__('organization.labels.contact_phone')),
+                        ->heading(__('project.labels.contact_phone')),
 
                     Column::make('contact_email')
-                        ->heading(__('organization.labels.contact_email')),
+                        ->heading(__('project.labels.contact_email')),
 
                     Column::make('website')
-                        ->heading(__('organization.labels.website')),
+                        ->heading(__('project.labels.website')),
 
                     Column::make('address')
-                        ->heading(__('organization.labels.address')),
+                        ->heading(__('project.labels.address')),
 
                     Column::make('counties')
-                        ->heading(__('organization.labels.counties'))
+                        ->heading(__('project.labels.counties'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->counties
                                 ->pluck('name')
@@ -94,7 +93,7 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('accepts_volunteers')
-                        ->heading(__('organization.labels.accepts_volunteers'))
+                        ->heading(__('project.labels.accepts_volunteers'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->accepts_volunteers
                                 ? __('forms::components.select.boolean.true')
@@ -102,7 +101,7 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('has_volunteers')
-                        ->heading(__('organization.labels.has_volunteers'))
+                        ->heading(__('project.labels.has_volunteers'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->volunteers_count
                                 ? __('forms::components.select.boolean.true')
@@ -110,31 +109,15 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('has_projects')
-                        ->heading(__('organization.labels.has_projects'))
+                        ->heading(__('project.labels.has_projects'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->projects->count()
                                 ? __('forms::components.select.boolean.true')
                                 : __('forms::components.select.boolean.false')
                         ),
 
-                    Column::make('has_active_projects')
-                        ->heading(__('organization.labels.has_active_projects'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->projects->where('status', ProjectStatus::active)->count()
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
-
-                    Column::make('has_eu_platesc')
-                        ->heading(__('organization.labels.has_eu_platesc'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->eu_platesc_merchant_id !== null && $record->eu_platesc_private_key !== null
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
-
                     Column::make('has_donations')
-                        ->heading(__('organization.labels.has_donations'))
+                        ->heading(__('project.labels.has_donations'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->projects->sum('donations_count')
                                 ? __('forms::components.select.boolean.true')

@@ -70,13 +70,15 @@ class ApprovedOrganizationsWidget extends BaseOrganizationsWidget
         return [
             ViewAction::make()
                 ->label(__('organization.actions.view'))
+                ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
 
             EditAction::make()
                 ->label(__('organization.actions.edit'))
+                ->iconButton()
                 ->url(fn (Organization $record) => OrganizationResource::getUrl('edit', $record)),
 
-            DeactivateOrganizationAction::make(),
+            DeactivateOrganizationAction::make()->iconButton(),
         ];
     }
 

@@ -86,6 +86,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
         return [
             ViewAction::make()
                 ->label(__('organization.actions.view'))
+                ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
         ];
     }

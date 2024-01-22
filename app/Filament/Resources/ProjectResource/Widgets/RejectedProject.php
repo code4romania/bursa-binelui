@@ -52,9 +52,12 @@ class RejectedProject extends BaseProjectWidget
     {
         return [
             ViewAction::make()->label(__('project.actions.view'))
+                ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
-            EditAction::make(),
-            ApproveProjectAction::make(),
+            EditAction::make()
+                ->iconButton(),
+            ApproveProjectAction::make()
+                ->iconButton(),
         ];
     }
 }

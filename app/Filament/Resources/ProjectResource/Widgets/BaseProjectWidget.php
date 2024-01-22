@@ -8,7 +8,6 @@ use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Filters\Layout;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -65,11 +64,6 @@ class BaseProjectWidget extends BaseWidget
     {
         return ProjectResource::getWidgetFilters();
     }
-
-//    protected function getTableFiltersLayout(): ?string
-//    {
-//        return  Layout::AboveContent;
-//    }
 
     protected function getTableRecordUrlUsing(): \Closure
     {

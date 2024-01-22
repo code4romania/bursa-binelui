@@ -57,11 +57,14 @@ class OrganizationActivityWidget extends BaseWidget
     protected function getTableActions(): array
     {
         return [
-            ViewActivityAction::make(),
+            ViewActivityAction::make()
+                ->iconButton(),
 
-            ApproveActivityAction::make(),
+            ApproveActivityAction::make()
+                ->iconButton(),
 
-            RejectActivityAction::make(),
+            RejectActivityAction::make()
+                ->iconButton(),
         ];
     }
 }

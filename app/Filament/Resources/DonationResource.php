@@ -153,7 +153,7 @@ class DonationResource extends Resource
                 DateFilter::make('created_at')
             ])
             ->actions([
-                ViewAction::make(),
+                ViewAction::make()->iconButton(),
             ]);
     }
 

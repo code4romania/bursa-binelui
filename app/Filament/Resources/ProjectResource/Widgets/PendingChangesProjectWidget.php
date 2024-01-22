@@ -87,6 +87,7 @@ class PendingChangesProjectWidget extends BaseProjectWidget
         return [
             ViewAction::make()
                 ->label(__('project.actions.view'))
+                ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
         ];
     }
