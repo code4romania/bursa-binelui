@@ -30,7 +30,7 @@ class DonationFactory extends Factory
         );
 
         return [
-            'user_id' => fake()->randomElement(User::all()),
+            'user_id' => User::factory()->donor(),
             'organization_id' => Organization::factory(),
             'project_id' => Project::factory(),
             'uuid' => Str::orderedUuid(),

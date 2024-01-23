@@ -34,7 +34,7 @@ class ExportAction extends BaseAction
                 ->modifyQueryUsing(function (Builder $query) {
                     return $query
                         ->with([
-                            'donations' => fn ($q) => $q->select(['user_id', 'amount', 'status']),
+                            'donations' => fn ($q) => $q->select(['user_id', 'amount', 'status', 'created_at']),
                         ])
                         ->withCount(['donations']);
                 })
@@ -64,7 +64,7 @@ class ExportAction extends BaseAction
                     Column::make('created_at')
                         ->heading(__('user.labels.created_at'))
                         ->formatStateUsing(
-                            fn (User $record) => $record->created_at
+                            fn (User $record) => $record->created_at->toFormattedDateTime()
                         ),
 
                     Column::make('newsletter_subscription')
@@ -72,7 +72,7 @@ class ExportAction extends BaseAction
                         ->formatStateUsing(
                             fn (User $record) =>
                                 $record->newsletter ?
-                                    $record->created_at :
+                                    $record->created_at->toFormattedDateTime() :
                                     ''
                         ),
 
@@ -95,12 +95,15 @@ class ExportAction extends BaseAction
                         ->formatStateUsing(
                             fn (User $record) =>
                                 $record->donations_count ?
-                                Donation::query()
-                                    ->where('user_id', $record->id)
-                                    ->orderByDesc('created_at')
-                                    ->first('created_at')
-                                    ->created_at:
-                                    ''
+                                    $record->donations
+                                        ->reject(fn ($item) => $item->status === EuPlatescStatus::CHARGED)
+                                        ->last()?->created_at->toFormattedDateTime() : ''
+                            //                                Donation::query()
+                            //                                    ->where('user_id', $record->id)
+                            //                                    ->orderByDesc('created_at')
+                            //                                    ->first('created_at')
+                            //                                    ->created_at:
+                            //                                    ''
                         ),
 
                 ]),
