@@ -32,8 +32,9 @@ return [
         'newsletter_subscription' => 'Abonat la newsletter',
         'referrer' => 'De unde a auzit de Bursa Binelui',
         'donations_sum' => 'Suma donata',
-        'dounations_count' => 'Numarul de donatii',
+        'donations_count' => 'Numarul de donatii',
         'id' => 'ID',
+        'last_donation_date' => 'Data ultimei donatii'
     ],
     'relations' => [
         'donations' => 'Donatii',

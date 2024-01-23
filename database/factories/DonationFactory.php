@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\EuPlatescStatus;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -29,6 +30,7 @@ class DonationFactory extends Factory
         );
 
         return [
+            'user_id' => fake()->randomElement(User::all()),
             'organization_id' => Organization::factory(),
             'project_id' => Project::factory(),
             'uuid' => Str::orderedUuid(),

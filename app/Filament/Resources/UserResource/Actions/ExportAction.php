@@ -6,6 +6,7 @@ namespace App\Filament\Resources\UserResource\Actions;
 
 use App\Enums\EuPlatescStatus;
 use App\Filament\Resources\UserResource;
+use App\Models\Donation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -69,7 +70,10 @@ class ExportAction extends BaseAction
                     Column::make('newsletter_subscription')
                         ->heading(__('user.labels.newsletter_subscription'))
                         ->formatStateUsing(
-                            fn (User $record) => $record->created_at
+                            fn (User $record) =>
+                                $record->newsletter ?
+                                    $record->created_at :
+                                    ''
                         ),
 
                     Column::make('referrer')
@@ -84,7 +88,20 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('donations_count')
-                        ->heading(__('user.labels.dounations_count')),
+                        ->heading(__('user.labels.donations_count')),
+
+                    Column::make('last_donation_date')
+                        ->heading(__('user.labels.last_donation_date'))
+                        ->formatStateUsing(
+                            fn (User $record) =>
+                                $record->donations_count ?
+                                Donation::query()
+                                    ->where('user_id', $record->id)
+                                    ->orderByDesc('created_at')
+                                    ->first('created_at')
+                                    ->created_at:
+                                    ''
+                        ),
 
                 ]),
         ]);
