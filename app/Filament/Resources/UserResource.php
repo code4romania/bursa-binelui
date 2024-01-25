@@ -11,6 +11,7 @@ use App\Filament\Resources\UserResource\Actions\ToggleUserAction;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\ProjectsRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\VolunteersRelationManager;
 use App\Forms\Components\Link;
 use App\Models\User;
@@ -180,6 +181,7 @@ class UserResource extends Resource
             DonationsRelationManager::class,
             VolunteersRelationManager::class,
             BadgesRelationManager::class,
+            ProjectsRelationManager::class
         ];
     }
 

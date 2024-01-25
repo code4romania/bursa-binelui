@@ -82,6 +82,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->hasMany(Donation::class);
     }
 
+    public function projects(): HasMany
+    {
+        return $this->organization->projects()->with('organization');
+    }
+
     public function canAccessFilament(): bool
     {
         return $this->isSuperUser();

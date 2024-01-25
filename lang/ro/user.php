@@ -40,10 +40,12 @@ return [
         'donations' => 'Donatii',
         'volunteer' => 'Proiecte la care este voluntar',
         'badges' => 'Insigne',
+        'projects' => 'Proiecte la care este administrator',
         'heading' => [
             'donations' => 'Numarul de dontatii :count ( :total RON)',
             'volunteers' => 'Numarul de  proiecte in care este volunar: :count',
             'badges' => 'Numarul de insigne: :count',
+            'projects' => 'Proiecte la care este administrator: :count',
         ],
     ],
     'name' => 'Nume',
