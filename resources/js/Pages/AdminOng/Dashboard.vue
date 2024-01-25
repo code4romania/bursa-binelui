@@ -16,7 +16,7 @@
 
                 <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8">
                     <dt class="text-sm font-medium leading-6 text-gray-500">{{ $t('status_document_label') }}</dt>
-                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ data.organization.has_statute ? $t('yes') : $('no') }}</dd>
+                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">{{ data.organization.has_statute ? $t('yes') : $t('no') }}</dd>
                 </div>
             </dl>
         </div>
