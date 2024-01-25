@@ -34,16 +34,18 @@ return [
         'donations_sum' => 'Suma donata',
         'donations_count' => 'Numarul de donatii',
         'id' => 'ID',
-        'last_donation_date' => 'Data ultimei donatii'
+        'last_donation_date' => 'Data ultimei donatii',
     ],
     'relations' => [
         'donations' => 'Donatii',
         'volunteer' => 'Proiecte la care este voluntar',
         'badges' => 'Insigne',
+        'projects' => 'Proiecte la care este administrator',
         'heading' => [
             'donations' => 'Numarul de dontatii :count ( :total RON)',
             'volunteers' => 'Numarul de  proiecte in care este volunar: :count',
             'badges' => 'Numarul de insigne: :count',
+            'projects' => 'Proiecte la care este administrator: :count',
         ],
     ],
     'name' => 'Nume',
@@ -73,6 +75,18 @@ return [
     'action' => [
         'attach' => 'Alocă utilizator',
         'detach' => 'Elimină',
+        'toggle' => 'Schimbă statusul',
     ],
-    'header' => 'Utilizatori (:number)'
+    'header' => 'Utilizatori (:number)',
+    'toggle_modal' => [
+        'heading' => 'Schimba statusul utilizatorului :name',
+        'subheading' => [
+            'active' => 'Activează utilizatorul :name',
+            'deactivate' => 'Dezactivează utilizatorul :name',
+        ],
+        'actions' => [
+            'active' => 'Activează',
+            'deactivate' => 'Dezactivează',
+        ],
+    ],
 ];

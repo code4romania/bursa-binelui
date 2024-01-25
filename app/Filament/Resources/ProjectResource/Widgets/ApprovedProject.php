@@ -87,7 +87,7 @@ class ApprovedProject extends BaseProjectWidget
                         'info' => 'archived',
                         'danger' => 'close',
                     ]
-                )->sortable(),
+                ),
 
             TextColumn::make('name')
                 ->description(fn (Project $record) => $record->organization->name)

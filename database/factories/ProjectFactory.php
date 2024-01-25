@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\ProjectStatus;
 use App\Models\Donation;
 use App\Models\Project;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -57,6 +58,7 @@ class ProjectFactory extends Factory
             Donation::factory()
                 ->for($project)
                 ->recycle($project->organization)
+                ->for($this->faker->randomElement(User::all()))
                 ->count(fake()->numberBetween(0, 15))
                 ->create();
         });

@@ -55,6 +55,11 @@ class PendingOrganizationsWidget extends BaseOrganizationsWidget
                 ->searchable()
                 ->sortable(),
 
+            TextColumn::make('updated_at')
+                ->label(__('organization.labels.updated_at'))
+                ->dateTime()
+                ->sortable(),
+
             TextColumn::make('created_at')
                 ->label(__('organization.labels.created_at'))
                 ->dateTime()

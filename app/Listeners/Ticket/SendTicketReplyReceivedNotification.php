@@ -17,12 +17,14 @@ class SendTicketReplyReceivedNotification
      */
     public function handle(TicketReplyReceived $event): void
     {
-        Notification::send(
-            User::query()
-                ->onlySuperUsers()
-                ->get(),
-            new Admin\TicketReceivedReplyNotification($event->message)
-        );
+        if (! $event->message->user->isSuperUser() && ! $event->message->user->isSuperManager()) {
+            Notification::send(
+                User::query()
+                    ->onlySuperUsers()
+                    ->get(),
+                new Admin\TicketReceivedReplyNotification($event->message)
+            );
+        }
 
         Notification::send(
             User::query()
