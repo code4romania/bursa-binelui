@@ -195,7 +195,7 @@
                     >
                         <fieldset>
                             <legend class="text-sm font-semibold leading-6 text-gray-900">
-                                {{ $t('accepting_volunteers') }}
+                                {{ $t('is_national') }}
                             </legend>
                             <div class="mt-6 space-y-6">
                                 <div class="relative flex gap-x-3">
