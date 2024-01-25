@@ -6,6 +6,7 @@ namespace App\Filament\Resources\UserResource\Actions;
 
 use App\Enums\EuPlatescStatus;
 use App\Filament\Resources\UserResource;
+use App\Models\Donation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -33,7 +34,7 @@ class ExportAction extends BaseAction
                 ->modifyQueryUsing(function (Builder $query) {
                     return $query
                         ->with([
-                            'donations' => fn ($q) => $q->select(['user_id', 'amount', 'status']),
+                            'donations' => fn ($q) => $q->select(['user_id', 'amount', 'status', 'created_at']),
                         ])
                         ->withCount(['donations']);
                 })
@@ -63,13 +64,16 @@ class ExportAction extends BaseAction
                     Column::make('created_at')
                         ->heading(__('user.labels.created_at'))
                         ->formatStateUsing(
-                            fn (User $record) => $record->created_at
+                            fn (User $record) => $record->created_at->toFormattedDateTime()
                         ),
 
                     Column::make('newsletter_subscription')
                         ->heading(__('user.labels.newsletter_subscription'))
                         ->formatStateUsing(
-                            fn (User $record) => $record->created_at
+                            fn (User $record) =>
+                                $record->newsletter ?
+                                    $record->created_at->toFormattedDateTime() :
+                                    ''
                         ),
 
                     Column::make('referrer')
@@ -84,7 +88,23 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('donations_count')
-                        ->heading(__('user.labels.dounations_count')),
+                        ->heading(__('user.labels.donations_count')),
+
+                    Column::make('last_donation_date')
+                        ->heading(__('user.labels.last_donation_date'))
+                        ->formatStateUsing(
+                            fn (User $record) =>
+                                $record->donations_count ?
+                                    $record->donations
+                                        ->reject(fn ($item) => $item->status === EuPlatescStatus::CHARGED)
+                                        ->last()?->created_at->toFormattedDateTime() : ''
+                            //                                Donation::query()
+                            //                                    ->where('user_id', $record->id)
+                            //                                    ->orderByDesc('created_at')
+                            //                                    ->first('created_at')
+                            //                                    ->created_at:
+                            //                                    ''
+                        ),
 
                 ]),
         ]);
