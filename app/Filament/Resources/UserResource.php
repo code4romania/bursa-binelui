@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Enums\UserRole;
 use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\UserResource\Actions\ExportAction;
+use App\Filament\Resources\UserResource\Actions\ToggleUserAction;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\BadgesRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\DonationsRelationManager;
@@ -19,6 +20,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -155,8 +158,11 @@ class UserResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->iconButton(),
-                Tables\Actions\EditAction::make()->iconButton(),
+                ViewAction::make()->iconButton(),
+                EditAction::make()->iconButton(),
+                ToggleUserAction::make()->iconButton(),
+
+
 
             ])
             ->defaultSort('id', 'desc')

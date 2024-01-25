@@ -44,6 +44,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'created_by',
         'organization_id',
         'newsletter',
+        'email_verified_at',
     ];
 
     /**
@@ -119,5 +120,12 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function scopeWhereDoesntHaveVerifiedEmail(Builder $query): Builder
     {
         return $query->whereNull('email_verified_at');
+    }
+
+    public function toggleUser(): void
+    {
+        $this->update([
+            'email_verified_at' => $this->email_verified_at ? null : now(),
+        ]);
     }
 }
