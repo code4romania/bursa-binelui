@@ -189,9 +189,9 @@
                         {{ $t('cancel') }}
                     </SecondaryButton>
 
-                    <SecondaryButton class="py-2.5" @click="createProject">
-                        {{ $t('preview') }}
-                    </SecondaryButton>
+<!--                    <SecondaryButton class="py-2.5" @click="createProject">-->
+<!--                        {{ $t('preview') }}-->
+<!--                    </SecondaryButton>-->
 
                     <PrimaryButton @click="createProject" :label="$t('save')" />
                 </div>
