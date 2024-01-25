@@ -17,12 +17,14 @@ class SendTicketCreatedNotification
      */
     public function handle(TicketCreated $event): void
     {
-        Notification::send(
-            User::query()
-                ->onlySuperUsers()
-                ->get(),
-            new Admin\TicketCreatedNotification($event->ticket)
-        );
+        if (! $event->ticket->user->isSuperUser() && ! $event->ticket->user->isSuperManager()) {
+            Notification::send(
+                User::query()
+                    ->onlySuperUsers()
+                    ->get(),
+                new Admin\TicketCreatedNotification($event->ticket)
+            );
+        }
 
         Notification::send(
             User::query()

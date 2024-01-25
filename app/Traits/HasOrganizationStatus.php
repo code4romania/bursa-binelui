@@ -32,7 +32,13 @@ trait HasOrganizationStatus
 
     public function scopeStatus(Builder $query, array|string|Collection|OrganizationStatus $statuses): void
     {
-        $query->whereIn('status', collect($statuses));
+        if ($statuses === OrganizationStatus::pending_changes->value) {
+            $query->whereHas('activities', function (Builder $query) {
+                $query->wherePending();
+            });
+        } else {
+            $query->whereIn('status', collect($statuses));
+        }
     }
 
     public function scopeIsPending(Builder $query): void
@@ -48,5 +54,12 @@ trait HasOrganizationStatus
     public function scopeIsRejected(Builder $query): void
     {
         $query->where('status', OrganizationStatus::rejected);
+    }
+
+    public function scopeIsPendingChanges(Builder $query): void
+    {
+        $query->whereHas('activities', function (Builder $query) {
+            $query->wherePending();
+        });
     }
 }

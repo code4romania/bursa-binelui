@@ -45,7 +45,8 @@ class OrganizationPolicy
          * An organization can be updated only by BB Admins, BB Managers
          *  and NGO Admins that belong to the organization.
          */
-        return $user->isSuperUser() || $user->isOrganizationAdmin($organization);
+        return $user->isSuperUser() ||
+            $user->isOrganizationAdmin($organization) || $user->isOrganizationManager($organization);
     }
 
     /**

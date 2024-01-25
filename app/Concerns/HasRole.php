@@ -42,7 +42,7 @@ trait HasRole
 
     public function isOrganizationManager(?Organization $organization = null): bool
     {
-        return $this->hasRole(UserRole::USER) && $this->belongsToOrganization($organization);
+        return $this->hasRole(UserRole::MANAGER) && $this->belongsToOrganization($organization);
     }
 
     // ========================================== //
