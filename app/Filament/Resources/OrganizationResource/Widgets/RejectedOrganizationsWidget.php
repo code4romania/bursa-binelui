@@ -58,6 +58,11 @@ class RejectedOrganizationsWidget extends BaseOrganizationsWidget
                 ->searchable()
                 ->sortable(),
 
+            TextColumn::make('updated_at')
+                ->label(__('organization.labels.updated_at'))
+                ->dateTime()
+                ->sortable(),
+
             TextColumn::make('status_updated_at')
                 ->label(__('organization.labels.rejected_at'))
                 ->dateTime()
