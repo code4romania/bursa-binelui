@@ -98,6 +98,12 @@ class PendingChangesProjectWidget extends BaseProjectWidget
 
     protected function getTableFilters(): array
     {
-        return array_merge([DateFilter::make('latest_updated_at')->label(__('project.filters.status_updated_between'))], parent::getTableFilters());
+        return array_merge(
+            [
+                DateFilter::make('latest_updated_at')
+                    ->label(__('project.filters.status_updated_between')),
+            ],
+            parent::getTableFilters()
+        );
     }
 }
