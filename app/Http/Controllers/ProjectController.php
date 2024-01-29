@@ -71,8 +71,8 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        if (! $project->isPublished() ) {
-           $this->authorize('view', $project);
+        if (! $project->isPublished()) {
+            $this->authorize('view', $project);
         }
 
         return Inertia::render('Public/Projects/Show', [

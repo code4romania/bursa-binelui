@@ -65,7 +65,7 @@ class UserResource extends Resource
                         fn (callable $get) => UserRole::SUPERMANAGER->is($get('role')) ||
                         UserRole::SUPERADMIN->is($get('role')) ||
                         UserRole::USER->is($get('role'))
-                    )
+                    )->visibleOn(['view'])
                     ->columnSpanFull(),
                 TextInput::make('name')
                     ->label(__('user.name'))
