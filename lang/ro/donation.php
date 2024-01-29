@@ -31,7 +31,7 @@ return [
         'full_name' => 'Donator',
         'email' => 'Email',
         'charge_date' => 'Data încasării',
-
+        'count' => 'Numar donatii',
     ],
 
     'statuses' => [
