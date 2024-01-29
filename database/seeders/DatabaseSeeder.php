@@ -62,17 +62,17 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         Organization::factory()
-            ->count(50)
+            ->count(5)
             ->approved()
             ->create();
 
         Organization::factory()
-            ->count(1)
+            ->count(5)
             ->rejected()
             ->create();
 
         Organization::factory()
-            ->count(1)
+            ->count(5)
             ->pending()
             ->create();
 
