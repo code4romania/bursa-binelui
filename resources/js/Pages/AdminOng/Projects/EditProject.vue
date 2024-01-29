@@ -4,7 +4,7 @@
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
             <Field
                 :label="$t('project_name_label')"
-                :hasPendingChanges="changes.includes('name')"
+                :hasPendingChanges="hasPendingChanges('name')"
                 :errors="formChangeStatus.errors.name"
             >
                 <template #value>
@@ -40,7 +40,7 @@
 
             <Field
                 :label="$t('amount_target_label')"
-                :hasPendingChanges="changes.includes('target_budget')"
+                :hasPendingChanges="hasPendingChanges('target_budget')"
                 :errors="formChangeStatus.errors.target_budget"
                 alt
             >
@@ -69,7 +69,7 @@
 
             <Field
                 :label="$t('period_start_donation')"
-                :hasPendingChanges="changes.includes('start')"
+                :hasPendingChanges="hasPendingChanges('start')"
                 :errors="formChangeStatus.errors.start"
             >
                 <template #value> {{ project.start }} </template>
@@ -97,7 +97,7 @@
 
             <Field
                 :label="$t('period_end_donation')"
-                :hasPendingChanges="changes.includes('end')"
+                :hasPendingChanges="hasPendingChanges('end')"
                 :errors="formChangeStatus.errors.end"
                 alt
             >
@@ -126,7 +126,7 @@
 
             <Field
                 :label="$t('project_category_label')"
-                :hasPendingChanges="changes.includes('categories')"
+                :hasPendingChanges="hasPendingChanges('categories')"
                 :errors="formChangeStatus.errors.categories"
             >
                 <template #value>
@@ -152,7 +152,7 @@
 
             <Field
                 :label="$t('counties_label')"
-                :hasPendingChanges="changes.includes('counties')"
+                :hasPendingChanges="hasPendingChanges('counties')"
                 :errors="formChangeStatus.errors.counties"
                 alt
             >
@@ -179,7 +179,7 @@
             </Field>
             <Field
                 :label="$t('is_national')"
-                :hasPendingChanges="changes.includes('is_national')"
+                :hasPendingChanges="hasPendingChanges('is_national')"
                 :errors="formChangeStatus.errors.is_national"
                 alt
             >
@@ -223,7 +223,7 @@
 
             <Field
                 :label="$t('project_description_label')"
-                :hasPendingChanges="changes.includes('description')"
+                :hasPendingChanges="hasPendingChanges('description')"
                 :errors="formChangeStatus.errors.description"
             >
                 <template #value>
@@ -254,7 +254,7 @@
 
             <Field
                 :label="$t('project_scope_label')"
-                :hasPendingChanges="changes.includes('scope')"
+                :hasPendingChanges="hasPendingChanges('scope')"
                 :errors="formChangeStatus.errors.scope"
                 alt
             >
@@ -284,7 +284,7 @@
 
             <Field
                 :label="$t('project_beneficiary_label')"
-                :hasPendingChanges="changes.includes('beneficiaries')"
+                :hasPendingChanges="hasPendingChanges('beneficiaries')"
                 :errors="formChangeStatus.errors.beneficiaries"
             >
                 <template #value>
@@ -318,7 +318,7 @@
 
             <Field
                 :label="$t('why_to_donate')"
-                :hasPendingChanges="changes.includes('reason_to_donate')"
+                :hasPendingChanges="hasPendingChanges('reason_to_donate')"
                 :errors="formChangeStatus.errors.reason_to_donate"
                 alt
             >
@@ -348,7 +348,7 @@
 
             <Field
                 :label="$t('accepting_volunteers')"
-                :hasPendingChanges="changes.includes('accepting_volunteers')"
+                :hasPendingChanges="hasPendingChanges('accepting_volunteers')"
                 :errors="formChangeStatus.errors.accepting_volunteers"
             >
                 <template #value>
@@ -391,7 +391,7 @@
 
             <Field
                 :label="$t('accepting_comments')"
-                :hasPendingChanges="changes.includes('accepting_comments')"
+                :hasPendingChanges="hasPendingChanges('accepting_comments')"
                 :errors="formChangeStatus.errors.accepting_comments"
                 alt
             >
@@ -606,6 +606,15 @@
         status: 'pending',
         id: project.value.id,
     });
+
+    const hasPendingChanges = (field) => {
+        let tmpChanges = props.changes;
+        if (Object.keys(tmpChanges).includes(field))
+        {
+            return tmpChanges[field].new;
+        }
+        return false;
+    };
 
     const changeProjectStatus = (id, status, type) => {
         let tmpRoute =

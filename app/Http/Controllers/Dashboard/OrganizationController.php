@@ -24,9 +24,8 @@ class OrganizationController extends Controller
             'counties' => $this->getCounties(),
             'changes' => Activity::pendingChangesFor($organization)
                 ->get()
-                ->flatMap(fn (Activity $activity) => $activity->properties->keys())
+                ->flatMap(fn (Activity $activity) => $activity->properties)
                 ->unique()
-                ->values(),
         ]);
     }
 

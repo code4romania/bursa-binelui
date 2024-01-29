@@ -14,7 +14,11 @@
         <dd class="text-sm font-medium leading-6 text-gray-700 md:text-base md:col-span-6 2xl:col-span-7">
             <slot name="value" />
 
-            <p v-show="hasPendingChanges" class="mt-2 text-sm text-red-600" v-text="$t('field_has_pending_changes')" />
+            <p v-show="hasPendingChanges" class="mt-2 text-sm text-red-600" v-text="$t('field_has_pending_changes')"/>
+            <p v-if="hasPendingChanges" class="mt-2 text-sm text-red-600">
+            {{ $t('field_pending_changes') }} {{ hasPendingChanges }}
+            </p>
+
             <p v-show="hasErrors" class="mt-2 text-sm text-red-600" v-text="errors" />
         </dd>
 
@@ -30,7 +34,7 @@
     const props = defineProps({
         label: String,
         hasPendingChanges: {
-            type: Boolean,
+            type: String,
             default: false,
         },
         alt: {

@@ -66,9 +66,8 @@ class ProjectController extends Controller
             'projectCategories' => $this->getProjectCategories(),
             'changes' => Activity::pendingChangesFor($project)
                 ->get()
-                ->flatMap(fn (Activity $activity) => $activity->properties->keys())
-                ->unique()
-                ->values(),
+                ->flatMap(fn (Activity $activity) => $activity->properties)
+                ->unique(),
         ]);
     }
 

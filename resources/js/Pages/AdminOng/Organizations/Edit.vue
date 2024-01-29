@@ -4,7 +4,7 @@
 
         <FieldSection>
             <!-- Edit organization name -->
-            <Field :label="$t('organization_name_label')" :hasPendingChanges="changes.includes('name')" alt>
+            <Field :label="$t('organization_name_label')" :hasPendingChanges="hasPendingChanges('name')" alt>
                 <template #value>
                     {{ organization.name }}
                 </template>
@@ -29,7 +29,7 @@
             </Field>
 
             <!-- Edit organization cif -->
-            <Field :label="$t('cif_label')" :hasPendingChanges="changes.includes('cif')">
+            <Field :label="$t('cif_label')" :hasPendingChanges="hasPendingChanges('cif')">
                 <template #value>
                     {{ organization.cif }}
                 </template>
@@ -54,7 +54,7 @@
             </Field>
 
             <!-- Edit organization image -->
-            <Field :label="$t('organization_logo_label')" :hasPendingChanges="changes.includes('logo')" alt>
+            <Field :label="$t('organization_logo_label')" :hasPendingChanges="hasPendingChanges('logo')" alt>
                 <template #value>
                     <img class="object-contain w-32 max-h-32 shrink-0" :src="organization.logo" alt="" />
                 </template>
@@ -73,7 +73,7 @@
             </Field>
 
             <!-- Edit organization description -->
-            <Field :label="$t('organization_description_label')" :hasPendingChanges="changes.includes('description')">
+            <Field :label="$t('organization_description_label')" :hasPendingChanges="hasPendingChanges('description')">
                 <template #value>
                     {{ organization.description }}
                 </template>
@@ -99,7 +99,7 @@
             <!-- Edit activity domains -->
             <Field
                 :label="$t('organization_activity_label')"
-                :hasPendingChanges="changes.includes('activity_domains')"
+                :hasPendingChanges="hasPendingChanges('activity_domains')"
                 alt
             >
                 <template #value>
@@ -125,7 +125,7 @@
             </Field>
 
             <!-- Edit statute -->
-            <Field :label="$t('status_document_label')" :hasPendingChanges="changes.includes('statute')">
+            <Field :label="$t('status_document_label')" :hasPendingChanges="hasPendingChanges('statute')">
                 <template #value>
                     <a
                         v-if="organization.statute_link"
@@ -151,7 +151,7 @@
             </Field>
 
             <!-- Edit counties -->
-            <Field :label="$t('counties_label')" :hasPendingChanges="changes.includes('counties')" alt>
+            <Field :label="$t('counties_label')" :hasPendingChanges="hasPendingChanges('counties')" alt>
                 <template #value>
                     {{ organization.county_names.join(', ') }}
                 </template>
@@ -179,7 +179,7 @@
             <!-- Edit accepts voluntiers -->
             <Field
                 :label="$t('organization_accepts_volunteers')"
-                :hasPendingChanges="changes.includes('accepts_volunteers')"
+                :hasPendingChanges="hasPendingChanges('accepts_volunteers')"
                 alt
             >
                 <template #value>
@@ -209,7 +209,7 @@
             <!-- Edit why volunteer -->
             <Field
                 :label="$t('organization_why_volunteer_label')"
-                :hasPendingChanges="changes.includes('why_volunteer')"
+                :hasPendingChanges="hasPendingChanges('why_volunteer')"
             >
                 <template #value>
                     {{ organization.why_volunteer }}
@@ -236,7 +236,7 @@
 
         <FieldSection :title="$t('organization_contact')">
             <!-- Edit organizaton website -->
-            <Field :label="$t('organization_website_label')" :hasPendingChanges="changes.includes('website')" alt>
+            <Field :label="$t('organization_website_label')" :hasPendingChanges="hasPendingChanges('website')" alt>
                 <template #value>
                     <a
                         href="{{ organization.website }}"
@@ -267,7 +267,7 @@
             </Field>
 
             <!-- Edit organizaton email -->
-            <Field :label="$t('organization_email_label')" :hasPendingChanges="changes.includes('contact_email')">
+            <Field :label="$t('organization_email_label')" :hasPendingChanges="hasPendingChanges('contact_email')">
                 <template #value>
                     <a
                         href="mailto:{{ organization.contact_email }}"
@@ -298,7 +298,7 @@
             </Field>
 
             <!-- Edit organizaton phone -->
-            <Field :label="$t('organization_phone_label')" :hasPendingChanges="changes.includes('contact_phone')" alt>
+            <Field :label="$t('organization_phone_label')" :hasPendingChanges="hasPendingChanges('contact_phone')" alt>
                 <template #value>
                     {{ organization.contact_phone }}
                 </template>
@@ -326,7 +326,7 @@
 
             <Field
                 :label="$t('organization_contact_person_label')"
-                :hasPendingChanges="changes.includes('contact_person')"
+                :hasPendingChanges="hasPendingChanges('contact_person')"
             >
                 <template #value>
                     {{ organization.contact_person }}
@@ -352,7 +352,7 @@
             </Field>
 
             <!-- Edit organizaton address -->
-            <Field :label="$t('organization_address_street_address_label')" :hasPendingChanges="changes.includes('address')" alt>
+            <Field :label="$t('organization_address_street_address_label')" :hasPendingChanges="hasPendingChanges('address')" alt>
                 <template #value>
                     {{ organization.address }},
                 </template>
@@ -398,7 +398,7 @@
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
+import {ref, computed, onMounted} from 'vue';
     import { router, useForm } from '@inertiajs/vue3';
     import route from '@/Helpers/useRoute';
     import Head from '@/Components/Head.vue';
@@ -433,6 +433,17 @@
             only: ['organization'],
         });
     };
+
+    const hasPendingChanges = (field) => {
+        let tmpChanges = props.changes;
+        if (Object.keys(tmpChanges).includes(field))
+        {
+            return tmpChanges[field].new;
+        }
+        return false;
+    };
+
+
 
     const editField = (field) => {
         const form = useForm({
