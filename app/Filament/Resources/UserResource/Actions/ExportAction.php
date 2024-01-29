@@ -98,12 +98,6 @@ class ExportAction extends BaseAction
                                     $record->donations
                                         ->reject(fn ($item) => $item->status === EuPlatescStatus::CHARGED)
                                         ->last()?->created_at->toFormattedDateTime() : ''
-                            //                                Donation::query()
-                            //                                    ->where('user_id', $record->id)
-                            //                                    ->orderByDesc('created_at')
-                            //                                    ->first('created_at')
-                            //                                    ->created_at:
-                            //                                    ''
                         ),
 
                 ]),
