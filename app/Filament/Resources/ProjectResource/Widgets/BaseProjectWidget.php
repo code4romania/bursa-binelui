@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BaseProjectWidget extends BaseWidget
 {
-//    protected static string $view = 'filament.resources.project-resource.widgets.new-project';
+    //    protected static string $view = 'filament.resources.project-resource.widgets.new-project';
     protected static ?int $sort = 1;
 
     /** @var string */
@@ -109,5 +109,12 @@ class BaseProjectWidget extends BaseWidget
             ['*'],
             $this->getTablePaginationPageName(),
         );
+    }
+
+    protected function getTableHeaderActions(): array
+    {
+        return [
+            ProjectResource\Actions\ExportAction::make($this->getTableQueryStringIdentifier())
+        ];
     }
 }
