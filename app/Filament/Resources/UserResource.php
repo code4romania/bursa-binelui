@@ -155,15 +155,13 @@ class UserResource extends Resource
                         true: fn (Builder $query) => $query->whereHasVerifiedEmail(),
                         false: fn (Builder $query) => $query->whereDoesntHaveVerifiedEmail(),
                     ),
-                DateFilter::make('created_at')
+                DateFilter::make('created_at'),
 
             ])
             ->actions([
                 ViewAction::make()->iconButton(),
                 EditAction::make()->iconButton(),
                 ToggleUserAction::make()->iconButton(),
-
-
 
             ])
             ->defaultSort('id', 'desc')
@@ -181,7 +179,7 @@ class UserResource extends Resource
             DonationsRelationManager::class,
             VolunteersRelationManager::class,
             BadgesRelationManager::class,
-            ProjectsRelationManager::class
+            ProjectsRelationManager::class,
         ];
     }
 
