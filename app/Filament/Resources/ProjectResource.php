@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\ProjectStatus;
+use App\Filament\Filters\DateFilter;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers\ActivitiesRelationManager;
 use App\Filament\Resources\ProjectResource\RelationManagers\DonationsRelationManager;
@@ -17,7 +18,6 @@ use App\Forms\Components\Link;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
@@ -29,7 +29,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Actions\Position;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 
 class ProjectResource extends Resource
@@ -186,13 +185,8 @@ class ProjectResource extends Resource
                 ->multiple()
                 ->relationship('counties', 'name')
                 ->label(__('project.filters.counties')),
-            Filter::make('status_updated_at')
-                ->form([
-                    Grid::make()->schema([
-                        DatePicker::make('status_updated_at')->label(__('project.filters.status_updated_at_from')),
-                        DatePicker::make('status_updated_at')->label(__('project.filters.status_updated_at_until')),
-                    ]),
-                ]),
+            DateFilter::make('created_at')
+                ->label(__('project.filters.created_between')),
         ];
     }
 
@@ -223,30 +217,42 @@ class ProjectResource extends Resource
     {
         return [
             TextColumn::make('id')
+                ->label(__('project.labels.id'))
                 ->formatStateUsing(function (Project $record) {
                     return sprintf('#%d', $record->id);
                 })
-                ->label(__('project.labels.id'))
                 ->sortable(),
-            TextColumn::make('name')->description(fn (Project $record) => $record->organization->name)->searchable(),
-            TextColumn::make('category')->formatStateUsing(fn (Project $record) => $record->categories->pluck('name')->join(', '))
-                ->label(__('project.labels.category')),
-            TextColumn::make('counties')->formatStateUsing(function (Project $record) {
-                if ($record->is_national) {
-                    return __('project.labels.national');
-                }
 
-                return $record->counties->pluck('name')->join(', ');
-            })
-                ->label(__('project.labels.counties')),
-            TextColumn::make('target_budget')->formatStateUsing(function (Project $record) {
-                return number_format($record->target_budget, 2, ',', '.');
-            })
-                ->label(__('project.labels.target_budget')),
-            TextColumn::make('status_updated_at')->date('d-m-Y H:i:s')
-                ->label(__('project.labels.status_updated_at')),
-            TextColumn::make('created_at')->date('d-m-Y H:i:s')
-                ->label(__('project.labels.created_at')),
+            TextColumn::make('name')
+                ->label(__('project.labels.name'))
+                ->description(fn (Project $record) => $record->organization->name)
+                ->searchable(),
+
+            TextColumn::make('category')
+                ->label(__('project.labels.category'))
+                ->formatStateUsing(fn (Project $record) => $record->categories->pluck('name')->join(', ')),
+
+            TextColumn::make('counties')
+                ->label(__('project.labels.counties'))
+                ->formatStateUsing(
+                    fn (Project $record) => $record->is_national ?
+                        __('project.labels.national') :
+                        $record->counties->pluck('name')->join(', ')
+                ),
+
+            TextColumn::make('target_budget')
+                ->label(__('project.labels.target_budget'))
+                ->formatStateUsing(
+                    fn (Project $record) => number_format($record->target_budget, 2, ',', '.')
+                ),
+
+            TextColumn::make('status_updated_at')
+                ->label(__('project.labels.status_updated_at'))
+                ->date('d-m-Y H:i:s'),
+
+            TextColumn::make('created_at')
+                ->label(__('project.labels.created_at'))
+                ->date('d-m-Y H:i:s'),
         ];
     }
 

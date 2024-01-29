@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
+use App\Filament\Filters\DateFilter;
 use App\Models\Activity;
 use App\Models\Organization;
 use App\Models\Project;
@@ -62,7 +63,10 @@ class PendingChangesProjectWidget extends BaseProjectWidget
                 })
                 ->label(__('project.labels.id'))
                 ->sortable(),
-            TextColumn::make('name')->description(fn (Project $record) => $record->organization->name)->searchable(),
+
+            TextColumn::make('name')
+                ->description(fn (Project $record) => $record->organization->name)
+                ->searchable(),
 
             TextColumn::make('activities_count')
                 ->label(__('project.labels.changes_count'))
@@ -90,5 +94,10 @@ class PendingChangesProjectWidget extends BaseProjectWidget
                 ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return array_merge([DateFilter::make('latest_updated_at')->label(__('project.filters.status_updated_between'))], parent::getTableFilters());
     }
 }

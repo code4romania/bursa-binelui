@@ -12,6 +12,8 @@ return [
         'status_updated_at_from' => 'Status schimbat  de la',
         'created_until' => 'Creată până la',
         'status_updated_at_until' => 'Status schimbat pana la',
+        'created_between' => 'Creată între',
+        'status_updated_between' => 'Status actualizat între',
     ],
     'status_arr' => [
         'draft' => 'Draft',
