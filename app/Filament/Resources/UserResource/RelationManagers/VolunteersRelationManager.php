@@ -57,6 +57,7 @@ class VolunteersRelationManager extends RelationManager
                         'pending' => 'warning',
                         'approved' => 'success',
                         'rejected' => 'danger',
+                        default => 'primary',
                     }),
             ])
             ->filters([

@@ -352,33 +352,6 @@
             </Field>
 
             <!-- Edit organizaton address -->
-            <Field :label="$t('organization_address_county_label')" :hasPendingChanges="changes.includes('counties')" alt>
-                <template #value>
-                    {{ originalOrganization.county_names.join(', ') }}
-                </template>
-
-                <template #action>
-                    <EditModal
-                        @action="editField('counties')"
-                        @cancel="
-                            organization.counties = originalOrganization.counties;
-                        "
-                        class="flex justify-end col-span-1"
-                    >
-                        <div class="flex flex-col gap-4 lg:flex-row">
-                            <Select
-                                :label="$t('counties_label')"
-                                :options="counties"
-                                type="object"
-                                v-model="organization.counties"
-                                v-if="!organization.is_national"
-                                :error="errors.counties"
-                                multiple
-                            />
-                        </div>
-                    </EditModal>
-                </template>
-            </Field>
             <Field :label="$t('organization_address_street_address_label')" :hasPendingChanges="changes.includes('address')" alt>
                 <template #value>
                     {{ organization.address }},

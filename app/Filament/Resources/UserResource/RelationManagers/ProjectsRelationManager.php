@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
 use Filament\Forms\Components\TextInput;
+use Filament\Pages\Actions\ViewAction;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
@@ -63,6 +64,7 @@ class ProjectsRelationManager extends RelationManager
             ->headerActions([
             ])
             ->actions([
+                ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
