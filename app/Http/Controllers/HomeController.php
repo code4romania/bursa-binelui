@@ -20,7 +20,7 @@ class HomeController extends Controller
     {
         return Inertia::render('Public/Home', [
             'projects_count' => Project::query()
-                ->whereIsOpen()
+                ->whereIsApproved()
                 ->count(),
 
             'organizations_count' => Organization::query()
