@@ -25,7 +25,7 @@ class OrganizationController extends Controller
             'changes' => Activity::pendingChangesFor($organization)
                 ->get()
                 ->flatMap(fn (Activity $activity) => $activity->properties)
-                ->unique()
+                ->unique(),
         ]);
     }
 
