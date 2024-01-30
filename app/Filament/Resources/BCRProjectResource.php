@@ -142,6 +142,7 @@ class BCRProjectResource extends Resource
                     ])
                     ->label(__('bcr-project.labels.external_links.label'))
                     ->inlineLabel()
+                    ->defaultItems(0)
                     ->columnSpanFull(),
 
                 Repeater::make('videos')
@@ -152,6 +153,7 @@ class BCRProjectResource extends Resource
                             ->required()
                             ->url(),
                     ])
+                    ->defaultItems(0)
                     ->inlineLabel()
                     ->columnSpanFull(),
 
