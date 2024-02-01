@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Filament\Resources\UserResource\Actions;
 
 use App\Enums\EuPlatescStatus;
+use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\UserResource;
-use App\Models\Donation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction as BaseAction;
 use pxlrbt\FilamentExcel\Columns\Column;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ExportAction extends BaseAction
 {
@@ -25,7 +24,7 @@ class ExportAction extends BaseAction
         $this->color('secondary');
 
         $this->exports([
-            ExcelExport::make()
+            ExcelExportWithNotificationInDB::make()
                 ->withFilename(fn () => sprintf(
                     '%s-%s',
                     now()->format('Y_m_d-H_i_s'),
@@ -100,7 +99,8 @@ class ExportAction extends BaseAction
                                         ->last()?->created_at->toFormattedDateTime() : ''
                         ),
 
-                ]),
+                ])
+                ->queue(),
         ]);
     }
 }

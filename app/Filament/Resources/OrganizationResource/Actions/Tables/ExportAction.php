@@ -4,43 +4,36 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\OrganizationResource\Actions\Tables;
 
-use App\Enums\OrganizationStatus;
+use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\OrganizationResource;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction as BaseAction;
 use pxlrbt\FilamentExcel\Columns\Column;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ExportAction extends BaseAction
 {
     protected string | null $status = null;
-
-    public function status(OrganizationStatus | string | null $status): static
-    {
-        $this->status = $status?->value ?? $status;
-
-        return $this;
-    }
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->color('secondary');
+        $status = $this->name ?? '';
 
         $this->exports([
-            ExcelExport::make()
+            ExcelExportWithNotificationInDB::make()
                 ->withFilename(fn () => sprintf(
                     '%s-%s-%s',
                     now()->format('Y_m_d-H_i_s'),
                     Str::slug(OrganizationResource::getPluralModelLabel()),
                     $this->status
                 ))
-                ->modifyQueryUsing(function (Builder $query) {
+                ->modifyQueryUsing(function (Builder $query) use ($status) {
                     return $query
-                        ->status($this->status)
+                        ->status($status)
                         ->with([
                             'activityDomains',
                             'counties',
@@ -140,7 +133,8 @@ class ExportAction extends BaseAction
                                 : __('forms::components.select.boolean.false')
                         ),
 
-                ]),
+                ])
+                ->queue(),
         ]);
     }
 }
