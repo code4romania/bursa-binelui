@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Actions;
 
+use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\ProjectResource;
 use App\Models\Activity;
 use App\Models\County;
@@ -15,7 +16,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction as BaseAction;
 use pxlrbt\FilamentExcel\Columns\Column;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ExportAction extends BaseAction
 {
@@ -27,46 +27,51 @@ class ExportAction extends BaseAction
 
         $this->color('secondary');
 
+        $fileName = sprintf(
+            '%s-%s',
+            now()->format('Y_m_d-H_i_s'),
+            Str::slug(ProjectResource::getPluralModelLabel()),
+        );
+        $name = $this->name;
         $this->exports([
-            ExcelExport::make()
-                ->withFilename(fn () => sprintf(
-                    '%s-%s',
-                    now()->format('Y_m_d-H_i_s'),
-                    Str::slug(ProjectResource::getPluralModelLabel()),
-                ))
-                ->modifyQueryUsing(function (Builder $query) {
-                    if ($this->name == 'approved_project') {
-                        $query->whereIsApproved();
-                    }
+            ExcelExportWithNotificationInDB::make()
+                ->withFilename($fileName)
+                ->modifyQueryUsing(
+                    function (Builder $query) use ($name) {
+                        if ($name == 'approved_project') {
+                            $query->whereIsApproved();
+                        }
 
-                    if ($this->name == 'new_project') {
-                        $query->whereIsPending();
-                    }
+                        if ($name == 'new_project') {
+                            $query->whereIsPending();
+                        }
 
-                    if ($this->name == 'pending_changes') {
-                        $query->withCount([
+                        if ($name == 'pending_changes') {
+                            $query->withCount([
                                 'activities' => fn (Builder $query) => $query->wherePending(),
                             ])
-                            ->whereHas('activities', function (Builder $query) {
-                                $query->wherePending();
-                            })
-                            ->addSelect([
-                                'latest_updated_at' => Activity::query()
-                                    ->withoutGlobalScopes()
-                                    ->wherePending()
-                                    ->select('created_at')
-                                    ->whereColumn('subject_id', 'projects.id')
-                                    ->whereMorphedTo('subject', Organization::class)
-                                    ->latest()
-                                    ->take(1),
-                            ]);
-                    }
+                                ->whereHas('activities', function (Builder $query) {
+                                    $query->wherePending();
+                                })
+                                ->addSelect([
+                                    'latest_updated_at' => Activity::query()
+                                        ->withoutGlobalScopes()
+                                        ->wherePending()
+                                        ->select('created_at')
+                                        ->whereColumn('subject_id', 'projects.id')
+                                        ->whereMorphedTo('subject', Organization::class)
+                                        ->latest()
+                                        ->take(1),
+                                ]);
+                        }
 
-                    if ($this->name == 'rejected_project') {
-                        $query->whereIsRejected();
+                        if ($name == 'rejected_project') {
+                            $query->whereIsRejected();
+                        }
+
+                        return $query;
                     }
-                    return $query;
-                })
+                )
                 ->withColumns([
                     Column::make('name')
                         ->heading(__('project.labels.name')),
@@ -146,7 +151,8 @@ class ExportAction extends BaseAction
                                 ->map(fn (Donation $donation) => $donation->amount)
                                 ->sum()
                         ),
-                ]),
+                ])
+            ->queue(),
         ]);
     }
 }

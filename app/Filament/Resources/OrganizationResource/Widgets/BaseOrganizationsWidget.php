@@ -49,13 +49,12 @@ abstract class BaseOrganizationsWidget extends BaseWidget
     protected function getTableHeaderActions(): array
     {
         return [
-            ExportAction::make()
-                ->status(match (\get_class($this)) {
-                    PendingOrganizationsWidget::class => OrganizationStatus::pending,
-                    ApprovedOrganizationsWidget::class => OrganizationStatus::approved,
-                    PendingChangesOrganizationsWidget::class => OrganizationStatus::pending_changes,
-                    RejectedOrganizationsWidget::class => OrganizationStatus::rejected,
-                }),
+            ExportAction::make(match (\get_class($this)) {
+                PendingOrganizationsWidget::class => OrganizationStatus::pending->value,
+                ApprovedOrganizationsWidget::class => OrganizationStatus::approved->value,
+                PendingChangesOrganizationsWidget::class => OrganizationStatus::pending_changes->value,
+                RejectedOrganizationsWidget::class => OrganizationStatus::rejected->value,
+            }),
         ];
     }
 
