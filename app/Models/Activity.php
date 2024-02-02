@@ -70,22 +70,14 @@ class Activity extends BaseActivity
     {
         $value = data_get($this->properties, $this->changed_field . '.old');
 
-        if ($this->description === 'statute') {
-            return Media::find($value)?->getUrl();
-        }
-
-        return $value;
+        return $this->getModifiedField($value);
     }
 
     public function getChangedFieldNewValueAttribute(): ?string
     {
         $value = data_get($this->properties, $this->changed_field . '.new');
 
-        if ($this->description === 'statute') {
-            return Media::find($value)?->getUrl();
-        }
-
-        return $value;
+        return $this->getModifiedField($value);
     }
 
     public function getStatusAttribute(): ?string
@@ -177,5 +169,22 @@ class Activity extends BaseActivity
             'rejected_at' => now(),
         ]);
 
+    }
+
+    /**
+     * @param mixed $value
+     * @return string | null
+     */
+    public function getModifiedField(mixed $value): ?string
+    {
+        if ($this->description === 'statute') {
+            $value = Media::find($value)?->getUrl();
+        }
+
+        if (gettype($value) == 'boolean') {
+            $value = $value ? __('field.boolean.true') : __('field.boolean.false');
+        }
+
+        return $value;
     }
 }
