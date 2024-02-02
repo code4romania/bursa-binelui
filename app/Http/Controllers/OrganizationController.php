@@ -34,7 +34,7 @@ class OrganizationController extends Controller
                         AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->with('activityDomains')
-                    ->orederBy('id', 'desc')
+                    ->defaultSort('-id')
                     ->isApproved()
                     ->paginate()
                     ->withQueryString()
