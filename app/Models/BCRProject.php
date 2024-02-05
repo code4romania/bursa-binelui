@@ -43,7 +43,7 @@ class BCRProject extends Model implements HasMedia
         'county_id',
         'project_category_id',
         'is_national',
-        'external_links'
+        'external_links',
     ];
 
     protected $casts = [
@@ -90,7 +90,7 @@ class BCRProject extends Model implements HasMedia
     {
         return collect($this->videos)
             ->pluck('link')
-            ->filter(fn ($video) => !blank($video))
+            ->filter(fn ($video) => ! blank($video))
             ->map(
                 fn (string $videoUrl) => Cache::remember(
                     'video-' . hash('sha256', $videoUrl),
