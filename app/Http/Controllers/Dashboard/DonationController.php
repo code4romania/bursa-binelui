@@ -19,15 +19,26 @@ class DonationController extends Controller
 {
     public function index(Request $request): Response
     {
-        $donations = auth()->user()->organization->donations()->with(['project:id,name,organization_id', 'organization:id,name'])->get();
-        $organizations = collect([]);
-        $projects = collect([]);
+        $donations = auth()->user()->organization
+            ->donations()
+            ->with([
+                'project:id,name,organization_id',
+                'organization:id,name',
+            ])
+            ->get();
+
+        $organizations = collect();
+        $projects = collect();
 
         $donations->map(function ($donation) use (&$organizations, &$projects) {
             $organizations->push($donation->project->organization);
             $projects->push($donation->project);
         });
-        $dates = $donations->pluck('created_at')->map(fn ($date) => $date->format('Y-m'))->unique();
+
+        $dates = $donations
+            ->pluck('created_at')
+            ->map(fn ($date) => $date->format('Y-m'))
+            ->unique();
 
         return Inertia::render('AdminOng/Donations/Index', [
             'filter' => $request->query('filter'),
