@@ -23,8 +23,12 @@ class ProjectPolicy
         return $user->belongsToOrganization($project->organization);
     }
 
-    public function editAsNgo(User $user, Project $project): bool
+    public function update(User $user, Project $project): bool
     {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
         return $user->belongsToOrganization($project->organization);
     }
 }
