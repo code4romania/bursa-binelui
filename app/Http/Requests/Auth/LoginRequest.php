@@ -51,6 +51,8 @@ class LoginRequest extends FormRequest
         if (Auth::attempt($credentials, $remember)) {
             RateLimiter::clear($this->throttleKey());
 
+            Auth::logoutOtherDevices($this->password);
+
             return;
         }
 
@@ -82,7 +84,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), config('throttle.login_limit'))) {
             return;
         }
 

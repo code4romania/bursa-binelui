@@ -189,6 +189,8 @@ module "s3_public" {
   ignore_public_acls      = false
   restrict_public_buckets = false
 
+  enable_versioning = var.env == "production"
+
   name   = "${local.namespace}-public"
   policy = data.aws_iam_policy_document.s3_cloudfront_public.json
 }
@@ -206,6 +208,8 @@ resource "aws_s3_bucket_cors_configuration" "s3_public" {
 
 module "s3_private" {
   source = "./modules/s3"
+
+  enable_versioning = var.env == "production"
 
   name   = "${local.namespace}-private"
   policy = data.aws_iam_policy_document.s3_cloudfront_private.json

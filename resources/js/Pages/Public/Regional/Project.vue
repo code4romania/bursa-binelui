@@ -72,7 +72,7 @@
 
                 <div class="mb-10" v-if="project.description">
                     <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_description_label') }}</h2>
-                    <div class="text-lg text-gray-500" v-html="project.description"></div>
+                    <div class="text-lg text-gray-500" v-text="project.description" />
                 </div>
             </div>
 
@@ -143,47 +143,47 @@
         <div class="mx-auto mb-8 max-w-7xl px-9">
             <div class="mb-10" v-if="project.needs">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_needs_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.needs"></div>
+                <div class="text-lg text-gray-500" v-text="project.needs" />
             </div>
 
             <div class="mb-10" v-if="project.solution">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_solution_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.solution"></div>
+                <div class="text-lg text-gray-500" v-text="project.solution" />
             </div>
 
             <div class="mb-10" v-if="project.stats">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_project_stats_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.stats"></div>
+                <div class="text-lg text-gray-500" v-text="project.stats" />
             </div>
 
             <div class="mb-10" v-if="project.results">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_results_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.results"></div>
+                <div class="text-lg text-gray-500" v-text="project.results" />
             </div>
 
             <div class="mb-10" v-if="project.proud">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_proud_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.proud"></div>
+                <div class="text-lg text-gray-500" v-text="project.proud" />
             </div>
 
             <div class="mb-10" v-if="project.parteners">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('parteners') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.parteners"></div>
+                <div class="text-lg text-gray-500" v-text="project.parteners" />
             </div>
 
             <div class="mb-10" v-if="project.budget">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_budget_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.budget"></div>
+                <div class="text-lg text-gray-500" v-text="project.budget" />
             </div>
 
             <div class="mb-10" v-if="project.participants">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_participants_no_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.participants"></div>
+                <div class="text-lg text-gray-500" v-text="project.participants" />
             </div>
 
             <div class="mb-10" v-if="project.project_organization">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_organization_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.project_organization"></div>
+                <div class="text-lg text-gray-500" v-text="project.project_organization" />
             </div>
         </div>
 
@@ -217,7 +217,7 @@
                 class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-primary-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20"
             >
                 <h2 class="relative z-30 mb-6 text-3xl font-bold text-white">{{ project.organization.name }}</h2>
-                <div class="relative z-30 text-base text-white" v-html="project.organization.description"></div>
+                <div class="relative z-30 text-base text-white" v-text="project.organization.description" />
                 <div class="relative z-30 mt-8">
                     <Link
                         class="bg-white block sm:inline text-center text-gray-900 focus-visible:outline-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
