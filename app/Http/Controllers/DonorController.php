@@ -40,7 +40,9 @@ class DonorController extends Controller
 
     public function donations(Request $request)
     {
-        $donations = auth()->user()->donations()->with(['project:id,name,organization_id', 'organization:id,name'])->get();
+        $donations = auth()->user()->donations()
+            ->with(['project:id,name,organization_id', 'organization:id,name'])
+            ->get();
 
         $organizations = collect([]);
         $projects = collect([]);
@@ -58,12 +60,10 @@ class DonorController extends Controller
                     ->where('user_id', auth()->user()->id)
                     ->with('project:id,name,organization_id')
                     ->allowedFilters([
-
                         AllowedFilter::custom('date', new DonationDatesFilter),
                         AllowedFilter::exact('organization', 'project.organization_id'),
                         AllowedFilter::exact('project', 'project_id'),
                         AllowedFilter::exact('status', 'status'),
-
                     ])
                     ->allowedSorts([
                         AllowedSort::field('publish_date', 'start'),

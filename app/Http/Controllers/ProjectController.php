@@ -18,6 +18,7 @@ use App\Http\Sorts\ProjectDonationsSumSort;
 use App\Models\Project;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -82,14 +83,15 @@ class ProjectController extends Controller
 
     public function donate(Project $project, Request $request)
     {
-        $request->validate([
-            'amount' => 'required|numeric|min:1',
-            'terms' => 'required|accepted',
-            'email' => 'required|email',
-            'name' => 'required',
+        $attributes = $request->validate([
+            'amount' => ['required', 'numeric', 'min:1'],
+            'terms' => ['required', 'accepted'],
+            'email' => ['required', 'email'],
+            'name' => ['required'],
         ]);
+
         try {
-            [$lastName, $firstName] = explode(' ', $request->name);
+            [$lastName, $firstName] = explode(' ', $attributes['name']);
         } catch (\Exception $e) {
             throw ValidationException::withMessages(['name' => __('invalid_name')]);
         }
@@ -97,12 +99,12 @@ class ProjectController extends Controller
         $donation = $project->donations()->create([
             'organization_id' => $project->organization_id,
             'user_id' => auth()->user()->id ?? null,
-            'amount' => $request->amount,
-            'uuid' => (string) \Illuminate\Support\Str::uuid(),
+            'amount' => $attributes['amount'],
+            'uuid' => (string) Str::uuid(),
             'charge_amount' => 0,
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'email' => $request->email,
+            'email' => $attributes['email'],
             'status' => EuPlatescStatus::INITIALIZE,
             'card_status' => null,
             'card_holder_status_message' => null,
