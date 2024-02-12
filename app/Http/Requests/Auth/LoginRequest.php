@@ -51,6 +51,8 @@ class LoginRequest extends FormRequest
         if (Auth::attempt($credentials, $remember)) {
             RateLimiter::clear($this->throttleKey());
 
+            Auth::logoutOtherDevices($this->password);
+
             return;
         }
 

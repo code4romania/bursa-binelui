@@ -20,7 +20,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware(['web', 'auth', 'verified', 'hasOrganization'])
+            Route::middleware(['web', 'auth', 'auth.session', 'verified', 'hasOrganization'])
                 ->prefix('dashboard')
                 ->name('dashboard.')
                 ->group(base_path('routes/dashboard.php'));
