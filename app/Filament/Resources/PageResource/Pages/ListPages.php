@@ -25,6 +25,6 @@ class ListPages extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('pages.header', ['number' => Page::count()]) ;
+        return __('pages.header', ['number' => Page::count()]);
     }
 }

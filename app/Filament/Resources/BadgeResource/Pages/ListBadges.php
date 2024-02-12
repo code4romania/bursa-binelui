@@ -28,6 +28,6 @@ class ListBadges extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('badge.header.badge', ['number' => Badge::count()]) ;
+        return __('badge.header.badge', ['number' => Badge::count()]);
     }
 }

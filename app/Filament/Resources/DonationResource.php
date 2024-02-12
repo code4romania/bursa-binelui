@@ -150,7 +150,7 @@ class DonationResource extends Resource
                         true: fn (Builder $query) => $query->whereHas('championshipStage'),
                         false: fn (Builder $query) => $query->whereDoesntHave('championshipStage'),
                     ),
-                DateFilter::make('created_at')
+                DateFilter::make('created_at'),
             ])
             ->actions([
                 ViewAction::make()->iconButton(),

@@ -25,6 +25,6 @@ class ListCategories extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('article.header.category', ['number' => ArticleCategory::count()]) ;
+        return __('article.header.category', ['number' => ArticleCategory::count()]);
     }
 }

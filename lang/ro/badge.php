@@ -41,7 +41,7 @@ return [
     ],
 
     'header' => [
-        'badge' =>  'Badge-uri (:number)',
+        'badge' => 'Badge-uri (:number)',
         'category_badge' => 'Categorii de badge (:number)',
-        ],
+    ],
 ];

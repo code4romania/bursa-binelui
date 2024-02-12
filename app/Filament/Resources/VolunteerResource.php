@@ -140,7 +140,7 @@ class VolunteerResource extends Resource
                             fn (Builder $query) => $query->whereNull('user_id')
                         ),
                     ),
-                DateFilter::make('created_at')
+                DateFilter::make('created_at'),
 
             ])
             ->actions([

@@ -168,11 +168,10 @@ class Activity extends BaseActivity
         $this->update([
             'rejected_at' => now(),
         ]);
-
     }
 
     /**
-     * @param mixed $value
+     * @param  mixed         $value
      * @return string | null
      */
     public function getModifiedField(mixed $value): ?string
@@ -181,7 +180,7 @@ class Activity extends BaseActivity
             $value = Media::find($value)?->getUrl();
         }
 
-        if (gettype($value) == 'boolean') {
+        if (\gettype($value) == 'boolean') {
             $value = $value ? __('field.boolean.true') : __('field.boolean.false');
         }
 

@@ -23,7 +23,7 @@ class PendingChangesOrganizationsWidget extends BaseOrganizationsWidget
     protected function getTableQuery(): Builder
     {
         return parent::getTableQuery()
-           ->isPendingChanges()
+            ->isPendingChanges()
             ->withCount([
                 'activities' => fn (Builder $query) => $query->wherePending(),
             ])

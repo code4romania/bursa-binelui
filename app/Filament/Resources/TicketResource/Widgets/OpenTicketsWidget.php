@@ -95,6 +95,6 @@ class OpenTicketsWidget extends TableWidget
 
     protected function getTableHeading(): string
     {
-        return __('ticket.header.open', ['number' => Ticket::query()->whereOpen()->count()]) ;
+        return __('ticket.header.open', ['number' => Ticket::query()->whereOpen()->count()]);
     }
 }

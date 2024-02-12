@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'driver' => env('NEWSLETTER_DRIVER', \Spatie\Newsletter\Drivers\MailChimpDriver::class),
+    'driver' => env('NEWSLETTER_DRIVER', Spatie\Newsletter\Drivers\MailChimpDriver::class),
 
     /*
      * These arguments will be given to the driver.

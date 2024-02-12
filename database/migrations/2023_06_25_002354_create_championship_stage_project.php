@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('championship_stage_project', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Project::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\ChampionshipStage::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Championship::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Project::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\ChampionshipStage::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Championship::class)->constrained()->cascadeOnDelete();
             $table->string('status')->default(false);
             $table->integer('number_of_donation')->nullable()->default(null);
             $table->integer('amount_of_donation')->nullable()->default(null);

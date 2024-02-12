@@ -178,7 +178,7 @@ class ArticleResource extends Resource
                     ->multiple()
                     ->relationship('category', 'name')
                     ->label(__('article.filter.category')),
-                DateFilter::make('created_at')
+                DateFilter::make('created_at'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

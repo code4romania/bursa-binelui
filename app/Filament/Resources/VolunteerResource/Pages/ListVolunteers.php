@@ -14,6 +14,6 @@ class ListVolunteers extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('volunteer.header', ['number' => Volunteer::count()]) ;
+        return __('volunteer.header', ['number' => Volunteer::count()]);
     }
 }

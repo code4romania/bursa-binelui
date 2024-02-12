@@ -19,12 +19,12 @@ class BcrProjectResource extends JsonResource
             'slug' => $this->slug,
             'county' => $this?->county?->name,
             'image' => $this->getFirstMediaUrl('preview'),
-            'gallery' => $this->getMedia('gallery')->map(function ($media) {
-                return [
+            'gallery' => $this->getMedia('gallery')
+                ->map(fn ($media) => [
                     'id' => $media->id,
                     'url' => $media->getFullUrl(),
-                ];
-            })->toArray(),
+                ])
+                ->toArray(),
             'is_national' => \boolval($this->is_national),
             'area' => $this->is_national ? __('bcr-project.labels.national') : $this?->county?->name,
             'start' => $this->start_date?->format('d.m.Y'),
@@ -32,16 +32,16 @@ class BcrProjectResource extends JsonResource
             'description' => $this->description,
             'accepting_comments' => \boolval($this->accepting_comments),
             'embedded_videos' => $this->embedded_videos,
-            'swipe_gallery' => $this->getMedia('gallery')->map(function ($media) {
-                return [
+            'swipe_gallery' => $this->getMedia('gallery')
+                ->map(fn ($media) => [
                     'src' => $media->getFullUrl(),
                     'thumbnail' => $media->getFullUrl('preview'),
                     'w' => 1200,
                     'h' => 800,
-                ];
-            })->toArray(),
+                ])
+                ->toArray(),
             'external_links' => collect($this->external_links)
-                ->filter(fn ($link) => !blank($link['link']))
+                ->filter(fn ($link) => ! blank($link['link']))
                 ->map(function (array $link) {
                     $link['source'] = parse_url($link['link'], \PHP_URL_HOST);
 
