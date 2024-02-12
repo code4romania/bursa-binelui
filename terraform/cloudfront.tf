@@ -141,7 +141,7 @@ resource "aws_cloudfront_origin_request_policy" "default" {
 }
 
 resource "aws_cloudfront_origin_access_control" "s3" {
-  name                              = "s3-always-signv4"
+  name                              = "${local.namespace}-s3-always-signv4"
   description                       = ""
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
