@@ -245,7 +245,7 @@ class Project extends Model implements HasMedia
     public function markAsApproved(): bool
     {
         $slug = \Str::slug($this->name);
-//        dd($this);
+
         $count = self::whereRaw("slug RLIKE '^{$this->slug}(-[0-9]+)?$'")->count();
         if ($count > 0) {
             $slug .= '-' . ($count + 1);

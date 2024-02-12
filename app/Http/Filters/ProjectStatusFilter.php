@@ -11,7 +11,6 @@ class ProjectStatusFilter implements Filter
 {
     public function __invoke(Builder $query, $status, string $property): Builder
     {
-//        dd($status, $property, $query);
         if ($status === 'active') {
             return $query->whereIsOpen();
         }
