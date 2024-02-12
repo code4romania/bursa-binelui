@@ -17,15 +17,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
+        $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
             Route::middleware(['web', 'auth', 'verified', 'hasOrganization'])
                 ->prefix('dashboard')
                 ->name('dashboard.')
@@ -42,6 +36,21 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+        });
+    }
+
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('register', function (Request $request) {
+            return Limit::perMinute(config('throttle.register_limit'))->by($request->ip());
+        });
+
+        RateLimiter::for('make-donation', function (Request $request) {
+            return Limit::perMinute(config('throttle.donation_limit'))->by($request->user()?->id ?: $request->ip());
+        });
+
+        RateLimiter::for('register-volunteer', function (Request $request) {
+            return Limit::perMinute(config('throttle.volunteer_limit'))->by($request->user()?->id ?: $request->ip());
         });
     }
 

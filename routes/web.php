@@ -80,8 +80,8 @@ Route::group([
     Route::get('/', 'index')->name('index');
     Route::get('/map', 'map')->name('map');
     Route::get('/{project:slug}', 'show')->name('show');
-    Route::post('/{project:slug}/donate', 'donate')->name('donate');
-    Route::post('/{project:slug}/volunteer', 'volunteer')->name('volunteer');
+    Route::post('/{project:slug}/donate', 'donate')->name('donate')->middleware('throttle:make-donation');
+    Route::post('/{project:slug}/volunteer', 'volunteer')->name('volunteer')->middleware('throttle:register-volunteer');
 });
 
 Route::get('/{page:slug}', PageController::class)->name('page');
