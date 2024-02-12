@@ -22,6 +22,6 @@ class ListDonations extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('donation.header', ['number' => Donation::count()]) ;
+        return __('donation.header', ['number' => Donation::count()]);
     }
 }

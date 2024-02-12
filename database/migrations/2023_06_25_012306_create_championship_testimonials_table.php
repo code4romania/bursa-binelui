@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('championship_testimonials', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Championship::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Championship::class)->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
             $table->string('author');

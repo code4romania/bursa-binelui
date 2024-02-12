@@ -22,6 +22,6 @@ class ListBadgeCategories extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('badge.header.category_badge', ['number' => BadgeCategory::count()]) ;
+        return __('badge.header.category_badge', ['number' => BadgeCategory::count()]);
     }
 }

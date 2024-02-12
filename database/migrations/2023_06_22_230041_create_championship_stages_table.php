@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('championship_stages', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Championship::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Championship::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->foreignId('parent_id')->nullable()->constrained('championship_stages')->cascadeOnDelete();
             $table->date('start_date')->nullable()->default(null);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Exports;
 
 use App\Notifications\Admin\ExportExcelNotification;
@@ -20,7 +22,7 @@ class ExcelExportWithNotificationInDB extends ExcelExport
 
         $this->prepareQueuedExport();
 
-        $filename = Str::uuid().'-'.$this->getFilename();
+        $filename = Str::uuid() . '-' . $this->getFilename();
         $authUser = auth()->user();
 
         $this

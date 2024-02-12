@@ -86,6 +86,6 @@ class ClosedTicketsWidget extends TableWidget
 
     protected function getTableHeading(): string
     {
-        return __('ticket.header.close', ['number' => Ticket::query()->whereClosed()->count()]) ;
+        return __('ticket.header.close', ['number' => Ticket::query()->whereClosed()->count()]);
     }
 }

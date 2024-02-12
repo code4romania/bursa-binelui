@@ -82,7 +82,7 @@ class CategoryResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                DateFilter::make('updated_at')
+                DateFilter::make('updated_at'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

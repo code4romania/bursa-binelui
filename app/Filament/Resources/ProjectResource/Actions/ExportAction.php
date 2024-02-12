@@ -98,20 +98,18 @@ class ExportAction extends BaseAction
                         ),
 
                     Column::make('counties')
-                    ->heading(__('project.labels.counties'))
+                        ->heading(__('project.labels.counties'))
                         ->formatStateUsing(
-                            fn (Project $record) =>
-                                $record->counties->map(fn (County $county) => $county->name)
-                                    ->join(', ')
+                            fn (Project $record) => $record->counties->map(fn (County $county) => $county->name)
+                                ->join(', ')
                         ),
 
                     Column::make('category')
                         ->heading(__('project.labels.category'))
-                    ->formatStateUsing(
-                        fn (Project $record, $state) =>
-                            $record->categories->map(fn (ProjectCategory $category) => $category->name)
+                        ->formatStateUsing(
+                            fn (Project $record, $state) => $record->categories->map(fn (ProjectCategory $category) => $category->name)
                                 ->join(', ')
-                    ),
+                        ),
 
                     Column::make('description')
                         ->heading(__('project.labels.description')),
@@ -139,20 +137,18 @@ class ExportAction extends BaseAction
                     Column::make('donation_number')
                         ->heading(__('donation.labels.count'))
                         ->formatStateUsing(
-                            fn (Project $record) =>
-                            $record->donations->count()
+                            fn (Project $record) => $record->donations->count()
                         ),
 
                     Column::make('donation_amount')
                         ->heading(__('donation.labels.amount'))
                         ->formatStateUsing(
-                            fn (Project $record) =>
-                            $record->donations
+                            fn (Project $record) => $record->donations
                                 ->map(fn (Donation $donation) => $donation->amount)
                                 ->sum()
                         ),
                 ])
-            ->queue(),
+                ->queue(),
         ]);
     }
 }

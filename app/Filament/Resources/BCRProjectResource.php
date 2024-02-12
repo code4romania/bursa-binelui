@@ -165,7 +165,7 @@ class BCRProjectResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                    ->formatStateUsing(function (BcrProject $record) {
+                    ->formatStateUsing(function (BCRProject $record) {
                         return sprintf('#%d', $record->id);
                     })
                     ->label(__('bcr-project.labels.id'))

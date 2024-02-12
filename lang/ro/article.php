@@ -35,7 +35,7 @@ return [
 
     'header' => [
         'article' => 'Articole (:number)',
-        'category' => 'Categorii (:number)'
+        'category' => 'Categorii (:number)',
     ],
 
 ];

@@ -22,6 +22,6 @@ class ListBCRProjects extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('bcr-project.header', ['number' => BCRProject::count()]) ;
+        return __('bcr-project.header', ['number' => BCRProject::count()]);
     }
 }

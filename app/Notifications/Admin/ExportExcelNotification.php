@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications\Admin;
 
 use App\Models\User;
@@ -15,6 +17,7 @@ class ExportExcelNotification extends Notification
     use Queueable;
 
     private string $filename;
+
     private User $user;
 
     /**
@@ -42,10 +45,10 @@ class ExportExcelNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->attach(storage_path('app/filament-excel/') . $this->filename)
+            ->line('The introduction to the notification.')
+            ->attach(storage_path('app/filament-excel/') . $this->filename)
 //                    ->action('Notification Action', $this->generateURL())
-                    ->line('Thank you for using our application!');
+            ->line('Thank you for using our application!');
     }
 
     /**

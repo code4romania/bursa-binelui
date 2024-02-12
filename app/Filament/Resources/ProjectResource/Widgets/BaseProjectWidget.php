@@ -114,7 +114,7 @@ class BaseProjectWidget extends BaseWidget
     protected function getTableHeaderActions(): array
     {
         return [
-            ProjectResource\Actions\ExportAction::make($this->getTableQueryStringIdentifier())
+            ProjectResource\Actions\ExportAction::make($this->getTableQueryStringIdentifier()),
         ];
     }
 }

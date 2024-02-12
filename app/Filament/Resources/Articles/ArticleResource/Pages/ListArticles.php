@@ -25,6 +25,6 @@ class ListArticles extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('article.header.article', ['number' => Article::count()]) ;
+        return __('article.header.article', ['number' => Article::count()]);
     }
 }

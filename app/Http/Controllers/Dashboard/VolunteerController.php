@@ -39,6 +39,7 @@ class VolunteerController extends Controller
 
     public function approve(Request $request, VolunteerRequest $volunteerRequest)
     {
+        $this->authorize('update', $volunteerRequest);
         $volunteerRequest->markAsApproved();
 
         return redirect()->back()
@@ -47,6 +48,7 @@ class VolunteerController extends Controller
 
     public function reject(Request $request, VolunteerRequest $volunteerRequest)
     {
+        $this->authorize('update', $volunteerRequest);
         $volunteerRequest->markAsRejected();
 
         return redirect()->back()
@@ -55,6 +57,7 @@ class VolunteerController extends Controller
 
     public function delete(Request $request, VolunteerRequest $volunteerRequest)
     {
+        $this->authorize('delete', $volunteerRequest);
         $volunteerRequest->delete();
 
         return redirect()->back()

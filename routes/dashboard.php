@@ -76,9 +76,6 @@ Route::group([
     Route::post('/', 'store')->name('store');
 
     Route::delete('/{user}', 'destroy')->name('destroy');
-
-    // Route::post('/{volunteerRequest}/reject', 'reject')->name('reject');
-    // Route::post('/{volunteerRequest}/delete', 'delete')->name('delete');
 });
 
 Route::group([

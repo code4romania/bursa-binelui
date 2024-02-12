@@ -22,6 +22,6 @@ class ListUsers extends ListRecords
 
     protected function getTableHeading(): string
     {
-        return __('user.header', ['number' => User::count()]) ;
+        return __('user.header', ['number' => User::count()]);
     }
 }

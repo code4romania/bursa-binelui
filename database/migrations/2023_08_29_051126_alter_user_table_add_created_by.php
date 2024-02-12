@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\User::class, 'created_by')->nullable()->constrained('users');
+            $table->foreignIdFor(App\Models\User::class, 'created_by')->nullable()->constrained('users');
         });
     }
 

@@ -69,8 +69,7 @@ class ExportAction extends BaseAction
                     Column::make('newsletter_subscription')
                         ->heading(__('user.labels.newsletter_subscription'))
                         ->formatStateUsing(
-                            fn (User $record) =>
-                                $record->newsletter ?
+                            fn (User $record) => $record->newsletter ?
                                     $record->created_at->toFormattedDateTime() :
                                     ''
                         ),
@@ -92,8 +91,7 @@ class ExportAction extends BaseAction
                     Column::make('last_donation_date')
                         ->heading(__('user.labels.last_donation_date'))
                         ->formatStateUsing(
-                            fn (User $record) =>
-                                $record->donations_count ?
+                            fn (User $record) => $record->donations_count ?
                                     $record->donations
                                         ->reject(fn ($item) => $item->status === EuPlatescStatus::CHARGED)
                                         ->last()?->created_at->toFormattedDateTime() : ''

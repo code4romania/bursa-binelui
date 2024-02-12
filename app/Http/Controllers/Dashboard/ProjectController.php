@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Enums\ProjectStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\EditRequest;
+use App\Http\Requests\Project\StatusChangeRequest;
 use App\Http\Requests\Project\StoreRequest;
 use App\Http\Resources\Project\EditProjectResource;
 use App\Http\Resources\ProjectCardResource;
@@ -15,7 +15,6 @@ use App\Models\Project;
 use App\Services\ProjectService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -57,7 +56,8 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        $this->authorize('view', $project);
+        $this->authorize('update', $project);
+
         $project->load('media');
 
         return Inertia::render('AdminOng/Projects/EditProject', [
@@ -73,44 +73,18 @@ class ProjectController extends Controller
 
     public function update(EditRequest $request, Project $project)
     {
-        $this->authorize('editAsNgo', $project);
-//        dd($request->validated());
+        $this->authorize('update', $project);
+
         ProjectService::update($project, $request->validated());
 
         return redirect()->back()
             ->with('success', 'Project updated.');
     }
 
-    public function changeStatus($id, Request $request)
+    public function changeStatus(StatusChangeRequest $request, Project $project)
     {
-        $project = Project::findOrFail($id);
-        $projectArray = $project->toArray();
-        $projectArray['preview'] = $project->getFirstMedia('preview');
-        if ($request->get('status') !== ProjectStatus::archived->value) {
-            Validator::make(
-                $projectArray,
-                [
-                    'name' => ['required', 'max:255'],
-                    'start' => ['required', 'date', 'after_or_equal:today'],
-                    'end' => ['required', 'date', 'after:start'],
-                    'target_budget' => ['required', 'numeric', 'min:1'],
-                    'categories' => ['required', 'array', 'min:1'],
-                    'counties' => ['required_if:is_national,0', 'array', 'min:1'],
-                    'description' => ['required', 'min:100', 'max:1000'],
-                    'scope' => ['required', 'min:100', 'max:1000'],
-                    'beneficiaries' => ['required', 'min:50', 'max:1000'],
-                    'reason_to_donate' => ['required', 'min:50', 'max:1000'],
-                    'preview' => ['required'],
-                    'videos' => ['nullable', 'array'],
-                    'videos.*.url' => ['nullable', 'url'],
-                    'external_links' => ['nullable', 'array'],
-                    'external_links.*.url' => ['nullable', 'url'],
-                ],
-                [
-                    'start.after_or_equal' => __('custom_validation.start_date.after_or_equal'),
-                ]
-            )->validate();
-        }
+        $this->authorize('update', $project);
+
         (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
 
         return redirect()->back()
