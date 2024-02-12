@@ -89,7 +89,7 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
-            'login' => Filament\Http\Livewire\Auth\Login::class,
+            'login' => App\Filament\Pages\Auth\Login::class,
         ],
     ],
 
@@ -318,6 +318,7 @@ return [
     'middleware' => [
         'auth' => [
             Authenticate::class,
+            AuthenticateSession::class,
         ],
         'base' => [
             EncryptCookies::class,
