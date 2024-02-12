@@ -63,7 +63,7 @@
 
                     <div v-if="organization.description">
                         <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('description') }}</h2>
-                        <div class="text-lg text-gray-500" v-html="organization.description"></div>
+                        <div class="text-lg text-gray-500" v-text="organization.description" />
                     </div>
                 </div>
 

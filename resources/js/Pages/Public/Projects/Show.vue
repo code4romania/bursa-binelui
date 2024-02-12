@@ -115,7 +115,7 @@
 
                 <div class="mb-10" v-if="project.description">
                     <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
-                    <div class="text-lg text-gray-500" v-html="project.description"></div>
+                    <div class="text-lg text-gray-500" v-text="project.description" />
                 </div>
             </div>
 
@@ -166,17 +166,17 @@
         <div class="container space-y-10">
             <div v-if="project.scope">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_scope_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.scope"></div>
+                <div class="text-lg text-gray-500" v-text="project.scope" />
             </div>
 
             <div v-if="project.beneficiaries">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_beneficiary_label') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.beneficiaries"></div>
+                <div class="text-lg text-gray-500" v-text="project.beneficiaries" />
             </div>
 
             <div v-if="project.reason_to_donate">
                 <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('why_to_donate') }}</h2>
-                <div class="text-lg text-gray-500" v-html="project.reason_to_donate"></div>
+                <div class="text-lg text-gray-500" v-text="project.reason_to_donate" />
             </div>
 
             <div v-if="project.external_links.length">
@@ -250,7 +250,7 @@
                 class="relative z-30 w-11/12 h-full p-8 py-20 overflow-hidden bg-primary-500 rounded-xl pb-60 sm:pb-10 sm:pl-60 sm:pr-20"
             >
                 <h2 class="relative z-30 mb-6 text-3xl font-bold text-white">{{ project.organization.name }}</h2>
-                <div class="relative z-30 text-base text-white" v-html="project.organization.description"></div>
+                <div class="relative z-30 text-base text-white" v-text="project.organization.description" />
                 <div class="relative z-30 mt-8">
                     <Link
                         class="bg-white block sm:inline text-center text-gray-900 focus-visible:outline-white rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
