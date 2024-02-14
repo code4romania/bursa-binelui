@@ -14,7 +14,6 @@ enum OrganizationStatus: string
     use Comparable;
     use HasLabel;
 
-    case draft = 'draft';
     case pending = 'pending';
     case approved = 'approved';
     case rejected = 'rejected';

@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         if ($user->hasRole(UserRole::ADMIN)) {
-            $attributes['ngo']['status'] = OrganizationStatus::draft;
+            $attributes['ngo']['status'] = OrganizationStatus::pending;
             $attributes['ngo']['slug'] = Str::slug($attributes['ngo']['name']);
 
             $organization = Organization::create($attributes['ngo']);

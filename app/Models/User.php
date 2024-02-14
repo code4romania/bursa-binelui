@@ -84,7 +84,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function projects(): HasMany
     {
-        return $this->organization->projects()->with('organization');
+        return $this->organization?->projects()->with('organization');
     }
 
     public function canAccessFilament(): bool
