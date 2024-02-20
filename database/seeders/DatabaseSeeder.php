@@ -11,6 +11,7 @@ use App\Models\Badge;
 use App\Models\BadgeCategory;
 use App\Models\BCRProject;
 use App\Models\Championship;
+use App\Models\Edition;
 use App\Models\Organization;
 use App\Models\ProjectCategory;
 use App\Models\User;
@@ -81,6 +82,10 @@ class DatabaseSeeder extends Seeder
         $this->seedBadges();
 
         $this->seedArticleCategories();
+
+        Edition::factory()
+            ->count(10)
+            ->create();
     }
 
     private function seedArticleCategories(): void

@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\VolunteerController;
 use App\Http\Controllers\Dashboard\WelcomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EditionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)->name('main');
@@ -102,4 +103,12 @@ Route::group([
     Route::post('/{ticket}/status', 'status')
         ->whereIn('status', ['open', 'closed'])
         ->name('status');
+});
+
+Route::group([
+    'prefix' => 'editions',
+    'controller' => EditionController::class,
+], function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/', 'create')->name('create');
 });
