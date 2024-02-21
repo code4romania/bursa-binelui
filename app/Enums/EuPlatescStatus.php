@@ -14,6 +14,7 @@ enum EuPlatescStatus: string
     case INITIALIZE = 'initialize';
     case AUTHORIZED = 'authorized';
     case UNAUTHORIZED = 'unauthorized';
+    case CAPTURE = 'capture';
     case CANCELED = 'canceled';
     case ABORTED = 'aborted';
     case PAYMENT_DECLINED = 'payment_declined';

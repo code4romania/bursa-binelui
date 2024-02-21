@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Donations\EuPlatescRequest;
 use App\Models\Donation;
 use App\Services\EuPlatescService;
 use Inertia\Inertia;
@@ -30,5 +31,14 @@ class DonationController extends Controller
     public function thankYou(string $uuid)
     {
         return Inertia::render('Public/Donor/ThankYou');
+    }
+
+    public function euPlatescCallback(EuPlatescRequest $request, Donation $donation)
+    {
+        $validatedData = $request->validated();
+
+        (new EuPlatescService($donation->organization_id))->processIpn($donation, $validatedData);
+
+        echo "OK";//IMPORTANT to print OK
     }
 }
