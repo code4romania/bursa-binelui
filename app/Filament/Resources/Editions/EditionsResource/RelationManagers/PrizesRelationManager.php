@@ -24,7 +24,7 @@ class PrizesRelationManager extends RelationManager
                     ->maxLength(255)
                     ->label(__('edition.labels.prize_name')),
 
-                Forms\Components\Select::make('edition_category_id')
+                Forms\Components\Select::make('edition_categories_id')
                     ->options(
                         fn (RelationManager $livewire) =>
                             EditionCategories::query()
@@ -50,6 +50,10 @@ class PrizesRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('edition_categories_id')
                     ->label(__('edition.labels.category'))
+                    ->formatStateUsing(
+                        fn ($state, $record) =>
+                            $record->editionCategories()->getParent()->name
+                    )
                     ->searchable()
                     ->sortable(),
             ])

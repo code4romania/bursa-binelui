@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\BelongsToEdition;
 use App\Concerns\HasCounties;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ class Gala extends Model implements HasMedia
     use HasFactory;
     use HasCounties;
     use InteractsWithMedia;
+    use BelongsToEdition;
 
     protected $fillable = [
         'title',

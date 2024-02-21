@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\EditionCategories;
+use App\Models\Prize;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,5 +21,16 @@ class EditionCategoriesFactory extends Factory
         return [
             'name' => fake()->text(25)
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (EditionCategories $editionCategory) {
+            Prize::factory()
+                ->count(1)
+                ->state(['edition_categories_id' => $editionCategory->id,
+                    'edition_id' => $editionCategory->edition_id])
+                ->create();
+        });
     }
 }

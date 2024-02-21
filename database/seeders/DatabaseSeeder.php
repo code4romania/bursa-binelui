@@ -13,6 +13,7 @@ use App\Models\BCRProject;
 use App\Models\Championship;
 use App\Models\Edition;
 use App\Models\Organization;
+use App\Models\Page;
 use App\Models\ProjectCategory;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -82,6 +83,8 @@ class DatabaseSeeder extends Seeder
         $this->seedBadges();
 
         $this->seedArticleCategories();
+
+        Page::factory()->count(10)->create();
 
         Edition::factory()
             ->count(10)
