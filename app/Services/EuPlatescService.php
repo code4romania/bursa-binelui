@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Enums\EuPlatescStatus;
 use App\Models\Donation;
 use App\Models\Organization;
+use Http;
 
 class EuPlatescService
 {
@@ -143,15 +144,10 @@ class EuPlatescService
 
     public function callMethod(array $data): array
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::URL_ACTION);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $server_output = curl_exec($ch);
-        curl_close($ch);
+        $response = Http::asForm()->post(self::URL_ACTION, $data);
 
-        return json_decode($server_output, true);
+        $body = $response->body() ?: '';
+        return json_decode($body, true);
     }
 
     public function canCaptureTransaction(): bool
