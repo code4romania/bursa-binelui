@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Editions\EditionsResource\RelationManagers;
+namespace App\Filament\Resources\EditionsResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -8,20 +8,24 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class CategoryRelationManager extends RelationManager
+class FaqRelationManager extends RelationManager
 {
-    protected static string $relationship = 'edition_categories';
+    protected static string $relationship = 'faq';
 
-    protected static ?string $recordTitleAttribute = 'Category';
+    protected static ?string $recordTitleAttribute = 'Faq';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label(__('edition.labels.category'))
+                Forms\Components\TextInput::make('question')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label(__('edition.labels.question')),
+
+                Forms\Components\Textarea::make('answer')
+                    ->required()
+                    ->label(__('edition.labels.answer')),
             ]);
     }
 
@@ -29,8 +33,13 @@ class CategoryRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label(__('edition.labels.categories'))
+                Tables\Columns\TextColumn::make('question')
+                    ->label(__('edition.labels.question'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('answer')
+                    ->label(__('edition.labels.answer'))
                     ->searchable()
                     ->sortable(),
             ])
@@ -39,7 +48,7 @@ class CategoryRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                    ->label(__('edition.labels.add_category')),
+                    ->label(__('edition.labels.add_faq')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -52,6 +61,6 @@ class CategoryRelationManager extends RelationManager
 
     public static function getTitle(): string
     {
-        return __('edition.labels.categories_tab');
+        return __('edition.labels.faq_tab');
     }
 }

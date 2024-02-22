@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\Editions;
+namespace App\Filament\Resources;
 
 use App\Filament\Resources\Editions\EditionsResource\Pages;
-use App\Filament\Resources\Editions\EditionsResource\RelationManagers\CategoryRelationManager;
-use App\Filament\Resources\Editions\EditionsResource\RelationManagers\FaqRelationManager;
-use App\Filament\Resources\Editions\EditionsResource\RelationManagers\GalesRelationManager;
-use App\Filament\Resources\Editions\EditionsResource\RelationManagers\PrizesRelationManager;
+use App\Filament\Resources\EditionsResource\Pages\CreateEditions;
+use App\Filament\Resources\EditionsResource\Pages\EditEditions;
+use App\Filament\Resources\EditionsResource\Pages\ListEditions;
+use App\Filament\Resources\EditionsResource\RelationManagers\CategoryRelationManager;
+use App\Filament\Resources\EditionsResource\RelationManagers\FaqRelationManager;
+use App\Filament\Resources\EditionsResource\RelationManagers\GalesRelationManager;
+use App\Filament\Resources\EditionsResource\RelationManagers\PrizesRelationManager;
 use App\Models\ArticleCategory;
 use App\Models\Edition;
-use App\Models\Page;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -33,12 +35,17 @@ class EditionsResource extends Resource
 
     protected static function getNavigationGroup(): ?string
     {
-        return __('navigation.group.gale');
+        return __('navigation.group.gala');
     }
 
     public static function getModelLabel(): string
     {
         return __('edition.label.singular');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('edition.label.plural');
     }
 
     public static function getEloquentQuery(): Builder
@@ -72,18 +79,16 @@ class EditionsResource extends Resource
                             ->columnSpanFull(),
 
                         Select::make('rule_page')
-                            ->options(Page::all()
-                                ->pluck('title', 'id'))
+                            ->relationship('page', 'title')
                             ->label(__('edition.labels.rule_page'))
-                            ->multiple()
                             ->preload()
                             ->required(),
 
-                        Select::make('edition_category')
+                        Select::make('article_category_id')
+                            ->relationship('article_category', 'name')
                             ->options(ArticleCategory::all()
                                 ->pluck('name', 'id'))
                             ->label(__('edition.labels.edition_category'))
-                            ->multiple()
                             ->preload()
                             ->required(),
 
@@ -156,9 +161,9 @@ class EditionsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEditions::route('/'),
-            'create' => Pages\CreateEditions::route('/create'),
-            'edit' => Pages\EditEditions::route('/{record}/edit'),
+            'index' => ListEditions::route('/'),
+            'create' => CreateEditions::route('/create'),
+            'edit' => EditEditions::route('/{record}/edit'),
         ];
     }
 

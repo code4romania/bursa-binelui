@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\Editions\EditionsResource\Pages;
+namespace App\Filament\Resources\EditionsResource\Pages;
 
-use App\Filament\Resources\Editions\EditionsResource;
+use App\Filament\Resources\EditionsResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateEditions extends CreateRecord

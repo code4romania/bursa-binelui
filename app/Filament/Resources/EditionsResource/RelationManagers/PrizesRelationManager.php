@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Editions\EditionsResource\RelationManagers;
+namespace App\Filament\Resources\EditionsResource\RelationManagers;
 
 use App\Models\EditionCategories;
 use Filament\Forms;
