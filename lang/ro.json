@@ -408,7 +408,7 @@
     "ticket_created_at": "Data",
     "ticket_closed_at": "Închis la data",
     "add_regional_project": "Adaugă un proiect regional",
-    "field_has_pending_changes": "Acest câmp are modificări neaprobare. Dacă il editezi, modificările vor fi pierdute.",
+    "field_has_pending_changes": "Modificarea acestui câmp trebuie aprobată înainte de a se mai face editări.",
     "field_pending_changes": "Noua valoare a campului este: ",
     "verify_email_title": "Îți mulțumim că te-ai înregistrat pe platforma Bursa Binelui !",
     "verify_email_description": "Te rugăm să îți validezi adresa de email pentru a-ți accesa contul. Dacă nu ai primit un email pentru validare, te rugăm să ne contactezi la email@example.com.",
@@ -499,7 +499,7 @@
     "project.labels.change_gallery_label": "Schimbă galeria de imagini",
 
     "organization_status_disabled": "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
-    "organization_status_pending": "Organizația este în așteptare",
+    "organization_status_pending": "Organizația ta este în curs de aprobare. Până la aprobare, aceasta nu va fi listată pe site-ul public Bursa Binelui.",
     "organization_status_approved": "Organizația este aprobată",
     "project_change_status_archived": "Vrei să arhivezi proiectul?"
 }
