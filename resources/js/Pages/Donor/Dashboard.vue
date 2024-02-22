@@ -26,55 +26,6 @@
                         class="my-6 space-y-6 text-sm text-gray-500"
                     ></div>
                 </div>
-
-                <div class="w-full lg:w-1/2 lg:px-10">
-                    <div class="bg-white shadow-lg">
-                        <div class="p-8 space-y-8">
-                            <div
-                                class="inline-flex items-center justify-start px-3 py-1 text-base font-semibold rounded-full cursor-pointer text-primary-500 bg-primary-50"
-                            >
-                                TOP
-                            </div>
-                            <h3
-                                class="text-6xl font-bold leading-6 text-gray-900"
-                            >
-                                {{ profile.donations_place }}
-                            </h3>
-                            <p class="text-lg text-gray-500">
-                                {{ $t("donations_place_1") }}
-                                {{ profile.donations_place }}
-                                {{ $t("donations_place_2") }}
-                            </p>
-                        </div>
-
-                        <div class="px-10 py-8 space-y-6 bg-gray-50">
-                            <div
-                                v-for="(
-                                    info, index
-                                ) in profile.donations_status"
-                                class="flex items-center justify-start gap-x-4"
-                                :key="index"
-                            >
-                                <SvgLoader
-                                    class="shrink-0 fill-gray-50"
-                                    name="check"
-                                />
-                                <p class="text-base font-normal text-gray-500">
-                                    {{ info }}
-                                </p>
-                            </div>
-
-                            <div class="w-full">
-                                <Link
-                                    :href="route('donor.donations')"
-                                    class="rounded-md block text-center px-3.5 py-2.5 text-sm text-white font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500"
-                                >
-                                    {{ $t("see_all_donations") }}
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="flex items-center gap-4">
