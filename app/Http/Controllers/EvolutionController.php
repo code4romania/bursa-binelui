@@ -4,15 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Filters\AcceptsVolunteersFilter;
 use App\Http\Filters\CountiesFilter;
 use App\Http\Filters\ProjectCategoriesFilter;
-use App\Http\Filters\ProjectDatesFilter;
-use App\Http\Filters\ProjectStatusFilter;
-use App\Http\Filters\SearchFilter;
-use App\Http\Sorts\ProjectDonationsCountSort;
-use App\Http\Sorts\ProjectDonationsSumSort;
-use App\Models\County;
 use App\Models\Donation;
 use App\Models\Project;
 use App\Models\ProjectCategory;
@@ -20,7 +13,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use Tpetry\QueryExpressions\Function\Aggregate\Count;
 use Tpetry\QueryExpressions\Function\Aggregate\Sum;
@@ -55,7 +47,7 @@ class EvolutionController extends Controller
             ->withSum('projects', 'target_budget')
             ->get();
 
-        $projects  =   QueryBuilder::for(Project::class)
+        $projects = QueryBuilder::for(Project::class)
             ->allowedFilters([
                 AllowedFilter::custom('county', new CountiesFilter),
                 AllowedFilter::custom('category', new ProjectCategoriesFilter),
@@ -76,7 +68,7 @@ class EvolutionController extends Controller
         $categories = ProjectCategory::query()
             ->addSelect('id as value')
             ->addSelect('name as label')
-            ->whereHas('projects', fn($query) => $query->whereIsApproved())
+            ->whereHas('projects', fn ($query) => $query->whereIsApproved())
             ->get();
 
         return Inertia::render('Public/Evolution/Evolution', [
