@@ -59,6 +59,7 @@ class County extends Model
         $value = explode(' ', $value);
         $value[0] = (float) $value[0];
         $value[1] = (float) $value[1];
+
         return $value;
     }
 }
