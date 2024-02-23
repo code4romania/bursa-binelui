@@ -35,6 +35,8 @@ class EvolutionController extends Controller
             ->groupByRaw('date')
             ->orderBy('date')
             ->get();
+
+
         $totalAmountDonation = $donations->sum('amount');
         $totalNumberDonation = $donations->sum('number');
 

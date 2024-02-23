@@ -110,20 +110,19 @@ const generateMapMarkers = async () => {
     for (const county of props.data) {
         try {
 
-            /** Intialize marker. */
             const markerIcon = {
-                url: generateMarkerIcon(county.projects),
+                url: generateMarkerIcon(county.projects.length),
                 scaledSize: new google.maps.Size(40, 40)
             };
 
             /** Marker options, */
             const marker = new google.maps.Marker({
-                position: county.coordinates,
+                position: { lat: county.coordinates[0], lng: county.coordinates[1] },
                 map: map.value,
                 title: county.name,
                 icon: markerIcon,
                 label: {
-                    text: county.projects.toString(),
+                    text: county.projects.length,
                     color: '#333',
                     fontSize: '14px',
                     fontWeight: 'bold'

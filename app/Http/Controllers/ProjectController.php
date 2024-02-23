@@ -15,6 +15,7 @@ use App\Http\Resources\Collections\ProjectCardCollection;
 use App\Http\Resources\Project\ShowProjectResource;
 use App\Http\Sorts\ProjectDonationsCountSort;
 use App\Http\Sorts\ProjectDonationsSumSort;
+use App\Models\County;
 use App\Models\Project;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
@@ -40,33 +41,44 @@ class ProjectController extends Controller
 
     protected function projectList(Request $request, string $view): Response
     {
+        $project = QueryBuilder::for(Project::class)
+            ->allowedFilters([
+                AllowedFilter::custom('county', new CountiesFilter),
+                AllowedFilter::custom('category', new ProjectCategoriesFilter),
+                AllowedFilter::custom('date', new ProjectDatesFilter),
+                AllowedFilter::custom('status', new ProjectStatusFilter),
+                AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
+                AllowedFilter::custom('search', new SearchFilter),
+            ])
+            ->allowedSorts([
+                AllowedSort::field('publish_date', 'start'),
+                AllowedSort::field('end_date', 'end'),
+                AllowedSort::field('target', 'target_budget'),
+                AllowedSort::custom('donations_total', new ProjectDonationsSumSort),
+                AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
+            ])
+            ->whereIsPublished()
+            ->orderBy('status_updated_at', 'desc');
+
+        $mapProjects = $project->get()
+            ->pluck('id')
+            ->toArray();
+        $mapCounties = County::whereHas('projects', fn ($query) => $query->whereIn('projects.id', $mapProjects))
+            ->with('projects:id,name,slug,organization_id')
+            ->get()
+            ->toArray();
+
+//        dd($mapCounties);
+
         return Inertia::render('Public/Projects/Index', [
             'view' => $view,
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
             'collection' => new ProjectCardCollection(
-                QueryBuilder::for(Project::class)
-                    ->allowedFilters([
-                        AllowedFilter::custom('county', new CountiesFilter),
-                        AllowedFilter::custom('category', new ProjectCategoriesFilter),
-                        AllowedFilter::custom('date', new ProjectDatesFilter),
-                        AllowedFilter::custom('status', new ProjectStatusFilter),
-                        AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
-                        AllowedFilter::custom('search', new SearchFilter),
-                    ])
-                    ->allowedSorts([
-                        AllowedSort::field('publish_date', 'start'),
-                        AllowedSort::field('end_date', 'end'),
-                        AllowedSort::field('target', 'target_budget'),
-                        AllowedSort::custom('donations_total', new ProjectDonationsSumSort),
-                        AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
-                    ])
-                    ->whereIsPublished()
-                    ->orderBy('status_updated_at', 'desc')
-                    ->paginate()
-                    ->withQueryString()
+                $project->paginate()->withQueryString()
             ),
+            'mapCounties' => $mapCounties,
         ]);
     }
 

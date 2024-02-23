@@ -94,7 +94,7 @@
         </div>
 
         <div v-if="view === 'map'" class="container">
-            <Map :data="projectsForMap" />
+            <Map :data="mapCounties" />
         </div>
 
         <div class="container">
@@ -112,7 +112,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
     import { ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
     import route from '@/Helpers/useRoute';
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -135,6 +135,9 @@
         categories: {
             type: Array,
         },
+        mapCounties: {
+            type: Array,
+        },
         view: {
             type: String,
             default: 'list',
@@ -153,4 +156,9 @@
     const url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
 
     const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
+
+    onMounted(() => {
+        console.log(props.mapCounties)
+    });
+
 </script>
