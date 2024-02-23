@@ -41,6 +41,7 @@ class DonationFactory extends Factory
             'email' => fake()->safeEmail(),
             'status' => fake()->randomElement(EuPlatescStatus::values()),
             'charge_date' => $start,
+            'created_at' => fake()->dateTimeBetween('-30 days', 'today'),
             'updated_without_correct_e_pid' => fake()->boolean(),
         ];
     }

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <canvas ref="chartCanvas" style="height: 400px;"></canvas>
+      <canvas ref="chartCanvas" class="w-full"></canvas>
     </div>
   </template>
 
@@ -12,24 +12,11 @@
 
   const props = defineProps({
     data: Array,
-    xAxe: Array,
-    yAxeId: String
+    yAxeId: String,
+    xAxeId: String,
+      label: String,
   });
 
-  const monthColors = {
-    Ian: '#FF6384',
-    Feb: '#36A2EB',
-    Mar: '#FFCE56',
-    Apr: '#8ED16D',
-    Mai: '#FF9F40',
-    Iun: '#607D8B',
-    Iul: '#FFC0CB',
-    Aug: '#7B68EE',
-    Sep: '#FFD700',
-    Oct: '#32CD32',
-    Noi: '#FFA500',
-    Dec: '#4682B4',
-  };
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -41,14 +28,12 @@
   };
 
   const reactiveChartData = (labels, data) => {
-    const colors = labels.map((month) => monthColors[month]);
 
     return {
       labels: labels,
       datasets: [
         {
           data: data,
-          backgroundColor: colors,
         },
       ],
     };
@@ -67,27 +52,10 @@
       tooltip: {
         callbacks: {
           title: (tooltipItems) => {
-            const month = tooltipItems[0].label;
-            return month;
+                return tooltipItems[0].label;
           },
           label: (context) => {
-            const index = context.dataIndex;
-            const yAxe = context.dataset.data[index];
-            const dataEntry = props.data[index];
-            const tooltipLabelParts = [];
-
-            const amountKey = formatLabel(props.yAxeId);
-            tooltipLabelParts.push(`${amountKey}: ${yAxe}`);
-
-            for (const key in dataEntry) {
-              if (key !== props.yAxeId) {
-                const formattedKey = formatLabel(key);
-                const value = dataEntry[key];
-                tooltipLabelParts.push(`${formattedKey}: ${value}`);
-              }
-            }
-
-            return tooltipLabelParts.join(', ');
+              return `${props.label}: ${context.parsed}`;
           },
         },
       },
@@ -102,11 +70,12 @@
 
   const renderChart = () => {
     const yAxe = props.data.map((entry) => entry[props.yAxeId]);
+    const xAxe = props.data.map((entry) => entry[props.xAxeId]);
 
-    const chartData = reactiveChartData(props.xAxe, yAxe);
+    const chartData = reactiveChartData(xAxe, yAxe);
 
     const ctx = chartCanvas.value.getContext('2d');
-    new Chart(ctx, {
+      return  new Chart(ctx, {
       type: 'doughnut', // Use 'doughnut' for a donut chart
       data: chartData,
       options: chartOptions,
