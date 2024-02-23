@@ -92,20 +92,20 @@
                               <td class=" px-2 py-2 text-sm" v-text="category.donations_count"/>
                               <td class=" px-2 py-2 text-sm" v-text="category.donations_sum_amount"/>
                           </tr>
+
                           </tbody>
                       </table>
                   </div>
               </div>
-              <div v-show="selectedData==='donation_number'">
-                  <DonutChart
+              <div class="p-4">
+                  <DonutChart v-if="selectedData==='donation_number'"
                       :data="projectCategories"
                       :label="$t('donation_number')"
                       :x-axe-id="'name'"
                       :y-axe-id="'donations_count'"
                   />
-              </div>
-              <div v-show="selectedData==='donation_amount'">
                   <DonutChart
+                      v-else
                       :data="projectCategories"
                       :label="$t('donation_amount')"
                       :x-axe-id="'name'"

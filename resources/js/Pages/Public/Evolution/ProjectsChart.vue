@@ -90,16 +90,16 @@
                       </table>
                   </div>
               </div>
-              <div v-show="selectedData==='projects_number'">
+              <div class="p-4" >
                   <DonutChart
+                      v-if="selectedData==='projects_number'"
                       :data="projectCategories"
                       :label="$t('projects_number')"
                       :x-axe-id="'name'"
                       :y-axe-id="'projects_count'"
                   />
-              </div>
-              <div v-show="selectedData==='projects_target'">
                   <DonutChart
+                      v-else
                       :data="projectCategories"
                       :label="$t('projects_target')"
                       :x-axe-id="'name'"
