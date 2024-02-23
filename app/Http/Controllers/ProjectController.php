@@ -57,8 +57,7 @@ class ProjectController extends Controller
                 AllowedSort::custom('donations_total', new ProjectDonationsSumSort),
                 AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
             ])
-            ->whereIsPublished()
-            ->orderBy('status_updated_at', 'desc');
+            ->whereIsPublished();
 
         $mapProjects = $project->get()
             ->pluck('id')
