@@ -19,7 +19,7 @@ class GalaFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->text(255),
+            'title' => fake()->text(25),
             'start_date' => fake()->date('Y-m-d'),
             'end_date' => fake()->date('Y-m-d'),
             'start_sign_up' => fake()->date('Y-m-d'),

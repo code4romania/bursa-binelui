@@ -6,6 +6,7 @@ use App\Concerns\BelongsToEdition;
 use App\Concerns\HasCounties;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -29,4 +30,11 @@ class Gala extends Model implements HasMedia
         'start_gale',
         'location'
     ];
+
+    protected $with = ['edition'];
+
+    public function galaProject(): HasMany
+    {
+        return $this->hasMany(GalaProject::class);
+    }
 }

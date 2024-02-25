@@ -12,6 +12,7 @@ use App\Models\BadgeCategory;
 use App\Models\BCRProject;
 use App\Models\Championship;
 use App\Models\Edition;
+use App\Models\GalaProject;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\ProjectCategory;
@@ -88,6 +89,10 @@ class DatabaseSeeder extends Seeder
 
         Edition::factory()
             ->count(10)
+            ->create();
+
+        GalaProject::factory()
+            ->count(21)
             ->create();
     }
 

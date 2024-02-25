@@ -23,7 +23,7 @@ class EditionFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->text(),
+            'title' => fake()->text(25),
             'short_description' => fake()->text(),
             'page_id' => Page::query()->inRandomOrder()->first()->id,
             'article_category_id' => ArticleCategory::query()->inRandomOrder()->first()->id,

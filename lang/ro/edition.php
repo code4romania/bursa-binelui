@@ -44,5 +44,16 @@ return [
         'add_category' => 'Adaugă categorie',
         'rule_page' => 'Selectează pagina Regulamentului',
         'edition_category' => 'Selectează categoria de articole',
+        'gala' => 'Gala',
+        'youth' => 'Youth',
+        'status' => 'Status',
+        'eligible' => 'Eligibil',
+        'short_list' => 'Shortlist',
+    ],
+    'project' => [
+        'label' => [
+            'singular' => 'Proiect',
+            'plural' => 'Proiecte înscrise'
+        ],
     ],
 ];

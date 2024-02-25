@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -51,5 +52,10 @@ class Edition extends Model implements HasMedia
     public function article_category(): BelongsTo
     {
         return $this->belongsTo(ArticleCategory::class);
+    }
+
+    public function gala_projects(): HasManyThrough
+    {
+        return $this->hasManyThrough(GalaProject::class, Gala::class);
     }
 }
