@@ -94,11 +94,12 @@
         </div>
 
         <div v-if="view === 'map'" class="container">
-            <Map :data="mapCounties" />
+            <Map :data="mapProjects"  @county-selected="((id)=>applySelectedCountyFromMap(id))"/>
         </div>
 
         <div class="container">
             <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ collection.meta.total }} {{ $t('of_projects') }}</h2>
+            <hidden ref="projectsView" />
 
             <!-- Published projects -->
             <PaginatedGrid
@@ -112,7 +113,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+    import {ref} from 'vue';
     import { ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
     import route from '@/Helpers/useRoute';
     import PageLayout from '@/Layouts/PageLayout.vue';
@@ -135,7 +136,7 @@ import {onMounted, ref} from 'vue';
         categories: {
             type: Array,
         },
-        mapCounties: {
+        mapProjects: {
             type: Array,
         },
         view: {
@@ -153,12 +154,17 @@ import {onMounted, ref} from 'vue';
         search: props.collection.filter?.search || null,
     });
 
-    const url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
+    let url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
+    const projectsView = ref(null) // assigned to some element in the template
+
+
+    function applySelectedCountyFromMap(id)
+    {
+        filter.value.county.push(id);
+        projectsView.value.scrollIntoView();
+        applyFilters()
+    }
 
     const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
-
-    onMounted(() => {
-        console.log(props.mapCounties)
-    });
 
 </script>

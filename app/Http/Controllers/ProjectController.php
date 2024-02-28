@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Enums\EuPlatescStatus;
 use App\Http\Filters\AcceptsVolunteersFilter;
 use App\Http\Filters\CountiesFilter;
+use App\Http\Filters\HasCountySelectedFilter;
 use App\Http\Filters\ProjectCategoriesFilter;
 use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Filters\ProjectStatusFilter;
@@ -58,26 +59,15 @@ class ProjectController extends Controller
                 AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
             ])
             ->whereIsPublished();
-
-        $mapProjects = $project->get()
-            ->pluck('id')
-            ->toArray();
-        $mapCounties = County::whereHas('projects', fn ($query) => $query->whereIn('projects.id', $mapProjects))
-            ->with('projects:id,name,slug,organization_id')
-            ->get()
-            ->toArray();
-
-//        dd($mapCounties);
-
         return Inertia::render('Public/Projects/Index', [
             'view' => $view,
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
+            'mapProjects' => $project->get(),
             'collection' => new ProjectCardCollection(
                 $project->paginate()->withQueryString()
             ),
-            'mapCounties' => $mapCounties,
         ]);
     }
 

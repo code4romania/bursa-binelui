@@ -44,7 +44,8 @@ class SeedCoordinates extends Command
                 return;
             }
             $county->update([
-                'coordinates' => \DB::raw("POINT({$latitude}, {$longitude})"),
+                'lat' => $latitude,
+                'long' => $longitude
             ]);
             $this->info("Coordinates for {$county->name} seeded.");
             $this->info("Sleeping for 5 seconds...");
