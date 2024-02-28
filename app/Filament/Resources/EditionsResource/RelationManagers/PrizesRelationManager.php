@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\EditionsResource\RelationManagers;
 
 use App\Models\EditionCategories;
@@ -26,11 +28,10 @@ class PrizesRelationManager extends RelationManager
 
                 Forms\Components\Select::make('edition_categories_id')
                     ->options(
-                        fn (RelationManager $livewire) =>
-                            EditionCategories::query()
-                                ->whereBelongsTo($livewire->ownerRecord)
-                                ->get()
-                                ->pluck('name', 'id')
+                        fn (RelationManager $livewire) => EditionCategories::query()
+                            ->whereBelongsTo($livewire->ownerRecord)
+                            ->get()
+                            ->pluck('name', 'id')
                     )
                     ->label(__('edition.labels.category'))
                     ->columnSpanFull()
@@ -51,8 +52,7 @@ class PrizesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('edition_categories_id')
                     ->label(__('edition.labels.category'))
                     ->formatStateUsing(
-                        fn ($state, $record) =>
-                            $record->editionCategories()->getParent()->name
+                        fn ($state, $record) => $record->editionCategories()->getParent()->name
                     )
                     ->searchable()
                     ->sortable(),

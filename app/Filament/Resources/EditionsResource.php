@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\Editions\EditionsResource\Pages;
 use App\Filament\Resources\EditionsResource\Pages\CreateEditions;
 use App\Filament\Resources\EditionsResource\Pages\EditEditions;
 use App\Filament\Resources\EditionsResource\Pages\ListEditions;
@@ -50,7 +51,6 @@ class EditionsResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-
         return parent::getEloquentQuery()->with(['edition_categories']);
     }
 
@@ -166,5 +166,4 @@ class EditionsResource extends Resource
             'edit' => EditEditions::route('/{record}/edit'),
         ];
     }
-
 }

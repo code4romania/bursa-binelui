@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Concerns\BelongsToEdition;
@@ -13,7 +15,6 @@ class EditionFaq extends Model
 
     protected $fillable = [
         'question',
-        'answer'
+        'answer',
     ];
-
 }

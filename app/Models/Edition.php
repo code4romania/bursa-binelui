@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,19 +19,18 @@ class Edition extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'active',
         'short_description',
         'start_date',
         'end_date',
     ];
 
-    public $preventsLazyLoading = true;
-
-    public function edition_categories(): HasMany
+    public function editionCategories(): HasMany
     {
         return $this->hasMany(EditionCategories::class);
     }
 
-    public function faq(): HasMany
+    public function faqs(): HasMany
     {
         return $this->hasMany(EditionFaq::class);
     }
@@ -39,7 +40,7 @@ class Edition extends Model implements HasMedia
         return $this->hasMany(Gala::class);
     }
 
-    public function prize(): HasMany
+    public function prizes(): HasMany
     {
         return $this->hasMany(Prize::class);
     }
@@ -49,12 +50,12 @@ class Edition extends Model implements HasMedia
         return $this->belongsTo(Page::class);
     }
 
-    public function article_category(): BelongsTo
+    public function articleCategory(): BelongsTo
     {
         return $this->belongsTo(ArticleCategory::class);
     }
 
-    public function gala_projects(): HasManyThrough
+    public function galaProjects(): HasManyThrough
     {
         return $this->hasManyThrough(GalaProject::class, Gala::class);
     }

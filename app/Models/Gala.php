@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Concerns\BelongsToEdition;
@@ -19,6 +21,7 @@ class Gala extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'edition_id',
         'start_date',
         'end_date',
         'start_sign_up',
@@ -28,7 +31,7 @@ class Gala extends Model implements HasMedia
         'start_evaluation',
         'end_evaluation',
         'start_gale',
-        'location'
+        'location',
     ];
 
     protected $with = ['edition'];

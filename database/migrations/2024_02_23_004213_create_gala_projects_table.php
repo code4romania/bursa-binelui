@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Edition;
 use App\Models\Gala;
+use App\Models\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +20,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Edition::class);
             $table->foreignIdFor(Gala::class);
+            $table->foreignIdFor(Organization::class);
             $table->string('title', 200);
             $table->text('description');
             $table->date('start_date');

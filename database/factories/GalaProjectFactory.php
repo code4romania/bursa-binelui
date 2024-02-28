@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\EditionCategories;
@@ -19,6 +21,7 @@ class GalaProjectFactory extends Factory
     public function definition(): array
     {
         $gala = Gala::query()
+            ->whereHas('edition', fn ($query) => $query->where('active', true))
             ->inRandomOrder()
             ->first();
         $editionID = $gala->edition_id;
@@ -26,7 +29,7 @@ class GalaProjectFactory extends Factory
             ->where('edition_id', $editionID)
             ->limit(2)
             ->get();
-//        dd($gala, $categories);
+
         return [
             'edition_id' => $editionID,
             'gala_id' => $gala->id,

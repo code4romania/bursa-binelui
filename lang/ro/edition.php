@@ -53,7 +53,7 @@ return [
     'project' => [
         'label' => [
             'singular' => 'Proiect',
-            'plural' => 'Proiecte înscrise'
+            'plural' => 'Proiecte înscrise',
         ],
     ],
 ];

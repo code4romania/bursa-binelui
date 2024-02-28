@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Concerns\BelongsToEdition;
@@ -13,7 +15,7 @@ class Prize extends Model
 
     protected $fillable = [
         'name',
-        'edition_categories_id'
+        'edition_categories_id',
     ];
 
     public function editionCategories()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\EditionsResource\RelationManagers;
 
 use Filament\Forms;
@@ -80,7 +82,7 @@ class GalesRelationManager extends RelationManager
                                         ->toFormattedDate()
                                 )
                                 ->required(),
-                        ])
+                        ]),
                     ]),
 
                 Forms\Components\Grid::make()
@@ -101,7 +103,7 @@ class GalesRelationManager extends RelationManager
                                         ->toFormattedDate()
                                 )
                                 ->required(),
-                        ])
+                        ]),
                     ]),
 
                 Forms\Components\Grid::make()
@@ -122,7 +124,7 @@ class GalesRelationManager extends RelationManager
                                         ->toFormattedDate()
                                 )
                                 ->required(),
-                        ])
+                        ]),
                     ]),
 
                 Forms\Components\Grid::make()
@@ -135,9 +137,8 @@ class GalesRelationManager extends RelationManager
                                         ->toFormattedDate()
                                 )
                                 ->required(),
-                        ])
+                        ]),
                     ]),
-
 
                 Forms\Components\TextInput::make('location')
                     ->label(__('edition.labels.location')),

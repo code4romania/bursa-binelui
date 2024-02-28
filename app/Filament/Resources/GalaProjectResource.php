@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GalaProjectResource\Pages;
-use App\Filament\Resources\GalaProjectResource\RelationManagers;
 use App\Models\EditionCategories;
 use App\Models\GalaProject;
 use Filament\Resources\Form;
@@ -62,6 +63,7 @@ class GalaProjectResource extends Resource
                     ->label(__('edition.labels.category'))
                     ->formatStateUsing(function ($state) {
                         $categories = json_decode($state);
+
                         return EditionCategories::query()
                             ->whereIn('id', $categories)
                             ->get()
@@ -96,13 +98,13 @@ class GalaProjectResource extends Resource
 
                 Tables\Columns\TextColumn::make('eligible')
                     ->label(__('edition.labels.eligible'))
-                    ->formatStateUsing(fn ($state) => !isset($state) ? '-' : ($state ? __('field.boolean.true') : __('field.boolean.false')))
+                    ->formatStateUsing(fn ($state) => ! isset($state) ? '-' : ($state ? __('field.boolean.true') : __('field.boolean.false')))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('short_list')
                     ->label(__('edition.labels.short_list'))
-                    ->formatStateUsing(fn ($state) => !isset($state) ? '-' : ($state ? __('field.boolean.true') : __('field.boolean.false')))
+                    ->formatStateUsing(fn ($state) => ! isset($state) ? '-' : ($state ? __('field.boolean.true') : __('field.boolean.false')))
                     ->searchable()
                     ->sortable(),
             ])
@@ -123,18 +125,17 @@ class GalaProjectResource extends Resource
                 Tables\Filters\TernaryFilter::make('youth')
                     ->label(__('edition.labels.youth')),
 
-
                 Tables\Filters\TernaryFilter::make('short_list')
                     ->label(__('edition.labels.short_list')),
 
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                        Tables\Actions\ViewAction::make(),
-                        Tables\Actions\EditAction::make(),
-                        Tables\Actions\Action::make('download'),
-                        Tables\Actions\DeleteAction::make(),
-                    ]),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('download'),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

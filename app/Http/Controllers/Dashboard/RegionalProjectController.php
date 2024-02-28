@@ -20,7 +20,7 @@ class RegionalProjectController extends Controller
      */
     public function index()
     {
-        $projects = RegionalProject::where('organization_id', auth()->user()->organization_id)->paginate(16)->withQueryString();
+        $projects = RegionalProject::with('counties', 'projectCategory')->latest()->paginate(10);
 
         return Inertia::render('AdminOng/Projects/Projects', [
             'query' => $projects,

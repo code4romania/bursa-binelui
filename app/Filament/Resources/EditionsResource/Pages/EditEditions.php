@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\EditionsResource\Pages;
 
 use App\Filament\Resources\EditionsResource;

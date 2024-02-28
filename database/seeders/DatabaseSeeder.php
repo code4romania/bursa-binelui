@@ -12,7 +12,7 @@ use App\Models\BadgeCategory;
 use App\Models\BCRProject;
 use App\Models\Championship;
 use App\Models\Edition;
-use App\Models\GalaProject;
+use App\Models\Gala;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\ProjectCategory;
@@ -64,6 +64,26 @@ class DatabaseSeeder extends Seeder
             ->count(3)
             ->create();
 
+        BCRProject::factory()->count(10)->create();
+
+        $this->seedBadges();
+
+        $this->seedArticleCategories();
+
+        Page::factory()->count(10)->create();
+
+        $edition = Edition::factory(['active' => true])
+            ->count(1)
+            ->create();
+
+//        dd($edition);
+        Gala::factory()
+            ->count(5)
+            ->recycle($edition)
+            ->create();
+
+
+
         Organization::factory()
             ->count(5)
             ->approved()
@@ -77,22 +97,6 @@ class DatabaseSeeder extends Seeder
         Organization::factory()
             ->count(5)
             ->pending()
-            ->create();
-
-        BCRProject::factory()->count(10)->create();
-
-        $this->seedBadges();
-
-        $this->seedArticleCategories();
-
-        Page::factory()->count(10)->create();
-
-        Edition::factory()
-            ->count(10)
-            ->create();
-
-        GalaProject::factory()
-            ->count(21)
             ->create();
     }
 

@@ -19,10 +19,11 @@ class PageFactory extends Factory
     public function definition(): array
     {
         $title = fake()->text(255);
+
         return [
             'title' => $title,
             'slug' => $title,
-            'content' => fake()->text(500)
+            'content' => fake()->text(500),
         ];
     }
 }

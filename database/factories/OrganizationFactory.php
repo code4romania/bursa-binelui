@@ -8,6 +8,7 @@ use App\Enums\OrganizationStatus;
 use App\Enums\VolunteerStatus;
 use App\Models\ActivityDomain;
 use App\Models\County;
+use App\Models\GalaProject;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\ProjectCategory;
@@ -138,6 +139,11 @@ class OrganizationFactory extends Factory
                         ->get(),
                     relationship:'categories'
                 )
+                ->create();
+
+            GalaProject::factory()
+                ->count(3)
+                ->for($organization)
                 ->create();
 
             $ticket = Ticket::factory()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\EditionCategories;
@@ -19,7 +21,7 @@ class EditionCategoriesFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->text(25)
+            'name' => fake()->text(25),
         ];
     }
 

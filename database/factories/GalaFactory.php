@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\County;
@@ -29,14 +31,13 @@ class GalaFactory extends Factory
             'start_evaluation' => fake()->date('Y-m-d'),
             'end_evaluation' => fake()->date('Y-m-d'),
             'start_gale' => fake()->date('Y-m-d'),
-            'location' => fake()->text(255)
+            'location' => fake()->text(255),
         ];
     }
 
-    public function configure()
+    public function configure(): Factory|self
     {
         return $this->afterCreating(function (Gala $gala) {
-
             $gala->counties()->attach(
                 County::query()
                     ->inRandomOrder()
