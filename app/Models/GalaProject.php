@@ -79,4 +79,24 @@ class GalaProject extends Model implements HasMedia
             ->logFillable()
             ->logOnlyDirty();
     }
+
+    public function markAsEligible(): bool
+    {
+        return $this->update(['eligible' => 1]);
+    }
+
+    public function markAsIneligible(): bool
+    {
+        return $this->update(['eligible' => 0]);
+    }
+
+    public function addToShortList(): bool
+    {
+        return $this->update(['short_list' => 1]);
+    }
+
+    public function removeFromShortList(): bool
+    {
+        return $this->update(['short_list' => 0]);
+    }
 }

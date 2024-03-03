@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Resources\GalaProjectResource\Pages;
 
 use App\Filament\Resources\GalaProjectResource;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListGalaProjects extends ListRecords
@@ -14,8 +13,6 @@ class ListGalaProjects extends ListRecords
 
     protected function getActions(): array
     {
-        return [
-            Actions\CreateAction::make(),
-        ];
+        return [];
     }
 }
