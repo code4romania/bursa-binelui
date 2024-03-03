@@ -18,7 +18,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class GalaProject extends Model implements HasMedia
 {
     use HasFactory;
-    use BelongsToOrganization;
     use InteractsWithMedia;
     use BelongsToOrganization;
     use HasCounties;
