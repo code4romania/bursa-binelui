@@ -13,12 +13,6 @@ use Illuminate\Support\Carbon;
 
 class BaseDonationWidget extends BaseWidget
 {
-    /**
-     * @param  string     $formatDate
-     * @param  Carbon     $whereCreatedCondition
-     * @param  string     $chartInterval
-     * @return Collection
-     */
     protected function getChartData(
         string $formatDate,
         Carbon $whereCreatedCondition,
@@ -27,8 +21,10 @@ class BaseDonationWidget extends BaseWidget
     ): Collection {
         return Donation::query()
             ->select(
-                DB::raw($selectedField),
-                DB::raw($formatDate),
+                [
+                    DB::raw($selectedField),
+                    DB::raw($formatDate),
+                ]
             )
             ->where('created_at', '>', $whereCreatedCondition)
             // TODO: add CAPTURE after pr #348
@@ -46,22 +42,22 @@ class BaseDonationWidget extends BaseWidget
         $filter = $this->filter ?: 'last_week';
 
         if ($filter == 'last_week') {
-            return now()->addDays(-7);
+            return now()->subDays(7);
         }
 
         if ($filter == 'last_month') {
-            return now()->addMonths(-1);
+            return now()->subMonths(1);
         }
 
         if ($filter == 'last_3_months') {
-            return now()->addMonths(-3);
+            return now()->subMonths(3);
         }
 
         if ($filter == 'last_6_months') {
-            return now()->addMonths(-6);
+            return now()->subMonths(6);
         }
 
-        return now()->addMonths(-12);
+        return now()->subMonths(12);
     }
 
     /**
