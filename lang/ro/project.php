@@ -79,6 +79,7 @@ return [
         'pending' => 'Proiecte in curs de aprobare',
         'approved' => 'Proiecte aprobate',
         'rejected' => 'Proiecte respinse',
+        'all_projects' => 'Toate proiectele',
 
     ],
     'visible_status' => [
