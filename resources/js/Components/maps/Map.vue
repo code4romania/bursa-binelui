@@ -6,7 +6,8 @@
     /** Import from vue. */
     import { ref, onMounted } from 'vue';
     import { usePage } from '@inertiajs/vue3';
-    import { MarkerClusterer } from '@googlemaps/markerclusterer';
+    import * as GM from '@googlemaps/markerclusterer';
+    const { MarkerClusterer } = GM;
 
     /** Component props. */
     const props = defineProps({ data: Array });
