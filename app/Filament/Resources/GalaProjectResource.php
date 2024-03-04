@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\OrganizationType;
+use App\Enums\ProjectArea;
 use App\Filament\Resources\GalaProjectResource\Pages;
-use App\Models\EditionCategories;
+use App\Models\Edition;
 use App\Models\GalaProject;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class GalaProjectResource extends Resource
 {
@@ -53,11 +55,14 @@ class GalaProjectResource extends Resource
             ->schema([
                 Select::make('gala')
                     ->label(__('edition.labels.gala'))
-                    ->relationship('gala', 'title', fn (Builder $query, Model $record) => $query->where('edition_id', $record->edition_id))
+                    ->relationship(
+                        'gala',
+                        'title',
+                    )
                     ->required()
                     ->inlineLabel(),
 
-                TextInput::make('title')
+                TextInput::make('name')
                     ->label(__('edition.labels.project_title'))
                     ->required()
                     ->inlineLabel()
@@ -95,11 +100,12 @@ class GalaProjectResource extends Resource
                     ->inlineLabel(),
 
                 Select::make('categories')
-                    ->options(
-                        fn ($state, $record) => EditionCategories::query()
-                            ->where('edition_id', $record->edition_id)
-                            ->get()
-                            ->pluck('name', 'id')
+                    ->relationship(
+                        'categories',
+                        'name',
+                        function (Builder $query, GalaProject $record) {
+                            return $query->where('edition_id', $record->gala->edition_id);
+                        }
                     )
                     ->label(__('edition.labels.project_categories'))
                     ->preload()
@@ -107,21 +113,14 @@ class GalaProjectResource extends Resource
                     ->inlineLabel()
                     ->required(),
 
-                Select::make('youth')
-                    ->options([
-                        '0' => __('field.boolean.false'),
-                        '1' => __('field.boolean.true'),
-                    ])
-                    ->preload()
+                Toggle::make('youth')
                     ->label(__('edition.labels.youth_project'))
                     ->inlineLabel()
                     ->required(),
 
                 Select::make('organization_type')
-                    ->options([
-                        'big' => __('edition.labels.big_organization'),
-                        'little' => __('edition.labels.little_organization'),
-                    ])
+                    ->label(__('edition.labels.organization_type'))
+                    ->options(OrganizationType::options())
                     ->preload()
                     ->inlineLabel()
                     ->required(),
@@ -162,12 +161,7 @@ class GalaProjectResource extends Resource
                     ->inlineLabel()
                     ->maxLength(1000),
 
-                Select::make('partnership')
-                    ->options([
-                        '0' => __('field.boolean.false'),
-                        '1' => __('field.boolean.true'),
-                    ])
-                    ->preload()
+                Toggle::make('partnership')
                     ->inlineLabel()
                     ->required(),
 
@@ -183,14 +177,8 @@ class GalaProjectResource extends Resource
                     ->inlineLabel()
                     ->maxLength(1000),
 
-                // change in enum class
                 Select::make('area')
-                    ->options([
-                        'local' => __('edition.labels.local'),
-                        'regional' => __('edition.labels.regional'),
-                        'national' => __('edition.labels.national'),
-                    ])
-                    ->preload()
+                    ->options(ProjectArea::options())
                     ->inlineLabel()
                     ->required(),
 
@@ -205,11 +193,13 @@ class GalaProjectResource extends Resource
                     ->required()
                     ->inlineLabel()
                     ->maxLength(1000),
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
     {
+        $editions = Edition::all();
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
@@ -217,17 +207,8 @@ class GalaProjectResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('categories')
+                Tables\Columns\TextColumn::make('categories.name')
                     ->label(__('edition.labels.category'))
-                    ->formatStateUsing(function ($state) {
-                        $categories = json_decode($state);
-
-                        return EditionCategories::query()
-                            ->whereIn('id', $categories)
-                            ->get()
-                            ->map(fn ($category) => $category->name)
-                            ->implode(', ');
-                    })
                     ->searchable()
                     ->sortable(),
 
@@ -237,15 +218,13 @@ class GalaProjectResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('edition')
+                Tables\Columns\TextColumn::make('gala.edition.title')
                     ->label(__('edition.label.singular'))
                     ->searchable()
-                    ->formatStateUsing(fn ($state, $record) => $state->title)
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('gala')
+                Tables\Columns\TextColumn::make('gala.title')
                     ->label(__('edition.labels.gala'))
-                    ->formatStateUsing(fn ($state) => $state->title)
                     ->searchable()
                     ->sortable(),
 
@@ -267,9 +246,14 @@ class GalaProjectResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('edition')
+                SelectFilter::make('edition_id')
                     ->label(__('edition.label.singular'))
-                    ->relationship('edition', 'title')
+                    ->options($editions->pluck('title', 'id')->toArray())
+//                    ->query(
+//                        function ($query, $values) {
+//                        dd($values);
+//                    }
+//                    )
                     ->multiple(),
 
                 SelectFilter::make('galas')

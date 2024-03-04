@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\EditionCategories;
 use App\Models\Gala;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -25,24 +24,16 @@ class GalaProjectFactory extends Factory
             ->whereHas('edition', fn ($query) => $query->where('active', true))
             ->inRandomOrder()
             ->first();
-        $editionID = $gala->edition_id;
-        $categories = EditionCategories::query()
-            ->where('edition_id', $editionID)
-            ->limit(2)
-            ->get();
-
         $name = fake()->text('200');
         $slug = Str::slug($name);
 
         return [
-            'edition_id' => $editionID,
             'gala_id' => $gala->id,
             'name' => $name,
             'slug' => $slug,
             'description' => fake()->text('500'),
             'start_date' => fake()->date('Y-m-d'),
             'end_date' => fake()->date('Y-m-d'),
-            'categories' => $categories->pluck('id'),
             'youth' => fake()->boolean(),
             'organization_type' => fake()->randomElement(['big', 'little']),
             'reason' => fake()->text(500),

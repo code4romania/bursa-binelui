@@ -67,6 +67,18 @@ return [
         'area' => 'Ce s-ar potrivi mai bine ca arie de impact al proiectului',
         'participants' => 'Care a fost numărul de participanți direcți și care este numărul beneficiarilor indirecți ai proiectului?',
         'team_details' => 'Cum a fost organizată echipa proiectului? Câți oameni ați fost, ce roluri ați avut?',
+        'organization_type' => 'Tipul de organizație',
+        'organization_types' => [
+            'little' => 'Mica',
+            'medium' => 'Medie',
+            'big' => 'Mare',
+        ],
+        'areas' => [
+            'local' => 'Local',
+            'regional' => 'Regional',
+            'national' => 'Național',
+
+        ],
 
     ],
     'project' => [
