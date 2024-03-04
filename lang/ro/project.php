@@ -76,6 +76,9 @@ return [
         'visible_status' => 'Status in platforma public',
         'changes_count' => 'Număr modificări în așteptare',
         'latest_updated_at' => 'Data ultimei modificări',
+        'pending' => 'Proiecte in curs de aprobare',
+        'approved' => 'Proiecte aprobate',
+        'rejected' => 'Proiecte respinse',
 
     ],
     'visible_status' => [

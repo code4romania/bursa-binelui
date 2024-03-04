@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Filament\Pages\Dashboard;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
@@ -107,7 +108,7 @@ return [
         'namespace' => 'App\\Filament\\Pages',
         'path' => app_path('Filament/Pages'),
         'register' => [
-            Pages\Dashboard::class,
+            Dashboard::class,
         ],
     ],
 

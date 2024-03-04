@@ -36,7 +36,6 @@ class EvolutionController extends Controller
             ->orderBy('date')
             ->get();
 
-
         $totalAmountDonation = $donations->sum('amount');
         $totalNumberDonation = $donations->sum('number');
 
