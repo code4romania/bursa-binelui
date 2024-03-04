@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,5 +59,10 @@ class Edition extends Model implements HasMedia
     public function galaProjects(): HasManyThrough
     {
         return $this->hasManyThrough(GalaProject::class, Gala::class);
+    }
+
+    public function scopeCurrentEditon(Builder $query): Builder
+    {
+        return $query->where('active', true);
     }
 }

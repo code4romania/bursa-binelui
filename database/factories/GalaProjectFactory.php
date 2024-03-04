@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Models\EditionCategories;
 use App\Models\Gala;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GalaProject>
@@ -30,14 +31,18 @@ class GalaProjectFactory extends Factory
             ->limit(2)
             ->get();
 
+        $name = fake()->text('200');
+        $slug = Str::slug($name);
+
         return [
             'edition_id' => $editionID,
             'gala_id' => $gala->id,
-            'title' => fake()->text('200'),
+            'name' => $name,
+            'slug' => $slug,
             'description' => fake()->text('500'),
             'start_date' => fake()->date('Y-m-d'),
             'end_date' => fake()->date('Y-m-d'),
-            'categories' => json_encode($categories->map(fn (EditionCategories $category) => $category->id)),
+            'categories' => $categories->pluck('id'),
             'youth' => fake()->boolean(),
             'organization_type' => fake()->randomElement(['big', 'little']),
             'reason' => fake()->text(500),

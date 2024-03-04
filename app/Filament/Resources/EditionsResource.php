@@ -51,7 +51,7 @@ class EditionsResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['edition_categories']);
+        return parent::getEloquentQuery()->with(['editionCategories']);
     }
 
     public static function form(Form $form): Form
@@ -85,7 +85,7 @@ class EditionsResource extends Resource
                             ->required(),
 
                         Select::make('article_category_id')
-                            ->relationship('article_category', 'name')
+                            ->relationship('articleCategory', 'name')
                             ->options(ArticleCategory::all()
                                 ->pluck('name', 'id'))
                             ->label(__('edition.labels.edition_category'))

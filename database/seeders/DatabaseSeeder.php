@@ -12,7 +12,6 @@ use App\Models\BadgeCategory;
 use App\Models\BCRProject;
 use App\Models\Championship;
 use App\Models\Edition;
-use App\Models\Gala;
 use App\Models\Organization;
 use App\Models\Page;
 use App\Models\ProjectCategory;
@@ -72,17 +71,9 @@ class DatabaseSeeder extends Seeder
 
         Page::factory()->count(10)->create();
 
-        $edition = Edition::factory(['active' => true])
+        Edition::factory(['active' => true])
             ->count(1)
             ->create();
-
-//        dd($edition);
-        Gala::factory()
-            ->count(5)
-            ->recycle($edition)
-            ->create();
-
-
 
         Organization::factory()
             ->count(5)

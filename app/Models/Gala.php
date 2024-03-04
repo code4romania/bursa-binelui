@@ -34,10 +34,15 @@ class Gala extends Model implements HasMedia
         'location',
     ];
 
-    protected $with = ['edition'];
+    protected $with = ['edition', 'counties'];
 
     public function galaProject(): HasMany
     {
         return $this->hasMany(GalaProject::class);
+    }
+
+    public function getRegistrationIsOpenAttribute(): bool
+    {
+        return now()->between($this->start_sign_up, $this->end_sign_up);
     }
 }

@@ -13,7 +13,7 @@ use Filament\Tables;
 
 class PrizesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'prize';
+    protected static string $relationship = 'prizes';
 
     protected static ?string $recordTitleAttribute = 'Prize';
 

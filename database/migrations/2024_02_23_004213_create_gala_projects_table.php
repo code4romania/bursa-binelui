@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreignIdFor(Edition::class);
             $table->foreignIdFor(Gala::class);
             $table->foreignIdFor(Organization::class);
-            $table->string('title', 200);
+            $table->string('name');
+            $table->string('slug');
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date');

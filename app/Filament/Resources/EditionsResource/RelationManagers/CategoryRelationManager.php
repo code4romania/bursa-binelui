@@ -12,7 +12,7 @@ use Filament\Tables;
 
 class CategoryRelationManager extends RelationManager
 {
-    protected static string $relationship = 'edition_categories';
+    protected static string $relationship = 'editionCategories';
 
     protected static ?string $recordTitleAttribute = 'Category';
 

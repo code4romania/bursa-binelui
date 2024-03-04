@@ -8,11 +8,8 @@
                     <ProjectCard v-if="'project' === type" :project="item" :cardType="cardType" />
 
                     <OrganizationCard v-else-if="'ong' === type" :organization="item" />
-
+                    <RegionalProject v-else-if="'project-regional' === type" :data="item" />
                     <ProjectSummaryCard v-else-if="'project-summary' === cardType" :data="item" />
-
-                    <RegionalProject v-else-if="'project-regional' === cardType" :data="item" />
-
                     <ChampionshipProject v-else-if="'project-championship' === cardType" :data="item" />
                 </template>
             </div>
@@ -33,6 +30,7 @@
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
     import RegionalProject from '@/Components/cards/RegionalProject.vue';
     import ChampionshipProject from '@/Components/cards/ChampionshipProject.vue';
+    import {onMounted} from "vue";
 
     /** Component props. */
     const props = defineProps({

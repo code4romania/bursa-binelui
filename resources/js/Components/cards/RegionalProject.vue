@@ -6,7 +6,7 @@
                 class="relative bg-gray-200 group-hover:opacity-75 sm:h-52"
             >
                 <img
-                    :src="data.cover_image !== '' ? data.cover_image : '/images/no_image.jpg'"
+                    :src="data.preview !== '' ? data.preview : '/images/no_image.jpg'"
                     alt="imagine proiect"
                     class="object-cover object-center w-full h-full rounded-t-lg sm:h-full sm:w-full"
                 />
@@ -58,8 +58,8 @@
     import { Link } from '@inertiajs/vue3';
 
     /** Import components. */
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Icon from '@/Components/Icon.vue';
+    import {onMounted} from "vue";
 
     /** Component props. */
     const props = defineProps({

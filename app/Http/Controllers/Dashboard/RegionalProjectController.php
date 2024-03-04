@@ -6,9 +6,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
+use App\Http\Resources\Edition\EditionShowResource;
+use App\Http\Resources\GalaProjectCardResource;
 use App\Models\County;
+use App\Models\Edition;
+use App\Models\GalaProject;
 use App\Models\ProjectCategory;
-use App\Models\RegionalProject;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,10 +23,13 @@ class RegionalProjectController extends Controller
      */
     public function index()
     {
-        $projects = RegionalProject::with('counties', 'projectCategory')->latest()->paginate(10);
+        $organization = auth()->user()->organization()->first();
+        $edition = Edition::currentEditon()->with('gales')->first();
+        $projects = GalaProject::whereBelongsToOrganization($organization)->paginate();
 
-        return Inertia::render('AdminOng/Projects/Projects', [
-            'query' => $projects,
+        return Inertia::render('AdminOng/GalaProjects/Projects', [
+            'query' => GalaProjectCardResource::collection($projects),
+            'edition' => EditionShowResource::make($edition),
         ]);
     }
 
@@ -44,7 +50,7 @@ class RegionalProjectController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $project = (new ProjectService(RegionalProject::class))->create($data);
+        $project = (new ProjectService(GalaProject::class))->create($data);
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
@@ -63,7 +69,7 @@ class RegionalProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RegionalProject $project)
+    public function edit(GalaProject $project)
     {
 //        $this->authorize('view', $project);
         $project->load('media');

@@ -12,7 +12,7 @@ use Filament\Tables;
 
 class FaqRelationManager extends RelationManager
 {
-    protected static string $relationship = 'faq';
+    protected static string $relationship = 'faqs';
 
     protected static ?string $recordTitleAttribute = 'Faq';
 

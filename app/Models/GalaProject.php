@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Concerns\BelongsToOrganization;
 use App\Concerns\HasCounties;
+use App\Concerns\HasSlug;
 use App\Traits\HasProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ class GalaProject extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use HasSlug;
     use BelongsToOrganization;
     use HasCounties;
     use InteractsWithMedia;
@@ -28,7 +30,7 @@ class GalaProject extends Model implements HasMedia
     protected $fillable = [
         'edition_id',
         'gala_id',
-        'title',
+        'name',
         'description',
         'start_date',
         'end_date',
@@ -59,7 +61,17 @@ class GalaProject extends Model implements HasMedia
     protected $with = [
         'gala',
         'edition',
+        'counties',
+        'organization',
     ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'categories' => 'array',
+    ];
+
+    public string $slugFieldSource = 'name';
 
     public function gala(): BelongsTo
     {
