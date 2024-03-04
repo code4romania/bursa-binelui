@@ -10,6 +10,7 @@ use App\Http\Resources\Edition\EditionShowResource;
 use App\Http\Resources\GalaProjectCardResource;
 use App\Models\County;
 use App\Models\Edition;
+use App\Models\Gala;
 use App\Models\GalaProject;
 use App\Models\ProjectCategory;
 use App\Services\ProjectService;
@@ -36,11 +37,10 @@ class RegionalProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Gala $gala)
     {
-        return Inertia::render('AdminOng/Projects/AddRegionalProject', [
-            'counties' => $this->getCounties(),
-            'projectCategories' => $this->getProjectCategories(),
+        return Inertia::render('AdminOng/GalaProjects/AddProject', [
+            'gala' => $gala,
         ]);
     }
 
