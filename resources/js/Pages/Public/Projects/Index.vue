@@ -98,8 +98,7 @@
         </div>
 
         <div class="container">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ collection.meta.total }} {{ $t('of_projects') }}</h2>
-            <hidden ref="projectsView" />
+            <h2 class="mb-6 text-2xl font-bold text-gray-900" ref="projectsView" v-text="collection.meta.total+' '+$t('of_projects')"/>
 
             <!-- Published projects -->
             <PaginatedGrid
