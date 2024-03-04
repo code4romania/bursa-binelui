@@ -79,6 +79,9 @@ return [
         'has_donations' => 'Organizația are donații?',
         'changes_count' => 'Număr modificări în așteptare',
         'latest_updated_at' => 'Data ultimei modificări',
+        'approved' => 'Organizații active',
+        'rejected' => 'Organizații dezactivate',
+        'pending' => 'Organizații în așteptare',
     ],
     'messages' => [
         'update_success' => 'Organizația a fost actualizată cu succes!',

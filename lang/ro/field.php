@@ -12,5 +12,9 @@ return [
         'true' => 'Da',
         'false' => 'Nu',
     ],
+    'last_week' => 'Ultima saptamana',
+    'last_month' => 'Ultima luna',
+    'last_x_months' => 'Ultimele :number luni',
+    'last_year' => 'Ultimul an',
 
 ];
