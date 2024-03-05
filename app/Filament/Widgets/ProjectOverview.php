@@ -13,7 +13,7 @@ class ProjectOverview extends BaseWidget
     protected function getCards(): array
     {
         return [
-            Card::make(__('project.label.plural'), Project::query()->count()),
+            Card::make(__('project.labels.all_projects'), Project::query()->count()),
             Card::make(__('project.labels.approved'), Project::query()->whereIsApproved()->count()),
             Card::make(__('project.labels.rejected'), Project::query()->whereIsRejected()->count()),
             Card::make(__('project.labels.pending'), Project::query()->whereIsPending()->count()),

@@ -21,6 +21,17 @@ class DonationsRelationManager extends RelationManager
         return __('donation.label.plural');
     }
 
+    protected function getTableHeading(): string
+    {
+        return __(
+            'donation.labels.count_with_amount',
+            [
+                'count' => $this->getTableQuery()->count(),
+                'total' => $this->getTableQuery()->sum('amount'),
+            ]
+        );
+    }
+
     public static function form(Form $form): Form
     {
         return $form
