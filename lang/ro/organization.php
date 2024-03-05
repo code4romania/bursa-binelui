@@ -82,6 +82,12 @@ return [
         'approved' => 'Organizații active',
         'rejected' => 'Organizații dezactivate',
         'pending' => 'Organizații în așteptare',
+        'status' => 'Status',
+        'admin' => 'Administrator',
+        'projects_count' => 'Număr de proiecte',
+        'active_projects_count' => 'Număr proiecte active',
+        'donations_count' => 'Număr total donații',
+        'donations_amount' => 'Sumă totală donații',
     ],
     'messages' => [
         'update_success' => 'Organizația a fost actualizată cu succes!',
