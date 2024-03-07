@@ -106,17 +106,17 @@
                     <button
                         type="button"
                         @click="projects_carousel.prev()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_left" />
+                        <ChevronLeftIcon class="fill-gray-700 shrink-0" />
                     </button>
 
                     <button
                         type="button"
                         @click="projects_carousel.next()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_right" />
+                        <ChevronRightIcon class="fill-gray-700 shrink-0" />
                     </button>
                 </div>
             </div>
@@ -189,17 +189,17 @@
                     <button
                         type="button"
                         @click="bcr_projects_carousel.prev()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_left" />
+                        <ChevronLeftIcon class="fill-gray-700 shrink-0" />
                     </button>
 
                     <button
                         type="button"
                         @click="bcr_projects_carousel.next()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_right" />
+                        <ChevronRightIcon class="fill-gray-700 shrink-0" />
                     </button>
                 </div>
             </div>
@@ -239,13 +239,14 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Head from '@/Components/Head.vue';
     import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
     import HeroPattern from '@/Components/patterns/HeroPattern.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import SmallSquarePattern from '@/Components/patterns/SmallSquarePattern.vue';
+
+    import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({

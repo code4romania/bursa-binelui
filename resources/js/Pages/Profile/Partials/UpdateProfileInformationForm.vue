@@ -1,7 +1,9 @@
 <template>
-    <section >
+    <section>
         <header class="flex items-center gap-4 mt-12">
-            <SvgLoader name="user" class="fill-white" />
+            <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                <UserIcon class="stroke-white shrink-0" />
+            </div>
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('account_settings') }}</h2>
         </header>
 
@@ -26,8 +28,7 @@
                 :error="form.errors.email"
                 disabled
             >
-                <p class="pt-1 text-sm text-gray-500">{{ $t("denied_change_email") }}</p>
-
+                <p class="pt-1 text-sm text-gray-500">{{ $t('denied_change_email') }}</p>
             </Input>
 
             <!-- Phone -->
@@ -86,9 +87,9 @@
 
     /** Import components. */
     import Input from '@/Components/form/Input.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import { UserIcon } from '@heroicons/vue/outline';
 
     /** Component props. */
     defineProps({

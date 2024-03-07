@@ -570,7 +570,6 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Field from '@/Components/Field.vue';
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
@@ -609,8 +608,7 @@
 
     const hasPendingChanges = (field) => {
         let tmpChanges = props.changes;
-        if (Object.keys(tmpChanges).includes(field))
-        {
+        if (Object.keys(tmpChanges).includes(field)) {
             return tmpChanges[field].new;
         }
         return false;

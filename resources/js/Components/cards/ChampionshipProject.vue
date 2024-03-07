@@ -59,7 +59,6 @@
     import { Link } from '@inertiajs/vue3';
 
     /** Import components. */
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Icon from '@/Components/Icon.vue';
 
     import { BookmarkIcon } from '@heroicons/vue/solid';

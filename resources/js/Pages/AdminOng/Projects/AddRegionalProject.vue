@@ -346,7 +346,6 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Input from '@/Components/form/Input.vue';
     import Select from '@/Components/form/Select.vue';
     import Textarea from '@/Components/form/Textarea.vue';

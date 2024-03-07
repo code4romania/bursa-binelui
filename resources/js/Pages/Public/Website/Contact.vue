@@ -51,7 +51,7 @@
                     <p class="text-sm font-medium text-gray-500">{{ $t('contact_info') }}</p>
 
                     <a href="mailto:support@example.com" class="flex items-center gap-2 py-6 text-sm text-gray-500">
-                        <SvgLoader class="shrink-0" name="email" />
+                        <MailIcon class="w-6 h-6 fill-primary-500" />
                         support@example.com
                     </a>
 
@@ -74,10 +74,10 @@
     import route from '@/Helpers/useRoute';
     import Head from '@/Components/Head.vue';
     import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Input from '@/Components/form/Input.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+    import { MailIcon } from '@heroicons/vue/solid';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 

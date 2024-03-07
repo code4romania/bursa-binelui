@@ -44,7 +44,7 @@
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
+                        <SpeakerphoneIcon class="w-5 h-5 fill-primary-100 stroke-white shrink-0" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
                 </div>
@@ -74,8 +74,8 @@
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import SharePage from '@/Components/SharePage.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Gallery from '@/Components/Gallery.vue';
+    import { SpeakerphoneIcon } from '@heroicons/vue/outline';
 
     defineProps({
         resource: {

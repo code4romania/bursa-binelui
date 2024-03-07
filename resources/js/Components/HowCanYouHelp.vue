@@ -115,7 +115,6 @@
 
 <script setup>
     /** Import components */
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     import { SpeakerphoneIcon } from '@heroicons/vue/outline';

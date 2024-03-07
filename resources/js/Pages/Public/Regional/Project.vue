@@ -13,13 +13,10 @@
                         <div
                             :class="[
                                 'w-8 h-8 rounded-lg flex items-center justify-center',
-                                project.active ? 'bg-red-500' : 'bg-primary-900',
+                                project.active ? 'bg-red-500' : 'bg-primary-500',
                             ]"
                         >
-                            <SvgLoader
-                                :class="['shrink-0 stroke-white', project.active ? 'fill-red-500' : 'fill-primary-900']"
-                                name="thunder"
-                            />
+                            <Icon class="w-4 h-6 stroke-2 shrink-0 stroke-white fill-transparent" name="thunder" />
                         </div>
                         <p class="text-base font-semibold leading-6 text-gray-900">
                             {{ project.active ? $t('active') : $t('inactive') }}
@@ -27,8 +24,8 @@
                     </div>
 
                     <div v-if="project.category" class="flex items-center gap-2">
-                        <div class="flex items-center justify-center rounded-lg bg-primary-50 w-9 h-9">
-                            <SvgLoader class="shrink-0 fill-primary-50 stroke-primary-500" name="badge" />
+                        <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-50">
+                            <BookmarkIcon class="stroke-primary-400 shrink-0" />
                         </div>
                         <p class="w-40 text-base font-semibold leading-6 text-gray-900 truncate lg:w-60">
                             {{ project.category }}
@@ -92,7 +89,7 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" />
+                            <!-- <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" /> -->
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">
@@ -108,7 +105,7 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="person" />
+                            <!-- <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="person" /> -->
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">
                                     {{ $t('contact_person') }}
@@ -248,12 +245,12 @@
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
+
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
     import Gallery from '@/Components/Gallery.vue';
-
+    import { BookmarkIcon } from '@heroicons/vue/outline';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const props = defineProps({

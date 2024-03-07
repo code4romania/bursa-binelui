@@ -45,9 +45,8 @@
             color="gray-700"
             v-model="form.ngo.description"
             :error="form.errors['ngo.description']"
-        >
-            <p class="text-xs font-normal text-gray-500">{{ $t('about_ong_description') }}</p>
-        </Textarea>
+            :more-info="$t('about_ong_description')"
+        />
 
         <!-- Activity domains -->
         <Select

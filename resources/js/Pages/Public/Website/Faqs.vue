@@ -34,7 +34,6 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Faqs from '@/Components/faqs/Faqs.vue';
     import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 

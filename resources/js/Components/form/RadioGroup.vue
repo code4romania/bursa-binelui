@@ -12,7 +12,7 @@
                     :class="[
                         checked ? 'ring-inset ring-1 ring-primary-500' : 'ring-inset ring-1 ring-gray-300',
                         active ? 'ring-inset ring-1 ring-primary-500' : 'ring-inset ring-1 ring-gray-300',
-                        'flex items-center justify-between gap-x-4 cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
+                        'flex items-center justify-between gap-x-4 cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none',
                     ]"
                 >
                     <div>
@@ -20,8 +20,8 @@
                         <p class="text-sm font-medium text-gray-400">{{ option.description }}</p>
                     </div>
 
-                    <SvgLoader v-if="!checked" name="circle" class="shrink-0 fill-white" />
-                    <SvgLoader v-else name="checkmark" class="shrink-0" />
+                    <CheckCircleIcon v-if="checked" class="w-5 h-5 shrink-0 text-primary-500" />
+                    <span v-else class="w-5 h-5 border border-gray-300 rounded-full bg-gray-50 shrink-0" />
                 </div>
             </RadioGroupOption>
         </div>
@@ -33,7 +33,7 @@
     import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 
     /** Import components. */
-    import SvgLoader from '@/Components/SvgLoader.vue';
+    import { CheckCircleIcon } from '@heroicons/vue/solid';
 
     const props = defineProps({
         options: Array,

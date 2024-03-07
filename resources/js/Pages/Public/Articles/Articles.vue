@@ -117,7 +117,8 @@
                                 class="flex items-center font-semibold text-primary-500 gap-x-2"
                             >
                                 {{ $t('read_article') }}
-                                <SvgLoader name="arrow_right" class="shrink-0" />
+
+                                <ArrowRightIcon class="w-5 h-5 shrink-0" />
                             </Link>
                         </div>
                     </div>
@@ -130,7 +131,6 @@
 <script setup>
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Head from '@/Components/Head.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Pagination from '@/Components/pagination/Pagination.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
     import ArticleCategory from '@/Components/ArticleCategory.vue';
@@ -140,6 +140,7 @@
 
     import 'vue3-carousel/dist/carousel.css';
     import { Carousel, Slide } from 'vue3-carousel';
+    import { ArrowRightIcon } from '@heroicons/vue/solid';
 
     const props = defineProps({
         collection: {
