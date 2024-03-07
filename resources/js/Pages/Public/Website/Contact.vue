@@ -6,7 +6,7 @@
         <div class="relative px-6 my-14 lg:px-0">
             <div class="flex flex-col max-w-5xl gap-20 mx-auto sm:flex-row">
                 <div class="w-full space-y-4 sm:w-6/12">
-                    <h1 class="text-3xl font-bold text-cyan-900">{{ $t('send_message') }}</h1>
+                    <h1 class="text-3xl font-bold text-primary-900">{{ $t('send_message') }}</h1>
                     <p class="text-sm font-medium text-gray-500">{{ $t('send_message_info') }}</p>
 
                     <form @submit.prevent="contact" class="pb-20 mt-2 space-y-6">
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="w-full space-y-4 sm:w-6/12">
-                    <h1 class="text-3xl font-bold text-cyan-900">{{ $t('contact') }}</h1>
+                    <h1 class="text-3xl font-bold text-primary-900">{{ $t('contact') }}</h1>
                     <p class="text-sm font-medium text-gray-500">{{ $t('contact_info') }}</p>
 
                     <a href="mailto:support@example.com" class="flex items-center gap-2 py-6 text-sm text-gray-500">

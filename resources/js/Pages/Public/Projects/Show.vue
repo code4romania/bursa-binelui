@@ -10,13 +10,13 @@
                         <div
                             :class="[
                                 'w-8 h-8 rounded-lg flex items-center justify-center',
-                                project.is_period_active ? 'bg-red-500' : 'bg-cyan-900',
+                                project.is_period_active ? 'bg-red-500' : 'bg-primary-900',
                             ]"
                         >
                             <SvgLoader
                                 :class="[
                                     'shrink-0 stroke-white',
-                                    project.is_period_active ? 'fill-red-500' : 'fill-cyan-900',
+                                    project.is_period_active ? 'fill-red-500' : 'fill-primary-900',
                                 ]"
                                 name="thunder"
                             />
@@ -37,7 +37,7 @@
                 </div>
 
                 <h1 v-if="project.name" class="py-12 text-6xl font-extrabold text-gray-900">{{ project.name }}</h1>
-                <h2 v-if="project.organization.name" class="mb-8 text-3xl font-bold text-cyan-900">
+                <h2 v-if="project.organization.name" class="mb-8 text-3xl font-bold text-primary-900">
                     {{ project.organization.name }}
                 </h2>
 
@@ -81,7 +81,7 @@
 
                 <div class="mt-8">
                     <div class="flex items-center justify-between mb-1 text-xl font-bold">
-                        <p class="text-cyan-900">{{ project.donations.total }}</p>
+                        <p class="text-primary-900">{{ project.donations.total }}</p>
                         <p class="text-primary-500">{{ project.donations.target }}</p>
                     </div>
 
@@ -89,13 +89,15 @@
                         <div
                             :class="[
                                 `h-6`,
-                                project.donations.total === project.donations.target ? 'bg-primary-500' : 'bg-cyan-900',
+                                project.donations.total === project.donations.target
+                                    ? 'bg-primary-500'
+                                    : 'bg-primary-900',
                             ]"
                             :style="`width: ${project.donations.percentage}%`"
                         ></div>
                     </div>
 
-                    <p class="mt-1 text-xl font-bold text-cyan-900">
+                    <p class="mt-1 text-xl font-bold text-primary-900">
                         {{ project.donations.count }} {{ $t('donations') }}
                     </p>
                 </div>
@@ -109,12 +111,12 @@
         <!-- Social share -->
         <div class="container grid items-start mx-auto mb-8 gap-y-8 gap-x-20 lg:grid-cols-5">
             <div class="lg:col-span-3">
-                <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
+                <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('share_project') }}</h2>
 
                 <SharePage class="mb-20" :pageRoute="route('projects.show', project.slug)" />
 
                 <div class="mb-10" v-if="project.description">
-                    <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('description') }}</h2>
+                    <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('description') }}</h2>
                     <div class="text-lg text-gray-500" v-text="project.description" />
                 </div>
             </div>
@@ -165,17 +167,17 @@
         <!-- Project info -->
         <div class="container space-y-10">
             <div v-if="project.scope">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_scope_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('project_scope_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.scope" />
             </div>
 
             <div v-if="project.beneficiaries">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('project_beneficiary_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('project_beneficiary_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.beneficiaries" />
             </div>
 
             <div v-if="project.reason_to_donate">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('why_to_donate') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('why_to_donate') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.reason_to_donate" />
             </div>
 
@@ -184,7 +186,7 @@
                     <div class="flex items-center justify-center w-10 h-10 p-2 text-white rounded-lg bg-primary-500">
                         <ExternalLinkIcon />
                     </div>
-                    <h3 class="text-3xl font-bold text-cyan-900">{{ $t('external_links_title') }}</h3>
+                    <h3 class="text-3xl font-bold text-primary-900">{{ $t('external_links_title') }}</h3>
                 </div>
 
                 <ul class="pl-8 leading-relaxed border-l-8 border-primary-500">

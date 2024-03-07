@@ -24,7 +24,7 @@
                             />
 
                             <div
-                                class="w-full mt-5 text-2xl font-bold text-cyan-900"
+                                class="w-full mt-5 text-2xl font-bold text-primary-900"
                                 v-if="article.author"
                                 v-text="article.author"
                             />
@@ -55,13 +55,13 @@
             <div class="grid col-span-8 gap-10 mt-2">
                 <header v-if="!category">
                     <Head :title="$t('articles.index')" />
-                    <h1 v-text="$t('articles.index')" class="text-3xl font-bold text-cyan-900" />
+                    <h1 v-text="$t('articles.index')" class="text-3xl font-bold text-primary-900" />
                 </header>
                 <header v-else>
                     <Head :title="$t('articles.category', { category: category.name })" />
                     <h1
                         v-text="$t('articles.category', { category: category.name })"
-                        class="text-3xl font-bold text-cyan-900"
+                        class="text-3xl font-bold text-primary-900"
                     />
                 </header>
 
@@ -84,7 +84,7 @@
 
             <aside class="col-span-12 lg:col-span-4">
                 <div>
-                    <h2 class="mb-5 text-3xl font-bold text-cyan-900">{{ $t('categories') }}</h2>
+                    <h2 class="mb-5 text-3xl font-bold text-primary-900">{{ $t('categories') }}</h2>
 
                     <div class="flex flex-wrap gap-2">
                         <ArticleCategory v-for="(category, index) in categories" :key="index" :category="category" />
@@ -92,7 +92,7 @@
                 </div>
 
                 <div class="w-full mt-10">
-                    <h2 class="mb-5 text-3xl font-bold text-cyan-900">{{ $t('other_articles_label') }}</h2>
+                    <h2 class="mb-5 text-3xl font-bold text-primary-900">{{ $t('other_articles_label') }}</h2>
                     <div
                         v-for="(article, index) in topArticles.data"
                         :key="index"

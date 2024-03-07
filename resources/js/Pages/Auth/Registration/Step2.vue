@@ -2,7 +2,7 @@
     <div class="space-y-6">
         <h1
             v-if="'organization' === form.type"
-            class="text-2xl font-bold text-cyan-900"
+            class="text-2xl font-bold text-primary-900"
             v-text="$t('account_details')"
         />
 
@@ -59,8 +59,8 @@
                 <div class="flex items-center space-x-1 text-sm">
                     <span class="text-gray-700">{{ $t('i_agree') }}</span>
                     <Link :href="route('terms')" class="text-primary-500">
-                        {{ $t('terms_link') }}
-                    </Link>.
+                        {{ $t('terms_link') }} </Link
+                    >.
                 </div>
             </label>
 
@@ -81,10 +81,7 @@
             <PrimaryButton @click="$emit('next', $event.target)" :label="$t('continue')" />
         </div>
 
-        <div
-            v-if="'user' === form.type"
-            :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']"
-        >
+        <div v-if="'user' === form.type" :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']">
             <PrimaryButton class="flex-1 w-full" @click="$emit('next', $event.target)" :label="$t('register_link')" />
 
             <SecondaryButton

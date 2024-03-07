@@ -4,12 +4,11 @@
             :href="project.type === 'project' ? route('projects.show', project) : route('bcr.show', project)"
             class="relative w-full overflow-hidden group aspect-w-5 aspect-h-3 drop-shadow-sm"
         >
-
             <img
                 :src="project.image"
                 class="object-cover object-center w-full transition-opacity duration-150 group-hover:opacity-75"
                 :class="{
-                    grayscale: (!project.is_active && project.type !== 'bcr_project'),
+                    grayscale: !project.is_active && project.type !== 'bcr_project',
                 }"
                 alt=""
             />
@@ -139,7 +138,7 @@
 
         <div class="px-6 pb-6" v-if="project.donations">
             <div class="flex items-center justify-between mb-1 text-lg font-bold">
-                <p class="text-cyan-900" v-text="project.donations.total" />
+                <p class="text-primary-900" v-text="project.donations.total" />
                 <p class="text-primary-500" v-text="project.donations.target" />
             </div>
 
@@ -148,7 +147,7 @@
                 :class="[
                     project.donations.percentage >= 100
                         ? 'progress-filled:bg-primary-500'
-                        : 'progress-filled:bg-cyan-900',
+                        : 'progress-filled:bg-primary-900',
                 ]"
                 :value="project.donations.percentage"
                 max="100"
@@ -160,16 +159,16 @@
 </template>
 
 <script setup>
-import {computed, onMounted} from 'vue';
+    import { computed, onMounted } from 'vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import Modal from '@/Components/modals/Modal.vue';
     import ProjectTag from '@/Components/projects/Tag.vue';
 
     import { BookmarkIcon, LocationMarkerIcon } from '@heroicons/vue/solid';
-import {trans} from "laravel-vue-i18n";
-import {useForm} from "@inertiajs/vue3";
-import route from "@/Helpers/useRoute.js";
+    import { trans } from 'laravel-vue-i18n';
+    import { useForm } from '@inertiajs/vue3';
+    import route from '@/Helpers/useRoute.js';
 
     /** Component props. */
     const props = defineProps({
@@ -180,21 +179,20 @@ import route from "@/Helpers/useRoute.js";
         status: null,
     });
 
-const changeProjectStatus = (id, status, type) => {
-    let tmpRoute =
-        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-    form.status = status;
-    console.log(form);
-    if (confirm(trans('project_change_status_'+status))) {
-        form.post(tmpRoute, {
-            preserveScroll: true,
-            onSuccess: (response) => {
-                //
-            },
-        });
-    }
-};
-
+    const changeProjectStatus = (id, status, type) => {
+        let tmpRoute =
+            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+        form.status = status;
+        console.log(form);
+        if (confirm(trans('project_change_status_' + status))) {
+            form.post(tmpRoute, {
+                preserveScroll: true,
+                onSuccess: (response) => {
+                    //
+                },
+            });
+        }
+    };
 
     /** Get days till project ends. */
     const project_end_date = computed(() => {

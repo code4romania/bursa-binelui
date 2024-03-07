@@ -23,7 +23,7 @@
             </div>
 
             <div class="absolute left-0 hidden -top-16 md:block">
-                <SvgLoader class="shrink-0 fill-primary-300" name="location_extra" />
+                <SvgLoader class="shrink-0 fill-primary-100" name="location_extra" />
             </div>
         </div>
 
@@ -36,7 +36,7 @@
 
         <!-- About -->
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('about_regional') }}</h3>
+            <h3 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('about_regional') }}</h3>
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
@@ -103,7 +103,7 @@
         </div>
 
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
+            <h2 class="mb-4 text-3xl font-bold text-primary-900">{{ $t('faqs_title') }}</h2>
             <Faqs :data="faqs" />
             <div class="mt-10">
                 <Link

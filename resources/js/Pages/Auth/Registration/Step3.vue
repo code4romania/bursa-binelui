@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-6">
-        <h1 v-if="'organization' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('ong_profile') }}</h1>
+        <h1 v-if="'organization' == form.type" class="text-2xl font-bold text-primary-900">{{ $t('ong_profile') }}</h1>
 
         <!-- Ong Name -->
         <Input

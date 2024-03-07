@@ -22,7 +22,7 @@
             </div>
 
             <div class="absolute left-0 hidden -top-16 md:block">
-                <SvgLoader class="shrink-0 fill-primary-300" name="big_troffe" />
+                <SvgLoader class="shrink-0 fill-primary-100" name="big_troffe" />
             </div>
         </div>
 
@@ -64,7 +64,7 @@
 
         <!-- About -->
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('about_championship') }}</h3>
+            <h3 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('about_championship') }}</h3>
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
@@ -127,7 +127,7 @@
         </div>
 
         <!-- Testimonials -->
-        <div class="w-full bg-cyan-900">
+        <div class="w-full bg-primary-900">
             <div class="flex items-center mx-auto max-w-7xl p-9 gap-x-4">
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
                     <SvgLoader class="shrink-0 fill-white" name="quote" />

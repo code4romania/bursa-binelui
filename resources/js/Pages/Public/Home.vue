@@ -27,7 +27,7 @@
                         {{ $t('see_evolution') }}
                     </Link>
 
-                    <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-300 -left-16 md:block" />
+                    <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-100 -left-16 md:block" />
                 </div>
 
                 <!-- Info texts -->
@@ -48,8 +48,8 @@
 
         <div class="container">
             <div class="relative flow-root bg-white rounded shadow-md">
-                <SmallSquarePattern class="absolute hidden lg:block -left-20 bottom-10 fill-primary-300" />
-                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-300" />
+                <SmallSquarePattern class="absolute hidden lg:block -left-20 bottom-10 fill-primary-100" />
+                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-100" />
 
                 <div class="relative mx-auto my-10 lg:max-w-5xl">
                     <div class="flex flex-col items-center w-full mb-4 md:flex-row">
@@ -79,7 +79,7 @@
                             ONG-URILE DE PE BURSA BINELUI
                         </h3>
                         <h3 class="inline px-6 py-2 text-xl font-bold text-white w-fit bg-primary-500">
-                            Se pot programa la CiviTech 911. Afla cum aici...
+                            se pot programa la CivicTech 911. Afla cum aici...
                         </h3>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
             </div>
 
             <div class="relative">
-                <LargeSquarePattern class="absolute bottom-0 hidden shrink-0 fill-primary-300 md:block right-1/2" />
+                <LargeSquarePattern class="absolute bottom-0 hidden shrink-0 fill-primary-100 md:block right-1/2" />
 
                 <Carousel
                     class="relative w-screen py-9"
@@ -149,7 +149,7 @@
         <div v-if="articles.data.length" class="w-full bg-primary-50 py-9">
             <div class="w-full mx-auto rounded lg:max-w-7xl px-9">
                 <div class="flex items-center gap-6 mb-9">
-                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">{{ $t('articles') }}</h2>
+                    <h2 class="text-2xl font-bold text-primary-900 lg:text-5xl">{{ $t('articles') }}</h2>
                     <Link
                         :href="route('articles.index')"
                         class="bg-primary-500 text-center w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -173,7 +173,7 @@
         <section v-if="bcr_projects">
             <div class="container flex flex-wrap justify-between gap-6 lg:items-center">
                 <h1
-                    class="w-full text-4xl font-extrabold leading-6 tracking-tight text-cyan-900 lg:text-5xl xl:text-6xl lg:w-auto"
+                    class="w-full text-4xl font-extrabold leading-6 tracking-tight text-primary-900 lg:text-5xl xl:text-6xl lg:w-auto"
                     v-text="$t('bcr_for_community')"
                 />
 

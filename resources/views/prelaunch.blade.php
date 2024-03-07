@@ -35,7 +35,7 @@
                 <x-icon-patterns.square-small @class([
                     'absolute top-full -left-16 -z-10',
                     'hidden shrink-0 md:block',
-                    'fill-primary-300 w-32 h-32',
+                    'fill-primary-100 w-32 h-32',
                 ]) />
             </div>
         </div>
