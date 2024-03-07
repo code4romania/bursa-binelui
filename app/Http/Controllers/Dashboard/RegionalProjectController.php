@@ -39,8 +39,17 @@ class RegionalProjectController extends Controller
      */
     public function create(Gala $gala)
     {
+        if (! $gala->registrationIsOpen) {
+            return redirect()->back();
+        }
+        $gala->edition->load('editionCategories');
+
         return Inertia::render('AdminOng/GalaProjects/AddProject', [
-            'gala' => $gala,
+            'counties' => $gala->counties,
+            'projectCategories' => $gala->edition->editionCategories,
+            'startDate' => $gala->start_sign_up,
+            'endDate' => $gala->end_sign_up,
+
         ]);
     }
 
