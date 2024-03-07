@@ -17,14 +17,18 @@
                 <ProjectTag v-if="project.is_pending" :label="$t('project_waiting_for_approval')" />
                 <ProjectTag v-else-if="project.is_draft" :label="$t('project_draft')" />
 
-                <ProjectTag v-else-if="project.is_starting_soon" :label="$t('project_starting_soon')" icon="clock" />
+                <ProjectTag
+                    v-else-if="project.is_starting_soon"
+                    :label="$t('project_starting_soon')"
+                    :icon="ClockIcon"
+                />
                 <ProjectTag
                     v-else-if="project.is_active && project.is_ending_soon"
                     :label="$t('project_ending_soon')"
-                    icon="clock"
+                    :icon="ClockIcon"
                 />
 
-                <ProjectTag v-else-if="project.is_active" :label="$t('project_active')" icon="clock" />
+                <ProjectTag v-else-if="project.is_active" :label="$t('project_active')" :icon="ClockIcon" />
                 <ProjectTag v-else-if="!project.is_active && !project.is_rejected" :label="$t('project_closed')" />
                 <ProjectTag v-if="project.is_rejected" :label="$t('project_rejected')" />
 
@@ -165,7 +169,7 @@
     import Modal from '@/Components/modals/Modal.vue';
     import ProjectTag from '@/Components/projects/Tag.vue';
 
-    import { BookmarkIcon, LocationMarkerIcon } from '@heroicons/vue/solid';
+    import { BookmarkIcon, LocationMarkerIcon, ClockIcon } from '@heroicons/vue/solid';
     import { trans } from 'laravel-vue-i18n';
     import { useForm } from '@inertiajs/vue3';
     import route from '@/Helpers/useRoute.js';

@@ -1,5 +1,5 @@
 <template>
-    <PageLayout :title="$t('projects_title')" icon="list">
+    <PageLayout :title="$t('projects_title')" :icon="ViewBoardsIcon">
         <!-- Filters -->
         <div class="container grid items-start gap-6 md:grid-cols-12">
             <div class="flex gap-x-6 md:col-span-12 lg:col-span-5">
@@ -74,7 +74,7 @@
 <script setup>
     import { ref } from 'vue';
     import route from '@/Helpers/useRoute';
-    import { ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
+    import { ViewBoardsIcon, ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Sort from '@/Components/filters/Sort.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';

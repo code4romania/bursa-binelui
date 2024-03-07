@@ -81,7 +81,7 @@
 
                     <div class="px-10 py-8 space-y-8 bg-gray-50">
                         <div class="flex justify-start gap-x-4">
-                            <Icon class="w-5 h-5 mt-1 shrink-0 fill-primary-500" name="location" />
+                            <LocationMarkerIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">{{ project?.county?.name }}</p>
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <!-- <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" /> -->
+                            <CalendarIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">
@@ -105,7 +105,7 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <!-- <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="person" /> -->
+                            <UserIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">
                                     {{ $t('contact_person') }}
@@ -250,7 +250,7 @@
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
     import Gallery from '@/Components/Gallery.vue';
-    import { BookmarkIcon } from '@heroicons/vue/outline';
+    import { BookmarkIcon, LocationMarkerIcon, CalendarIcon, UserIcon } from '@heroicons/vue/outline';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const props = defineProps({

@@ -24,7 +24,7 @@
                 v-if="organization.activity_domains"
                 class="flex items-center gap-1 mt-1 text-sm font-medium text-gray-800"
             >
-                <Icon class="w-4 h-4 text-gray-500 shrink-0" name="activity" />
+                <BookmarkIcon class="w-5 h-5 shrink-0" />
                 <span class="text-gray-700 truncate" v-text="organization.activity_domains" />
             </div>
 
@@ -39,11 +39,8 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
     import { Link } from '@inertiajs/vue3';
-
-    /** Import components. */
-    import Icon from '@/Components/Icon.vue';
+    import { BookmarkIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     defineProps({

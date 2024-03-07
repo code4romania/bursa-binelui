@@ -15,7 +15,7 @@
                     <div
                         class="inline-flex items-center px-3 py-1 text-base font-bold text-white bg-red-500 rounded-full gap-x-2"
                     >
-                        <Icon class="w-5 h-5 shrink-0" name="location" />
+                        <LocationMarkerIcon class="w-5 h-5 shrink-0 fill-primary-500" />
 
                         4
                     </div>
@@ -31,12 +31,12 @@
 
                 <div class="flex items-center gap-5 mt-1 text-base font-medium text-gray-700">
                     <div v-if="data.county" class="flex items-center gap-1">
-                        <Icon class="w-5 h-5 shrink-0" name="location" />
+                        <LocationMarkerIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                         {{ data.county.name }}
                     </div>
 
                     <div v-if="data.activity_domains" class="flex items-center gap-1">
-                        <Icon class="w-4 h-4 text-gray-500 shrink-0" name="activity" />
+                        <BookmarkIcon class="w-5 h-5 text-gray-500 shrink-0" />
                         <span class="w-20 truncate lg:w-40">{{ data.activity_domains.join(',') }}</span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
     /** Import components. */
     import Icon from '@/Components/Icon.vue';
 
-    import { BookmarkIcon } from '@heroicons/vue/solid';
+    import { BookmarkIcon, LocationMarkerIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({
