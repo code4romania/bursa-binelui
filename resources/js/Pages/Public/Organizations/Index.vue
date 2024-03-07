@@ -1,5 +1,5 @@
 <template>
-    <PageLayout :title="$t('organization_title')" icon="list">
+    <PageLayout :title="$t('organization_title')" :icon="ViewBoardsIcon">
         <!-- Filters -->
         <div class="container grid items-start gap-6 sm:grid-cols-6">
             <div class="flex gap-x-6 sm:col-span-3">
@@ -77,6 +77,7 @@
 <script setup>
     import { ref } from 'vue';
     import { XIcon } from '@heroicons/vue/solid';
+    import { ViewBoardsIcon } from '@heroicons/vue/outline';
     import route from '@/Helpers/useRoute';
 
     import PageLayout from '@/Layouts/PageLayout.vue';

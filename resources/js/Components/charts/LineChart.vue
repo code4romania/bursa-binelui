@@ -30,13 +30,13 @@
                     tension: 0.4,
                     fill: {
                         target: 'origin',
-                        above: '#C1E8E8',
+                        above: '#BDE1FF',
                         below: 'green',
                     },
                     pointRadius: 0,
                     hoverRadius: 5,
                     hoverBackgroundColor: 'white',
-                    hoverBorderColor: '#53BFBF',
+                    hoverBorderColor: '#65b7ff',
                     hoverBorderWidth: 2,
                 },
             ],
@@ -62,10 +62,9 @@
                     date: {
                         locale: 'roRo',
                     },
-                }
+                },
             },
             y: {
-
                 grid: {
                     display: false,
                 },
@@ -77,7 +76,7 @@
                 callbacks: {
                     title: (tooltipItems) => {
                         const date = new Date(tooltipItems[0].label);
-                        return  date.toLocaleDateString('ro-Ro');
+                        return date.toLocaleDateString('ro-Ro');
                     },
                     label: (context) => {
                         const yAxe = context.parsed.y;
@@ -93,9 +92,7 @@
 
     const renderChart = () => {
         const yAxe = props.data.map((entry) => entry[props.yAxeId]);
-        const xAxe = props.data.map((entry) =>entry[props.xAxeId]);
-
-
+        const xAxe = props.data.map((entry) => entry[props.xAxeId]);
 
         const chartData = reactiveChartData(xAxe, yAxe);
 
@@ -109,7 +106,7 @@
     function getMonthName(date) {
         const d = new Date(date);
         const monthNumber = d.getMonth();
-        console.log('monthNumber', monthNumber)
+        console.log('monthNumber', monthNumber);
         const tmpDate = new Date();
         tmpDate.setMonth(monthNumber);
 

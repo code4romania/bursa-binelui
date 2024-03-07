@@ -23,7 +23,7 @@
             </div>
 
             <div class="absolute left-0 hidden -top-16 md:block">
-                <SvgLoader class="shrink-0 fill-primary-300" name="location_extra" />
+                <!-- <SvgLoader class="shrink-0 fill-primary-100" name="location_extra" /> -->
             </div>
         </div>
 
@@ -36,15 +36,15 @@
 
         <!-- About -->
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('about_regional') }}</h3>
+            <h3 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('about_regional') }}</h3>
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
         <!-- Projects -->
         <div class="mx-auto mb-10 p-9 max-w-7xl">
             <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="list" />
+                <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                    <!-- <SvgLoader class="shrink-0 fill-primary-500" name="list" /> -->
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
             </div>
@@ -75,7 +75,7 @@
                             @click="emptyFilters"
                             class="flex items-center w-1/2 gap-2 py-2 sm:w-auto"
                         >
-                            <SvgLoader name="close" />
+                            <!-- <SvgLoader name="close" /> -->
                             {{ $t('empty_filters') }}
                         </SecondaryButton>
 
@@ -103,7 +103,7 @@
         </div>
 
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h2 class="mb-4 text-3xl font-bold text-cyan-900">{{ $t('faqs_title') }}</h2>
+            <h2 class="mb-4 text-3xl font-bold text-primary-900">{{ $t('faqs_title') }}</h2>
             <Faqs :data="faqs" />
             <div class="mt-10">
                 <Link
@@ -120,7 +120,7 @@
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
+                        <SpeakerphoneIcon class="w-5 h-5 fill-primary-100 stroke-white shrink-0" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
                 </div>
@@ -148,7 +148,7 @@
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
+                        <SpeakerphoneIcon class="w-5 h-5 fill-primary-100 stroke-white shrink-0" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('parteners') }}</h3>
                 </div>
@@ -175,8 +175,8 @@
         <!-- Prev editions -->
         <div class="mx-auto mb-20 max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="clock" />
+                <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                    <!-- <SvgLoader class="shrink-0 fill-primary-500" name="clock" /> -->
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('prev_edtions') }}</h2>
             </div>
@@ -206,7 +206,6 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
@@ -220,6 +219,7 @@
     import Sort from '@/Components/filters/Sort.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import MultiSelectObjectFilter from '@/Components/filters/MultiSelectObjectFilter.vue';
+    import { SpeakerphoneIcon } from '@heroicons/vue/outline';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 

@@ -13,13 +13,10 @@
                         <div
                             :class="[
                                 'w-8 h-8 rounded-lg flex items-center justify-center',
-                                project.active ? 'bg-red-500' : 'bg-cyan-900',
+                                project.active ? 'bg-red-500' : 'bg-primary-500',
                             ]"
                         >
-                            <SvgLoader
-                                :class="['shrink-0 stroke-white', project.active ? 'fill-red-500' : 'fill-cyan-900']"
-                                name="thunder"
-                            />
+                            <Icon class="w-4 h-6 stroke-2 shrink-0 stroke-white fill-transparent" name="thunder" />
                         </div>
                         <p class="text-base font-semibold leading-6 text-gray-900">
                             {{ project.active ? $t('active') : $t('inactive') }}
@@ -27,8 +24,8 @@
                     </div>
 
                     <div v-if="project.category" class="flex items-center gap-2">
-                        <div class="flex items-center justify-center rounded-lg bg-primary-50 w-9 h-9">
-                            <SvgLoader class="shrink-0 fill-primary-50 stroke-primary-500" name="badge" />
+                        <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-50">
+                            <BookmarkIcon class="stroke-primary-400 shrink-0" />
                         </div>
                         <p class="w-40 text-base font-semibold leading-6 text-gray-900 truncate lg:w-60">
                             {{ project.category }}
@@ -38,13 +35,13 @@
 
                 <h1 v-if="project.name" class="text-6xl font-extrabold text-left text-gray-900">{{ project.name }}</h1>
 
-                <div class="flex items-center justify-start w-full mt-4 text-2xl font-bold text-cyan-900">
+                <div class="flex items-center justify-start w-full mt-4 text-2xl font-bold text-primary-900">
                     {{ project.organization.name }}
                 </div>
             </div>
 
             <div class="relative items-center justify-center hidden w-full p-20 lg:w-6/12 sm:flex">
-                <LargeSquarePattern class="absolute bottom-0 right- fill-primary-300" />
+                <LargeSquarePattern class="absolute bottom-0 right- fill-primary-100" />
 
                 <div class="relative flex items-center w-fit">
                     <img
@@ -66,12 +63,12 @@
         <!-- Social share -->
         <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
             <div class="w-full lg:w-6/12">
-                <h2 class="mb-8 text-3xl font-bold text-cyan-900">{{ $t('share_project') }}</h2>
+                <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('share_project') }}</h2>
 
                 <SharePage class="mb-20" :pageRoute="route('projects.show', project.slug)" />
 
                 <div class="mb-10" v-if="project.description">
-                    <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_description_label') }}</h2>
+                    <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_description_label') }}</h2>
                     <div class="text-lg text-gray-500" v-text="project.description" />
                 </div>
             </div>
@@ -84,7 +81,7 @@
 
                     <div class="px-10 py-8 space-y-8 bg-gray-50">
                         <div class="flex justify-start gap-x-4">
-                            <Icon class="w-5 h-5 mt-1 shrink-0 fill-primary-500" name="location" />
+                            <LocationMarkerIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">{{ project?.county?.name }}</p>
@@ -92,7 +89,7 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="calendar" />
+                            <CalendarIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('period') }}</h3>
                                 <p class="mt-2 text-base font-normal text-gray-500">
@@ -108,7 +105,7 @@
                         </div>
 
                         <div class="flex justify-start gap-x-4">
-                            <SvgLoader class="mt-1 shrink-0 fill-primary-500 stroke-primary-500" name="person" />
+                            <UserIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                             <div>
                                 <h3 class="text-base font-semibold text-gray-600 leading-0">
                                     {{ $t('contact_person') }}
@@ -142,47 +139,47 @@
         <!-- Project info -->
         <div class="mx-auto mb-8 max-w-7xl px-9">
             <div class="mb-10" v-if="project.needs">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_needs_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_needs_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.needs" />
             </div>
 
             <div class="mb-10" v-if="project.solution">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_solution_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_solution_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.solution" />
             </div>
 
             <div class="mb-10" v-if="project.stats">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_project_stats_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_project_stats_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.stats" />
             </div>
 
             <div class="mb-10" v-if="project.results">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_results_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_results_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.results" />
             </div>
 
             <div class="mb-10" v-if="project.proud">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_proud_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_proud_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.proud" />
             </div>
 
             <div class="mb-10" v-if="project.parteners">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('parteners') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('parteners') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.parteners" />
             </div>
 
             <div class="mb-10" v-if="project.budget">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_budget_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_budget_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.budget" />
             </div>
 
             <div class="mb-10" v-if="project.participants">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_participants_no_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_participants_no_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.participants" />
             </div>
 
             <div class="mb-10" v-if="project.project_organization">
-                <h2 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('regional_organization_label') }}</h2>
+                <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('regional_organization_label') }}</h2>
                 <div class="text-lg text-gray-500" v-text="project.project_organization" />
             </div>
         </div>
@@ -248,12 +245,12 @@
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
+
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
     import SharePage from '@/Components/SharePage.vue';
     import Gallery from '@/Components/Gallery.vue';
-
+    import { BookmarkIcon, LocationMarkerIcon, CalendarIcon, UserIcon } from '@heroicons/vue/outline';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     const props = defineProps({

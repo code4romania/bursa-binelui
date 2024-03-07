@@ -8,8 +8,8 @@
                 <div class="w-full md:w-1/2">
                     <!-- Header -->
                     <header class="flex items-center gap-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                            <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
+                        <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                            <ChartBarIcon class="stroke-white shrink-0" />
                         </div>
                         <h2 class="text-2xl font-bold text-gray-900">{{ $t('thank_you') }}</h2>
                     </header>
@@ -29,10 +29,11 @@
                     <div class="bg-white shadow-lg">
                         <div class="px-10 py-8 space-y-6 bg-gray-50">
                             <div
-                                v-for="info in profile"
+                                v-for="(info, key) in profile"
+                                :key="key"
                                 class="flex items-center justify-start gap-x-4"
                             >
-                                <SvgLoader class="shrink-0 fill-gray-50" name="check" />
+                                <CheckIcon class="shrink-0 fill-gray-50" />
                                 <p class="text-base font-normal text-gray-500">{{ info }}</p>
                             </div>
 
@@ -54,9 +55,10 @@
             <div class="flex flex-col w-full gap-6 sm:flex-row">
                 <div class="w-full sm:w-6/12">
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center justify-center rounded-lg bg-primary-500 w-9 h-9">
-                            <SvgLoader class="fill-primary-500 shrink-0" name="brand_icon" />
+                        <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                            <ChartBarIcon class="stroke-white shrink-0" />
                         </div>
+
                         <h1 class="text-2xl font-bold text-gray-900">{{ $t('thank_you') }}</h1>
                     </div>
 
@@ -102,10 +104,10 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+    import { ChartBarIcon, CheckIcon } from '@heroicons/vue/outline';
 
     const props = defineProps({
         project: Object,

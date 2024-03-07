@@ -29,26 +29,29 @@
 
         <button
             @click="copy(url)"
-            class="relative overflow-hidden duration-150 rounded-full ransition-opacity hover:opacity-75"
+            class="relative flex items-center justify-center w-8 h-8 overflow-hidden duration-150 border-2 border-blue-500 rounded-full ransition-opacity hover:opacity-75"
+            :class="[copied && text === url ? 'text-white bg-blue-500' : 'text-blue-500']"
         >
-            <Icon v-if="copied && text === url" name="check" class="w-8 h-8 text-white bg-blue-500" />
-            <Icon v-else name="link" class="w-8 h-8 text-blue-500" />
+            <CheckIcon v-if="copied && text === url" class="w-5 h-5" />
+            <LinkIcon v-else class="w-5 h-5" />
         </button>
 
         <button
             @click="copy(embedCode)"
-            class="relative overflow-hidden duration-150 rounded-full ransition-opacity hover:opacity-75"
+            class="relative flex items-center justify-center w-8 h-8 overflow-hidden duration-150 border-2 rounded-full border-primary-500 ransition-opacity hover:opacity-75"
+            :class="[copied && text === embedCode ? 'text-white bg-primary-500' : 'text-primary-500']"
         >
-            <Icon v-if="copied && text === embedCode" name="check" class="w-8 h-8 text-white bg-primary-500" />
-            <Icon v-else name="embed" class="w-8 h-8 text-primary-500" />
+            <CheckIcon v-if="copied && text === embedCode" class="w-5 h-5" />
+            <CodeIcon v-else class="w-5 h-5" />
         </button>
     </div>
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
+    import { computed } from 'vue';
     import { useClipboard } from '@vueuse/core';
     import Icon from '@/Components/Icon.vue';
+    import { CheckIcon, LinkIcon, CodeIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({

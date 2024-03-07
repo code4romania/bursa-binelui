@@ -2,7 +2,7 @@
     <div class="space-y-6">
         <h1
             v-if="'organization' === form.type"
-            class="text-2xl font-bold text-cyan-900"
+            class="text-2xl font-bold text-primary-900"
             v-text="$t('account_details')"
         />
 
@@ -58,9 +58,7 @@
                 <Checkbox name="terms" v-model:checked="form.terms" required />
                 <div class="flex items-center space-x-1 text-sm">
                     <span class="text-gray-700">{{ $t('i_agree') }}</span>
-                    <Link :href="route('terms')" class="text-primary-500">
-                        {{ $t('terms_link') }}
-                    </Link>.
+                    <Link :href="route('terms')" class="text-primary-500"> {{ $t('terms_link') }} </Link>.
                 </div>
             </label>
 
@@ -81,19 +79,8 @@
             <PrimaryButton @click="$emit('next', $event.target)" :label="$t('continue')" />
         </div>
 
-        <div
-            v-if="'user' === form.type"
-            :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']"
-        >
+        <div v-if="'user' === form.type" :class="['flex flex-col md:flex-row items-center gap-4 justify-between mt-6']">
             <PrimaryButton class="flex-1 w-full" @click="$emit('next', $event.target)" :label="$t('register_link')" />
-
-            <SecondaryButton
-                class="w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"
-                @click="$emit('google', $event.target)"
-            >
-                <SvgLoader name="google" />
-                {{ $t('google_login') }}
-            </SecondaryButton>
         </div>
     </div>
 </template>
@@ -104,7 +91,6 @@
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import Checkbox from '@/Components/form/Checkbox.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
 
     const props = defineProps({
         form: Object,

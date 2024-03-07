@@ -4,7 +4,7 @@
         <Head :title="$t('faqs_title')" />
 
         <div class="mx-auto mt-4 mb-10 space-y-6 p-9 max-w-7xl">
-            <h1 v-if="faqs?.title" class="text-3xl font-bold text-cyan-900">{{ faqs.title }}</h1>
+            <h1 v-if="faqs?.title" class="text-3xl font-bold text-primary-900">{{ faqs.title }}</h1>
             <div v-if="faqs?.content" v-html="faqs.content" class="space-y-4 text-base text-gray-500"></div>
 
             <div class="relative bg-white z-101">
@@ -34,7 +34,6 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Faqs from '@/Components/faqs/Faqs.vue';
     import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 

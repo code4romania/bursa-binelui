@@ -27,7 +27,7 @@
                         {{ $t('see_evolution') }}
                     </Link>
 
-                    <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-300 -left-16 md:block" />
+                    <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-100 -left-16 md:block" />
                 </div>
 
                 <!-- Info texts -->
@@ -48,8 +48,8 @@
 
         <div class="container">
             <div class="relative flow-root bg-white rounded shadow-md">
-                <SmallSquarePattern class="absolute hidden lg:block -left-20 bottom-10 fill-primary-300" />
-                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-300" />
+                <SmallSquarePattern class="absolute hidden lg:block -left-20 bottom-10 fill-primary-100" />
+                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-100" />
 
                 <div class="relative mx-auto my-10 lg:max-w-5xl">
                     <div class="flex flex-col items-center w-full mb-4 md:flex-row">
@@ -79,7 +79,7 @@
                             ONG-URILE DE PE BURSA BINELUI
                         </h3>
                         <h3 class="inline px-6 py-2 text-xl font-bold text-white w-fit bg-primary-500">
-                            Se pot programa la CiviTech 911. Afla cum aici...
+                            se pot programa la CivicTech 911. Afla cum aici...
                         </h3>
                     </div>
                 </div>
@@ -106,23 +106,23 @@
                     <button
                         type="button"
                         @click="projects_carousel.prev()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_left" />
+                        <ChevronLeftIcon class="fill-gray-700 shrink-0" />
                     </button>
 
                     <button
                         type="button"
                         @click="projects_carousel.next()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_right" />
+                        <ChevronRightIcon class="fill-gray-700 shrink-0" />
                     </button>
                 </div>
             </div>
 
             <div class="relative">
-                <LargeSquarePattern class="absolute bottom-0 hidden shrink-0 fill-primary-300 md:block right-1/2" />
+                <LargeSquarePattern class="absolute bottom-0 hidden shrink-0 fill-primary-100 md:block right-1/2" />
 
                 <Carousel
                     class="relative w-screen py-9"
@@ -149,7 +149,7 @@
         <div v-if="articles.data.length" class="w-full bg-primary-50 py-9">
             <div class="w-full mx-auto rounded lg:max-w-7xl px-9">
                 <div class="flex items-center gap-6 mb-9">
-                    <h2 class="text-2xl font-bold text-cyan-900 lg:text-5xl">{{ $t('articles') }}</h2>
+                    <h2 class="text-2xl font-bold text-primary-900 lg:text-5xl">{{ $t('articles') }}</h2>
                     <Link
                         :href="route('articles.index')"
                         class="bg-primary-500 text-center w-full sm:w-auto hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -173,7 +173,7 @@
         <section v-if="bcr_projects">
             <div class="container flex flex-wrap justify-between gap-6 lg:items-center">
                 <h1
-                    class="w-full text-4xl font-extrabold leading-6 tracking-tight text-cyan-900 lg:text-5xl xl:text-6xl lg:w-auto"
+                    class="w-full text-4xl font-extrabold leading-6 tracking-tight text-primary-900 lg:text-5xl xl:text-6xl lg:w-auto"
                     v-text="$t('bcr_for_community')"
                 />
 
@@ -189,17 +189,17 @@
                     <button
                         type="button"
                         @click="bcr_projects_carousel.prev()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_left" />
+                        <ChevronLeftIcon class="fill-gray-700 shrink-0" />
                     </button>
 
                     <button
                         type="button"
                         @click="bcr_projects_carousel.next()"
-                        class="flex items-center justify-center w-10 h-10 p-2 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
+                        class="flex items-center justify-center w-8 h-8 p-1 bg-white rounded-lg shadow-md cursor-pointer shrink-0"
                     >
-                        <SvgLoader class="shrink-0 fill-gray-700" name="chevron_right" />
+                        <ChevronRightIcon class="fill-gray-700 shrink-0" />
                     </button>
                 </div>
             </div>
@@ -239,13 +239,14 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Head from '@/Components/Head.vue';
     import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';
     import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
     import HeroPattern from '@/Components/patterns/HeroPattern.vue';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
     import SmallSquarePattern from '@/Components/patterns/SmallSquarePattern.vue';
+
+    import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({
