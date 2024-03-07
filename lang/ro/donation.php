@@ -33,6 +33,7 @@ return [
         'charge_date' => 'Data încasării',
         'count' => 'Numar donatii',
         'count_with_amount' => 'Numarul de dontatii :count ( :total RON)',
+        'donors' => 'Donatori',
     ],
 
     'statuses' => [

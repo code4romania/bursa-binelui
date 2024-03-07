@@ -6,6 +6,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\BadgeType;
 use App\Filament\Resources\BadgeResource\Pages;
+use App\Filament\Resources\BadgeResource\RelationManagers\OrganizationRelationManager;
 use App\Filament\Resources\BadgeResource\RelationManagers\UsersRelationManager;
 use App\Models\Badge;
 use Filament\Forms\Components\Select;
@@ -144,6 +145,7 @@ class BadgeResource extends Resource
     {
         return [
             UsersRelationManager::class,
+            OrganizationRelationManager::class,
         ];
     }
 

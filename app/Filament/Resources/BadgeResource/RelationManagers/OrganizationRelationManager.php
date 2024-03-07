@@ -13,15 +13,15 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
-class UsersRelationManager extends RelationManager
+class OrganizationRelationManager extends RelationManager
 {
-    protected static string $relationship = 'users';
+    protected static string $relationship = 'organizations';
 
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function getTitle(): string
     {
-        return __('donation.labels.donors');
+        return __('organization.label.plural');
     }
 
     public static function form(Form $form): Form
@@ -39,10 +39,12 @@ class UsersRelationManager extends RelationManager
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->description(fn ($record) => $record->email),
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('allocated_at')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
 
             ])
             ->filters([
@@ -65,6 +67,6 @@ class UsersRelationManager extends RelationManager
 
     public static function canViewForRecord(Model $ownerRecord): bool
     {
-        return $ownerRecord->badgeCategory->title === BadgeCategories::DONATIONS->value;
+        return $ownerRecord->badgeCategory->title === BadgeCategories::PROJECTS_ONG->value;
     }
 }
