@@ -563,98 +563,92 @@
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
-    import { useForm } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute';
+import { ref, computed } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute';
 
-    /** Import components. */
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
-    import Field from '@/Components/Field.vue';
-    import EditModal from '@/Components/modals/EditModal.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import FileInput from '@/Components/form/FileInput.vue';
-    import Repeater from '@/Components/form/Repeater.vue';
-    import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DangerButton from '@/Components/buttons/DangerButton.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
-    import Select from '@/Components/form/Select.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import RepeaterComponent from '@/Components/RepeaterComponent.vue';
-    import FileGroup from '@/Components/form/FileGroup.vue';
+/** Import components. */
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import Field from '@/Components/Field.vue';
+import EditModal from '@/Components/modals/EditModal.vue';
+import Input from '@/Components/form/Input.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import FileInput from '@/Components/form/FileInput.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import Select from '@/Components/form/Select.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import RepeaterComponent from '@/Components/RepeaterComponent.vue';
+import FileGroup from '@/Components/form/FileGroup.vue';
 
-    const props = defineProps({
-        project: Object,
-        errors: Object,
-        counties: Array,
-        projectCategories: Array,
-        flash: Object,
-        changes: Array,
-    });
+const props = defineProps({
+    project: Object,
+    errors: Object,
+    counties: Array,
+    projectCategories: Array,
+    flash: Object,
+    changes: Array,
+});
 
-    const project = ref(props.project);
-    const originalProject = computed(() => props.project);
+const project = ref(props.project);
+const originalProject = computed(() => props.project);
 
-    const resetField = (field) => {
-        project.value[field] = originalProject.value[field];
-    };
+const resetField = (field) => {
+    project.value[field] = originalProject.value[field];
+};
 
-    const formChangeStatus = useForm({
-        status: 'pending',
-        id: project.value.id,
-    });
+const formChangeStatus = useForm({
+    status: 'pending',
+    id: project.value.id,
+});
 
-    const hasPendingChanges = (field) => {
-        let tmpChanges = props.changes;
-        if (Object.keys(tmpChanges).includes(field))
-        {
-            return tmpChanges[field].new;
-        }
-        return false;
-    };
+const hasPendingChanges = (field) => {
+    let tmpChanges = props.changes;
+    if (Object.keys(tmpChanges).includes(field)) {
+        return tmpChanges[field].new;
+    }
+    return false;
+};
 
-    const changeProjectStatus = (id, status, type) => {
-        let tmpRoute =
-            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        if (confirm('Are you sure you want to change the status of this project?')) {
-            formChangeStatus.post(tmpRoute, {
-                preserveScroll: true,
-                onSuccess: (response) => {
-                    //
-                },
-                onError: (error) => {
-                    Object.keys(error).forEach((key) => {
-                        if (key.includes('external_links')) {
-                            formChangeStatus.errors['external_links'] = error[key];
-                        }
-                        if (key.includes('videos')) {
-                            formChangeStatus.errors['videos'] = error[key];
-                        }
-                    });
-                    console.log(error);
-                },
-            });
-        }
-    };
-
-    const editField = (field) => {
-        const form = useForm({
-            [field]: project.value[field],
-        });
-        form.post(route('dashboard.projects.update', project.value.id), {
+const changeProjectStatus = (id, status, type) => {
+    let tmpRoute =
+        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+    if (confirm('Are you sure you want to change the status of this project?')) {
+        formChangeStatus.post(tmpRoute, {
             preserveScroll: true,
             onSuccess: (response) => {
                 //
             },
+            onError: (error) => {
+                Object.keys(error).forEach((key) => {
+                    if (key.includes('external_links')) {
+                        formChangeStatus.errors['external_links'] = error[key];
+                    }
+                    if (key.includes('videos')) {
+                        formChangeStatus.errors['videos'] = error[key];
+                    }
+                });
+                console.log(error);
+            },
         });
-    };
-    function arrayError(key) {
-        if (props?.errors[key]) {
-            return props?.errors[key];
-        }
-        return null;
     }
+};
+
+const editField = (field) => {
+    const form = useForm({
+        [field]: project.value[field],
+    });
+    form.post(route('dashboard.projects.update', project.value.id), {
+        preserveScroll: true,
+        onSuccess: (response) => {
+            //
+        },
+    });
+};
+function arrayError(key) {
+    if (props?.errors[key]) {
+        return props?.errors[key];
+    }
+    return null;
+}
 </script>
