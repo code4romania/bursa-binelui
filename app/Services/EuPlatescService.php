@@ -11,8 +11,6 @@ use Http;
 
 class EuPlatescService
 {
-    public const URL_ACTION = 'https://manager.euplatesc.ro/v3/index.php?action=ws';
-
     public const CAPTURE_METHOD = 'capture';
 
     private string $merchantId;
@@ -152,7 +150,10 @@ class EuPlatescService
 
     public function callMethod(array $data): array
     {
-        $response = Http::asForm()->post(self::URL_ACTION, $data);
+        $response = Http::asForm()->post(
+            config('euplatesc.url_action'),
+            $data
+        );
 
         $body = $response->body() ?: '';
 

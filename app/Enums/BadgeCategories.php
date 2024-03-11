@@ -14,15 +14,15 @@ enum BadgeCategories: string
     use Comparable;
     use HasLabel;
 
-    case DONATIONS = 'Donatii';
+    case DONATIONS = 'donations';
 
-    case VOLUNTEERS = 'Voluntariat';
+    case VOLUNTEERS = 'volunteers';
 
-    case SHARING = 'Sharing';
+    case SHARING = 'sharing';
 
-    case PROJECTS_ONG = 'Proiect ONG';
+    case PROJECTS_ONG = 'projects_ong';
 
-    case MONTH_ACTIVITY = 'Activitate lunara';
+    case MONTH_ACTIVITY = 'month_activity';
 
     public function labelKeyPrefix(): string
     {
