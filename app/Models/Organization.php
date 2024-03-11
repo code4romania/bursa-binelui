@@ -77,7 +77,6 @@ class Organization extends Model implements HasMedia
     public array $requiresApproval = [
         'name',
         'cif',
-        'address',
         'statute',
     ];
 

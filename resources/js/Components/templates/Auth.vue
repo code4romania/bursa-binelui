@@ -6,7 +6,7 @@
             <div class="w-full mx-auto mb-64">
                 <div>
                     <div class="mt-6 prose sm:prose-lg">
-                        <h1 v-if="content?.title" class="tracking-tight text-cyan-900" v-text="content.title" />
+                        <h1 v-if="content?.title" class="tracking-tight text-primary-900" v-text="content.title" />
                         <p v-text="content?.description" />
                     </div>
                     <div class="mt-6 text-sm leading-6 text-gray-600 sm:text-base">

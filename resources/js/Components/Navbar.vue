@@ -1,8 +1,8 @@
 <template>
     <Disclosure as="nav" class="relative z-10 bg-white shadow" v-slot="{ open }">
         <div class="container flex items-center justify-between h-16 gap-4 lg:gap-6 lg:my-2">
-            <Link href="/" class="flex items-center flex-shrink-0">
-                <img class="block w-auto h-10 lg:h-full" src="/images/bursa_binelui_logo.png" />
+            <Link href="/" class="shrink-0">
+                <Icon class="block max-w-36 max-h-10 text-primary-500" name="logo" />
             </Link>
 
             <!-- Desktop main links -->
@@ -223,6 +223,7 @@
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
     import { MenuIcon, XIcon } from '@heroicons/vue/outline';
     import { UserCircleIcon } from '@heroicons/vue/solid';
+    import Icon from '@/Components/Icon.vue';
 
     import NavLink from '@/Components/links/NavLink.vue';
     import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';

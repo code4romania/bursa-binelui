@@ -7,7 +7,7 @@
                 <div class="w-full max-w-sm mx-auto lg:w-96 xl:w-128 xl:max-w-xl">
                     <div>
                         <h1
-                            class="mb-6 text-4xl font-extrabold tracking-tight text-cyan-900 sm:text-4xl"
+                            class="mb-6 text-4xl font-extrabold tracking-tight text-primary-900 sm:text-4xl"
                             v-text="title"
                         />
 

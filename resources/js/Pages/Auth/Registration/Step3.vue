@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-6">
-        <h1 v-if="'organization' == form.type" class="text-2xl font-bold text-cyan-900">{{ $t('ong_profile') }}</h1>
+        <h1 v-if="'organization' == form.type" class="text-2xl font-bold text-primary-900">{{ $t('ong_profile') }}</h1>
 
         <!-- Ong Name -->
         <Input
@@ -45,9 +45,8 @@
             color="gray-700"
             v-model="form.ngo.description"
             :error="form.errors['ngo.description']"
-        >
-            <p class="text-xs font-normal text-gray-500">{{ $t('about_ong_description') }}</p>
-        </Textarea>
+            :more-info="$t('about_ong_description')"
+        />
 
         <!-- Activity domains -->
         <Select

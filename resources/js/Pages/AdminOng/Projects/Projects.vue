@@ -37,7 +37,7 @@
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
+
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
 
     import { PlusIcon } from '@heroicons/vue/solid';

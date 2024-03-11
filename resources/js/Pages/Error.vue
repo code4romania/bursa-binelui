@@ -15,9 +15,9 @@
                         <span v-text="$t('back_home')" />
                     </Link>
                 </div>
-                <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-300 left-16 md:block" />
+                <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-100 left-16 md:block" />
 
-                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-300" />
+                <LargeSquarePattern class="absolute hidden lg:block -bottom-32 -right-32 fill-primary-100" />
             </div>
         </main>
     </PageLayout>

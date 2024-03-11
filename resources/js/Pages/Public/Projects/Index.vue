@@ -1,5 +1,5 @@
 <template>
-    <PageLayout :title="$t('projects_title')" icon="list">
+    <PageLayout :title="$t('projects_title')" :icon="ViewBoardsIcon">
         <!-- Filters -->
         <div class="container grid items-start gap-6 md:grid-cols-12">
             <div class="flex gap-x-6 md:col-span-12 lg:col-span-5">
@@ -94,11 +94,15 @@
         </div>
 
         <div v-if="view === 'map'" class="container">
-            <Map :data="projectsForMap" />
+            <Map :data="mapProjects" @county-selected="(id) => applySelectedCountyFromMap(id)" />
         </div>
 
         <div class="container">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ collection.meta.total }} {{ $t('of_projects') }}</h2>
+            <h2
+                class="mb-6 text-2xl font-bold text-gray-900"
+                ref="projectsView"
+                v-text="collection.meta.total + ' ' + $t('of_projects')"
+            />
 
             <!-- Published projects -->
             <PaginatedGrid
@@ -113,7 +117,7 @@
 
 <script setup>
     import { ref } from 'vue';
-    import { ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
+    import { ViewBoardsIcon, ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
     import route from '@/Helpers/useRoute';
     import PageLayout from '@/Layouts/PageLayout.vue';
     import Sort from '@/Components/filters/Sort.vue';
@@ -135,6 +139,9 @@
         categories: {
             type: Array,
         },
+        mapProjects: {
+            type: Array,
+        },
         view: {
             type: String,
             default: 'list',
@@ -150,7 +157,14 @@
         search: props.collection.filter?.search || null,
     });
 
-    const url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
+    let url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
+    const projectsView = ref(null); // assigned to some element in the template
+
+    function applySelectedCountyFromMap(id) {
+        filter.value.county.push(id);
+        projectsView.value.scrollIntoView();
+        applyFilters();
+    }
 
     const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
 </script>

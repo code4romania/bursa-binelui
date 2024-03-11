@@ -29,8 +29,10 @@
         "spatie/laravel-medialibrary": "^10.11",
         "spatie/laravel-newsletter": "^5.1",
         "spatie/laravel-query-builder": "^5.3",
+        "staudenmeir/eloquent-has-many-deep": "^1.19",
         "stevegrunwell/time-constants": "^1.1",
-        "tightenco/ziggy": "^1.8"
+        "tightenco/ziggy": "^1.8",
+        "tpetry/laravel-query-expressions": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",

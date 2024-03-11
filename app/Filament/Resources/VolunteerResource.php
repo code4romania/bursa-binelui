@@ -128,6 +128,16 @@ class VolunteerResource extends Resource
                     ->multiple()
                     ->relationship('volunteer', 'name')
                     ->label(__('volunteer.filters.user')),
+
+                SelectFilter::make('status')
+                    ->multiple()
+                    ->options([
+                        'pending' => __('volunteer.statuses.pending'),
+                        'approved' => __('volunteer.statuses.approved'),
+                        'rejected' => __('volunteer.statuses.rejected'),
+                    ])
+                    ->label(__('volunteer.column.status')),
+
                 TernaryFilter::make('has_user')
                     ->label(__('volunteer.filters.has_user'))
                     ->queries(

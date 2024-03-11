@@ -118,11 +118,7 @@
     import Table from '@/Components/Table.vue';
 
     const props = defineProps({
-        donations: Number,
-        amount: Number,
-        donations_number: Array,
-        donations_amount: Array,
-        table_data: Array,
+       total
     });
 
     const time_evolution_1 = ref('time_evolution');

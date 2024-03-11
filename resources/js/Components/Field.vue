@@ -34,7 +34,6 @@
     const props = defineProps({
         label: String,
         hasPendingChanges: {
-            type: String,
             default: false,
         },
         alt: {

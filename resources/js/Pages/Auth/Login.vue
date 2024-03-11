@@ -56,14 +56,6 @@
                     :disabled="form.processing"
                     :label="$t('log_in')"
                 />
-
-                <!--                <SecondaryButton-->
-                <!--                    class="col-span-2 md:col-span-1 w-full flex items-center justify-center flex-1 gap-x-2 py-2.5"-->
-                <!--                    @click="googleLogin"-->
-                <!--                >-->
-                <!--                    <SvgLoader name="google" />-->
-                <!--                    {{ $t('google_login') }}-->
-                <!--                </SecondaryButton>-->
             </div>
         </form>
     </AuthLayout>
@@ -77,7 +69,6 @@
     import Checkbox from '@/Components/form/Checkbox.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
 
     /** Component props. */
     defineProps({

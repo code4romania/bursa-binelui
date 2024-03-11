@@ -19,16 +19,7 @@ class DonorController extends Controller
     public function index()
     {
         $profile = [
-            'description' => '<p>Mulțumim că ești alături de noi. Prin participarea ta activă la această inițiativă, ne arăți că ești preocupat de problemele sociale și că vrei să faci o diferență pozitivă în lumea în care trăim, iar contribuția ta este extrem de valoroasă.</p>
-                <p>Prin distribuirea informațiilor despre proiectele de pe Bursa Binelui și încurajând prietenii și familia să se alăture, devii un promotor important al inițiativei noastre.</p>
-                <p>Fiecare pas pe care îl facem împreună contează și, împreună, putem face o diferență semnificativă.</p>',
-            'donations_place' => '5%',
-            'donations_status' => [
-                'Ai donat către mai mult de 5 organizații',
-                'Volunariezi la 3 organizații',
-                'Ești abonat la newsletterul de bine',
-                'Ai distribuit de multiple ori informații utile',
-            ],
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
         ];
 
         return Inertia::render('Donor/Dashboard', [

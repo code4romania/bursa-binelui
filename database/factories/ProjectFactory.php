@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\ProjectStatus;
+use App\Models\County;
 use App\Models\Donation;
 use App\Models\Project;
 use App\Models\User;
@@ -29,6 +30,7 @@ class ProjectFactory extends Factory
         $start = CarbonImmutable::createFromInterface(
             fake()->dateTimeBetween('-3 days', 'today')
         );
+        $created_at = now()->subDays(30);
 
         return [
             'name' => $name,
@@ -40,6 +42,8 @@ class ProjectFactory extends Factory
             'reason_to_donate' => fake()->text(),
             'beneficiaries' => fake()->text(),
             'start' => $start,
+            'created_at' => fake()->dateTimeBetween('-30 days', 'today'),
+            'updated_at' => fake()->dateTimeBetween('-30 days', 'today'),
             'end' => $start->addDays(7),
             'accepting_volunteers' => fake()->boolean(),
             'accepting_comments' => fake()->boolean(),
@@ -55,6 +59,12 @@ class ProjectFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Project $project) {
+            $project->counties()->attach(
+                County::query()
+                    ->inRandomOrder()
+                    ->take(fake()->numberBetween(1, 3))
+                    ->get()
+            );
             Donation::factory()
                 ->for($project)
                 ->recycle($project->organization)

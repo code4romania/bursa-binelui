@@ -43,7 +43,7 @@ class ProjectResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-        return (string) static::$model::whereIsPublished()->count();
+        return (string) static::$model::count();
     }
 
     public static function form(Form $form): Form

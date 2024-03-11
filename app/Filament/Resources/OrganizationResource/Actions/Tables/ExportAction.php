@@ -8,6 +8,7 @@ use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\OrganizationResource;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction as BaseAction;
 use pxlrbt\FilamentExcel\Columns\Column;
@@ -39,6 +40,8 @@ class ExportAction extends BaseAction
                             'counties',
                             'projects' => fn ($q) => $q->select('id', 'organization_id', 'status')
                                 ->withCount('donations'),
+                            'users' => fn ($q) => $q->select('organization_id', 'name', 'role')
+                                ->onlyOrganizationAdmins(),
                         ])
                         ->withCount([
                             'volunteers',
@@ -51,14 +54,27 @@ class ExportAction extends BaseAction
                     Column::make('name')
                         ->heading(__('organization.labels.name')),
 
+                    Column::make('status')
+                        ->heading(__('organization.labels.status')),
+
                     Column::make('cif')
                         ->heading(__('organization.labels.cif')),
+
+                    Column::make('description')
+                        ->heading(__('organization.labels.description')),
 
                     Column::make('activity_domains')
                         ->heading(__('organization.labels.activity_domains'))
                         ->formatStateUsing(
                             fn (Organization $record) => $record->activityDomains
                                 ->pluck('name')
+                                ->join(', ')
+                        ),
+
+                    Column::make('users')
+                        ->heading(__('organization.labels.admin'))
+                        ->formatStateUsing(
+                            fn (Collection $state) => $state->pluck('name')
                                 ->join(', ')
                         ),
 
@@ -101,6 +117,21 @@ class ExportAction extends BaseAction
                                 : __('forms::components.select.boolean.false')
                         ),
 
+                    Column::make('projects_count')
+                        ->heading(__('organization.labels.projects_count'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->projects
+                                ->count()
+                        ),
+
+                    Column::make('active_projects_count')
+                        ->heading(__('organization.labels.active_projects_count'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->projects()
+                                ->whereIsOpen()
+                                ->count()
+                        ),
+
                     Column::make('has_projects')
                         ->heading(__('organization.labels.has_projects'))
                         ->formatStateUsing(
@@ -131,6 +162,20 @@ class ExportAction extends BaseAction
                             fn (Organization $record) => $record->projects->sum('donations_count')
                                 ? __('forms::components.select.boolean.true')
                                 : __('forms::components.select.boolean.false')
+                        ),
+
+                    Column::make('donations_count')
+                        ->heading(__('organization.labels.donations_count'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->donations()
+                                ->count()
+                        ),
+
+                    Column::make('donations_amount')
+                        ->heading(__('organization.labels.donations_amount'))
+                        ->formatStateUsing(
+                            fn (Organization $record) => $record->donations()
+                                ->sum('amount')
                         ),
 
                 ])

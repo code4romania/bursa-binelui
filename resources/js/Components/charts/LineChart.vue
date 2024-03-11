@@ -1,19 +1,22 @@
 <template>
     <div>
-        <canvas ref="chartCanvas" style="height: 400px"></canvas>
+        <canvas ref="chartCanvas" class="w-full"></canvas>
     </div>
 </template>
 
 <script setup>
     import { ref, onMounted } from 'vue';
     import Chart from 'chart.js/auto';
+    import 'chartjs-adapter-moment';
 
     const chartCanvas = ref(null);
 
     const props = defineProps({
         data: Array,
-        xAxe: Array,
         yAxeId: String,
+        xAxeId: String,
+        label: String,
+        useMonthLabel: Boolean,
     });
 
     const reactiveChartData = (labels, data) => {
@@ -27,13 +30,13 @@
                     tension: 0.4,
                     fill: {
                         target: 'origin',
-                        above: '#C1E8E8',
+                        above: '#BDE1FF',
                         below: 'green',
                     },
                     pointRadius: 0,
                     hoverRadius: 5,
                     hoverBackgroundColor: 'white',
-                    hoverBorderColor: '#53BFBF',
+                    hoverBorderColor: '#65b7ff',
                     hoverBorderWidth: 2,
                 },
             ],
@@ -51,8 +54,14 @@
         },
         scales: {
             x: {
-                grid: {
-                    display: true,
+                type: 'time',
+                time: {
+                    unit: 'month',
+                },
+                adapters: {
+                    date: {
+                        locale: 'roRo',
+                    },
                 },
             },
             y: {
@@ -66,14 +75,12 @@
                 intersect: false,
                 callbacks: {
                     title: (tooltipItems) => {
-                        const month = tooltipItems[0].label;
-                        return month;
+                        const date = new Date(tooltipItems[0].label);
+                        return date.toLocaleDateString('ro-Ro');
                     },
                     label: (context) => {
-                        const index = context.dataIndex;
                         const yAxe = context.parsed.y;
-                        const { sales, expenses } = props.data[index];
-                        return `Amount: ${yAxe}, Sales: ${sales}, Expenses: ${expenses}`;
+                        return `${props.label}: ${yAxe}`;
                     },
                 },
             },
@@ -85,16 +92,26 @@
 
     const renderChart = () => {
         const yAxe = props.data.map((entry) => entry[props.yAxeId]);
+        const xAxe = props.data.map((entry) => entry[props.xAxeId]);
 
-        const chartData = reactiveChartData(props.xAxe, yAxe);
+        const chartData = reactiveChartData(xAxe, yAxe);
 
         const ctx = chartCanvas.value.getContext('2d');
-        new Chart(ctx, {
+        return new Chart(ctx, {
             type: 'line',
             data: chartData,
             options: chartOptions,
         });
     };
+    function getMonthName(date) {
+        const d = new Date(date);
+        const monthNumber = d.getMonth();
+        console.log('monthNumber', monthNumber);
+        const tmpDate = new Date();
+        tmpDate.setMonth(monthNumber);
+
+        return tmpDate.toLocaleString('ro-Ro', { month: 'long' });
+    }
 
     onMounted(() => {
         renderChart();

@@ -1,46 +1,58 @@
 <template>
     <PageLayout>
-        <Head :title="$t('evolution')" />
+        <Head
+            :title="$t('evolution')"
+            :description="$t('evolution_description')"
+        />
+        <div class="container my-8 sm:my-14 lg:my-20">
 
-        <div class="mx-auto my-10 space-y-12 max-w-7xl">
-            <TimeEvolution
-                :donations="donations"
-                :amount="amount"
-                :donations_number="donations_number"
-                :donations_amount="donations_amount"
-                :table_data="table_data"
-            />
+        <DonationsChart
+         :title="getTitle('donation')"
+         :data="donations"
+         :project-categories="categoriesWithDonations"
+        />
 
-            <ProjectsChart
-                :projects="projects"
-                :projects_number="projects_number"
-                :counties="counties"
-                :domains="domains"
-                :table_data="table_data"
-            />
+        <ProjectsChart
+            :title="getTitle('projects')"
+            :data="projects"
+            :counties="counties"
+            :filter="filter"
+            :project-categories="categoriesWithDonations"
+            :project-categories-list="projectCategories"
 
-            <AppChart :projects="projects" :projects_number="projects_number" />
+        />
         </div>
+
     </PageLayout>
 </template>
 
 <script setup>
-    import Head from '@/Components/Head.vue';
+import Head from '@/Components/Head.vue';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import {onMounted} from "vue";
+import {trans} from "laravel-vue-i18n";
+import DonationsChart from "@/Pages/Public/Evolution/DonationsChart.vue";
+import ProjectsChart from "@/Pages/Public/Evolution/ProjectsChart.vue";
 
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import TimeEvolution from '@/Components/charts/TimeEvolution.vue';
-    import ProjectsChart from '@/Components/charts/ProjectsChart.vue';
-    import AppChart from '@/Components/charts/AppChart.vue';
 
     const props = defineProps({
-        donations: Number,
-        amount: Number,
-        donations_number: Array,
-        donations_amount: Array,
-        projects: Number,
-        projects_number: Array,
+        totalAmountDonations: Number,
+        totalNumberDonations: Number,
+        totalProjects: Number,
+        donations: Array,
+        projects: Array,
         counties: Array,
-        domains: Array,
-        table_data: Array,
+        projectCategories: Array,
+        categoriesWithDonations: Array,
+        filter: Object
     });
+    onMounted(() => {
+        console.log('props', props);
+    });
+    function getTitle(type) {
+        if (type === 'donation')
+            return `${props.totalNumberDonations} ${trans('donations')},${props.totalAmountDonations} ${trans('currency')}`;
+        if (type === 'projects')
+            return `${props.totalProjects} ${trans('registered_projects')}`;
+    }
 </script>

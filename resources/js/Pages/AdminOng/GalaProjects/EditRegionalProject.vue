@@ -401,7 +401,7 @@
 
         <div class="flex items-center gap-4 mt-9">
             <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                <SvgLoader class="shrink-0 fill-primary-500" name="book" />
+                <!-- <SvgLoader class="shrink-0 fill-primary-500" name="book" /> -->
             </div>
             <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
         </div>
@@ -455,10 +455,9 @@
 
     /** Import components. */
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
+
     import EditModal from '@/Components/modals/EditModal.vue';
     import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
     import Textarea from '@/Components/form/Textarea.vue';
     import FileGroup from '@/Components/form/FileGroup.vue';
     import Repeater from '@/Components/form/Repeater.vue';

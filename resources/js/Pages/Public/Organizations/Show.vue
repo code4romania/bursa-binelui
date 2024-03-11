@@ -9,7 +9,7 @@
                     <div class="py-4 mr-6 bg-white border-b border-gray-200">
                         <div class="flex items-center gap-4">
                             <GlobeAltIcon
-                                class="flex items-center justify-center w-10 h-10 p-2 text-white rounded-lg bg-primary-500 shrink-0"
+                                class="flex items-center justify-center w-8 h-8 p-1 text-white rounded-lg bg-primary-500 shrink-0"
                             />
 
                             <span
@@ -75,7 +75,7 @@
 
                         <div class="px-10 py-8 space-y-8 bg-gray-50">
                             <div v-if="organization.contact_person" class="flex justify-start gap-x-4">
-                                <SvgLoader class="mt-1 shrink-0" name="home" />
+                                <HomeIcon class="w-6 h-6 shrink-0 fill-primary-500" />
                                 <div>
                                     <h3 class="text-base font-semibold text-gray-600">{{ $t('ong_address') }}</h3>
                                     <p class="mt-2 text-base font-normal text-gray-500">
@@ -86,7 +86,7 @@
                             </div>
 
                             <div v-if="organization.contact_person" class="flex justify-start gap-x-4">
-                                <SvgLoader class="mt-1 shrink-0" name="email" />
+                                <MailIcon class="w-6 h-6 shrink-0 fill-primary-500" />
                                 <div>
                                     <h3 class="text-base font-semibold text-gray-600">{{ $t('email') }}</h3>
                                     <p class="mt-2 text-base font-normal text-gray-500">
@@ -96,7 +96,7 @@
                             </div>
 
                             <div v-if="organization.contact_person" class="flex justify-start gap-x-4">
-                                <SvgLoader class="mt-1 shrink-0" name="person" />
+                                <UserIcon class="w-6 h-6 shrink-0 fill-primary-500" />
                                 <div>
                                     <h3 class="text-base font-semibold text-gray-600 leading-0">
                                         {{ $t('contact_person') }}
@@ -124,7 +124,7 @@
             <div id="projects" class="bg-gray-50 px-9">
                 <div class="flex items-center gap-4 py-12 mx-auto max-w-7xl">
                     <ChartBarIcon
-                        class="flex items-center justify-center w-10 h-10 p-2 rounded-lg shrink-0 stroke-white bg-primary-500"
+                        class="flex items-center justify-center w-8 h-8 p-1 rounded-lg shrink-0 stroke-white bg-primary-500"
                     />
 
                     <h3 class="text-2xl font-bold text-gray-900">{{ $t('ong_projects') }}</h3>
@@ -162,7 +162,6 @@
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import ProjectCard from '@/Components/cards/ProjectCard.vue';
     import DonateModal from '@/Components/modals/DonateModal.vue';
     import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
@@ -170,6 +169,7 @@
     import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
 
     import { ChartBarIcon, GlobeAltIcon } from '@heroicons/vue/outline';
+    import { HomeIcon, MailIcon, UserIcon } from '@heroicons/vue/solid';
 
     /** Page props. */
     const props = defineProps({

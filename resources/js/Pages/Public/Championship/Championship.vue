@@ -82,7 +82,7 @@
                     <ChampionshipModal v-if="$page.props.auth.user" @click.once="infiniteScroll">
                         <div class="px-9">
                             <SecondaryButton class="flex items-center flex-1 gap-x-2 py-2.5 my-10">
-                                <SvgLoader name="add" />
+                                <!-- <SvgLoader name="add" /> -->
                                 {{ $t('add_new_project') }}
                             </SecondaryButton>
                         </div>
@@ -103,7 +103,7 @@
                         :triggerModalText="$t('register_project')"
                     >
                         <div class="flex flex-col items-center w-full my-4 space-y-3">
-                            <SvgLoader name="success" class="fill-green-200" />
+                            <!-- <SvgLoader name="success" class="fill-green-200" /> -->
 
                             <h3 class="text-lg font-bold text-gray-500">{{ $t('championship_success_title') }}</h3>
 
@@ -158,7 +158,7 @@
                     <div
                         class="absolute flex items-center justify-center w-32 h-32 rounded-lg bg-gray-50 -bottom-10 -left-10"
                     >
-                        <SvgLoader class="shrink-0" name="cup" />
+                        <!-- <SvgLoader class="shrink-0" name="cup" /> -->
                     </div>
                 </div>
             </div>
@@ -184,15 +184,15 @@
 
         <!-- About -->
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h3 class="mb-6 text-3xl font-bold text-cyan-900">{{ $t('about_championship') }}</h3>
+            <h3 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('about_championship') }}</h3>
             <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
         </div>
 
         <!-- Projects -->
         <div v-if="0 < projects?.data.length" id="projects" class="mx-auto mb-10 p-9 max-w-7xl">
             <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="list" />
+                <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                    <!-- <SvgLoader class="shrink-0 fill-primary-500" name="list" /> -->
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('participants') }}</h2>
             </div>
@@ -223,7 +223,7 @@
                             @click="emptyFilters"
                             class="flex items-center w-1/2 gap-2 py-2 sm:w-auto"
                         >
-                            <SvgLoader name="close" />
+                            <!-- <SvgLoader name="close" /> -->
                             {{ $t('empty_filters') }}
                         </SecondaryButton>
 
@@ -247,10 +247,10 @@
         </div>
 
         <!-- Testimonials -->
-        <div v-if="0 < testimonials.length" class="w-full bg-cyan-900">
+        <div v-if="0 < testimonials.length" class="w-full bg-primary-900">
             <div class="flex items-center mx-auto max-w-7xl p-9 gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-white" name="quote" />
+                <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                    <!-- <SvgLoader class="shrink-0 fill-white" name="quote" /> -->
                 </div>
                 <h2 class="text-2xl font-bold text-white">{{ $t('testimonials') }}</h2>
             </div>
@@ -288,7 +288,7 @@
             <div class="pt-12 pb-20 bg-primary-500">
                 <div class="flex items-center gap-4 mx-auto px-9 max-w-7xl">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
-                        <SvgLoader class="shrink-0 stroke-white fill-primary-100" name="sound" />
+                        <SpeakerphoneIcon class="w-5 h-5 fill-primary-100 stroke-white shrink-0" />
                     </div>
                     <h3 class="text-2xl font-bold text-white">{{ $t('related_articles') }}</h3>
                 </div>
@@ -314,8 +314,8 @@
         <!-- External links -->
         <div v-if="0 < links.length" class="mx-auto max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="links" />
+                <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                    <!-- <SvgLoader class="shrink-0 fill-primary-500" name="links" /> -->
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('external_links_title') }}</h2>
             </div>
@@ -333,8 +333,8 @@
         <!-- Prev editions -->
         <div class="mx-auto mb-20 max-w-7xl p-9 gap-x-4">
             <div class="flex items-center mx-auto mb-10 max-w-7xl gap-x-4">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-500">
-                    <SvgLoader class="shrink-0 fill-primary-500" name="clock" />
+                <div class="flex items-center justify-center w-8 h-8 p-1 rounded-lg bg-primary-500">
+                    <!-- <SvgLoader class="shrink-0 fill-primary-500" name="clock" /> -->
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $t('prev_edtions') }}</h2>
             </div>
@@ -370,8 +370,6 @@
     import PageLayout from '@/Layouts/PageLayout.vue';
     import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
     import Sort from '@/Components/filters/Sort.vue';
-    import Icon from '@/Components/Icon.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import Input from '@/Components/form/Input.vue';
     import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
@@ -383,6 +381,7 @@
     import ProjectSummaryCard from '@/Components/cards/ProjectSummaryCard.vue';
 
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import { SpeakerphoneIcon } from '@heroicons/vue/outline';
 
     const about_championship =
         'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.';

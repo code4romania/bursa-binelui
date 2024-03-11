@@ -14,7 +14,7 @@
 <body class="font-sans antialiased">
     <main class="container relative grid items-center min-h-screen lg:gap-10 xl:gap-20 lg:grid-cols-2">
         <div class="py-12">
-            <img class="mb-8" src="/images/bursa_binelui_logo.png" alt="Logo Bursa Binelui" />
+            <x-icon-logo class="w-full mb-8 h-14 max-w-44 fill-primary-500" />
 
             <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
                 <span class="inline-block">Coming</span>
@@ -35,7 +35,7 @@
                 <x-icon-patterns.square-small @class([
                     'absolute top-full -left-16 -z-10',
                     'hidden shrink-0 md:block',
-                    'fill-primary-300 w-32 h-32',
+                    'fill-primary-100 w-32 h-32',
                 ]) />
             </div>
         </div>

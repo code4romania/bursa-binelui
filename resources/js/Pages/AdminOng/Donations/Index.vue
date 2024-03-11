@@ -18,15 +18,16 @@
 
                 <SecondaryButton
                     @click="clearFilters"
-                    class="flex items-center justify-center col-span-2 gap-2 py-2 text-center"
+                    class="flex items-center justify-center col-span-2 py-2 text-center gap-x-2"
                 >
-                    <SvgLoader name="close" />
+                    <XIcon class="w-4 h-4 shrink-0" />
+
                     {{ $t('empty_filters') }}
                 </SecondaryButton>
 
                 <div :class="['col-span-12 flex justify-end', hasValues ? 'sm:col-span-4' : 'sm:col-span-6']">
-                    <SecondaryButton class="flex items-center justify-center gap-4 py-2">
-                        <SvgLoader class="shrink-0" name="download" />
+                    <SecondaryButton class="flex items-center justify-center py-2 gap-x-2">
+                        <DownloadIcon class="w-4 h-4 shrink-0" />
                         {{ $t('download_table') }}
                     </SecondaryButton>
                 </div>
@@ -64,7 +65,6 @@
             />
         </div>
 
-
         <Table :collection="collection" />
     </DashboardLayout>
 </template>
@@ -72,16 +72,15 @@
 <script setup>
     import { ref } from 'vue';
     import route from '@/Helpers/useRoute';
-    import { CurrencyEuroIcon } from '@heroicons/vue/outline';
     import DashboardLayout from '@/Layouts/DashboardLayout.vue';
     import Title from '@/Components/Title.vue';
-    import SvgLoader from '@/Components/SvgLoader.vue';
     import Table from '@/Components/tables/Table.vue';
     import Select from '@/Components/form/Select.vue';
     import SearchFilter from '@/Components/filters/SearchFilter.vue';
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
     import useFilters from '@/Helpers/useFilters.js';
+    import { CurrencyEuroIcon } from '@heroicons/vue/outline';
+    import { XIcon, DownloadIcon } from '@heroicons/vue/solid';
 
     const props = defineProps({
         collection: {
@@ -95,7 +94,6 @@
         projects: Array,
         statuses: Array,
         dates: Array,
-
     });
 
     /** Active filter state. */
@@ -111,7 +109,6 @@
     });
 
     const sort = ref(null);
-
 
     const { applyFilters, clearFilters } = useFilters(filter, sort, route('dashboard.donations.index'));
 </script>

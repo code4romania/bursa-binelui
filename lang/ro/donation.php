@@ -32,6 +32,7 @@ return [
         'email' => 'Email',
         'charge_date' => 'Data încasării',
         'count' => 'Numar donatii',
+        'count_with_amount' => 'Numarul de dontatii :count ( :total RON)',
     ],
 
     'statuses' => [
