@@ -243,4 +243,11 @@ class Organization extends Model implements HasMedia
     {
         return $this->getMedia('statute')->isNotEmpty();
     }
+
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class)
+            ->using(BadgeOrganization::class)
+            ->orderByPivot('allocated_at', 'desc');
+    }
 }

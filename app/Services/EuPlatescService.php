@@ -11,8 +11,8 @@ use Http;
 
 class EuPlatescService
 {
-    const URL_ACTION = 'https://manager.euplatesc.ro/v3/index.php?action=ws';
-    const CAPTURE_METHOD = "capture";
+    public const CAPTURE_METHOD = 'capture';
+
     private string $merchantId;
 
     private string $privateKey;
@@ -74,6 +74,7 @@ class EuPlatescService
         }
 
         $key = $useApiKey ? $this->userApiKey : $this->privateKey;
+
         return hash_hmac('MD5', $str, pack('H*', $key));
     }
 
@@ -96,23 +97,25 @@ class EuPlatescService
             'card_holder', 'email', 'rtype', 'cce'];
 
         foreach ($params as $param) {
-            if (!isset($validatedData[$param])) {
+            if (! isset($validatedData[$param])) {
                 continue;
             }
             $data[$param] = addslashes(trim($validatedData[$param]));
         }
 
         $data['fp_hash'] = strtoupper($this->euPlatescHash($data));
+
         return $data;
     }
 
     public function processIpn(Donation $donation, array $validatedData): void
     {
         $data = $this->getRequestIpnData($validatedData);
-        $fp_hash=addslashes(trim($validatedData['fp_hash']));
+        $fp_hash = addslashes(trim($validatedData['fp_hash']));
 
-        if ($data['fp_hash'] !== $fp_hash || $data['action'] != "0") {
+        if ($data['fp_hash'] !== $fp_hash || $data['action'] != '0') {
             $donation->update(['status' => EuPlatescStatus::UNAUTHORIZED]);
+
             return;
         }
 
@@ -120,16 +123,19 @@ class EuPlatescService
             'ep_id' => $data['ep_id']];
         $donation->update($values);
 
+        $user = $donation->user;
+        $userBadge = new UserBadge();
+        $userBadge->updateDonationBadge($user);
     }
 
     public function recipeTransaction(Donation $donation): bool
     {
-        $data =  [
-            'method'  	=> self::CAPTURE_METHOD,
-            'ukey'     	=> $this->userKey,
-            'epid'		=> $donation->ep_id,
+        $data = [
+            'method' => self::CAPTURE_METHOD,
+            'ukey' => $this->userKey,
+            'epid' => $donation->ep_id,
             'timestamp' => gmdate('YmdHis'),
-            'nonce'     => md5(mt_rand().time()),
+            'nonce' => md5(mt_rand() . time()),
         ];
         $data['fp_hash'] = strtoupper($this->euPlatescHash($data, true));
 
@@ -138,15 +144,19 @@ class EuPlatescService
         if (isset($response['error'])) {
             return false;
         }
-        return (bool)$response['success'];
 
+        return (bool) $response['success'];
     }
 
     public function callMethod(array $data): array
     {
-        $response = Http::asForm()->post(self::URL_ACTION, $data);
+        $response = Http::asForm()->post(
+            config('euplatesc.url_action'),
+            $data
+        );
 
         $body = $response->body() ?: '';
+
         return json_decode($body, true);
     }
 

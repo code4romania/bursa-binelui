@@ -53,6 +53,13 @@ class Badge extends Model implements HasMedia
             ->orderByPivot('allocated_at', 'desc');
     }
 
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class)
+            ->using(BadgeOrganization::class)
+            ->orderByPivot('allocated_at', 'desc');
+    }
+
     public function getImageAttribute(): string
     {
         return $this->getFirstMediaUrl(conversionName: 'thumb');

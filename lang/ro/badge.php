@@ -44,4 +44,11 @@ return [
         'badge' => 'Badge-uri (:number)',
         'category_badge' => 'Categorii de badge (:number)',
     ],
+
+    'categories' => ['donations' => 'Donatiii',
+        'volunteers' => 'Voluntariat',
+        'sharing' => 'Sharing',
+        'projects_ong' => 'Proiect ONG',
+        'month_activity' => 'Activitate lunara',
+    ],
 ];

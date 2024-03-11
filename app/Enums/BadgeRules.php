@@ -19,7 +19,12 @@ enum BadgeRules: string
     case DONATION_THREE_COUNTER_DONATION = 'donation_three_counter_donation';
     case DONATION_TEN_COUNTER_DONATION = 'donation_ten_counter_donation';
     case DONATION_FIFTEEN_COUNTER_DONATION = 'donation_fifteen_counter_donation';
+    case DONATION_TWENTY_COUNTER_DONATION = 'donation_twenty_counter_donation';
     case DONATION_TWENTY_FIVE_COUNTER_DONATION = 'donation_twenty_five_counter_donation';
+    case DONATION_THIRTIETH_COUNTER_DONATION = 'donation_thirtieth_counter_donation';
+    case DONATION_THIRTIETH_FIVE_COUNTER_DONATION = 'donation_thirtieth_five_counter_donation';
+    case DONATION_FORTY_COUNTER_DONATION = 'donation_forty_counter_donation';
+    case DONATION_FORTY_FIVE_COUNTER_DONATION = 'donation_forty_five_counter_donation';
     case DONATION_FIFTY_COUNTER_DONATION = 'donation_fifty_counter_donation';
     case DONATION_ONE_HUNDRED_AMOUNT_DONATION = 'donation_one_hundred_amount_donation';
     case DONATION_FIVE_HUNDRED_AMOUNT_DONATION = 'donation_five_hundred_amount_donation';
@@ -31,6 +36,12 @@ enum BadgeRules: string
     case DONATION_TOP_DONOR_ON_PROJECT = 'donation_top_donor_on_project';
     case SHARING_FIRST_SHARE = 'sharing_first_share';
     case SHARING_FIVE_SHARES = 'sharing_five_shares';
+
+    case PROJECT_FIRST_CREATED = 'project_first_created';
+    case PROJECT_TWO_CREATED = 'project_two_created';
+    case PROJECT_THREE_CREATED = 'project_three_created';
+    case PROJECT_FOR_CREATED = 'project_for_created';
+    case PROJECT_FIVE_CREATED = 'project_five_created';
 
     public function labelKeyPrefix(): string
     {

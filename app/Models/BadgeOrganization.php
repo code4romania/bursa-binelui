@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class BadgeUser extends Pivot
+class BadgeOrganization extends Pivot
 {
     public $incrementing = true;
 

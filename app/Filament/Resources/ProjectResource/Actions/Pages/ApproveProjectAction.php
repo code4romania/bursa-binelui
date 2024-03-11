@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\ProjectResource\Actions\Pages;
 
 use App\Models\Project;
+use App\Services\OrganizationBadge;
 use Filament\Pages\Actions\Action;
 
 class ApproveProjectAction extends Action
@@ -38,6 +39,8 @@ class ApproveProjectAction extends Action
 
         $this->action(function (Project $record) {
             $record->markAsApproved();
+            $badgeOrganization = new OrganizationBadge();
+            $badgeOrganization->updateOrganizationBadge($record->organization);
         });
     }
 }
