@@ -32,6 +32,7 @@ class GalesRelationManager extends RelationManager
                 SpatieMediaLibraryFileUpload::make('image')
                     ->label(__('edition.labels.add_gala_picture'))
                     ->disk(config('filesystems.default_public'))
+                    ->collection('preview')
                     ->required()
                     ->maxFiles(1)
                     ->image()

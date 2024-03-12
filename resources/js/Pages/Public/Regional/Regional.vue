@@ -57,10 +57,10 @@
 
             <div class="container">
                 <div
-                    class="grid grid-cols-4 bg-gray-50 rounded-lg shadow py-8 px-20 mt-4 mb-8"
+                    class="grid grid-cols-9 bg-gray-50 rounded-lg shadow py-8 px-20 mt-4 mb-8"
                     v-for="item in edition.gales"
                 >
-                    <div class="col-span-3">
+                    <div class="col-span-6">
                         <h3 class="text-2xl font-bold text-gray-800 divide-x divide-gray-200" v-text="item.title" />
                         <div class="mt-2 flex">
                             <Icon class="w-5 h-5 shrink-0 text-primary-900" name="location" />
@@ -68,21 +68,53 @@
                             <p v-text="item.counties" />
                         </div>
                     </div>
-                    <div
-                        class="grid-cols-2 justify-center content-center items-center border-l-2 px-20"
-                        v-if="item.registration_is_open"
-                    >
-                        <h3 v-text="$t('registration_active')" class="accent-gray-500 text-md mb-4" />
+
+                    <div class="col-span-3 content-center text-center border-l-2" v-if="item.registration_start_soon">
+                        <h3
+                            v-text="$t('regional.project.page.registration_start_soon')"
+                            class="accent-gray-500 text-md mb-4"
+                        />
+                        <p v-text="item.start_sign_up" class="text-2xl"></p>
+
+                        <p>
+                            {{ $t('regional.project.page.see_rules') }}
+                            <Link
+                                class="text-primary-500 hover:underline"
+                                :href="route('regional.rules', edition.page_rules)"
+                                v-text="$t('regional.project.page.rules_page')"
+                            />
+                        </p>
+                    </div>
+
+                    <div class="col-span-3 content-center text-center border-l-2" v-if="item.registration_is_open">
+                        <h3
+                            v-text="$t('regional.project.page.registration_is_open')"
+                            class="accent-gray-500 text-md mb-4"
+                        />
+                        <p v-text="item.register_period" class="text-2xl"></p>
+
+                        <p>
+                            {{ $t('regional.project.page.see_rules') }}
+                            <Link
+                                class="text-primary-500 hover:underline"
+                                :href="route('regional.rules', edition.page_rules)"
+                                v-text="$t('regional.project.page.rules_page')"
+                            />
+                        </p>
+                    </div>
+
+                    <div class="col-span-3 content-center text-center border-l-2" v-if="item.registration_ended">
+                        <h3
+                            v-text="$t('regional.project.page.registration_ended')"
+                            class="accent-gray-500 text-md mb-4"
+                        />
                         <Link
-                            :href="route('dashboard.projects.regional.create', { gala: item.id })"
+                            :href="route('regional.galas.show', item.id)"
                             class="flex items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-default bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500"
                         >
-                            <span v-text="$t('add_project')" />
-                            <ChevronRightIcon class="w-4 h-4 shrink-0" />
+                            {{ $t('regional.project.page.see_projects') }}
+                            <ChevronRightIcon class="w-5 h-5 fill-white stroke-white shrink-0" />
                         </Link>
-                    </div>
-                    <div class="grid-cols-2 justify-center content-center items-center border-l-2 px-20" v-else>
-                        <h3 v-text="$t('registration_inactive')" class="accent-gray-500 text-md mb-4" />
                     </div>
                 </div>
             </div>

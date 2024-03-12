@@ -9,8 +9,11 @@ use App\Concerns\HasCounties;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Vite;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Gala extends Model implements HasMedia
 {
@@ -35,6 +38,31 @@ class Gala extends Model implements HasMedia
     ];
 
     protected $with = ['edition', 'counties'];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'start_sign_up' => 'date',
+        'end_sign_up' => 'date',
+        'start_validate' => 'date',
+        'end_validate' => 'date',
+        'start_evaluation' => 'date',
+        'end_evaluation' => 'date',
+        'start_gale' => 'date',
+    ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('preview')
+            ->useDisk(config('filesystems.default_public'))
+            ->useFallbackUrl(Vite::image('placeholder.png'))
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('preview')
+                    ->fit(Manipulations::FIT_CONTAIN, 300, 300);
+            });
+    }
 
     public function galaProject(): HasMany
     {

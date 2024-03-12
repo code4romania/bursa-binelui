@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Concerns\BelongsToEdition;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EditionCategories extends Model
@@ -16,8 +17,8 @@ class EditionCategories extends Model
 
     protected $fillable = ['name'];
 
-    public function galaProjects(): HasMany
+    public function galaProjects(): BelongsToMany
     {
-        return $this->hasMany(GalaProject::class);
+        return $this->belongsToMany(GalaProject::class,'edition_categories_gala_project');
     }
 }
