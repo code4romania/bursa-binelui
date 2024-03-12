@@ -111,7 +111,7 @@
                 </div>
             </div>
 
-            <div class="container mt-8">
+            <div class="container -mt-8">
                 <div class="grid gap-6 grid-cols-3">
                     <ArticleCard v-for="(article, index) in articles.data" :key="article.id" :article="article" />
                 </div>
@@ -126,12 +126,11 @@ import { onMounted, ref } from 'vue';
 import route from '@/Helpers/useRoute';
 
 /** Import from inertia. */
-import { Link, useForm, router } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import Head from '@/Components/Head.vue';
 
 /** Import components. */
 import PageLayout from '@/Layouts/PageLayout.vue';
-import EditionCard from '@/Components/cards/Edition.vue';
 import { ChevronRightIcon, SpeakerphoneIcon } from '@heroicons/vue/outline';
 
 import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
@@ -147,14 +146,5 @@ const props = defineProps({
         type: Array,
         default: null,
     },
-});
-
-/** Active filter state. */
-const hasValues = ref(false);
-
-const name = ref('');
-
-onMounted(() => {
-    console.log(props.edition);
 });
 </script>
