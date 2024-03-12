@@ -48,10 +48,12 @@ class GalaProjectFactory extends Factory
             'area' => fake()->text(255),
             'participants' => fake()->text(500),
             'team_details' => fake()->text(500),
-            'contact_name' => fake()->name(),
-            'contact_position' => fake()->jobTitle(),
-            'contact_phone_number' => fake()->phoneNumber(),
-            'contact_email' => fake()->email(),
+            'contact' => [
+                'name' => fake()->name(),
+                'position' => fake()->jobTitle(),
+                'phone_number' => fake()->phoneNumber(),
+                'email' => fake()->email(),
+            ],
         ];
     }
 }

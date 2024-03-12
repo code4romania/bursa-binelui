@@ -48,10 +48,7 @@ class GalaProject extends Model implements HasMedia
         'area',
         'participants',
         'team_details',
-        'contact_name',
-        'contact_position',
-        'contact_phone_number',
-        'contact_email',
+        'contact',
         'status',
         'eligible',
         'short_list',
@@ -67,6 +64,11 @@ class GalaProject extends Model implements HasMedia
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
+        'youth' => 'boolean',
+        'partnership' => 'boolean',
+        'eligible' => 'boolean',
+        'short_list' => 'boolean',
+        'contact' => 'array',
     ];
 
     public string $slugFieldSource = 'name';

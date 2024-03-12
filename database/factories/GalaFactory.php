@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Models\County;
 use App\Models\Gala;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,17 +21,19 @@ class GalaFactory extends Factory
      */
     public function definition(): array
     {
+        $date = Carbon::createFromInterface(fake()->dateTimeBetween('-1 week', '5 weeks'));
+
         return [
             'title' => fake()->text(25),
-            'start_date' => fake()->date('Y-m-d'),
-            'end_date' => fake()->date('Y-m-d'),
-            'start_sign_up' => fake()->date('Y-m-d'),
-            'end_sign_up' => fake()->date('Y-m-d'),
-            'start_validate' => fake()->date('Y-m-d'),
-            'end_validate' => fake()->date('Y-m-d'),
-            'start_evaluation' => fake()->date('Y-m-d'),
-            'end_evaluation' => fake()->date('Y-m-d'),
-            'start_gale' => fake()->date('Y-m-d'),
+            'start_date' => $date,
+            'end_date' => $date->addDays(7),
+            'start_sign_up' => $date,
+            'end_sign_up' => $date->addDays(7),
+            'start_validate' => $date->addDays(14),
+            'end_validate' => $date->addDays(21),
+            'start_evaluation' => $date->addDays(28),
+            'end_evaluation' => $date->addDays(35),
+            'start_gale' => $date->addDays(42),
             'location' => fake()->text(255),
         ];
     }

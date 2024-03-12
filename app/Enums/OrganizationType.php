@@ -15,7 +15,6 @@ enum OrganizationType: string
     use HasLabel;
 
     case LITTLE = 'little';
-    case MEDIUM = 'medium';
     case BIG = 'big';
 
     public function labelKeyPrefix(): string

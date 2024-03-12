@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Enums\OrganizationType;
+use App\Enums\ProjectArea;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
 use App\Http\Resources\Edition\EditionShowResource;
@@ -47,8 +49,12 @@ class RegionalProjectController extends Controller
         return Inertia::render('AdminOng/GalaProjects/AddProject', [
             'counties' => $gala->counties,
             'projectCategories' => $gala->edition->editionCategories,
+            'galaTitle' => $gala->title,
             'startDate' => $gala->start_sign_up,
             'endDate' => $gala->end_sign_up,
+            'areas' =>  ProjectArea::optionsForRadio(),
+            'galaId' => $gala->id,
+            'organizationTypes' => OrganizationType::optionsForRadio(),
 
         ]);
     }
@@ -58,13 +64,15 @@ class RegionalProjectController extends Controller
      */
     public function store(StoreRequest $request)
     {
+
         $data = $request->validated();
         $project = (new ProjectService(GalaProject::class))->create($data);
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
-
-        return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
+        return redirect()
+            ->route('dashboard.projects.regional.edit', $project->id)
+            ->with('success', __('regional_projects.created'));
     }
 
     /**
@@ -80,10 +88,9 @@ class RegionalProjectController extends Controller
      */
     public function edit(GalaProject $project)
     {
-//        $this->authorize('view', $project);
         $project->load('media');
 
-        return Inertia::render('AdminOng/Projects/EditRegionalProject', [
+        return Inertia::render('AdminOng/GalaProjects/EditRegionalProject', [
             'project' => $project,
             'counties' => County::get(['name', 'id']),
             'projectCategories' => ProjectCategory::get(['name', 'id']),

@@ -1,14 +1,14 @@
 <template>
     <DashboardLayout>
         <!-- Inertia page head -->
-        <Title :title="$t('add_project_title')" />
+        <Title :title="$t('regional.project.page_title') + galaTitle" />
 
         <form @submit.prevent="createProject">
             <div class="w-full space-y-6 max-w-7xl mt-9">
                 <!-- Project name -->
                 <Input
                     class="w-full xl:w-1/2"
-                    :label="$t('project_name_label')"
+                    :label="$t('regional.project.title')"
                     color="gray-700"
                     id="project-name"
                     type="text"
@@ -19,48 +19,50 @@
                 <!-- Project description -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_description_label')"
+                    :label="$t('regional.project.description')"
                     id="about-project"
                     color="gray-700"
+                    :more-info="$t('regional.project.description_info')"
+                    :number-of-characters="700"
                     v-model="form.description"
                     :error="form.errors.description"
                 >
                 </Textarea>
-                <p class="text-sm font-normal text-gray-500">{{ $t('regional_description_summary') }}</p>
 
                 <!-- County -->
                 <SelectMultiple
                     class="w-full xl:w-1/2"
-                    :label="$t('counties_label')"
+                    :label="$t('regional.project.counties')"
                     :options="counties"
                     v-model="selectedCounties"
                     :error="form.errors.counties"
                 />
 
-                <!-- Date start_date -->
-                <Input
-                    class="w-full xl:w-1/2"
-                    :label="$t('start_date')"
-                    color="gray-700"
-                    type="date"
-                    v-model="form.start_date"
-                    :error="form.errors.start_date"
-                />
+                <div class="grid grid-cols-2">
+                    <Input
+                        class="w-full xl:w-1/2"
+                        :label="$t('regional.project.start_date')"
+                        color="gray-700"
+                        type="date"
+                        v-model="form.start_date"
+                        :error="form.errors.start_date"
+                    />
 
-                <!-- Date end_date -->
-                <Input
-                    class="w-full xl:w-1/2"
-                    :label="$t('end_date')"
-                    color="gray-700"
-                    type="date"
-                    v-model="form.end_date"
-                    :error="form.errors.end_date"
-                />
+                    <!-- Date end_date -->
+                    <Input
+                        class="w-full xl:w-1/2"
+                        :label="$t('regional.project.end_date')"
+                        color="gray-700"
+                        type="date"
+                        v-model="form.end_date"
+                        :error="form.errors.end_date"
+                    />
+                </div>
 
                 <!-- Project categories -->
                 <SelectMultiple
                     class="w-full xl:w-1/2"
-                    :label="$t('project_categories_label')"
+                    :label="$t('regional.project.categories')"
                     :options="projectCategories"
                     v-model="form.categories"
                     type="singleValue"
@@ -68,198 +70,141 @@
                 />
 
                 <label class="flex items-center">
-                    <Checkbox name="for_youth" v-model:checked="form.for_youth" />
-                    <span class="ml-2 text-sm text-gray-700">{{ $t('regional_for_youth_label') }}</span>
-
-                    <!-- Error -->
-                    <p v-show="form.errors.for_youth" class="mt-2 text-sm text-red-600">
-                        {{ form.errors.for_youth }}
-                    </p>
+                    <Checkbox name="youth" v-model:checked="form.youth" />
+                    <span class="ml-2 text-sm text-gray-700">{{ $t('regional.project.youth') }}</span>
                 </label>
 
-                <!-- identified_need -->
+                <Radio
+                    :label="$t('regional.project.organization_type')"
+                    :options="organizationTypes"
+                    name="locations"
+                    v-model="form.organization_type"
+                    :error="form.errors.organization_type"
+                />
+
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_identified_need_label')"
+                    :label="$t('regional.project.identified_need')"
                     id="identified_need-project"
                     color="gray-700"
-                    v-model="form.identified_need"
-                    :error="form.errors.identified_need"
+                    v-model="form.reason"
+                    :error="form.errors.reason"
                 >
                 </Textarea>
 
-                <!-- proposed_solution -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_proposed_solution_label')"
+                    :label="$t('regional.project.proposed_solution')"
                     id="proposed_solution-project"
                     color="gray-700"
-                    v-model="form.proposed_solution"
-                    :error="form.errors.proposed_solution"
+                    v-model="form.solution"
+                    :error="form.errors.solution"
                 >
                 </Textarea>
 
-                <!-- project_progress -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_project_progress_label')"
+                    :label="$t('regional.project.project_progress')"
                     id="project_progress-project"
                     color="gray-700"
-                    v-model="form.project_progress"
-                    :error="form.errors.project_progress"
+                    v-model="form.project_details"
+                    :error="form.errors.project_details"
                 >
                 </Textarea>
 
                 <!-- Special about -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_what_is_special_label')"
+                    :label="$t('regional.project.what_is_special')"
                     id="special-project"
                     color="gray-700"
-                    v-model="form.project_differentiator"
-                    :error="form.errors.project_differentiator"
+                    v-model="form.special"
+                    :error="form.errors.special"
                 >
                 </Textarea>
 
-                <!-- key_results -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_key_results_label')"
+                    :label="$t('regional.project.key_results')"
                     id="key_results-project"
                     color="gray-700"
-                    v-model="form.key_results"
-                    :error="form.errors.key_results"
+                    v-model="form.results"
+                    :error="form.errors.results"
                 >
                 </Textarea>
 
-                <!-- pride_success -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_pride_success_label')"
+                    :label="$t('regional.project.pride_success')"
                     id="pride_success-project"
                     color="gray-700"
-                    v-model="form.pride_success"
-                    :error="form.errors.pride_success"
+                    v-model="form.proud"
+                    :error="form.errors.proud"
                 >
                 </Textarea>
 
-                <!-- had_partners -->
                 <Radio
-                    :label="$t('regional_had_partners_label')"
+                    :label="$t('regional.project.had_partners')"
                     :options="[
                         { label: 'Da', value: true },
                         { label: 'Nu', value: false },
                     ]"
                     name="had_partners"
-                    v-model="form.had_partners"
-                    :error="form.errors.had_partners"
+                    v-model="form.partnership"
+                    :error="form.errors.partnership"
                 />
 
-                <!-- What parteners -->
                 <Textarea
-                    v-if="form.had_partners"
+                    v-if="form.partnership"
                     class="w-full"
-                    :label="$t('regional_partners_label')"
-                    id="what-parteners-project"
+                    :label="$t('regional.project.partners')"
+                    id="what-partners-project"
                     color="gray-700"
-                    v-model="form.partners"
-                    :error="form.errors.partners"
+                    v-model="form.partnership_details"
+                    :error="form.errors.partnership_details"
                 >
                 </Textarea>
 
-                <!-- project_budget -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_project_budget_label')"
+                    :label="$t('regional.project.project_budget')"
                     id="project_budget-project"
                     color="gray-700"
-                    v-model="form.project_budget"
-                    :error="form.errors.project_budget"
+                    v-model="form.budget_details"
+                    :error="form.errors.budget_details"
                 >
                 </Textarea>
-                <p class="text-sm font-normal text-gray-500">{{ $t('regional_project_budget_summary') }}</p>
 
                 <!-- Arie -->
                 <Radio
-                    :label="$t('regional_arie_label')"
-                    :options="impact_areas"
+                    :label="$t('regional.project.arie')"
+                    :options="areas"
                     name="locations"
-                    v-model="form.impact_area"
-                    :error="form.errors.impact_area"
+                    v-model="form.area"
+                    :error="form.errors.area"
                 />
 
                 <!-- participant_count -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_participant_count_no_label')"
+                    :label="$t('regional.project.participant_count_no')"
                     id="participant_count-scope"
                     color="gray-700"
-                    v-model="form.participant_count"
-                    :error="form.errors.participant_count"
+                    v-model="form.participants"
+                    :error="form.errors.participants"
                 >
                 </Textarea>
 
                 <!-- project_team -->
                 <Textarea
                     class="w-full"
-                    :label="$t('regional_project_team_label')"
+                    :label="$t('regional.project.project_team')"
                     id="project_team-scope"
                     color="gray-700"
-                    v-model="form.project_team"
-                    :error="form.errors.project_team"
+                    v-model="form.team_details"
+                    :error="form.errors.team_details"
                 >
                 </Textarea>
-
-                <hr class="bg-gray-500" />
-
-                <Textarea
-                    class="w-full"
-                    :label="$t('regional_info_sources_label')"
-                    id="extra-info"
-                    color="gray-700"
-                    v-model="form.info_sources"
-                    :error="form.errors.info_sources"
-                >
-                </Textarea>
-
-                <div class="flex w-full" v-for="(item, index) in projectLinks">
-                    <InputWithIcon
-                        class="w-1/2"
-                        :label="$t('regional_link_label')"
-                        color="gray-700"
-                        icon="https://"
-                        type="text"
-                        v-model="item.url"
-                    />
-                    <DangerButton
-                        v-if="index > 0"
-                        class="mt-8 ml-4"
-                        background="red-500"
-                        hover="red-400"
-                        color="white"
-                        @click="
-                            () => {
-                                projectLinks.pop();
-                            }
-                        "
-                    >
-                        {{ $t('remove') }}
-                    </DangerButton>
-                    <SecondaryButton
-                        v-if="projectLinks.length <= 5"
-                        class="mt-8 ml-4"
-                        background="primary-500"
-                        hover="primary-400"
-                        color="white"
-                        @click="
-                            () => {
-                                projectLinks.push({ url: '' });
-                            }
-                        "
-                    >
-                        {{ $t('add') }}
-                    </SecondaryButton>
-                </div>
 
                 <!-- File group -->
                 <FileGroup v-model="form.file_group" />
@@ -267,56 +212,59 @@
                 <hr class="bg-gray-500" />
 
                 <div>
-                    <h2 class="text-lg font-bold text-gray-900">Persoana de contact</h2>
-                    <p class="text-gray-500">
-                        Organizația poate recruta voluntari prin platforma Bursa Binelui. Completează datele de mai jos
-                        dacă dorești acest lucru pentru organizația ta.
-                    </p>
+                    <h2 class="text-lg font-bold text-gray-900" v-text="$t('regional.project.contact_info')" />
+                    <p class="text-gray-500" v-text="$t('regional.project.contact_info_details')" />
                 </div>
 
                 <!-- contact_info name -->
                 <Input
                     class="w-full xl:w-1/2"
-                    :label="$t('regional_contact_info_person')"
+                    :label="$t('regional.project.contact_info_person')"
                     color="gray-700"
                     id="contact_info-name"
                     type="text"
-                    v-model="form.contact_info.name"
-                    :error="form?.errors?.contact_info?.name"
+                    v-model="form.contact.name"
+                    :error="form?.errors?.contact?.name"
                 />
 
                 <!-- contact_info job -->
                 <Input
                     class="w-full xl:w-1/2"
-                    :label="$t('regional_contact_info_job')"
+                    :label="$t('regional.project.contact_info_job')"
                     color="gray-700"
                     id="contact_info-job"
                     type="text"
-                    v-model="form.contact_info.job"
-                    :error="form?.errors?.contact_info?.job"
+                    v-model="form.contact.job"
+                    :error="form?.errors?.contact?.job"
                 />
 
                 <!-- contact_info phone-->
                 <Input
                     class="w-full xl:w-1/2"
-                    :label="$t('regional_contact_info_phone')"
+                    :label="$t('regional.project.contact_info_phone')"
                     color="gray-700"
                     id="project-name"
                     type="number"
-                    v-model="form.contact_info.phone"
-                    :error="form?.errors?.contact_info?.phone"
+                    v-model="form.contact.phone"
+                    :error="form?.errors?.contact?.phone"
                 />
 
                 <!-- contact_info email -->
                 <Input
                     class="w-full xl:w-1/2"
-                    :label="$t('regional_contact_info_email')"
+                    :label="$t('regional.project.contact_info_email')"
                     color="gray-700"
                     id="contact_info-email"
                     type="email"
-                    v-model="form.contact_info.email"
-                    :error="form?.errors?.contact_info?.email"
+                    v-model="form.contact.email"
+                    :error="form?.errors?.contact?.email"
                 />
+
+                <h2 class="text-lg font-bold text-gray-900" v-text="$t('regional.project.info_by_email')" />
+                <label class="flex items-center">
+                    <Checkbox name="info_by_email" v-model:checked="form.info_by_email" />
+                    <span class="ml-2 text-sm text-gray-700">{{ $t('regional.project.info_by_email_info') }}</span>
+                </label>
 
                 <hr class="bg-gray-500" />
 
@@ -337,101 +285,71 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import route from '@/Helpers/useRoute';
+import { onMounted, ref } from 'vue';
+import route from '@/Helpers/useRoute';
 
-    /** Import from inertia. */
-    import { useForm } from '@inertiajs/vue3';
+/** Import from inertia. */
+import { useForm } from '@inertiajs/vue3';
 
-    /** Import components. */
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import FileGroup from '@/Components/form/FileGroup.vue';
-    import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DangerButton from '@/Components/buttons/DangerButton.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
-    import Radio from '@/Components/form/Radio.vue';
+/** Import components. */
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import Input from '@/Components/form/Input.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import FileGroup from '@/Components/form/FileGroup.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+import Radio from '@/Components/form/Radio.vue';
 
-    /** Initialize inertia from Object. */
-    const form = useForm({
-        project_status: 'pending',
+/** Initialize inertia from Object. */
+const form = useForm({
+    gala_id: '',
+    project_status: 'pending',
+    name: '',
+    description: '',
+    categories: [],
+    organization_type: '',
+    start_date: '',
+    end_date: '',
+    counties: [],
+    youth: false,
+    reason: '',
+    solution: '',
+    project_details: '',
+    special: '',
+    results: '',
+    proud: '',
+    partnership: '',
+    partnership_details: '',
+    budget_details: '',
+    area: '',
+    participants: '',
+    team_details: '',
+    file_group: [],
+    info_by_email: false,
+    contact: {
         name: '',
-        description: '',
-        categories: [],
-        start_date: '',
-        end_date: '',
-        counties: [],
-        for_youth: false,
-        identified_need: '',
-        proposed_solution: '',
-        project_progress: '',
-        project_differentiator: '',
-        key_results: '',
-        pride_success: '',
-        had_partners: '',
-        partners: '',
-        project_budget: '',
-        impact_area: '',
-        participant_count: '',
-        project_team: '',
-        info_sources: '',
-        file_group: [],
-        project_links: [{ url: '' }],
-        contact_info: {
-            name: '',
-            job: '',
-            phone: '',
-            email: '',
-        },
+        job: '',
+        phone: '',
+        email: '',
+    },
+});
+
+let selectedCounties = [];
+const props = defineProps(['projectCategories', 'counties', 'galaTitle', 'areas', 'galaId', 'organizationTypes']);
+
+onMounted(() => {
+    console.log(props.areas);
+});
+
+/** Create project. */
+const createProject = (status = 'in_review') => {
+    form.gala_id = props.galaId;
+    form.post(route('dashboard.projects.regional.store'), {
+        preserveScroll: true,
+        onError: () => {},
     });
-
-    let selectedCounties = [];
-    const props = defineProps(['projectCategories', 'counties']);
-    let projectLinks = ref(form.project_links);
-
-    const impact_areas = [
-        {
-            label: 'Local',
-            value: 'local',
-        },
-        {
-            label: 'Judetean',
-            value: 'judetean',
-        },
-        {
-            label: 'Regional',
-            value: 'regional',
-        },
-    ];
-
-    function prepareProjectLinks() {
-        form.project_links = projectLinks.value.filter((item) => item.url !== '').map((item) => item.url);
-    }
-
-    /** Create project. */
-    const createProject = (status = 'in_review') => {
-        form.counties = selectedCounties.map((item) => item.id);
-
-        console.log(form.categories);
-        if (form.categories.length > 0) {
-            form.categories = form.categories.map((item) => item.id);
-        }
-        if (status === 'draft') {
-            form.project_status = 'draft';
-        }
-        console.log(form);
-        // return;
-
-        prepareProjectLinks();
-        form.post(route('dashboard.projects.regional.store'), {
-            preserveScroll: true,
-            onError: () => {},
-        });
-    };
+};
 </script>
