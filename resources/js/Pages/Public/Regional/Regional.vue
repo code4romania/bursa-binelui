@@ -110,7 +110,9 @@ import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 import Icon from '@/Components/Icon.vue';
 
 const about_championship =
-    'Purus morbi dignissim senectus mattis adipiscing. Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.';
+    'Scopul și misiunea Galelor Bursei Binelui este premierea excelenței în a face bine la nivel local și regional în domeniul civic.Prima ediție a Galelor Bursei Binelui are loc în 2024 și celebrează excelența din domeniul neguvernamental non-profit prin premierea celor mai bune inițiative finalizate pe parcursul anului 2023 în România, la nivel local și regional.\n' +
+    '\n' +
+    'În cadrul inițiativei vor avea loc 5 gale regionale în orașele Brașov, Cluj-Napoca, Constanța, Iași și Timișoara. Inițiativele societății civile vor fi premiate în 5 categorii (de scris categoriile), cu 3 premii în fiecare categorie (proiecte ale unor organizații mari, proiecte ale unor organizații mici, proiecte pentru tineret) și un Premiu Mare Regional.';
 
 const props = defineProps({
     edition: {
