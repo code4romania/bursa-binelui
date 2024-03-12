@@ -125,25 +125,9 @@
             ],
         },
         {
-            name: 'Proiectele regionale',
+            name: 'Gale bursa binelui',
             route: route('dashboard.projects.regional.index'),
             icon: FolderIcon,
-            subMenu: [
-                {
-                    name: 'published_projects',
-                    route: route('dashboard.projects.regional.index', {
-                        project_status: 'published',
-                    }),
-                    icon: FolderOpenIcon,
-                },
-                {
-                    name: 'draft_projects',
-                    route: route('dashboard.projects.regional.index', {
-                        project_status: 'draft',
-                    }),
-                    icon: FolderRemoveIcon,
-                },
-            ],
         },
         {
             name: 'Voluntari',
@@ -183,16 +167,6 @@
         if (item.route === `${window.location.origin}${window.location.pathname}${window.location.search}`) {
             return true;
         }
-
-        /** UNCOMENT IF PARENT NEED TO BE SELECTED TO */
-
-        // if (item.subMenu) {
-        //     for (const subItem of item.subMenu) {
-        //         if (subItem.route  === `${window.location.origin}${window.location.pathname}${window.location.search}`) {
-        //             return true;
-        //         }
-        //     }
-        // }
 
         return false;
     };

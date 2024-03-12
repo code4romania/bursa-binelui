@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
+use App\Models\GalaProject;
 use App\Models\Project;
 use App\Models\RegionalProject;
 use App\Models\User;
@@ -17,7 +18,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProjectService
 {
-    private Project|RegionalProject $project;
+    private Project|GalaProject $project;
 
     public function __construct($projectClass = null)
     {
@@ -44,7 +45,7 @@ class ProjectService
             ->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery'));
     }
 
-    public function create(array $data): Project|RegionalProject
+    public function create(array $data): Project|GalaProject
     {
         $data['organization_id'] = auth()->user()->organization_id;
         $data['status'] = ProjectStatus::draft->value;
@@ -72,7 +73,7 @@ class ProjectService
         return $project;
     }
 
-    private function createDraftProject(array $data): Project|RegionalProject
+    private function createDraftProject(array $data): Project|GalaProject
     {
         if (empty($data['name'])) {
             $data['name'] = 'Draft-' . date('Y-m-d H:i:s') . '-' . auth()->user()->name;
@@ -108,7 +109,7 @@ class ProjectService
     /**
      * @throws \Exception
      */
-    public function changeStatus(Project|RegionalProject $project, string $status): void
+    public function changeStatus(Project|GalaProject $project, string $status): void
     {
         match ($status) {
             ProjectStatus::pending->value => $this->pending($project),
@@ -136,7 +137,7 @@ class ProjectService
         };
     }
 
-    private function pending(Project|RegionalProject $project)
+    private function pending(Project|GalaProject $project)
     {
         $this->project = $project;
         $this->project->status = ProjectStatus::pending->value;
@@ -145,7 +146,7 @@ class ProjectService
         $this->sendCreateNotifications($this->project);
     }
 
-    private function archive(Project|RegionalProject $project): void
+    private function archive(Project|GalaProject $project): void
     {
         $this->project = $project;
         $this->project->status = ProjectStatus::archived->value;

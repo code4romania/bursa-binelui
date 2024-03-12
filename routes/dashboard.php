@@ -47,8 +47,8 @@ Route::group([
         'controller' => RegionalProjectController::class,
     ], function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
+        Route::get('/{gala}/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
         Route::get('/{project}/edit', 'edit')->name('edit');
         Route::post('/{project}/status', 'changeStatus')->name('status');
         Route::put('/{project}', 'update')->name('update');

@@ -31,7 +31,7 @@ class Donation extends Model
         'approval_date',
         'charge_date',
         'updated_without_correct_e_pid',
-        'ep_id'
+        'ep_id',
     ];
 
     protected $casts = [

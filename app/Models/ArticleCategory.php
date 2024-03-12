@@ -30,4 +30,9 @@ class ArticleCategory extends Model
     {
         return $this->hasMany(Article::class);
     }
+
+    public function edition(): HasMany
+    {
+        return $this->hasMany(Edition::class);
+    }
 }

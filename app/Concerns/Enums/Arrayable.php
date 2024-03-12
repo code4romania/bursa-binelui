@@ -28,4 +28,16 @@ trait Arrayable
             ])
             ->all();
     }
+
+    public static function optionsForRadio(): array
+    {
+        return collect(self::cases())
+            ->mapWithKeys(fn (self $case) => [
+                $case->value => [
+                    'label' => $case->label(),
+                    'value' => $case->value,
+                ],
+            ])
+            ->all();
+    }
 }

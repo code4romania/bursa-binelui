@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Enums\OrganizationType;
+use App\Enums\ProjectArea;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
+use App\Http\Resources\Edition\EditionShowResource;
+use App\Http\Resources\GalaProjectCardResource;
 use App\Models\County;
+use App\Models\Edition;
+use App\Models\Gala;
+use App\Models\GalaProject;
 use App\Models\ProjectCategory;
-use App\Models\RegionalProject;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,21 +26,36 @@ class RegionalProjectController extends Controller
      */
     public function index()
     {
-        $projects = RegionalProject::where('organization_id', auth()->user()->organization_id)->paginate(16)->withQueryString();
+        $organization = auth()->user()->organization()->first();
+        $edition = Edition::currentEdition()->with('gales')->first();
+        $projects = GalaProject::whereBelongsToOrganization($organization)->paginate();
 
-        return Inertia::render('AdminOng/Projects/Projects', [
-            'query' => $projects,
+        return Inertia::render('AdminOng/GalaProjects/Projects', [
+            'query' => GalaProjectCardResource::collection($projects),
+            'edition' => EditionShowResource::make($edition),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Gala $gala)
     {
-        return Inertia::render('AdminOng/Projects/AddRegionalProject', [
-            'counties' => $this->getCounties(),
-            'projectCategories' => $this->getProjectCategories(),
+        if (! $gala->registrationIsOpen) {
+            return redirect()->back();
+        }
+        $gala->edition->load('editionCategories');
+
+        return Inertia::render('AdminOng/GalaProjects/Add', [
+            'counties' => $gala->counties,
+            'projectCategories' => $gala->edition->editionCategories,
+            'galaTitle' => $gala->title,
+            'startDate' => $gala->start_sign_up,
+            'endDate' => $gala->end_sign_up,
+            'areas' => ProjectArea::optionsForRadio(),
+            'galaId' => $gala->id,
+            'organizationTypes' => OrganizationType::optionsForRadio(),
+
         ]);
     }
 
@@ -44,12 +65,14 @@ class RegionalProjectController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $project = (new ProjectService(RegionalProject::class))->create($data);
+        $project = (new ProjectService(GalaProject::class))->create($data);
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
 
-        return redirect()->route('dashboard.projects.edit', $project->id)->with('success', 'Project created.');
+        return redirect()
+            ->route('dashboard.projects.regional.edit', $project->id)
+            ->with('success', __('regional_projects.created'));
     }
 
     /**
@@ -63,12 +86,11 @@ class RegionalProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RegionalProject $project)
+    public function edit(GalaProject $project)
     {
-//        $this->authorize('view', $project);
         $project->load('media');
 
-        return Inertia::render('AdminOng/Projects/EditRegionalProject', [
+        return Inertia::render('AdminOng/GalaProjects/Edit', [
             'project' => $project,
             'counties' => County::get(['name', 'id']),
             'projectCategories' => ProjectCategory::get(['name', 'id']),
