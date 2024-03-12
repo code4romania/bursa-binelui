@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Articles\ArticleCardResource;
 use App\Http\Resources\Edition\EditionShowResource;
 use App\Models\Edition;
 use App\Models\Project;
@@ -17,6 +18,7 @@ class RegionalController extends Controller
 
         return Inertia::render('Public/Regional/Regional', [
             'edition' => EditionShowResource::make($edition),
+            'articles' => ArticleCardResource::collection($edition->articles()->latest()->limit(3)->get()),
 
         ]);
     }

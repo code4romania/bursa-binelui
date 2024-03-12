@@ -40,13 +40,11 @@
             </div>
         </div>
 
-        <!-- About -->
         <div class="mx-auto mb-10 max-w-7xl p-9 md:flex-row">
-            <h3 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('about_regional') }}</h3>
-            <div class="text-base font-normal text-gray-500" v-html="about_championship"></div>
+            <h3 class="mb-6 text-3xl font-bold text-primary-900" v-text="$t('about_regional')" />
+            <div class="text-base font-normal text-gray-500" v-html="$t('regional.project.page.about')"></div>
         </div>
 
-        <!-- Curent year -->
         <div class="relative mb-10 overflow-hidden pb-9">
             <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
                 <div class="flex items-center gap-4 mx-auto max-w-7xl">
@@ -59,7 +57,7 @@
 
             <div class="container">
                 <div
-                    class="grid grid-cols-4 bg-gray-50 rounded-lg shadow py-8 px-20 mt-4"
+                    class="grid grid-cols-4 bg-gray-50 rounded-lg shadow py-8 px-20 mt-4 mb-8"
                     v-for="item in edition.gales"
                 >
                     <div class="col-span-3">
@@ -89,6 +87,36 @@
                 </div>
             </div>
         </div>
+
+        <div class="container grid grid-cols-6 mt-4">
+            <div class="p-8 col-span-2 mx-auto">
+                <h3 class="text-2xl font-bold text-gray-800" v-text="$t('regional.project.page.faqs')" />
+                <p class="my-4" v-html="$t('regional.project.page.faqs_description')" />
+            </div>
+            <div class="p-8 col-span-4">
+                <div v-for="item in edition.faqs" :key="item.id">
+                    <h3 class="text-xl font-bold text-gray-800" v-text="item.question" />
+                    <p class="my-4" v-text="item.answer" />
+                </div>
+            </div>
+        </div>
+
+        <div class="relative mb-10 overflow-hidden pb-9">
+            <div class="pt-12 pb-20 bg-primary-500 px-9 lg:px-0">
+                <div class="flex items-center gap-4 mx-auto max-w-7xl">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-100">
+                        <SpeakerphoneIcon class="w-5 h-5 fill-primary-100 stroke-white shrink-0" />
+                    </div>
+                    <h3 class="text-2xl font-bold text-white" v-text="$t('regional.project.page.articles')"></h3>
+                </div>
+            </div>
+
+            <div class="container mt-8">
+                <div class="grid gap-6 grid-cols-3">
+                    <ArticleCard v-for="(article, index) in articles.data" :key="article.id" :article="article" />
+                </div>
+            </div>
+        </div>
     </PageLayout>
 </template>
 
@@ -108,15 +136,15 @@ import { ChevronRightIcon, SpeakerphoneIcon } from '@heroicons/vue/outline';
 
 import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 import Icon from '@/Components/Icon.vue';
-
-const about_championship =
-    'Scopul și misiunea Galelor Bursei Binelui este premierea excelenței în a face bine la nivel local și regional în domeniul civic.Prima ediție a Galelor Bursei Binelui are loc în 2024 și celebrează excelența din domeniul neguvernamental non-profit prin premierea celor mai bune inițiative finalizate pe parcursul anului 2023 în România, la nivel local și regional.\n' +
-    '\n' +
-    'În cadrul inițiativei vor avea loc 5 gale regionale în orașele Brașov, Cluj-Napoca, Constanța, Iași și Timișoara. Inițiativele societății civile vor fi premiate în 5 categorii (de scris categoriile), cu 3 premii în fiecare categorie (proiecte ale unor organizații mari, proiecte ale unor organizații mici, proiecte pentru tineret) și un Premiu Mare Regional.';
+import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
 const props = defineProps({
     edition: {
         type: Object,
+        default: null,
+    },
+    articles: {
+        type: Array,
         default: null,
     },
 });
@@ -129,6 +157,4 @@ const name = ref('');
 onMounted(() => {
     console.log(props.edition);
 });
-
-const stages = ['Etapa curenta', 'Etapa precendenta'];
 </script>

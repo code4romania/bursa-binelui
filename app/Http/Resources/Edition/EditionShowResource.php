@@ -26,6 +26,7 @@ class EditionShowResource extends JsonResource
             'start' => $this->start_date,
             'end' => $this->end_date,
             'gales' => GalaShowResource::collection($this->gales),
+            'faqs' => FaqResource::collection($this->faqs),
 
         ];
     }
