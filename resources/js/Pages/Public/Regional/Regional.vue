@@ -15,10 +15,12 @@
                     <Link
                         v-text="$t('regional.project.page.rules_page')"
                         :href="route('regional.rules', edition.page_rules)"
+                        class="rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-default text-gray-900 bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     />
                     <Link
                         v-text="$t('regional.project.page.registration_project')"
                         :href="route('dashboard.projects.regional.index')"
+                        class="flex items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-default bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500"
                     />
                 </div>
 
@@ -56,7 +58,10 @@
             </div>
 
             <div class="container">
-                <div class="grid grid-cols-4 bg-gray-50 rounded-lg shadow py-8 px-20" v-for="item in edition.gales">
+                <div
+                    class="grid grid-cols-4 bg-gray-50 rounded-lg shadow py-8 px-20 mt-4"
+                    v-for="item in edition.gales"
+                >
                     <div class="col-span-3">
                         <h3 class="text-2xl font-bold text-gray-800 divide-x divide-gray-200" v-text="item.title" />
                         <div class="mt-2 flex">

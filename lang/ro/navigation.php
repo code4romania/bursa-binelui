@@ -6,7 +6,7 @@ return [
     'group' => [
         'manage' => 'Administrează ONG',
         'championship' => 'Campionatul de bine',
-        'gala' => 'Gale regionale',
+        'gala' => 'Gale bursa binelui',
         'content' => 'Conținut',
         'articles' => 'Articole',
         'reports' => 'Rapoarte',
