@@ -46,13 +46,13 @@ class RegionalProjectController extends Controller
         }
         $gala->edition->load('editionCategories');
 
-        return Inertia::render('AdminOng/GalaProjects/AddProject', [
+        return Inertia::render('AdminOng/GalaProjects/Add', [
             'counties' => $gala->counties,
             'projectCategories' => $gala->edition->editionCategories,
             'galaTitle' => $gala->title,
             'startDate' => $gala->start_sign_up,
             'endDate' => $gala->end_sign_up,
-            'areas' =>  ProjectArea::optionsForRadio(),
+            'areas' => ProjectArea::optionsForRadio(),
             'galaId' => $gala->id,
             'organizationTypes' => OrganizationType::optionsForRadio(),
 
@@ -64,12 +64,12 @@ class RegionalProjectController extends Controller
      */
     public function store(StoreRequest $request)
     {
-
         $data = $request->validated();
         $project = (new ProjectService(GalaProject::class))->create($data);
         $project->addAllMediaFromRequest()->each(function ($fileAdder) {
             $fileAdder->toMediaCollection('regionalProjectFiles');
         });
+
         return redirect()
             ->route('dashboard.projects.regional.edit', $project->id)
             ->with('success', __('regional_projects.created'));
@@ -90,7 +90,7 @@ class RegionalProjectController extends Controller
     {
         $project->load('media');
 
-        return Inertia::render('AdminOng/GalaProjects/EditRegionalProject', [
+        return Inertia::render('AdminOng/GalaProjects/Edit', [
             'project' => $project,
             'counties' => County::get(['name', 'id']),
             'projectCategories' => ProjectCategory::get(['name', 'id']),

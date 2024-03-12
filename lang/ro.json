@@ -491,6 +491,7 @@
     "project_change_status_archived": "Vrei să arhivezi proiectul?",
 
     "regional.project.page_title": "Înscrie proiectul în ",
+    "regional.project.edit_page_title": "Editează proiectul în ",
     "regional.project.title" : "Denumire proiect* (această informație va fi listată pe site)",
     "regional.project.description" : "Rezumatul proiectului* (această informație va fi listată pe site) ",
     "regional.project.description_info": "Scrie o descriere generala a proiectului (max 700 caractere)",
