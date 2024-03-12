@@ -27,7 +27,7 @@ class RegionalProjectController extends Controller
     public function index()
     {
         $organization = auth()->user()->organization()->first();
-        $edition = Edition::currentEditon()->with('gales')->first();
+        $edition = Edition::currentEdition()->with('gales')->first();
         $projects = GalaProject::whereBelongsToOrganization($organization)->paginate();
 
         return Inertia::render('AdminOng/GalaProjects/Projects', [

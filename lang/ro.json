@@ -522,7 +522,11 @@
     "regional.project.contact_info_phone": "Număr telefon persoană de contact (fără prefix)*",
     "regional.project.contact_info_email": "Adresă de e-mail persoană de contact*",
     "regional.project.info_by_email" : "Acord de informare prin email",
-    "regional.project.info_by_email_info" : "Doresc să primesc informații despre proiectul meu prin email"
+    "regional.project.info_by_email_info" : "Doresc să primesc informații despre proiectul meu prin email",
+
+    "regional.project.page.rules_page" : "Regulament",
+    "regional.project.page.registration_project" : "Înscrie proiect",
+    "regional.project.page.calendar" : "Calendarul Galelor Bursa Binelui"
 
 
 }

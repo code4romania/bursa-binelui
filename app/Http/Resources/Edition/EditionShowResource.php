@@ -22,8 +22,7 @@ class EditionShowResource extends JsonResource
 
             'title' => $this->title,
             'short_description' => $this->short_description,
-            //            'articles' => $this->articles,
-            //            'rules' => $this->rules,
+            'page_rules' => $this->page->slug,
             'start' => $this->start_date,
             'end' => $this->end_date,
             'gales' => GalaShowResource::collection($this->gales),

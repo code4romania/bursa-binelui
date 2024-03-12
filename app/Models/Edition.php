@@ -61,7 +61,7 @@ class Edition extends Model implements HasMedia
         return $this->hasManyThrough(GalaProject::class, Gala::class);
     }
 
-    public function scopeCurrentEditon(Builder $query): Builder
+    public function scopeCurrentEdition(Builder $query): Builder
     {
         return $query->where('active', true);
     }

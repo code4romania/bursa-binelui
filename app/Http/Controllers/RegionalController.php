@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\County;
+use App\Http\Resources\Edition\EditionShowResource;
+use App\Models\Edition;
 use App\Models\Project;
 use Inertia\Inertia;
 
@@ -12,105 +13,11 @@ class RegionalController extends Controller
 {
     public function index()
     {
-        $editions = [
-            [
-                'href' => '1',
-                'name' => 'Campionatul de bine 2020',
-            ],
-            [
-                'href' => '2',
-                'name' => 'Campionatul de bine 2019',
-            ],
-            [
-                'href' => '3',
-                'name' => 'Campionatul de bine 2018',
-            ],
-        ];
-
-        $regions = [
-            [
-                'id' => 1,
-                'cover_image' => '/images/project_img.png',
-                'status' => 'registration',
-                'name' => 'Galele Regionale Muntenia',
-            ],
-            [
-                'id' => 2,
-                'cover_image' => '/images/project_img.png',
-                'status' => 'finished',
-                'name' => 'Galele Regionale Muntenia',
-            ],
-            [
-                'id' => 3,
-                'cover_image' => '/images/project_img.png',
-                'status' => 'winners',
-                'name' => 'Galele Regionale Muntenia',
-            ],
-            [
-                'id' => 4,
-                'cover_image' => '/images/project_img.png',
-                'status' => 'registration',
-                'name' => 'Galele Regionale Muntenia',
-            ],
-            [
-                'id' => 5,
-                'cover_image' => '/images/project_img.png',
-                'status' => 'finished',
-                'name' => 'Galele Regionale Muntenia',
-            ],
-            [
-                'id' => 6,
-                'cover_image' => '/images/project_img.png',
-                'status' => 'winners',
-                'name' => 'Galele Regionale Muntenia',
-            ],
-        ];
-
-        $registration = [
-            'start' => '2023-06-01',
-            'end' => '2023-07-20',
-        ];
-
-        $parteners = [
-            '/images/project_img.png',
-            '/images/project_img.png',
-            '/images/project_img.png',
-            '/images/project_img.png',
-            '/images/project_img.png',
-            '/images/project_img.png',
-        ];
-
-        $faqs = [
-            [
-                'title' => 'Title 1',
-                'content' => 'Content 1',
-            ],
-            [
-                'title' => 'Title 2',
-                'content' => 'Content 2',
-            ],
-            [
-                'title' => 'Title 3',
-                'content' => 'Content 3',
-            ],
-            [
-                'title' => 'Title 4',
-                'content' => 'Content 4',
-            ],
-        ];
-
-        $projects = Project::whereIsOpen()->paginate(9)->withQueryString();
-
-        $countries = County::get(['name', 'id']);
+        $edition = Edition::currentEdition()->with(['gales', 'faqs', 'page'])->first();
 
         return Inertia::render('Public/Regional/Regional', [
-            'query' => $projects,
-            'editions' => $editions,
-            'regions' => $regions,
-            'parteners' => $parteners,
-            'registration' => $registration,
-            'faqs' => $faqs,
-            'countries' => $countries,
+            'edition' => EditionShowResource::make($edition),
+
         ]);
     }
 
