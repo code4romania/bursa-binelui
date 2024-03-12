@@ -68,6 +68,6 @@ class Edition extends Model implements HasMedia
 
     public function articles(): HasMany
     {
-        return $this->hasMany(Article::class,'article_category_id','article_category_id');
+        return $this->hasMany(Article::class, 'article_category_id', 'article_category_id');
     }
 }
