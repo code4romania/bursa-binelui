@@ -216,72 +216,72 @@
 </template>
 
 <script setup>
-    import { computed } from 'vue';
-    import { usePage } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute';
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute';
 
-    import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-    import { MenuIcon, XIcon } from '@heroicons/vue/outline';
-    import { UserCircleIcon } from '@heroicons/vue/solid';
-    import Icon from '@/Components/Icon.vue';
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import { MenuIcon, XIcon } from '@heroicons/vue/outline';
+import { UserCircleIcon } from '@heroicons/vue/solid';
+import Icon from '@/Components/Icon.vue';
 
-    import NavLink from '@/Components/links/NavLink.vue';
-    import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';
-    import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
+import NavLink from '@/Components/links/NavLink.vue';
+import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';
+import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 
-    /** Explore menu links. */
-    const explore = [
-        {
-            name: 'Proiecte',
-            description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
-            href: route('projects.index'),
-        },
-        {
-            name: 'Organizatii',
-            description: 'Descoperă toate organizațiile înscrise pe Bursa Binelui și alege cauza pe care vrei să o susții.',
-            href: route('organizations.index'),
-        },
-        {
-            name: 'BCR pentru comunitate',
-            description: 'Descoperă proiectele organizate de BCR.',
-            href: route('bcr.index'),
-        },
-        {
-            name: 'Campionatul de Bine',
-            description: 'O competiție a faptelor bune. Alătură-te!',
-            href: route('championship'),
-        },
-        {
-            name: 'Gale Regionale',
-            description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
-            href: route('regional'),
-        },
-    ];
+/** Explore menu links. */
+const explore = [
+    {
+        name: 'Proiecte',
+        description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
+        href: route('projects.index'),
+    },
+    {
+        name: 'Organizatii',
+        description: 'Descoperă toate organizațiile înscrise pe Bursa Binelui și alege cauza pe care vrei să o susții.',
+        href: route('organizations.index'),
+    },
+    {
+        name: 'BCR pentru comunitate',
+        description: 'Descoperă proiectele organizate de BCR.',
+        href: route('bcr.index'),
+    },
+    {
+        name: 'Campionatul de Bine',
+        description: 'O competiție a faptelor bune. Alătură-te!',
+        href: route('championship'),
+    },
+    {
+        name: 'Gale bursa binelui',
+        description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
+        href: route('regional'),
+    },
+];
 
-    /** About menu links. */
-    const about = [
-        {
-            name: 'Despre Bursa Binelui',
-            description:
-                'Află mai multe despre inițiativa noastră și cum poți să te alături, atât ca organizație, cât și ca donator sau voluntar.',
-            href: route('page', 'about'),
-        },
-        {
-            name: 'Evolutia faptelor bune',
-            description: 'Vezi evoluția faptelor bune pe Bursa Binelui în timp, cu ajutorul unor grafice.',
-            href: route('evolution'),
-        },
-        {
-            name: 'Întrebări frecvente',
-            description: 'Ai o neclaritate? Găsește răspunsul aici.',
-            href: route('page', 'faqs'),
-        },
-    ];
+/** About menu links. */
+const about = [
+    {
+        name: 'Despre Bursa Binelui',
+        description:
+            'Află mai multe despre inițiativa noastră și cum poți să te alături, atât ca organizație, cât și ca donator sau voluntar.',
+        href: route('page', 'about'),
+    },
+    {
+        name: 'Evolutia faptelor bune',
+        description: 'Vezi evoluția faptelor bune pe Bursa Binelui în timp, cu ajutorul unor grafice.',
+        href: route('evolution'),
+    },
+    {
+        name: 'Întrebări frecvente',
+        description: 'Ai o neclaritate? Găsește răspunsul aici.',
+        href: route('page', 'faqs'),
+    },
+];
 
-    const languages = computed(() =>
-        usePage().props.locales.available.map((locale) => ({
-            name: locale,
-            id: locale,
-        }))
-    );
+const languages = computed(() =>
+    usePage().props.locales.available.map((locale) => ({
+        name: locale,
+        id: locale,
+    }))
+);
 </script>
