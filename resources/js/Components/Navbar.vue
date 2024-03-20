@@ -53,14 +53,6 @@
                             >
                                 {{ $t('dashbord') }}
                             </NavLink>
-                            <NavLink
-                                v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
-                                class="w-full px-3 py-2 text-base"
-                                :href="route('dashboard.main')"
-                                :active="route().current('dashboard.main')"
-                            >
-                                {{ $t('administrate_link') }}
-                            </NavLink>
 
                             <NavLink
                                 class="w-full px-3 py-2 text-base"
@@ -69,6 +61,13 @@
                             >
                                 {{ $t('my_donations') }}
                             </NavLink>
+                            <NavLink
+                                v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
+                                class="w-full px-3 py-2 text-base"
+                                :href="route('dashboard.main')"
+                                :active="route().current('dashboard.main')"
+                                v-text="$t('administrate_link')"
+                            />
 
                             <!-- Account settings -->
                             <NavLink
