@@ -21,7 +21,7 @@ class StatusChangeRequest extends FormRequest
             'end' => ['required', 'date', 'after:start'],
             'target_budget' => ['required', 'numeric', 'min:1'],
             'categories' => ['required', 'array', 'min:1'],
-            'counties' => ['required_if:is_national,0', 'array', 'min:1'],
+            'counties' => ['required_if:is_national,0', 'array', 'min:1', 'nullable'],
             'description' => ['required', 'min:100', 'max:1000'],
             'scope' => ['required', 'min:100', 'max:1000'],
             'beneficiaries' => ['required', 'min:50', 'max:1000'],
