@@ -488,6 +488,7 @@
     "organization_status_disabled": "Organizația este dezactivată, vezi detalii în secțiunea de tichete",
     "organization_status_pending": "Organizația ta este în curs de aprobare. Până la aprobare, aceasta nu va fi listată pe site-ul public Bursa Binelui.",
     "organization_status_approved": "Organizația este aprobată",
+    "organization_status_rejected": "Organizația este respinsă",
     "project_change_status_archived": "Vrei să arhivezi proiectul?",
 
     "regional.project.page_title": "Înscrie proiectul în ",
