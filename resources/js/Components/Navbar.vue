@@ -237,7 +237,7 @@ const explore = [
         href: route('projects.index'),
     },
     {
-        name: 'Organizatii',
+        name: 'Organizații',
         description: 'Descoperă toate organizațiile înscrise pe Bursa Binelui și alege cauza pe care vrei să o susții.',
         href: route('organizations.index'),
     },
