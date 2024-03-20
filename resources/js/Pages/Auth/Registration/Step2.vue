@@ -58,7 +58,8 @@
                 <Checkbox name="terms" v-model:checked="form.terms" required />
                 <div class="flex items-center space-x-1 text-sm">
                     <span class="text-gray-700">{{ $t('i_agree') }}</span>
-                    <Link :href="route('terms')" class="text-primary-500"> {{ $t('terms_link') }} </Link>.
+                    <Link :href="route('terms')" target="_blank" class="text-primary-500"> {{ $t('terms_link') }} </Link
+                    >.
                 </div>
             </label>
 
@@ -86,13 +87,13 @@
 </template>
 
 <script setup>
-    import { Link } from '@inertiajs/vue3';
-    import Input from '@/Components/form/Input.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
+import { Link } from '@inertiajs/vue3';
+import Input from '@/Components/form/Input.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
 
-    const props = defineProps({
-        form: Object,
-    });
+const props = defineProps({
+    form: Object,
+});
 </script>
