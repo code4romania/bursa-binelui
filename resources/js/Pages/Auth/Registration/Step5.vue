@@ -23,8 +23,8 @@
             v-model="form.ngo.why_volunteer"
             :error="form.errors['ngo.why_volunteer']"
         >
-            <p class="text-xs font-normal text-gray-500">{{ $t('why_volunteer_info') }}</p>
         </Textarea>
+        <p class="text-xs font-normal text-gray-500" v-html="$t('why_volunteer_info')" />
 
         <div v-if="'organization' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <SecondaryButton @click="$emit('prev', $event.target)">
@@ -37,12 +37,12 @@
 </template>
 
 <script setup>
-    import Textarea from '@/Components/form/Textarea.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
 
-    const props = defineProps({
-        form: Object,
-    });
+const props = defineProps({
+    form: Object,
+});
 </script>
