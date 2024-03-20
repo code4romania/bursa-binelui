@@ -1,6 +1,8 @@
 <template>
     <PageLayout :title="$t('projects_title')" :icon="ViewBoardsIcon">
-        <!-- Filters -->
+        <div v-if="view === 'map'" class="container">
+            <Map :data="mapProjects" @county-selected="(id) => applySelectedCountyFromMap(id)" />
+        </div>
         <div class="container grid items-start gap-6 md:grid-cols-12">
             <div class="flex gap-x-6 md:col-span-12 lg:col-span-5">
                 <SearchFilter
@@ -93,10 +95,6 @@
             />
         </div>
 
-        <div v-if="view === 'map'" class="container">
-            <Map :data="mapProjects" @county-selected="(id) => applySelectedCountyFromMap(id)" />
-        </div>
-
         <div class="container">
             <h2
                 class="mb-6 text-2xl font-bold text-gray-900"
@@ -116,55 +114,55 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import { ViewBoardsIcon, ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
-    import route from '@/Helpers/useRoute';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Sort from '@/Components/filters/Sort.vue';
-    import SearchFilter from '@/Components/filters/SearchFilter.vue';
-    import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import Map from '@/Components/maps/Map.vue';
-    import DatePicker from '@/Components/form/DatePicker.vue';
-    import Select from '@/Components/form/Select.vue';
-    import useFilters from '@/Helpers/useFilters.js';
+import { ref } from 'vue';
+import { ViewBoardsIcon, ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
+import route from '@/Helpers/useRoute';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Sort from '@/Components/filters/Sort.vue';
+import SearchFilter from '@/Components/filters/SearchFilter.vue';
+import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import Map from '@/Components/maps/Map.vue';
+import DatePicker from '@/Components/form/DatePicker.vue';
+import Select from '@/Components/form/Select.vue';
+import useFilters from '@/Helpers/useFilters.js';
 
-    const props = defineProps({
-        collection: {
-            type: Object,
-        },
-        counties: {
-            type: Array,
-        },
-        categories: {
-            type: Array,
-        },
-        mapProjects: {
-            type: Array,
-        },
-        view: {
-            type: String,
-            default: 'list',
-            validator: (view) => ['list', 'map'].includes(view),
-        },
-    });
+const props = defineProps({
+    collection: {
+        type: Object,
+    },
+    counties: {
+        type: Array,
+    },
+    categories: {
+        type: Array,
+    },
+    mapProjects: {
+        type: Array,
+    },
+    view: {
+        type: String,
+        default: 'list',
+        validator: (view) => ['list', 'map'].includes(view),
+    },
+});
 
-    const filter = ref({
-        county: props.collection.filter?.county || [],
-        status: props.collection.filter?.status || null,
-        category: props.collection.filter?.category || [],
-        date: props.collection.filter?.date || [],
-        search: props.collection.filter?.search || null,
-    });
+const filter = ref({
+    county: props.collection.filter?.county || [],
+    status: props.collection.filter?.status || null,
+    category: props.collection.filter?.category || [],
+    date: props.collection.filter?.date || [],
+    search: props.collection.filter?.search || null,
+});
 
-    let url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
-    const projectsView = ref(null); // assigned to some element in the template
+let url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
+const projectsView = ref(null); // assigned to some element in the template
 
-    function applySelectedCountyFromMap(id) {
-        filter.value.county.push(id);
-        projectsView.value.scrollIntoView();
-        applyFilters();
-    }
+function applySelectedCountyFromMap(id) {
+    filter.value.county.push(id);
+    projectsView.value.scrollIntoView();
+    applyFilters();
+}
 
-    const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
+const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
 </script>
