@@ -28,9 +28,8 @@ class ProjectFactory extends Factory
         $name = fake()->unique()->sentence();
 
         $start = CarbonImmutable::createFromInterface(
-            fake()->dateTimeBetween('-3 days', 'today')
+            fake()->dateTimeBetween('-1 year', 'today')
         );
-        $created_at = now()->subDays(30);
 
         return [
             'name' => $name,
@@ -42,9 +41,9 @@ class ProjectFactory extends Factory
             'reason_to_donate' => fake()->text(),
             'beneficiaries' => fake()->text(),
             'start' => $start,
-            'created_at' => fake()->dateTimeBetween('-30 days', 'today'),
+            'created_at' => fake()->dateTimeBetween('-1 year', 'today'),
             'updated_at' => fake()->dateTimeBetween('-30 days', 'today'),
-            'end' => $start->addDays(7),
+            'end' => $start->addDays(rand(3, 14)),
             'accepting_volunteers' => fake()->boolean(),
             'accepting_comments' => fake()->boolean(),
             'videos' => fake()->randomElements([
@@ -69,7 +68,7 @@ class ProjectFactory extends Factory
                 ->for($project)
                 ->recycle($project->organization)
                 ->for($this->faker->randomElement(User::all()))
-                ->count(fake()->numberBetween(0, 15))
+                ->count(fake()->numberBetween(0, 25))
                 ->create();
         });
     }
