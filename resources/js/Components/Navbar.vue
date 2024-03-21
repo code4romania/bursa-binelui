@@ -265,11 +265,11 @@ const about = [
             'Află mai multe despre inițiativa noastră și cum poți să te alături, atât ca organizație, cât și ca donator sau voluntar.',
         href: route('page', 'about'),
     },
-    {
-        name: 'Evolutia faptelor bune',
-        description: 'Vezi evoluția faptelor bune pe Bursa Binelui în timp, cu ajutorul unor grafice.',
-        href: route('evolution'),
-    },
+    // {
+    //     name: 'Evolutia faptelor bune',
+    //     description: 'Vezi evoluția faptelor bune pe Bursa Binelui în timp, cu ajutorul unor grafice.',
+    //     href: route('evolution'),
+    // },
     {
         name: 'Întrebări frecvente',
         description: 'Ai o neclaritate? Găsește răspunsul aici.',

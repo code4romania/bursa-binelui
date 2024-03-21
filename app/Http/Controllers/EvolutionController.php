@@ -22,6 +22,9 @@ class EvolutionController extends Controller
 {
     public function __invoke(Request $request): Response
     {
+        if (! auth()->check() || ! auth()->user()->isSuperUser()) {
+            return abort(404);
+        }
         $donations = Donation::query()
             ->select(
                 [
