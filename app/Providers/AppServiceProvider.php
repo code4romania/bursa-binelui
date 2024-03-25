@@ -64,14 +64,6 @@ class AppServiceProvider extends ServiceProvider
                     ->activeIcon('heroicon-s-presentation-chart-line')
                     ->group('Campionatul de bine')
                     ->sort(11),
-
-                NavigationItem::make('Raportare')
-                    ->url('#', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-presentation-chart-line')
-                    ->activeIcon('heroicon-s-presentation-chart-line')
-                    ->group('Date platformă și raportaări')
-                    ->sort(15),
-
             ]);
         });
 

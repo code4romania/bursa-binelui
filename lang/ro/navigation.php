@@ -10,5 +10,6 @@ return [
         'content' => 'Conținut',
         'articles' => 'Articole',
         'reports' => 'Rapoarte',
+        'statistics' => 'Date platforma si raportari',
     ],
 ];

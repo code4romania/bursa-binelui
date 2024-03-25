@@ -88,6 +88,8 @@ return [
         'active_projects_count' => 'Număr proiecte active',
         'donations_count' => 'Număr total donații',
         'donations_amount' => 'Sumă totală donații',
+        'volunteers_count' => 'Numar inscrieri coluntari',
+        'county' => 'Judet',
     ],
     'messages' => [
         'update_success' => 'Organizația a fost actualizată cu succes!',

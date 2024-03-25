@@ -35,6 +35,8 @@ return [
         'donations_count' => 'Numarul de donatii',
         'id' => 'ID',
         'last_donation_date' => 'Data ultimei donatii',
+        'badges_count' => 'Numar de badge-uri',
+        'volunteer_count' => 'Numar inscrieri voluntariat',
     ],
     'relations' => [
         'donations' => 'Donatii',
