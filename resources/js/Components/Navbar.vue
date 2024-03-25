@@ -245,16 +245,16 @@ const explore = [
         description: 'Descoperă proiectele organizate de BCR.',
         href: route('bcr.index'),
     },
-    {
-        name: 'Campionatul de Bine',
-        description: 'O competiție a faptelor bune. Alătură-te!',
-        href: route('championship'),
-    },
-    {
-        name: 'Gale bursa binelui',
-        description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
-        href: route('regional'),
-    },
+    // {
+    //     name: 'Campionatul de Bine',
+    //     description: 'O competiție a faptelor bune. Alătură-te!',
+    //     href: route('championship'),
+    // },
+    // {
+    //     name: 'Gale bursa binelui',
+    //     description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
+    //     href: route('regional'),
+    // },
 ];
 
 /** About menu links. */
