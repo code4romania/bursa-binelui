@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Concerns\HasUuid;
 use App\Enums\EuPlatescStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -49,6 +50,14 @@ class Donation extends Model
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function scopeSearch(Builder $query, string $searchedText): Builder
+    {
+        return $query
+            ->orWhere('first_name', 'LIKE', "%{$searchedText}%")
+            ->orWhere('last_name', 'LIKE', "%{$searchedText}%")
+            ->orWhere('email', 'LIKE', "%{$searchedText}%");
     }
 
     public function user(): BelongsTo
