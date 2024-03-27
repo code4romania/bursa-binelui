@@ -20,12 +20,12 @@
                         {{ $t('donate_to_a_project') }}
                     </Link>
 
-                    <Link
-                        :href="route('evolution')"
-                        class="rounded-md w-full md:w-auto bg-white text-center px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
-                    >
-                        {{ $t('see_evolution') }}
-                    </Link>
+                    <!--                    <Link-->
+                    <!--                        :href="route('evolution')"-->
+                    <!--                        class="rounded-md w-full md:w-auto bg-white text-center px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"-->
+                    <!--                    >-->
+                    <!--                        {{ $t('see_evolution') }}-->
+                    <!--                    </Link>-->
 
                     <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-100 -left-16 md:block" />
                 </div>
@@ -227,89 +227,89 @@
 </template>
 
 <script setup>
-    /** Import from vue */
-    import { ref } from 'vue';
-    import route from '@/Helpers/useRoute';
+/** Import from vue */
+import { ref } from 'vue';
+import route from '@/Helpers/useRoute';
 
-    /** Import plugins */
-    import 'vue3-carousel/dist/carousel.css';
-    import { Carousel, Slide } from 'vue3-carousel';
+/** Import plugins */
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide } from 'vue3-carousel';
 
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Head from '@/Components/Head.vue';
-    import Icon from '@/Components/Icon.vue';
-    import ProjectCard from '@/Components/cards/ProjectCard.vue';
-    import ArticleCard from '@/Components/cards/ArticleCard.vue';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Head from '@/Components/Head.vue';
+import Icon from '@/Components/Icon.vue';
+import ProjectCard from '@/Components/cards/ProjectCard.vue';
+import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
-    import HeroPattern from '@/Components/patterns/HeroPattern.vue';
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import SmallSquarePattern from '@/Components/patterns/SmallSquarePattern.vue';
+import HeroPattern from '@/Components/patterns/HeroPattern.vue';
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import SmallSquarePattern from '@/Components/patterns/SmallSquarePattern.vue';
 
-    import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid';
 
-    /** Component props. */
-    const props = defineProps({
-        projects_count: Number,
-        organizations_count: Number,
-        projects: Object,
-        bcr_projects: Object,
-        donate_projects: Object,
-        articles: Object,
-    });
+/** Component props. */
+const props = defineProps({
+    projects_count: Number,
+    organizations_count: Number,
+    projects: Object,
+    bcr_projects: Object,
+    donate_projects: Object,
+    articles: Object,
+});
 
-    const bcr_projects_carousel = ref(null);
-    const projects_carousel = ref(null);
+const bcr_projects_carousel = ref(null);
+const projects_carousel = ref(null);
 
-    const carouselOptions = ref({
-        settings: {
-            itemsToShow: 1,
+const carouselOptions = ref({
+    settings: {
+        itemsToShow: 1,
+        snapAlign: 'start',
+        wrapAround: true,
+        itemsToScroll: 1,
+    },
+    breakpoints: {
+        700: {
+            itemsToShow: 2,
             snapAlign: 'start',
             wrapAround: true,
             itemsToScroll: 1,
         },
-        breakpoints: {
-            700: {
-                itemsToShow: 2,
-                snapAlign: 'start',
-                wrapAround: true,
-                itemsToScroll: 1,
-            },
-            850: {
-                itemsToShow: 2.5,
-                snapAlign: 'start',
-                wrapAround: true,
-                itemsToScroll: 1,
-            },
-            1024: {
-                itemsToShow: 3,
-                snapAlign: 'start',
-                wrapAround: true,
-                itemsToScroll: 3,
-            },
-            1200: {
-                itemsToShow: 3.5,
-                snapAlign: 'start',
-                wrapAround: true,
-            },
-            1440: {
-                itemsToShow: 4.5,
-                snapAlign: 'start',
-                wrapAround: true,
-                itemsToScroll: 3,
-            },
-            1700: {
-                itemsToShow: 5.5,
-                snapAlign: 'start',
-                wrapAround: true,
-                itemsToScroll: 3,
-            },
+        850: {
+            itemsToShow: 2.5,
+            snapAlign: 'start',
+            wrapAround: true,
+            itemsToScroll: 1,
         },
-    });
+        1024: {
+            itemsToShow: 3,
+            snapAlign: 'start',
+            wrapAround: true,
+            itemsToScroll: 3,
+        },
+        1200: {
+            itemsToShow: 3.5,
+            snapAlign: 'start',
+            wrapAround: true,
+        },
+        1440: {
+            itemsToShow: 4.5,
+            snapAlign: 'start',
+            wrapAround: true,
+            itemsToScroll: 3,
+        },
+        1700: {
+            itemsToShow: 5.5,
+            snapAlign: 'start',
+            wrapAround: true,
+            itemsToScroll: 3,
+        },
+    },
+});
 
-    const getCardClass = (index) => {
-        let pattern = ['md:mt-16', 'md:-mt-16', 'md:mt-0'];
+const getCardClass = (index) => {
+    let pattern = ['md:mt-16', 'md:-mt-16', 'md:mt-0'];
 
-        return pattern[index % pattern.length];
-    };
+    return pattern[index % pattern.length];
+};
 </script>

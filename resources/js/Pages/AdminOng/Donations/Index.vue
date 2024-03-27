@@ -24,13 +24,6 @@
 
                     {{ $t('empty_filters') }}
                 </SecondaryButton>
-
-                <div :class="['col-span-12 flex justify-end', hasValues ? 'sm:col-span-4' : 'sm:col-span-6']">
-                    <SecondaryButton class="flex items-center justify-center py-2 gap-x-2">
-                        <DownloadIcon class="w-4 h-4 shrink-0" />
-                        {{ $t('download_table') }}
-                    </SecondaryButton>
-                </div>
             </div>
 
             <Select
@@ -70,45 +63,45 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import route from '@/Helpers/useRoute';
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import Table from '@/Components/tables/Table.vue';
-    import Select from '@/Components/form/Select.vue';
-    import SearchFilter from '@/Components/filters/SearchFilter.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import useFilters from '@/Helpers/useFilters.js';
-    import { CurrencyEuroIcon } from '@heroicons/vue/outline';
-    import { XIcon, DownloadIcon } from '@heroicons/vue/solid';
+import { ref } from 'vue';
+import route from '@/Helpers/useRoute';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import Table from '@/Components/tables/Table.vue';
+import Select from '@/Components/form/Select.vue';
+import SearchFilter from '@/Components/filters/SearchFilter.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import useFilters from '@/Helpers/useFilters.js';
+import { CurrencyEuroIcon } from '@heroicons/vue/outline';
+import { XIcon, DownloadIcon } from '@heroicons/vue/solid';
 
-    const props = defineProps({
-        collection: {
-            type: Object,
-            required: true,
-        },
-        filter: {
-            type: Object,
-            required: false,
-        },
-        projects: Array,
-        statuses: Array,
-        dates: Array,
-    });
+const props = defineProps({
+    collection: {
+        type: Object,
+        required: true,
+    },
+    filter: {
+        type: Object,
+        required: false,
+    },
+    projects: Array,
+    statuses: Array,
+    dates: Array,
+});
 
-    /** Active filter state. */
-    const hasValues = ref(false);
+/** Active filter state. */
+const hasValues = ref(false);
 
-    /** Filter values. */
-    const filter = ref({
-        search: props.filter?.search || null,
-        status: props.filter?.status || null,
-        amount: props.filter?.amount || null,
-        project: props.filter?.project || null,
-        dates: props.filter?.dates || [],
-    });
+/** Filter values. */
+const filter = ref({
+    search: props.filter?.search || null,
+    status: props.filter?.status || null,
+    amount: props.filter?.amount || null,
+    project: props.filter?.project || null,
+    dates: props.filter?.dates || [],
+});
 
-    const sort = ref(null);
+const sort = ref(null);
 
-    const { applyFilters, clearFilters } = useFilters(filter, sort, route('dashboard.donations.index'));
+const { applyFilters, clearFilters } = useFilters(filter, sort, route('dashboard.donations.index'));
 </script>
