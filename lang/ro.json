@@ -537,7 +537,19 @@
     "regional.project.page.registration_ended" : "Înscrierea a luat sfărșit",
     "regional.project.page.see_rules" : "Vezi calendarul detaliat în",
     "regional.project.page.see_projects" : "Vezi proiectele înscrise",
-    "regional.project.gala.registration_ended": "Perioada de înscriere a luat sfârșit. Gala va avea loc pe"
+    "regional.project.gala.registration_ended": "Perioada de înscriere a luat sfârșit. Gala va avea loc pe",
+    "donation_status.aborted" : "Anulată",
+    "donation_status.charged" : "Încasată",
+    "donation_status.capture" : "Încasată",
+    "donation_status.canceled" : "Anulată",
+    "donation_status.authorized" : "Autorizată",
+    "donation_status.possible_fraud" : "Posibil fraudulos",
+    "donation_status.payment_declined" : "Plata refuzată"
+
+
+
+
+
 
 
 

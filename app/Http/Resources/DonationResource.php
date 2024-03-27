@@ -16,7 +16,7 @@ class DonationResource extends Resource
             'donor' => "{$this->first_name} {$this->last_name}",
             'project' => $this->project->name,
             'amount' => money_format($this->amount),
-            'status' => $this->status,
+            'status' => $this->status->label(),
             'created_at' => $this->created_at->toFormattedDateTime(),
         ];
     }

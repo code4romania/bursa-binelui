@@ -44,6 +44,7 @@ class Policy extends BasePolicy
             ->addDirective(Directive::IMG, [
                 '*',
                 'data:',
+                'blob:',
             ])
             ->addDirective(Directive::OBJECT, Keyword::SELF);
     }
