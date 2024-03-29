@@ -13,6 +13,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\HtmlString;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -37,7 +38,11 @@ class AuthServiceProvider extends ServiceProvider
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject(__('auth.mail.verify_email.subject'))
+                ->greeting(__('auth.mail.verify_email.greeting'))
                 ->line(__('auth.mail.verify_email.line_1'))
+                ->salutation(
+                    new HtmlString(__('auth.mail.verify_email.salutation') . '<br/>' . __('auth.mail.verify_email.team'))
+                )
                 ->action(__('auth.mail.verify_email.action'), $url);
         });
     }

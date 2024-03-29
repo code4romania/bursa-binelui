@@ -9,7 +9,10 @@ return [
     'mail' => [
         'verify_email' => [
             'subject' => 'Verifică-ți adresa de email',
-            'line_1' => 'Te rugăm să confirmi adresa de email apăsând pe butonul de mai jos.',
+            'greeting' => 'Bunǎ,',
+            'salutation' => 'Îţi mulțumim,',
+            'team' => 'Echipa Bursa Binelui',
+            'line_1' => 'Bun venit pe platforma Bursa Binelui! Te rugăm să confirmi adresa de email apăsând pe butonul de mai jos.',
             'action' => 'Confirmă adresa de email',
         ],
     ],
