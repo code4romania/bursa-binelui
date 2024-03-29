@@ -35,13 +35,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view-project', function ($user) {
             return $user->isAdmin();
         });
+        app()->setLocale('ro');
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject(__('auth.mail.verify_email.subject'))
                 ->greeting(__('auth.mail.verify_email.greeting'))
                 ->line(__('auth.mail.verify_email.line_1'))
                 ->salutation(
-                    new HtmlString(__('auth.mail.verify_email.salutation') . '<br/>' . __('auth.mail.verify_email.team'))
+                    new HtmlString(__('mail.salutation') . '<br/>' . __('mail.team'))
                 )
                 ->action(__('auth.mail.verify_email.action'), $url);
         });

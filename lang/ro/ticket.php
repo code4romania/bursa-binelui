@@ -58,6 +58,7 @@ return[
     'mail' => [
         'created' => [
             'subject' => 'Ticketul #:id a fost creat.',
+            'line' => 'Administratorul platformei a deschis Ticketul #10 pentru tine.'
         ],
         'replied' => [
             'subject' => 'Ticketul #:id a primit un răspuns nou.',

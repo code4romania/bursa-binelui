@@ -68,9 +68,6 @@ class RegistrationRequest extends FormRequest
             'ngo.contact_person.required' => __('custom_validation.ngo.field.required', ['attribute' => 'persoana de contact']),
             'ngo.website.url' => __('custom_validation.ngo.field.url', ['attribute' => 'Website']),
 
-
-
-
         ];
     }
 }
