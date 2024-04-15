@@ -123,6 +123,6 @@ return [
     ],
 
     'ticket_rejected' => [
-        'subject' => 'Organizația ta a fost respinsă de către un administrator.',
+        'subject' => 'Ne pare rău, modificarea făcută a fost respinsă de către un administrator Bursa Binelui.',
     ],
 ];

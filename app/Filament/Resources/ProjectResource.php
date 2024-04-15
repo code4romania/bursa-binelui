@@ -114,11 +114,11 @@ class ProjectResource extends Resource
                 DatePicker::make('end')
                     ->required(),
                 Textarea::make('description')
-                    ->maxLength(65535),
+                    ->maxLength(1000),
                 Textarea::make('scope')
-                    ->maxLength(65535),
+                    ->maxLength(860),
                 Textarea::make('beneficiaries')
-                    ->maxLength(65535),
+                    ->maxLength(1000),
                 Textarea::make('reason_to_donate')
                     ->maxLength(65535),
                 Toggle::make('accepting_volunteers')

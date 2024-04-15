@@ -54,4 +54,5 @@ return [
     ],
 
     'header' => 'Voluntari (:number)',
+    'general_project' => 'Direct la ONG',
 ];

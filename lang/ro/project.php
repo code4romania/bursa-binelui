@@ -80,6 +80,7 @@ return [
         'approved' => 'Proiecte aprobate',
         'rejected' => 'Proiecte respinse',
         'all_projects' => 'Toate proiectele',
+        'cif' => 'CUI/CIF',
 
     ],
     'visible_status' => [
@@ -94,7 +95,7 @@ return [
     ],
 
     'ticket_rejected' => [
-        'subject' => 'Proiectul :project a fost respinsă de către un administrator.',
+        'subject' => 'Ne pare rău, modificarea făcută a fost respinsă de către un administrator Bursa Binelui.',
     ],
 
     'approve_modal' => [
@@ -119,4 +120,6 @@ return [
         'subheading' => 'Sunteți sigur că doriți să reactivați proiectul ":name"?',
     ],
 
+    'project_status_changed' => 'Proiectul a fost trimis pentru aprobare către administratorul platformei. Mulțumim!',
+    'project_updated' => 'Datele proiectului au fost schimbate.',
 ];

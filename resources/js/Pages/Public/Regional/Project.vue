@@ -252,6 +252,7 @@
     import Gallery from '@/Components/Gallery.vue';
     import { BookmarkIcon, LocationMarkerIcon, CalendarIcon, UserIcon } from '@heroicons/vue/outline';
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import { trans } from 'laravel-vue-i18n';
 
     const props = defineProps({
         project: {
@@ -276,7 +277,7 @@
         if (navigator.clipboard) {
             navigator.clipboard
                 .writeText(embedCode)
-                .then(() => alert('Embed code copied to clipboard!'))
+                .then(() => alert(trans('embed_code_copied')))
                 .catch(() => alert('Failed to copy embed code to clipboard!'));
         } else {
             /** Create textarea element. */

@@ -109,7 +109,7 @@ class RegionalProjectController extends Controller
         $project->update($request->all());
 
         return redirect()->back()
-            ->with('success', 'Project updated.');
+            ->with('success', __('project.project_updated'));
     }
 
     /**
@@ -129,6 +129,6 @@ class RegionalProjectController extends Controller
                 ->with('error', $exception->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Project status changed.');
+        return redirect()->back()->with('success', __('project.project_status_changed'));
     }
 }

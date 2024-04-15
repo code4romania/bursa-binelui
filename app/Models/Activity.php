@@ -160,7 +160,7 @@ class Activity extends BaseActivity
             $organization = $this->subject->organization;
         }
         $organization->tickets()->create([
-            'subject' => __('project.ticket_rejected.subject', ['project' => $this->subject->name]),
+            'subject' => __('project.ticket_rejected.subject'),
             'content' => $reason,
             'user_id' => auth()->user()->id,
         ]);

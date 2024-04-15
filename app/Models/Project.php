@@ -267,7 +267,7 @@ class Project extends Model implements HasMedia
 
         if ($reason) {
             $this->organization->tickets()->create([
-                'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
+                'subject' => __('project.ticket_rejected.subject'),
                 'content' => $reason,
                 'user_id' => auth()->user()->id,
             ]);

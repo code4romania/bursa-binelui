@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'failed' => 'Datele de identificare nu pot fi confirmate.',
+    'failed' => 'Datele de identificare introduse nu sunt corecte. Dacă ai uitat parola, dă click pe "Am uitat parola".',
     'password' => 'Parola este greșită.',
     'throttle' => 'Prea multe încercări de intrare în cont. Puteți încerca din nou peste :seconds secunde.',
     'mail' => [
@@ -20,6 +20,7 @@ return [
         'already_used' => 'Parola a fost deja setată.',
         'greeting' => 'Bun venit, :name!',
         'intro' => 'Bine ai venit pe platforma :app. Pentru a-ți seta parola, te rugăm să apeși pe butonul de mai jos.',
+        'ngo_intro' => 'O organizație de pe platforma Bursa Binelui te-a invitat să devii manager pentru un ONG. Pentru a crea un cont și a-ți seta o parolă, te rugăm să apeși pe butonul de mai jos.',
         'invalid_signature' => 'Link-ul de setare a parolei este invalid.',
         'no_user' => 'Nu există un utilizator cu acest email.',
         'subject' => 'Bun venit pe :app',
