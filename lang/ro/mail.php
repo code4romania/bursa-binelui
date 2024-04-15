@@ -15,6 +15,10 @@ return[
             'line_2' => 'Pe baza acestor documente se va încheia contractul între organizație și furnizorul de plăţi online, EuPlătesc.ro, colaborator BCR, banca susținătoare a platformei Bursa Binelui. În acest moment, susținătorii tăi nu pot face donații pentru proiectul pe care l-ai înscris, dar această opțiune va fi activată imediat ce documentele listate mai sus ajung completate și semnate la EuPlătesc pentru a încheia contractul.',
             'line_3' => 'Îți reamintim că butonul DONEAZĂ apare doar în pagina proiectelor făcute de ONG - ca să puteți primi donații prin intermediul platformei Bursa Binelui, te rugăm să înregistrezi și proiectul / proiectele pentru care dorești să atragi fonduri. Mai multe detalii găsești în pagina de AJUTOR a platformei BursaBinelui.ro. Dacă ai întrebări, te rugăm scrie-ne pe contact@bursabinelui.ro.',
         ],
+        'project_created' => [
+            'line_1' => 'Administratorul platformei a aprobat Proiectul tău, de acum este listat pe platforma BB.',
+        ],
+        'action_button' => 'Intră aici în contul tău.',
     ],
     'admin' => [
         'organization_created' => [
