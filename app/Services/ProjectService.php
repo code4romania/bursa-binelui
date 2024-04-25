@@ -14,6 +14,7 @@ use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Spatie\Image\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProjectService
@@ -66,7 +67,13 @@ class ProjectService
 
         if (! empty($data['gallery'])) {
             collect($data['gallery'])->map(function ($image) use ($project) {
-                $project->addMedia($image)->toMediaCollection('gallery');
+                $tmpImage = Image::load($image->getPathname());
+
+                $width = $tmpImage->getWidth();
+                $height = $tmpImage->getHeight();
+                $project->addMedia($image)
+                    ->withCustomProperties($width || $height ? compact('width', 'height') : [])
+                    ->toMediaCollection('gallery');
             });
         }
 

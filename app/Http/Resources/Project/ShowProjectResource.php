@@ -25,6 +25,8 @@ class ShowProjectResource extends Resource
                 return [
                     'id' => $media->id,
                     'url' => $media->getFullUrl(),
+                    'width' => $media->getCustomProperty('width') ?? '100%',
+                    'height' => $media->getCustomProperty('height') ?? '100%',
                 ];
             })->toArray(),
             'organization' => [

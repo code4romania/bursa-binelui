@@ -47,7 +47,7 @@ class OrganizationCreated extends Notification
                 new HtmlString(__('mail.salutation') . '<br/>' . __('mail.team'))
             )
             ->line(__('mail.admin.organization_created.line_1', ['name' => $this->organization->name]))
-            ->action(__('mail.admin.organization_created.action'), OrganizationResource::getUrl('view',['record'=>$this->organization]));
+            ->action(__('mail.admin.organization_created.action'), OrganizationResource::getUrl('view', ['record' => $this->organization]));
     }
 
     /**
