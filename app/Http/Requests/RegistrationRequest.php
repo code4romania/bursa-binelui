@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use App\Rules\ValidCIF;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class RegistrationRequest extends FormRequest
 {
@@ -23,7 +24,17 @@ class RegistrationRequest extends FormRequest
             'user' => ['required', 'array'],
             'user.name' => ['required', 'string'],
             'user.email' => ['required', 'email', 'unique:users,email'],
-            'user.password' => ['required', 'string', 'confirmed'],
+            'user.password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
         ];
 
         if ($this->type === 'organization') {

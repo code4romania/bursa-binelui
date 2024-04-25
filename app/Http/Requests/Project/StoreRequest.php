@@ -51,12 +51,12 @@ class StoreRequest extends FormRequest
             'preview' => ['file', 'nullable'],
         ];
     }
+
     public function messages()
     {
         return[
             'start.after_or_equal' => __('custom_validation.project.start.after_or_equal'),
             'end.after' => __('custom_validation.project.end.after'),
         ];
-
     }
 }
