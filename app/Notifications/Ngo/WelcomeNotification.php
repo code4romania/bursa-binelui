@@ -33,9 +33,7 @@ class WelcomeNotification extends Notification
             ->greeting(__('auth.welcome.greeting', [
                 'name' => $notifiable->name,
             ]))
-            ->line(__('auth.welcome.intro', [
-                'app' => config('app.name'),
-            ]))
+            ->line(__('auth.welcome.ngo_intro'))
             ->action(__('auth.welcome.submit'), URL::signedRoute(
                 'dashboard.auth.welcome',
                 ['user' => $notifiable->id]

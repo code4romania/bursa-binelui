@@ -78,7 +78,7 @@ class ProjectController extends Controller
         ProjectService::update($project, $request->validated());
 
         return redirect()->back()
-            ->with('success', 'Project updated.');
+            ->with('success', __('project.project_updated'));
     }
 
     public function changeStatus(StatusChangeRequest $request, Project $project)
@@ -88,6 +88,6 @@ class ProjectController extends Controller
         (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
 
         return redirect()->back()
-            ->with('success', 'Project status changed.');
+            ->with('success', __('project.project_status_changed.'));
     }
 }

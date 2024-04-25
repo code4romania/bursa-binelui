@@ -152,7 +152,7 @@ const navigation = [
         icon: UserCircleIcon,
     },
     {
-        name: 'Donații',
+        name: trans('donations'),
         route: route('dashboard.donations.index'),
         icon: CurrencyEuroIcon,
     },

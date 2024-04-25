@@ -42,7 +42,7 @@ class TicketReceivedReplyNotification extends Notification
             ->subject(__('ticket.mail.replied.subject', [
                 'id' => $this->message->ticket->id,
             ]))
-            ->line(__('ticket.mail.replied.subject', [
+            ->line(__('ticket.mail.replied.body', [
                 'id' => $this->message->ticket->id,
             ]))
             ->action(

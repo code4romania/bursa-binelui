@@ -15,7 +15,7 @@
     "verification_email": "Un nou email de validare a fost trimis către adresa ta de email.",
     "cancel": "Anulează",
     "save": "Salvează",
-    "saved": "Salvat.",
+    "saved": "Modificări salvate.",
     "remember_me": "Ține-mă minte",
     "password_forgoten": "Am uitat parola",
     "log_in": "Intră în cont",
@@ -111,7 +111,7 @@
     "external_links_title": "Linkuri externe",
     "add": "Adaugă",
     "remove": "Șterge",
-    "external_links_text": "Organizația poate recruta voluntari prin platforma Bursa Binelui. Completează datele de mai jos dacă dorești acest lucru pentru organizația ta.",
+    "external_links_text": "Linkuri externe. Orice link legat de proiect trebuie să conțină și https://",
     "preview": "Previzualizează",
     "edit_project_title": "Editează proiect",
     "main_image": "Imagine principală",
@@ -148,7 +148,7 @@
     "register_ong_link": "Înregistrează ONG",
     "donor_link": "Devino donator",
     "organizations_link": "Organizații",
-    "projects_link": "Proiecte active",
+    "projects_link": "Proiecte deschise",
     "news_letter_subscribe_title": "ABONEAZĂ-TE LA NEWSLETTER",
     "news_letter_subscribe_text": "Cele mai noi informații, proiecte și vești de bine despre organizațiile tale preferate.",
     "subscribe": "Abonare",
@@ -227,7 +227,7 @@
     "message_label": "Mesaj",
     "confirm_delete_image_text": "Esti sigur ca vrei sa stergi imaginea?",
     "copied": "copiat",
-    "donation_status": "Statut donație",
+    "donation_status": "Status donație",
     "project": "Proiect",
     "start_date": "Dată început",
     "end_date": "Dată sfârșit",
@@ -362,7 +362,7 @@
     "projects_number" : "Număr proiecte",
     "projects_target" : "Suma target",
     "evolution": "Evolutie",
-    "donations": "Donații",
+    "donations": "Donații ONG",
     "registered_projects": "proiecte inscrise",
     "projects_per_domain": "Proiecte per domenii",
     "good_deeds": "Indicele Faptelor Bune",
@@ -393,16 +393,17 @@
     "ticket_closed_at": "Închis la data",
     "add_regional_project": "Adaugă un proiect regional",
     "field_has_pending_changes": "Modificarea acestui câmp trebuie aprobată înainte de a se mai face editări.",
-    "field_pending_changes": "Noua valoare a campului este: ",
-    "verify_email_title": "Îți mulțumim că te-ai înregistrat pe platforma Bursa Binelui!",
-    "verify_email_description": "Te rugăm să îți validezi adresa de email pentru a-ți accesa contul. Dacă nu ai primit un email pentru validarea contului, te rugăm să ne contactezi la contact@bursabinelui.com.",
-    "verify_email_warning": "Dacă adresa de email nu va fi validată în 48 de ore, datele tale vor fi șterse și va trebui să te înregistrezi din nou.",
+    "field_pending_changes": "Noua valoare a cămpului este: ",
+    "verify_email_title": "Îți mulțumim că te-ai înregistrat pe platforma Bursa Binelui !",
+    "verify_email_description": "Te rugăm să îți validezi adresa de email pentru a-ți accesa contul. Dacă nu ai primit un email pentru validare, te rugăm să ne contactezi la email@example.com.",
+    "verify_email_warning": "Dacă adresa de email nu va fi validată în 48 de ore, datele tale vor fi șterse și nu vor putea fi recuperate",
     "county_available_for_participation": "Județe participante: ",
     "registration_active" : "Înscrierea este activă",
     "registration_inactive" : "Înscrierea este inactivă",
     "can.be.archived": "Arhivează",
     "articles.index": "Articole",
     "articles.category": "Articole din domeniul \":category\"",
+    "embed_code_copied": "Codul embed a fost salvat în clipboard și poate fi folosit.",
 
     "sort.trigger": "Sortează",
     "sort.publish_date": "Data publicării",
@@ -490,6 +491,7 @@
     "organization_status_approved": "Organizația este aprobată",
     "organization_status_rejected": "Organizația este respinsă",
     "project_change_status_archived": "Vrei să arhivezi proiectul?",
+    "project_change_status_publish": "Ești sigur că vrei să trimiți proiectul draft pentru aprobare?",
 
     "regional.project.page_title": "Înscrie proiectul în ",
     "regional.project.edit_page_title": "Editează proiectul în ",
@@ -516,7 +518,7 @@
     "regional.project.project_team" : "Cum a fost organizată echipa proiectului? Câți oameni ați fost, ce roluri ați avut?*",
     "regional.project.preview_image" : "Încarcă o poză reprezentativă despre proiect* (această informație va fi listată pe site)",
     "regional.project.gallery" : "Dacă doriți să împărtășiți cu noi diverse alte materiale, e momentul să le încărcați aici*.",
-    "regional.project.contact_info_details": "Organizația poate recruta voluntari prin platforma Bursa Binelui. Completează datele de mai jos dacă dorești acest lucru pentru organizația ta.",
+    "regional.project.contact_info_details": "Linkuri externe. Orice link legat de proiect trebuie să conțină și https://",
     "regional.project.contact_info": "Persoana de contact",
     "regional.project.contact_info_person": "Nume si prenume persoană de contact*",
     "regional.project.contact_info_job": "Funcția persoanei de contact în organizație*",
@@ -538,19 +540,8 @@
     "regional.project.page.see_rules" : "Vezi calendarul detaliat în",
     "regional.project.page.see_projects" : "Vezi proiectele înscrise",
     "regional.project.gala.registration_ended": "Perioada de înscriere a luat sfârșit. Gala va avea loc pe",
-    "donation_status.aborted" : "Anulată",
-    "donation_status.charged" : "Încasată",
-    "donation_status.capture" : "Încasată",
-    "donation_status.canceled" : "Anulată",
-    "donation_status.authorized" : "Autorizată",
-    "donation_status.possible_fraud" : "Posibil fraudulos",
-    "donation_status.payment_declined" : "Plata refuzată"
-
-
-
-
-
-
-
+    "Hello!": "Salut!",
+    "Regards": "Îţi mulțumim",
+    "Team": "Echipa"
 
 }

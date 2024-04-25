@@ -116,12 +116,12 @@ class DatabaseSeeder extends Seeder
     {
         $projectCategories = [
             'Antreprenoriat social',
-            'Cultura',
+            'Cultură',
             'Drepturile omului',
             'Educație',
             'Mediu',
             'Protecția animalelor',
-            'Sanatate',
+            'Sănătate',
             'Social',
             'Sport',
         ];

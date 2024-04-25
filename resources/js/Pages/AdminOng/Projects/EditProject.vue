@@ -584,6 +584,7 @@
     import Checkbox from '@/Components/form/Checkbox.vue';
     import RepeaterComponent from '@/Components/RepeaterComponent.vue';
     import FileGroup from '@/Components/form/FileGroup.vue';
+    import { trans } from 'laravel-vue-i18n';
 
     const props = defineProps({
         project: Object,
@@ -617,7 +618,7 @@
     const changeProjectStatus = (id, status, type) => {
         let tmpRoute =
             type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        if (confirm('Are you sure you want to change the status of this project?')) {
+        if (confirm(trans('project_change_status_publish'))) {
             formChangeStatus.post(tmpRoute, {
                 preserveScroll: true,
                 onSuccess: (response) => {

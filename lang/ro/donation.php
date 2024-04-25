@@ -37,15 +37,15 @@ return [
     ],
 
     'statuses' => [
-        'initialize' => 'Inițializata',
-        'authorized' => 'Autorizata',
-        'unauthorized' => 'Neautorizata',
-        'canceled' => 'Anulata',
-        'aborted' => 'Abandonata',
-        'payment_declined' => 'Plata refuzata',
+        'initialize' => 'Inițializată',
+        'authorized' => 'Autorizată',
+        'unauthorized' => 'Neautorizată',
+        'canceled' => 'Anulată',
+        'aborted' => 'Abandonată',
+        'payment_declined' => 'Plata refuzată',
         'possible_fraud' => 'Posibil fraudulos',
-        'charged' => 'Incasata',
-        'capture' => 'Incasata',
+        'charged' => 'Incasată',
+        'capture' => 'Incasată',
     ],
 
     'header' => 'Donatii (:number)',
