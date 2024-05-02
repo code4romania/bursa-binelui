@@ -542,6 +542,8 @@
     "regional.project.gala.registration_ended": "Perioada de înscriere a luat sfârșit. Gala va avea loc pe",
     "Hello!": "Salut!",
     "Regards": "Îţi mulțumim",
-    "Team": "Echipa"
+    "Team": "Echipa",
+    "project.project_status_changed": "Statusul proiectului a fost schimbat cu succes"
+
 
 }
