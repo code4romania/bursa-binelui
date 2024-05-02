@@ -24,13 +24,12 @@ return [
     'start_date' => [
         'after_or_equal' => 'Data de început a perioadei de donații nu poate fi în trecut.',
     ],
-    'project' =>
-    [
-        'start'=> [
+    'project' => [
+        'start' => [
             'after_or_equal' => 'Data de început a proiectului nu poate fi în trecut.',
         ],
         'end' => [
             'after' => 'Data de finalizare a proiectului trebuie să fie după data de început.',
         ],
-    ]
+    ],
 ];
