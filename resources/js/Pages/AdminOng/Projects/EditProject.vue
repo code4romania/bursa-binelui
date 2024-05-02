@@ -70,7 +70,7 @@
             <Field
                 :label="$t('period_start_donation')"
                 :hasPendingChanges="hasPendingChanges('start')"
-                :errors="formChangeStatus.errors.start"
+                :errors="formChangeStatus.errors.start || errors.start"
             >
                 <template #value> {{ project.start }} </template>
 
@@ -98,7 +98,7 @@
             <Field
                 :label="$t('period_end_donation')"
                 :hasPendingChanges="hasPendingChanges('end')"
-                :errors="formChangeStatus.errors.end"
+                :errors="formChangeStatus.errors.end || errors.end"
                 alt
             >
                 <template #value>{{ project.end }} </template>

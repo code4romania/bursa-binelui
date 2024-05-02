@@ -41,4 +41,12 @@ class EditRequest extends FormRequest
             'image' => ['file', 'nullable'],
         ];
     }
+
+    public function messages(): array
+    {
+        return[
+            'start.after_or_equal' => __('custom_validation.project.start.after_or_equal'),
+            'end.after' => __('custom_validation.project.end.after'),
+        ];
+    }
 }
