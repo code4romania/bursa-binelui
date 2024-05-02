@@ -48,7 +48,7 @@
                                     <Link
                                         :href="route('contact')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text=" $t('contact_link') "
+                                        v-text="$t('contact_link')"
                                     />
                                 </li>
                             </ul>
@@ -57,7 +57,7 @@
 
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                            <h3 class="text-sm font-semibold leading-5 text-gray-400" v-text="$t('navigate')"/>
+                            <h3 class="text-sm font-semibold leading-5 text-gray-400" v-text="$t('navigate')" />
                             <ul role="list" class="mt-6 space-y-4">
                                 <li>
                                     <Link
@@ -120,7 +120,11 @@
 
             <div class="pt-8 mt-10 border-t border-white/10 md:flex md:items-center md:justify-between lg:mt-16">
                 <div class="flex gap-6 md:order-2">
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                    <a
+                        href="https://www.facebook.com/BursaBinelui.ro"
+                        class="text-gray-500 hover:text-gray-400"
+                        target="_blank"
+                    >
                         <Icon name="social/facebook" class="w-6 h-6" />
                     </a>
 
@@ -128,11 +132,11 @@
                         <Icon name="social/instagram" class="w-6 h-6" />
                     </a>
 
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
-                        <Icon name="social/twitter" class="w-6 h-6" />
-                    </a>
-
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                    <a
+                        href="https://github.com/code4romania/bursa-binelui"
+                        class="text-gray-500 hover:text-gray-400"
+                        target="_blank"
+                    >
                         <Icon name="social/github" class="w-6 h-6" />
                     </a>
                 </div>
@@ -145,27 +149,27 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { useForm } from '@inertiajs/vue3';
-    // import route from '@/Helpers/useRoute';
+/** Import from inertia. */
+import { useForm } from '@inertiajs/vue3';
+// import route from '@/Helpers/useRoute';
 
-    /** Import componets. */
-    import Input from '@/Components/form/Input.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import Icon from '@/Components/Icon.vue';
+/** Import componets. */
+import Input from '@/Components/form/Input.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import Icon from '@/Components/Icon.vue';
 
-    /** Form variables. */
-    const form = useForm({
-        subscriber_email: '',
-    });
+/** Form variables. */
+const form = useForm({
+    subscriber_email: '',
+});
 
-    /** Subscribe action. */
-    const subscribe = () => {
-        // form.post(route('need.subscribe.route'), {
-        //     onFinish: () => form.reset('subscribe_email'),
-        // });
-    };
+/** Subscribe action. */
+const subscribe = () => {
+    // form.post(route('need.subscribe.route'), {
+    //     onFinish: () => form.reset('subscribe_email'),
+    // });
+};
 
-    /** Get current year. */
-    const currentYear = new Date().getFullYear();
+/** Get current year. */
+const currentYear = new Date().getFullYear();
 </script>
