@@ -6,6 +6,7 @@ return [
     'activity_domains_ids' => 'Trebuie să selectați cel puțin un domeniu de activitate.',
     'counties_ids' => 'Te rugăm să selectezi cel puțin un județ.',
     'password_confirmed' => 'Ai întrodus două parole diferite.',
+    'password_complexity' => 'Parola trebuie să conțină cel puțin 8 caractere, litere mari și mici, cifre și caractere speciale.',
     'email_unique' => 'Această adresa de email a fost deja folosită pentru înregistrare pe platforma Bursa Binelui. Alege o altă adresă sau scrie un mail administratorului la contact@bursabinelui.ro. ',
     'terms_required' => 'Pentru a te înregistra, te rugăm să accepți "Termeni și condiții" ale site-ului Bursa Binelui.',
     'ngo' => [

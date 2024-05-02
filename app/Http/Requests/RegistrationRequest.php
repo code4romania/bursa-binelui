@@ -68,6 +68,7 @@ class RegistrationRequest extends FormRequest
             'ngo.counties' => __('custom_validation.counties_ids'),
             'user.email.unique' => __('custom_validation.email_unique'),
             'user.password.confirmed' => __('custom_validation.password_confirmed'),
+            'user.password.*' => __('custom_validation.password_complexity'),
             'terms.accepted' => __('custom_validation.terms_required'),
             'ngo.cif.unique' => __('custom_validation.ngo.cif.unique'),
             'ngo.logo.required' => __('custom_validation.ngo.field.required', ['attribute' => 'logo']),
