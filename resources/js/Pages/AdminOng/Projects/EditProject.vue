@@ -244,9 +244,7 @@
                             v-model="project.description"
                             :error="errors.description"
                         >
-                            <p class="text-sm font-normal text-gray-500">
-                                {{ $t('project_description_extra') }}
-                            </p>
+                            {{ $t('project_description_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -276,7 +274,7 @@
                             v-model="project.scope"
                             :error="errors.scope"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
+                            {{ $t('project_scope_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -305,9 +303,7 @@
                             v-model="project.beneficiaries"
                             :error="errors.beneficiaries"
                         >
-                            <p class="text-sm font-normal text-gray-500">
-                                {{ $t('project_beneficiary_extra') }}
-                            </p>
+                            {{ $t('project_beneficiary_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -340,7 +336,7 @@
                             v-model="project.reason_to_donate"
                             :error="errors.reason_to_donate"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
+                            {{ $t('why_to_donate_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
