@@ -41,9 +41,16 @@ class ProjectService
                     $media->delete();
                 }
             });
-
         collect($value)->filter(fn ($image) => ! \is_array($image))
-            ->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery'));
+            ->map(function ($image) use ($project) {
+                $tmpImage = Image::load($image->getPathname());
+
+                $width = $tmpImage->getWidth();
+                $height = $tmpImage->getHeight();
+                $project->addMedia($image)
+                    ->withCustomProperties($width || $height ? compact('width', 'height') : [])
+                    ->toMediaCollection('gallery');
+            });
     }
 
     public function create(array $data): Project|GalaProject

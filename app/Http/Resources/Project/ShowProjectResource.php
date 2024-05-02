@@ -51,6 +51,8 @@ class ShowProjectResource extends Resource
                 return [
                     'src' => $media->getFullUrl(),
                     'thumbnail' => $media->getFullUrl('preview'),
+                    'width' => $media->getCustomProperty('width') ?? '100%',
+                    'height' => $media->getCustomProperty('height') ?? '100%',
                 ];
             })->toArray(),
             'is_active' => $this->is_active,
