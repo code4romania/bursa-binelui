@@ -10,7 +10,6 @@
             rel="noreferrer"
         >
             <img :src="image.thumbnail" alt="" />
-            {{ image }}
         </a>
     </div>
 </template>
