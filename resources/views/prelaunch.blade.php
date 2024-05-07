@@ -14,7 +14,7 @@
 <body class="font-sans antialiased">
     <main class="container relative grid items-center min-h-screen lg:gap-10 xl:gap-20 lg:grid-cols-2">
         <div class="py-12">
-            <x-icon-logo class="w-full mb-8 h-14 max-w-44 fill-primary-500" />
+            <img src="{{Vite::image('logo-old.png')}}" class="mb-8  max-w-44 fill-primary-500">
 
             <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-2xl lg:text-2xl">
                 <span class="inline-block">Dragi utilizatori și prieteni ai platformei </span>
