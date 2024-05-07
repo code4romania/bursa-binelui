@@ -48,18 +48,15 @@
 
                 <div class="w-full space-y-4 sm:w-6/12">
                     <h1 class="text-3xl font-bold text-primary-900">{{ $t('contact') }}</h1>
-                    <p class="text-sm font-medium text-gray-500">{{ $t('contact_info') }}</p>
 
-                    <a href="mailto:support@example.com" class="flex items-center gap-2 py-6 text-sm text-gray-500">
+                    <a href="mailto:contact@bursabinelui.ro" class="flex items-center gap-2 py-2 text-sm text-gray-500">
                         <MailIcon class="w-6 h-6 fill-primary-500" />
-                        support@example.com
+                        contact@bursabinelui.ro
                     </a>
-
-                    <div class="space-y-2">
-                        <p class="text-base font-semibold text-primary-500">Los Angeles</p>
-                        <p class="text-sm font-medium text-gray-500">4556 Brendan Ferry</p>
-                        <p class="text-sm font-medium text-gray-500">Los Angeles, CA 90210</p>
-                    </div>
+                    <a href="tel:0729115837" class="flex items-center gap-2 py-2 text-sm text-gray-500">
+                        <PhoneIcon class="w-6 h-6 fill-primary-500" />
+                        0729115837
+                    </a>
                 </div>
             </div>
 
@@ -70,25 +67,25 @@
 </template>
 
 <script setup>
-    import { useForm } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute';
-    import Head from '@/Components/Head.vue';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import { MailIcon } from '@heroicons/vue/solid';
+import { useForm } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute';
+import Head from '@/Components/Head.vue';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Input from '@/Components/form/Input.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import { MailIcon, PhoneIcon } from '@heroicons/vue/solid';
 
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
-    const form = useForm({
-        name: '',
-        email: '',
-        text: '',
-    });
+const form = useForm({
+    name: '',
+    email: '',
+    text: '',
+});
 
-    /** Submit action. */
-    const contact = () => {
-        // form.post(route('route'), {});
-    };
+/** Submit action. */
+const contact = () => {
+    // form.post(route('route'), {});
+};
 </script>
