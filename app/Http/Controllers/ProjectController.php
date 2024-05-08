@@ -15,6 +15,7 @@ use App\Http\Resources\Collections\ProjectCardCollection;
 use App\Http\Resources\Project\ShowProjectResource;
 use App\Http\Sorts\ProjectDonationsCountSort;
 use App\Http\Sorts\ProjectDonationsSumSort;
+use App\Models\County;
 use App\Models\Project;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
@@ -63,7 +64,9 @@ class ProjectController extends Controller
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
-            'mapProjects' => $project->get(),
+            'mapCounties' => County::whereHas('projects', fn ($query) => $query->whereIsPublished())
+                ->withCount('projects')
+                ->get(),
             'collection' => new ProjectCardCollection(
                 $project->paginate()->withQueryString()
             ),

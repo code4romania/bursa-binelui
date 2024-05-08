@@ -51,41 +51,29 @@ const generateMapMarkers = async () => {
     const mapOptions = {
         center: { lat: 45.9432, lng: 24.9668 },
         zoom: 7,
-        // mapTypeId: google.maps.MapTypeId.ROADMAP,
         mapId: '63407f7951bfa43b',
     };
     const { Map } = await google.maps.importLibrary('maps');
 
     const map = new Map(document.getElementById('map'), mapOptions);
 
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-
-    let tmpCounties = [];
-    let projects = props.data;
-    props.data.map((project) => {
-        project.counties.forEach((county) => {
-            county.projects = projects.filter((p) => p.counties.filter((c) => c.id === county.id).length > 0).length;
-            if (tmpCounties.filter((c) => c.id === county.id).length === 0) tmpCounties.push(county);
-            else {
-                let index = tmpCounties.findIndex((c) => c.id === county.id);
-                tmpCounties[index].projects += county.projects;
-            }
-        });
-    });
-    tmpCounties.forEach((county) => {
-        let markers = [];
-        console.log(county);
-        for (let project = 0; project < county.projects; project++) {
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary('marker');
+    // const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    props.data.forEach((county) => {
+        {
+            console.log(county);
+            const pinNoGlyph = new PinElement({
+                glyph: `${county.projects_count}`,
+            });
             const position = { lat: parseFloat(county.lat), lng: parseFloat(county.long) };
             const marker = new AdvancedMarkerElement({
                 position: position,
+                map: map,
                 title: county.name,
-                map: map.value,
+                content: pinNoGlyph.element,
             });
             marker.addListener('click', () => filterProjects(county, marker));
-            markers.push(marker);
         }
-        new MarkerClusterer({ map, markers, onClusterClick: () => filterProjects(county) });
     });
 };
 

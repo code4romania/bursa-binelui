@@ -1,7 +1,7 @@
 <template>
     <PageLayout :title="$t('projects_title')" :icon="ViewBoardsIcon">
         <div v-if="view === 'map'" class="container">
-            <Map :data="mapProjects" @county-selected="(id) => applySelectedCountyFromMap(id)" />
+            <Map :data="mapCounties" @county-selected="(id) => applySelectedCountyFromMap(id)" />
         </div>
         <div class="container grid items-start gap-6 md:grid-cols-12">
             <div class="flex gap-x-6 md:col-span-12 lg:col-span-5">
@@ -137,7 +137,7 @@ const props = defineProps({
     categories: {
         type: Array,
     },
-    mapProjects: {
+    mapCounties: {
         type: Array,
     },
     view: {
