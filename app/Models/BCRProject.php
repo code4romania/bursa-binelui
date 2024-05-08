@@ -57,7 +57,7 @@ class BCRProject extends Model implements HasMedia
     ];
 
     protected $with = [
-        'county', 'category','media'
+        'county', 'category', 'media',
     ];
 
     public function registerMediaCollections(): void

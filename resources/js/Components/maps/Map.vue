@@ -62,8 +62,30 @@ const generateMapMarkers = async () => {
     props.data.forEach((county) => {
         {
             console.log(county);
+            let scale = 1;
+            switch (true) {
+                case county.projects_count > 1:
+                    scale = 1.2;
+                    break;
+                case county.projects_count > 20:
+                    scale = 1.4;
+                    break;
+                case county.projects_count > 30:
+                    scale = 1.6;
+                    break;
+                case county.projects_count > 40:
+                    scale = 1.8;
+                    break;
+                case county.projects_count > 50:
+                    scale = 2;
+            }
+            console.log(scale);
             const pinNoGlyph = new PinElement({
                 glyph: `${county.projects_count}`,
+                background: '#00438A',
+                glyphColor: '#fff',
+                borderColor: '#A8D2FF',
+                scale: scale,
             });
             const position = { lat: parseFloat(county.lat), lng: parseFloat(county.long) };
             const marker = new AdvancedMarkerElement({
