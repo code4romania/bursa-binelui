@@ -119,12 +119,11 @@ abstract class Command extends BaseCommand
             )
             ->get()
             ->each(function (object $file) use ($model, $collection) {
-                $ext =ltrim($file->FileExtension, '.');
+                $ext = ltrim($file->FileExtension, '.');
                 $filename = rtrim($file->FileName, '.') . '.' . $ext;
                 $width = null;
                 $height = null;
-                if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'], true))
-                {
+                if (\in_array($ext, ['jpg', 'jpeg', 'png', 'gif'], true)) {
                     $tmpImage = Image::load($file->Data);
                     $width = $tmpImage->getWidth();
                     $height = $tmpImage->getHeight();
