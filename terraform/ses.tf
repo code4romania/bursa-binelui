@@ -2,6 +2,22 @@
 resource "aws_sesv2_email_identity" "main" {
   email_identity         = var.domain_name
   configuration_set_name = aws_sesv2_configuration_set.main.configuration_set_name
+
+  dynamic "dkim_signing_attributes" {
+    for_each = var.byodkim ? [1] : []
+
+    content {
+      domain_signing_private_key = tls_private_key.byodkim[0].private_key_pem
+      domain_signing_selector    = "ses"
+      next_signing_key_length    = "RSA_2048_BIT"
+    }
+  }
+}
+
+resource "tls_private_key" "byodkim" {
+  count     = var.byodkim ? 1 : 0
+  algorithm = "RSA"
+  rsa_bits  = 2048
 }
 
 # Configuration set

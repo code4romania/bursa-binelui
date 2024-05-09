@@ -88,3 +88,8 @@ variable "prelaunch_secret" {
   type    = string
   default = null
 }
+
+variable "byodkim" {
+  type    = bool
+  default = false
+}
