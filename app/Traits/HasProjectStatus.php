@@ -51,7 +51,9 @@ trait HasProjectStatus
 
     public function isStartingSoon(): bool
     {
-        return $this->isPublished() && ($this->start->isFuture() || ! $this->organization->EuPlatescIsActive());
+        return $this->isPublished()
+            && ! $this->end->isPast()
+            && ($this->start->isFuture() || ! $this->organization->EuPlatescIsActive());
     }
 
     public function isClose(): bool
