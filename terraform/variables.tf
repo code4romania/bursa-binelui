@@ -88,3 +88,8 @@ variable "prelaunch_secret" {
   type    = string
   default = null
 }
+
+variable "google_analytics_tracking_id" {
+  type    = string
+  default = null
+}
