@@ -1,8 +1,13 @@
 <template>
     <Disclosure as="nav" class="relative z-10 bg-white shadow" v-slot="{ open }">
         <div class="container flex items-center justify-between h-16 gap-4 lg:gap-6 lg:my-2">
-            <Link href="/" class="shrink-0">
-                <Icon class="block max-w-36 max-h-10 text-primary-500" name="logo" />
+            <Link href="/" class="flex divide-x shrink-0 divide-primary-200">
+                <div class="pe-3">
+                    <Icon class="block max-w-28 max-w max-h-12" name="logo" />
+                </div>
+                <div class="ps-3">
+                    <Icon class="block max-w-28 max-h-12" name="bcr" />
+                </div>
             </Link>
 
             <!-- Desktop main links -->

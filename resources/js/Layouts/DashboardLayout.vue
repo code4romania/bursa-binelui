@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col min-h-screen">
         <Navbar />
+        <PontBanner />
 
         <Notification />
         <OrganizationStatus />
@@ -68,6 +69,7 @@
 <script setup>
 import Navbar from '@/Components/Navbar.vue';
 import Footer from '@/Components/Footer.vue';
+import PontBanner from '@/Components/PontBanner.vue';
 import Notification from '@/Components/Notification.vue';
 import route from '@/Helpers/useRoute';
 
