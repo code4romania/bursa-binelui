@@ -157,7 +157,6 @@ class ProjectService
         $this->project->status = ProjectStatus::pending->value;
         $this->project->status_updated_at = now();
         $this->project->save();
-        $this->sendCreateNotifications($this->project);
     }
 
     private function archive(Project|GalaProject $project): void

@@ -16,7 +16,7 @@ return[
             'line_3' => 'Îți reamintim că butonul DONEAZĂ apare doar în pagina proiectelor făcute de ONG - ca să puteți primi donații prin intermediul platformei Bursa Binelui, te rugăm să înregistrezi și proiectul / proiectele pentru care dorești să atragi fonduri. Mai multe detalii găsești în pagina de AJUTOR a platformei BursaBinelui.ro. Dacă ai întrebări, te rugăm scrie-ne pe contact@bursabinelui.ro.',
         ],
         'project_created' => [
-            'line_1' => 'Administratorul platformei a aprobat Proiectul tău, de acum este listat pe platforma BB.',
+            'line_1' => 'Proiectul tǎu a fost trimis spre aprobare.',
         ],
         'action_button' => 'Intră aici în contul tău.',
     ],
