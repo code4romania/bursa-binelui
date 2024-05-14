@@ -100,8 +100,7 @@ class ImportBadgesCommand extends Command
         $badges->chunk((int) $this->option('chunk'), function (Collection $badges) {
             $badges->each(function ($badge) {
                 $user = User::where('id', $badge->UserId)->first();
-                if ($user)
-                {
+                if ($user) {
                     $user->badges()->attach($badge->BadgeDefinitionId, ['allocated_at' => Carbon::parse($badge->IssueDate)]);
                 }
             });
