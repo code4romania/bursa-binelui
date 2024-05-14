@@ -112,6 +112,10 @@ module "ecs_app" {
       value = 0.5
     },
     {
+      name  = "GOOGLE_ANALYTICS_TRACKING_ID"
+      value = var.google_analytics_tracking_id
+    },
+    {
       name  = "PRELAUNCH_SECRET"
       value = var.prelaunch_secret
     },
