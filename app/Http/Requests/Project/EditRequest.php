@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Project;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class EditRequest extends FormRequest
 {
@@ -37,8 +38,8 @@ class EditRequest extends FormRequest
             'external_links.*.url' => ['required', 'url'],
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
-            'gallery.*.file' => ['file', 'nullable'],
-            'image' => ['file', 'nullable'],
+            'gallery.*.file' => ['file', 'nullable', File::image()->max(5000)->extensions(['png', 'jpg', 'jpeg'])],
+            'image' => ['file', File::image()->max('5mb')->extensions(['png', 'jpg', 'jpeg']), 'nullable'],
         ];
     }
 
@@ -47,6 +48,9 @@ class EditRequest extends FormRequest
         return[
             'start.after_or_equal' => __('custom_validation.project.start.after_or_equal'),
             'end.after' => __('custom_validation.project.end.after'),
+            'videos.*.url.url' => __('custom_validation.url'),
+            'image.max' => __('custom_validation.image.size'),
+            'gallery.*.file.max' => __('custom_validation.image.size'),
         ];
     }
 }

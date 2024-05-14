@@ -429,7 +429,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('main_image')" :errors="formChangeStatus.errors.preview">
+            <Field :label="$t('main_image')" :errors="formChangeStatus.errors.image || errors.image">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <img class="object-contain w-32 h-32 shrink-0" :src="originalProject.image" alt="" />
@@ -469,7 +469,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('video_link_label')" alt :errors="formChangeStatus.errors.videos">
+            <Field
+                :label="$t('video_link_label')"
+                alt
+                :errors="formChangeStatus.errors.videos || arrayError('videos.0.url')"
+            >
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">
@@ -507,7 +511,10 @@
                 </template>
             </Field>
 
-            <Field :label="$t('external_links_title')" :errors="formChangeStatus.errors.external_links">
+            <Field
+                :label="$t('external_links_title')"
+                :errors="formChangeStatus.errors.external_links || arrayError('external_links.0.title')"
+            >
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">

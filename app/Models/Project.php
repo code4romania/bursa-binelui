@@ -50,6 +50,7 @@ class Project extends Model implements HasMedia
         'status',
         'scope',
         'reason_to_donate',
+        'archived_at',
         'beneficiaries',
         'is_national',
         'start',
@@ -207,7 +208,7 @@ class Project extends Model implements HasMedia
     public function getCanBeArchivedAttribute(): bool
     {
         return $this->status == ProjectStatus::approved
-            && now()->subDays(30)->gte($this->end);
+            && now()->subDays(30)->gte($this->end) && ! $this->isArchived();
     }
 
     public function getIsEndingSoonAttribute(): bool

@@ -48,4 +48,8 @@ return [
         'secret_key' => env('GOOGLE_RECAPTCHA_SECRET_SITE_KEY'),
         'threshold' => max(0.0, min(1.0, floatval(env('GOOGLE_RECAPTCHA_THRESHOLD', 0.5)))),
     ],
+
+    'google_analytics' => [
+        'tracking_id' => env('GOOGLE_ANALYTICS_TRACKING_ID', ''),
+    ],
 ];

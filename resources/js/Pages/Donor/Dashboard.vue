@@ -16,7 +16,7 @@
                         </h2>
                     </header>
 
-                    <div v-html="profile.description" class="my-6 space-y-6 text-sm text-gray-500"></div>
+                    <div v-html="trans('my_dashboard.description')" class="my-6 space-y-6 text-sm text-gray-500"></div>
                 </div>
             </div>
 
@@ -46,13 +46,14 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { Head } from '@inertiajs/vue3';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import { ChartBarIcon } from '@heroicons/vue/outline';
+/** Import from inertia. */
+import { Head } from '@inertiajs/vue3';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import { ChartBarIcon } from '@heroicons/vue/outline';
+import { trans } from 'laravel-vue-i18n';
 
-    const props = defineProps({
-        profile: Object,
-        badges: Array,
-    });
+const props = defineProps({
+    profile: Object,
+    badges: Array,
+});
 </script>

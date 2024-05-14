@@ -187,4 +187,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'min_donation' => env('MIN_DONATION', 5),
+    'max_donation' => env('MAX_DONATION', 10000),
+
 ];

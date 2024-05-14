@@ -163,8 +163,8 @@ class ProjectService
     private function archive(Project|GalaProject $project): void
     {
         $this->project = $project;
-        $this->project->status = ProjectStatus::archived->value;
         $this->project->status_updated_at = now();
+        $this->project->archived_at = now();
         $this->project->save();
     }
 }

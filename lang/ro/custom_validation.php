@@ -24,12 +24,23 @@ return [
     'start_date' => [
         'after_or_equal' => 'Data de început a perioadei de donații nu poate fi în trecut.',
     ],
+    'url' => 'Te rugăm să introduci o adresă web validă împreună cu https://.',
+    'image' => [
+        'size' => 'Imaginea trebuie să aibă o dimensiune de maxim 5MB.',
+    ],
+    'counties' => [
+        'required_if' => 'Trebuie să alegi cel puțin un județ, dacǎ proiectul nu este național.',
+    ],
     'project' => [
         'start' => [
             'after_or_equal' => 'Data de început a proiectului nu poate fi în trecut.',
         ],
         'end' => [
             'after' => 'Data de finalizare a proiectului trebuie să fie după data de început.',
+        ],
+        'donate' => [
+            'min' => 'Suma minimă de donație este de :min RON.',
+            'max' => 'Suma maximă de donație este de :max RON.',
         ],
     ],
 ];

@@ -108,7 +108,7 @@ const navigation = [
         icon: OfficeBuildingIcon,
     },
     {
-        name: trans('projects_all'),
+        name: 'Toate proiectele',
         route: route('dashboard.projects.index'),
         icon: FolderIcon,
         subMenu: [
@@ -149,12 +149,12 @@ const navigation = [
         ],
     },
     {
-        name: 'Utilizatori',
+        name: 'Manageri ONG',
         route: route('dashboard.users.index'),
         icon: UserCircleIcon,
     },
     {
-        name: trans('donations'),
+        name: 'Donații ONG',
         route: route('dashboard.donations.index'),
         icon: CurrencyEuroIcon,
     },
