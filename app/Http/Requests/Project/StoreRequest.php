@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'end' => ['date', 'nullable', 'after:tomorrow'],
             'counties' => ['array', 'nullable'],
             'counties.*' => ['exists:counties,id', 'nullable'],
-            'description' => ['string', 'nullable', 'max:800'],
+            'description' => ['string', 'nullable', 'max:1000'],
             'scope' => ['string', 'nullable'],
             'reason_to_donate' => ['string', 'nullable'],
             'beneficiaries' => ['nullable', 'string'],
