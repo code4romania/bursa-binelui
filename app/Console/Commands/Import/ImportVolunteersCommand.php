@@ -26,7 +26,7 @@ class ImportVolunteersCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Import projects from the old database.';
+    protected $description = 'Import volunteers from the old database.';
 
     /**
      * Execute the console command.
