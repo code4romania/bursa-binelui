@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col min-h-screen">
         <Navbar />
+        <PontBanner />
 
         <Notification />
 
@@ -34,6 +35,7 @@
     import Head from '@/Components/Head.vue';
     import Navbar from '@/Components/Navbar.vue';
     import Footer from '@/Components/Footer.vue';
+    import PontBanner from '@/Components/PontBanner.vue';
     import Notification from '@/Components/Notification.vue';
     import Icon from '@/Components/Icon.vue';
 
