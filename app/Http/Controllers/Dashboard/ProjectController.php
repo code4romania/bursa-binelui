@@ -88,6 +88,6 @@ class ProjectController extends Controller
         (new ProjectService(Project::class))->changeStatus($project, $request->get('status'));
 
         return redirect()->back()
-            ->with('success', __('project.project_status_changed.'));
+            ->with('success', __('project.project_status_changed_notification'));
     }
 }

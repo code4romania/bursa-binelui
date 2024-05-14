@@ -29,6 +29,7 @@
                 />
 
                 <ProjectTag v-else-if="project.is_active" :label="$t('project_active')" :icon="ClockIcon" />
+                <ProjectTag v-else-if="project.is_archived" :label="$t('projects.status.archived')" :icon="ClockIcon" />
                 <ProjectTag v-else-if="!project.is_active && !project.is_rejected" :label="$t('project_closed')" />
                 <ProjectTag v-if="project.is_rejected" :label="$t('project_rejected')" />
 
@@ -163,48 +164,48 @@
 </template>
 
 <script setup>
-    import { computed, onMounted } from 'vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DonateModal from '@/Components/modals/DonateModal.vue';
-    import Modal from '@/Components/modals/Modal.vue';
-    import ProjectTag from '@/Components/projects/Tag.vue';
+import { computed, onMounted } from 'vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import DonateModal from '@/Components/modals/DonateModal.vue';
+import Modal from '@/Components/modals/Modal.vue';
+import ProjectTag from '@/Components/projects/Tag.vue';
 
-    import { BookmarkIcon, LocationMarkerIcon, ClockIcon } from '@heroicons/vue/solid';
-    import { trans } from 'laravel-vue-i18n';
-    import { useForm } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute.js';
+import { BookmarkIcon, LocationMarkerIcon, ClockIcon } from '@heroicons/vue/solid';
+import { trans } from 'laravel-vue-i18n';
+import { useForm } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute.js';
 
-    /** Component props. */
-    const props = defineProps({
-        project: Object,
-        cardType: String,
-    });
-    const form = useForm({
-        status: null,
-    });
+/** Component props. */
+const props = defineProps({
+    project: Object,
+    cardType: String,
+});
+const form = useForm({
+    status: null,
+});
 
-    const changeProjectStatus = (id, status, type) => {
-        let tmpRoute =
-            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        form.status = status;
-        console.log(form);
-        if (confirm(trans('project_change_status_' + status))) {
-            form.post(tmpRoute, {
-                preserveScroll: true,
-                onSuccess: (response) => {
-                    //
-                },
-            });
-        }
-    };
+const changeProjectStatus = (id, status, type) => {
+    let tmpRoute =
+        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+    form.status = status;
+    console.log(form);
+    if (confirm(trans('project_change_status_' + status))) {
+        form.post(tmpRoute, {
+            preserveScroll: true,
+            onSuccess: (response) => {
+                //
+            },
+        });
+    }
+};
 
-    /** Get days till project ends. */
-    const project_end_date = computed(() => {
-        const targetDate = new Date(props.project.end);
-        const today = new Date();
-        const timeDiff = targetDate.getTime() - today.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+/** Get days till project ends. */
+const project_end_date = computed(() => {
+    const targetDate = new Date(props.project.end);
+    const today = new Date();
+    const timeDiff = targetDate.getTime() - today.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        return daysDiff;
-    });
+    return daysDiff;
+});
 </script>

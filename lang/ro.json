@@ -450,6 +450,7 @@
     "locales.ro": "Română",
     "locales.en": "English",
     "projects.status.open": "Deschis",
+    "projects.status.archived": "Arhivat",
     "projects.status.close": "Închis",
     "projects.status.starting_soon": "Începe în curând",
     "projects.status.ending_soon": "Se încheie în curând",
@@ -543,7 +544,8 @@
     "Hello!": "Salut!",
     "Regards": "Îţi mulțumim",
     "Team": "Echipa",
-    "project.project_status_changed": "Statusul proiectului a fost schimbat cu succes"
+    "project.project_status_changed_notification": "Statusul proiectului a fost schimbat cu succes",
+    "my_dashboard.description": "<p>Mulțumim că ești alături de noi. Prin participarea ta activă la această inițiativă, ne arăți că ești preocupat de problemele sociale și că vrei să faci o diferență pozitivă în lumea în care trăim, iar contribuția ta este extrem de valoroasă.</p><p>Prin distribuirea informațiilor despre proiectele de pe Bursa Binelui și încurajând prietenii și familia să se alăture, devii un promotor important al inițiativei noastre.</p><p>Fiecare pas pe care îl facem împreună contează și, împreună, putem face o diferență semnificativă.</p>"
 
 
 }

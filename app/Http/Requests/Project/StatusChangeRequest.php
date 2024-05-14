@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Project;
 
+use App\Enums\ProjectStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StatusChangeRequest extends FormRequest
@@ -15,6 +16,10 @@ class StatusChangeRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->status === ProjectStatus::approved->value) {
+            return [];
+        }
+
         return [
             'name' => ['required', 'max:255'],
             'start' => ['required', 'date', 'after_or_equal:today'],
