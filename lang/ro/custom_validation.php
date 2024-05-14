@@ -38,5 +38,9 @@ return [
         'end' => [
             'after' => 'Data de finalizare a proiectului trebuie să fie după data de început.',
         ],
+        'donate' => [
+            'min' => 'Suma minimă de donație este de :min RON.',
+            'max' => 'Suma maximă de donație este de :max RON.',
+        ],
     ],
 ];

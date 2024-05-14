@@ -100,7 +100,7 @@
                                                     id="amount"
                                                     type="number"
                                                     v-model="guestForm.amount"
-                                                    :error="guestForm.errors.amount"
+                                                    :error="guestForm.errors.amount || errors?.amount"
                                                 />
 
                                                 <!-- Amount -->
@@ -113,7 +113,7 @@
                                                     id="amount"
                                                     type="number"
                                                     v-model="authForm.amount"
-                                                    :error="authForm.errors.amount"
+                                                    :error="authForm.errors.amount || errors?.amount"
                                                 />
 
                                                 <!-- Confirm -->
@@ -174,60 +174,62 @@
 </template>
 
 <script setup>
-    /** Import from vue */
-    import { ref } from 'vue';
-    import route from '@/Helpers/useRoute';
+/** Import from vue */
+import { computed, ref } from 'vue';
+import route from '@/Helpers/useRoute';
 
-    /** Import from inertia. */
-    import { Link, useForm, usePage } from '@inertiajs/vue3';
+/** Import from inertia. */
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-    /** Import plugins. */
-    import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
-    import { XIcon } from '@heroicons/vue/outline';
+/** Import plugins. */
+import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
+import { XIcon } from '@heroicons/vue/outline';
 
-    /** Import components. */
-    import Input from '@/Components/form/Input.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+/** Import components. */
+import Input from '@/Components/form/Input.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
-    /** Component props. */
-    const props = defineProps({
-        triggerModalText: String,
-        triggerModalClasses: String,
-        data: [Object, Array, String, Number],
+/** Component props. */
+const props = defineProps({
+    triggerModalText: String,
+    triggerModalClasses: String,
+    data: [Object, Array, String, Number],
+    errors: Object,
+});
+
+/** Local data. */
+const open = ref(false);
+const errors = computed(() => usePage().props.errors || null);
+
+/** Initialize inertia from Object. */
+const guestForm = useForm({
+    name: '',
+    email: '',
+    amount: '',
+    terms: false,
+});
+
+/** Initialize inertia from Object. */
+const authForm = useForm({
+    amount: '',
+});
+
+/** Donate action */
+const donate = () => {
+    /** Trigger donate post method. */
+    if (usePage().props.auth.user) {
+        guestForm.name = usePage().props.auth.user.name;
+        guestForm.email = usePage().props.auth.user.email;
+        guestForm.terms = true;
+        guestForm.amount = authForm.amount;
+    }
+    guestForm.post(route('projects.donate', props.data.slug), {
+        onSuccess: () => (open.value = false),
+        onError: (errors) => {
+            console.log('error', errors);
+        },
+        onFinish: () => guestForm.reset(),
     });
-
-    /** Local data. */
-    const open = ref(false);
-
-    /** Initialize inertia from Object. */
-    const guestForm = useForm({
-        name: '',
-        email: '',
-        amount: '',
-        terms: false,
-    });
-
-    /** Initialize inertia from Object. */
-    const authForm = useForm({
-        amount: '',
-    });
-
-    /** Donate action */
-    const donate = () => {
-        /** Trigger donate post method. */
-        if (usePage().props.auth.user) {
-            guestForm.name = usePage().props.auth.user.name;
-            guestForm.email = usePage().props.auth.user.email;
-            guestForm.terms = true;
-            guestForm.amount = authForm.amount;
-        }
-        guestForm.post(route('projects.donate', props.data.slug), {
-            onSuccess: () => (open.value = false),
-            onError: (errors) => {
-                console.log('error', errors);
-            },
-            onFinish: () => guestForm.reset(),
-        });
-    };
+};
 </script>
