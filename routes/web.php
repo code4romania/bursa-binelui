@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::inertia('/termenii-si-conditii', 'Public/Website/Terms')->name('terms');
+Route::inertia('/terms', 'Public/Website/Terms')->name('terms');
 Route::inertia('/politica-de-confidentialitate', 'Public/Website/Policy')->name('policy');
 Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
 Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
