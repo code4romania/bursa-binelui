@@ -168,7 +168,6 @@ const subscribe = () => {
     form.post(route('subscribe.to.newsletter'), {
         onSuccess: () => {
             form.reset('subscriber_email');
-            alert('Abonare cu succes!');
         },
     });
 };

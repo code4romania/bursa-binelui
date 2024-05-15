@@ -78,6 +78,7 @@ return [
         'attach' => 'Alocă utilizator',
         'detach' => 'Elimină',
         'toggle' => 'Schimbă statusul',
+        'subscribedToNewsletter' => 'Abonat cu succes la newsletter',
     ],
     'header' => 'Utilizatori (:number)',
     'toggle_modal' => [
