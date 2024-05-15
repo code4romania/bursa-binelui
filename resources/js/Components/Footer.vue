@@ -151,12 +151,12 @@
 <script setup>
 /** Import from inertia. */
 import { useForm } from '@inertiajs/vue3';
-// import route from '@/Helpers/useRoute';
 
 /** Import componets. */
 import Input from '@/Components/form/Input.vue';
 import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 import Icon from '@/Components/Icon.vue';
+import route from '@/Helpers/useRoute.js';
 
 /** Form variables. */
 const form = useForm({
@@ -165,9 +165,12 @@ const form = useForm({
 
 /** Subscribe action. */
 const subscribe = () => {
-    // form.post(route('need.subscribe.route'), {
-    //     onFinish: () => form.reset('subscribe_email'),
-    // });
+    form.post(route('subscribe.to.newsletter'), {
+        onSuccess: () => {
+            form.reset('subscriber_email');
+            alert('Abonare cu succes!');
+        },
+    });
 };
 
 /** Get current year. */
