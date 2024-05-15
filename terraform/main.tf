@@ -127,6 +127,14 @@ module "ecs_app" {
       name  = "AWS_PUBLIC_BUCKET_ROOT"
       value = "media"
     },
+    {
+      name  = "NEWSLETTER_API_KEY"
+      value = var.newsletter_api_key
+    },
+    {
+      name  = "NEWSLETTER_LIST_ID"
+      value = var.newsletter_list_id
+    }
   ]
 
   secrets = [

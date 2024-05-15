@@ -93,3 +93,14 @@ variable "google_analytics_tracking_id" {
   type    = string
   default = null
 }
+
+variable "newsletter_api_key" {
+  type      = string
+  default   = null
+  sensitive = true
+}
+
+variable "newsletter_list_id" {
+  type    = string
+  default = null
+}
