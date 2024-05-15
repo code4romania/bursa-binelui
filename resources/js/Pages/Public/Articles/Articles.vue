@@ -113,7 +113,7 @@
                         <div class="flex items-center justify-between text-sm">
                             <p class="text-gray-500">{{ article.created_at }}</p>
                             <Link
-                                :href="route('articles.show', article.id)"
+                                :href="route('articles.show', article.slug)"
                                 class="flex items-center font-semibold text-primary-500 gap-x-2"
                             >
                                 {{ $t('read_article') }}
@@ -129,37 +129,37 @@
 </template>
 
 <script setup>
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Head from '@/Components/Head.vue';
-    import Pagination from '@/Components/pagination/Pagination.vue';
-    import ArticleCard from '@/Components/cards/ArticleCard.vue';
-    import ArticleCategory from '@/Components/ArticleCategory.vue';
-    import ClientOnly from '@/Components/ClientOnly.vue';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Head from '@/Components/Head.vue';
+import Pagination from '@/Components/pagination/Pagination.vue';
+import ArticleCard from '@/Components/cards/ArticleCard.vue';
+import ArticleCategory from '@/Components/ArticleCategory.vue';
+import ClientOnly from '@/Components/ClientOnly.vue';
 
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
-    import 'vue3-carousel/dist/carousel.css';
-    import { Carousel, Slide } from 'vue3-carousel';
-    import { ArrowRightIcon } from '@heroicons/vue/solid';
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide } from 'vue3-carousel';
+import { ArrowRightIcon } from '@heroicons/vue/solid';
 
-    const props = defineProps({
-        collection: {
-            type: Object,
-            required: true,
-        },
-        topArticles: {
-            type: Object,
-            required: true,
-        },
-        categories: {
-            type: Array,
-            default: () => [],
-        },
-        category: {
-            type: Object,
-            default: null,
-        },
-    });
+const props = defineProps({
+    collection: {
+        type: Object,
+        required: true,
+    },
+    topArticles: {
+        type: Object,
+        required: true,
+    },
+    categories: {
+        type: Array,
+        default: () => [],
+    },
+    category: {
+        type: Object,
+        default: null,
+    },
+});
 
-    const filterArticles = (value) => {};
+const filterArticles = (value) => {};
 </script>
