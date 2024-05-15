@@ -24,6 +24,10 @@ class NewsletterService
         );
 
         if (false !== $response) {
+            \Log::error('Failed to subscribe user to newsletter', [
+                'email' => $email,
+                'response' => $response,
+            ]);
             // TODO: check if email registered as user
             // and assign subscriber badge if the
             // user doesn't already have one.
