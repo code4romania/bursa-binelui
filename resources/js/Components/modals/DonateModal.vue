@@ -122,7 +122,9 @@
                                                     <span class="ml-2 mr-1 text-sm text-gray-700">{{
                                                         $t('i_agree')
                                                     }}</span>
-                                                    <Link :href="route('terms')" class="text-sm text-primary-500"
+                                                    <Link
+                                                        :href="route('page', { slug: 'terms' })"
+                                                        class="text-sm text-primary-500"
                                                         >{{ $t('terms_link') }}<span class="text-red-500">*</span></Link
                                                     >
 

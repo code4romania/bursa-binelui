@@ -81,8 +81,5 @@ Route::group([
     Route::post('/{project:slug}/donate', 'donate')->name('donate')->middleware('throttle:make-donation');
     Route::post('/{project:slug}/volunteer', 'volunteer')->name('volunteer')->middleware('throttle:register-volunteer');
 });
-Route::get('/terms', PageController::class)->name('terms');
-Route::get('/politica-de-confidentialitate', PageController::class)->name('policy');
-
 
 Route::get('/{page:slug}', PageController::class)->name('page');

@@ -121,7 +121,9 @@
                                                     <span class="ml-2 mr-1 text-sm text-gray-700">{{
                                                         $t('i_agree')
                                                     }}</span>
-                                                    <Link :href="route('terms')" class="text-sm text-primary-500"
+                                                    <Link
+                                                        :href="route('page', { slug: 'terms' })"
+                                                        class="text-sm text-primary-500"
                                                         >{{ $t('terms_link') }}<span class="text-red-500">*</span></Link
                                                     >
 
@@ -190,79 +192,79 @@
 </template>
 
 <script setup>
-    /** Import from vue */
-    import { ref, computed } from 'vue';
+/** Import from vue */
+import { ref, computed } from 'vue';
 
-    /** Import from inertia. */
-    import { Link, useForm, usePage } from '@inertiajs/vue3';
+/** Import from inertia. */
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-    /** Import plugins. */
-    import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
-    import { XIcon } from '@heroicons/vue/outline';
+/** Import plugins. */
+import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
+import { XIcon } from '@heroicons/vue/outline';
 
-    /** Import components. */
-    import Modal from '@/Components/modals/Modal.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+/** Import components. */
+import Modal from '@/Components/modals/Modal.vue';
+import Input from '@/Components/form/Input.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 
-    /** Component props. */
-    const props = defineProps({
-        triggerModalText: String,
-        triggerModalClasses: String,
-        data: [Object, Array, String, Number],
-        postUrl: String,
+/** Component props. */
+const props = defineProps({
+    triggerModalText: String,
+    triggerModalClasses: String,
+    data: [Object, Array, String, Number],
+    postUrl: String,
+});
+
+/** Local data. */
+const open = ref(false);
+
+/** Initialize inertia from Object. */
+const form = useForm({
+    name: '',
+    email: '',
+    phone: '',
+    terms: false,
+});
+
+/** Trigger modal */
+const triggerClick = (id) => document.getElementById(`${id}`).click();
+
+/** Check donation period. */
+const projectExpired = computed(() => {
+    if (new Date() > new Date(props.data.period_end)) {
+        return true;
+    }
+
+    return false;
+});
+
+let successSubmit = ref(false);
+
+/** Volunteer action */
+const volunteerForm = () => {
+    /** Check if project is active. */
+    if (projectExpired.value) {
+        open.value = false;
+        triggerClick('project-expired');
+
+        return;
+    }
+
+    let user = usePage().props?.auth && usePage().props?.auth?.user ? usePage().props.auth.user : null;
+
+    if (user) {
+        form.name = `${usePage().props.auth.user.name} `;
+        form.email = usePage().props.auth.user.email;
+        form.terms = true;
+    }
+    form.post(props.postUrl, {
+        onSuccess: () => {
+            successSubmit.value = true;
+        },
+        onError: (error) => {
+            console.log(error);
+        },
     });
-
-    /** Local data. */
-    const open = ref(false);
-
-    /** Initialize inertia from Object. */
-    const form = useForm({
-        name: '',
-        email: '',
-        phone: '',
-        terms: false,
-    });
-
-    /** Trigger modal */
-    const triggerClick = (id) => document.getElementById(`${id}`).click();
-
-    /** Check donation period. */
-    const projectExpired = computed(() => {
-        if (new Date() > new Date(props.data.period_end)) {
-            return true;
-        }
-
-        return false;
-    });
-
-    let successSubmit = ref(false);
-
-    /** Volunteer action */
-    const volunteerForm = () => {
-        /** Check if project is active. */
-        if (projectExpired.value) {
-            open.value = false;
-            triggerClick('project-expired');
-
-            return;
-        }
-
-        let user = usePage().props?.auth && usePage().props?.auth?.user ? usePage().props.auth.user : null;
-
-        if (user) {
-            form.name = `${usePage().props.auth.user.name} `;
-            form.email = usePage().props.auth.user.email;
-            form.terms = true;
-        }
-        form.post(props.postUrl, {
-            onSuccess: () => {
-                successSubmit.value = true;
-            },
-            onError: (error) => {
-                console.log(error);
-            },
-        });
-    };
+};
 </script>
