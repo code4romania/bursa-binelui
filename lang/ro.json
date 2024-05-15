@@ -546,7 +546,11 @@
     "Regards": "Îţi mulțumim",
     "Team": "Echipa",
     "project.project_status_changed_notification": "Statusul proiectului a fost schimbat cu succes",
-    "my_dashboard.description": "<p>Mulțumim că ești alături de noi. Prin participarea ta activă la această inițiativă, ne arăți că ești preocupat de problemele sociale și că vrei să faci o diferență pozitivă în lumea în care trăim, iar contribuția ta este extrem de valoroasă.</p><p>Prin distribuirea informațiilor despre proiectele de pe Bursa Binelui și încurajând prietenii și familia să se alăture, devii un promotor important al inițiativei noastre.</p><p>Fiecare pas pe care îl facem împreună contează și, împreună, putem face o diferență semnificativă.</p>"
-
+    "my_dashboard.description": "<p>Mulțumim că ești alături de noi. Prin participarea ta activă la această inițiativă, ne arăți că ești preocupat de problemele sociale și că vrei să faci o diferență pozitivă în lumea în care trăim, iar contribuția ta este extrem de valoroasă.</p><p>Prin distribuirea informațiilor despre proiectele de pe Bursa Binelui și încurajând prietenii și familia să se alăture, devii un promotor important al inițiativei noastre.</p><p>Fiecare pas pe care îl facem împreună contează și, împreună, putem face o diferență semnificativă.</p>",
+    "Reset Password Notification": "Notificare resetare parolă",
+    "You are receiving this email because we received a password reset request for your account.": "Primești acest email deoarece am primit o cerere de resetare a parolei pentru contul tău.",
+    "Reset Password": "Resetează parola",
+    "If you did not request a password reset, no further action is required.": "Dacă nu ai solicitat resetarea parolei, nu este necesară nicio altă acțiune.",
+    "This password reset link will expire in :count minutes.": "Acest link de resetare a parolei va expira în :count minute."
 
 }
