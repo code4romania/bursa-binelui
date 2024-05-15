@@ -86,6 +86,12 @@ class ArticleResource extends Resource
                                         : null,
                                 )->columnSpanFull(),
 
+                                DateTimePicker::make('published_at')
+                                    ->label(__('article.published_at'))
+                                    ->default(now())
+                                    ->hiddenOn('edit')
+                                    ->withoutSeconds(),
+
                                 TextInput::make('author')
                                     ->label(__('article.author'))
                                     ->required()
@@ -144,6 +150,7 @@ class ArticleResource extends Resource
 
                         DateTimePicker::make('published_at')
                             ->label(__('article.published_at'))
+                            ->default(now())
                             ->withoutSeconds(),
                     ]),
 

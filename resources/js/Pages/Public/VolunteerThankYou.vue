@@ -13,7 +13,12 @@
                         <h1 class="text-2xl font-bold text-gray-900">{{ $t('thank_you') }}</h1>
                     </div>
 
-                    <p class="mt-8 text-lg font-medium text-gray-500">{{ $t('reward') }}</p>
+                    <p class="mt-8 text-lg font-medium text-gray-500" v-if="!$page.props.auth.user">
+                        {{ $t('reward') }}
+                    </p>
+                    <p class="mt-8 text-lg font-medium text-gray-500" v-if="$page.props.auth.user">
+                        {{ $t('reward_auth') }}
+                    </p>
 
                     <div class="mt-8">
                         <Link
@@ -58,24 +63,24 @@
 </template>
 
 <script setup>
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import DonateModal from '@/Components/modals/DonateModal.vue';
-    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
-    import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
-    import { ChartBarIcon } from '@heroicons/vue/outline';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import DonateModal from '@/Components/modals/DonateModal.vue';
+import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
+import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+import { ChartBarIcon } from '@heroicons/vue/outline';
 
-    const props = defineProps({
-        flash: Object,
-    });
+const props = defineProps({
+    flash: Object,
+});
 
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = () => {
-        document.getElementById('volunteer-active-modal').click();
-    };
+/** Trigger volunteer modal from card. */
+const triggerVolunteer = () => {
+    document.getElementById('volunteer-active-modal').click();
+};
 
-    /** Trigger donate modal from card. */
-    const triggerDonate = () => {
-        document.getElementById('donate-active-modal').click();
-    };
+/** Trigger donate modal from card. */
+const triggerDonate = () => {
+    document.getElementById('donate-active-modal').click();
+};
 </script>
