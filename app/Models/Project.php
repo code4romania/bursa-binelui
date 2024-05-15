@@ -76,16 +76,23 @@ class Project extends Model implements HasMedia
     protected $with = [
         'media',
         'organization',
-        'donations',
         'counties',
         'categories',
-        'approvedDonations',
+
     ];
 
-    protected $withCount = [
-        'donations',
-        'approvedDonations',
-    ];
+    protected static function booted()
+    {
+        static::addGlobalScope('total_amount', function (Builder $query) {
+            $query
+                ->withSum(['donations as total_donations' => function (Builder $query) {
+                    $query->where('status', EuPlatescStatus::CHARGED);
+                }], 'amount')
+                ->withCount(['donations as approved_donations_count' => function (Builder $query) {
+                    $query->where('status', EuPlatescStatus::CHARGED);
+                }]);
+        });
+    }
 
     public function registerMediaCollections(): void
     {
@@ -131,11 +138,6 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
-    public function approvedDonations(): HasMany
-    {
-        return $this->donations()->where('status', EuPlatescStatus::CHARGED);
-    }
-
     public function stages(): BelongsToMany
     {
         return $this->belongsToMany(ChampionshipStage::class);
@@ -158,11 +160,6 @@ class Project extends Model implements HasMedia
         'start',
         'end',
     ];
-
-    public function getTotalDonationsAttribute(): int
-    {
-        return (int) $this->approvedDonations->sum('amount');
-    }
 
     public function getCoverImageAttribute(): string
     {

@@ -43,6 +43,7 @@ class ProjectController extends Controller
     protected function projectList(Request $request, string $view): Response
     {
         $project = QueryBuilder::for(Project::class)
+            ->without('donations')
             ->allowedFilters([
                 AllowedFilter::custom('county', new CountiesFilter),
                 AllowedFilter::custom('category', new ProjectCategoriesFilter),
