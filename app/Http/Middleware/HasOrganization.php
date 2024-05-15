@@ -17,7 +17,7 @@ class HasOrganization
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->organization_id) {
+        if (auth()->user()?->organization_id) {
             return $next($request);
         }
         abort(404);
