@@ -188,6 +188,6 @@ return [
     ])->toArray(),
 
     'min_donation' => env('MIN_DONATION', 5),
-    'max_donation' => env('MAX_DONATION', 10000),
+    'max_donation' => env('MAX_DONATION', 1000),
 
 ];

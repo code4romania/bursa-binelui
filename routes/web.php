@@ -32,8 +32,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::inertia('/terms', 'Public/Website/Terms')->name('terms');
-Route::inertia('/politica-de-confidentialitate', 'Public/Website/Policy')->name('policy');
 Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
 Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
 Route::inertia('/multumim', 'Public/VolunteerThankYou')->name('volunteer.thanks');
@@ -83,5 +81,8 @@ Route::group([
     Route::post('/{project:slug}/donate', 'donate')->name('donate')->middleware('throttle:make-donation');
     Route::post('/{project:slug}/volunteer', 'volunteer')->name('volunteer')->middleware('throttle:register-volunteer');
 });
+Route::get('/terms', PageController::class)->name('terms');
+Route::get('/politica-de-confidentialitate', PageController::class)->name('policy');
+
 
 Route::get('/{page:slug}', PageController::class)->name('page');
