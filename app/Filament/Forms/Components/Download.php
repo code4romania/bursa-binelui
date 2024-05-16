@@ -51,7 +51,7 @@ class Download extends Component
         return $this->getRecord()
             ->getMedia($this->getCollectionName())
             ->map(fn (Media $media) => [
-                'url' => $media->getFullUrl(),
+                'url' => $media->getTemporaryUrl(now()->addMinutes(10)),
                 'name' => $media->name . '.' . $media->extension,
             ]);
     }

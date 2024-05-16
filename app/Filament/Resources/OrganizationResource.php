@@ -113,6 +113,7 @@ class OrganizationResource extends Resource
                             ->disk(config('filesystems.default'))
                             ->inlineLabel()
                             ->disablePreview()
+                            ->enableDownload()
                             ->collection('statute')
                             ->hiddenOn('view'),
 
