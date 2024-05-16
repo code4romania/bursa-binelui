@@ -76,32 +76,34 @@
                 </div>
             </div>
 
-            <div
-                v-if="'admin' == cardType"
-                class="flex mt-4 overflow-hidden border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
-            >
-                <Link
-                    :href="route('projects.show', project)"
-                    class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+            <template v-if="!project.is_archived">
+                <div
+                    v-if="'admin' == cardType"
+                    class="flex mt-4 overflow-hidden border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
                 >
-                    {{ $t('view') }}
-                </Link>
+                    <Link
+                        :href="route('projects.show', project)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t('view') }}
+                    </Link>
 
-                <Link
-                    v-if="project.type !== 'regional'"
-                    :href="route('dashboard.projects.edit', project.id)"
-                    class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
-                >
-                    {{ $t('edit') }}
-                </Link>
-                <Link
-                    v-if="project.type === 'regional'"
-                    :href="route('dashboard.projects.regional.edit', project.id)"
-                    class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
-                >
-                    {{ $t('edit') }}
-                </Link>
-            </div>
+                    <Link
+                        v-if="project.type !== 'regional'"
+                        :href="route('dashboard.projects.edit', project.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t('edit') }}
+                    </Link>
+                    <Link
+                        v-if="project.type === 'regional'"
+                        :href="route('dashboard.projects.regional.edit', project.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t('edit') }}
+                    </Link>
+                </div>
+            </template>
 
             <SecondaryButton
                 v-if="'admin' == cardType && project.can_be_archived"
