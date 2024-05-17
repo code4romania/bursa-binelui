@@ -270,7 +270,7 @@
 
 <script setup>
 /** Import form vue */
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 /** Import from inertia. */
 import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
@@ -292,9 +292,7 @@ const props = defineProps({
         required: true,
     },
 });
-onMounted(() => {
-    console.log(project);
-});
+
 const project = ref(props.project);
 
 /**
