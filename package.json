@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build --minify=false && vite build --minify=false --ssr"
+        "build": "vite build && vite build --ssr"
     },
     "devDependencies": {
         "@headlessui/vue": "^1.7.19",
