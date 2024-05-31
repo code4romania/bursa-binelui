@@ -124,8 +124,11 @@ class EuPlatescService
         $donation->update($values);
 
         $user = $donation->user;
-        $userBadge = new UserBadge();
-        $userBadge->updateDonationBadge($user);
+        if ($user) {
+            $userBadge = new UserBadge();
+            $userBadge->updateDonationBadge($user);
+        }
+
     }
 
     public function recipeTransaction(Donation $donation): bool
