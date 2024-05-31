@@ -126,11 +126,11 @@ const navigation = [
             },
         ],
     },
-    // {
-    //     name: 'Gale bursa binelui',
-    //     route: route('dashboard.projects.regional.index'),
-    //     icon: FolderIcon,
-    // },
+    {
+        name: 'Gale bursa binelui',
+        route: route('dashboard.projects.regional.index'),
+        icon: FolderIcon,
+    },
     {
         name: 'Voluntari',
         route: route('dashboard.volunteers.index'),
