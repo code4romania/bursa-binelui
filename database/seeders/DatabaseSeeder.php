@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
         foreach ($articleCategories as $category) {
             ArticleCategory::factory()
                 ->name($category)
-                ->hasArticles(4)
+                    ->hasArticles(4)
                 ->create();
         }
     }
