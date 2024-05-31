@@ -30,8 +30,8 @@ class EuPlatescService
         $organization = Organization::findOrFail($organizationId);
         $this->merchantId = $organization->eu_platesc_merchant_id;
         $this->privateKey = $organization->eu_platesc_private_key;
-        $this->userKey = $organization->eu_platesc_user_key ?? '';
-        $this->userApiKey = $organization->eu_platesc_user_api_key ?? '';
+        $this->userKey = $organization->eu_platesc_merchant_id ?? '';
+        $this->userApiKey = $organization->eu_platesc_private_key ?? '';
 
         $this->testMode = config('services.eu_platesc.test_mode');
         $this->url = config('services.eu_platesc.url');
@@ -124,8 +124,10 @@ class EuPlatescService
         $donation->update($values);
 
         $user = $donation->user;
-        $userBadge = new UserBadge();
-        $userBadge->updateDonationBadge($user);
+        if ($user) {
+            $userBadge = new UserBadge();
+            $userBadge->updateDonationBadge($user);
+        }
     }
 
     public function recipeTransaction(Donation $donation): bool
