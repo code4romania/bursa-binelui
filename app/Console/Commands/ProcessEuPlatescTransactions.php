@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Enums\EuPlatescStatus;
@@ -32,17 +34,18 @@ class ProcessEuPlatescTransactions extends Command
     {
         $organizations = $this->getOrganizationsWithOpenDonations();
 
-        Log::info('Processing EuPlatesc transactions'.count($organizations));
+        Log::info('Processing EuPlatesc transactions' . \count($organizations));
         foreach ($organizations as $organization) {
             $organizationID = $organization->id;
             $service = new EuPlatescService($organizationID);
-            if (!$service->canCaptureTransaction()) {
+            if (! $service->canCaptureTransaction()) {
                 continue;
             }
 
             foreach ($organization->donations as $donation) {
                 if ($service->recipeTransaction($donation)) {
                     $donation->update(['status' => EuPlatescStatus::CAPTURE]);
+                    $donation->update(['status_updated_at' => now()]);
                 }
             }
         }
@@ -53,7 +56,5 @@ class ProcessEuPlatescTransactions extends Command
         return Organization::query()
             ->withWhereHas('donations', fn ($query) => $query->whereNotNull('ep_id')->where('donations.status', EuPlatescStatus::AUTHORIZED))
             ->get();
-
     }
-
 }
