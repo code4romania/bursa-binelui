@@ -152,6 +152,7 @@ class DonationResource extends Resource
                     ),
                 DateFilter::make('created_at'),
             ])
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 ViewAction::make()->iconButton(),
             ]);

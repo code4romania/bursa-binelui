@@ -13,6 +13,8 @@ class EuPlatescService
 {
     public const CAPTURE_METHOD = 'capture';
 
+    private const ErrCodeForAlreadyCaptured = 8;
+
     private string $merchantId;
 
     private string $privateKey;
@@ -134,7 +136,7 @@ class EuPlatescService
     {
         $data = [
             'method' => self::CAPTURE_METHOD,
-            'ukey' => $this->userKey,
+            'mid' => $this->userKey,
             'epid' => $donation->ep_id,
             'timestamp' => gmdate('YmdHis'),
             'nonce' => md5(mt_rand() . time()),
@@ -144,6 +146,10 @@ class EuPlatescService
         $response = $this->callMethod($data);
 
         if (isset($response['error'])) {
+            if ($response['ecode'] == self::ErrCodeForAlreadyCaptured) {
+                return true;
+            }
+
             return false;
         }
 
