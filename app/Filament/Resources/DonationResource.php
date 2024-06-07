@@ -109,18 +109,13 @@ class DonationResource extends Resource
                     ->label(__('donation.labels.created_at'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->formatStateUsing(fn (Donation $record) => $record->created_at->format('Y-m-d H:i'))
-                    ->label(__('donation.labels.created_at'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('charge_date')
+                TextColumn::make('status_updated_at')
                     ->formatStateUsing(fn (Donation $record) => $record->charge_date?->format('Y-m-d H:i'))
-                    ->label(__('donation.labels.charge_date'))
+                    ->label(__('donation.labels.status_updated_at'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('status')
-                    ->label(__('donation.labels.organization'))
+                    ->label(__('donation.labels.status'))
                     ->formatStateUsing(fn (Donation $record) => __($record->status->label()))
                     ->searchable()
                     ->sortable(),

@@ -43,6 +43,7 @@ class ProcessEuPlatescTransactions extends Command
             foreach ($organization->donations as $donation) {
                 if ($service->recipeTransaction($donation)) {
                     $donation->update(['status' => EuPlatescStatus::CAPTURE]);
+                    $donation->update(['status_updated_at' => now()]);
                 }
             }
         }

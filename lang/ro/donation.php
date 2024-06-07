@@ -34,6 +34,7 @@ return [
         'count' => 'Numar donatii',
         'count_with_amount' => 'Numarul de dontatii :count ( :total RON)',
         'donors' => 'Donatori',
+        'status_updated_at' => 'Data actualizării statusului',
     ],
 
     'statuses' => [
