@@ -62,6 +62,10 @@ class HandleInertiaRequests extends Middleware
 
     protected function flash(Request $request): ?array
     {
+        if (! $request->hasSession()) {
+            return null;
+        }
+
         $type = match (true) {
             $request->session()->has('error') => 'error',
             $request->session()->has('success') => 'success',

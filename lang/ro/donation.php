@@ -34,6 +34,7 @@ return [
         'count' => 'Numar donatii',
         'count_with_amount' => 'Numarul de dontatii :count ( :total RON)',
         'donors' => 'Donatori',
+        'status_updated_at' => 'Data actualizării statusului',
     ],
 
     'statuses' => [
@@ -44,9 +45,15 @@ return [
         'aborted' => 'Abandonată',
         'payment_declined' => 'Plata refuzată',
         'possible_fraud' => 'Posibil fraudulos',
-        'charged' => 'Incasată',
-        'capture' => 'Incasată',
+        'charged' => 'Încasată',
     ],
 
     'header' => 'Donatii (:number)',
+
+    'stats' => [
+        'charged' => 'Donații încasate',
+        'charged_amount' => 'Sumă încasată',
+        'pending' => 'Donații în așteptare',
+        'failed' => 'Donații eșuate',
+    ],
 ];

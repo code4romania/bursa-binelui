@@ -15,12 +15,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        //         $schedule->command('inspire')->hourly();
-        $schedule->command('model:prune')->daily();
+        $schedule->command('model:prune')
+            ->daily();
+
         $schedule->command(ProcessEuPlatescTransactions::class)
-            ->daily()
-            ->everyFourHours()
-            ->timezone('Europe/Bucharest');
+            ->everyFourHours();
     }
 
     /**

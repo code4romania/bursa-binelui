@@ -24,6 +24,8 @@ class Edition extends Model implements HasMedia
         'short_description',
         'start_date',
         'end_date',
+        'page_id',
+        'article_category_id',
     ];
 
     public function editionCategories(): HasMany
