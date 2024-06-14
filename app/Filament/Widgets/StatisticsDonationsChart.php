@@ -36,7 +36,7 @@ class StatisticsDonationsChart extends LineChartWidget
                 ]
             )
             ->where('created_at', '>', $whereCreatedCondition)
-            ->whereIn('status', [EuPlatescStatus::CAPTURE])
+            ->whereIn('status', [EuPlatescStatus::CHARGED])
             ->groupBy($chartInterval)
             ->orderBy($chartInterval)
             ->get();

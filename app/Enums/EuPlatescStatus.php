@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace App\Enums;
 
 use App\Concerns\Enums\Arrayable;
+use App\Concerns\Enums\Comparable;
 use App\Concerns\Enums\HasLabel;
 
 enum EuPlatescStatus: string
 {
     use Arrayable;
+    use Comparable;
     use HasLabel;
+
     case INITIALIZE = 'initialize';
     case AUTHORIZED = 'authorized';
     case UNAUTHORIZED = 'unauthorized';
-    case CAPTURE = 'capture';
     case CANCELED = 'canceled';
     case ABORTED = 'aborted';
     case PAYMENT_DECLINED = 'payment_declined';
