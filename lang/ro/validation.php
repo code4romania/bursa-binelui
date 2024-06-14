@@ -108,7 +108,7 @@ return [
         'mixed' => ':Attribute trebuie să conțină cel puțin o literă mare și o literă mică.',
         'numbers' => ':Attribute trebuie să conțină cel puțin un număr.',
         'symbols' => ':Attribute trebuie să conțină cel puțin un simbol.',
-        'uncompromised' => ':Attribute dat a apărut într-o scurgere de date. Vă rugăm să alegeți un alt :attribute.',
+        'uncompromised' => ':Attribute nu este sigură. Te rugăm să folosești o altă parolă.',
     ],
     'present' => 'Câmpul :attribute trebuie să fie prezent.',
     'prohibited' => 'Câmpul :attribute este interzis.',
