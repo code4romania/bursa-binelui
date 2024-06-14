@@ -49,4 +49,11 @@ return [
     ],
 
     'header' => 'Donatii (:number)',
+
+    'stats' => [
+        'charged' => 'Donații încasate',
+        'charged_amount' => 'Sumă încasată',
+        'pending' => 'Donații în așteptare',
+        'failed' => 'Donații eșuate',
+    ],
 ];
