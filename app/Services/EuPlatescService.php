@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Enums\EuPlatescStatus;
 use App\Models\Donation;
 use App\Models\Organization;
-use Http;
+use Illuminate\Support\Facades\Http;
 
 class EuPlatescService
 {

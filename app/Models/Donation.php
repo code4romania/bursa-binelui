@@ -60,6 +60,30 @@ class Donation extends Model
             ->orWhere('email', 'LIKE', "%{$searchedText}%");
     }
 
+    public function scopeWhereCharged(Builder $query): Builder
+    {
+        return $query->where('status', EuPlatescStatus::CHARGED);
+    }
+
+    public function scopeWherePending(Builder $query): Builder
+    {
+        return $query->whereIn('status', [
+            EuPlatescStatus::INITIALIZE,
+            EuPlatescStatus::AUTHORIZED,
+        ]);
+    }
+
+    public function scopeWhereFailed(Builder $query): Builder
+    {
+        return $query->whereIn('status', [
+            EuPlatescStatus::UNAUTHORIZED,
+            EuPlatescStatus::CANCELED,
+            EuPlatescStatus::ABORTED,
+            EuPlatescStatus::PAYMENT_DECLINED,
+            EuPlatescStatus::POSSIBLE_FRAUD,
+        ]);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

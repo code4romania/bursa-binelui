@@ -19,7 +19,7 @@ class UserBadge
     public function updateDonationBadge(User $user): void
     {
         $donationCount = $user->donations
-            ->filter(fn (Donation $donation) => $donation->status == EuPlatescStatus::CAPTURE)
+            ->filter(fn (Donation $donation) => EuPlatescStatus::CHARGED->is($donation->status))
             ->count();
 
         $badgeRule = $this->getBadgeRuleByDonationCount($donationCount);

@@ -8,6 +8,7 @@ use App\Enums\EuPlatescStatus;
 use App\Models\Organization;
 use App\Services\EuPlatescService;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -44,8 +45,10 @@ class ProcessEuPlatescTransactions extends Command
 
             foreach ($organization->donations as $donation) {
                 if ($service->recipeTransaction($donation)) {
-                    $donation->update(['status' => EuPlatescStatus::CAPTURE]);
-                    $donation->update(['status_updated_at' => now()]);
+                    $donation->update([
+                        'status' => EuPlatescStatus::CHARGED,
+                        'status_updated_at' => now(),
+                    ]);
                 }
             }
         }
@@ -54,7 +57,7 @@ class ProcessEuPlatescTransactions extends Command
     private function getOrganizationsWithOpenDonations(): Collection|array
     {
         return Organization::query()
-            ->withWhereHas('donations', fn ($query) => $query->whereNotNull('ep_id')->where('donations.status', EuPlatescStatus::AUTHORIZED))
+            ->withWhereHas('donations', fn (Builder $query) => $query->whereNotNull('ep_id')->where('donations.status', EuPlatescStatus::AUTHORIZED))
             ->get();
     }
 }

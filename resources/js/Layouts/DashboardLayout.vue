@@ -166,10 +166,10 @@ const navigation = [
 ];
 
 const isActive = (item) => {
-    if (item.route === `${window.location.origin}${window.location.pathname}${window.location.search}`) {
-        return true;
+    if (typeof window === 'undefined') {
+        return false;
     }
 
-    return false;
+    return item.route === `${window.location.origin}${window.location.pathname}${window.location.search}`;
 };
 </script>
