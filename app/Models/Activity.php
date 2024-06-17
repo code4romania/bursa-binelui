@@ -177,7 +177,7 @@ class Activity extends BaseActivity
     public function getModifiedField(mixed $value): ?string
     {
         if ($this->description === 'statute') {
-            $value = Media::find($value)?->getUrl();
+            $value = Media::find($value)?->getTemporaryUrl(now()->addMinutes(5));
         }
 
         if (\gettype($value) == 'boolean') {
