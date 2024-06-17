@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Services\NewsletterService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -72,23 +71,5 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
-    }
-
-    public function subscribeToNewsletter(Request $request)
-    {
-        $data = $request->validate([
-            'subscriber_email' => 'required|email',
-        ]);
-        try {
-            if (blank(config('newsletter.driver_arguments.api_key'))) {
-                NewsletterService::subscribe($data['email']);
-            }
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-
-            return Redirect::back()->with('error', __('user.action.errorSubscribingToNewsletter'));
-        }
-
-        return Redirect::back()->with('success', __('user.action.subscribedToNewsletter'));
     }
 }
