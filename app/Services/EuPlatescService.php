@@ -27,9 +27,12 @@ class EuPlatescService
 
     private string $url;
 
-    public function __construct($organizationId)
+    public function __construct(Organization | int $organization)
     {
-        $organization = Organization::findOrFail($organizationId);
+        if (! $organization instanceof Organization) {
+            $organization = Organization::findOrFail($organization);
+        }
+
         $this->merchantId = $organization->eu_platesc_merchant_id;
         $this->privateKey = $organization->eu_platesc_private_key;
         $this->userKey = $organization->eu_platesc_merchant_id ?? '';

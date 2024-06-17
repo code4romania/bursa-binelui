@@ -60,6 +60,11 @@ class Donation extends Model
             ->orWhere('email', 'LIKE', "%{$searchedText}%");
     }
 
+    public function scopeWhereAuthorized(Builder $query): Builder
+    {
+        return $query->where('donations.status', EuPlatescStatus::AUTHORIZED);
+    }
+
     public function scopeWhereCharged(Builder $query): Builder
     {
         return $query->where('status', EuPlatescStatus::CHARGED);

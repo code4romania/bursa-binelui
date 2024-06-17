@@ -1,0 +1,9 @@
+#!/command/with-contenv sh
+
+php /var/www/artisan queue:work \
+    --max-jobs $WORKER_MAX_JOBS \
+    --sleep $WORKER_SLEEP \
+    --rest $WORKER_REST \
+    --timeout $WORKER_TIMEOUT \
+    --tries $WORKER_TRIES \
+    --force
