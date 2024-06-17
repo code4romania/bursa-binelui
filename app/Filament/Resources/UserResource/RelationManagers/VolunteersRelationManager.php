@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 
 class VolunteersRelationManager extends RelationManager
@@ -25,16 +22,6 @@ class VolunteersRelationManager extends RelationManager
     protected function getTableHeading(): string
     {
         return __('user.relations.heading.volunteers', ['count' => $this->getTableQuery()->count()]);
-    }
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                TextInput::make('volunteer.name')
-                    ->required()
-                    ->maxLength(255),
-            ]);
     }
 
     public static function table(Table $table): Table
@@ -64,12 +51,10 @@ class VolunteersRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
+                //
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                //
             ]);
     }
 }
