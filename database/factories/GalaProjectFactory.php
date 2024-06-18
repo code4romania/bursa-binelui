@@ -22,10 +22,10 @@ class GalaProjectFactory extends Factory
     public function definition(): array
     {
         $gala = Gala::query()
-            ->whereHas('edition', fn ($query) => $query->where('active', true))
             ->inRandomOrder()
             ->first();
-        $name = fake()->text('200');
+
+        $name = fake()->text(200);
         $slug = Str::slug($name);
 
         return [

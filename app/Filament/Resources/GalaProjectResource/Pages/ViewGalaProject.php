@@ -35,4 +35,9 @@ class ViewGalaProject extends ViewRecord
                 ->hidden(fn () => ! $this->record->short_list),
         ];
     }
+
+    public function hasCombinedRelationManagerTabsWithForm(): bool
+    {
+        return true;
+    }
 }

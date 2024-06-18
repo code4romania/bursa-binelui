@@ -83,6 +83,11 @@ class GalaProject extends Model implements HasMedia
         return $this->belongsToMany(EditionCategories::class, 'edition_categories_gala_project');
     }
 
+    public function prizes(): BelongsToMany
+    {
+        return $this->belongsToMany(Prize::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

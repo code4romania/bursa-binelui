@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Enums\OrganizationType;
 use App\Enums\ProjectArea;
 use App\Filament\Resources\GalaProjectResource\Pages;
+use App\Filament\Resources\GalaProjectResource\RelationManagers\PrizesRelationManager;
 use App\Forms\Components\Link;
 use App\Models\Edition;
 use App\Models\GalaProject;
@@ -296,7 +297,7 @@ class GalaProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PrizesRelationManager::class,
         ];
     }
 
@@ -304,8 +305,6 @@ class GalaProjectResource extends Resource
     {
         return [
             'index' => Pages\ListGalaProjects::route('/'),
-            'create' => Pages\CreateGalaProject::route('/create'),
-            'edit' => Pages\EditGalaProject::route('/{record}/edit'),
             'view' => Pages\ViewGalaProject::route('/{record}'),
         ];
     }
