@@ -19,7 +19,9 @@ class Kernel extends ConsoleKernel
             ->daily();
 
         $schedule->job(ProcessAuthorizedTransactionsJob::class)
-            ->everyFourHours();
+            ->everyFourHours()
+            ->onOneServer()
+            ->sentryMonitor();
     }
 
     /**
