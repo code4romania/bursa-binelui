@@ -73,7 +73,7 @@ module "ecs_app" {
     },
     {
       name  = "EU_PLATESC_TEST_MODE"
-      value = tostring(true)
+      value = tostring(false)
     },
     {
       name  = "AWS_DEFAULT_REGION"
