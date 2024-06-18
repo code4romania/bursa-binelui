@@ -50,7 +50,8 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Link::make('organizatii')->type('organization')
+                Link::make('organizatii')
+                    ->type('organization')
                     ->label(__('organization.labels.administrator'))
                     ->inlineLabel()
                     ->columnSpanFull(),

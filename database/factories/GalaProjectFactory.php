@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Gala;
+use App\Models\GalaProject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -55,5 +56,17 @@ class GalaProjectFactory extends Factory
                 'email' => fake()->email(),
             ],
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (GalaProject $galaProject) {
+            $galaProject->categories()->attach(
+                $galaProject->gala->edition->editionCategories
+                    ->shuffle()
+                    ->take(fake()->numberBetween(1, 3))
+                    ->pluck('id')
+            );
+        });
     }
 }

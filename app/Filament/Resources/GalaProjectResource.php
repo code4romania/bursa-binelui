@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Enums\OrganizationType;
 use App\Enums\ProjectArea;
 use App\Filament\Resources\GalaProjectResource\Pages;
+use App\Forms\Components\Link;
 use App\Models\Edition;
 use App\Models\GalaProject;
 use Filament\Forms\Components\DatePicker;
@@ -53,6 +54,12 @@ class GalaProjectResource extends Resource
     {
         return $form
             ->schema([
+                Link::make('organizatii')
+                    ->type('organization')
+                    ->label(__('organization.label.singular'))
+                    ->inlineLabel()
+                    ->columnSpanFull(),
+
                 Select::make('gala')
                     ->label(__('edition.labels.gala'))
                     ->relationship(
@@ -202,14 +209,16 @@ class GalaProjectResource extends Resource
 
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('name')
                     ->label(__('edition.project.label.plural'))
                     ->searchable()
+                    ->wrap()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('categories.name')
                     ->label(__('edition.labels.category'))
                     ->searchable()
+                    ->wrap()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('youth')
