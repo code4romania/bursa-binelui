@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\EditionsResource\RelationManagers;
 
-use App\Models\EditionCategories;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class PrizesRelationManager extends RelationManager
 {
@@ -20,22 +20,19 @@ class PrizesRelationManager extends RelationManager
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(1)
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
+                    ->label(__('edition.labels.prize_name'))
                     ->maxLength(255)
-                    ->label(__('edition.labels.prize_name')),
+                    ->required(),
 
                 Forms\Components\Select::make('edition_categories_id')
-                    ->options(
-                        fn (RelationManager $livewire) => EditionCategories::query()
-                            ->whereBelongsTo($livewire->ownerRecord)
-                            ->get()
-                            ->pluck('name', 'id')
-                    )
                     ->label(__('edition.labels.category'))
-                    ->columnSpanFull()
-                    ->required()
+                    ->relationship('editionCategories', 'name', function (Builder $query, self $livewire) {
+                        $query->whereBelongsTo($livewire->ownerRecord);
+                    })
+                    ->searchable()
                     ->preload(),
             ]);
     }
@@ -49,11 +46,8 @@ class PrizesRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('edition_categories_id')
+                Tables\Columns\TextColumn::make('editionCategories.name')
                     ->label(__('edition.labels.category'))
-                    ->formatStateUsing(
-                        fn ($state, $record) => $record->editionCategories()->getParent()->name
-                    )
                     ->searchable()
                     ->sortable(),
             ])

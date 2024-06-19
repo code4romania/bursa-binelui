@@ -35,8 +35,6 @@ class GalaFactory extends Factory
             'end_evaluation' => $date->addDays(35),
             'start_gale' => $date->addDays(42),
             'location' => fake()->text(255),
-            'eligible' => fake()->boolean(),
-            'short_list' => fake()->boolean(),
         ];
     }
 

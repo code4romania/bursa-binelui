@@ -55,6 +55,8 @@ class GalaProjectFactory extends Factory
                 'phone_number' => fake()->phoneNumber(),
                 'email' => fake()->email(),
             ],
+            'eligible' => fake()->boolean(),
+            'short_list' => fake()->boolean(),
         ];
     }
 

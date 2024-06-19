@@ -19,7 +19,15 @@ class PrizesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('edition.labels.prize_name'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('editionCategories.name')
+                    ->label(__('edition.labels.category'))
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
