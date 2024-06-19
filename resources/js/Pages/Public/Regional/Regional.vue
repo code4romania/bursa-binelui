@@ -4,10 +4,12 @@
         <Head :title="$t('regional_title')" />
 
         <!-- Header -->
-        <div class="flex flex-col-reverse w-full gap-10 mx-auto lg:my-10 lg:flex-row lg:max-w-7xl sm:mt-0 px-9">
+        <div
+            class="flex flex-col-reverse w-full gap-10 mx-auto overflow-hidden lg:my-10 lg:flex-row lg:max-w-7xl sm:mt-0 px-9"
+        >
             <div class="relative flex flex-col w-full lg:w-6/12">
                 <h1
-                    class="relative z-50 py-6 text-3xl font-extrabold text-gray-900 lg:py-12 lg:text-6xl"
+                    class="relative py-6 text-3xl font-extrabold text-gray-900 lg:py-12 lg:text-6xl"
                     v-text="$t('regional_title')"
                 />
 
@@ -57,22 +59,22 @@
 
             <div class="container">
                 <div
-                    class="grid grid-cols-9 bg-gray-50 rounded-lg shadow py-8 px-20 mt-4 mb-8"
+                    class="grid grid-cols-9 px-20 py-8 mt-4 mb-8 rounded-lg shadow bg-gray-50"
                     v-for="item in edition.gales"
                 >
                     <div class="col-span-6">
                         <h3 class="text-2xl font-bold text-gray-800 divide-x divide-gray-200" v-text="item.title" />
-                        <div class="mt-2 flex">
+                        <div class="flex mt-2">
                             <Icon class="w-5 h-5 shrink-0 text-primary-900" name="location" />
                             <p v-text="$t('county_available_for_participation')" class="accent-gray-500 text-md" />
                             <p v-text="item.counties" />
                         </div>
                     </div>
 
-                    <div class="col-span-3 content-center text-center border-l-2" v-if="item.registration_start_soon">
+                    <div class="content-center col-span-3 text-center border-l-2" v-if="item.registration_start_soon">
                         <h3
                             v-text="$t('regional.project.page.registration_start_soon')"
-                            class="accent-gray-500 text-md mb-4"
+                            class="mb-4 accent-gray-500 text-md"
                         />
                         <p v-text="item.start_sign_up" class="text-2xl"></p>
 
@@ -86,10 +88,10 @@
                         </p>
                     </div>
 
-                    <div class="col-span-3 content-center text-center border-l-2" v-if="item.registration_is_open">
+                    <div class="content-center col-span-3 text-center border-l-2" v-if="item.registration_is_open">
                         <h3
                             v-text="$t('regional.project.page.registration_is_open')"
-                            class="accent-gray-500 text-md mb-4"
+                            class="mb-4 accent-gray-500 text-md"
                         />
                         <p v-text="item.register_period" class="text-2xl"></p>
 
@@ -103,10 +105,10 @@
                         </p>
                     </div>
 
-                    <div class="col-span-3 content-center text-center border-l-2" v-if="item.registration_ended">
+                    <div class="content-center col-span-3 text-center border-l-2" v-if="item.registration_ended">
                         <h3
                             v-text="$t('regional.project.page.registration_ended')"
-                            class="accent-gray-500 text-md mb-4"
+                            class="mb-4 accent-gray-500 text-md"
                         />
                         <Link
                             :href="route('regional.galas.show', item.id)"
@@ -121,11 +123,11 @@
         </div>
 
         <div class="container grid grid-cols-6 mt-4">
-            <div class="p-8 col-span-2 mx-auto">
+            <div class="col-span-2 p-8 mx-auto">
                 <h3 class="text-2xl font-bold text-gray-800" v-text="$t('regional.project.page.faqs')" />
                 <p class="my-4" v-html="$t('regional.project.page.faqs_description')" />
             </div>
-            <div class="p-8 col-span-4">
+            <div class="col-span-4 p-8">
                 <div v-for="item in edition.faqs" :key="item.id">
                     <h3 class="text-xl font-bold text-gray-800" v-text="item.question" />
                     <p class="my-4" v-text="item.answer" />
@@ -144,7 +146,7 @@
             </div>
 
             <div class="container -mt-8">
-                <div class="grid gap-6 grid-cols-3">
+                <div class="grid grid-cols-3 gap-6">
                     <ArticleCard v-for="(article, index) in articles.data" :key="article.id" :article="article" />
                 </div>
             </div>
@@ -153,30 +155,30 @@
 </template>
 
 <script setup>
-/** Import from vue */
-import { onMounted, ref } from 'vue';
-import route from '@/Helpers/useRoute';
+    /** Import from vue */
+    import { onMounted, ref } from 'vue';
+    import route from '@/Helpers/useRoute';
 
-/** Import from inertia. */
-import { Link } from '@inertiajs/vue3';
-import Head from '@/Components/Head.vue';
+    /** Import from inertia. */
+    import { Link } from '@inertiajs/vue3';
+    import Head from '@/Components/Head.vue';
 
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-import { ChevronRightIcon, SpeakerphoneIcon } from '@heroicons/vue/outline';
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import { ChevronRightIcon, SpeakerphoneIcon } from '@heroicons/vue/outline';
 
-import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-import Icon from '@/Components/Icon.vue';
-import ArticleCard from '@/Components/cards/ArticleCard.vue';
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import Icon from '@/Components/Icon.vue';
+    import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
-const props = defineProps({
-    edition: {
-        type: Object,
-        default: null,
-    },
-    articles: {
-        type: Array,
-        default: null,
-    },
-});
+    const props = defineProps({
+        edition: {
+            type: Object,
+            default: null,
+        },
+        articles: {
+            type: Array,
+            default: null,
+        },
+    });
 </script>
