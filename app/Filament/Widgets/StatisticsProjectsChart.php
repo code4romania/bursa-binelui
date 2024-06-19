@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Models\Project;
-use DB;
 use Filament\Widgets\LineChartWidget;
+use Illuminate\Support\Facades\DB;
+use Tpetry\QueryExpressions\Function\Aggregate\Count;
+use Tpetry\QueryExpressions\Language\Alias;
 
 class StatisticsProjectsChart extends LineChartWidget
 {
@@ -21,29 +23,23 @@ class StatisticsProjectsChart extends LineChartWidget
 
     protected function getData(): array
     {
-        $selectedFields = 'count(*) as total';
-        $chartInterval = 'month';
-        $formatDate = "DATE_FORMAT(created_at,'%Y %m') as month";
-
-        $whereCreatedCondition = now()->subYear(1);
+        $interval = 'month';
 
         $data = Project::query()
             ->withoutGlobalScope('total_amount')
-            ->select(
-                [
-                    DB::raw($selectedFields),
-                    DB::raw($formatDate),
-                ]
-            )
-            ->where('created_at', '>', $whereCreatedCondition)
-            ->without(['media',
+            ->select([
+                new Alias(new Count('*'), 'total'),
+                new Alias(DB::raw("DATE_FORMAT(created_at, '%Y %m')"), $interval),
+            ])
+            ->where('created_at', '>', now()->subYear(1))
+            ->without([
+                'media',
                 'organization',
-                'donations',
                 'counties',
                 'categories',
-                'approvedDonations'])
-            ->groupBy($chartInterval)
-            ->orderBy($chartInterval)
+            ])
+            ->groupBy($interval)
+            ->orderBy($interval)
             ->get();
 
         return [
@@ -53,7 +49,7 @@ class StatisticsProjectsChart extends LineChartWidget
                     'data' => $data->map(fn ($value) => $value->total),
                 ],
             ],
-            'labels' => $data->map(fn ($value) => $value->$chartInterval),
+            'labels' => $data->map(fn ($value) => $value->$interval),
         ];
     }
 }

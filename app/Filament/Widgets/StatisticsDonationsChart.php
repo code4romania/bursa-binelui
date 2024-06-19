@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Widgets;
 
-use App\Enums\EuPlatescStatus;
 use App\Models\Donation;
-use DB;
 use Filament\Widgets\LineChartWidget;
+use Illuminate\Support\Facades\DB;
+use Tpetry\QueryExpressions\Function\Aggregate\Count;
+use Tpetry\QueryExpressions\Language\Alias;
 
 class StatisticsDonationsChart extends LineChartWidget
 {
@@ -22,23 +23,17 @@ class StatisticsDonationsChart extends LineChartWidget
 
     protected function getData(): array
     {
-        $selectedFields = 'count(*) as total';
-        $chartInterval = 'month';
-        $formatDate = "DATE_FORMAT(created_at,'%Y %m') as month";
-
-        $whereCreatedCondition = now()->subYear(1);
+        $interval = 'month';
 
         $data = Donation::query()
-            ->select(
-                [
-                    DB::raw($selectedFields),
-                    DB::raw($formatDate),
-                ]
-            )
-            ->where('created_at', '>', $whereCreatedCondition)
-            ->whereIn('status', [EuPlatescStatus::CHARGED])
-            ->groupBy($chartInterval)
-            ->orderBy($chartInterval)
+            ->select([
+                new Alias(new Count('*'), 'total'),
+                new Alias(DB::raw("DATE_FORMAT(created_at, '%Y %m')"), $interval),
+            ])
+            ->where('created_at', '>', now()->subYear(1))
+            ->whereCharged()
+            ->groupBy($interval)
+            ->orderBy($interval)
             ->get();
 
         return [
@@ -48,7 +43,7 @@ class StatisticsDonationsChart extends LineChartWidget
                     'data' => $data->map(fn ($value) => $value->total),
                 ],
             ],
-            'labels' => $data->map(fn ($value) => $value->$chartInterval),
+            'labels' => $data->map(fn ($value) => $value->$interval),
         ];
     }
 }
