@@ -80,6 +80,7 @@ return [
 
         ],
         'created_at' => 'Data creării',
+        'id' => 'ID',
 
     ],
     'project' => [

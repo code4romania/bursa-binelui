@@ -216,6 +216,11 @@ class GalaProjectResource extends Resource
 
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label(__('edition.labels.id'))
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('edition.project.label.plural'))
                     ->searchable()
@@ -300,9 +305,7 @@ class GalaProjectResource extends Resource
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array
