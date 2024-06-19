@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(ProcessAuthorizedTransactionsJob::class)
             ->everyFourHours()
             ->onOneServer()
-            ->sentryMonitor('process-authorized-transactions-job');
+            ->sentryMonitor();
     }
 
     /**
