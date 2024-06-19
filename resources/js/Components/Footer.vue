@@ -95,27 +95,7 @@
                     </div>
                 </div>
 
-                <div class="mt-10 xl:mt-0">
-                    <h3 class="text-sm font-semibold leading-5 text-gray-400">
-                        {{ $t('news_letter_subscribe_title') }}
-                    </h3>
-                    <p class="mt-4 text-sm leading-6 text-gray-400">{{ $t('news_letter_subscribe_text') }}</p>
-
-                    <form class="items-center mt-6 sm:flex sm:max-w-md" @submit.prevent="subscribe">
-                        <Input
-                            id="subscribe-email"
-                            placeholder="Adresa de email"
-                            type="email"
-                            color="white"
-                            v-model="form.subscriber_email"
-                            :error="form.errors.subscriber_email"
-                        />
-
-                        <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
-                            <PrimaryButton type="submit" :disabled="form.processing" :label="$t('subscribe')" />
-                        </div>
-                    </form>
-                </div>
+                <Newsletter class="mt-10 xl:mt-0" />
             </div>
 
             <div class="pt-8 mt-10 border-t border-white/10 md:flex md:items-center md:justify-between lg:mt-16">
@@ -149,29 +129,11 @@
 </template>
 
 <script setup>
-/** Import from inertia. */
-import { useForm } from '@inertiajs/vue3';
+    /** Import componets. */
+    import Newsletter from '@/Components/FooterNewsletter.vue';
+    import Icon from '@/Components/Icon.vue';
+    import route from '@/Helpers/useRoute.js';
 
-/** Import componets. */
-import Input from '@/Components/form/Input.vue';
-import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-import Icon from '@/Components/Icon.vue';
-import route from '@/Helpers/useRoute.js';
-
-/** Form variables. */
-const form = useForm({
-    subscriber_email: '',
-});
-
-/** Subscribe action. */
-const subscribe = () => {
-    form.post(route('subscribe.to.newsletter'), {
-        onSuccess: () => {
-            form.reset('subscriber_email');
-        },
-    });
-};
-
-/** Get current year. */
-const currentYear = new Date().getFullYear();
+    /** Get current year. */
+    const currentYear = new Date().getFullYear();
 </script>

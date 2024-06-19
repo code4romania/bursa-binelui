@@ -68,8 +68,12 @@ module "ecs_app" {
       value = "https://www.${var.domain_name}"
     },
     {
+      name  = "QUEUE_CONNECTION"
+      value = "database"
+    },
+    {
       name  = "EU_PLATESC_TEST_MODE"
-      value = tostring(true)
+      value = tostring(false)
     },
     {
       name  = "AWS_DEFAULT_REGION"

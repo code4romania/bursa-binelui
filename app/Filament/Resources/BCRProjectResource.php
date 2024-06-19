@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -71,12 +72,21 @@ class BCRProjectResource extends Resource
                     ->columnSpanFull()
                     ->required(),
 
+                Toggle::make('is_national')
+                    ->label(__('project.labels.is_national'))
+                    ->inlineLabel()
+                    ->columnSpanFull()
+                    ->reactive()
+                    ->required(),
+
                 Select::make('county_id')
                     ->label(__('bcr-project.labels.county'))
                     ->relationship('county', 'name')
                     ->inlineLabel()
                     ->columnSpanFull()
-                    ->required(),
+                    ->required()
+                    ->hidden(fn (callable $get) => $get('is_national') === true),
+
                 Select::make('status')
                     ->label(__('bcr-project.labels.status'))
                     ->inlineLabel()

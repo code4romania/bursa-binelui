@@ -1,14 +1,14 @@
 <template>
     <div>
         <!-- Label -->
-        <label :for="id" :class="[`block text-sm font-medium leading-6 text-${color}`]">
+        <label :for="id" :class="[`block text-sm font-medium leading-7 text-${color}`]">
             <span v-if="label">{{ label }}</span>
             <span v-else><slot /></span>
         </label>
 
         <!-- Input -->
         <input
-            class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
+            class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-7"
             :value="modelValue"
             :type="type"
             :autocomplete="hasAutocomplete"
@@ -59,31 +59,31 @@
             type: Boolean,
         },
         placeholder: {
-            type: String
+            type: String,
         },
-        color:{
-            type: String
+        color: {
+            type: String,
         },
         pattern: {
             type: String,
-            default: null
+            default: null,
         },
         min: {
             type: Number,
-            default: null
+            default: null,
         },
         max: {
             type: Number,
-            default: null
+            default: null,
         },
         maxlength: {
             type: Number,
-            default: null
+            default: null,
         },
         disabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     });
 
     /** Component emits. */
@@ -104,9 +104,9 @@
 </script>
 
 <style scoped>
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 </style>

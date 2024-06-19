@@ -6,7 +6,7 @@ return [
 
     'label' => [
         'singular' => 'Voluntar',
-        'plural' => 'Voluntarii',
+        'plural' => 'Voluntari',
     ],
 
     'column' => [

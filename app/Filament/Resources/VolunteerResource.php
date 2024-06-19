@@ -167,7 +167,7 @@ class VolunteerResource extends Resource
         ];
     }
 
-    private static function getResourceLink(VolunteerRequest $record, string $type): HtmlString
+    public static function getResourceLink(VolunteerRequest $record, string $type): HtmlString
     {
         return match ($type) {
             'project' => self::getProjectLink($record),

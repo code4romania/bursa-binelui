@@ -43,10 +43,12 @@
     import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
     import { ChevronDownIcon } from '@heroicons/vue/solid';
 
-    const currentLocale = computed(() => usePage().props.locales?.current);
+    const page = usePage();
+
+    const currentLocale = computed(() => page.props.locales?.current);
 
     const locales = computed(() => {
-        let available = usePage().props.locales?.available || [];
+        let available = page.props.locales?.available || [];
 
         return available
             .map((locale) => ({
