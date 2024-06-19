@@ -49,8 +49,9 @@
     import { ExclamationCircleIcon, CheckCircleIcon, XIcon } from '@heroicons/vue/solid';
     import ClientOnly from '@/Components/ClientOnly.vue';
 
-    const isSuccess = computed(() => Boolean(usePage().props.flash?.success));
-    const message = computed(() => usePage().props.flash?.message || null);
+    const page = usePage();
+    const isSuccess = computed(() => Boolean(page.props.flash?.success));
+    const message = computed(() => page.props.flash?.message || null);
 
     const isVisible = ref(false);
     const show = () => (isVisible.value = true);

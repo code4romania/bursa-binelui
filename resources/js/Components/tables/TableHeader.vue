@@ -55,6 +55,8 @@
         },
     });
 
+    const page = usePage();
+
     const currentUrl = computed(() => {
         const { sort, ...params } = route().params;
 
@@ -70,7 +72,7 @@
 
     const sortData = (column) => {
         const request = {
-            filters: usePage().props.filters,
+            filters: page.props.filters,
         };
 
         if (props.sort.column !== column.field) {

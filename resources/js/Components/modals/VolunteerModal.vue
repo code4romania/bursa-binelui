@@ -232,6 +232,8 @@
         postUrl: String,
     });
 
+    const page = usePage();
+
     /** Local data. */
     const open = ref(false);
 
@@ -267,11 +269,9 @@
             return;
         }
 
-        let user = usePage().props?.auth && usePage().props?.auth?.user ? usePage().props.auth.user : null;
-
-        if (user) {
-            form.name = `${usePage().props.auth.user.name} `;
-            form.email = usePage().props.auth.user.email;
+        if (page.props?.auth?.user) {
+            form.name = `${page.props.auth.user.name} `;
+            form.email = page.props.auth.user.email;
             form.terms = true;
         }
         form.post(props.postUrl, {
