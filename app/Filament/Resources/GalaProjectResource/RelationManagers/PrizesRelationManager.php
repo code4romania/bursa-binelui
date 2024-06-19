@@ -43,4 +43,9 @@ class PrizesRelationManager extends RelationManager
                 Tables\Actions\DetachAction::make(),
             ]);
     }
+
+    public static function getTitle(): string
+    {
+        return __('edition.labels.prizes_tab');
+    }
 }
