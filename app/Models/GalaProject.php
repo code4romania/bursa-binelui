@@ -16,6 +16,8 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Znck\Eloquent\Relations\BelongsToThrough;
+use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 class GalaProject extends Model implements HasMedia
 {
@@ -27,6 +29,7 @@ class GalaProject extends Model implements HasMedia
     use InteractsWithMedia;
     use HasProjectStatus;
     use LogsActivity;
+    use BelongsToThroughTrait;
 
     protected $fillable = [
         'gala_id',
@@ -76,6 +79,11 @@ class GalaProject extends Model implements HasMedia
     public function gala(): BelongsTo
     {
         return $this->belongsTo(Gala::class);
+    }
+
+    public function edition(): BelongsToThrough
+    {
+        return $this->belongsToThrough(Edition::class, Gala::class);
     }
 
     public function categories(): BelongsToMany
