@@ -101,8 +101,9 @@
         },
     });
 
+    const page = usePage();
     /** Get user. */
-    const user = usePage().props.auth.user;
+    const user = page.props.auth.user;
 
     /** Form variables. */
     const form = useForm({

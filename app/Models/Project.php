@@ -78,7 +78,6 @@ class Project extends Model implements HasMedia
         'organization',
         'counties',
         'categories',
-
     ];
 
     protected static function booted()

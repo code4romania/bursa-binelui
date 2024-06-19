@@ -6,10 +6,10 @@ namespace App\Filament\Widgets;
 
 use App\Models\Donation;
 use App\Models\Project;
-use DB;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class StatisticsCards extends StatsOverviewWidget
 {
@@ -20,7 +20,7 @@ class StatisticsCards extends StatsOverviewWidget
      */
     public function getLastEndDate(string $cardLabel): Carbon
     {
-        if ($cardLabel == 'year') {
+        if ($cardLabel === 'year') {
             return now()->subYear(2);
         }
 
@@ -32,7 +32,7 @@ class StatisticsCards extends StatsOverviewWidget
      */
     private function getCurrentEndDate(string $cardLabel): Carbon
     {
-        if ($cardLabel == 'year') {
+        if ($cardLabel === 'year') {
             return now()->subYear(1);
         }
 
@@ -59,7 +59,7 @@ class StatisticsCards extends StatsOverviewWidget
         $color = $currentGrandThanLast ? 'success' : 'danger';
         $icon = $currentGrandThanLast ? 'heroicon-s-trending-up' : 'heroicon-s-trending-down';
 
-        $description = $cardLabel == 'year' ?
+        $description = $cardLabel === 'year' ?
             (
                 $currentGrandThanLast ?
                 __('statistics.labels.current_year_grand_than_last_year', ['number' => $currentAvg - $lastAvg]) :

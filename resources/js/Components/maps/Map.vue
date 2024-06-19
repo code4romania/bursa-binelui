@@ -18,6 +18,8 @@ const emit = defineEmits(['county-selected']);
 const map = ref(null);
 const selectedCounties = ref([]);
 
+const page = usePage();
+
 /** Intialize google map. */
 async function initializeMap() {
     return new Promise((resolve, reject) => {
@@ -26,7 +28,7 @@ async function initializeMap() {
         }
 
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=' + usePage().props.google_maps_api_key;
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=' + page.props.google_maps_api_key;
         script.async = true;
         script.defer = true;
         script.onload = () => {

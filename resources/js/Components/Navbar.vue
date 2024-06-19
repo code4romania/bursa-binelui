@@ -282,8 +282,10 @@
         },
     ];
 
+    const page = usePage();
+
     const languages = computed(() =>
-        usePage().props.locales.available.map((locale) => ({
+        page.props.locales.available.map((locale) => ({
             name: locale,
             id: locale,
         }))
