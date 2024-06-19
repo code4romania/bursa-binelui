@@ -6,6 +6,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\OrganizationType;
 use App\Enums\ProjectArea;
+use App\Filament\Forms\Components\Value;
 use App\Filament\Resources\GalaProjectResource\Pages;
 use App\Filament\Resources\GalaProjectResource\RelationManagers\PrizesRelationManager;
 use App\Forms\Components\Link;
@@ -55,6 +56,11 @@ class GalaProjectResource extends Resource
     {
         return $form
             ->schema([
+                Value::make('created_at')
+                    ->label(__('edition.labels.created_at'))
+                    ->inlineLabel()
+                    ->withTime(),
+
                 Link::make('organizatii')
                     ->type('organization')
                     ->label(__('organization.label.singular'))
@@ -240,6 +246,11 @@ class GalaProjectResource extends Resource
 
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('edition.labels.status'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('edition.labels.created_at'))
                     ->searchable()
                     ->sortable(),
 

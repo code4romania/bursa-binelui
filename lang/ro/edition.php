@@ -79,6 +79,7 @@ return [
             'national' => 'Național',
 
         ],
+        'created_at' => 'Data creării',
 
     ],
     'project' => [
