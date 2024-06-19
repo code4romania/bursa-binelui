@@ -28,7 +28,7 @@ class StatisticsProjectsChart extends LineChartWidget
         $whereCreatedCondition = now()->subYear(1);
 
         $data = Project::query()
-            ->withoutGlobalScopes()
+            ->withoutGlobalScope('total_amount')
             ->select(
                 [
                     DB::raw($selectedFields),
