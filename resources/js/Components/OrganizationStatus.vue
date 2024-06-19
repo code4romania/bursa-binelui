@@ -46,7 +46,8 @@
     import { trans } from 'laravel-vue-i18n';
     import ClientOnly from '@/Components/ClientOnly.vue';
 
-    const status = computed(() => usePage().props.auth.organization.status || null);
+    const page = usePage();
+    const status = computed(() => page.props.auth.organization.status || null);
 
     const isVisible = ref(false);
     let message = '';

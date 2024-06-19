@@ -212,9 +212,11 @@
         errors: Object,
     });
 
+    const page = usePage();
+
     /** Local data. */
     const open = ref(false);
-    const errors = computed(() => usePage().props.errors || null);
+    const errors = computed(() => page.props.errors || null);
 
     /** Initialize inertia from Object. */
     const guestForm = useForm({
@@ -232,9 +234,9 @@
     /** Donate action */
     const donate = () => {
         /** Trigger donate post method. */
-        if (usePage().props.auth.user) {
-            guestForm.name = usePage().props.auth.user.name;
-            guestForm.email = usePage().props.auth.user.email;
+        if (page.props.auth.user) {
+            guestForm.name = page.props.auth.user.name;
+            guestForm.email = page.props.auth.user.email;
             guestForm.terms = true;
             guestForm.amount = authForm.amount;
         }
