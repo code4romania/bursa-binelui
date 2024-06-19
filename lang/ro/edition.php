@@ -89,9 +89,9 @@ return [
     ],
 
     'actions' => [
-        'mark-as-eligible' => 'Marchează eligibilitate',
-        'mark-as-ineligible' => 'Marchează ca ne-eligibil',
-        'add-to-short-list' => 'Adaugă în Shortlist',
+        'mark-as-eligible' => 'Marchează ca eligibil',
+        'mark-as-ineligible' => 'Marchează ca neeligibil',
+        'add-to-short-list' => 'Adaugă în shortlist',
         'remove-from-short-list' => 'Scoate din Shortlist',
     ],
 ];
