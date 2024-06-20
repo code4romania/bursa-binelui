@@ -59,17 +59,11 @@ class StatisticsCards extends StatsOverviewWidget
         $color = $currentGrandThanLast ? 'success' : 'danger';
         $icon = $currentGrandThanLast ? 'heroicon-s-trending-up' : 'heroicon-s-trending-down';
 
+        $diffPercent = round(($currentAvg * 100 / $lastAvg) - 100, 2);
         $description = $cardLabel === 'year' ?
-            (
-                $currentGrandThanLast ?
-                __('statistics.labels.current_year_grand_than_last_year', ['number' => $currentAvg - $lastAvg]) :
-                __('statistics.labels.current_year_less_than_last_year', ['number' => $lastAvg - $currentAvg])
-            ) :
-            (
-                $currentGrandThanLast ?
-                __('statistics.labels.current_month_grand_than_last_month', ['number' => $currentAvg - $lastAvg]) :
-                __('statistics.labels.current_month_less_than_last_month', ['number' => $lastAvg - $currentAvg])
-            );
+                __('statistics.labels.current_year_vs_last_year', ['number' => $diffPercent])
+             :
+                __('statistics.labels.current_month_vs_last_month', ['number' => $diffPercent]);
 
         $chart = array_map(function () use ($currentAvg, $lastAvg) {
             return rand(min((int) $currentAvg, (int) $lastAvg), max((int) $currentAvg, (int) $lastAvg));
@@ -118,14 +112,13 @@ class StatisticsCards extends StatsOverviewWidget
         $color = $currentGrandThanLast ? 'success' : 'danger';
         $icon = $currentGrandThanLast ? 'heroicon-s-trending-up' : 'heroicon-s-trending-down';
 
-        $description =
-            $currentGrandThanLast ?
-                __('statistics.labels.donation_grand_than_last_year', ['amount' => $currentYear - $lastYear]) :
-                __('statistics.labels.donation_less_than_last_year', ['amount' => $lastYear - $currentYear]);
+        $diffPercent = round(($currentYear * 100 / $lastYear) - 100, 2);
+
+        $description = __('statistics.labels.donation_vs_last_year', ['amount' => $diffPercent]);
 
         return Card::make(
             __('statistics.labels.donations_amount'),
-            __('statistics.labels.amount_in_currency', ['amount' => $currentYear])
+            __('statistics.labels.amount_in_currency', ['amount' => number_format($currentYear)])
         )
             ->descriptionColor($color)
             ->descriptionIcon($icon)
