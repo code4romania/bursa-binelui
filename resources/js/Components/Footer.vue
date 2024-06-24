@@ -21,7 +21,7 @@
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
                             <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('util_links') }}</h3>
-                            <ul role="list" class="mt-6 space-y-4">
+                            <ul class="mt-6 space-y-4">
                                 <li>
                                     <Link
                                         :href="route('page', { slug: 'about' })"
@@ -58,7 +58,7 @@
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
                             <h3 class="text-sm font-semibold leading-5 text-gray-400" v-text="$t('navigate')" />
-                            <ul role="list" class="mt-6 space-y-4">
+                            <ul class="mt-6 space-y-4">
                                 <li>
                                     <Link
                                         :href="route('login')"
@@ -107,10 +107,6 @@
                     >
                         <Icon name="social/facebook" class="w-6 h-6" />
                     </a>
-
-                    <!--                    <a href="#" class="text-gray-500 hover:text-gray-400">-->
-                    <!--                        <Icon name="social/instagram" class="w-6 h-6" />-->
-                    <!--                    </a>-->
 
                     <a
                         href="https://github.com/code4romania/bursa-binelui"

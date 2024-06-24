@@ -19,17 +19,18 @@ createServer((page) =>
                     ...props.initialPage.props.ziggy,
                     // Build the location, since there is
                     // no window.location in Node.
-                    location: new URL(props.initialPage.props.ziggy.url)
+                    location: new URL(props.initialPage.props.ziggy.url),
                 })
                 .use(i18nVue, {
                     lang: props.initialPage.props.locales.current,
+                    shared: false,
                     resolve: lang => {
                         const langs = import.meta.glob('../../lang/*.json', { eager: true });
                         return langs[`../../lang/${lang}.json`].default;
-                    }
+                    },
                 })
                 .use(plugin)
-                .component('Link', Link)
+                .component('Link', Link);
         },
     })
 );
