@@ -17,6 +17,7 @@ createInertiaApp({
             .component('Link', Link);
 
         return app.use(i18nVue, {
+            lang: props.initialPage.props.locales.current,
             resolve: async (lang) => {
                 const langs = import.meta.glob('../../lang/*.json');
                 return await langs[`../../lang/${lang}.json`]();

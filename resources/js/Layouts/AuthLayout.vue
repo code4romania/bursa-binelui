@@ -15,7 +15,7 @@
                             <span v-if="description" v-text="description" />
 
                             <Link
-                                v-if="actionUrl && actionUrl"
+                                v-if="actionUrl"
                                 :href="actionUrl"
                                 class="text-primary-600 hover:text-primary-500 hover:underline"
                             >
