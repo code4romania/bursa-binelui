@@ -11,7 +11,7 @@
             </Link>
 
             <!-- Desktop main links -->
-            <div class="hidden lg:flex lg:items-center sm:space-x-4 xl:space-x-8">
+            <div class="items-center hidden lg:flex gap-x-4 lg:gap-x-8 xl:gap-x-12">
                 <!-- Explore menu -->
                 <FlyoutMenu :name="$t('explore_navbar_menu')" :links="explore" />
 
@@ -66,13 +66,15 @@
                             >
                                 {{ $t('my_donations') }}
                             </NavLink>
+
                             <NavLink
                                 v-if="['admin', 'manager'].includes($page.props.auth.user.role)"
                                 class="w-full px-3 py-2 text-base"
                                 :href="route('dashboard.main')"
                                 :active="route().current('dashboard.main')"
-                                v-text="$t('administrate_link')"
-                            />
+                            >
+                                {{ $t('administrate_link') }}
+                            </NavLink>
 
                             <!-- Account settings -->
                             <NavLink
@@ -111,8 +113,6 @@
                         {{ $t('register_link') }}
                     </Link>
                 </template>
-
-                <LanguageSwitcher />
             </div>
 
             <DisclosureButton
@@ -212,8 +212,6 @@
                         {{ $t('register_link') }}
                     </NavLink>
                 </div>
-
-                <LanguageSwitcher class="py-2" />
             </div>
         </DisclosurePanel>
     </Disclosure>
@@ -225,16 +223,14 @@
     import route from '@/Helpers/useRoute';
 
     import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-    import { MenuIcon, XIcon } from '@heroicons/vue/outline';
-    import { UserCircleIcon } from '@heroicons/vue/solid';
+    import { MenuIcon, XIcon, UserCircleIcon } from '@heroicons/vue/solid';
     import Icon from '@/Components/Icon.vue';
 
     import NavLink from '@/Components/links/NavLink.vue';
     import FlyoutMenu from '@/Components/dropdowns/FlyoutMenu.vue';
-    import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 
     /** Explore menu links. */
-    const explore = [
+    const explore = computed(() => [
         {
             name: 'Proiecte',
             description: 'Descoperă proiectele înscrise la Bursa Binelui și susține proiectul pe care îl îndrăgești.',
@@ -250,20 +246,20 @@
             description: 'Descoperă proiectele organizate de BCR.',
             href: route('bcr.index'),
         },
-        {
-            name: 'Campionatul de Bine',
-            description: 'O competiție a faptelor bune. Alătură-te!',
-            href: route('championship'),
-        },
-        {
-            name: 'Gale bursa binelui',
-            description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
-            href: route('regional'),
-        },
-    ];
+        // {
+        //     name: 'Campionatul de Bine',
+        //     description: 'O competiție a faptelor bune. Alătură-te!',
+        //     href: route('championship'),
+        // },
+        // {
+        //     name: 'Gale bursa binelui',
+        //     description: 'Proiectele cu cel mai mare impact, pe regiuni. Vezi participanții!',
+        //     href: route('regional'),
+        // },
+    ]);
 
     /** About menu links. */
-    const about = [
+    const about = computed(() => [
         {
             name: 'Despre Bursa Binelui',
             description:
@@ -280,14 +276,5 @@
             description: 'Ai o neclaritate? Găsește răspunsul aici.',
             href: route('page', 'faqs'),
         },
-    ];
-
-    const page = usePage();
-
-    const languages = computed(() =>
-        page.props.locales.available.map((locale) => ({
-            name: locale,
-            id: locale,
-        }))
-    );
+    ]);
 </script>

@@ -9,19 +9,18 @@
             </div>
         </div>
 
-        <div class="bg-white px-9">
-            <ul
-                role="list"
-                class="grid grid-cols-1 gap-8 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
-            >
-                <li class="relative z-50 flex flex-col col-span-1 p-6 -mt-12 bg-white rounded-md shadow-lg">
+        <div class="px-9">
+            <ul class="grid grid-cols-1 gap-8 mx-auto -mt-12 max-w-7xl lg:grid-cols-3">
+                <li
+                    class="relative z-50 flex flex-col col-span-1 p-6 bg-white rounded-md shadow-lg ring-1 ring-gray-100"
+                >
                     <ShareIcon
-                        class="flex items-center justify-center w-10 h-10 p-2 rounded-lg text-primary-600 bg-primary-50"
+                        class="flex items-center justify-center w-10 h-10 p-2 mb-6 rounded-lg text-primary-600 bg-primary-50"
                     />
 
-                    <h3 class="mt-6 mb-2 text-lg font-medium text-gray-900">{{ $t('social_media_share') }}</h3>
+                    <h3 class="font-semibold leading-7 text-gray-900" v-text="$t('social_media_share')" />
 
-                    <div class="text-sm text-gray-500">
+                    <p class="mt-1 text-sm leading-relaxed text-gray-600">
                         {{ $t('share') }}
                         <a
                             class="text-blue-500 underline"
@@ -62,17 +61,19 @@
                             >{{ $t('messenger') }}</a
                         >
                         {{ $t('tell_about') }}
-                    </div>
+                    </p>
                 </li>
 
-                <li class="relative z-50 flex flex-col col-span-1 p-6 bg-white rounded-md shadow-lg sm:-mt-12">
+                <li
+                    class="relative z-50 flex flex-col col-span-1 p-6 bg-white rounded-md shadow-lg ring-1 ring-gray-100"
+                >
                     <HeartIcon
-                        class="flex items-center justify-center w-10 h-10 p-2 rounded-lg text-primary-600 bg-primary-50"
+                        class="flex items-center justify-center w-10 h-10 p-2 mb-6 rounded-lg text-primary-600 bg-primary-50"
                     />
 
-                    <h3 class="mt-6 mb-2 text-lg font-medium text-gray-900">{{ $t('donate_or_volunteer') }}</h3>
+                    <h3 class="font-semibold leading-7 text-gray-900" v-text="$t('donate_or_volunteer')" />
 
-                    <div class="text-sm text-gray-500">
+                    <p class="mt-1 text-sm leading-relaxed text-gray-600">
                         {{ $t('interested_in_ong') }}
                         <a
                             :href="pageRoute + '#projects'"
@@ -83,27 +84,48 @@
                         <button
                             type="button"
                             v-if="acceptsVolunteers"
-                            @click="$emit('volunteer')"
+                            @click="triggerVolunteer"
                             class="text-blue-500 underline cursor-pointer"
                             v-text="$t('register_to_volunteer')"
                         />
                         {{ $t('for_ong') }}
-                    </div>
+                    </p>
                 </li>
 
-                <li class="relative z-50 flex flex-col col-span-1 p-6 bg-white rounded-md shadow-lg sm:-mt-12">
+                <li
+                    class="relative z-50 flex flex-col col-span-1 p-6 bg-white rounded-md shadow-lg ring-1 ring-gray-100"
+                >
                     <GlobeAltIcon
-                        class="flex items-center justify-center w-10 h-10 p-2 rounded-lg text-primary-600 bg-primary-50"
+                        class="flex items-center justify-center w-10 h-10 p-2 mb-6 rounded-lg text-primary-600 bg-primary-50"
                     />
 
-                    <h3 class="mt-6 mb-2 text-lg font-medium text-gray-900">{{ $t('your_blog') }}</h3>
+                    <h3 class="font-semibold leading-7 text-gray-900" v-text="$t('your_blog')" />
 
-                    <div class="text-sm text-gray-500">
-                        {{ $t('you_have_blog') }}
-                        <p @click="$emit('copyCode')" class="text-blue-500 underline cursor-pointer">
-                            {{ $t('embed_code') }}
+                    <div class="relative mt-1">
+                        <p class="text-sm leading-relaxed text-gray-600">
+                            {{ $t('you_have_blog') }}
+                            <button
+                                type="button"
+                                @click="copy(embedCode)"
+                                class="text-blue-500 underline"
+                                v-text="$t('embed_code')"
+                            />
+                            {{ $t('copy_code') }}
                         </p>
-                        {{ $t('copy_code') }}
+
+                        <div
+                            v-if="copied && text === embedCode"
+                            class="absolute inset-0 z-50 flex items-center py-4 overflow-hidden transition-opacity duration-150 bg-white"
+                        >
+                            <div class="flex gap-x-2">
+                                <CheckCircleIcon class="w-5 h-5 text-green-400 shrink-0" aria-hidden="true" />
+
+                                <span
+                                    class="text-sm font-medium text-green-800 max-w-64"
+                                    v-text="$t('embed_code_copied')"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -114,18 +136,28 @@
 </template>
 
 <script setup>
-    /** Import components */
+    import { computed } from 'vue';
+    import { useClipboard } from '@vueuse/core';
+
     import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
     import { SpeakerphoneIcon } from '@heroicons/vue/outline';
-    import { ShareIcon, HeartIcon, GlobeAltIcon } from '@heroicons/vue/solid';
+    import { CheckCircleIcon, ShareIcon, HeartIcon, GlobeAltIcon } from '@heroicons/vue/solid';
 
     /** Component props. */
     const props = defineProps({
         pageRoute: String,
-        acceptsVolunteers: Boolean,
+        acceptsVolunteers: {
+            type: Boolean,
+            default: false,
+        },
     });
 
-    /** Component emits. */
-    defineEmits(['copyCode', 'donate', 'volunteer']);
+    const embedCode = computed(() => `<iframe src="${window.location.href}" width="800" height="600"></iframe>`);
+
+    const { text, copy, copied } = useClipboard({ legacy: true });
+
+    const triggerVolunteer = () => {
+        document.getElementById('volunteer-active-modal').click();
+    };
 </script>

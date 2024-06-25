@@ -72,49 +72,49 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import route from '@/Helpers/useRoute';
-import Title from '@/Components/Title.vue';
-import Table from '@/Components/tables/Table.vue';
-import Select from '@/Components/form/Select.vue';
-import SearchFilter from '@/Components/filters/SearchFilter.vue';
-import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-import useFilters from '@/Helpers/useFilters.js';
-import PageLayout from '@/Layouts/PageLayout.vue';
-import { XIcon, DownloadIcon } from '@heroicons/vue/solid';
+    import { ref } from 'vue';
+    import route from '@/Helpers/useRoute';
+    import Title from '@/Components/Title.vue';
+    import Table from '@/Components/tables/Table.vue';
+    import Select from '@/Components/form/Select.vue';
+    import SearchFilter from '@/Components/filters/SearchFilter.vue';
+    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+    import useFilters from '@/Helpers/useFilters.js';
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import { XIcon } from '@heroicons/vue/solid';
 
-const props = defineProps({
-    collection: {
-        type: Object,
-        required: true,
-    },
-    filter: {
-        type: Object,
-        required: false,
-    },
-    projects: Array,
-    organizations: Array,
-    statuses: Array,
-    amounts: Array,
-    dates: Array,
-    //     start_dates: Array,
-    //     end_dates: Array
-});
+    const props = defineProps({
+        collection: {
+            type: Object,
+            required: true,
+        },
+        filter: {
+            type: Object,
+            required: false,
+        },
+        projects: Array,
+        organizations: Array,
+        statuses: Array,
+        amounts: Array,
+        dates: Array,
+        //     start_dates: Array,
+        //     end_dates: Array
+    });
 
-/** Active filter state. */
-const hasValues = ref(false);
+    /** Active filter state. */
+    const hasValues = ref(false);
 
-/** Filter values. */
-const filter = ref({
-    search: props.filter?.search || null,
-    status: props.filter?.status || null,
-    amount: props.filter?.amount || null,
-    project: props.filter?.project || null,
-    organization: props.filter?.organization || null,
-    start_date: props.filter?.start_date || null,
-    end_date: props.filter?.end_date || null,
-});
+    /** Filter values. */
+    const filter = ref({
+        search: props.filter?.search || null,
+        status: props.filter?.status || null,
+        amount: props.filter?.amount || null,
+        project: props.filter?.project || null,
+        organization: props.filter?.organization || null,
+        start_date: props.filter?.start_date || null,
+        end_date: props.filter?.end_date || null,
+    });
 
-const sort = ref(null);
-const { applyFilters, clearFilters } = useFilters(filter, sort, route('donor.donations'));
+    const sort = ref(null);
+    const { applyFilters, clearFilters } = useFilters(filter, sort, route('donor.donations'));
 </script>

@@ -84,9 +84,6 @@
             v-if="project"
             class="mb-20"
             :pageRoute="route('projects.show', project.slug)"
-            @donate="triggerDonate"
-            @volunteer="triggerVolunteer"
-            @copyCode="copyEmbed"
             :acceptsVolunteers="project.accepting_volunteers"
         />
 
@@ -112,48 +109,4 @@
     const props = defineProps({
         project: Object,
     });
-
-    /**
-     * Copy embed code.
-     */
-    const copyEmbed = () => {
-        /** Embed iframe. */
-        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
-
-        /** Check if navigator object exists and copy iframe. */
-        if (navigator.clipboard) {
-            navigator.clipboard
-                .writeText(embedCode)
-                .then(() => alert('Embed code copied to clipboard!'))
-                .catch(() => alert('Failed to copy embed code to clipboard!'));
-        } else {
-            /** Create textarea element. */
-            const tempInput = document.createElement('textarea');
-
-            /** Set textarea value as embed code. */
-            tempInput.value = embedCode;
-
-            /** Apend textarea to body. */
-            document.body.appendChild(tempInput);
-
-            /** Select textarea text. */
-            tempInput.select();
-
-            /** Copy textarea content. */
-            document.execCommand('copy');
-
-            /** Remove textarea. */
-            document.body.removeChild(tempInput);
-        }
-    };
-
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = () => {
-        document.getElementById('volunteer-active-modal').click();
-    };
-
-    /** Trigger donate modal from card. */
-    const triggerDonate = () => {
-        document.getElementById('donate-active-modal').click();
-    };
 </script>

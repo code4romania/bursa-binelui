@@ -1,10 +1,11 @@
 <template>
     <Link
         :href="href"
-        :class="[
-            'inline-flex font-medium leading-5',
-            active ? 'text-primary-600 hover:text-primary-500' : 'text-gray-500 hover:text-primary-600',
-        ]"
+        class="inline-flex font-medium leading-5"
+        :class="{
+            'text-primary-600 hover:text-primary-500': active,
+            'text-gray-500 hover:text-primary-600': !active,
+        }"
     >
         <slot />
     </Link>

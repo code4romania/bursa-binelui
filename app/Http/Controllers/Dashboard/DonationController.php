@@ -39,7 +39,8 @@ class DonationController extends Controller
         $dates = $donations
             ->pluck('created_at')
             ->map(fn ($date) => $date->format('Y-m'))
-            ->unique();
+            ->unique()
+            ->values();
 
         return Inertia::render('AdminOng/Donations/Index', [
             'filter' => $request->query('filter'),
