@@ -60,10 +60,9 @@ class StatisticsCards extends StatsOverviewWidget
         $icon = $currentGrandThanLast ? 'heroicon-s-trending-up' : 'heroicon-s-trending-down';
 
         $diffPercent = round(($currentAvg * 100 / $lastAvg) - 100, 2);
-        $description = $cardLabel === 'year' ?
-                __('statistics.labels.current_year_vs_last_year', ['number' => $diffPercent])
-             :
-                __('statistics.labels.current_month_vs_last_month', ['number' => $diffPercent]);
+        $description = $cardLabel === 'year'
+            ? __('statistics.labels.current_year_vs_last_year', ['number' => $diffPercent])
+            : __('statistics.labels.current_month_vs_last_month', ['number' => $diffPercent]);
 
         $chart = array_map(function () use ($currentAvg, $lastAvg) {
             return rand(min((int) $currentAvg, (int) $lastAvg), max((int) $currentAvg, (int) $lastAvg));
