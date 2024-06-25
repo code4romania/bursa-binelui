@@ -147,7 +147,6 @@
             <HowCanYouHelp
                 class="mb-20"
                 :pageRoute="route('organizations.show', organization)"
-                @volunteer="triggerVolunteer"
                 :acceptsVolunteers="organization.accepting_volunteers"
             />
         </div>
@@ -175,14 +174,4 @@
     const props = defineProps({
         organization: [Array, Object],
     });
-
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = () => {
-        document.getElementById('volunteer-active-modal').click();
-    };
-
-    /** Trigger donate modal from card. */
-    const triggerDonate = () => {
-        document.getElementById('donate-active-modal').click();
-    };
 </script>

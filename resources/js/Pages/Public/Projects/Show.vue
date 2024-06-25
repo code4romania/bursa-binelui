@@ -204,13 +204,9 @@
             </div>
         </div>
 
-        <!-- How can you help -->
         <HowCanYouHelp
             class="mb-20"
             :pageRoute="route('projects.show', project.slug)"
-            @donate="triggerDonate"
-            @volunteer="triggerVolunteer"
-            @copyCode="copyEmbed"
             :acceptsVolunteers="project.accepting_volunteers"
         />
 
@@ -269,78 +265,27 @@
 </template>
 
 <script setup>
-/** Import form vue */
-import { ref } from 'vue';
+    /** Import form vue */
+    import { ref } from 'vue';
 
-/** Import from inertia. */
-import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+    /** Import from inertia. */
+    import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
 
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-import DonateModal from '@/Components/modals/DonateModal.vue';
-import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
-import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
-import SharePage from '@/Components/SharePage.vue';
-import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-import { ExternalLinkIcon, BookmarkIcon, LightningBoltIcon, ChartBarIcon } from '@heroicons/vue/outline';
-import { LocationMarkerIcon, CalendarIcon } from '@heroicons/vue/solid';
-import Gallery from '@/Components/Gallery.vue';
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import DonateModal from '@/Components/modals/DonateModal.vue';
+    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
+    import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+    import SharePage from '@/Components/SharePage.vue';
+    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+    import { ExternalLinkIcon, BookmarkIcon, LightningBoltIcon, ChartBarIcon } from '@heroicons/vue/outline';
+    import { LocationMarkerIcon, CalendarIcon } from '@heroicons/vue/solid';
+    import Gallery from '@/Components/Gallery.vue';
 
-const props = defineProps({
-    project: {
-        type: Object,
-        required: true,
-    },
-});
-
-const project = ref(props.project);
-
-/**
- * Copy embed code.
- */
-const copyEmbed = () => {
-    /** Embed iframe. */
-    const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
-
-    /** Check if navigator object exists and copy iframe. */
-    if (navigator.clipboard) {
-        navigator.clipboard
-            .writeText(embedCode)
-            .then(() => alert('Embed code copied to clipboard!'))
-            .catch(() => alert('Failed to copy embed code to clipboard!'));
-    } else {
-        /** Create textarea element. */
-        const tempInput = document.createElement('textarea');
-
-        /** Set textarea value as embed code. */
-        tempInput.value = embedCode;
-
-        /** Apend textarea to body. */
-        document.body.appendChild(tempInput);
-
-        /** Select textarea text. */
-        tempInput.select();
-
-        /** Copy textarea content. */
-        document.execCommand('copy');
-
-        /** Remove textarea. */
-        document.body.removeChild(tempInput);
-    }
-};
-
-/** Trigger volunteer modal from card. */
-const triggerVolunteer = () => {
-    document.getElementById('volunteer-active-modal').click();
-};
-
-/** Trigger donate modal from card. */
-const triggerDonate = () => {
-    if (false === props.project.is_period_active) {
-        document.getElementById('project-donation-expired').click();
-        return;
-    }
-
-    document.getElementById('donate-active-modal').click();
-};
+    const props = defineProps({
+        project: {
+            type: Object,
+            required: true,
+        },
+    });
 </script>

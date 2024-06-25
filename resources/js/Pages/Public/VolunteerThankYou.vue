@@ -48,9 +48,6 @@
         <HowCanYouHelp
             class="mb-20"
             :pageRoute="route('projects.show', 1)"
-            @donate="triggerDonate"
-            @volunteer="triggerVolunteer"
-            @copyCode="copyEmbed"
             :acceptsVolunteers="flash?.data.accepting_volunteers"
         />
 
@@ -63,24 +60,14 @@
 </template>
 
 <script setup>
-/** Import components. */
-import PageLayout from '@/Layouts/PageLayout.vue';
-import DonateModal from '@/Components/modals/DonateModal.vue';
-import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
-import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
-import { ChartBarIcon } from '@heroicons/vue/outline';
+    /** Import components. */
+    import PageLayout from '@/Layouts/PageLayout.vue';
+    import DonateModal from '@/Components/modals/DonateModal.vue';
+    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
+    import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+    import { ChartBarIcon } from '@heroicons/vue/outline';
 
-const props = defineProps({
-    flash: Object,
-});
-
-/** Trigger volunteer modal from card. */
-const triggerVolunteer = () => {
-    document.getElementById('volunteer-active-modal').click();
-};
-
-/** Trigger donate modal from card. */
-const triggerDonate = () => {
-    document.getElementById('donate-active-modal').click();
-};
+    const props = defineProps({
+        flash: Object,
+    });
 </script>
