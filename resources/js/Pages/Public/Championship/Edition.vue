@@ -243,7 +243,7 @@
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';
-    import { Carousel, Slide } from 'vue3-carousel';
+    import { Carousel, Slide } from 'vue3-carousel/dist/carousel.es.js';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';
