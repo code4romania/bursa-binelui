@@ -139,7 +139,7 @@ import ClientOnly from '@/Components/ClientOnly.vue';
 import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
 
 import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide } from 'vue3-carousel';
+import { Carousel, Slide } from 'vue3-carousel/dist/carousel.es.js';
 import { ArrowRightIcon } from '@heroicons/vue/solid';
 
 const props = defineProps({
