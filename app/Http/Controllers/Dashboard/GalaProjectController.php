@@ -102,7 +102,7 @@ class GalaProjectController extends Controller
      */
     public function update(Request $request, GalaProject $project)
     {
-        $this->authorize('editAsNgo', $project);;
+        $this->authorize('editAsNgo', $project);
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
