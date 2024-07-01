@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Dashboard\DonationController;
 use App\Http\Controllers\Dashboard\OrganizationController;
 use App\Http\Controllers\Dashboard\ProjectController;
-use App\Http\Controllers\Dashboard\RegionalProjectController;
+use App\Http\Controllers\Dashboard\GalaProjectController;
 use App\Http\Controllers\Dashboard\TicketController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\VolunteerController;
@@ -42,14 +42,14 @@ Route::group([
     Route::post('/{project}', 'update')->name('update');
 
     Route::group([
-        'prefix' => 'regional',
-        'as' => 'regional.',
-        'controller' => RegionalProjectController::class,
+        'prefix' => 'gala',
+        'as' => 'gala.',
+        'controller' => GalaProjectController::class,
     ], function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{gala}/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
-        Route::get('/{project}/edit', 'edit')->name('edit');
+        Route::get('/{project:slug}/edit', 'edit')->name('edit');
         Route::post('/{project}/status', 'changeStatus')->name('status');
         Route::put('/{project}', 'update')->name('update');
     });

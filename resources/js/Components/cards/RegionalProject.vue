@@ -41,12 +41,19 @@
                 </div>
             </div>
 
-            <div class="w-full p-6">
+            <div class="w-full p-6 grid grid-cols-2 gap-2">
                 <Link
                     :href="route('regional.project', data.slug)"
                     class="block text-center w-full mt-auto bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                     {{ $t('see') }}
+                </Link>
+
+                <Link
+                    :href="route('dashboard.projects.gala.edit', data.slug)"
+                    class="block text-center w-full mt-auto bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                >
+                    {{ $t('edit') }}
                 </Link>
             </div>
         </div>
@@ -54,16 +61,16 @@
 </template>
 
 <script setup>
-    import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 
-    /** Import components. */
-    import Icon from '@/Components/Icon.vue';
-    import {onMounted} from "vue";
-    import { LocationMarkerIcon, BookmarkIcon } from '@heroicons/vue/solid';
+/** Import components. */
+import Icon from '@/Components/Icon.vue';
+import { onMounted } from 'vue';
+import { LocationMarkerIcon, BookmarkIcon } from '@heroicons/vue/solid';
 
-    /** Component props. */
-    const props = defineProps({
-        data: Object,
-        cardType: String,
-    });
+/** Component props. */
+const props = defineProps({
+    data: Object,
+    cardType: String,
+});
 </script>

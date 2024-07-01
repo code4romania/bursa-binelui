@@ -67,109 +67,109 @@
 </template>
 
 <script setup>
-    import Navbar from '@/Components/Navbar.vue';
-    import Footer from '@/Components/Footer.vue';
-    import PontBanner from '@/Components/PontBanner.vue';
-    import Notification from '@/Components/Notification.vue';
-    import route from '@/Helpers/useRoute';
+import Navbar from '@/Components/Navbar.vue';
+import Footer from '@/Components/Footer.vue';
+import PontBanner from '@/Components/PontBanner.vue';
+import Notification from '@/Components/Notification.vue';
+import route from '@/Helpers/useRoute';
 
-    import {
-        AnnotationIcon,
-        CurrencyEuroIcon,
-        FolderIcon,
-        FolderOpenIcon,
-        FolderRemoveIcon,
-        HomeIcon,
-        OfficeBuildingIcon,
-        UserAddIcon,
-        UserCircleIcon,
-        UserGroupIcon,
-        UserRemoveIcon,
-    } from '@heroicons/vue/outline';
-    import OrganizationStatus from '@/Components/OrganizationStatus.vue';
-    import { trans } from 'laravel-vue-i18n';
+import {
+    AnnotationIcon,
+    CurrencyEuroIcon,
+    FolderIcon,
+    FolderOpenIcon,
+    FolderRemoveIcon,
+    HomeIcon,
+    OfficeBuildingIcon,
+    UserAddIcon,
+    UserCircleIcon,
+    UserGroupIcon,
+    UserRemoveIcon,
+} from '@heroicons/vue/outline';
+import OrganizationStatus from '@/Components/OrganizationStatus.vue';
+import { trans } from 'laravel-vue-i18n';
 
-    const props = defineProps({
-        gridClass: {
-            type: String,
-            default: 'gap-8',
-        },
-    });
+const props = defineProps({
+    gridClass: {
+        type: String,
+        default: 'gap-8',
+    },
+});
 
-    const navigation = [
-        {
-            name: 'Panou de control',
-            route: route('dashboard.main'),
-            icon: HomeIcon,
-        },
-        {
-            name: 'Organizația mea',
-            route: route('dashboard.organization.edit'),
-            icon: OfficeBuildingIcon,
-        },
-        {
-            name: 'Toate proiectele',
-            route: route('dashboard.projects.index'),
-            icon: FolderIcon,
-            subMenu: [
-                {
-                    name: 'published_projects',
-                    route: route('dashboard.projects.index', {
-                        project_status: 'published',
-                    }),
-                    icon: FolderOpenIcon,
-                },
-                {
-                    name: 'draft_projects',
-                    route: route('dashboard.projects.index', { project_status: 'draft' }),
-                    icon: FolderRemoveIcon,
-                },
-            ],
-        },
-        {
-            name: 'Gale bursa binelui',
-            route: route('dashboard.projects.regional.index'),
-            icon: FolderIcon,
-        },
-        {
-            name: 'Voluntari',
-            route: route('dashboard.volunteers.index'),
-            icon: UserGroupIcon,
-            subMenu: [
-                {
-                    name: 'volunteers_pending',
-                    route: route('dashboard.volunteers.index', { status: 'pending' }),
-                    icon: UserAddIcon,
-                },
-                {
-                    name: 'volunteers_rejected',
-                    route: route('dashboard.volunteers.index', { status: 'rejected' }),
-                    icon: UserRemoveIcon,
-                },
-            ],
-        },
-        {
-            name: 'Manageri ONG',
-            route: route('dashboard.users.index'),
-            icon: UserCircleIcon,
-        },
-        {
-            name: 'Donații ONG',
-            route: route('dashboard.donations.index'),
-            icon: CurrencyEuroIcon,
-        },
-        {
-            name: 'Tickets',
-            route: route('dashboard.tickets.index', { status: 'open' }),
-            icon: AnnotationIcon,
-        },
-    ];
+const navigation = [
+    {
+        name: 'Panou de control',
+        route: route('dashboard.main'),
+        icon: HomeIcon,
+    },
+    {
+        name: 'Organizația mea',
+        route: route('dashboard.organization.edit'),
+        icon: OfficeBuildingIcon,
+    },
+    {
+        name: 'Toate proiectele',
+        route: route('dashboard.projects.index'),
+        icon: FolderIcon,
+        subMenu: [
+            {
+                name: 'published_projects',
+                route: route('dashboard.projects.index', {
+                    project_status: 'published',
+                }),
+                icon: FolderOpenIcon,
+            },
+            {
+                name: 'draft_projects',
+                route: route('dashboard.projects.index', { project_status: 'draft' }),
+                icon: FolderRemoveIcon,
+            },
+        ],
+    },
+    {
+        name: 'Gale bursa binelui',
+        route: route('dashboard.projects.gala.index'),
+        icon: FolderIcon,
+    },
+    {
+        name: 'Voluntari',
+        route: route('dashboard.volunteers.index'),
+        icon: UserGroupIcon,
+        subMenu: [
+            {
+                name: 'volunteers_pending',
+                route: route('dashboard.volunteers.index', { status: 'pending' }),
+                icon: UserAddIcon,
+            },
+            {
+                name: 'volunteers_rejected',
+                route: route('dashboard.volunteers.index', { status: 'rejected' }),
+                icon: UserRemoveIcon,
+            },
+        ],
+    },
+    {
+        name: 'Manageri ONG',
+        route: route('dashboard.users.index'),
+        icon: UserCircleIcon,
+    },
+    {
+        name: 'Donații ONG',
+        route: route('dashboard.donations.index'),
+        icon: CurrencyEuroIcon,
+    },
+    {
+        name: 'Tickets',
+        route: route('dashboard.tickets.index', { status: 'open' }),
+        icon: AnnotationIcon,
+    },
+];
 
-    const isActive = (item) => {
-        if (typeof window === 'undefined') {
-            return false;
-        }
+const isActive = (item) => {
+    if (typeof window === 'undefined') {
+        return false;
+    }
 
-        return item.route === `${window.location.origin}${window.location.pathname}${window.location.search}`;
-    };
+    return item.route === `${window.location.origin}${window.location.pathname}${window.location.search}`;
+};
 </script>

@@ -21,7 +21,7 @@
                     />
                     <Link
                         v-text="$t('regional.project.page.registration_project')"
-                        :href="route('dashboard.projects.regional.index')"
+                        :href="route('dashboard.projects.gala.index')"
                         class="flex items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-default bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500"
                     />
                 </div>
@@ -155,30 +155,30 @@
 </template>
 
 <script setup>
-    /** Import from vue */
-    import { onMounted, ref } from 'vue';
-    import route from '@/Helpers/useRoute';
+/** Import from vue */
+import { onMounted, ref } from 'vue';
+import route from '@/Helpers/useRoute';
 
-    /** Import from inertia. */
-    import { Link } from '@inertiajs/vue3';
-    import Head from '@/Components/Head.vue';
+/** Import from inertia. */
+import { Link } from '@inertiajs/vue3';
+import Head from '@/Components/Head.vue';
 
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import { ChevronRightIcon, SpeakerphoneIcon } from '@heroicons/vue/outline';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import { ChevronRightIcon, SpeakerphoneIcon } from '@heroicons/vue/outline';
 
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import Icon from '@/Components/Icon.vue';
-    import ArticleCard from '@/Components/cards/ArticleCard.vue';
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import Icon from '@/Components/Icon.vue';
+import ArticleCard from '@/Components/cards/ArticleCard.vue';
 
-    const props = defineProps({
-        edition: {
-            type: Object,
-            default: null,
-        },
-        articles: {
-            type: Array,
-            default: null,
-        },
-    });
+const props = defineProps({
+    edition: {
+        type: Object,
+        default: null,
+    },
+    articles: {
+        type: Array,
+        default: null,
+    },
+});
 </script>

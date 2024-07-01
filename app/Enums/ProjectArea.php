@@ -16,7 +16,6 @@ enum ProjectArea: string
 
     case LOCAL = 'local';
     case REGIONAL = 'regional';
-    case NATIONAL = 'national';
 
     public function labelKeyPrefix(): string
     {

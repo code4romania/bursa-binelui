@@ -17,7 +17,7 @@
             >
                 <h3 v-text="$t('registration_active')" class="accent-gray-500 text-md mb-4" />
                 <Link
-                    :href="route('dashboard.projects.regional.create', { gala: item.id })"
+                    :href="route('dashboard.projects.gala.create', { gala: item.id })"
                     class="flex items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-default bg-primary-500 hover:bg-primary-400 text-white focus-visible:outline-primary-500"
                 >
                     <span v-text="$t('add_project')" />

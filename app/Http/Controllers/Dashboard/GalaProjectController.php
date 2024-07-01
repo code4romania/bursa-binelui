@@ -19,7 +19,7 @@ use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RegionalProjectController extends Controller
+class GalaProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -71,7 +71,7 @@ class RegionalProjectController extends Controller
         });
 
         return redirect()
-            ->route('dashboard.projects.regional.edit', $project->id)
+            ->route('dashboard.projects.gala.edit', $project->slug)
             ->with('success', __('regional_projects.created'));
     }
 
@@ -100,9 +100,9 @@ class RegionalProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RegionalProject $project)
+    public function update(Request $request, GalaProject $project)
     {
-//        $this->authorize('editAsNgo', $project);;
+        $this->authorize('editAsNgo', $project);;
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }

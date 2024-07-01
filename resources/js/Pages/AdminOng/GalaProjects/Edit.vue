@@ -519,6 +519,6 @@ const editField = (field) => {
     let newForm = useForm({
         [field]: form[field],
     });
-    newForm.post(route('dashboard.projects.regional.update', project.value.id));
+    newForm.post(route('dashboard.projects.gala.update', project.value.id));
 };
 </script>
