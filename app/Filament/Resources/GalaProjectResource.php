@@ -13,6 +13,7 @@ use App\Forms\Components\Link;
 use App\Models\GalaProject;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -125,6 +126,15 @@ class GalaProjectResource extends Resource
                     ->multiple()
                     ->inlineLabel()
                     ->required(),
+
+                SpatieMediaLibraryFileUpload::make('regionalProjectFiles')
+                    ->label(__('project.labels.gallery'))
+                    ->collection('regionalProjectFiles')
+                    ->inlineLabel()
+                    ->disk(config('filesystems.default_public'))
+                    ->image()
+                    ->multiple()
+                    ->maxFiles(20),
 
                 Toggle::make('youth')
                     ->label(__('edition.labels.youth_project'))
