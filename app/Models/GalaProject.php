@@ -7,7 +7,8 @@ namespace App\Models;
 use App\Concerns\BelongsToOrganization;
 use App\Concerns\HasCounties;
 use App\Concerns\HasSlug;
-use App\Traits\HasProjectStatus;
+use App\Enums\GalaProjectStatus;
+use App\Enums\OrganizationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +28,6 @@ class GalaProject extends Model implements HasMedia
     use BelongsToOrganization;
     use HasCounties;
     use InteractsWithMedia;
-    use HasProjectStatus;
     use LogsActivity;
     use BelongsToThroughTrait;
 
@@ -72,6 +72,8 @@ class GalaProject extends Model implements HasMedia
         'eligible' => 'boolean',
         'short_list' => 'boolean',
         'contact' => 'array',
+        'status' => GalaProjectStatus::class,
+        'organization_type' => OrganizationType::class,
     ];
 
     public string $slugFieldSource = 'name';
@@ -122,5 +124,10 @@ class GalaProject extends Model implements HasMedia
     public function removeFromShortList(): bool
     {
         return $this->update(['short_list' => 0]);
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status->value === GalaProjectStatus::draft->value;
     }
 }

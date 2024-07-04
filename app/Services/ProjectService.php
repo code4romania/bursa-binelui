@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\GalaProjectStatus;
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
 use App\Models\GalaProject;
@@ -128,6 +129,7 @@ class ProjectService
         match ($status) {
             ProjectStatus::pending->value => $this->pending($project),
             ProjectStatus::archived->value => $this->archive($project),
+            GalaProjectStatus::publish->value => $this->publish($project),
             default => Log::error('Invalid status  on change project status [# %s ]: %s', $project->id, $status),
         };
     }
@@ -164,6 +166,14 @@ class ProjectService
         $this->project = $project;
         $this->project->status_updated_at = now();
         $this->project->archived_at = now();
+        $this->project->save();
+    }
+
+    private function publish(GalaProject|Project $project): void
+    {
+        $this->project = $project;
+        $this->project->status_updated_at = now();
+        $this->project->status = GalaProjectStatus::publish;
         $this->project->save();
     }
 }

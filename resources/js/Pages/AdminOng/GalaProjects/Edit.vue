@@ -493,21 +493,6 @@ const props = defineProps({
     error_message: String,
 });
 
-const impact_areas = [
-    {
-        label: 'Local',
-        value: 'local',
-    },
-    {
-        label: 'Judetean',
-        value: 'judetean',
-    },
-    {
-        label: 'Regional',
-        value: 'regional',
-    },
-];
-
 let project = ref(props.project);
 let form = useForm(project.value);
 
@@ -519,6 +504,6 @@ const editField = (field) => {
     let newForm = useForm({
         [field]: form[field],
     });
-    newForm.post(route('dashboard.projects.gala.update', project.value.id));
+    newForm.put(route('dashboard.projects.gala.update', project.value.id));
 };
 </script>

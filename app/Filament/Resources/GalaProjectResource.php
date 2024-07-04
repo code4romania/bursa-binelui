@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\GalaProjectStatus;
 use App\Enums\OrganizationType;
 use App\Enums\ProjectArea;
 use App\Filament\Forms\Components\Value;
@@ -313,6 +314,11 @@ class GalaProjectResource extends Resource
         return [
             PrizesRelationManager::class,
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('status', GalaProjectStatus::publish);
     }
 
     public static function getPages(): array

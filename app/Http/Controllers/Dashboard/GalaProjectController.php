@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
 use App\Http\Resources\Edition\EditionShowResource;
 use App\Http\Resources\GalaProjectCardResource;
-use App\Models\County;
 use App\Models\Edition;
 use App\Models\Gala;
 use App\Models\GalaProject;
@@ -78,9 +77,14 @@ class GalaProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(GalaProject $project)
     {
-        //
+        $this->authorize('view', $project);
+        $project->load('media');
+
+        return Inertia::render('AdminOng/GalaProjects/View', [
+            'project' => $project,
+        ]);
     }
 
     /**
@@ -88,11 +92,12 @@ class GalaProjectController extends Controller
      */
     public function edit(GalaProject $project)
     {
+        $this->authorize('update', $project);
         $project->load('media');
 
         return Inertia::render('AdminOng/GalaProjects/Edit', [
             'project' => $project,
-            'counties' => County::get(['name', 'id']),
+            'counties' => $project->gala->counties()->get(['name', 'counties.id']),
             'projectCategories' => ProjectCategory::get(['name', 'id']),
         ]);
     }
@@ -102,7 +107,7 @@ class GalaProjectController extends Controller
      */
     public function update(Request $request, GalaProject $project)
     {
-        $this->authorize('editAsNgo', $project);
+        $this->authorize('update', $project);
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
         }
@@ -112,18 +117,10 @@ class GalaProjectController extends Controller
             ->with('success', __('project.project_updated'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function changeStatus(Request $request, string $id)
+    public function changeStatus(Request $request, GalaProject $project)
     {
         try {
-            (new ProjectService(RegionalProject::class))->changeStatus($id, $request->get('status'));
+            (new ProjectService(GalaProject::class))->changeStatus($project, $request->get('status'));
         } catch (\Exception $exception) {
             return redirect()->back()
                 ->with('error', $exception->getMessage());
