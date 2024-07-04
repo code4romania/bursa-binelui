@@ -5,349 +5,356 @@
 
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
             <!-- Edit project name -->
-            <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.title')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.name"
-                />
-                <EditModal @action="editField('name')" class="flex justify-end col-span-1">
-                    <!-- Project name -->
-                    <Input
-                        class="w-full"
-                        :label="$t('regional.project.title')"
-                        color="gray-700"
-                        id="project-name"
-                        type="text"
-                        v-model="form.name"
-                        :error="form.errors.name"
+            <Field :label="$t('regional.project.title')" :errors="form.errors.name">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.name"
                     />
-                </EditModal>
-            </div>
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.description')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.description"
-                />
-                <EditModal @action="editField('description')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.description')"
-                        color="gray-700"
-                        id="amount-target"
-                        type="number"
-                        v-model="form.description"
-                        :error="form.errors.description"
-                    />
-                </EditModal>
-            </div>
+                </template>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.counties')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.counties?.map((item) => item.name).join(', ')"
-                />
-                <EditModal @action="editField('counties')" class="flex justify-end col-span-1">
-                    <SelectMultiple
-                        class="w-full xl:w-1/2"
-                        :label="$t('regional.project.counties')"
-                        :options="counties"
-                        v-model="form.counties"
-                        :error="form.errors.counties"
-                    />
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.start_date')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.start_date"
-                />
-                <EditModal @action="editField('start_date')" class="flex justify-end col-span-1">
-                    <div class="flex w-full gap-6">
-                        <!-- Date start -->
+                <template #action>
+                    <EditModal @action="editField('name')" class="flex justify-end col-span-1">
+                        <!-- Project name -->
                         <Input
-                            class="w-full xl:w-1/2"
-                            :label="$t('start_date')"
+                            class="w-full"
+                            :label="$t('regional.project.title')"
                             color="gray-700"
-                            type="date"
-                            v-model="form.start_date"
-                            :error="form.errors.start_date"
+                            id="project-name"
+                            type="text"
+                            v-model="form.name"
+                            :error="form.errors.name"
                         />
-                    </div>
-                </EditModal>
-            </div>
+                    </EditModal>
+                </template>
+            </Field>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.end_date')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.end_date"
-                />
-                <EditModal @action="editField('end_date')" class="flex justify-end col-span-1">
-                    <div class="flex w-full gap-6">
-                        <!-- Date start -->
-                        <Input
-                            class="w-full xl:w-1/2"
-                            :label="$t('end_date')"
+            <Field :label="$t('regional.project.description')" alt :errors="form.errors.description">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.description"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('description')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.description')"
                             color="gray-700"
-                            type="date"
-                            v-model="form.end_date"
-                            :error="form.errors.end_date"
+                            id="amount-target"
+                            type="number"
+                            v-model="form.description"
+                            :error="form.errors.description"
                         />
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.counties')" :errors="form.errors.counties">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.counties?.map((item) => item.name).join(', ')"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('counties')" class="flex justify-end col-span-1">
+                        <SelectMultiple
+                            class="w-full xl:w-1/2"
+                            :label="$t('regional.project.counties')"
+                            :options="counties"
+                            v-model="form.counties"
+                            :error="form.errors.counties"
+                        />
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.start_date')" alt :errors="form.errors.start_date">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.start_date"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('start_date')" class="flex justify-end col-span-1">
+                        <div class="flex w-full gap-6">
+                            <!-- Date start -->
+                            <Input
+                                class="w-full xl:w-1/2"
+                                :label="$t('start_date')"
+                                color="gray-700"
+                                type="date"
+                                v-model="form.start_date"
+                                :error="form.errors.start_date"
+                            />
+                        </div>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.end_date')" :errors="form.errors.end_date">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.end_date"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('end_date')" class="flex justify-end col-span-1">
+                        <div class="flex w-full gap-6">
+                            <!-- Date start -->
+                            <Input
+                                class="w-full xl:w-1/2"
+                                :label="$t('end_date')"
+                                color="gray-700"
+                                type="date"
+                                v-model="form.end_date"
+                                :error="form.errors.end_date"
+                            />
+                        </div>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.categories')" alt :errors="form.errors.categories">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.categories?.map((item) => item.name).join(', ')"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('categories')" class="flex justify-end col-span-1">
+                        <SelectMultiple
+                            class="w-full"
+                            :label="$t('project_category_label')"
+                            :options="props.projectCategories"
+                            v-model="form.categories"
+                            :error="form.errors.categories"
+                        />
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.youth')" :errors="form.errors.youth">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.youth ? 'da' : 'nu'"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('youth')" class="flex justify-end col-span-1">
+                        <Checkbox name="youth" v-model:checked="form.youth" />
+                        <span class="ml-2 text-sm text-gray-700">{{ $t('regional.project.youth') }}</span>
+
+                        <!-- Error -->
+                        <p v-show="form.errors.youth" class="mt-2 text-sm text-red-600">
+                            {{ form.errors.youth }}
+                        </p>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.identified_need')" alt :errors="form.errors.identified_need">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.reason"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('reason')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.identified_need')"
+                            id="reason-project"
+                            color="gray-700"
+                            v-model="form.reason"
+                            :error="form.errors.reason"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.proposed_solution')" :errors="form.errors.solution">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.solution"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('solution')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.proposed_solution')"
+                            id="project-beneficiary"
+                            color="gray-700"
+                            v-model="form.solution"
+                            :error="form.errors.solution"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.project_details')" alt :errors="form.errors.project_details">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.project_details"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('project_details')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.project_progress')"
+                            id="project-beneficiary"
+                            color="gray-700"
+                            v-model="form.project_details"
+                            :error="form.errors.project_details"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.what_is_special')" :errors="form.errors.special">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.special"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('special')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.what_is_special')"
+                            id="project-beneficiary"
+                            color="gray-700"
+                            v-model="form.special"
+                            :error="form.errors.special"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.key_results')" alt :errors="form.errors.results">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.results"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('results')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.key_results')"
+                            id="project-beneficiary"
+                            color="gray-700"
+                            v-model="form.results"
+                            :error="form.errors.results"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.pride_success')" :errors="form.errors.proud">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.proud"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('proud')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.pride_success')"
+                            id="project-beneficiary"
+                            color="gray-700"
+                            v-model="form.proud"
+                            :error="form.errors.proud"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('photo_gallery')" alt :errors="form.errors.gallery">
+                <template #value>
+                    <div class="flex flex-wrap items-center gap-6 md:gap-8">
+                        <div class="aspect-1 shrink-0" v-for="(image, index) in form.gallery" :key="index">
+                            <img class="object-cover w-32 h-32" :src="image.url" alt="" />
+                        </div>
                     </div>
-                </EditModal>
-            </div>
+                </template>
 
-            <!-- Edit project category -->
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.categories')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.categories?.map((item) => item.name).join(', ')"
-                />
-                <EditModal @action="editField('categories')" class="flex justify-end col-span-1">
-                    <SelectMultiple
-                        class="w-full"
-                        :label="$t('project_category_label')"
-                        :options="props.projectCategories"
-                        v-model="form.categories"
-                        :error="form.errors.categories"
+                <template #action>
+                    <EditModal @action="editField('gallery')" @cancel="resetField('gallery')">
+                        <FileGroup v-model="form.gallery" :label="$t('photo_gallery')" />
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.had_partners')" :errors="form.errors.partnership">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.partnership ? 'da' : 'nu'"
                     />
-                </EditModal>
-            </div>
+                </template>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.youth')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.youth ? 'da' : 'nu'"
-                />
-                <EditModal @action="editField('youth')" class="flex justify-end col-span-1">
-                    <Checkbox name="youth" v-model:checked="form.youth" />
-                    <span class="ml-2 text-sm text-gray-700">{{ $t('regional.project.youth') }}</span>
+                <template #action>
+                    <EditModal @action="editField('partnership')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.had_partners')"
+                            id="project-beneficiary"
+                            color="gray-700"
+                            v-model="form.partnership"
+                            :error="form.errors.partnership"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
 
-                    <!-- Error -->
-                    <p v-show="form.errors.youth" class="mt-2 text-sm text-red-600">
-                        {{ form.errors.youth }}
-                    </p>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.organization_type')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.organization_type"
-                />
-                <EditModal @action="editField('youth')" class="flex justify-end col-span-1">
-                    <Radio
-                        :label="$t('regional.project.organization_type')"
-                        :options="organizationTypes"
-                        name="locations"
-                        v-model="form.organization_type"
-                        :error="form.errors.organization_type"
+            <Field
+                :label="$t('regional.project.partners')"
+                alt
+                v-if="form.partnership"
+                :errors="form.errors.partnership_details"
+            >
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.partnership_details"
                     />
+                </template>
 
-                    <!-- Error -->
-                    <p v-show="form.errors.organization_type" class="mt-2 text-sm text-red-600">
-                        {{ form.errors.organization_type }}
-                    </p>
-                </EditModal>
-            </div>
-
-            <!-- Edit project scope -->
-            <div class="grid grid-cols-12 px-4 py-6 bg-gray-100">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.identified_need')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.reason"
-                />
-                <EditModal @action="editField('reason')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.identified_need')"
-                        id="reason-project"
-                        color="gray-700"
-                        v-model="form.reason"
-                        :error="form.errors.reason"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <!-- Edit project beneficiary -->
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.proposed_solution')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.solution"
-                />
-                <EditModal @action="editField('solution')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.proposed_solution')"
-                        id="project-beneficiary"
-                        color="gray-700"
-                        v-model="form.solution"
-                        :error="form.errors.solution"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.project_progress')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.project_details"
-                />
-                <EditModal @action="editField('project_details')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.project_progress')"
-                        id="project-beneficiary"
-                        color="gray-700"
-                        v-model="form.project_details"
-                        :error="form.errors.project_details"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.what_is_special')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.special"
-                />
-                <EditModal @action="editField('special')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.what_is_special')"
-                        id="project-beneficiary"
-                        color="gray-700"
-                        v-model="form.special"
-                        :error="form.errors.special"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.key_results')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.results"
-                />
-                <EditModal @action="editField('results')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.key_results')"
-                        id="project-beneficiary"
-                        color="gray-700"
-                        v-model="form.results"
-                        :error="form.errors.results"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.pride_success')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.proud"
-                />
-                <EditModal @action="editField('proud')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.pride_success')"
-                        id="project-beneficiary"
-                        color="gray-700"
-                        v-model="form.proud"
-                        :error="form.errors.proud"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.had_partners')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.partnership ? 'da' : 'nu'"
-                />
-                <EditModal @action="editField('partnership')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.had_partners')"
-                        id="project-beneficiary"
-                        color="gray-700"
-                        v-model="form.partnership"
-                        :error="form.errors.partnership"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
-
-            <div class="grid grid-cols-12 px-4 py-6 bg-white" v-if="form.partnership">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.partners')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.partnership_details"
-                />
                 <EditModal @action="editField('partnership_details')" class="flex justify-end col-span-1">
                     <Textarea
                         class="w-full"
@@ -359,100 +366,104 @@
                     >
                     </Textarea>
                 </EditModal>
-            </div>
+            </Field>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.project_budget')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.budget_details"
-                />
-                <EditModal @action="editField('budget_details')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.project_budget')"
-                        id="budget_details"
-                        color="gray-700"
-                        v-model="form.budget_details"
-                        :error="form.errors.budget_details"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
+            <Field :label="$t('regional.project.project_budget')" :errors="form.errors.budget_details">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.budget_details"
+                    />
+                </template>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.participant_count_no')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.participants"
-                />
-                <EditModal @action="editField('participants')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.participant_count_no')"
-                        id="participants"
-                        color="gray-700"
-                        v-model="form.participants"
-                        :error="form.errors.participants"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
+                <template #action>
+                    <EditModal @action="editField('budget_details')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.project_budget')"
+                            id="budget_details"
+                            color="gray-700"
+                            v-model="form.budget_details"
+                            :error="form.errors.budget_details"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.project_team')"
-                />
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
-                    v-text="form.team_details"
-                />
-                <EditModal @action="editField('team_details')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.project_team')"
-                        id="team_details"
-                        color="gray-700"
-                        v-model="form.team_details"
-                        :error="form.errors.team_details"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
+            <Field :label="$t('regional.project.participant_count_no')" alt :errors="form.errors.participants">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.participants"
+                    />
+                </template>
 
-            <div class="grid grid-cols-12 px-4 py-6 bg-white">
-                <dt
-                    class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-5"
-                    v-text="$t('regional.project.contact_info')"
-                />
-                <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
-                    <div class="flex items center">
-                        <div class="flex flex-col">
-                            <span v-text="form.contact?.name" />
-                            <span v-text="form.contact?.email" />
-                            <span v-text="form.contact?.phone" />
+                <template #action>
+                    <EditModal @action="editField('participants')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.participant_count_no')"
+                            id="participants"
+                            color="gray-700"
+                            v-model="form.participants"
+                            :error="form.errors.participants"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.project_team')" :errors="form.errors.team_details">
+                <template #value>
+                    <dt
+                        class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
+                        v-text="form.team_details"
+                    />
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('team_details')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.project_team')"
+                            id="team_details"
+                            color="gray-700"
+                            v-model="form.team_details"
+                            :error="form.errors.team_details"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
+
+            <Field :label="$t('regional.project.contact_info')" alt :errors="form.errors.contact_info">
+                <template #value>
+                    <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
+                        <div class="flex items center">
+                            <div class="flex flex-col">
+                                <span v-text="form.contact?.name" />
+                                <span v-text="form.contact?.email" />
+                                <span v-text="form.contact?.phone" />
+                            </div>
                         </div>
-                    </div>
-                </dt>
-                <EditModal @action="editField('team_details')" class="flex justify-end col-span-1">
-                    <Textarea
-                        class="w-full"
-                        :label="$t('regional.project.project_team')"
-                        id="team_details"
-                        color="gray-700"
-                        v-model="form.team_details"
-                        :error="form.errors.team_details"
-                    >
-                    </Textarea>
-                </EditModal>
-            </div>
+                    </dt>
+                </template>
+
+                <template #action>
+                    <EditModal @action="editField('team_details')" class="flex justify-end col-span-1">
+                        <Textarea
+                            class="w-full"
+                            :label="$t('regional.project.project_team')"
+                            id="team_details"
+                            color="gray-700"
+                            v-model="form.team_details"
+                            :error="form.errors.team_details"
+                        >
+                        </Textarea>
+                    </EditModal>
+                </template>
+            </Field>
         </dl>
     </DashboardLayout>
 </template>
@@ -478,6 +489,7 @@ import DangerButton from '@/Components/buttons/DangerButton.vue';
 import SelectMultiple from '@/Components/form/SelectMultiple.vue';
 import Checkbox from '@/Components/form/Checkbox.vue';
 import Radio from '@/Components/form/Radio.vue';
+import Field from '@/Components/Field.vue';
 
 const flash = {
     success_message: '',
