@@ -8,12 +8,14 @@ use App\Concerns\BelongsToEdition;
 use App\Concerns\HasCounties;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Vite;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 class Gala extends Model implements HasMedia
 {
@@ -21,6 +23,7 @@ class Gala extends Model implements HasMedia
     use HasCounties;
     use InteractsWithMedia;
     use BelongsToEdition;
+    use BelongsToThroughTrait;
 
     protected $fillable = [
         'title',
@@ -72,5 +75,10 @@ class Gala extends Model implements HasMedia
     public function getRegistrationIsOpenAttribute(): bool
     {
         return now()->between($this->start_sign_up, $this->end_sign_up);
+    }
+
+    public function edition(): BelongsTo
+    {
+        return $this->belongsTo(Edition::class);
     }
 }

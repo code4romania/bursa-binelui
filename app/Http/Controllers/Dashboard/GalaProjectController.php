@@ -13,7 +13,6 @@ use App\Http\Resources\GalaProjectCardResource;
 use App\Models\Edition;
 use App\Models\Gala;
 use App\Models\GalaProject;
-use App\Models\ProjectCategory;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -46,8 +45,8 @@ class GalaProjectController extends Controller
         $gala->edition->load('editionCategories');
 
         return Inertia::render('AdminOng/GalaProjects/Add', [
-            'counties' => $gala->counties,
-            'projectCategories' => $gala->edition->editionCategories,
+            'counties' => $gala->counties()->get(['name', 'counties.id']),
+            'projectCategories' => $gala->edition->editionCategories()->get(['name', 'edition_categories.id']),
             'galaTitle' => $gala->title,
             'startDate' => $gala->start_sign_up,
             'endDate' => $gala->end_sign_up,
@@ -98,7 +97,7 @@ class GalaProjectController extends Controller
         return Inertia::render('AdminOng/GalaProjects/Edit', [
             'project' => $project,
             'counties' => $project->gala->counties()->get(['name', 'counties.id']),
-            'projectCategories' => ProjectCategory::get(['name', 'id']),
+            'projectCategories' => $project->edition->editionCategories()->get(['name', 'edition_categories.id']),
         ]);
     }
 
@@ -110,6 +109,9 @@ class GalaProjectController extends Controller
         $this->authorize('update', $project);
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
+        }
+        if ($request->has('categories')) {
+            $project->categories()->sync(collect($request->get('categories'))->pluck('id'));
         }
         $project->update($request->all());
 

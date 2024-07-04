@@ -465,6 +465,7 @@
                 </template>
             </Field>
         </dl>
+        <PrimaryButton :label="$t('publish')" class="w-full mt-4" @click="publishProject()" />
     </DashboardLayout>
 </template>
 
@@ -508,10 +509,27 @@ const props = defineProps({
 let project = ref(props.project);
 let form = useForm(project.value);
 
-onMounted(() => {
-    console.log(props.project);
+const changeStatusForm = useForm({
+    status: 'published',
+    project: props.project,
 });
 
+const publishProject = () => {
+    changeStatusForm.post(route('dashboard.projects.gala.status', props.project.slug), {
+        onSuccess: () => {
+            changeStatusForm.project = null;
+            changeStatusForm.status = 'published';
+        },
+        onError: () => {
+            changeStatusForm.project = null;
+            changeStatusForm.status = 'published';
+        },
+        onFinish: () => {
+            changeStatusForm.project = null;
+            changeStatusForm.status = 'published';
+        },
+    });
+};
 const editField = (field) => {
     let newForm = useForm({
         [field]: form[field],
