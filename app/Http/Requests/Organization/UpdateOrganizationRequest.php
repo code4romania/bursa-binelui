@@ -19,8 +19,8 @@ class UpdateOrganizationRequest extends FormRequest
         return [
             'name' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
-            'logo' => ['nullable', 'file', 'mimes:jpg,png'],
-            'statute' => ['nullable', 'file', 'mimes:pdf'],
+            'logo' => ['nullable', 'image', 'max:2048'],
+            'statute' => ['nullable', 'file', 'mimes:pdf', 'max:15360'],
             'address' => ['nullable', 'string'],
             'cif' => ['nullable', 'string', 'unique:organizations,cif', new ValidCIF],
             'contact_email' => ['nullable', 'email'],
