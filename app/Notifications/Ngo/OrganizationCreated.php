@@ -47,7 +47,8 @@ class OrganizationCreated extends Notification
             )
             ->line(__('mail.ngo.organization_created.line_1'))
             ->line(__('mail.ngo.organization_created.line_2'))
-            ->line(__('mail.ngo.organization_created.line_3'));
+            ->line(__('mail.ngo.organization_created.line_3'))
+            ->line(__('mail.ngo.organization_created.line_4'));
     }
 
     /**
