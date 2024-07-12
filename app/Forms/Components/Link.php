@@ -29,7 +29,7 @@ class Link extends Field
 
     public function getOrganization(): Collection
     {
-        return collect([])->push(['name' => $this->getRecord()->organization->name, 'url' => OrganizationResource::getUrl('view', $this->getRecord()->organization)]);
+        return collect([])->push(['name' => $this->getRecord()->organization?->name, 'url' => OrganizationResource::getUrl('view', $this->getRecord()->organization)]);
     }
 
     public function getProject(): Collection
