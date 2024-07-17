@@ -94,7 +94,7 @@
         },
         projects: Array,
         organizations: Array,
-        statuses: Array,
+        statuses: Object,
         amounts: Array,
         dates: Array,
         //     start_dates: Array,
