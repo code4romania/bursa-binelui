@@ -67,9 +67,11 @@ class ProjectController extends Controller
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
-            'mapCounties' => County::whereHas('projects', fn ($query) => $query->whereIsPublished())
-                ->withCount('projects')
-                ->get(),
+            'pins' => $view === 'map'
+                ? County::query()
+                    ->withWhereHasProjectsCount()
+                    ->get()
+                : [],
             'collection' => new ProjectCardCollection(
                 $project->paginate()->withQueryString()
             ),

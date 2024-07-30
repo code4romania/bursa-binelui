@@ -184,6 +184,6 @@ class Activity extends BaseActivity
             $value = $value ? __('field.boolean.true') : __('field.boolean.false');
         }
 
-        return $value;
+        return (string) $value;
     }
 }

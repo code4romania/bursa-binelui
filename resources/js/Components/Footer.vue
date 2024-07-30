@@ -34,22 +34,25 @@
                                     <Link
                                         :href="route('page', { slug: 'terms' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('terms_link')"
-                                    />
+                                    >
+                                        {{ $t('terms_link') }}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
                                         :href="route('page', { slug: 'policy' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('policy_link')"
-                                    />
+                                    >
+                                        {{ $t('policy_link') }}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
                                         :href="route('contact')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('contact_link')"
-                                    />
+                                    >
+                                        {{ $t('contact_link') }}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -63,8 +66,9 @@
                                     <Link
                                         :href="route('login')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('register_ong_link')"
-                                    />
+                                    >
+                                        {{ $t('register_ong_link') }}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
@@ -125,11 +129,11 @@
 </template>
 
 <script setup>
-    /** Import componets. */
-    import Newsletter from '@/Components/FooterNewsletter.vue';
-    import Icon from '@/Components/Icon.vue';
-    import route from '@/Helpers/useRoute.js';
+/** Import componets. */
+import Newsletter from '@/Components/FooterNewsletter.vue';
+import Icon from '@/Components/Icon.vue';
+import route from '@/Helpers/useRoute.js';
 
-    /** Get current year. */
-    const currentYear = new Date().getFullYear();
+/** Get current year. */
+const currentYear = new Date().getFullYear();
 </script>
