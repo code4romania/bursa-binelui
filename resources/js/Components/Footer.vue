@@ -67,7 +67,7 @@
                                         :href="route('login')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
                                     >
-                                        $t('register_ong_link')
+                                        {{ $t('register_ong_link') }}
                                     </Link>
                                 </li>
                                 <li>
