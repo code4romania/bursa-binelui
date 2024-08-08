@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -241,7 +242,7 @@ class Project extends Model implements HasMedia
 
     public function markAsApproved(): bool
     {
-        $slug = \Str::slug($this->name);
+        $slug = Str::slug($this->name);
 
         $count = self::whereRaw("slug RLIKE '^{$this->slug}(-[0-9]+)?$'")->count();
         if ($count > 0) {
@@ -275,11 +276,12 @@ class Project extends Model implements HasMedia
     {
         return collect($this->videos)
             ->pluck('url')
+            ->filter()
             ->map(
                 fn (string $videoUrl) => Cache::remember(
                     'video-' . hash('sha256', $videoUrl),
                     MONTH_IN_SECONDS,
-                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, '', false)
+                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, report: false)
                 )
             )
             ->filter()
