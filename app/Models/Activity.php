@@ -160,7 +160,7 @@ class Activity extends BaseActivity
             $organization = $this->subject->organization;
         }
         $organization->tickets()->create([
-            'subject' => __('project.ticket_rejected.subject', ['project' => $this->subject->name]),
+            'subject' => __('project.ticket_rejected.subject'),
             'content' => $reason,
             'user_id' => auth()->user()->id,
         ]);
@@ -184,6 +184,6 @@ class Activity extends BaseActivity
             $value = $value ? __('field.boolean.true') : __('field.boolean.false');
         }
 
-        return $value;
+        return (string) $value;
     }
 }

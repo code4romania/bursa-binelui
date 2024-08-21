@@ -18,6 +18,22 @@
     <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#00438a">
     <meta name="msapplication-TileColor" content="#00438a">
     <meta name="theme-color" content="#ffffff">
+    @if(!empty(config('services.google_analytics.tracking_id')))
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{config('services.google_analytics.tracking_id')}}"></script>
+        <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag(){dataLayer.push(arguments);}
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', '{{config('services.google_analytics.tracking_id')}}');
+
+        </script>
+    @endif
 </head>
 
 <body class="font-sans antialiased">

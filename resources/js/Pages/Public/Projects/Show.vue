@@ -126,8 +126,11 @@
                         <LocationMarkerIcon class="w-5 h-5 shrink-0 fill-primary-500" />
                         <div>
                             <h3 class="text-base font-semibold text-gray-600 leading-0">{{ $t('range') }}</h3>
-                            <p class="mt-2 text-base font-normal text-gray-500">
+                            <p class="mt-2 text-base font-normal text-gray-500" v-if="!project.is_national">
                                 {{ project.counties }}
+                            </p>
+                            <p class="mt-2 text-base font-normal text-gray-500" v-if="project.is_national">
+                                {{ $t('is_national') }}
                             </p>
                         </div>
                     </div>
@@ -201,13 +204,9 @@
             </div>
         </div>
 
-        <!-- How can you help -->
         <HowCanYouHelp
             class="mb-20"
             :pageRoute="route('projects.show', project.slug)"
-            @donate="triggerDonate"
-            @volunteer="triggerVolunteer"
-            @copyCode="copyEmbed"
             :acceptsVolunteers="project.accepting_volunteers"
         />
 
@@ -267,7 +266,7 @@
 
 <script setup>
     /** Import form vue */
-    import { onMounted, ref } from 'vue';
+    import { ref } from 'vue';
 
     /** Import from inertia. */
     import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
@@ -289,57 +288,4 @@
             required: true,
         },
     });
-    onMounted(() => {
-        console.log(project);
-    });
-    const project = ref(props.project);
-
-    /**
-     * Copy embed code.
-     */
-    const copyEmbed = () => {
-        /** Embed iframe. */
-        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
-
-        /** Check if navigator object exists and copy iframe. */
-        if (navigator.clipboard) {
-            navigator.clipboard
-                .writeText(embedCode)
-                .then(() => alert('Embed code copied to clipboard!'))
-                .catch(() => alert('Failed to copy embed code to clipboard!'));
-        } else {
-            /** Create textarea element. */
-            const tempInput = document.createElement('textarea');
-
-            /** Set textarea value as embed code. */
-            tempInput.value = embedCode;
-
-            /** Apend textarea to body. */
-            document.body.appendChild(tempInput);
-
-            /** Select textarea text. */
-            tempInput.select();
-
-            /** Copy textarea content. */
-            document.execCommand('copy');
-
-            /** Remove textarea. */
-            document.body.removeChild(tempInput);
-        }
-    };
-
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = () => {
-        document.getElementById('volunteer-active-modal').click();
-    };
-
-    /** Trigger donate modal from card. */
-    const triggerDonate = () => {
-        if (false === props.project.is_period_active) {
-            document.getElementById('project-donation-expired').click();
-            return;
-        }
-
-        document.getElementById('donate-active-modal').click();
-    };
 </script>

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Notifications\Admin;
 
+use App\Filament\Resources\OrganizationResource;
 use App\Models\Organization;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class OrganizationCreated extends Notification
 {
@@ -39,11 +41,13 @@ class OrganizationCreated extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line(__('mail.admin.organization_created.line_1'))
-            ->line(__('mail.admin.organization_created.line_2'))
-            ->line(__('mail.admin.organization_created.line_3'))
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject(__('mail.admin.organization_created.subject', ['name' => $this->organization->name]))
+            ->greeting(__('mail.greeting'))
+            ->salutation(
+                new HtmlString(__('mail.salutation') . '<br/>' . __('mail.team'))
+            )
+            ->line(__('mail.admin.organization_created.line_1', ['name' => $this->organization->name]))
+            ->action(__('mail.admin.organization_created.action'), OrganizationResource::getUrl('view', ['record' => $this->organization]));
     }
 
     /**

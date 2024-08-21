@@ -4,8 +4,8 @@
             v-for="(image, key) in images"
             :key="key"
             :href="image.src"
-            :data-pswp-width="image.w"
-            :data-pswp-height="image.h"
+            :data-pswp-width="image.width"
+            :data-pswp-height="image.height"
             target="_blank"
             rel="noreferrer"
         >
@@ -15,44 +15,44 @@
 </template>
 
 <script setup>
-    import { ref, onMounted, onUnmounted } from 'vue';
-    import PhotoSwipeLightbox from 'photoswipe/lightbox';
-    import 'photoswipe/style.css';
+import { ref, onMounted, onUnmounted } from 'vue';
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import 'photoswipe/style.css';
 
-    const props = defineProps({
-        galleryID: {
-            type: String,
-            required: false,
-            default: 'test',
-        },
-        images: {
-            type: Array,
-            required: true,
-        },
+const props = defineProps({
+    galleryID: {
+        type: String,
+        required: false,
+        default: 'test',
+    },
+    images: {
+        type: Array,
+        required: true,
+    },
+});
+
+const lightbox = ref(null);
+
+onMounted(() => {
+    if (lightbox.value !== null) {
+        return;
+    }
+
+    lightbox.value = new PhotoSwipeLightbox({
+        gallery: '#' + props.galleryID,
+        children: 'a',
+        pswpModule: () => import('photoswipe'),
     });
 
-    const lightbox = ref(null);
+    lightbox.value.init();
+});
 
-    onMounted(() => {
-        if (lightbox.value !== null) {
-            return;
-        }
+onUnmounted(() => {
+    if (!lightbox.value) {
+        return;
+    }
 
-        lightbox.value = new PhotoSwipeLightbox({
-            gallery: '#' + props.galleryID,
-            children: 'a',
-            pswpModule: () => import('photoswipe'),
-        });
-
-        lightbox.value.init();
-    });
-
-    onUnmounted(() => {
-        if (!lightbox.value) {
-            return;
-        }
-
-        lightbox.value.destroy();
-        lightbox.value = null;
-    });
+    lightbox.value.destroy();
+    lightbox.value = null;
+});
 </script>

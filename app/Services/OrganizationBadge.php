@@ -30,7 +30,7 @@ class OrganizationBadge
             ->with('badges')
             ->first();
 
-        if (! $badgeCategory->badges) {
+        if (! $badgeCategory?->badges) {
             return;
         }
 

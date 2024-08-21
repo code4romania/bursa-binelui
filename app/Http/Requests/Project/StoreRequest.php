@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'end' => ['date', 'nullable', 'after:tomorrow'],
             'counties' => ['array', 'nullable'],
             'counties.*' => ['exists:counties,id', 'nullable'],
-            'description' => ['string', 'nullable', 'max:800'],
+            'description' => ['string', 'nullable', 'max:1000'],
             'scope' => ['string', 'nullable'],
             'reason_to_donate' => ['string', 'nullable'],
             'beneficiaries' => ['nullable', 'string'],
@@ -47,8 +47,16 @@ class StoreRequest extends FormRequest
 
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
-            'gallery.*.file' => ['file', 'nullable'],
-            'preview' => ['file', 'nullable'],
+            'gallery.*.file' => ['nullable', 'image', 'max:5120'],
+            'preview' => ['nullable', 'image', 'max:5120'],
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'start.after_or_equal' => __('custom_validation.project.start.after_or_equal'),
+            'end.after' => __('custom_validation.project.end.after'),
         ];
     }
 }

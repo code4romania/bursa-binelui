@@ -8,6 +8,7 @@ use App\Models\Organization;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class OrganizationCreated extends Notification
 {
@@ -39,11 +40,15 @@ class OrganizationCreated extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+            ->subject(__('mail.ngo.organization_created.subject'))
+            ->greeting(__('mail.greeting'))
+            ->salutation(
+                new HtmlString(__('mail.salutation') . '<br/>' . __('mail.team'))
+            )
             ->line(__('mail.ngo.organization_created.line_1'))
             ->line(__('mail.ngo.organization_created.line_2'))
             ->line(__('mail.ngo.organization_created.line_3'))
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->line(__('mail.ngo.organization_created.line_4'));
     }
 
     /**

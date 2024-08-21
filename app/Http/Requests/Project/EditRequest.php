@@ -37,8 +37,19 @@ class EditRequest extends FormRequest
             'external_links.*.url' => ['required', 'url'],
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
-            'gallery.*.file' => ['file', 'nullable'],
-            'image' => ['file', 'nullable'],
+            'gallery.*.file' => ['nullable', 'image', 'max:5120'],
+            'image' => ['nullable', 'image', 'max:5120'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return[
+            'start.after_or_equal' => __('custom_validation.project.start.after_or_equal'),
+            'end.after' => __('custom_validation.project.end.after'),
+            'videos.*.url.url' => __('custom_validation.url'),
+            'image.max' => __('custom_validation.image.size'),
+            'gallery.*.file.max' => __('custom_validation.image.size'),
         ];
     }
 }

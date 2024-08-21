@@ -21,7 +21,7 @@
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
                             <h3 class="text-sm font-semibold leading-5 text-gray-400">{{ $t('util_links') }}</h3>
-                            <ul role="list" class="mt-6 space-y-4">
+                            <ul class="mt-6 space-y-4">
                                 <li>
                                     <Link
                                         :href="route('page', { slug: 'about' })"
@@ -34,22 +34,25 @@
                                     <Link
                                         :href="route('page', { slug: 'terms' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('terms_link')"
-                                    />
+                                    >
+                                        {{ $t('terms_link') }}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
                                         :href="route('page', { slug: 'policy' })"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('policy_link')"
-                                    />
+                                    >
+                                        {{ $t('policy_link') }}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
                                         :href="route('contact')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text=" $t('contact_link') "
-                                    />
+                                    >
+                                        {{ $t('contact_link') }}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -57,14 +60,15 @@
 
                     <div class="md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                            <h3 class="text-sm font-semibold leading-5 text-gray-400" v-text="$t('navigate')"/>
-                            <ul role="list" class="mt-6 space-y-4">
+                            <h3 class="text-sm font-semibold leading-5 text-gray-400" v-text="$t('navigate')" />
+                            <ul class="mt-6 space-y-4">
                                 <li>
                                     <Link
                                         :href="route('login')"
                                         class="text-sm leading-6 text-gray-400 hover:text-white"
-                                        v-text="$t('register_ong_link')"
-                                    />
+                                    >
+                                        {{ $t('register_ong_link') }}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link
@@ -95,44 +99,24 @@
                     </div>
                 </div>
 
-                <div class="mt-10 xl:mt-0">
-                    <h3 class="text-sm font-semibold leading-5 text-gray-400">
-                        {{ $t('news_letter_subscribe_title') }}
-                    </h3>
-                    <p class="mt-4 text-sm leading-6 text-gray-400">{{ $t('news_letter_subscribe_text') }}</p>
-
-                    <form class="items-center mt-6 sm:flex sm:max-w-md" @submit.prevent="subscribe">
-                        <Input
-                            id="subscribe-email"
-                            placeholder="Adresa de email"
-                            type="email"
-                            color="white"
-                            v-model="form.subscriber_email"
-                            :error="form.errors.subscriber_email"
-                        />
-
-                        <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
-                            <PrimaryButton type="submit" :disabled="form.processing" :label="$t('subscribe')" />
-                        </div>
-                    </form>
-                </div>
+                <Newsletter class="mt-10 xl:mt-0" />
             </div>
 
             <div class="pt-8 mt-10 border-t border-white/10 md:flex md:items-center md:justify-between lg:mt-16">
                 <div class="flex gap-6 md:order-2">
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                    <a
+                        href="https://www.facebook.com/BursaBinelui.ro"
+                        class="text-gray-500 hover:text-gray-400"
+                        target="_blank"
+                    >
                         <Icon name="social/facebook" class="w-6 h-6" />
                     </a>
 
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
-                        <Icon name="social/instagram" class="w-6 h-6" />
-                    </a>
-
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
-                        <Icon name="social/twitter" class="w-6 h-6" />
-                    </a>
-
-                    <a href="#" class="text-gray-500 hover:text-gray-400">
+                    <a
+                        href="https://github.com/code4romania/bursa-binelui"
+                        class="text-gray-500 hover:text-gray-400"
+                        target="_blank"
+                    >
                         <Icon name="social/github" class="w-6 h-6" />
                     </a>
                 </div>
@@ -145,27 +129,11 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { useForm } from '@inertiajs/vue3';
-    // import route from '@/Helpers/useRoute';
+/** Import componets. */
+import Newsletter from '@/Components/FooterNewsletter.vue';
+import Icon from '@/Components/Icon.vue';
+import route from '@/Helpers/useRoute.js';
 
-    /** Import componets. */
-    import Input from '@/Components/form/Input.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import Icon from '@/Components/Icon.vue';
-
-    /** Form variables. */
-    const form = useForm({
-        subscriber_email: '',
-    });
-
-    /** Subscribe action. */
-    const subscribe = () => {
-        // form.post(route('need.subscribe.route'), {
-        //     onFinish: () => form.reset('subscribe_email'),
-        // });
-    };
-
-    /** Get current year. */
-    const currentYear = new Date().getFullYear();
+/** Get current year. */
+const currentYear = new Date().getFullYear();
 </script>

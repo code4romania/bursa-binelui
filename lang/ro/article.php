@@ -8,6 +8,7 @@ return [
         'singular' => 'articol',
         'plural' => 'Articole',
     ],
+    'published_at' => 'Publicat la',
 
     'article' => 'Articol',
     'articles' => 'Articole',

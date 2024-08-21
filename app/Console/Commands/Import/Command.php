@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Spatie\Image\Image;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 abstract class Command extends BaseCommand
@@ -118,11 +119,20 @@ abstract class Command extends BaseCommand
             )
             ->get()
             ->each(function (object $file) use ($model, $collection) {
-                $filename = rtrim($file->FileName, '.') . '.' . ltrim($file->FileExtension, '.');
+                $ext = ltrim($file->FileExtension, '.');
+                $filename = rtrim($file->FileName, '.') . '.' . $ext;
+                $width = null;
+                $height = null;
+                if (\in_array($ext, ['jpg', 'jpeg', 'png', 'gif'], true)) {
+                    $tmpImage = Image::load($file->Data);
+                    $width = $tmpImage->getWidth();
+                    $height = $tmpImage->getHeight();
+                }
 
                 $model->addMediaFromString($file->Data)
                     ->usingFileName($filename)
                     ->usingName($filename)
+                    ->withCustomProperties($width || $height ? compact('width', 'height') : [])
                     ->toMediaCollection($collection);
             });
     }

@@ -1,49 +1,46 @@
 <template>
     <Popover class="relative">
         <PopoverButton
-            :class="[
-                'flex w-full lg:w-auto justify-between p-3 lg:p-0 lg:inline-flex items-center text-base font-medium leading-5 focus:outline-none',
-                `${
-                    setActive(route().current())
-                        ? 'bg-primary-50 lg:bg-transparent text-primary-500 lg:hover:text-primary-400'
-                        : 'text-gray-500 lg:hover:text-primary-500'
-                }`,
-            ]"
+            class="flex items-center justify-between w-full p-3 text-base font-medium leading-5 lg:w-auto lg:p-0 lg:inline-flex focus:outline-none gap-x-1"
+            :class="{
+                'bg-primary-50 lg:bg-transparent text-primary-500 lg:hover:text-primary-400': isActive,
+                'text-gray-500 lg:hover:text-primary-500': !isActive,
+            }"
         >
-            {{ name }}
+            <span v-text="name" />
             <ChevronDownIcon class="w-5 h-5" aria-hidden="true" />
         </PopoverButton>
 
-        <transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="translate-y-1 opacity-0"
-            enter-to-class="translate-y-0 opacity-100"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="translate-y-0 opacity-100"
-            leave-to-class="translate-y-1 opacity-0"
+        <TransitionRoot
+            enter="transition duration-200 ease-out"
+            enter-from="translate-y-1 opacity-0"
+            enter-to="translate-y-0 opacity-100"
+            leave="transition duration-150 ease-in"
+            leave-from="translate-y-0 opacity-100"
+            leave-to="translate-y-1 opacity-0"
         >
-            <PopoverPanel class="absolute z-50 flex w-screen px-4 -translate-x-1/2 left-1/2 lg:mt-5 max-w-max">
+            <PopoverPanel class="absolute z-50 flex px-4 -translate-x-1/2 left-1/2 lg:mt-5">
                 <div
-                    class="grid flex-auto w-screen max-w-sm gap-1 p-4 text-sm leading-6 bg-white shadow-lg rounded-3xl ring-1 ring-gray-900/5"
+                    class="grid flex-auto w-screen max-w-sm p-4 text-sm leading-6 bg-white rounded-lg drop-shadow ring-1 ring-gray-200"
                 >
-                    <div v-for="link in links" :key="link.name" class="relative">
-                        <NavLink
-                            :href="link.href"
-                            class="flex-col items-start justify-start block w-full gap-1 p-4 rounded-lg hover:bg-gray-50"
-                        >
-                            <p class="block w-full text-base font-medium text-left text-gray-900">{{ link.name }}</p>
-                            <p v-if="link.description" class="text-sm text-gray-500" v-text="link.description" />
-                        </NavLink>
-                    </div>
+                    <NavLink
+                        v-for="(link, index) in links"
+                        :key="index"
+                        :href="link.href"
+                        class="flex-col items-start justify-start block w-full gap-1 p-4 rounded-lg hover:bg-gray-50"
+                    >
+                        <p class="font-semibold text-gray-900" v-text="link.name" />
+                        <p v-if="link.description" class="text-sm text-gray-600" v-text="link.description" />
+                    </NavLink>
                 </div>
             </PopoverPanel>
-        </transition>
+        </TransitionRoot>
     </Popover>
 </template>
 
 <script setup>
-    /** Import plugins. */
-    import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
+    import { computed } from 'vue';
+    import { Popover, PopoverButton, PopoverPanel, TransitionRoot } from '@headlessui/vue';
     import { ChevronDownIcon } from '@heroicons/vue/solid';
     import route from '@/Helpers/useRoute';
 
@@ -56,14 +53,5 @@
         links: Array,
     });
 
-    /**
-     * Determines if a navigation item should be active based on the current route.
-     *
-     * @param {Object} item The navigation item to check.
-     *
-     * @returns {Boolean} Whether or not the navigation item should be active.
-     */
-    const setActive = (currentRoute) => {
-        return props.links.some((link) => route().current(link.href));
-    };
+    const isActive = computed(() => props.links.some((link) => route().current(link.href)));
 </script>

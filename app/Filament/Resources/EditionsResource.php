@@ -78,7 +78,7 @@ class EditionsResource extends Resource
                             ->maxFiles(1)
                             ->columnSpanFull(),
 
-                        Select::make('rule_page')
+                        Select::make('page_id')
                             ->relationship('page', 'title')
                             ->label(__('edition.labels.rule_page'))
                             ->preload()

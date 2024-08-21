@@ -41,10 +41,7 @@ class ProjectCreated extends Notification
     {
         return (new MailMessage)
             ->line(__('mail.ngo.project_created.line_1'))
-            ->line(__('mail.ngo.project_created.line_2'))
-            ->line(__('mail.ngo.project_created.line_3'))
-            ->action('mail.ngo.action_button', url('/'))
-            ->line('Thank you for using our application!');
+            ->action(__('mail.ngo.action_button'), url('/'));
     }
 
     /**

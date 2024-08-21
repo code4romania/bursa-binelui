@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Image\Manipulations;
@@ -50,6 +51,7 @@ class Project extends Model implements HasMedia
         'status',
         'scope',
         'reason_to_donate',
+        'archived_at',
         'beneficiaries',
         'is_national',
         'start',
@@ -75,16 +77,22 @@ class Project extends Model implements HasMedia
     protected $with = [
         'media',
         'organization',
-        'donations',
         'counties',
         'categories',
-        'approvedDonations',
     ];
 
-    protected $withCount = [
-        'donations',
-        'approvedDonations',
-    ];
+    protected static function booted()
+    {
+        static::addGlobalScope('total_amount', function (Builder $query) {
+            $query
+                ->withSum(['donations as total_donations' => function (Builder $query) {
+                    $query->where('status', EuPlatescStatus::CHARGED);
+                }], 'amount')
+                ->withCount(['donations as approved_donations_count' => function (Builder $query) {
+                    $query->where('status', EuPlatescStatus::CHARGED);
+                }]);
+        });
+    }
 
     public function registerMediaCollections(): void
     {
@@ -130,11 +138,6 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Donation::class);
     }
 
-    public function approvedDonations(): HasMany
-    {
-        return $this->donations()->where('status', EuPlatescStatus::CHARGED);
-    }
-
     public function stages(): BelongsToMany
     {
         return $this->belongsToMany(ChampionshipStage::class);
@@ -157,11 +160,6 @@ class Project extends Model implements HasMedia
         'start',
         'end',
     ];
-
-    public function getTotalDonationsAttribute(): int
-    {
-        return (int) $this->approvedDonations->sum('amount');
-    }
 
     public function getCoverImageAttribute(): string
     {
@@ -207,7 +205,7 @@ class Project extends Model implements HasMedia
     public function getCanBeArchivedAttribute(): bool
     {
         return $this->status == ProjectStatus::approved
-            && now()->subDays(30)->gte($this->end);
+            && now()->subDays(30)->gte($this->end) && ! $this->isArchived();
     }
 
     public function getIsEndingSoonAttribute(): bool
@@ -244,7 +242,7 @@ class Project extends Model implements HasMedia
 
     public function markAsApproved(): bool
     {
-        $slug = \Str::slug($this->name);
+        $slug = Str::slug($this->name);
 
         $count = self::whereRaw("slug RLIKE '^{$this->slug}(-[0-9]+)?$'")->count();
         if ($count > 0) {
@@ -267,7 +265,7 @@ class Project extends Model implements HasMedia
 
         if ($reason) {
             $this->organization->tickets()->create([
-                'subject' => __('project.ticket_rejected.subject', ['project' => $this->name]),
+                'subject' => __('project.ticket_rejected.subject'),
                 'content' => $reason,
                 'user_id' => auth()->user()->id,
             ]);
@@ -278,11 +276,12 @@ class Project extends Model implements HasMedia
     {
         return collect($this->videos)
             ->pluck('url')
+            ->filter()
             ->map(
                 fn (string $videoUrl) => Cache::remember(
                     'video-' . hash('sha256', $videoUrl),
                     MONTH_IN_SECONDS,
-                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, '', false)
+                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, report: false)
                 )
             )
             ->filter()

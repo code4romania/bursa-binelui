@@ -11,10 +11,12 @@ use App\Http\Filters\ProjectCategoriesFilter;
 use App\Http\Filters\ProjectDatesFilter;
 use App\Http\Filters\ProjectStatusFilter;
 use App\Http\Filters\SearchFilter;
+use App\Http\Requests\Project\DonateRequest;
 use App\Http\Resources\Collections\ProjectCardCollection;
 use App\Http\Resources\Project\ShowProjectResource;
 use App\Http\Sorts\ProjectDonationsCountSort;
 use App\Http\Sorts\ProjectDonationsSumSort;
+use App\Models\County;
 use App\Models\Project;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
@@ -41,6 +43,7 @@ class ProjectController extends Controller
     protected function projectList(Request $request, string $view): Response
     {
         $project = QueryBuilder::for(Project::class)
+            ->without('donations')
             ->allowedFilters([
                 AllowedFilter::custom('county', new CountiesFilter),
                 AllowedFilter::custom('category', new ProjectCategoriesFilter),
@@ -56,6 +59,7 @@ class ProjectController extends Controller
                 AllowedSort::custom('donations_total', new ProjectDonationsSumSort),
                 AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
             ])
+            ->defaultSort('-id')
             ->whereIsPublished();
 
         return Inertia::render('Public/Projects/Index', [
@@ -63,7 +67,11 @@ class ProjectController extends Controller
             'categories' => $this->getProjectCategories(),
             'counties' => $this->getCounties(),
             'google_maps_api_key' => config('services.google_maps_api_key'),
-            'mapProjects' => $project->get(),
+            'pins' => $view === 'map'
+                ? County::query()
+                    ->withWhereHasProjectsCount()
+                    ->get()
+                : [],
             'collection' => new ProjectCardCollection(
                 $project->paginate()->withQueryString()
             ),
@@ -81,14 +89,9 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function donate(Project $project, Request $request)
+    public function donate(Project $project, DonateRequest $request)
     {
-        $attributes = $request->validate([
-            'amount' => ['required', 'numeric', 'min:1'],
-            'terms' => ['required', 'accepted'],
-            'email' => ['required', 'email'],
-            'name' => ['required'],
-        ]);
+        $attributes = $request->validated();
 
         try {
             [$lastName, $firstName] = explode(' ', $attributes['name']);

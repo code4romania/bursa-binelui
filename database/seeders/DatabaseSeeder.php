@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
         foreach ($articleCategories as $category) {
             ArticleCategory::factory()
                 ->name($category)
-                ->hasArticles(4)
+                    ->hasArticles(4)
                 ->create();
         }
     }
@@ -116,12 +116,12 @@ class DatabaseSeeder extends Seeder
     {
         $projectCategories = [
             'Antreprenoriat social',
-            'Cultura',
+            'Cultură',
             'Drepturile omului',
             'Educație',
             'Mediu',
             'Protecția animalelor',
-            'Sanatate',
+            'Sănătate',
             'Social',
             'Sport',
         ];

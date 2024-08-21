@@ -7,8 +7,8 @@ module "ecs_app" {
 
   name         = local.namespace
   cluster_name = module.ecs_cluster.cluster_name
-  min_capacity = 2
-  max_capacity = 4
+  min_capacity = 4
+  max_capacity = 8
 
   image_repo = local.image_repo
   image_tag  = local.image_tag
@@ -22,8 +22,8 @@ module "ecs_app" {
   lb_health_check_enabled = true
   lb_path                 = "/"
 
-  container_memory_soft_limit = 512
-  container_memory_hard_limit = 768
+  container_memory_soft_limit = 768
+  container_memory_hard_limit = 1024
 
   log_group_name                 = module.ecs_cluster.log_group_name
   service_discovery_namespace_id = module.ecs_cluster.service_discovery_namespace_id
@@ -37,7 +37,7 @@ module "ecs_app" {
   enable_execute_command = var.enable_execute_command
 
   predefined_metric_type = "ECSServiceAverageCPUUtilization"
-  target_value           = 70
+  target_value           = 65
 
   ordered_placement_strategy = [
     {
@@ -68,8 +68,12 @@ module "ecs_app" {
       value = "https://www.${var.domain_name}"
     },
     {
+      name  = "QUEUE_CONNECTION"
+      value = "database"
+    },
+    {
       name  = "EU_PLATESC_TEST_MODE"
-      value = tostring(true)
+      value = tostring(false)
     },
     {
       name  = "AWS_DEFAULT_REGION"
@@ -112,6 +116,10 @@ module "ecs_app" {
       value = 0.5
     },
     {
+      name  = "GOOGLE_ANALYTICS_TRACKING_ID"
+      value = var.google_analytics_tracking_id
+    },
+    {
       name  = "PRELAUNCH_SECRET"
       value = var.prelaunch_secret
     },
@@ -123,6 +131,14 @@ module "ecs_app" {
       name  = "AWS_PUBLIC_BUCKET_ROOT"
       value = "media"
     },
+    {
+      name  = "NEWSLETTER_API_KEY"
+      value = var.newsletter_api_key
+    },
+    {
+      name  = "NEWSLETTER_LIST_ID"
+      value = var.newsletter_list_id
+    }
   ]
 
   secrets = [

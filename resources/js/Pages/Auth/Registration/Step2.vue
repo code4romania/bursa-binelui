@@ -58,7 +58,9 @@
                 <Checkbox name="terms" v-model:checked="form.terms" required />
                 <div class="flex items-center space-x-1 text-sm">
                     <span class="text-gray-700">{{ $t('i_agree') }}</span>
-                    <a :href="route('terms')" target="_blank" class="text-primary-500"> {{ $t('terms_link') }} </a>.
+                    <a :href="route('page', { slug: 'terms' })" target="_blank" class="text-primary-500">
+                        {{ $t('terms_link') }} </a
+                    >.
                 </div>
             </label>
 

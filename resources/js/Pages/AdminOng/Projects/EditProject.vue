@@ -70,7 +70,7 @@
             <Field
                 :label="$t('period_start_donation')"
                 :hasPendingChanges="hasPendingChanges('start')"
-                :errors="formChangeStatus.errors.start"
+                :errors="formChangeStatus.errors.start || errors.start"
             >
                 <template #value> {{ project.start }} </template>
 
@@ -98,7 +98,7 @@
             <Field
                 :label="$t('period_end_donation')"
                 :hasPendingChanges="hasPendingChanges('end')"
-                :errors="formChangeStatus.errors.end"
+                :errors="formChangeStatus.errors.end || errors.end"
                 alt
             >
                 <template #value>{{ project.end }} </template>
@@ -244,9 +244,7 @@
                             v-model="project.description"
                             :error="errors.description"
                         >
-                            <p class="text-sm font-normal text-gray-500">
-                                {{ $t('project_description_extra') }}
-                            </p>
+                            {{ $t('project_description_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -276,7 +274,7 @@
                             v-model="project.scope"
                             :error="errors.scope"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('project_scope_extra') }}</p>
+                            {{ $t('project_scope_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -305,9 +303,7 @@
                             v-model="project.beneficiaries"
                             :error="errors.beneficiaries"
                         >
-                            <p class="text-sm font-normal text-gray-500">
-                                {{ $t('project_beneficiary_extra') }}
-                            </p>
+                            {{ $t('project_beneficiary_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -340,7 +336,7 @@
                             v-model="project.reason_to_donate"
                             :error="errors.reason_to_donate"
                         >
-                            <p class="text-sm font-normal text-gray-500">{{ $t('why_to_donate_extra') }}</p>
+                            {{ $t('why_to_donate_extra') }}
                         </Textarea>
                     </EditModal>
                 </template>
@@ -433,7 +429,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('main_image')" :errors="formChangeStatus.errors.preview">
+            <Field :label="$t('main_image')" :errors="formChangeStatus.errors.image || errors.image">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <img class="object-contain w-32 h-32 shrink-0" :src="originalProject.image" alt="" />
@@ -473,7 +469,11 @@
                 </template>
             </Field>
 
-            <Field :label="$t('video_link_label')" alt :errors="formChangeStatus.errors.videos">
+            <Field
+                :label="$t('video_link_label')"
+                alt
+                :errors="formChangeStatus.errors.videos || arrayError('videos.0.url')"
+            >
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">
@@ -511,7 +511,10 @@
                 </template>
             </Field>
 
-            <Field :label="$t('external_links_title')" :errors="formChangeStatus.errors.external_links">
+            <Field
+                :label="$t('external_links_title')"
+                :errors="formChangeStatus.errors.external_links || arrayError('external_links.0.title')"
+            >
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">
@@ -553,7 +556,7 @@
                 </template>
             </Field>
             <SecondaryButton
-                v-if="!project.is_active && !project.is_pending && !project.can_be_archived"
+                v-if="!project.is_active && !project.is_pending && !project.can_be_archived && !project.active"
                 class="w-full mt-4 py-2.5 text-primary-500 ring-1 ring-inset ring-primary-500 hover:bg-primary-400"
                 @click="changeProjectStatus(project.id, 'pending', project.type)"
                 :label="$t('publish')"
@@ -563,96 +566,93 @@
 </template>
 
 <script setup>
-    import { ref, computed } from 'vue';
-    import { useForm } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute';
+import { ref, computed } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute';
 
-    /** Import components. */
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import Field from '@/Components/Field.vue';
-    import EditModal from '@/Components/modals/EditModal.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import FileInput from '@/Components/form/FileInput.vue';
-    import Repeater from '@/Components/form/Repeater.vue';
-    import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DangerButton from '@/Components/buttons/DangerButton.vue';
-    import SelectMultiple from '@/Components/form/SelectMultiple.vue';
-    import Select from '@/Components/form/Select.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import RepeaterComponent from '@/Components/RepeaterComponent.vue';
-    import FileGroup from '@/Components/form/FileGroup.vue';
+/** Import components. */
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import Field from '@/Components/Field.vue';
+import EditModal from '@/Components/modals/EditModal.vue';
+import Input from '@/Components/form/Input.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import FileInput from '@/Components/form/FileInput.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import Select from '@/Components/form/Select.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import RepeaterComponent from '@/Components/RepeaterComponent.vue';
+import FileGroup from '@/Components/form/FileGroup.vue';
+import { trans } from 'laravel-vue-i18n';
 
-    const props = defineProps({
-        project: Object,
-        errors: Object,
-        counties: Array,
-        projectCategories: Array,
-        flash: Object,
-        changes: Array,
-    });
+const props = defineProps({
+    project: Object,
+    errors: Object,
+    counties: Array,
+    projectCategories: Array,
+    flash: Object,
+    changes: Array,
+});
 
-    const project = ref(props.project);
-    const originalProject = computed(() => props.project);
+const project = ref(props.project);
+const originalProject = computed(() => props.project);
 
-    const resetField = (field) => {
-        project.value[field] = originalProject.value[field];
-    };
+const resetField = (field) => {
+    project.value[field] = originalProject.value[field];
+};
 
-    const formChangeStatus = useForm({
-        status: 'pending',
-        id: project.value.id,
-    });
+const formChangeStatus = useForm({
+    status: 'pending',
+    id: project.value.id,
+});
 
-    const hasPendingChanges = (field) => {
-        let tmpChanges = props.changes;
-        if (Object.keys(tmpChanges).includes(field)) {
-            return tmpChanges[field].new;
-        }
-        return false;
-    };
+const hasPendingChanges = (field) => {
+    let tmpChanges = props.changes;
+    if (Object.keys(tmpChanges).includes(field)) {
+        return tmpChanges[field].new;
+    }
+    return false;
+};
 
-    const changeProjectStatus = (id, status, type) => {
-        let tmpRoute =
-            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        if (confirm('Are you sure you want to change the status of this project?')) {
-            formChangeStatus.post(tmpRoute, {
-                preserveScroll: true,
-                onSuccess: (response) => {
-                    //
-                },
-                onError: (error) => {
-                    Object.keys(error).forEach((key) => {
-                        if (key.includes('external_links')) {
-                            formChangeStatus.errors['external_links'] = error[key];
-                        }
-                        if (key.includes('videos')) {
-                            formChangeStatus.errors['videos'] = error[key];
-                        }
-                    });
-                    console.log(error);
-                },
-            });
-        }
-    };
-
-    const editField = (field) => {
-        const form = useForm({
-            [field]: project.value[field],
-        });
-        form.post(route('dashboard.projects.update', project.value.id), {
+const changeProjectStatus = (id, status, type) => {
+    let tmpRoute =
+        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+    if (confirm(trans('project_change_status_publish'))) {
+        formChangeStatus.post(tmpRoute, {
             preserveScroll: true,
             onSuccess: (response) => {
                 //
             },
+            onError: (error) => {
+                Object.keys(error).forEach((key) => {
+                    if (key.includes('external_links')) {
+                        formChangeStatus.errors['external_links'] = error[key];
+                    }
+                    if (key.includes('videos')) {
+                        formChangeStatus.errors['videos'] = error[key];
+                    }
+                });
+                console.log(error);
+            },
         });
-    };
-    function arrayError(key) {
-        if (props?.errors[key]) {
-            return props?.errors[key];
-        }
-        return null;
     }
+};
+
+const editField = (field) => {
+    const form = useForm({
+        [field]: project.value[field],
+    });
+    form.post(route('dashboard.projects.update', project.value.id), {
+        preserveScroll: true,
+        onSuccess: (response) => {
+            //
+        },
+    });
+};
+function arrayError(key) {
+    if (props?.errors[key]) {
+        return props?.errors[key];
+    }
+    return null;
+}
 </script>

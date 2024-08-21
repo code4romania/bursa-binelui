@@ -6,11 +6,11 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BcrProjectController;
 use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/newsletter', NewsletterController::class)->name('newsletter');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,8 +33,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::inertia('/termenii-si-conditii', 'Public/Website/Terms')->name('terms');
-Route::inertia('/politica-de-confidentialitate', 'Public/Website/Policy')->name('policy');
 Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
 Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
 Route::inertia('/multumim', 'Public/VolunteerThankYou')->name('volunteer.thanks');

@@ -25,6 +25,8 @@ class ShowProjectResource extends Resource
                 return [
                     'id' => $media->id,
                     'url' => $media->getFullUrl(),
+                    'width' => $media->getCustomProperty('width') ?? '100%',
+                    'height' => $media->getCustomProperty('height') ?? '100%',
                 ];
             })->toArray(),
             'organization' => [
@@ -49,10 +51,13 @@ class ShowProjectResource extends Resource
                 return [
                     'src' => $media->getFullUrl(),
                     'thumbnail' => $media->getFullUrl('preview'),
+                    'width' => $media->getCustomProperty('width') ?? '100%',
+                    'height' => $media->getCustomProperty('height') ?? '100%',
                 ];
             })->toArray(),
             'is_active' => $this->is_active,
             'is_starting_soon' => $this->isStartingSoon(),
+            'active' => $this->active,
             'external_links' => collect($this->external_links)->map(function (array $link) {
                 $link['source'] = parse_url($link['url'], \PHP_URL_HOST);
 

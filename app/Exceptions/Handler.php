@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
+use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Inertia\Inertia;
 use Throwable;
@@ -38,6 +39,9 @@ class Handler extends ExceptionHandler
         $response = parent::render($request, $e);
 
         if (! app()->isLocal() && \in_array($response->status(), [401, 403, 404, 429, 500, 503])) {
+            // This fixes SSR errors on error pages.
+            Inertia::share((new HandleInertiaRequests)->share($request));
+
             return Inertia::render('Error', [
                 'status' => $response->status(),
                 'title' => __('error.' . $response->status() . '.title'),

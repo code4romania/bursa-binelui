@@ -24,13 +24,6 @@
 
                     {{ $t('empty_filters') }}
                 </SecondaryButton>
-
-                <div :class="['col-span-12 flex justify-end', hasValues ? 'sm:col-span-4' : 'sm:col-span-6']">
-                    <SecondaryButton class="flex items-center justify-center py-2 gap-x-2">
-                        <DownloadIcon class="w-4 h-4 shrink-0" />
-                        {{ $t('download_table') }}
-                    </SecondaryButton>
-                </div>
             </div>
 
             <Select
@@ -80,7 +73,7 @@
     import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
     import useFilters from '@/Helpers/useFilters.js';
     import { CurrencyEuroIcon } from '@heroicons/vue/outline';
-    import { XIcon, DownloadIcon } from '@heroicons/vue/solid';
+    import { XIcon } from '@heroicons/vue/solid';
 
     const props = defineProps({
         collection: {
@@ -91,8 +84,8 @@
             type: Object,
             required: false,
         },
-        projects: Array,
-        statuses: Array,
+        projects: Object,
+        statuses: Object,
         dates: Array,
     });
 

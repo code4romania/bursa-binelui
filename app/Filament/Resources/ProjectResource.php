@@ -114,11 +114,11 @@ class ProjectResource extends Resource
                 DatePicker::make('end')
                     ->required(),
                 Textarea::make('description')
-                    ->maxLength(65535),
+                    ->maxLength(1000),
                 Textarea::make('scope')
-                    ->maxLength(65535),
+                    ->maxLength(860),
                 Textarea::make('beneficiaries')
-                    ->maxLength(65535),
+                    ->maxLength(1000),
                 Textarea::make('reason_to_donate')
                     ->maxLength(65535),
                 Toggle::make('accepting_volunteers')
@@ -139,9 +139,12 @@ class ProjectResource extends Resource
                     ->image()
                     ->multiple()
                     ->maxFiles(20),
-                Forms\Components\Repeater::make('videos')->schema([
-                    TextInput::make('url'),
-                ]),
+                Forms\Components\Repeater::make('videos')
+                    ->schema([
+                        TextInput::make('url')
+                            ->url()
+                            ->required(),
+                    ]),
                 Forms\Components\Repeater::make('external_links')->schema([
                     TextInput::make('title')
                         ->required(),

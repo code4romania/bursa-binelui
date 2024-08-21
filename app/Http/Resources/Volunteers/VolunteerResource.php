@@ -26,7 +26,7 @@ class VolunteerResource extends JsonResource
 
             'project' => $this->model_type === Project::class
                 ? $this->model->name
-                : 'General',
+                : __('volunteer.general_project'),
         ];
     }
 }

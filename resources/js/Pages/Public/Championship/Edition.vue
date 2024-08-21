@@ -176,7 +176,6 @@
 
             <div class="relative bg-white">
                 <ul
-                    role="list"
                     class="grid grid-cols-1 gap-8 mx-auto -mt-12 lg:mt-0 max-w-7xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
                 >
                     <ArticleCard
@@ -244,7 +243,7 @@
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';
-    import { Carousel, Slide } from 'vue3-carousel';
+    import { Carousel, Slide } from 'vue3-carousel/dist/carousel.es.js';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

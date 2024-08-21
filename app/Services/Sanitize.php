@@ -43,9 +43,11 @@ class Sanitize
 
     public static function text(?string $text, int | null $limit = null): ?string
     {
-        return static::sanitize($text)
+        $text = static::sanitize($text)
             ->when($limit, fn (Stringable $string, int $limit) => $string->limit($limit, ''))
-            ->value() ?: null;
+            ->value();
+
+        return html_entity_decode($text) ?: null;
     }
 
     public static function slug(?string $title): ?string

@@ -29,6 +29,7 @@
                 />
 
                 <ProjectTag v-else-if="project.is_active" :label="$t('project_active')" :icon="ClockIcon" />
+                <ProjectTag v-else-if="project.is_archived" :label="$t('projects.status.archived')" :icon="ClockIcon" />
                 <ProjectTag v-else-if="!project.is_active && !project.is_rejected" :label="$t('project_closed')" />
                 <ProjectTag v-if="project.is_rejected" :label="$t('project_rejected')" />
 
@@ -75,32 +76,34 @@
                 </div>
             </div>
 
-            <div
-                v-if="'admin' == cardType"
-                class="flex mt-4 overflow-hidden border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
-            >
-                <Link
-                    :href="route('projects.show', project)"
-                    class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+            <template v-if="!project.is_archived">
+                <div
+                    v-if="'admin' == cardType"
+                    class="flex mt-4 overflow-hidden border border-gray-300 divide-x divide-gray-300 rounded-md shadow-sm"
                 >
-                    {{ $t('view') }}
-                </Link>
+                    <Link
+                        :href="route('projects.show', project)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t('view') }}
+                    </Link>
 
-                <Link
-                    v-if="project.type !== 'regional'"
-                    :href="route('dashboard.projects.edit', project.id)"
-                    class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
-                >
-                    {{ $t('edit') }}
-                </Link>
-                <Link
-                    v-if="project.type === 'regional'"
-                    :href="route('dashboard.projects.regional.edit', project.id)"
-                    class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
-                >
-                    {{ $t('edit') }}
-                </Link>
-            </div>
+                    <Link
+                        v-if="project.type !== 'regional'"
+                        :href="route('dashboard.projects.edit', project.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t('edit') }}
+                    </Link>
+                    <Link
+                        v-if="project.type === 'regional'"
+                        :href="route('dashboard.projects.regional.edit', project.id)"
+                        class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
+                    >
+                        {{ $t('edit') }}
+                    </Link>
+                </div>
+            </template>
 
             <SecondaryButton
                 v-if="'admin' == cardType && project.can_be_archived"
@@ -163,48 +166,48 @@
 </template>
 
 <script setup>
-    import { computed, onMounted } from 'vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DonateModal from '@/Components/modals/DonateModal.vue';
-    import Modal from '@/Components/modals/Modal.vue';
-    import ProjectTag from '@/Components/projects/Tag.vue';
+import { computed, onMounted } from 'vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import DonateModal from '@/Components/modals/DonateModal.vue';
+import Modal from '@/Components/modals/Modal.vue';
+import ProjectTag from '@/Components/projects/Tag.vue';
 
-    import { BookmarkIcon, LocationMarkerIcon, ClockIcon } from '@heroicons/vue/solid';
-    import { trans } from 'laravel-vue-i18n';
-    import { useForm } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute.js';
+import { BookmarkIcon, LocationMarkerIcon, ClockIcon } from '@heroicons/vue/solid';
+import { trans } from 'laravel-vue-i18n';
+import { useForm } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute.js';
 
-    /** Component props. */
-    const props = defineProps({
-        project: Object,
-        cardType: String,
-    });
-    const form = useForm({
-        status: null,
-    });
+/** Component props. */
+const props = defineProps({
+    project: Object,
+    cardType: String,
+});
+const form = useForm({
+    status: null,
+});
 
-    const changeProjectStatus = (id, status, type) => {
-        let tmpRoute =
-            type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
-        form.status = status;
-        console.log(form);
-        if (confirm(trans('project_change_status_' + status))) {
-            form.post(tmpRoute, {
-                preserveScroll: true,
-                onSuccess: (response) => {
-                    //
-                },
-            });
-        }
-    };
+const changeProjectStatus = (id, status, type) => {
+    let tmpRoute =
+        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+    form.status = status;
+    console.log(form);
+    if (confirm(trans('project_change_status_' + status))) {
+        form.post(tmpRoute, {
+            preserveScroll: true,
+            onSuccess: (response) => {
+                //
+            },
+        });
+    }
+};
 
-    /** Get days till project ends. */
-    const project_end_date = computed(() => {
-        const targetDate = new Date(props.project.end);
-        const today = new Date();
-        const timeDiff = targetDate.getTime() - today.getTime();
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+/** Get days till project ends. */
+const project_end_date = computed(() => {
+    const targetDate = new Date(props.project.end);
+    const today = new Date();
+    const timeDiff = targetDate.getTime() - today.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-        return daysDiff;
-    });
+    return daysDiff;
+});
 </script>

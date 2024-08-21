@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Enums\EuPlatescStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\DonationDatesFilter;
+use App\Http\Filters\SearchFilter;
 use App\Http\Resources\Collections\DonationCollection;
 use App\Models\Donation;
 use Illuminate\Http\Request;
@@ -38,7 +39,8 @@ class DonationController extends Controller
         $dates = $donations
             ->pluck('created_at')
             ->map(fn ($date) => $date->format('Y-m'))
-            ->unique();
+            ->unique()
+            ->values();
 
         return Inertia::render('AdminOng/Donations/Index', [
             'filter' => $request->query('filter'),
@@ -49,7 +51,7 @@ class DonationController extends Controller
                         AllowedFilter::exact('organization', 'project.organization_id'),
                         AllowedFilter::exact('project', 'project_id'),
                         AllowedFilter::exact('status', 'status'),
-                        AllowedFilter::exact('search', 'email'),
+                        AllowedFilter::custom('search', new SearchFilter),
                     ])
                     ->where('organization_id', auth()->user()->organization_id)
                     ->with('project:id,name,organization_id')

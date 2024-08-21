@@ -116,7 +116,7 @@ class OrganizationFactory extends Factory
 
             $projects = Project::factory()
                 ->for($organization)
-                ->count(3)
+                ->count(rand(3, 8))
                 ->hasAttached(
                     Volunteer::factory()
                         ->count(1),

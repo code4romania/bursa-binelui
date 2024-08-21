@@ -45,6 +45,10 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(config('throttle.register_limit'))->by($request->ip());
         });
 
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(config('throttle.login_limit'))->by($request->ip());
+        });
+
         RateLimiter::for('make-donation', function (Request $request) {
             return Limit::perMinute(config('throttle.donation_limit'))->by($request->user()?->id ?: $request->ip());
         });

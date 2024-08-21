@@ -30,7 +30,7 @@ class ValidCIF implements ValidationRule
         }
 
         if ($value < 10 || $value > 999999999) {
-            $fail(__('validation.not_regex', ['attribute' => $attribute]));
+            $fail(__('custom_validation.ngo.cif.not_regex', ['attribute' => $attribute]));
 
             return;
         }
@@ -52,7 +52,7 @@ class ValidCIF implements ValidationRule
         }
 
         if ($c1 !== $c2) {
-            $fail(__('validation.not_regex', ['attribute' => $attribute]));
+            $fail(__('custom_validation.ngo.cif.not_regex', ['attribute' => $attribute]));
         }
     }
 }

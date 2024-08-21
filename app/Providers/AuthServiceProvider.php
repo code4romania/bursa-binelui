@@ -13,6 +13,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\HtmlString;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -34,10 +35,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view-project', function ($user) {
             return $user->isAdmin();
         });
+        app()->setLocale('ro');
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject(__('auth.mail.verify_email.subject'))
+                ->greeting(__('auth.mail.verify_email.greeting'))
                 ->line(__('auth.mail.verify_email.line_1'))
+                ->salutation(
+                    new HtmlString(__('mail.salutation') . '<br/>' . __('mail.team'))
+                )
                 ->action(__('auth.mail.verify_email.action'), $url);
         });
     }

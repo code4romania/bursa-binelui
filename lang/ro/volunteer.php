@@ -6,7 +6,7 @@ return [
 
     'label' => [
         'singular' => 'Voluntar',
-        'plural' => 'Voluntarii',
+        'plural' => 'Voluntari',
     ],
 
     'column' => [
@@ -54,4 +54,5 @@ return [
     ],
 
     'header' => 'Voluntari (:number)',
+    'general_project' => 'Direct la ONG',
 ];

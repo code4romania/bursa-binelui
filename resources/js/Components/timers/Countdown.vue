@@ -38,53 +38,55 @@
 </template>
 
 <script setup>
-/** Import from vue. */
-import { computed, ref, watchEffect} from 'vue'
+    /** Import from vue. */
+    import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
 
-const props = defineProps({
-    dates: Object
-});
+    const props = defineProps({
+        dates: Object,
+    });
 
-const current = new Date();
-const start = new Date(props.dates.start);
-const end = new Date(props.dates.end);
+    const current = new Date();
+    const start = new Date(props.dates.start);
+    const end = new Date(props.dates.end);
 
-const show = computed(() => {
-    if (current < start) {
-        return 'soon';
-    } else if (end < current) {
-        return 'ended';
-    } else if ((current >= start) && (current <= end)) {
-        return 'now';
-    } else {
-        return 'winners';
-    }
-});
-
-const countdown = ref({
-    days: 0,
-    hours: 0,
-    minutes: 0
-});
-
-const startCountdown = () => {
-    const countdownInterval = setInterval(() => {
-        const remainingTime = end - current;
-
-        if (remainingTime <= 0) {
-            clearInterval(countdownInterval);
-            countdown.value.days = 0;
-            countdown.value.hours = 0;
-            countdown.value.minutes = 0;
+    const show = computed(() => {
+        if (current < start) {
+            return 'soon';
+        } else if (end < current) {
+            return 'ended';
+        } else if (current >= start && current <= end) {
+            return 'now';
         } else {
-            countdown.value.days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-            countdown.value.hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            countdown.value.minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            return 'winners';
         }
-    }, 1000);
-};
+    });
 
-watchEffect(() => {
-    startCountdown();
-});
+    const countdown = ref({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+    });
+
+    const countdownInterval = ref(null);
+
+    onMounted(() => {
+        countdownInterval.value = setInterval(() => {
+            const remainingTime = end - current;
+
+            if (remainingTime <= 0) {
+                clearInterval(countdownInterval.value);
+                countdown.value.days = 0;
+                countdown.value.hours = 0;
+                countdown.value.minutes = 0;
+            } else {
+                countdown.value.days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                countdown.value.hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                countdown.value.minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            }
+        }, 1000);
+    });
+
+    onBeforeUnmount(() => {
+        clearInterval(countdownInterval.value);
+    });
 </script>

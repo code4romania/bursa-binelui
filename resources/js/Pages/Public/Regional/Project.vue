@@ -188,9 +188,6 @@
         <HowCanYouHelp
             class="mb-20"
             :pageRoute="route('projects.show', project.slug)"
-            @donate="triggerDonate"
-            @volunteer="triggerVolunteer"
-            @copyCode="copyEmbed"
             :acceptsVolunteers="project.accepting_volunteers"
         />
 
@@ -235,11 +232,8 @@
 </template>
 
 <script setup>
-    /** Import form vue */
-    import { computed, onMounted, ref } from 'vue';
-
     /** Import from inertia. */
-    import { Link, usePage, useForm } from '@inertiajs/vue3';
+    import { Link } from '@inertiajs/vue3';
     import Head from '@/Components/Head.vue';
 
     /** Import components. */
@@ -258,56 +252,11 @@
             type: Object,
             required: true,
         },
-        gallery: Array,
+        gallery: {
+            type: Array,
+            default: () => [],
+        },
     });
-    onMounted(() => {
-        console.log(project);
-    });
-    const project = ref(props.project);
-
-    /**
-     * Copy embed code.
-     */
-    const copyEmbed = () => {
-        /** Embed iframe. */
-        const embedCode = `<iframe src="${window.location.href}" width="800px" height="600px"></iframe>`;
-
-        /** Check if navigator object exists and copy iframe. */
-        if (navigator.clipboard) {
-            navigator.clipboard
-                .writeText(embedCode)
-                .then(() => alert('Embed code copied to clipboard!'))
-                .catch(() => alert('Failed to copy embed code to clipboard!'));
-        } else {
-            /** Create textarea element. */
-            const tempInput = document.createElement('textarea');
-
-            /** Set textarea value as embed code. */
-            tempInput.value = embedCode;
-
-            /** Apend textarea to body. */
-            document.body.appendChild(tempInput);
-
-            /** Select textarea text. */
-            tempInput.select();
-
-            /** Copy textarea content. */
-            document.execCommand('copy');
-
-            /** Remove textarea. */
-            document.body.removeChild(tempInput);
-        }
-    };
-
-    /** Get days till project ends. */
-    // const project_end_date = computed(() => {
-    //     const targetDate = new Date(project.period_end);
-    //     const today = new Date();
-    //     const timeDiff = targetDate.getTime() - today.getTime();
-    //     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-    //     return daysDiff;
-    // })
 
     /** Trigger donate modal from card. */
     const triggerDonate = () => {

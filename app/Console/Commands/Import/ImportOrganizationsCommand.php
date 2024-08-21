@@ -91,7 +91,15 @@ class ImportOrganizationsCommand extends Command
                             'eu_platesc_merchant_id' => Sanitize::text($row->MerchantId),
                             'eu_platesc_private_key' => Sanitize::text($row->MerchantKey),
                         ]);
+                        $counties = $this->db
+                            ->table('dbo.ONGCounties')
+                            ->where('ONGId', $row->Id)
+                            ->pluck('CountyId')
+                            ->map(fn (int $county) => $this->mapCounty($county));
 
+                        if ($counties->isNotEmpty()) {
+                            $organization->counties()->sync($counties);
+                        }
                         if (! $this->option('skip-files')) {
                             // Add logo
                             $this->addFilesToCollection($organization, $row->LogoImageId, 'logo');

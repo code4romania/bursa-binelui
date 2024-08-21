@@ -51,7 +51,13 @@ class WelcomeController extends Controller
     public function store(Request $request, User $user): RedirectResponse
     {
         $attributes = $request->validate([
-            'password' => ['required', 'confirmed', Password::defaults()],
+            'password' => ['required', 'confirmed',
+                Password::min(8)
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised(),],
         ]);
 
         $user->setPassword($attributes['password']);

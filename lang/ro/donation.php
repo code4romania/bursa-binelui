@@ -34,18 +34,26 @@ return [
         'count' => 'Numar donatii',
         'count_with_amount' => 'Numarul de dontatii :count ( :total RON)',
         'donors' => 'Donatori',
+        'status_updated_at' => 'Data actualizării statusului',
     ],
 
     'statuses' => [
-        'initialize' => 'Inițializata',
-        'authorized' => 'Autorizata',
-        'unauthorized' => 'Neautorizata',
-        'canceled' => 'Anulata',
-        'aborted' => 'Abandonata',
-        'payment_declined' => 'Plata refuzata',
+        'initialize' => 'Inițializată',
+        'authorized' => 'Autorizată',
+        'unauthorized' => 'Neautorizată',
+        'canceled' => 'Anulată',
+        'aborted' => 'Abandonată',
+        'payment_declined' => 'Plata refuzată',
         'possible_fraud' => 'Posibil fraudulos',
-        'charged' => 'Incasata',
+        'charged' => 'Încasată',
     ],
 
     'header' => 'Donatii (:number)',
+
+    'stats' => [
+        'charged' => 'Donații încasate',
+        'charged_amount' => 'Sumă încasată',
+        'pending' => 'Donații în așteptare',
+        'failed' => 'Donații eșuate',
+    ],
 ];

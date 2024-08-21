@@ -13,7 +13,12 @@
                         <h1 class="text-2xl font-bold text-gray-900">{{ $t('thank_you') }}</h1>
                     </div>
 
-                    <p class="mt-8 text-lg font-medium text-gray-500">{{ $t('reward') }}</p>
+                    <p class="mt-8 text-lg font-medium text-gray-500" v-if="!$page.props.auth.user">
+                        {{ $t('reward') }}
+                    </p>
+                    <p class="mt-8 text-lg font-medium text-gray-500" v-if="$page.props.auth.user">
+                        {{ $t('reward_auth') }}
+                    </p>
 
                     <div class="mt-8">
                         <Link
@@ -43,9 +48,6 @@
         <HowCanYouHelp
             class="mb-20"
             :pageRoute="route('projects.show', 1)"
-            @donate="triggerDonate"
-            @volunteer="triggerVolunteer"
-            @copyCode="copyEmbed"
             :acceptsVolunteers="flash?.data.accepting_volunteers"
         />
 
@@ -68,14 +70,4 @@
     const props = defineProps({
         flash: Object,
     });
-
-    /** Trigger volunteer modal from card. */
-    const triggerVolunteer = () => {
-        document.getElementById('volunteer-active-modal').click();
-    };
-
-    /** Trigger donate modal from card. */
-    const triggerDonate = () => {
-        document.getElementById('donate-active-modal').click();
-    };
 </script>

@@ -14,6 +14,7 @@ use App\Notifications\Admin\ProjectCreated as ProjectCreatedAdmin;
 use App\Notifications\Ngo\ProjectCreated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Spatie\Image\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProjectService
@@ -40,9 +41,16 @@ class ProjectService
                     $media->delete();
                 }
             });
-
         collect($value)->filter(fn ($image) => ! \is_array($image))
-            ->map(fn ($image) => $project->addMedia($image)->toMediaCollection('gallery'));
+            ->map(function ($image) use ($project) {
+                $tmpImage = Image::load($image->getPathname());
+
+                $width = $tmpImage->getWidth();
+                $height = $tmpImage->getHeight();
+                $project->addMedia($image)
+                    ->withCustomProperties($width || $height ? compact('width', 'height') : [])
+                    ->toMediaCollection('gallery');
+            });
     }
 
     public function create(array $data): Project|GalaProject
@@ -66,7 +74,13 @@ class ProjectService
 
         if (! empty($data['gallery'])) {
             collect($data['gallery'])->map(function ($image) use ($project) {
-                $project->addMedia($image)->toMediaCollection('gallery');
+                $tmpImage = Image::load($image->getPathname());
+
+                $width = $tmpImage->getWidth();
+                $height = $tmpImage->getHeight();
+                $project->addMedia($image)
+                    ->withCustomProperties($width || $height ? compact('width', 'height') : [])
+                    ->toMediaCollection('gallery');
             });
         }
 
@@ -143,14 +157,13 @@ class ProjectService
         $this->project->status = ProjectStatus::pending->value;
         $this->project->status_updated_at = now();
         $this->project->save();
-        $this->sendCreateNotifications($this->project);
     }
 
     private function archive(Project|GalaProject $project): void
     {
         $this->project = $project;
-        $this->project->status = ProjectStatus::archived->value;
         $this->project->status_updated_at = now();
+        $this->project->archived_at = now();
         $this->project->save();
     }
 }

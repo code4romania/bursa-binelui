@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class TicketCreatedNotification extends Notification
 {
@@ -39,10 +40,14 @@ class TicketCreatedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+            ->greeting(__('mail.greeting'))
+            ->salutation(
+                new HtmlString(__('mail.salutation') . '<br/>' . __('mail.team'))
+            )
             ->subject(__('ticket.mail.created.subject', [
                 'id' => $this->ticket->id,
             ]))
-            ->line(__('ticket.mail.created.subject', [
+            ->line(__('ticket.mail.created.line', [
                 'id' => $this->ticket->id,
             ]))
             ->action(

@@ -20,12 +20,12 @@
                         {{ $t('donate_to_a_project') }}
                     </Link>
 
-                    <Link
-                        :href="route('evolution')"
-                        class="rounded-md w-full md:w-auto bg-white text-center px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"
-                    >
-                        {{ $t('see_evolution') }}
-                    </Link>
+                    <!--                    <Link-->
+                    <!--                        :href="route('evolution')"-->
+                    <!--                        class="rounded-md w-full md:w-auto bg-white text-center px-3.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-2.5"-->
+                    <!--                    >-->
+                    <!--                        {{ $t('see_evolution') }}-->
+                    <!--                    </Link>-->
 
                     <SmallSquarePattern class="absolute top-0 hidden shrink-0 fill-primary-100 -left-16 md:block" />
                 </div>
@@ -158,7 +158,7 @@
                     </Link>
                 </div>
 
-                <ul role="list" class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+                <ul class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
                     <ArticleCard
                         v-for="(article, index) in articles.data"
                         :key="index"
@@ -233,7 +233,7 @@
 
     /** Import plugins */
     import 'vue3-carousel/dist/carousel.css';
-    import { Carousel, Slide } from 'vue3-carousel';
+    import { Carousel, Slide } from 'vue3-carousel/dist/carousel.es.js';
 
     /** Import components. */
     import PageLayout from '@/Layouts/PageLayout.vue';

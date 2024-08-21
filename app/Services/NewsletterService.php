@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use Spatie\Newsletter\Facades\Newsletter;
 
 class NewsletterService
@@ -14,16 +15,17 @@ class NewsletterService
             'MERGE1' => $name,
         ];
 
-        $options = [
-            'pending' => true,
-        ];
-
         $response = rescue(
-            fn () => Newsletter::subscribe($email, $mergeFields, options: $options),
+            fn () => Newsletter::subscribePending($email, $mergeFields),
             false
         );
 
         if (false !== $response) {
+            Log::error('Failed to subscribe user to newsletter', [
+                'email' => $email,
+                'response' => $response,
+            ]);
+
             // TODO: check if email registered as user
             // and assign subscriber badge if the
             // user doesn't already have one.

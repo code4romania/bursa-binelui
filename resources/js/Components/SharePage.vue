@@ -58,7 +58,7 @@
         pageRoute: String,
     });
 
-    const { text, copy, copied, isSupported } = useClipboard();
+    const { text, copy, copied } = useClipboard({ legacy: true });
 
     const url = computed(() => window.location.href);
 
