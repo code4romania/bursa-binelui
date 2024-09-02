@@ -176,10 +176,6 @@ class Activity extends BaseActivity
      */
     public function getModifiedField(mixed $value): ?string
     {
-        if ($this->description === 'statute') {
-            $value = Media::find($value)?->getUrl();
-        }
-
         if (\gettype($value) == 'boolean') {
             $value = $value ? __('field.boolean.true') : __('field.boolean.false');
         }
