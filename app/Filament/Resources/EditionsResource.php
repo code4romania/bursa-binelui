@@ -121,7 +121,7 @@ class EditionsResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('categories')
+                Tables\Columns\TextColumn::make('editionCategories.name')
                     ->label(__('edition.labels.categories'))
                     ->searchable()
                     ->sortable(),

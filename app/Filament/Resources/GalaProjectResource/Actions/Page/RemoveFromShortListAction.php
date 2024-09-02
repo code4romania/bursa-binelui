@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\GalaProjectResource\Actions\Page;
 
+use App\Models\GalaProject;
 use Filament\Pages\Actions\Action;
 
 class RemoveFromShortListAction extends Action
@@ -19,8 +20,16 @@ class RemoveFromShortListAction extends Action
 
         $this->label(__('edition.actions.remove-from-short-list'));
 
-        $this->action(function () {
-            $this->getRecord()->removeFromShortList();
+        $this->color('danger');
+
+        $this->icon('heroicon-s-minus-circle');
+
+        $this->outlined();
+
+        $this->action(function (GalaProject $record) {
+            $record->removeFromShortList();
         });
+
+        $this->hidden(fn (GalaProject $record) => $record->short_list === false);
     }
 }

@@ -7,7 +7,8 @@ namespace App\Models;
 use App\Concerns\BelongsToOrganization;
 use App\Concerns\HasCounties;
 use App\Concerns\HasSlug;
-use App\Traits\HasProjectStatus;
+use App\Enums\GalaProjectStatus;
+use App\Enums\OrganizationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,8 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Znck\Eloquent\Relations\BelongsToThrough;
+use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 class GalaProject extends Model implements HasMedia
 {
@@ -25,8 +28,8 @@ class GalaProject extends Model implements HasMedia
     use BelongsToOrganization;
     use HasCounties;
     use InteractsWithMedia;
-    use HasProjectStatus;
     use LogsActivity;
+    use BelongsToThroughTrait;
 
     protected $fillable = [
         'gala_id',
@@ -62,13 +65,15 @@ class GalaProject extends Model implements HasMedia
     ];
 
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
         'youth' => 'boolean',
         'partnership' => 'boolean',
         'eligible' => 'boolean',
         'short_list' => 'boolean',
         'contact' => 'array',
+        'status' => GalaProjectStatus::class,
+        'organization_type' => OrganizationType::class,
     ];
 
     public string $slugFieldSource = 'name';
@@ -78,9 +83,19 @@ class GalaProject extends Model implements HasMedia
         return $this->belongsTo(Gala::class);
     }
 
+    public function edition(): BelongsToThrough
+    {
+        return $this->belongsToThrough(Edition::class, Gala::class);
+    }
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(EditionCategories::class, 'edition_categories_gala_project');
+    }
+
+    public function prizes(): BelongsToMany
+    {
+        return $this->belongsToMany(Prize::class);
     }
 
     public function getActivitylogOptions(): LogOptions
@@ -109,5 +124,10 @@ class GalaProject extends Model implements HasMedia
     public function removeFromShortList(): bool
     {
         return $this->update(['short_list' => 0]);
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status->value === GalaProjectStatus::draft->value;
     }
 }

@@ -38,7 +38,7 @@ class EditionFactory extends Factory
     {
         return $this->afterCreating(function (Edition $edition) {
             EditionCategories::factory()
-                ->count(2)
+                ->count(5)
                 ->for($edition)
                 ->create();
 

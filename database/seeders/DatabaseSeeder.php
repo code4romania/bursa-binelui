@@ -75,6 +75,10 @@ class DatabaseSeeder extends Seeder
             ->count(1)
             ->create();
 
+        Edition::factory(['active' => false])
+            ->count(3)
+            ->create();
+
         Organization::factory()
             ->count(150)
             ->approved()
@@ -107,7 +111,7 @@ class DatabaseSeeder extends Seeder
         foreach ($articleCategories as $category) {
             ArticleCategory::factory()
                 ->name($category)
-                    ->hasArticles(4)
+                ->hasArticles(4)
                 ->create();
         }
     }

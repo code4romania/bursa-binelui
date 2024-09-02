@@ -97,7 +97,7 @@
                     </Link>
                     <Link
                         v-if="project.type === 'regional'"
-                        :href="route('dashboard.projects.regional.edit', project.id)"
+                        :href="route('dashboard.projects.gala.edit', project.id)"
                         class="w-1/2 text-center px-3.5 py-2.5 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-50"
                     >
                         {{ $t('edit') }}
@@ -188,7 +188,7 @@ const form = useForm({
 
 const changeProjectStatus = (id, status, type) => {
     let tmpRoute =
-        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+        type === 'regional' ? route('dashboard.projects.gala.status', id) : route('dashboard.projects.status', id);
     form.status = status;
     console.log(form);
     if (confirm(trans('project_change_status_' + status))) {

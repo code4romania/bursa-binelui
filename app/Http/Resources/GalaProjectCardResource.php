@@ -14,16 +14,20 @@ class GalaProjectCardResource extends Resource
     {
         return [
             'id' => $this->id,
-            'type' => 'project',
+            'type' => 'gala_project',
             'name' => $this->name,
             'slug' => $this->slug,
-            'county' => $this->counties->pluck('name')->join(', '), // $this->county?->name,
-            'image' => $this->getFirstMediaUrl('preview'),
+            'counties' => $this->counties->pluck('name')->join(', '), // $this->county?->name,
+            'counties_count' => $this->counties->count(),
+            'image' => $this->getFirstMediaUrl('regionalProjectFiles'),
             'organization' => [
                 'name' => $this->organization->name,
                 'slug' => $this->organization->slug,
                 'id' => $this->organization->id,
             ],
+            'categories' => $this->categories->pluck('name')->join(', '),
+            'is_draft' => $this->isDraft(),
+
         ];
     }
 }

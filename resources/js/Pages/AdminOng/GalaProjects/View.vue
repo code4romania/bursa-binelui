@@ -5,7 +5,7 @@
 
         <dl class="mt-6 border-t border-gray-100 divide-y divide-gray-100">
             <!-- Edit project name -->
-            <Field :label="$t('regional.project.title')" :errors="form.errors.name">
+            <Field no-edit :label="$t('regional.project.title')" :errors="form.errors.name">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -29,7 +29,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.description')" alt :errors="form.errors.description">
+            <Field no-edit :label="$t('regional.project.description')" alt :errors="form.errors.description">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -52,7 +52,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.counties')" :errors="form.errors.counties">
+            <Field no-edit :label="$t('regional.project.counties')" :errors="form.errors.counties">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -73,7 +73,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.start_date')" alt :errors="form.errors.start_date">
+            <Field no-edit :label="$t('regional.project.start_date')" alt :errors="form.errors.start_date">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -98,7 +98,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.end_date')" :errors="form.errors.end_date">
+            <Field no-edit :label="$t('regional.project.end_date')" :errors="form.errors.end_date">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -123,7 +123,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.categories')" alt :errors="form.errors.categories">
+            <Field no-edit :label="$t('regional.project.categories')" alt :errors="form.errors.categories">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -144,7 +144,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.youth')" :errors="form.errors.youth">
+            <Field no-edit :label="$t('regional.project.youth')" :errors="form.errors.youth">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -165,7 +165,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.identified_need')" alt :errors="form.errors.identified_need">
+            <Field no-edit :label="$t('regional.project.identified_need')" alt :errors="form.errors.identified_need">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -188,7 +188,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.proposed_solution')" :errors="form.errors.solution">
+            <Field no-edit :label="$t('regional.project.proposed_solution')" :errors="form.errors.solution">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -211,7 +211,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.project_details')" alt :errors="form.errors.project_details">
+            <Field no-edit :label="$t('regional.project.project_details')" alt :errors="form.errors.project_details">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -234,7 +234,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.what_is_special')" :errors="form.errors.special">
+            <Field no-edit :label="$t('regional.project.what_is_special')" :errors="form.errors.special">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -257,7 +257,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.key_results')" alt :errors="form.errors.results">
+            <Field no-edit :label="$t('regional.project.key_results')" alt :errors="form.errors.results">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -280,7 +280,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.pride_success')" :errors="form.errors.proud">
+            <Field no-edit :label="$t('regional.project.pride_success')" :errors="form.errors.proud">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -303,7 +303,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('photo_gallery')" alt :errors="form.errors.gallery">
+            <Field no-edit :label="$t('photo_gallery')" alt :errors="form.errors.gallery">
                 <template #value>
                     <div class="flex flex-wrap items-center gap-6 md:gap-8">
                         <div class="aspect-1 shrink-0" v-for="(image, index) in form.gallery" :key="index">
@@ -319,7 +319,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.had_partners')" :errors="form.errors.partnership">
+            <Field no-edit :label="$t('regional.project.had_partners')" :errors="form.errors.partnership">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -343,6 +343,7 @@
             </Field>
 
             <Field
+                no-edit
                 :label="$t('regional.project.partners')"
                 alt
                 v-if="form.partnership"
@@ -368,7 +369,7 @@
                 </EditModal>
             </Field>
 
-            <Field :label="$t('regional.project.project_budget')" :errors="form.errors.budget_details">
+            <Field no-edit :label="$t('regional.project.project_budget')" :errors="form.errors.budget_details">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -391,7 +392,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.participant_count_no')" alt :errors="form.errors.participants">
+            <Field no-edit :label="$t('regional.project.participant_count_no')" alt :errors="form.errors.participants">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -414,7 +415,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.project_team')" :errors="form.errors.team_details">
+            <Field no-edit :label="$t('regional.project.project_team')" :errors="form.errors.team_details">
                 <template #value>
                     <dt
                         class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6"
@@ -437,7 +438,7 @@
                 </template>
             </Field>
 
-            <Field :label="$t('regional.project.contact_info')" alt :errors="form.errors.contact_info">
+            <Field no-edit :label="$t('regional.project.contact_info')" alt :errors="form.errors.contact_info">
                 <template #value>
                     <dt class="col-span-12 text-base font-medium leading-6 text-gray-700 md:col-span-6">
                         <div class="flex items center">
@@ -465,37 +466,23 @@
                 </template>
             </Field>
         </dl>
-        <PrimaryButton :label="$t('publish')" class="w-full mt-4" @click="publishProject()" />
     </DashboardLayout>
 </template>
 
 <script setup>
 /** Import from inertia. */
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import route from '@/Helpers/useRoute';
+import { useForm } from '@inertiajs/vue3';
 
 /** Import components. */
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-
-import EditModal from '@/Components/modals/EditModal.vue';
-import Input from '@/Components/form/Input.vue';
+import { ref } from 'vue';
 import Textarea from '@/Components/form/Textarea.vue';
-import FileGroup from '@/Components/form/FileGroup.vue';
-import Repeater from '@/Components/form/Repeater.vue';
-import InputWithIcon from '@/Components/form/InputWithIcon.vue';
-import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-import { onMounted, ref } from 'vue';
-import DangerButton from '@/Components/buttons/DangerButton.vue';
-import SelectMultiple from '@/Components/form/SelectMultiple.vue';
 import Checkbox from '@/Components/form/Checkbox.vue';
-import Radio from '@/Components/form/Radio.vue';
 import Field from '@/Components/Field.vue';
-
-const flash = {
-    success_message: '',
-    error_message: '',
-};
+import Input from '@/Components/form/Input.vue';
+import SelectMultiple from '@/Components/form/SelectMultiple.vue';
+import FileGroup from '@/Components/form/FileGroup.vue';
+import EditModal from '@/Components/modals/EditModal.vue';
 
 const props = defineProps({
     project: Object,
@@ -508,32 +495,4 @@ const props = defineProps({
 
 let project = ref(props.project);
 let form = useForm(project.value);
-
-const changeStatusForm = useForm({
-    status: 'published',
-    project: props.project,
-});
-
-const publishProject = () => {
-    changeStatusForm.post(route('dashboard.projects.gala.status', props.project.slug), {
-        onSuccess: () => {
-            changeStatusForm.project = null;
-            changeStatusForm.status = 'published';
-        },
-        onError: () => {
-            changeStatusForm.project = null;
-            changeStatusForm.status = 'published';
-        },
-        onFinish: () => {
-            changeStatusForm.project = null;
-            changeStatusForm.status = 'published';
-        },
-    });
-};
-const editField = (field) => {
-    let newForm = useForm({
-        [field]: form[field],
-    });
-    newForm.put(route('dashboard.projects.gala.update', project.value.id));
-};
 </script>

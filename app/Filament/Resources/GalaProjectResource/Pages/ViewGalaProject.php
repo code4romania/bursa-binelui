@@ -15,24 +15,21 @@ class ViewGalaProject extends ViewRecord
     {
         return [
             GalaProjectResource\Actions\Page\MarkAsEligibleAction::make()
-                ->record($this->record)
-                ->disabled(fn () => (bool) $this->record->eligible)
-                ->hidden(fn () => (bool) $this->record->eligible),
+                ->record($this->getRecord()),
 
             GalaProjectResource\Actions\Page\MarkAsIneligibleAction::make()
-                ->record($this->record)
-                ->disabled(fn () => ! $this->record->eligible)
-                ->hidden(fn () => ! $this->record->eligible),
+                ->record($this->getRecord()),
 
             GalaProjectResource\Actions\Page\AddToShortListAction::make()
-                ->record($this->record)
-                ->disabled(fn () => (bool) $this->record->short_list)
-                ->hidden(fn () => (bool) $this->record->short_list),
+                ->record($this->getRecord()),
 
             GalaProjectResource\Actions\Page\RemoveFromShortListAction::make()
-                ->record($this->record)
-                ->disabled(fn () => ! $this->record->short_list)
-                ->hidden(fn () => ! $this->record->short_list),
+                ->record($this->getRecord()),
         ];
+    }
+
+    public function hasCombinedRelationManagerTabsWithForm(): bool
+    {
+        return true;
     }
 }

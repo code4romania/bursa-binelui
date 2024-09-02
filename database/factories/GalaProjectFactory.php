@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Gala;
+use App\Models\GalaProject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,10 +22,10 @@ class GalaProjectFactory extends Factory
     public function definition(): array
     {
         $gala = Gala::query()
-            ->whereHas('edition', fn ($query) => $query->where('active', true))
             ->inRandomOrder()
             ->first();
-        $name = fake()->text('200');
+
+        $name = fake()->text(200);
         $slug = Str::slug($name);
 
         return [
@@ -54,6 +55,20 @@ class GalaProjectFactory extends Factory
                 'phone_number' => fake()->phoneNumber(),
                 'email' => fake()->email(),
             ],
+            'eligible' => fake()->boolean(),
+            'short_list' => fake()->boolean(),
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (GalaProject $galaProject) {
+            $galaProject->categories()->attach(
+                $galaProject->gala->edition->editionCategories
+                    ->shuffle()
+                    ->take(fake()->numberBetween(1, 3))
+                    ->pluck('id')
+            );
+        });
     }
 }
