@@ -140,9 +140,12 @@ class ProjectResource extends Resource
                     ->image()
                     ->multiple()
                     ->maxFiles(20),
-                Forms\Components\Repeater::make('videos')->schema([
-                    TextInput::make('url'),
-                ]),
+                Forms\Components\Repeater::make('videos')
+                    ->schema([
+                        TextInput::make('url')
+                            ->url()
+                            ->required(),
+                    ]),
                 Forms\Components\Repeater::make('external_links')->schema([
                     TextInput::make('title')
                         ->required(),
