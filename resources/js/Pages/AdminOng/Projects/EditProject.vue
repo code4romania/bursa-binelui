@@ -469,11 +469,7 @@
                 </template>
             </Field>
 
-            <Field
-                :label="$t('video_link_label')"
-                alt
-                :errors="formChangeStatus.errors.videos || arrayError('videos.0.url')"
-            >
+            <Field :label="$t('video_link_label')" alt :errors="formChangeStatus.errors.videos || arrayError('videos')">
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
                         <div class="grid gap-4">
@@ -501,10 +497,10 @@
                                 {
                                     label: $t('video_link_label'),
                                     key: 'url',
-                                    error: arrayError('videos.0.url'),
+                                    error: arrayError('videos'),
                                 },
                             ]"
-                            :error="arrayError('videos.0.url')"
+                            :error="arrayError('videos')"
                             name="videos"
                         />
                     </EditModal>
@@ -513,7 +509,7 @@
 
             <Field
                 :label="$t('external_links_title')"
-                :errors="formChangeStatus.errors.external_links || arrayError('external_links.0.title')"
+                :errors="formChangeStatus.errors.external_links || arrayError('external_links')"
             >
                 <template #value>
                     <div class="flex items-center col-span-12 gap-6 text-base font-medium leading-6 text-gray-700">
@@ -533,7 +529,7 @@
                     <EditModal
                         @action="editField('external_links')"
                         class="flex justify-end col-span-1"
-                        :errors="arrayError('external_links.0.url')"
+                        :errors="arrayError('external_links')"
                         :label="$t('external_links_title')"
                     >
                         <RepeaterComponent
@@ -543,12 +539,12 @@
                                 {
                                     label: $t('project.labels.external_links_title'),
                                     key: 'title',
-                                    error: arrayError('external_links.0.title'),
+                                    error: arrayError('external_links'),
                                 },
                                 {
                                     label: $t('project.labels.external_links_url'),
                                     key: 'url',
-                                    error: arrayError('external_links.0.url'),
+                                    error: arrayError('external_links'),
                                 },
                             ]"
                         />
@@ -650,9 +646,12 @@ const editField = (field) => {
     });
 };
 function arrayError(key) {
-    if (props?.errors[key]) {
-        return props?.errors[key];
-    }
-    return null;
+    let errorMessage = '';
+    Object.keys(props?.errors).forEach((error) => {
+        if (error.startsWith(key)) {
+            errorMessage = props?.errors[error];
+        }
+    });
+    return errorMessage;
 }
 </script>
