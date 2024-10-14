@@ -7,14 +7,16 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Articles\ArticleCardResource;
 use App\Http\Resources\Edition\EditionShowResource;
 use App\Http\Resources\Edition\GalaShowResource;
+use App\Http\Resources\GalaProject\ShowResource;
 use App\Models\Edition;
 use App\Models\EditionCategories;
 use App\Models\Gala;
+use App\Models\GalaProject;
 use App\Models\Project;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
-class RegionalController extends Controller
+class GalaController extends Controller
 {
     public function index()
     {
@@ -133,117 +135,12 @@ class RegionalController extends Controller
             'gala' => GalaShowResource::make($gala),
             'categories' => $categories,
         ]);
-
     }
 
-    public function project(Project $project)
+    public function project(GalaProject $project)
     {
-        $gallery = [
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => 'https://youtu.be/f-t2nWVauSE',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'video',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-            [
-                'src' => '/images/project_img.png',
-                'type' => 'image',
-            ],
-        ];
-
         return Inertia::render('Public/Regional/Project', [
-            'project' => $project,
-            'gallery' => $gallery,
+            'project' => new ShowResource($project),
         ]);
     }
 

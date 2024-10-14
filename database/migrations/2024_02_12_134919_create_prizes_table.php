@@ -17,8 +17,15 @@ return new class extends Migration
     {
         Schema::create('prizes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Edition::class);
-            $table->foreignIdFor(EditionCategories::class);
+            $table->foreignIdFor(Edition::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(EditionCategories::class)
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
             $table->string('name');
             $table->timestamps();
         });

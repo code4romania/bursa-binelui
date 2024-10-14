@@ -19,7 +19,7 @@ class PrizeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->text(255),
+            'name' => fake()->sentence(),
         ];
     }
 }

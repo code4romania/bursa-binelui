@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Models\County;
 use App\Models\Gala;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class GalaFactory extends Factory
      */
     public function definition(): array
     {
-        $date = Carbon::createFromInterface(fake()->dateTimeBetween('-1 week', '5 weeks'));
+        $date = CarbonImmutable::createFromInterface(fake()->dateTimeBetween('-1 week', '1 week'));
 
         return [
             'title' => fake()->text(25),

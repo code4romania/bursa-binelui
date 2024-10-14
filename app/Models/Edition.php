@@ -33,6 +33,11 @@ class Edition extends Model implements HasMedia
         return $this->hasMany(EditionCategories::class);
     }
 
+    public function galas(): HasMany
+    {
+        return $this->hasMany(Gala::class);
+    }
+
     public function faqs(): HasMany
     {
         return $this->hasMany(EditionFaq::class);

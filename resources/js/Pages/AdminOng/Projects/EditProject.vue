@@ -612,7 +612,7 @@ const hasPendingChanges = (field) => {
 
 const changeProjectStatus = (id, status, type) => {
     let tmpRoute =
-        type === 'regional' ? route('dashboard.projects.regional.status', id) : route('dashboard.projects.status', id);
+        type === 'regional' ? route('dashboard.projects.gala.status', id) : route('dashboard.projects.status', id);
     if (confirm(trans('project_change_status_publish'))) {
         formChangeStatus.post(tmpRoute, {
             preserveScroll: true,

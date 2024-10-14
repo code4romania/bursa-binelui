@@ -340,14 +340,10 @@ const form = useForm({
 let selectedCounties = [];
 const props = defineProps(['projectCategories', 'counties', 'galaTitle', 'areas', 'galaId', 'organizationTypes']);
 
-onMounted(() => {
-    console.log(props.areas);
-});
-
 /** Create project. */
 const createProject = (status = 'in_review') => {
     form.gala_id = props.galaId;
-    form.post(route('dashboard.projects.regional.store'), {
+    form.post(route('dashboard.projects.gala.store'), {
         preserveScroll: true,
         onError: () => {},
     });

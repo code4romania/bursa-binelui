@@ -10,16 +10,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionalProject\StoreRequest;
 use App\Http\Resources\Edition\EditionShowResource;
 use App\Http\Resources\GalaProjectCardResource;
-use App\Models\County;
 use App\Models\Edition;
 use App\Models\Gala;
 use App\Models\GalaProject;
-use App\Models\ProjectCategory;
 use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RegionalProjectController extends Controller
+class GalaProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,8 +45,8 @@ class RegionalProjectController extends Controller
         $gala->edition->load('editionCategories');
 
         return Inertia::render('AdminOng/GalaProjects/Add', [
-            'counties' => $gala->counties,
-            'projectCategories' => $gala->edition->editionCategories,
+            'counties' => $gala->counties()->get(['name', 'counties.id']),
+            'projectCategories' => $gala->edition->editionCategories()->get(['name', 'edition_categories.id']),
             'galaTitle' => $gala->title,
             'startDate' => $gala->start_sign_up,
             'endDate' => $gala->end_sign_up,
@@ -71,16 +69,21 @@ class RegionalProjectController extends Controller
         });
 
         return redirect()
-            ->route('dashboard.projects.regional.edit', $project->id)
+            ->route('dashboard.projects.gala.edit', $project->slug)
             ->with('success', __('regional_projects.created'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(GalaProject $project)
     {
-        //
+        $this->authorize('view', $project);
+        $project->load('media');
+
+        return Inertia::render('AdminOng/GalaProjects/View', [
+            'project' => $project,
+        ]);
     }
 
     /**
@@ -88,23 +91,27 @@ class RegionalProjectController extends Controller
      */
     public function edit(GalaProject $project)
     {
+        $this->authorize('update', $project);
         $project->load('media');
 
         return Inertia::render('AdminOng/GalaProjects/Edit', [
             'project' => $project,
-            'counties' => County::get(['name', 'id']),
-            'projectCategories' => ProjectCategory::get(['name', 'id']),
+            'counties' => $project->gala->counties()->get(['name', 'counties.id']),
+            'projectCategories' => $project->edition->editionCategories()->get(['name', 'edition_categories.id']),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RegionalProject $project)
+    public function update(Request $request, GalaProject $project)
     {
-//        $this->authorize('editAsNgo', $project);;
+        $this->authorize('update', $project);
         if ($request->has('counties')) {
             $project->counties()->sync(collect($request->get('counties'))->pluck('id'));
+        }
+        if ($request->has('categories')) {
+            $project->categories()->sync(collect($request->get('categories'))->pluck('id'));
         }
         $project->update($request->all());
 
@@ -112,18 +119,10 @@ class RegionalProjectController extends Controller
             ->with('success', __('project.project_updated'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function changeStatus(Request $request, string $id)
+    public function changeStatus(Request $request, GalaProject $project)
     {
         try {
-            (new ProjectService(RegionalProject::class))->changeStatus($id, $request->get('status'));
+            (new ProjectService(GalaProject::class))->changeStatus($project, $request->get('status'));
         } catch (\Exception $exception) {
             return redirect()->back()
                 ->with('error', $exception->getMessage());
