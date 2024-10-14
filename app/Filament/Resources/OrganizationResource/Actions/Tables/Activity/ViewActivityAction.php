@@ -43,26 +43,23 @@ class ViewActivityAction extends BaseAction
 
             Value::make('changed_field_new_value')
                 ->label(__('activity.value.new'))
-                ->content(
-                    function (Activity $record) {
+
+                ->content(function (Activity $record) {
                     if ($record->changed_field === 'statute') {
                         $media = Media::find($record->changed_field_new_value);
                         if (! $media) {
                             return '-';
                         }
-
-                        return new HtmlString(
-                            sprintf(
-                                '<a href="%s" target="_blank">%s</a>',
-                                $media->getTemporaryUrl(now()->addMinutes(30)),
-                                $media->file_name
-                            )
-                        );
+                        return new HtmlString(\sprintf(
+                            '<a href="%s" target="_blank">%s</a>',
+                            $media->getTemporaryUrl(now()->addMinutes(30)),
+                            $media->file_name
+                        ));
                     }
 
                     return $record->changed_field_new_value;
-                }
-                )
+                })
+
                 ->inlineLabel(),
         ]);
 

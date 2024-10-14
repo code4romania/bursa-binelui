@@ -10,9 +10,9 @@ use App\Models\BCRProject;
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
@@ -94,7 +94,7 @@ class BCRProjectResource extends Resource
                     ->columnSpanFull()
                     ->required(),
 
-                Textarea::make('description')
+                RichEditor::make('description')
                     ->label(__('bcr-project.labels.description'))
                     ->inlineLabel()
                     ->columnSpanFull()

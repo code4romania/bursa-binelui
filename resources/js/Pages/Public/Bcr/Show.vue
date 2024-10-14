@@ -41,7 +41,7 @@
 
                 <div class="mb-10" v-if="project.description">
                     <h2 class="mb-6 text-3xl font-bold text-primary-900">{{ $t('description') }}</h2>
-                    <div class="text-lg text-gray-500" v-text="project.description" />
+                    <div class="text-lg text-gray-500" v-html="project.description" />
                 </div>
             </div>
 
@@ -85,11 +85,11 @@
 
                 <ul class="pl-8 leading-relaxed border-l-8 border-primary-500">
                     <li
-                        v-for="({ url, title, source }, index) in project.external_links"
+                        v-for="({ link, title, source }, index) in project.external_links"
                         :key="index"
                         class="overflow-hidden text-gray-800"
                     >
-                        <a :href="url" class="inline group" target="_blank" rel="noopener">
+                        <a :href="link" class="inline group" target="_blank" rel="noopener">
                             <span v-text="title" class="text-blue-500 underline group-hover:no-underline" />
                         </a>
 
@@ -126,25 +126,25 @@
 </template>
 
 <script setup>
-    /** Import form vue */
-    import { onMounted, ref } from 'vue';
+/** Import form vue */
+import { onMounted, ref } from 'vue';
 
-    /** Import from inertia. */
-    import Head from '@/Components/Head.vue';
+/** Import from inertia. */
+import Head from '@/Components/Head.vue';
 
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import SharePage from '@/Components/SharePage.vue';
-    import Gallery from '@/Components/Gallery.vue';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import SharePage from '@/Components/SharePage.vue';
+import Gallery from '@/Components/Gallery.vue';
 
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import { ExternalLinkIcon, BookmarkIcon, ChartBarIcon } from '@heroicons/vue/outline';
-    import { LocationMarkerIcon, CalendarIcon } from '@heroicons/vue/solid';
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import { ExternalLinkIcon, BookmarkIcon, ChartBarIcon } from '@heroicons/vue/outline';
+import { LocationMarkerIcon, CalendarIcon } from '@heroicons/vue/solid';
 
-    const props = defineProps({
-        project: {
-            type: Object,
-            required: true,
-        },
-    });
+const props = defineProps({
+    project: {
+        type: Object,
+        required: true,
+    },
+});
 </script>
