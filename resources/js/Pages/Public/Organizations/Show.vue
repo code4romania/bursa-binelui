@@ -50,7 +50,6 @@
                 </div>
             </div>
 
-            <!-- Soacial share -->
             <div class="flex flex-col mx-auto mb-8 lg:flex-row max-w-7xl px-9">
                 <div class="w-full lg:w-6/12">
                     <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('share_page') }}</h2>
@@ -64,6 +63,13 @@
                     <div v-if="organization.description">
                         <h2 class="mb-8 text-3xl font-bold text-primary-900">{{ $t('description') }}</h2>
                         <div class="text-lg text-gray-500" v-text="organization.description" />
+                    </div>
+
+                    <div v-if="organization.accepts_volunteers">
+                        <h2 class="my-8 text-3xl font-bold text-primary-900">
+                            {{ $t('why_volunteer') }}
+                        </h2>
+                        <div class="text-lg text-gray-500" v-text="organization.why_volunteer" />
                     </div>
                 </div>
 
@@ -157,21 +163,21 @@
 </template>
 
 <script setup>
-    import Head from '@/Components/Head.vue';
+import Head from '@/Components/Head.vue';
 
-    /** Import components. */
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import ProjectCard from '@/Components/cards/ProjectCard.vue';
-    import DonateModal from '@/Components/modals/DonateModal.vue';
-    import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
-    import SharePage from '@/Components/SharePage.vue';
-    import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
+/** Import components. */
+import PageLayout from '@/Layouts/PageLayout.vue';
+import ProjectCard from '@/Components/cards/ProjectCard.vue';
+import DonateModal from '@/Components/modals/DonateModal.vue';
+import VolunteerModal from '@/Components/modals/VolunteerModal.vue';
+import SharePage from '@/Components/SharePage.vue';
+import HowCanYouHelp from '@/Components/HowCanYouHelp.vue';
 
-    import { ChartBarIcon, GlobeAltIcon } from '@heroicons/vue/outline';
-    import { HomeIcon, MailIcon, UserIcon } from '@heroicons/vue/solid';
+import { ChartBarIcon, GlobeAltIcon } from '@heroicons/vue/outline';
+import { HomeIcon, MailIcon, UserIcon } from '@heroicons/vue/solid';
 
-    /** Page props. */
-    const props = defineProps({
-        organization: [Array, Object],
-    });
+/** Page props. */
+const props = defineProps({
+    organization: [Array, Object],
+});
 </script>
