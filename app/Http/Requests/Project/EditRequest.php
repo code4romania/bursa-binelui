@@ -5,14 +5,25 @@ declare(strict_types=1);
 namespace App\Http\Requests\Project;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class EditRequest extends FormRequest
 {
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('external_links')) {
+            $this->merge([
+                'external_links' => $this->appendHttpsToUrl($this->external_links),
+            ]);
+        }
+
+        if ($this->has('videos')) {
+            $this->merge([
+                'videos' => $this->appendHttpsToUrl($this->videos),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
@@ -51,5 +62,20 @@ class EditRequest extends FormRequest
             'image.max' => __('custom_validation.image.size'),
             'gallery.*.file.max' => __('custom_validation.image.size'),
         ];
+    }
+
+    private function appendHttpsToUrl(array $data): array
+    {
+        return collect($data)->map(function ($item) {
+            if (! filled($item['url'])) {
+                return $item;
+            }
+            if (Str::isUrl($item['url'])) {
+                return $item;
+            }
+            $item['url'] = 'https://' . $item['url'];
+
+            return $item;
+        })->toArray();
     }
 }
