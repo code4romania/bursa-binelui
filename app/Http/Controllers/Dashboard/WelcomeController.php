@@ -53,11 +53,11 @@ class WelcomeController extends Controller
         $attributes = $request->validate([
             'password' => ['required', 'confirmed',
                 Password::min(8)
-                ->mixedCase()
-                ->letters()
-                ->numbers()
-                ->symbols()
-                ->uncompromised(),],
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(), ],
         ]);
 
         $user->setPassword($attributes['password']);

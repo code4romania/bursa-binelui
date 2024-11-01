@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Widgets;
 
+use App\Filament\Resources\ProjectResource;
 use App\Filament\Resources\ProjectResource\Actions\Tables\Projects\ApproveProjectAction;
 use App\Models\Project;
 use Filament\Tables\Actions\EditAction;
@@ -55,6 +56,7 @@ class RejectedProject extends BaseProjectWidget
                 ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
             EditAction::make()
+                ->url(fn (Project $record) => ProjectResource::getUrl('edit', ['record' => $record]))
                 ->iconButton(),
             ApproveProjectAction::make()
                 ->iconButton(),

@@ -53,5 +53,4 @@ class ShowResource extends JsonResource
 
         ];
     }
-
 }

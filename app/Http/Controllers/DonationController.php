@@ -39,6 +39,6 @@ class DonationController extends Controller
 
         (new EuPlatescService($donation->organization_id))->processIpn($donation, $validatedData);
 
-        echo "OK";//IMPORTANT to print OK
+        echo 'OK'; //IMPORTANT to print OK
     }
 }

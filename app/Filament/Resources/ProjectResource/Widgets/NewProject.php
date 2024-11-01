@@ -51,7 +51,8 @@ class NewProject extends BaseProjectWidget
             ViewAction::make()->label(__('project.actions.view'))
                 ->iconButton()
                 ->url($this->getTableRecordUrlUsing()),
-            EditAction::make()
+            EditAction::make('edit')
+                ->url(fn (Project $record) => ProjectResource::getUrl('edit', ['record' => $record]))
                 ->iconButton(),
             ApproveProjectAction::make()
                 ->iconButton(),
