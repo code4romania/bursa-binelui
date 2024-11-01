@@ -249,6 +249,8 @@ class Project extends Model implements HasMedia
             $slug .= '-' . ($count + 1);
         }
 
+        $this->activities->map(fn (Activity $activity) => $activity->approve());
+
         return $this->update([
             'status' => ProjectStatus::approved,
             'status_updated_at' => $this->freshTimestamp(),
