@@ -36,7 +36,6 @@ class ProjectService
             ->filter(fn ($item) => \is_array($item))
             ->pluck('id');
 
-
         $project->getMedia('gallery')
             ->map(function (Media $media) use ($mediaIds) {
                 if (! $mediaIds->contains($media->id)) {

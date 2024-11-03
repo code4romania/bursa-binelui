@@ -24,6 +24,16 @@ class Kernel extends ConsoleKernel
             ->everyFourHours()
             ->onOneServer()
             ->sentryMonitor('process-authorized-transactions-job');
+
+        $schedule->command('app:notification-end-project-period', ['--days' => 10])
+            ->dailyAt('09:00')
+            ->onOneServer()
+            ->sentryMonitor('notification-end-project-period');
+
+        $schedule->command('app:notification-end-project-period', ['--days' => 2])
+            ->dailyAt('10:00')
+            ->onOneServer()
+            ->sentryMonitor('notification-end-project-period');
     }
 
     /**
