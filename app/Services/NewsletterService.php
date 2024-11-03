@@ -16,7 +16,7 @@ class NewsletterService
         ];
 
         $response = rescue(
-            fn () => Newsletter::subscribePending($email, $mergeFields),
+            fn () => Newsletter::subscribe($email, $mergeFields),
             false
         );
 
