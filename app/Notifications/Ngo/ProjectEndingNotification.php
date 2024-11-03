@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Notifications;
+namespace App\Notifications\Ngo;
 
 use App\Models\Project;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectEndingNotification extends Notification
+class ProjectEndingNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

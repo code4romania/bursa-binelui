@@ -6,6 +6,9 @@ namespace App\Jobs;
 
 use App\Enums\EuPlatescStatus;
 use App\Models\Donation;
+use App\Models\User;
+use App\Notifications\Ngo\DonationReceived;
+use App\Notifications\UserDonationReceived;
 use App\Services\EuPlatescService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -53,6 +56,17 @@ class CaptureAuthorizedDonationJob implements ShouldQueue, ShouldBeUnique
                 'status' => EuPlatescStatus::CHARGED,
                 'status_updated_at' => now(),
             ]);
+            $userInstanceOfDonner = new User([
+                'email' => $this->donation->email,
+                'name' => $this->donation->first_name . ' ' . $this->donation->last_name,
+            ]);
+            \Notification::send($userInstanceOfDonner, new UserDonationReceived($this->donation));
+            $organizationsUsers = $this->donation->load('organization')
+                ->organization->load('users')->users->filter(function ($user) {
+                    return $user->hasVerifiedEmail();
+                });
+
+            \Notification::send($organizationsUsers, new DonationReceived());
         }
     }
 }

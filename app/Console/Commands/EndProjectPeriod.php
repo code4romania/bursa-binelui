@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Project;
-use App\Notifications\ProjectEndingNotification;
+use App\Notifications\Ngo\ProjectEndingNotification;
 use Illuminate\Console\Command;
 
 class EndProjectPeriod extends Command
@@ -37,13 +37,12 @@ class EndProjectPeriod extends Command
             ->whereDate('end', now()->addDays($daysBeforeEnding))
             ->get();
         $projects->each(function (Project $project) use ($daysBeforeEnding) {
-            $project->organization->load('users')->users->each(function ($user) use ($daysBeforeEnding, $project) {
-                try {
-                    $user->notify(new ProjectEndingNotification($project, $daysBeforeEnding));
-                } catch (\Exception $e) {
-                    $this->error($e->getMessage());
-                }
+
+           $users =  $project->organization->load('users')->users->filter(function ($user) {
+                return $user->hasVerifiedEmail();
             });
+           \Notification::send($users, new ProjectEndingNotification($project, $daysBeforeEnding));
+
         });
     }
 }
