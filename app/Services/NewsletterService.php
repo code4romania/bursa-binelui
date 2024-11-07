@@ -12,12 +12,10 @@ class NewsletterService
     public static function subscribe(string $email, ?string $name = null)
     {
         $mergeFields = [];
-        if (filled($name))
-        {
+        if (filled($name)) {
             $mergeFields = [
                 'MERGE1' => $name,
             ];
-
         }
         $response = rescue(
             fn () => Newsletter::subscribe($email, $mergeFields),
@@ -32,7 +30,6 @@ class NewsletterService
             ]);
 
             // TODO: check if email registered as user
-
         }
 
         return $response;

@@ -538,7 +538,7 @@
                         :label="$t('external_links_title')"
                     >
                         <RepeaterComponent
-                            :elements="originalProject.external_links"
+                            :elements="project.external_links"
                             name="external_links"
                             :structure="[
                                 {
