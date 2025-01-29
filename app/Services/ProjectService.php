@@ -42,6 +42,7 @@ class ProjectService
                     $media->delete();
                 }
             });
+
         collect($value)->filter(fn ($image) => ! \is_array($image))
             ->map(function ($image) use ($project) {
                 $tmpImage = Image::load($image->getPathname());

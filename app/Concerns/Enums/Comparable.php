@@ -11,7 +11,6 @@ trait Comparable
      */
     public function is(mixed $enum): bool
     {
-
         if ($enum instanceof static) {
             return $this->value === $enum->value;
         }

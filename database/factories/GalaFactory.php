@@ -6,7 +6,6 @@ namespace Database\Factories;
 
 use App\Models\County;
 use App\Models\Gala;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -11,12 +11,14 @@ class NewsletterService
 {
     public static function subscribe(string $email, ?string $name = null)
     {
-        $mergeFields = [
-            'MERGE1' => $name,
-        ];
-
+        $mergeFields = [];
+        if (filled($name)) {
+            $mergeFields = [
+                'MERGE1' => $name,
+            ];
+        }
         $response = rescue(
-            fn () => Newsletter::subscribePending($email, $mergeFields),
+            fn () => Newsletter::subscribe($email, $mergeFields),
             false
         );
 
@@ -24,11 +26,10 @@ class NewsletterService
             Log::error('Failed to subscribe user to newsletter', [
                 'email' => $email,
                 'response' => $response,
+                'error' => Newsletter::getApi()->getLastError(),
             ]);
 
             // TODO: check if email registered as user
-            // and assign subscriber badge if the
-            // user doesn't already have one.
         }
 
         return $response;

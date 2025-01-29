@@ -23,12 +23,12 @@ class PasswordController extends Controller
             'password' => [
                 'required',
                 Password::min(8)
-                ->mixedCase()
-                ->letters()
-                ->numbers()
-                ->symbols()
-                ->uncompromised(),
-                'confirmed'
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+                'confirmed',
             ],
         ]);
 

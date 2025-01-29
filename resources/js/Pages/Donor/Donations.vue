@@ -50,20 +50,12 @@
                     @update:modelValue="applyFilters"
                 />
 
-                <Select
-                    class="col-span-12 sm:col-span-6 lg:col-span-4"
-                    :label="$t('start_date')"
-                    v-model="filter.start_date"
-                    :options="dates"
+                <DatePicker
+                    :label="$t('donation_period')"
+                    class="md:col-span-6 lg:col-span-3"
+                    v-model="filter.date"
                     @update:modelValue="applyFilters"
-                />
-
-                <Select
-                    class="col-span-12 sm:col-span-6 lg:col-span-4"
-                    :label="$t('start_date')"
-                    v-model="filter.end_date"
-                    :options="dates"
-                    @update:modelValue="applyFilters"
+                    range
                 />
             </div>
             <Table :collection="collection" />
@@ -72,49 +64,49 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import route from '@/Helpers/useRoute';
-    import Title from '@/Components/Title.vue';
-    import Table from '@/Components/tables/Table.vue';
-    import Select from '@/Components/form/Select.vue';
-    import SearchFilter from '@/Components/filters/SearchFilter.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import useFilters from '@/Helpers/useFilters.js';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import { XIcon } from '@heroicons/vue/solid';
+import { ref } from 'vue';
+import route from '@/Helpers/useRoute';
+import Title from '@/Components/Title.vue';
+import Table from '@/Components/tables/Table.vue';
+import Select from '@/Components/form/Select.vue';
+import SearchFilter from '@/Components/filters/SearchFilter.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import useFilters from '@/Helpers/useFilters.js';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import { XIcon } from '@heroicons/vue/solid';
+import DatePicker from '@/Components/form/DatePicker.vue';
 
-    const props = defineProps({
-        collection: {
-            type: Object,
-            required: true,
-        },
-        filter: {
-            type: Object,
-            required: false,
-        },
-        projects: Array,
-        organizations: Array,
-        statuses: Object,
-        amounts: Array,
-        dates: Array,
-        //     start_dates: Array,
-        //     end_dates: Array
-    });
+const props = defineProps({
+    collection: {
+        type: Object,
+        required: true,
+    },
+    filter: {
+        type: Object,
+        required: false,
+    },
+    projects: Array,
+    organizations: Array,
+    statuses: Object,
+    amounts: Array,
+    dates: Array,
+    //     start_dates: Array,
+    //     end_dates: Array
+});
 
-    /** Active filter state. */
-    const hasValues = ref(false);
+/** Active filter state. */
+const hasValues = ref(false);
 
-    /** Filter values. */
-    const filter = ref({
-        search: props.filter?.search || null,
-        status: props.filter?.status || null,
-        amount: props.filter?.amount || null,
-        project: props.filter?.project || null,
-        organization: props.filter?.organization || null,
-        start_date: props.filter?.start_date || null,
-        end_date: props.filter?.end_date || null,
-    });
+/** Filter values. */
+const filter = ref({
+    search: props.filter?.search || null,
+    status: props.filter?.status || null,
+    amount: props.filter?.amount || null,
+    project: props.filter?.project || null,
+    organization: props.filter?.organization || null,
+    date: props.filter?.date || null,
+});
 
-    const sort = ref(null);
-    const { applyFilters, clearFilters } = useFilters(filter, sort, route('donor.donations'));
+const sort = ref(null);
+const { applyFilters, clearFilters } = useFilters(filter, sort, route('donor.donations'));
 </script>

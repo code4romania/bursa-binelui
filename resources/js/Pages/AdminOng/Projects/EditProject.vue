@@ -454,11 +454,16 @@
             </Field>
 
             <Field :label="$t('photo_gallery')" :errors="formChangeStatus.errors.gallery">
-                <template #value>
+                <template #value v-if="!showSpinner">
                     <div class="flex flex-wrap items-center gap-6 md:gap-8">
                         <div class="aspect-1 shrink-0" v-for="(image, index) in originalProject.gallery" :key="index">
                             <img class="object-cover w-32 h-32" :src="image.url" alt="" />
                         </div>
+                    </div>
+                </template>
+                <template #value v-else>
+                    <div class="flex items">
+                        <Icon class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-500" name="spinner" />
                     </div>
                 </template>
 
@@ -533,7 +538,7 @@
                         :label="$t('external_links_title')"
                     >
                         <RepeaterComponent
-                            :elements="originalProject.external_links"
+                            :elements="project.external_links"
                             name="external_links"
                             :structure="[
                                 {
@@ -580,6 +585,7 @@ import Checkbox from '@/Components/form/Checkbox.vue';
 import RepeaterComponent from '@/Components/RepeaterComponent.vue';
 import FileGroup from '@/Components/form/FileGroup.vue';
 import { trans } from 'laravel-vue-i18n';
+import Icon from '@/Components/Icon.vue';
 
 const props = defineProps({
     project: Object,
@@ -592,6 +598,8 @@ const props = defineProps({
 
 const project = ref(props.project);
 const originalProject = computed(() => props.project);
+
+const showSpinner = ref(false);
 
 const resetField = (field) => {
     project.value[field] = originalProject.value[field];
@@ -635,13 +643,19 @@ const changeProjectStatus = (id, status, type) => {
 };
 
 const editField = (field) => {
+    if (field === 'gallery') {
+        showSpinner.value = true;
+    }
     const form = useForm({
         [field]: project.value[field],
     });
     form.post(route('dashboard.projects.update', project.value.id), {
         preserveScroll: true,
         onSuccess: (response) => {
-            //
+            showSpinner.value = false;
+        },
+        onFinish: () => {
+            showSpinner.value = false;
         },
     });
 };

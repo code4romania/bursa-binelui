@@ -28,7 +28,7 @@ class BaseDonationWidget extends BaseWidget
             )
             ->where('created_at', '>', $whereCreatedCondition)
             // TODO: add CAPTURE after pr #348
-            ->whereIn('status', [EuPlatescStatus::AUTHORIZED])
+            ->whereIn('status', [EuPlatescStatus::AUTHORIZED->value, EuPlatescStatus::CHARGED->value])
             ->groupBy($chartInterval)
             ->orderBy($chartInterval)
             ->get();

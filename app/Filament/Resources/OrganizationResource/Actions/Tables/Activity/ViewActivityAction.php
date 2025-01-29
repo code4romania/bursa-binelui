@@ -50,6 +50,7 @@ class ViewActivityAction extends BaseAction
                         if (! $media) {
                             return '-';
                         }
+
                         return new HtmlString(\sprintf(
                             '<a href="%s" target="_blank">%s</a>',
                             $media->getTemporaryUrl(now()->addMinutes(30)),

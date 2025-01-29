@@ -8,6 +8,7 @@ use App\Enums\VolunteerStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Collections\VolunteerCollection;
 use App\Models\VolunteerRequest;
+use App\Notifications\UserWasApprovedForVolunteering;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -41,6 +42,7 @@ class VolunteerController extends Controller
     {
         $this->authorize('update', $volunteerRequest);
         $volunteerRequest->markAsApproved();
+        \Notification::send($volunteerRequest->volunteer->user, new UserWasApprovedForVolunteering());
 
         return redirect()->back()
             ->with('success', __('volunteer.messages.approved'));

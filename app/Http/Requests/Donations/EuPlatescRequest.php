@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Donations;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,17 +25,17 @@ class EuPlatescRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount'     => ['required', 'decimal:2'],
-            'curr'       => ['required', 'string'],
+            'amount' => ['required', 'decimal:2'],
+            'curr' => ['required', 'string'],
             'invoice_id' => ['required', 'string'],
-            'ep_id'      => ['required', 'string'],
-            'merch_id'   => ['required', 'string'],
-            'action'     => ['required', 'numeric', Rule::in(0, 1)],
-            'message'    => ['required', 'string'],
-            'approval'   => ['required', 'string'],
-            'timestamp'  => ['required', 'date_format:YmdHis'],
-            'nonce'      => ['required', 'string'],
-            'fp_hash'    => ['required', 'string'],
+            'ep_id' => ['required', 'string'],
+            'merch_id' => ['required', 'string'],
+            'action' => ['required', 'numeric', Rule::in(0, 1)],
+            'message' => ['required', 'string'],
+            'approval' => ['required', 'string'],
+            'timestamp' => ['required', 'date_format:YmdHis'],
+            'nonce' => ['required', 'string'],
+            'fp_hash' => ['required', 'string'],
             'sec_status' => ['nullable', 'numeric'],
             'rrn' => ['nullable', 'numeric'],
             'mcard' => ['nullable', 'numeric'],
@@ -45,7 +47,7 @@ class EuPlatescRequest extends FormRequest
             'card_holder' => ['nullable', 'string'],
             'email' => ['nullable', 'string'],
             'rtype' => ['nullable', 'string'],
-            'cce' => ['nullable', 'string']
+            'cce' => ['nullable', 'string'],
         ];
     }
 }
