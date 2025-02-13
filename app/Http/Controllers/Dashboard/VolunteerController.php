@@ -10,6 +10,7 @@ use App\Http\Resources\Collections\VolunteerCollection;
 use App\Models\VolunteerRequest;
 use App\Notifications\UserWasApprovedForVolunteering;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -41,8 +42,11 @@ class VolunteerController extends Controller
     public function approve(Request $request, VolunteerRequest $volunteerRequest)
     {
         $this->authorize('update', $volunteerRequest);
+
         $volunteerRequest->markAsApproved();
-        \Notification::send($volunteerRequest->volunteer->user, new UserWasApprovedForVolunteering());
+
+        Notification::route('mail', $volunteerRequest->volunteer->email)
+            ->notify(new UserWasApprovedForVolunteering);
 
         return redirect()->back()
             ->with('success', __('volunteer.messages.approved'));
