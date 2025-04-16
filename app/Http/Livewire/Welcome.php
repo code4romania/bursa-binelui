@@ -15,6 +15,7 @@ use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -33,6 +34,7 @@ class Welcome extends Component implements HasForms
 
     public function mount($user, Request $request): void
     {
+
         if (Filament::auth()->check()) {
             redirect()->intended(Filament::getUrl());
         }
@@ -41,7 +43,7 @@ class Welcome extends Component implements HasForms
             abort(Response::HTTP_FORBIDDEN, __('auth.welcome.invalid_signature'));
         }
 
-        $this->user = User::find($user)->first();
+        $this->user = User::where('id', $user->id)->first();
 
         if (\is_null($this->user)) {
             abort(Response::HTTP_FORBIDDEN, __('auth.welcome.no_user'));
