@@ -15,7 +15,6 @@ use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -34,7 +33,6 @@ class Welcome extends Component implements HasForms
 
     public function mount($user, Request $request): void
     {
-
         if (Filament::auth()->check()) {
             redirect()->intended(Filament::getUrl());
         }
