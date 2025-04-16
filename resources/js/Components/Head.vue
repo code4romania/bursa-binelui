@@ -7,8 +7,8 @@
         <meta property="og:site_name" :content="$page.props.appName" />
 
         <template v-if="description">
-            <meta property="og:description" :content="description" />
-            <meta name="description" :content="description" />
+            <meta property="og:description" :content="stripHTMLTags(description)" />
+            <meta name="description" :content="stripHTMLTags(description)" />
         </template>
 
         <meta v-if="image" property="og:image" :content="image" />
@@ -19,22 +19,23 @@
     </Head>
 </template>
 
-
 <script setup>
-    import { Head } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
-    const props = defineProps({
-        title: {
-            type: String,
-            default: null,
-        },
-        description: {
-            type: String,
-            default: null,
-        },
-        image: {
-            type: String,
-            default: null,
-        },
-    });
+const props = defineProps({
+    title: {
+        type: String,
+        default: null,
+    },
+    description: {
+        type: String,
+        default: null,
+    },
+    image: {
+        type: String,
+        default: null,
+    },
+});
+
+const stripHTMLTags = (str) => str.replace(/<[^>]*>/g, '');
 </script>
