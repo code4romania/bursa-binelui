@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
             ->sentryMonitor('model-prune');
 
         $schedule->job(ProcessAuthorizedTransactionsJob::class)
-            ->everyFourHours()
+            ->everyFiveMinutes()
             ->onOneServer()
             ->sentryMonitor('process-authorized-transactions-job');
 
