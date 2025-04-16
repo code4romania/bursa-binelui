@@ -26,6 +26,8 @@ class ProcessAuthorizedTransactionsJob implements ShouldQueue
      */
     public function handle(): void
     {
+        \Log::info('Processing authorized transactions started at ' . now()->toString());
+        $counter = 0;
         Organization::query()
             ->whereHasEuPlatesc()
             ->withWhereHas('donations', function (Builder $query) {
@@ -34,11 +36,13 @@ class ProcessAuthorizedTransactionsJob implements ShouldQueue
                     ->whereNotNull('ep_id');
             })
             ->get()
-            ->each(function (Organization $organization) {
+            ->each(function (Organization $organization) use (&$counter) {
                 $service = new EuPlatescService($organization);
 
                 $organization->donations
                     ->each(fn (Donation $donation) => CaptureAuthorizedDonationJob::dispatch($donation, $service));
+                $counter++;
             });
+        \Log::info('Processing authorized transactions ended at ' . now()->toString() . ' with ' . $counter . ' organization processed.');
     }
 }
