@@ -8,7 +8,6 @@ use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\ProjectResource;
 use App\Models\Activity;
 use App\Models\County;
-use App\Models\Donation;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Models\ProjectCategory;
@@ -36,6 +35,7 @@ class ExportAction extends BaseAction
         $this->exports([
             ExcelExportWithNotificationInDB::make()
                 ->withFilename($fileName)
+                ->fromTable()
                 ->modifyQueryUsing(
                     function (Builder $query) use ($name) {
                         if ($name == 'approved_project') {
@@ -137,15 +137,13 @@ class ExportAction extends BaseAction
                     Column::make('donation_number')
                         ->heading(__('donation.labels.count'))
                         ->formatStateUsing(
-                            fn (Project $record) => $record->donations->count()
+                            fn (Project $record) => $record->loadMissing('donations')->donations->count()
                         ),
 
                     Column::make('donation_amount')
                         ->heading(__('donation.labels.amount'))
                         ->formatStateUsing(
-                            fn (Project $record) => $record->donations
-                                ->map(fn (Donation $donation) => $donation->amount)
-                                ->sum()
+                            fn (Project $record) => $record->loadMissing('donations')->donations()->sum('amount'),
                         ),
                 ])
                 ->queue(),

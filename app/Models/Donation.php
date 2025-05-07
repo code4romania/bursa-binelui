@@ -67,7 +67,7 @@ class Donation extends Model
 
     public function scopeWhereCharged(Builder $query): Builder
     {
-        return $query->where('status', EuPlatescStatus::CHARGED);
+        return $query->where('donations.status', EuPlatescStatus::CHARGED);
     }
 
     public function scopeWherePending(Builder $query): Builder
