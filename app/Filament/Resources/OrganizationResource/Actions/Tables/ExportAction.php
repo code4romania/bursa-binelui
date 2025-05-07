@@ -24,6 +24,7 @@ class ExportAction extends BaseAction
 
         $this->color('secondary');
         $status = $this->name ?? '';
+        $this->status = $status;
 
         $this->exports([
             ExcelExportWithNotificationInDB::make()
