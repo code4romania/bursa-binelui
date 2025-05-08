@@ -6,6 +6,9 @@ namespace App\Filament\Widgets;
 
 class DonationAmountOverview extends BaseDonationWidget
 {
+    protected int | string | array $columnSpan = 2;
+
+
     protected function getData(): array
     {
         $selectedFields = 'sum(amount) as total';

@@ -8,6 +8,7 @@ use App\Filament\Widgets\DonationAmountOverview;
 use App\Filament\Widgets\DonationCountOverview;
 use App\Filament\Widgets\OrganizationOverview;
 use App\Filament\Widgets\ProjectOverview;
+use App\Filament\Widgets\StatisticsDonationsChart;
 
 class Dashboard extends \Filament\Pages\Dashboard
 {
@@ -27,6 +28,6 @@ class Dashboard extends \Filament\Pages\Dashboard
 
     protected function getHeaderWidgetsColumns(): int
     {
-        return 3;
+        return 4;
     }
 }
