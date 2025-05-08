@@ -150,7 +150,7 @@ class DonationResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->headerActions([
-                ExportAction::make('download')
+                ExportAction::make('download'),
             ])
             ->actions([
                 ViewAction::make()->iconButton(),
