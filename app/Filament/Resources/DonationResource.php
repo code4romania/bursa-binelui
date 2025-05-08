@@ -6,6 +6,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\EuPlatescStatus;
 use App\Filament\Filters\DateFilter;
+use App\Filament\Resources\DonationResource\Actions\ExportAction;
 use App\Filament\Resources\DonationResource\Pages;
 use App\Forms\Components\Link;
 use App\Models\Donation;
@@ -148,6 +149,9 @@ class DonationResource extends Resource
                 DateFilter::make('created_at'),
             ])
             ->defaultSort('created_at', 'desc')
+            ->headerActions([
+                ExportAction::make('download')
+            ])
             ->actions([
                 ViewAction::make()->iconButton(),
             ]);
