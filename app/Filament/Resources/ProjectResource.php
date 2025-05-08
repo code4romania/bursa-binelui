@@ -46,6 +46,16 @@ class ProjectResource extends Resource
         return (string) static::$model::count();
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('project.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('project.label.plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
