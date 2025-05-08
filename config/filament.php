@@ -291,6 +291,8 @@ return [
 
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DRIVER', 'public'),
 
+    'filament-excel-disk' => env('FILAMENT_EXCEL_DISK', 'filament-excel'),
+
     /*
     |--------------------------------------------------------------------------
     | Google Fonts

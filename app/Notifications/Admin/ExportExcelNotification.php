@@ -48,7 +48,7 @@ class ExportExcelNotification extends Notification
         return (new MailMessage)
             ->subject(__('notification.export_finished.title'))
             ->line(__('notification.export_finished.body'))
-            ->attach(Storage::disk('s3private') . $this->filename)
+            ->attach(Storage::disk(config('filament.filament-excel-disk'))->path($this->filename))
             ->action(__('notification.export_finished.action'), $this->generateURL());
     }
 
