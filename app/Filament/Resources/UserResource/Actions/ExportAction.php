@@ -30,8 +30,21 @@ class ExportAction extends BaseAction
                     now()->format('Y_m_d-H_i_s'),
                     Str::slug(UserResource::getPluralModelLabel()),
                 ))
+                ->fromTable()
                 ->modifyQueryUsing(function (Builder $query) {
                     return $query
+                        ->addSelect([
+                            'referrer',
+                            'id',
+                            'role',
+                            'name',
+                            'email',
+                            'email_verified_at',
+                            'created_at',
+                            'newsletter',
+                            'organization_id',
+                            'created_by',
+                        ])
                         ->with([
                             'donations' => fn ($q) => $q->select(['user_id', 'amount', 'status', 'created_at']),
                         ])
@@ -49,7 +62,7 @@ class ExportAction extends BaseAction
 
                     Column::make('role')
                         ->heading(__('user.labels.role'))->formatStateUsing(
-                            fn ($state) => $state->label()
+                            fn (User $record) => $record->role->label()
                         ),
 
                     Column::make('status')
@@ -77,6 +90,10 @@ class ExportAction extends BaseAction
                     Column::make('referrer')
                         ->heading(__('user.labels.referrer')),
 
+                    Column::make('donations_count')
+                        ->formatStateUsing(fn (User $record) => $record->donations()->whereCharged()->count() ?? 0)
+                        ->heading(__('user.labels.donations_count')),
+
                     Column::make('donations')
                         ->heading(__('user.labels.donations_sum'))
                         ->formatStateUsing(
@@ -85,8 +102,10 @@ class ExportAction extends BaseAction
                                 ->sum('amount')
                         ),
 
-                    Column::make('donations_count')
-                        ->heading(__('user.labels.donations_count')),
+                    Column::make('comments_count')
+                        //TODO:: implement comments module and add this column
+                        ->formatStateUsing(fn (User $record) => 'numarul de comentarii va aparea dupa implementarea modulului')
+                        ->heading(__('user.labels.comments_count')),
 
                     Column::make('last_donation_date')
                         ->heading(__('user.labels.last_donation_date'))
