@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Tpetry\QueryExpressions\Function\Aggregate\Count;
 use Tpetry\QueryExpressions\Language\Alias;
 
-class   StatisticsDonationsChart extends LineChartWidget
+class StatisticsDonationsChart extends LineChartWidget
 {
     protected int | string | array $columnSpan = 3;
 

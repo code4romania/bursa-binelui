@@ -36,7 +36,7 @@ class ExcelExportWithNotificationInDB extends ExcelExport
         $authUser = auth()->user();
 
         $this
-            ->queueExport($filename, config('filament.filament-excel-disk'), $this->getWriterType())
+            ->queueExport($filename, 'filament-excel', $this->getWriterType())
             ->chain([
                 function () use ($authUser, $filename) {
                     Notification::send(
