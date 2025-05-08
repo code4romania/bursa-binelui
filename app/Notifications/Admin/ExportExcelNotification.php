@@ -73,11 +73,11 @@ class ExportExcelNotification extends Notification
             ->seconds(5)
             ->icon('heroicon-o-inbox-in')
             ->actions([
-//                Action::make('export_excel')
-//                    ->label(__('filament-excel::notifications.download_ready.download'))
-//                    ->url($this->generateURL(), shouldOpenInNewTab: true)
-//                    ->button()
-//                    ->close(),
+                //                Action::make('export_excel')
+                //                    ->label(__('filament-excel::notifications.download_ready.download'))
+                //                    ->url($this->generateURL(), shouldOpenInNewTab: true)
+                //                    ->button()
+                //                    ->close(),
             ])
             ->getDatabaseMessage();
     }
