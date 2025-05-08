@@ -24,7 +24,7 @@
             :error="form.errors['ngo.why_volunteer']"
         >
         </Textarea>
-        <p class="text-xs font-normal text-gray-500" v-html="$t('why_volunteer_info')" />
+        <p class="text-xs font-normal text-gray-500 prose" v-html="$t('why_volunteer_info')" />
 
         <div v-if="'organization' == form.type" class="flex items-center justify-between mt-6 gap-x-4">
             <SecondaryButton @click="$emit('prev', $event.target)">
