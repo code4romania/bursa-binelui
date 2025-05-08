@@ -18,6 +18,7 @@ return[
     'export_finished' => [
         'title' => 'Exportul a fost finalizat',
         'body' => ' Procesul de export pentru :filename a fost finalizat',
+        'notification' => 'Fisierul a fost trimis la adresa de email asociata contului tau.',
         'action' => 'Descarcă',
     ],
 ];

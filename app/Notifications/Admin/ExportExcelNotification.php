@@ -68,16 +68,16 @@ class ExportExcelNotification extends Notification
     {
         return FilamentNotification::make()
             ->title(__('notification.export_finished.title'))
-            ->body(__('notification.export_finished.body', ['filename' => $this->filename]))
+            ->body(__('notification.export_finished.notification'))
             ->success()
             ->seconds(5)
             ->icon('heroicon-o-inbox-in')
             ->actions([
-                Action::make('export_excel')
-                    ->label(__('filament-excel::notifications.download_ready.download'))
-                    ->url($this->generateURL(), shouldOpenInNewTab: true)
-                    ->button()
-                    ->close(),
+//                Action::make('export_excel')
+//                    ->label(__('filament-excel::notifications.download_ready.download'))
+//                    ->url($this->generateURL(), shouldOpenInNewTab: true)
+//                    ->button()
+//                    ->close(),
             ])
             ->getDatabaseMessage();
     }
