@@ -48,8 +48,8 @@ class ExportExcelNotification extends Notification
         return (new MailMessage)
             ->subject(__('notification.export_finished.title'))
             ->line(__('notification.export_finished.body', ['filename' => $this->filename]))
-            ->attach(Storage::disk('filament-excel')->path($this->filename));
-//            ->action(__('notification.export_finished.action'), Storage::disk('filament-excel')->url($this->filename));
+            ->attach(Storage::disk('filament-excel')->path($this->filename))
+            ->action(__('notification.export_finished.action'), Storage::disk('filament-excel')->url($this->filename));
     }
 
     /**
@@ -73,11 +73,11 @@ class ExportExcelNotification extends Notification
             ->seconds(5)
             ->icon('heroicon-o-inbox-in')
             ->actions([
-                //                Action::make('export_excel')
-                //                    ->label(__('filament-excel::notifications.download_ready.download'))
-                //                    ->url($this->generateURL(), shouldOpenInNewTab: true)
-                //                    ->button()
-                //                    ->close(),
+                Action::make('export_excel')
+                    ->label(__('filament-excel::notifications.download_ready.download'))
+                    ->url($this->generateURL(), shouldOpenInNewTab: true)
+                    ->button()
+                    ->close(),
             ])
             ->getDatabaseMessage();
     }
