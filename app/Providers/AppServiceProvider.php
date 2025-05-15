@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 'use_path_style_endpoint' => config('filesystems.disks.s3private.use_path_style_endpoint'),
                 'visibility' => config('filesystems.disks.s3private.visibility'),
                 'throw' => config('filesystems.disks.s3private.throw'),
-                'root' => config('filesystems.disks.s3private.root').'filament-excel/',
+                'root' => config('filesystems.disks.s3private.root') . 'filament-excel/',
             ]);
     }
 
