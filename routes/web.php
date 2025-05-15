@@ -84,10 +84,11 @@ Route::group([
 });
 
 Route::get('filament-excel/{path}', function (string $path) {
-    return
-        response()
-            ->download(Storage::disk('filament-excel')->path($path), substr($path, 37))
-            ->deleteFileAfterSend();
+    if (! Storage::disk('filament-excel')->exists($path)) {
+        abort(404);
+    }
+
+    return Storage::disk('filament-excel')->download($path);
 })
     ->where('path', '.*')
     ->name('filament-excel-download');

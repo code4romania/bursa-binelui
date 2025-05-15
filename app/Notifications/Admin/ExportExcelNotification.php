@@ -45,11 +45,15 @@ class ExportExcelNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $file = Storage::disk('filament-excel')->exists($this->filename)
+            ? Storage::disk('filament-excel')->get($this->filename)
+            : null;
+
         return (new MailMessage)
             ->subject(__('notification.export_finished.title'))
             ->line(__('notification.export_finished.body', ['filename' => $this->filename]))
-            ->attach(Storage::disk('filament-excel')->path($this->filename))
-            ->action(__('notification.export_finished.action'), Storage::disk('filament-excel')->url($this->filename));
+            ->attachData($file, $this->filename)
+            ->action(__('notification.export_finished.action'), $this->generateURL());
     }
 
     /**
