@@ -25,17 +25,15 @@ class ExportAction extends BaseAction
 
         $this->color('secondary');
 
-        $fileName = sprintf(
-            '%s-%s-%s',
-            now()->format('Y_m_d-H_i_s'),
-            Str::slug(ProjectResource::getPluralModelLabel()),
-            $this->name ?? ''
-        );
-
         try {
             $this->exports([
                 ExcelExportWithNotificationInDB::make()
-                    ->withFilename($fileName)
+                    ->withFilename(fn () => sprintf(
+                        '%s-%s-%s',
+                        now()->format('Y_m_d-H_i_s'),
+                        Str::slug(ProjectResource::getPluralModelLabel()),
+                        $this->name ?? ''
+                    ))
                     ->fromTable()
                     ->modifyQueryUsing(fn (Builder $query): Builder => $query->addSelect([
                         'start',

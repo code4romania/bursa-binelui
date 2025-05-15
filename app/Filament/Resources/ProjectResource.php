@@ -257,7 +257,7 @@ class ProjectResource extends Resource
             TextColumn::make('target_budget')
                 ->label(__('project.labels.target_budget'))
                 ->formatStateUsing(
-                    fn (Project $record) => number_format($record->target_budget, 2, ',', '.')
+                    fn (Project $record) => number_format($record->target_budget ?? 0, 2, ',', '.')
                 ),
 
             TextColumn::make('status_updated_at')
