@@ -83,4 +83,14 @@ Route::group([
     Route::post('/{project:slug}/volunteer', 'volunteer')->name('volunteer')->middleware('throttle:register-volunteer');
 });
 
+Route::get('filament-excel/{path}', function (string $path) {
+    if (! Storage::disk('filament-excel')->exists($path)) {
+        abort(404);
+    }
+
+    return Storage::disk('filament-excel')->download($path);
+})
+    ->where('path', '.*')
+    ->name('filament-excel-download');
+
 Route::get('/{page:slug}', PageController::class)->name('page');

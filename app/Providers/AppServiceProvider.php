@@ -28,6 +28,21 @@ class AppServiceProvider extends ServiceProvider
         config([
             'filament.default_filesystem_disk' => config('filesystems.default_public'),
         ]);
+        config()
+            ->set('filesystems.disks.filament-excel', [
+                'driver' => config('filesystems.disks.s3private.driver'),
+                'key' => config('filesystems.disks.s3private.key'),
+                'secret' => config('filesystems.disks.s3private.secret'),
+                'token' => config('filesystems.disks.s3private.token'),
+                'region' => config('filesystems.disks.s3private.region'),
+                'bucket' => config('filesystems.disks.s3private.bucket'),
+                'url' => config('filesystems.disks.s3private.url'),
+                'endpoint' => config('filesystems.disks.s3private.endpoint'),
+                'use_path_style_endpoint' => config('filesystems.disks.s3private.use_path_style_endpoint'),
+                'visibility' => config('filesystems.disks.s3private.visibility'),
+                'throw' => config('filesystems.disks.s3private.throw'),
+                'root' => config('filesystems.disks.s3private.root') . 'filament-excel/',
+            ]);
     }
 
     /**
