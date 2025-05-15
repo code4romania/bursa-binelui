@@ -69,6 +69,17 @@
 
             <Select
                 class="relative md:col-span-6 lg:col-span-3"
+                :label="$t('is_national')"
+                v-model="filter.is_national"
+                :options="{
+                    true: $t('yes'),
+                    false: $t('no'),
+                }"
+                @update:modelValue="applyFilters"
+            />
+
+            <Select
+                class="relative md:col-span-6 lg:col-span-3"
                 :label="$t('county')"
                 v-model="filter.county"
                 :options="counties"
@@ -114,56 +125,57 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import { ViewBoardsIcon, ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
-    import route from '@/Helpers/useRoute';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import Sort from '@/Components/filters/Sort.vue';
-    import SearchFilter from '@/Components/filters/SearchFilter.vue';
-    import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import Map from '@/Components/maps/Map.vue';
-    import DatePicker from '@/Components/form/DatePicker.vue';
-    import Select from '@/Components/form/Select.vue';
-    import useFilters from '@/Helpers/useFilters.js';
+import { ref } from 'vue';
+import { ViewBoardsIcon, ViewGridIcon, LocationMarkerIcon, XIcon } from '@heroicons/vue/solid';
+import route from '@/Helpers/useRoute';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import Sort from '@/Components/filters/Sort.vue';
+import SearchFilter from '@/Components/filters/SearchFilter.vue';
+import PaginatedGrid from '@/Components/templates/PaginatedGrid.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import Map from '@/Components/maps/Map.vue';
+import DatePicker from '@/Components/form/DatePicker.vue';
+import Select from '@/Components/form/Select.vue';
+import useFilters from '@/Helpers/useFilters.js';
 
-    const props = defineProps({
-        collection: {
-            type: Object,
-        },
-        counties: {
-            type: Array,
-        },
-        categories: {
-            type: Array,
-        },
-        pins: {
-            type: Array,
-        },
-        view: {
-            type: String,
-            default: 'list',
-            validator: (view) => ['list', 'map'].includes(view),
-        },
-    });
+const props = defineProps({
+    collection: {
+        type: Object,
+    },
+    counties: {
+        type: Array,
+    },
+    categories: {
+        type: Array,
+    },
+    pins: {
+        type: Array,
+    },
+    view: {
+        type: String,
+        default: 'list',
+        validator: (view) => ['list', 'map'].includes(view),
+    },
+});
 
-    const filter = ref({
-        county: props.collection.filter?.county || [],
-        status: props.collection.filter?.status || null,
-        category: props.collection.filter?.category || [],
-        date: props.collection.filter?.date || [],
-        search: props.collection.filter?.search || null,
-    });
+const filter = ref({
+    county: props.collection.filter?.county || [],
+    status: props.collection.filter?.status || null,
+    category: props.collection.filter?.category || [],
+    is_national: props.collection.filter?.is_national || null,
+    date: props.collection.filter?.date || [],
+    search: props.collection.filter?.search || null,
+});
 
-    let url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
-    const scrollTarget = ref(null);
+let url = route(props.view === 'map' ? 'projects.map' : 'projects.index');
+const scrollTarget = ref(null);
 
-    function applySelectedCountyFromMap(id) {
-        filter.value.county = [id];
-        applyFilters();
+function applySelectedCountyFromMap(id) {
+    filter.value.county = [id];
+    applyFilters();
 
-        scrollTarget.value.scrollIntoView();
-    }
+    scrollTarget.value.scrollIntoView();
+}
 
-    const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
+const { applyFilters, clearFilters } = useFilters(filter, props.collection.sort, url);
 </script>

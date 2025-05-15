@@ -41,7 +41,7 @@ class Welcome extends Component implements HasForms
             abort(Response::HTTP_FORBIDDEN, __('auth.welcome.invalid_signature'));
         }
 
-        $this->user = User::find($user)->first();
+        $this->user = User::where('id', $user->id)->first();
 
         if (\is_null($this->user)) {
             abort(Response::HTTP_FORBIDDEN, __('auth.welcome.no_user'));

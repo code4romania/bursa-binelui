@@ -46,6 +46,16 @@ class ProjectResource extends Resource
         return (string) static::$model::count();
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('project.label.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('project.label.plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -247,7 +257,7 @@ class ProjectResource extends Resource
             TextColumn::make('target_budget')
                 ->label(__('project.labels.target_budget'))
                 ->formatStateUsing(
-                    fn (Project $record) => number_format($record->target_budget, 2, ',', '.')
+                    fn (Project $record) => number_format($record->target_budget ?? 0, 2, ',', '.')
                 ),
 
             TextColumn::make('status_updated_at')

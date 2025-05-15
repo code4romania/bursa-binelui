@@ -6,6 +6,8 @@ namespace App\Filament\Widgets;
 
 class DonationCountOverview extends BaseDonationWidget
 {
+    protected int | string | array $columnSpan = 2;
+
     protected function getData(): array
     {
         $selectedField = 'count(id) as count';

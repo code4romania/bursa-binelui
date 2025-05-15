@@ -27,6 +27,6 @@ class Dashboard extends \Filament\Pages\Dashboard
 
     protected function getHeaderWidgetsColumns(): int
     {
-        return 3;
+        return 4;
     }
 }

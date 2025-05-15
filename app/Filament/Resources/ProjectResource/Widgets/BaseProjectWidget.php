@@ -6,6 +6,7 @@ namespace App\Filament\Resources\ProjectResource\Widgets;
 
 use App\Enums\ProjectStatus;
 use App\Filament\Resources\ProjectResource;
+use App\Filament\Resources\ProjectResource\Actions\ExportAction;
 use App\Models\Project;
 use Filament\Tables\Actions\Action;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -114,7 +115,7 @@ class BaseProjectWidget extends BaseWidget
     protected function getTableHeaderActions(): array
     {
         return [
-            ProjectResource\Actions\ExportAction::make($this->getTableQueryStringIdentifier()),
+            ExportAction::make($this->getTableQueryStringIdentifier()),
         ];
     }
 }

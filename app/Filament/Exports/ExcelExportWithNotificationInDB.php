@@ -11,6 +11,16 @@ use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ExcelExportWithNotificationInDB extends ExcelExport
 {
+    public function getColumns(): array
+    {
+        $columns = [];
+        foreach ($this->evaluate($this->columns) as $column) {
+            $columns[$column->getName()] = $column;
+        }
+
+        return $columns;
+    }
+
     public function export()
     {
         $this->resolveFilename();
@@ -34,5 +44,11 @@ class ExcelExportWithNotificationInDB extends ExcelExport
                         new ExportExcelNotification($authUser, $filename)
                     );
                 }]);
+
+        \Filament\Notifications\Notification::make('export')
+            ->title(__('notification.export.success.title'))
+            ->body(__('notification.export.success.body'))
+            ->success()
+            ->send();
     }
 }

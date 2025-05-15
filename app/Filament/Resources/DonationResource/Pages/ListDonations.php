@@ -16,7 +16,6 @@ class ListDonations extends ListRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
         ];
     }
 
@@ -24,4 +23,5 @@ class ListDonations extends ListRecords
     {
         return __('donation.header', ['number' => Donation::count()]);
     }
+
 }

@@ -41,7 +41,7 @@ trait HasProjectStatus
 
     public function isOpen(): bool
     {
-        return $this->isPublished() && $this->start->isPast() && $this->end->isFuture();
+        return $this->isPublished() && $this->start?->isPast() && $this->end?->isFuture();
     }
 
     public function isArchived(): bool
@@ -52,13 +52,13 @@ trait HasProjectStatus
     public function isStartingSoon(): bool
     {
         return $this->isPublished()
-            && ! $this->end->isPast()
-            && ($this->start->isFuture() || ! $this->organization->EuPlatescIsActive());
+            && ! $this->end?->isPast()
+            && ($this->start?->isFuture() || ! $this->organization->EuPlatescIsActive());
     }
 
     public function isClose(): bool
     {
-        return $this->isPublished() && $this->end->isPast();
+        return $this->isPublished() && $this->end?->isPast();
     }
 
     public function scopeWhereIsPending(Builder $query): Builder

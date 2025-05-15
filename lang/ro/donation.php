@@ -46,6 +46,7 @@ return [
         'payment_declined' => 'Plata refuzată',
         'possible_fraud' => 'Posibil fraudulos',
         'charged' => 'Încasată',
+        'capture' => 'Capturată',
     ],
 
     'header' => 'Donatii (:number)',

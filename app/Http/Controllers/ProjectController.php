@@ -9,6 +9,7 @@ use App\Http\Filters\AcceptsVolunteersFilter;
 use App\Http\Filters\CountiesFilter;
 use App\Http\Filters\ProjectCategoriesFilter;
 use App\Http\Filters\ProjectDatesFilter;
+use App\Http\Filters\ProjectNationalFilter;
 use App\Http\Filters\ProjectStatusFilter;
 use App\Http\Filters\SearchFilter;
 use App\Http\Requests\Project\DonateRequest;
@@ -51,6 +52,7 @@ class ProjectController extends Controller
                 AllowedFilter::custom('status', new ProjectStatusFilter),
                 AllowedFilter::custom('volunteers', new AcceptsVolunteersFilter),
                 AllowedFilter::custom('search', new SearchFilter),
+                AllowedFilter::custom('is_national', new ProjectNationalFilter),
             ])
             ->allowedSorts([
                 AllowedSort::field('publish_date', 'start'),

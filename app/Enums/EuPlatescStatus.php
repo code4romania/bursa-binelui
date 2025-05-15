@@ -24,6 +24,7 @@ enum EuPlatescStatus: string
     case PAYMENT_DECLINED = 'payment_declined';
     case POSSIBLE_FRAUD = 'possible_fraud';
     case CHARGED = 'charged';
+    case CAPTURE = 'capture';
 
     public function labelKeyPrefix(): string
     {

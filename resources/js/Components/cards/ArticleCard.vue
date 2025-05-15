@@ -17,7 +17,7 @@
 
             <h3 class="mb-3 text-xl font-bold text-gray-900 line-clamp-2" v-text="article.title" />
 
-            <div class="text-gray-500 line-clamp-4" v-html="article.description" />
+            <div class="text-gray-500 line-clamp-4 prose" v-html="article.description" />
 
             <div class="flex items-center justify-between mt-6">
                 <time class="text-sm text-gray-500" v-text="article.date" />
@@ -37,13 +37,13 @@
 </template>
 
 <script setup>
-    import ArticleCategory from '@/Components/ArticleCategory.vue';
-    import { ArrowNarrowRightIcon } from '@heroicons/vue/solid';
+import ArticleCategory from '@/Components/ArticleCategory.vue';
+import { ArrowNarrowRightIcon } from '@heroicons/vue/solid';
 
-    defineProps({
-        article: {
-            type: Object,
-            required: true,
-        },
-    });
+defineProps({
+    article: {
+        type: Object,
+        required: true,
+    },
+});
 </script>

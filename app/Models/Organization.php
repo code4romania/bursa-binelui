@@ -244,6 +244,28 @@ class Organization extends Model implements HasMedia
         return $this->getMedia('statute')->isNotEmpty();
     }
 
+    public function getStatuteFileAttribute(): ?string
+    {
+        if ($this->getMedia('statute')->isNotEmpty()) {
+            $file = $this->getFirstMedia('statute');
+
+            try {
+                return $file->getTemporaryUrl(now()->addDay());
+            } catch (\RuntimeException $exception) {
+                return $file->getUrl();
+            } catch (\Throwable $exception) {
+                return $exception->getMessage();
+            }
+        }
+
+        return null;
+    }
+
+    public function getAcceptDonationsAttribute(): bool
+    {
+        return ! empty($this->eu_platesc_merchant_id) && ! empty($this->eu_platesc_private_key);
+    }
+
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class)

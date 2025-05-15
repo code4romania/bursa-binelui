@@ -52,21 +52,25 @@ class CaptureAuthorizedDonationJob implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         if ($this->service->recipeTransaction($this->donation)) {
+            \Log::info('Donation ' . $this->donation->id . ' was charged');
             $this->donation->update([
                 'status' => EuPlatescStatus::CHARGED,
                 'status_updated_at' => now(),
             ]);
+            \Log::info('Donation ' . $this->donation->id . 'was updated in DB');
             $userInstanceOfDonner = new User([
                 'email' => $this->donation->email,
                 'name' => $this->donation->first_name . ' ' . $this->donation->last_name,
             ]);
             \Notification::send($userInstanceOfDonner, new UserDonationReceived($this->donation));
+            \Log::info('Notification was sent to ' . $this->donation->email);
             $organizationsUsers = $this->donation->load('organization')
                 ->organization->load('users')->users->filter(function ($user) {
                     return $user->hasVerifiedEmail();
                 });
 
             \Notification::send($organizationsUsers, new DonationReceived());
+            \Log::info('Notification was sent to ' . $organizationsUsers->pluck('email')->implode(', '));
         }
     }
 }

@@ -10,6 +10,7 @@ use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
 class ExportExcelNotification extends Notification
@@ -45,10 +46,10 @@ class ExportExcelNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->attach(storage_path('app/filament-excel/') . $this->filename)
-//                    ->action('Notification Action', $this->generateURL())
-            ->line('Thank you for using our application!');
+            ->subject(__('notification.export_finished.title'))
+            ->line(__('notification.export_finished.body', ['filename' => $this->filename]))
+            ->attach(Storage::disk('filament-excel')->path($this->filename));
+//            ->action(__('notification.export_finished.action'), Storage::disk('filament-excel')->url($this->filename));
     }
 
     /**
@@ -66,17 +67,17 @@ class ExportExcelNotification extends Notification
     public function toDatabase(): array
     {
         return FilamentNotification::make()
-            ->title(__('filament-excel::notifications.queued.title'))
-            ->body(__('filament-excel::notifications.queued.body'))
+            ->title(__('notification.export_finished.title'))
+            ->body(__('notification.export_finished.notification'))
             ->success()
             ->seconds(5)
             ->icon('heroicon-o-inbox-in')
             ->actions([
-                Action::make('export_excel')
-                    ->label(__('filament-excel::notifications.download_ready.download'))
-                    ->url($this->generateURL(), shouldOpenInNewTab: true)
-                    ->button()
-                    ->close(),
+                //                Action::make('export_excel')
+                //                    ->label(__('filament-excel::notifications.download_ready.download'))
+                //                    ->url($this->generateURL(), shouldOpenInNewTab: true)
+                //                    ->button()
+                //                    ->close(),
             ])
             ->getDatabaseMessage();
     }
