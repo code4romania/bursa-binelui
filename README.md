@@ -81,7 +81,7 @@ CSP_ENABLED=false
 
 > **Note:** Only for local development!
 
-#### 8. Configure local development URL & how to access the app
+#### 8. Configure local development URL
 #### 8.1. If using Laravel Herd (macOS, Windows)
 - **Install Laravel Herd**  
    Visit [https://herd.laravel.com](https://herd.laravel.com) and download the installer for macOS or Windows
