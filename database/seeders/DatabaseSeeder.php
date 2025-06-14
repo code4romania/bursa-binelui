@@ -71,6 +71,8 @@ class DatabaseSeeder extends Seeder
 
         Page::factory()->count(10)->create();
 
+		$this->seedSpecificAboutAndFaqsPages();
+
         Edition::factory(['active' => true])
             ->count(1)
             ->create();
@@ -153,4 +155,35 @@ class DatabaseSeeder extends Seeder
                 ->create();
         }
     }
+
+	private function seedSpecificAboutAndFaqsPages(): void
+	{
+		// Add the /about page
+		Page::create([
+			'title' => ['ro' => 'Despre BB'],
+			'slug' => ['ro' => 'about'],
+			'description' => ['ro' => 'Răspunsuri la întrebările frecvente despre Bursa Binelui.'],
+			'content' => ['ro' => '<p>Bursa Binelui, singura platformă online de donații fără comision dedicată ONG-urilor din România, este un proiect creat și susținut de Banca Comercială Română (BCR) și coordonat în parteneriat Grupul PONT. Platforma aduce împreună organizațiile care au nevoie de sprijin pentru a-și desfășura activitatea și oamenii care vor să investească în faptele bune din comunitatea lor.</p>'],
+		]);
+
+		// Add the /faqs page
+		Page::create([
+			'title' => ['ro' => 'Întrebări frecvente'],
+			'slug' => ['ro' => 'faqs'],
+			'description' => ['ro' => 'Răspunsuri la întrebările frecvente despre Bursa Binelui.'],
+			'content' => ['ro' => '
+				<h2>Întrebări frecvente</h2>
+				<p>Aici găsiți răspunsuri la cele mai frecvente întrebări referitoare la Bursa Binelui.</p>
+				
+				<h3>1. Ce este Bursa Binelui?</h3>
+				<p>Bursa Binelui este o platformă dedicată strângerii de fonduri și voluntariatului pentru cauze sociale.</p>
+				
+				<h3>2. Cum pot dona?</h3>
+				<p>Puteți dona prin intermediul proiectelor disponibile pe platformă, folosind metoda de plată preferată.</p>
+				
+				<h3>3. Cum mă pot înscrie ca voluntar?</h3>
+				<p>Accesați pagina proiectului și folosiți formularul de înscriere voluntar pentru a vă oferi sprijinul.</p>
+    		'],
+		]);
+	}
 }
