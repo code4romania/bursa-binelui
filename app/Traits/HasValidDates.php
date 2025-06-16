@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasValidDates
 {
-    public function scopeValidDates(Builder $query, string $startColumn = 'start_date', string $endColumn = 'end_date'): Builder
+    public function scopeWhereHasValidDates(Builder $query, string $startColumn = 'start_date', string $endColumn = 'end_date'): Builder
     {
         return $query
             ->whereNotNull($startColumn)

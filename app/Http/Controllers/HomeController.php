@@ -29,7 +29,7 @@ class HomeController extends Controller
 
             'projects' => ProjectCardResource::collection(
                 Project::whereIsOpen()
-                    ->validDates('start','end')
+                    ->whereHasValidDates('start','end')
                     ->latest()
                     ->limit(12)
                     ->get()
@@ -38,7 +38,7 @@ class HomeController extends Controller
             'bcr_projects' => BCRProjectCardResource::collection(
                 BCRProject::query()
                     ->where('status', ProjectStatus::approved)
-                    ->validDates()
+                    ->whereHasValidDates()
                     ->latest()
                     ->with('county')
                     ->limit(12)

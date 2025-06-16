@@ -63,7 +63,7 @@ class ProjectController extends Controller
             ])
             ->defaultSort('-id')
             ->whereIsPublished()
-            ->validDates('start', 'end');
+            ->whereHasValidDates('start', 'end');
 
         return Inertia::render('Public/Projects/Index', [
             'view' => $view,
