@@ -62,7 +62,8 @@ class ProjectController extends Controller
                 AllowedSort::custom('donations_count', new ProjectDonationsCountSort),
             ])
             ->defaultSort('-id')
-            ->whereIsPublished();
+            ->whereIsPublished()
+            ->whereHasValidDates('start', 'end');
 
         return Inertia::render('Public/Projects/Index', [
             'view' => $view,

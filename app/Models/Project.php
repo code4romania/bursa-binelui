@@ -11,6 +11,7 @@ use App\Concerns\LogsActivityForApproval;
 use App\Enums\EuPlatescStatus;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
+use App\Traits\HasValidDates;
 use Embed\Embed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,6 +40,7 @@ class Project extends Model implements HasMedia
     use HasVolunteers;
     use InteractsWithMedia;
     use HasProjectStatus;
+    use HasValidDates;
     use HasSlug;
     use LogsActivity;
     use LogsActivityForApproval;
@@ -192,14 +194,14 @@ class Project extends Model implements HasMedia
 
     public function getIsPeriodActiveAttribute(): bool
     {
-        return $this->start->isPast() && $this->end->isFuture();
+        return $this->start?->isPast() && $this->end?->isFuture();
     }
 
     public function getIsActiveAttribute(): bool
     {
         return $this->status == ProjectStatus::approved
-            && $this->start->isPast()
-            && $this->end->isFuture();
+            && $this->start?->isPast()
+            && $this->end?->isFuture();
     }
 
     public function getCanBeArchivedAttribute(): bool
@@ -249,7 +251,7 @@ class Project extends Model implements HasMedia
             $slug .= '-' . ($count + 1);
         }
 
-        $this->activities->map(fn (Activity $activity) => $activity->approve());
+        $this->activities->map(fn(Activity $activity) => $activity->approve());
 
         return $this->update([
             'status' => ProjectStatus::approved,
@@ -280,10 +282,10 @@ class Project extends Model implements HasMedia
             ->pluck('url')
             ->filter()
             ->map(
-                fn (string $videoUrl) => Cache::remember(
+                fn(string $videoUrl) => Cache::remember(
                     'video-' . hash('sha256', $videoUrl),
                     MONTH_IN_SECONDS,
-                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, report: false)
+                    fn() => rescue(fn() => (new Embed)->get($videoUrl)->code, report: false)
                 )
             )
             ->filter()

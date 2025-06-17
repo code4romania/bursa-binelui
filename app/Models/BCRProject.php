@@ -8,6 +8,7 @@ use App\Concerns\HasLocation;
 use App\Concerns\HasSlug;
 use App\Enums\ProjectStatus;
 use App\Traits\HasProjectStatus;
+use App\Traits\HasValidDates;
 use Embed\Embed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,7 @@ class BCRProject extends Model implements HasMedia
 {
     use HasFactory;
     use HasLocation;
+    use HasValidDates;
     use InteractsWithMedia;
     use HasProjectStatus;
     use HasSlug;
@@ -90,12 +92,12 @@ class BCRProject extends Model implements HasMedia
     {
         return collect($this->videos)
             ->pluck('link')
-            ->filter(fn ($video) => ! blank($video))
+            ->filter(fn($video) => ! blank($video))
             ->map(
-                fn (string $videoUrl) => Cache::remember(
+                fn(string $videoUrl) => Cache::remember(
                     'video-' . hash('sha256', $videoUrl),
                     MONTH_IN_SECONDS,
-                    fn () => rescue(fn () => (new Embed)->get($videoUrl)->code, '', false)
+                    fn() => rescue(fn() => (new Embed)->get($videoUrl)->code, '', false)
                 )
             )
             ->filter()
