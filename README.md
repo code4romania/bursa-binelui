@@ -36,6 +36,63 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 
 Mention all related repos and projects.
 
+## Development
+
+### Running the app
+- After initial setup (below), run `npm run dev`
+- If using Laravel Herd/Valet, access your app in the browser at `https://bursabinelui.test`
+- If using the built-in PHP server:
+	- run `php artisan:serve`
+	- access your app in the browser at `http://127.0.0.1:8000`
+
+### Initial setup
+<details>
+<summary>See initial setup</strong></summary>
+
+#### 1. Create local database `bursa_binelui`
+
+#### 2. Copy `.env.example`, rename it to `.env` and fill in your database information
+
+#### 3. Install composer dependencies
+```bash
+composer install
+```
+
+#### 4. Install npm dependencies
+```bash
+npm install
+```
+
+#### 5. Generate the app secret key
+```bash
+php artisan key:generate
+```
+
+#### 6. Migrate and seed the database
+```bash
+php artisan migrate:fresh --seed
+```
+> **Note:** Seeding may fail due to underlying issues with Faker date generation. If that happens, just rerun `php artisan migrate:fresh --seed`. Also, seeding can take a while, so be patient.
+
+#### 7. Add the following line to your `.env` file to disable CSP locally
+```bash
+CSP_ENABLED=false
+```
+
+> **Note:** Only for local development!
+
+#### 8. Configure local development URL
+#### 8.1. If using Laravel Herd (macOS, Windows)
+- **Install Laravel Herd**  
+   Visit [https://herd.laravel.com](https://herd.laravel.com) and download the installer for macOS or Windows
+- **Open your project with Herd**  
+  - Launch Herd. Go to `Sites`. Go to `Add Sites`. Go to `Link existing project`. Select the project. Select the `PHP version` and `enable HTTPS`. Click `Next`
+  - ![](https://i.imgur.com/YYhxeVK.png)
+
+#### 8.2. If using the built-in PHP server
+- In your `.env` file, update `APP_URL` to `APP_URL=http://127.0.0.1:8000`
+</details>
+
 ## Deployment
 
 Guide users through getting your code up and running on their own system. In this section you can talk about:
