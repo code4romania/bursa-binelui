@@ -29,6 +29,7 @@ class Article extends Model implements HasMedia
         'slug',
         'content',
         'article_category_id',
+        'cover_photo_url',
         'author',
     ];
 

@@ -103,6 +103,11 @@ class ArticleResource extends Resource
                                     ->relationship('category', 'name')
                                     ->required(),
 
+                                TextInput::make('cover_photo_url')
+                                    ->label(__('article.cover_photo_url'))
+                                    ->url()
+                                    ->maxLength(255),
+
                                 TiptapEditor::make('content')
                                     ->label(__('article.content'))
                                     ->extraInputAttributes([

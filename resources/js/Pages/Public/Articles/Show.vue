@@ -4,7 +4,9 @@
 
         <figure class="container">
             <div class="aspect-w-2 aspect-h-1">
-                <img class="object-cover" :src="resource.cover" alt="" />
+                <a :href="resource.cover_photo_url" target="_blank" rel="noopener">
+                    <img class="object-cover" :src="resource.cover" alt="" />
+                </a>
             </div>
         </figure>
 
@@ -68,22 +70,22 @@
 </template>
 
 <script setup>
-    import ArticleCard from '@/Components/cards/ArticleCard.vue';
-    import Head from '@/Components/Head.vue';
-    import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
-    import PageLayout from '@/Layouts/PageLayout.vue';
-    import SharePage from '@/Components/SharePage.vue';
-    import Gallery from '@/Components/Gallery.vue';
-    import { SpeakerphoneIcon } from '@heroicons/vue/outline';
+import ArticleCard from '@/Components/cards/ArticleCard.vue';
+import Head from '@/Components/Head.vue';
+import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+import PageLayout from '@/Layouts/PageLayout.vue';
+import SharePage from '@/Components/SharePage.vue';
+import Gallery from '@/Components/Gallery.vue';
+import { SpeakerphoneIcon } from '@heroicons/vue/outline';
 
-    defineProps({
-        resource: {
-            type: Object,
-            required: true,
-        },
-        related: {
-            type: Object,
-            default: () => ({}),
-        },
-    });
+defineProps({
+    resource: {
+        type: Object,
+        required: true,
+    },
+    related: {
+        type: Object,
+        default: () => ({}),
+    },
+});
 </script>
