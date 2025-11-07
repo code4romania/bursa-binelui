@@ -15,6 +15,7 @@ return [
     'title' => 'Titlu',
     'content' => 'Conținut',
     'is_published' => 'Publicat',
+    'cover_photo_url' => 'URL fotografie copertă',
     'category' => 'Categorie articol',
     'author' => 'Autor',
     'created_at' => 'Creat la',

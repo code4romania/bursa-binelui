@@ -18,6 +18,7 @@ class ArticleResource extends Resource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'cover_photo_url'=> $this->cover_photo_url,
             'description' => Str::of($this->content)
                 ->stripTags()
                 ->limit(200),
