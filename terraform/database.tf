@@ -15,8 +15,8 @@ resource "aws_db_instance" "main" {
   iam_database_authentication_enabled = true
 
   engine                      = "mysql"
-  engine_version              = "8.0"
-  allow_major_version_upgrade = false
+  engine_version              = "8.4"
+  allow_major_version_upgrade = true
   auto_minor_version_upgrade  = true
 
   # storage
