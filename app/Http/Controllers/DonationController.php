@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Donations\EuPlatescRequest;
 use App\Models\Donation;
+use App\Notifications\Ngo\DonationReceived;
 use App\Notifications\UserDonationReceived;
 use App\Services\EuPlatescService;
 use Illuminate\Support\Facades\Notification;
@@ -37,8 +38,8 @@ class DonationController extends Controller
 
         Notification::route('mail', $donation->email)
             ->notify(new UserDonationReceived($donation));
-        
-        
+
+
         $organizationsUsers = $donation->load('organization')
             ->organization->load('users')->users->filter(function ($user) {
                 return $user->hasVerifiedEmail();
