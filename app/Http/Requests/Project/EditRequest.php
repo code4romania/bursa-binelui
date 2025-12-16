@@ -49,9 +49,9 @@ class EditRequest extends FormRequest
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
 
-//            'gallery.*.file' => ['nullable', 'image', 'max:5120', 'min:400'],
-//            'gallery.*.id' => ['nullable', 'exists:media,id'],
-//            'gallery.*.url' => ['nullable', 'url'],
+            //            'gallery.*.file' => ['nullable', 'image', 'max:5120', 'min:400'],
+            //            'gallery.*.id' => ['nullable', 'exists:media,id'],
+            //            'gallery.*.url' => ['nullable', 'url'],
             'image' => ['nullable', 'image', 'max:5120'],
         ];
     }
