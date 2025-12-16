@@ -47,8 +47,8 @@ class StoreRequest extends FormRequest
 
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
-            'gallery.*.file' => ['nullable', 'image', 'max:5120'],
-            'preview' => ['nullable', 'image', 'max:5120'],
+            'gallery.*.file' => ['nullable', 'image', 'max:5120', 'min:500'],
+            'preview' => ['nullable', 'image', 'max:5120', 'min:500'],
         ];
     }
 

@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Donations\EuPlatescRequest;
 use App\Models\Donation;
+use App\Notifications\UserDonationReceived;
 use App\Services\EuPlatescService;
+use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 
 class DonationController extends Controller
@@ -30,6 +32,12 @@ class DonationController extends Controller
 
     public function thankYou(string $uuid)
     {
+        $donation = Donation::where('uuid', $uuid)->firstOrFail();
+        \Log::info('Donation ' . $donation->id . 'was updated in DB');
+
+        Notification::route('mail', $donation->email)
+            ->notify(new UserDonationReceived($donation));
+
         return Inertia::render('Public/Donor/ThankYou');
     }
 

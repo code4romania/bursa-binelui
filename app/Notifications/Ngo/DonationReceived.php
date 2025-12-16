@@ -39,7 +39,7 @@ class DonationReceived extends Notification implements ShouldQueue
         return (new MailMessage)
             ->greeting('Salut,')
             ->subject('Ai primit o donație pentru proiectul tău listat pe Bursa Binelui')
-            ->line('Proiectul organizației tale listat pe Bursa Binelui a primit o donație. Poți să vizualizezi detaliile tranzacțiilor intrând în contul tău pe platforma Bursa Binelui!')
+            ->line('Proiectul organizației tale listat pe Bursa Binelui a fost inițializată o donație. Poți să vizualizezi detaliile tranzacțiilor intrând în contul tău pe platforma Bursa Binelui!')
             ->line('Îţi mulțumim,')
             ->salutation('Echipa Bursa Binelui');
     }
