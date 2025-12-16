@@ -15,7 +15,7 @@ class ProjectDatesFilter implements Filter
         $start = Carbon::createFromFormat('Y-m-d', $dates[0])->toDateString();
         $end = Carbon::createFromFormat('Y-m-d', $dates[1])->toDateString();
 
-        $query->whereBetween('start', [$start, $end])
-            ->orWhereBetween('end', [$start, $end]);
+        $query->whereDate('start', '<=', $end)
+            ->whereDate('end', '>=', $start);
     }
 }

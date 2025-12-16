@@ -1,5 +1,5 @@
 <template>
-    <div :id="galleryID" class="grid gap-2 mt-10 sm:grid-cols-2 lg:grid-cols-4 my-gallery">
+    <div :id="galleryID" class="grid gap-2 mt-10 sm:grid-cols-1 lg:grid-cols-4 my-gallery">
         <a
             v-for="(image, key) in images"
             :key="key"
@@ -9,7 +9,7 @@
             target="_blank"
             rel="noreferrer"
         >
-            <img :src="image.thumbnail" alt="" />
+            <img :src="image.thumbnail" alt="" class="w-full h-auto" />
         </a>
     </div>
 </template>

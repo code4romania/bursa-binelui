@@ -48,10 +48,10 @@ class EditRequest extends FormRequest
             'external_links.*.url' => ['required', 'url'],
             'is_national' => ['boolean', 'nullable'],
             'gallery' => ['array', 'nullable'],
-            //            TODO to check how we can validate this. Problema e ca validate nu stie sa ia mix intre File si array
-            //            'gallery.*.file' => ['nullable', 'image', 'max:5120'],
+
+            //            'gallery.*.file' => ['nullable', 'image', 'max:5120', 'min:400'],
             //            'gallery.*.id' => ['nullable', 'exists:media,id'],
-            //            'gallery.*.url' => ['nullable', 'string'],
+            //            'gallery.*.url' => ['nullable', 'url'],
             'image' => ['nullable', 'image', 'max:5120'],
         ];
     }
