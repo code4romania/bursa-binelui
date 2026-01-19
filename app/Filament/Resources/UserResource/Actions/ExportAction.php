@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\UserResource\Actions;
 
-use App\Enums\EuPlatescStatus;
 use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\UserResource;
+use App\Models\Donation;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,7 +27,7 @@ class ExportAction extends BaseAction
         try {
             $this->exports([
                 ExcelExportWithNotificationInDB::make()
-                    ->withFilename(fn () => sprintf(
+                    ->withFilename(fn () => \sprintf(
                         '%s-%s',
                         now()->format('Y_m_d-H_i_s'),
                         Str::slug(UserResource::getPluralModelLabel()),
@@ -46,11 +46,22 @@ class ExportAction extends BaseAction
                                 'newsletter',
                                 'organization_id',
                                 'created_by',
+                                'last_donation_date' => Donation::query()
+                                    ->select('created_at')
+                                    ->whereColumn('user_id', 'users.id')
+                                    ->whereCharged()
+                                    ->orderBy('created_at', 'desc')
+                                    ->limit(1),
                             ])
-                            ->with([
-                                'donations' => fn ($q) => $q->select(['user_id', 'amount', 'status', 'created_at']),
+                            ->withCasts([
+                                'last_donation_date' => 'datetime',
                             ])
-                            ->withCount(['donations']);
+                            ->withSum([
+                                'donations' => fn ($q) => $q->whereCharged(),
+                            ], 'amount')
+                            ->withCount([
+                                'donations' => fn ($q) => $q->whereCharged(),
+                            ]);
                     })
                     ->withColumns([
                         Column::make('id')
@@ -93,16 +104,10 @@ class ExportAction extends BaseAction
                             ->heading(__('user.labels.referrer')),
 
                         Column::make('donations_count')
-                            ->formatStateUsing(fn (User $record) => $record->donations()->whereCharged()->count() ?? 0)
                             ->heading(__('user.labels.donations_count')),
 
-                        Column::make('donations')
-                            ->heading(__('user.labels.donations_sum'))
-                            ->formatStateUsing(
-                                fn (User $record) => $record->donations
-                                    ->reject(fn ($item) => $item->status === EuPlatescStatus::CHARGED)
-                                    ->sum('amount')
-                            ),
+                        Column::make('donations_sum_amount')
+                            ->heading(__('user.labels.donations_sum')),
 
                         Column::make('comments_count')
                             //TODO:: implement comments module and add this column
@@ -111,12 +116,7 @@ class ExportAction extends BaseAction
 
                         Column::make('last_donation_date')
                             ->heading(__('user.labels.last_donation_date'))
-                            ->formatStateUsing(
-                                fn (User $record) => $record->donations_count ?
-                                    $record->donations
-                                        ->reject(fn ($item) => $item->status === EuPlatescStatus::CHARGED)
-                                        ->last()?->created_at->toFormattedDateTime() : ''
-                            ),
+                            ->formatStateUsing(fn (User $record) => $record->last_donation_date?->toFormattedDateTime()),
 
                     ])
                     ->queue(),
