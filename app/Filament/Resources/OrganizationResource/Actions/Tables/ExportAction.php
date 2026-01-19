@@ -31,7 +31,7 @@ class ExportAction extends BaseAction
             $this->exports([
                 ExcelExportWithNotificationInDB::make()
                     ->fromTable()
-                    ->withFilename(fn () => sprintf(
+                    ->withFilename(fn () => \sprintf(
                         '%s-%s-%s',
                         now()->format('Y_m_d-H_i_s'),
                         Str::slug(OrganizationResource::getPluralModelLabel()),
@@ -42,15 +42,21 @@ class ExportAction extends BaseAction
                             ->addSelect(['accepts_volunteers', 'eu_platesc_merchant_id', 'eu_platesc_private_key', 'cif', 'description', 'address', 'contact_person', 'contact_phone', 'contact_email', 'website', 'facebook'])
                             ->status($status)
                             ->with([
-                                'activityDomains',
-                                'counties',
+                                'activityDomains:id,name',
+                                'counties:id,name',
                                 'projects' => fn ($q) => $q->select('id', 'organization_id', 'status')
                                     ->withCount('donations'),
                                 'users' => fn ($q) => $q->select('organization_id', 'name', 'role')
                                     ->onlyOrganizationAdmins(),
                             ])
+                            ->withSum([
+                                'donations as donations_amount' => fn ($q) => $q->whereCharged(),
+                            ], 'charge_amount')
                             ->withCount([
                                 'volunteers',
+                                'donations' => fn ($q) => $q->whereCharged(),
+                                'projects',
+                                'projects as active_projects' => fn ($q) => $q->whereIsOpen(),
                             ]);
                     })
                     ->withColumns([
@@ -79,6 +85,7 @@ class ExportAction extends BaseAction
                                     ->pluck('name')
                                     ->join(', ')
                             ),
+
                         Column::make('description')
                             ->heading(__('organization.labels.description')),
 
@@ -133,41 +140,16 @@ class ExportAction extends BaseAction
                             ),
 
                         Column::make('projects_count')
-                            ->heading(__('organization.labels.projects_count'))
-                            ->formatStateUsing(
-                                fn (Organization $record) => $record->projects()
-                                    ->count()
-                            ),
+                            ->heading(__('organization.labels.projects_count')),
 
                         Column::make('active_projects_count')
-                            ->heading(__('organization.labels.active_projects_count'))
-                            ->formatStateUsing(
-                                function (Organization $record) {
-                                    $count = $record->projects()
-                                        ->whereIsOpen()
-                                        ->count();
-
-                                    return $count > 0 ?
-                                        $count :
-                                        '0';
-                                }
-                            ),
+                            ->heading(__('organization.labels.active_projects_count')),
 
                         Column::make('donations_count')
-                            ->heading(__('organization.labels.donations_count'))
-                            ->formatStateUsing(
-                                fn (Organization $record) => $record->donations()
-                                    ->whereCharged()
-                                    ->count()
-                            ),
+                            ->heading(__('organization.labels.donations_count')),
 
                         Column::make('donations_amount')
-                            ->heading(__('organization.labels.donations_amount'))
-                            ->formatStateUsing(
-                                fn (Organization $record) => $record->donations()
-                                    ->whereCharged()
-                                    ->sum('charge_amount')
-                            ),
+                            ->heading(__('organization.labels.donations_amount')),
 
                     ])
                     ->queue(),
