@@ -56,7 +56,7 @@ class ExportAction extends BaseAction
                                 'volunteers',
                                 'donations' => fn ($q) => $q->whereCharged(),
                                 'projects',
-                                'projects as active_projects' => fn ($q) => $q->whereIsOpen(),
+                                'projects as active_projects_count' => fn ($q) => $q->whereIsOpen(),
                             ]);
                     })
                     ->withColumns([
