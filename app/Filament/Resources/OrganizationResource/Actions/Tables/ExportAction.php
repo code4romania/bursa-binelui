@@ -50,7 +50,7 @@ class ExportAction extends BaseAction
                                     ->onlyOrganizationAdmins(),
                             ])
                             ->withSum([
-                                'donations as donations_amount' => fn ($q) => $q->whereCharged(),
+                                'donations' => fn ($q) => $q->whereCharged(),
                             ], 'charge_amount')
                             ->withCount([
                                 'volunteers',
@@ -148,7 +148,7 @@ class ExportAction extends BaseAction
                         Column::make('donations_count')
                             ->heading(__('organization.labels.donations_count')),
 
-                        Column::make('donations_amount')
+                        Column::make('donations_sum_amount')
                             ->heading(__('organization.labels.donations_amount')),
 
                     ])
