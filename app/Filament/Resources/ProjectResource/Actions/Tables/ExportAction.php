@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Actions\Tables;
 
-use App\Enums\ProjectStatus;
+use App\Filament\Exports\ExcelExportWithNotificationInDB;
 use App\Filament\Resources\ProjectResource;
-use App\Models\Organization;
+use App\Models\County;
+use App\Models\Project;
+use App\Models\ProjectCategory;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction as BaseAction;
 use pxlrbt\FilamentExcel\Columns\Column;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ExportAction extends BaseAction
 {
     protected string | null $status = null;
-
-    public function status(ProjectStatus | string | null $status): static
-    {
-        $this->status = $status?->value ?? $status;
-
-        return $this;
-    }
 
     protected function setUp(): void
     {
@@ -30,99 +25,115 @@ class ExportAction extends BaseAction
 
         $this->color('secondary');
 
-        $this->exports([
-            ExcelExport::make()
-                ->withFilename(fn () => sprintf(
-                    '%s-%s-%s',
-                    now()->format('Y_m_d-H_i_s'),
-                    Str::slug(ProjectResource::getPluralModelLabel()),
-                    $this->status
-                ))
-                ->modifyQueryUsing(function (Builder $query) {
-                    return $query
-                        ->status($this->status)
-                        ->with([
-                            'counties',
-                            'donations',
-                        ])
-                        ->withCount([
-                            'donations',
-                        ]);
-                })
-                ->withColumns([
-                    Column::make('id')
-                        ->heading('ID'),
+        try {
+            $this->exports([
+                ExcelExportWithNotificationInDB::make()
+                    ->withFilename(fn () => \sprintf(
+                        '%s-%s-%s',
+                        now()->format('Y_m_d-H_i_s'),
+                        Str::slug(ProjectResource::getPluralModelLabel()),
+                        $this->name ?? ''
+                    ))
+                    ->fromTable()
+                    ->modifyQueryUsing(function (Builder $query): Builder {
+                        return $query
+                            ->addSelect([
+                                'start',
+                                'end',
+                                'scope',
+                                'target_budget',
+                                'beneficiaries',
+                                'reason_to_donate',
+                                'accepting_volunteers',
+                                'description',
+                                'accepting_comments',
+                            ])
+                            ->without('media')
+                            ->withCount([
+                                'donations',
+                            ])
+                            ->withSum([
+                                'donations' => fn (Builder $q) => $q->whereCharged(),
+                            ], 'amount');
+                    })
+                    ->withColumns([
+                        Column::make('name')
+                            ->heading(__('project.labels.name')),
 
-                    Column::make('name')
-                        ->heading(__('project.labels.name')),
+                        Column::make('status')
+                            ->formatStateUsing(fn (Project $record): string => $record->status->label())
+                            ->heading(__('project.labels.status')),
 
-                    Column::make('cif')
-                        ->heading(__('project.labels.cif')),
+                        Column::make('organization')
+                            ->heading(__('project.labels.organization'))
+                            ->formatStateUsing(
+                                fn (Project $record, $state) => $state->name
+                            ),
 
-                    Column::make('activity_domains')
-                        ->heading(__('project.labels.activity_domains'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->activityDomains
-                                ->pluck('name')
-                                ->join(', ')
-                        ),
+                        Column::make('start')
+                            ->heading(__('project.labels.start'))
+                            ->formatStateUsing(
+                                fn (Project $record, $state) => $state?->toFormattedDateTime()
+                            ),
 
-                    Column::make('contact_person')
-                        ->heading(__('project.labels.contact_person')),
+                        Column::make('end')
+                            ->heading(__('project.labels.end'))
+                            ->formatStateUsing(
+                                fn (Project $record, $state) => $state?->toFormattedDateTime()
+                            ),
 
-                    Column::make('contact_phone')
-                        ->heading(__('project.labels.contact_phone')),
+                        Column::make('counties')
+                            ->heading(__('project.labels.counties'))
+                            ->formatStateUsing(
+                                fn (Project $record) => $record->counties->map(fn (County $county) => $county->name)
+                                    ->join(', ')
+                            ),
 
-                    Column::make('contact_email')
-                        ->heading(__('project.labels.contact_email')),
+                        Column::make('category')
+                            ->heading(__('project.labels.category'))
+                            ->formatStateUsing(
+                                fn (Project $record, $state) => $record->categories->map(fn (ProjectCategory $category) => $category->name)
+                                    ->join(', ')
+                            ),
 
-                    Column::make('website')
-                        ->heading(__('project.labels.website')),
+                        Column::make('description')
+                            ->heading(__('project.labels.description')),
 
-                    Column::make('address')
-                        ->heading(__('project.labels.address')),
+                        Column::make('scope')
+                            ->heading(__('project.labels.scope')),
 
-                    Column::make('counties')
-                        ->heading(__('project.labels.counties'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->counties
-                                ->pluck('name')
-                                ->join(', ')
-                        ),
+                        Column::make('target_budget')
+                            ->heading(__('project.labels.target_budget')),
 
-                    Column::make('accepts_volunteers')
-                        ->heading(__('project.labels.accepts_volunteers'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->accepts_volunteers
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
+                        Column::make('beneficiaries')
+                            ->heading(__('project.labels.beneficiaries')),
 
-                    Column::make('has_volunteers')
-                        ->heading(__('project.labels.has_volunteers'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->volunteers_count
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
+                        Column::make('reason_to_donate')
+                            ->heading(__('project.labels.reason_to_donate')),
 
-                    Column::make('has_projects')
-                        ->heading(__('project.labels.has_projects'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->projects->count()
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
+                        Column::make('accepting_volunteers')
+                            ->heading(__('project.labels.accepting_volunteers'))
+                            ->formatStateUsing(fn (Project $record, $state) => $state ? __('field.boolean.true') : __('field.boolean.false')),
 
-                    Column::make('has_donations')
-                        ->heading(__('project.labels.has_donations'))
-                        ->formatStateUsing(
-                            fn (Organization $record) => $record->projects->sum('donations_count')
-                                ? __('forms::components.select.boolean.true')
-                                : __('forms::components.select.boolean.false')
-                        ),
+                        Column::make('accepting_comments')
+                            ->heading(__('project.labels.accepting_comments'))
+                            ->formatStateUsing(fn (Project $record, $state) => $state ? __('field.boolean.true') : __('field.boolean.false')),
 
-                ]),
-        ]);
+                        Column::make('donations_count')
+                            ->heading(__('donation.labels.count')),
+
+                        Column::make('donations_sum_amount')
+                            ->heading(__('donation.labels.amount')),
+                    ])
+                    ->queue(),
+            ]);
+        } catch (\Throwable $exception) {
+            logger()->error($exception->getMessage());
+            Notification::make('export')
+                ->title(__('notification.export.error.title'))
+                ->body(__('notification.export.error.body'))
+                ->danger()
+                ->send();
+        }
     }
 }
