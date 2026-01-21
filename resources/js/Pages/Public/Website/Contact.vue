@@ -53,9 +53,9 @@
                         <MailIcon class="w-6 h-6 fill-primary-500" />
                         contact@bursabinelui.ro
                     </a>
-                    <a href="tel:0729115837" class="flex items-center gap-2 py-2 text-sm text-gray-500">
+                    <a href="tel:0757055590" class="flex items-center gap-2 py-2 text-sm text-gray-500">
                         <PhoneIcon class="w-6 h-6 fill-primary-500" />
-                        0729115837
+                        0757055590
                     </a>
                 </div>
             </div>
