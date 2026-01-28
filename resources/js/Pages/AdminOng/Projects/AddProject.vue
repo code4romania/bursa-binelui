@@ -135,15 +135,15 @@
                     />
                 </label>
 
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.accepting_comments" />
-                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_comments_label')" />
-                    <p
-                        v-show="form.errors.accepting_comments"
-                        class="mt-2 text-sm text-red-600"
-                        v-html="form.errors.accepting_comments"
-                    />
-                </label>
+                <!--                <label class="flex items-center">-->
+                <!--                    <Checkbox name="remember" v-model:checked="form.accepting_comments" />-->
+                <!--                    <span class="ml-2 text-sm text-gray-700" v-html="$t('has_comments_label')" />-->
+                <!--                    <p-->
+                <!--                        v-show="form.errors.accepting_comments"-->
+                <!--                        class="mt-2 text-sm text-red-600"-->
+                <!--                        v-html="form.errors.accepting_comments"-->
+                <!--                    />-->
+                <!--                </label>-->
 
                 <label class="flex items-center">
                     <FileInput
@@ -191,9 +191,9 @@
                         {{ $t('cancel') }}
                     </SecondaryButton>
 
-<!--                    <SecondaryButton class="py-2.5" @click="createProject">-->
-<!--                        {{ $t('preview') }}-->
-<!--                    </SecondaryButton>-->
+                    <!--                    <SecondaryButton class="py-2.5" @click="createProject">-->
+                    <!--                        {{ $t('preview') }}-->
+                    <!--                    </SecondaryButton>-->
 
                     <PrimaryButton @click="createProject" :label="$t('save')" />
                 </div>
@@ -203,60 +203,60 @@
 </template>
 
 <script setup>
-    /** Import from inertia. */
-    import { useForm } from '@inertiajs/vue3';
-    import route from '@/Helpers/useRoute';
+/** Import from inertia. */
+import { useForm } from '@inertiajs/vue3';
+import route from '@/Helpers/useRoute';
 
-    /** Import components. */
-    import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-    import Title from '@/Components/Title.vue';
-    import Input from '@/Components/form/Input.vue';
-    import Select from '@/Components/form/Select.vue';
-    import Textarea from '@/Components/form/Textarea.vue';
-    import Checkbox from '@/Components/form/Checkbox.vue';
-    import FileGroup from '@/Components/form/FileGroup.vue';
-    import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
-    import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
-    import DangerButton from '@/Components/buttons/DangerButton.vue';
-    import { ref } from 'vue';
-    import FileInput from '@/Components/form/FileInput.vue';
-    import RepeaterComponent from '@/Components/RepeaterComponent.vue';
+/** Import components. */
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import Title from '@/Components/Title.vue';
+import Input from '@/Components/form/Input.vue';
+import Select from '@/Components/form/Select.vue';
+import Textarea from '@/Components/form/Textarea.vue';
+import Checkbox from '@/Components/form/Checkbox.vue';
+import FileGroup from '@/Components/form/FileGroup.vue';
+import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/buttons/SecondaryButton.vue';
+import DangerButton from '@/Components/buttons/DangerButton.vue';
+import { ref } from 'vue';
+import FileInput from '@/Components/form/FileInput.vue';
+import RepeaterComponent from '@/Components/RepeaterComponent.vue';
 
-    /** Initialize inertia from Object. */
-    const form = useForm({
-        name: '',
-        target_budget: '',
-        categories: [],
-        start: '',
-        end: '',
-        counties: [],
-        description: '',
-        scope: '',
-        beneficiaries: '',
-        reason_to_donate: '',
-        is_national: false,
-        accepting_comments: false,
-        accepting_volunteers: false,
-        preview: null,
-        gallery: [],
-        videos: [],
-        external_links: [],
+/** Initialize inertia from Object. */
+const form = useForm({
+    name: '',
+    target_budget: '',
+    categories: [],
+    start: '',
+    end: '',
+    counties: [],
+    description: '',
+    scope: '',
+    beneficiaries: '',
+    reason_to_donate: '',
+    is_national: false,
+    accepting_comments: false,
+    accepting_volunteers: false,
+    preview: null,
+    gallery: [],
+    videos: [],
+    external_links: [],
+});
+const props = defineProps(['projectCategories', 'counties']);
+const external_links = ref(form.external_links);
+const videos = ref(form.videos);
+
+/** Create project. */
+const createProject = () => {
+    form.post(route('dashboard.projects.store'), {
+        preserveScroll: true,
+        onError: () => {},
     });
-    const props = defineProps(['projectCategories', 'counties']);
-    const external_links = ref(form.external_links);
-    const videos = ref(form.videos);
-
-    /** Create project. */
-    const createProject = () => {
-        form.post(route('dashboard.projects.store'), {
-            preserveScroll: true,
-            onError: () => {},
-        });
-    };
-    function arrayError(key) {
-        if (form.errors[key]) {
-            return form.errors[key];
-        }
-        return null;
+};
+function arrayError(key) {
+    if (form.errors[key]) {
+        return form.errors[key];
     }
+    return null;
+}
 </script>

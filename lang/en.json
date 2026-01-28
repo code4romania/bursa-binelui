@@ -1,5 +1,6 @@
 {
     "change_password": "Change password",
     "current_password": "Current password",
-    "password": "Password"
+    "password": "Password",
+    "contact_message_sent": "Thank you! Your message has been sent. We will contact you soon."
 }

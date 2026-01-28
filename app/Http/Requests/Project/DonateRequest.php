@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Project;
 
+use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DonateRequest extends FormRequest
@@ -23,8 +24,11 @@ class DonateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $min = (int) (Setting::value('donation_min_amount') ?? config('app.min_donation', 5));
+        $max = (int) (Setting::value('donation_max_amount') ?? config('app.max_donation', 1000));
+
         return [
-            'amount' => ['required', 'numeric', 'min:' . config('app.min_donation'), 'max:' . config('app.max_donation')],
+            'amount' => ['required', 'numeric', 'min:' . $min, 'max:' . $max],
             'terms' => ['required', 'accepted'],
             'email' => ['required', 'email'],
             'name' => ['required'],
@@ -33,9 +37,12 @@ class DonateRequest extends FormRequest
 
     public function messages(): array
     {
+        $min = (int) (Setting::value('donation_min_amount') ?? config('app.min_donation', 5));
+        $max = (int) (Setting::value('donation_max_amount') ?? config('app.max_donation', 1000));
+
         return [
-            'amount.min' => __('custom_validation.project.donate.min', ['min' => config('app.min_donation')]),
-            'amount.max' => __('custom_validation.project.donate.max', ['max' => config('app.max_donation')]),
+            'amount.min' => __('custom_validation.project.donate.min', ['min' => $min]),
+            'amount.max' => __('custom_validation.project.donate.max', ['max' => $max]),
         ];
     }
 }
