@@ -9,41 +9,38 @@
                     <h1 class="text-3xl font-bold text-primary-900">{{ $t('send_message') }}</h1>
                     <p class="text-sm font-medium text-gray-500">{{ $t('send_message_info') }}</p>
 
-                    <!--                    <form @submit.prevent="contact" class="pb-20 mt-2 space-y-6">-->
-                    <!--                        &lt;!&ndash; Name &ndash;&gt;-->
-                    <!--                        <Input-->
-                    <!--                            class="w-full"-->
-                    <!--                            :label="$t('name_last_name')"-->
-                    <!--                            color="gray-700"-->
-                    <!--                            id="name"-->
-                    <!--                            type="text"-->
-                    <!--                            v-model="form.name"-->
-                    <!--                            :error="form.errors.name"-->
-                    <!--                        />-->
+                    <form @submit.prevent="submit" class="pb-20 mt-2 space-y-6">
+                        <Input
+                            class="w-full"
+                            :label="$t('name_last_name')"
+                            color="gray-700"
+                            id="name"
+                            type="text"
+                            v-model="form.name"
+                            :error="form.errors.name"
+                        />
 
-                    <!--                        &lt;!&ndash; Email &ndash;&gt;-->
-                    <!--                        <Input-->
-                    <!--                            class="w-full"-->
-                    <!--                            :label="$t('email')"-->
-                    <!--                            color="gray-700"-->
-                    <!--                            id="email"-->
-                    <!--                            type="email"-->
-                    <!--                            v-model="form.email"-->
-                    <!--                            :error="form.errors.email"-->
-                    <!--                        />-->
+                        <Input
+                            class="w-full"
+                            :label="$t('email')"
+                            color="gray-700"
+                            id="email"
+                            type="email"
+                            v-model="form.email"
+                            :error="form.errors.email"
+                        />
 
-                    <!--                        &lt;!&ndash; Mesaj &ndash;&gt;-->
-                    <!--                        <Textarea-->
-                    <!--                            class="w-full"-->
-                    <!--                            :label="$t('message_label')"-->
-                    <!--                            id="text"-->
-                    <!--                            color="gray-700"-->
-                    <!--                            v-model="form.text"-->
-                    <!--                            :error="form.errors.text"-->
-                    <!--                        />-->
+                        <Textarea
+                            class="w-full"
+                            :label="$t('message_label')"
+                            id="text"
+                            color="gray-700"
+                            v-model="form.text"
+                            :error="form.errors.text"
+                        />
 
-                    <!--                        <PrimaryButton type="submit" :disabled="form.processing" :label="$t('send')" />-->
-                    <!--                    </form>-->
+                        <PrimaryButton type="submit" :disabled="form.processing" :label="$t('send')" />
+                    </form>
                 </div>
 
                 <div class="w-full space-y-4 sm:w-6/12">
@@ -85,7 +82,10 @@ const form = useForm({
 });
 
 /** Submit action. */
-const contact = () => {
-    // form.post(route('route'), {});
+const submit = () => {
+    form.post(route('contact.store'), {
+        preserveScroll: true,
+        onSuccess: () => form.reset(),
+    });
 };
 </script>

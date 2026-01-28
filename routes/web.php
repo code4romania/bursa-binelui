@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BcrProjectController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EvolutionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store')->middleware('throttle:5,1');
 Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
 Route::inertia('/multumim', 'Public/VolunteerThankYou')->name('volunteer.thanks');
 Route::group(['prefix' => 'proiect-bcr', 'as' => 'bcr.'], function () {
