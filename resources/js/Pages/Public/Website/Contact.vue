@@ -46,13 +46,13 @@
                 <div class="w-full space-y-4 sm:w-6/12">
                     <h1 class="text-3xl font-bold text-primary-900">{{ $t('contact') }}</h1>
 
-                    <a href="mailto:contact@bursabinelui.ro" class="flex items-center gap-2 py-2 text-sm text-gray-500">
+                    <a v-if="contact_email" :href="`mailto:${contact_email}`" class="flex items-center gap-2 py-2 text-sm text-gray-500">
                         <MailIcon class="w-6 h-6 fill-primary-500" />
-                        contact@bursabinelui.ro
+                        {{ contact_email }}
                     </a>
-                    <a href="tel:0757055590" class="flex items-center gap-2 py-2 text-sm text-gray-500">
+                    <a v-if="contact_phone" :href="`tel:${contact_phone}`" class="flex items-center gap-2 py-2 text-sm text-gray-500">
                         <PhoneIcon class="w-6 h-6 fill-primary-500" />
-                        0757055590
+                        {{ contact_phone }}
                     </a>
                 </div>
             </div>
@@ -74,6 +74,11 @@ import PrimaryButton from '@/Components/buttons/PrimaryButton.vue';
 import { MailIcon, PhoneIcon } from '@heroicons/vue/solid';
 
 import LargeSquarePattern from '@/Components/patterns/LargeSquarePattern.vue';
+
+const props = defineProps({
+    contact_phone: { type: String, default: '' },
+    contact_email: { type: String, default: '' },
+});
 
 const form = useForm({
     name: '',

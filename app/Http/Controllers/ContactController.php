@@ -5,11 +5,22 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ContactController extends Controller
 {
+    public function index(): Response
+    {
+        return Inertia::render('Public/Website/Contact', [
+            'contact_phone' => Setting::value('contact_phone') ?? '0757055590',
+            'contact_email' => Setting::value('contact_email') ?? 'contact@bursabinelui.ro',
+        ]);
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

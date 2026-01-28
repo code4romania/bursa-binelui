@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::inertia('/contact', 'Public/Website/Contact')->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store')->middleware('throttle:5,1');
 Route::inertia('/donator', 'Public/Donor/Donor')->name('donor');
 Route::inertia('/multumim', 'Public/VolunteerThankYou')->name('volunteer.thanks');
