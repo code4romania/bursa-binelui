@@ -385,49 +385,49 @@
                 </template>
             </Field>
 
-            <Field
-                :label="$t('accepting_comments')"
-                :hasPendingChanges="hasPendingChanges('accepting_comments')"
-                :errors="formChangeStatus.errors.accepting_comments"
-                alt
-            >
-                <template #value>
-                    {{ originalProject.accepting_comments }}
-                </template>
+            <!--            <Field-->
+            <!--                :label="$t('accepting_comments')"-->
+            <!--                :hasPendingChanges="hasPendingChanges('accepting_comments')"-->
+            <!--                :errors="formChangeStatus.errors.accepting_comments"-->
+            <!--                alt-->
+            <!--            >-->
+            <!--                <template #value>-->
+            <!--                    {{ originalProject.accepting_comments }}-->
+            <!--                </template>-->
 
-                <template #action>
-                    <EditModal
-                        @action="editField('accepting_comments')"
-                        @cancel="resetField('accepting_comments')"
-                        class="flex justify-end col-span-1"
-                    >
-                        <fieldset>
-                            <legend class="text-sm font-semibold leading-6 text-gray-900">
-                                {{ $t('accepting_comments') }}
-                            </legend>
-                            <div class="mt-6 space-y-6">
-                                <div class="relative flex gap-x-3">
-                                    <div class="flex items-center h-6">
-                                        <Checkbox
-                                            class="form-checkbox"
-                                            id="accepting_comments"
-                                            color="gray-700"
-                                            v-model="project.accepting_comments"
-                                            :checked="project.accepting_comments === 'Da'"
-                                            :error="errors.accepting_comments"
-                                        />
-                                    </div>
-                                    <div class="text-sm leading-6">
-                                        <label for="accepting_comments" class="font-medium text-gray-900">{{
-                                            $t('accepting_comments')
-                                        }}</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </EditModal>
-                </template>
-            </Field>
+            <!--                <template #action>-->
+            <!--                    <EditModal-->
+            <!--                        @action="editField('accepting_comments')"-->
+            <!--                        @cancel="resetField('accepting_comments')"-->
+            <!--                        class="flex justify-end col-span-1"-->
+            <!--                    >-->
+            <!--                        <fieldset>-->
+            <!--                            <legend class="text-sm font-semibold leading-6 text-gray-900">-->
+            <!--                                {{ $t('accepting_comments') }}-->
+            <!--                            </legend>-->
+            <!--                            <div class="mt-6 space-y-6">-->
+            <!--                                <div class="relative flex gap-x-3">-->
+            <!--                                    <div class="flex items-center h-6">-->
+            <!--                                        <Checkbox-->
+            <!--                                            class="form-checkbox"-->
+            <!--                                            id="accepting_comments"-->
+            <!--                                            color="gray-700"-->
+            <!--                                            v-model="project.accepting_comments"-->
+            <!--                                            :checked="project.accepting_comments === 'Da'"-->
+            <!--                                            :error="errors.accepting_comments"-->
+            <!--                                        />-->
+            <!--                                    </div>-->
+            <!--                                    <div class="text-sm leading-6">-->
+            <!--                                        <label for="accepting_comments" class="font-medium text-gray-900">{{-->
+            <!--                                            $t('accepting_comments')-->
+            <!--                                        }}</label>-->
+            <!--                                    </div>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                        </fieldset>-->
+            <!--                    </EditModal>-->
+            <!--                </template>-->
+            <!--            </Field>-->
 
             <Field :label="$t('main_image')" :errors="formChangeStatus.errors.image || errors.image">
                 <template #value>
