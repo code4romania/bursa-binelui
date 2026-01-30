@@ -8,7 +8,6 @@ use App\Jobs\ProcessAuthorizedTransactionsJob;
 use App\Models\Setting;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Artisan;
 
 class Kernel extends ConsoleKernel
 {
@@ -17,31 +16,32 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $daysBeforeProjectExpiration = (int) (Setting::value('project_expiration_notification_days_before') ?? 7);
+        $daysBeforeProjectExpirationReminder = (int) (Setting::value('project_expiration_notification_days_before_reminder') ?? 2);
+
         $schedule->command('model:prune')
             ->daily()
+            ->name('model-prune')
             ->onOneServer()
             ->sentryMonitor('model-prune');
 
         $schedule->job(ProcessAuthorizedTransactionsJob::class)
             ->everyFourHours()
+            ->name('transactions-process-authorized')
             ->onOneServer()
             ->sentryMonitor('process-authorized-transactions-job');
 
-        $schedule->call(function () {
-            $days = (int) (Setting::value('project_expiration_notification_days_before') ?? 10);
-            Artisan::call('app:notification-end-project-period', ['--days' => $days]);
-        })
+        $schedule->command('app:notification-end-project-period', ['--days' => $daysBeforeProjectExpiration])
             ->dailyAt('09:00')
+            ->name('notification-end-project-period')
             ->onOneServer()
             ->sentryMonitor('notification-end-project-period');
 
-        $schedule->call(function () {
-            $days = (int) (Setting::value('project_expiration_notification_days_before_reminder') ?? 2);
-            Artisan::call('app:notification-end-project-period', ['--days' => $days]);
-        })
+        $schedule->command('app:notification-end-project-period', ['--days' => $daysBeforeProjectExpirationReminder])
             ->dailyAt('10:00')
+            ->name('notification-end-project-period-reminder')
             ->onOneServer()
-            ->sentryMonitor('notification-end-project-period-reminder');
+            ->sentryMonitor('notification-end-project-period');
     }
 
     /**
