@@ -16,8 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $daysBeforeProjectExpiration = (int) (Setting::value('project_expiration_notification_days_before') ?? 7);
-        $daysBeforeProjectExpirationReminder = (int) (Setting::value('project_expiration_notification_days_before_reminder') ?? 2);
+
 
         $schedule->command('model:prune')
             ->daily()
@@ -37,11 +36,6 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->sentryMonitor('notification-end-project-period');
 
-        $schedule->command('app:notification-end-project-period', ['--days' => $daysBeforeProjectExpirationReminder])
-            ->dailyAt('10:00')
-            ->name('notification-end-project-period-reminder')
-            ->onOneServer()
-            ->sentryMonitor('notification-end-project-period');
     }
 
     /**

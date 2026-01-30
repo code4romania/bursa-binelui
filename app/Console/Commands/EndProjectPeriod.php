@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Project;
+use App\Models\Setting;
 use App\Notifications\Ngo\ProjectEndingNotification;
 use Illuminate\Console\Command;
 
@@ -15,7 +16,7 @@ class EndProjectPeriod extends Command
      *
      * @var string
      */
-    protected $signature = 'app:notification-end-project-period {--days=7}';
+    protected $signature = 'app:notification-end-project-period';
 
     /**
      * The console command description.
@@ -29,20 +30,26 @@ class EndProjectPeriod extends Command
      */
     public function handle(): void
     {
-        $this->info('Ending project period...');
-        $daysBeforeEnding = (int) $this->option('days') ?? 7;
-        $this->info("Ending period {$daysBeforeEnding}...");
-        $projects = Project::withoutEagerLoads()->with(['organization'])
-            ->whereIsApproved()
-            ->whereDate('end', now()->addDays($daysBeforeEnding))
-            ->get();
-        $projects->each(function (Project $project) use ($daysBeforeEnding) {
+        $daysBeforeProjectExpiration = (int) (Setting::value('project_expiration_notification_days_before') ?? 7);
+        $daysBeforeProjectExpirationReminder = (int) (Setting::value('project_expiration_notification_days_before_reminder') ?? 2);
+        $this->info('Notifying projects ending in ' . $daysBeforeProjectExpiration);
+        $this->projectsEndingNotification($daysBeforeProjectExpiration);
+        $this->info('Notifying projects ending in ' . $daysBeforeProjectExpirationReminder . ' (reminder)');
+        $this->projectsEndingNotification($daysBeforeProjectExpirationReminder);
+    }
 
-           $users =  $project->organization->load('users')->users->filter(function ($user) {
+    private function projectsEndingNotification(int $days)
+    {
+        $projects = Project::withoutEagerLoads()
+            ->with(['organization.users'])
+            ->whereIsApproved()
+            ->whereDate('end', now()->addDays($days))
+            ->get();
+        $projects->each(function (Project $project) use ($days) {
+            $users = $project->organization->users->filter(function ($user) {
                 return $user->hasVerifiedEmail();
             });
-           \Notification::send($users, new ProjectEndingNotification($project, $daysBeforeEnding));
-
+            \Notification::send($users, new ProjectEndingNotification($project, $days));
         });
     }
 }
