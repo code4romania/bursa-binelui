@@ -4,13 +4,13 @@
 [![GitHub last commit][ico-last-commit]][link-last-commit]
 [![License: MPL 2.0][ico-license]][link-license]
 
-Insert bullets description of the project if available.
+Bursa Binelui is a civic-tech platform that connects NGOs with donors and volunteers. Organizations register, publish projects, and collect donations. Donors give to approved projects, and volunteers offer their time to organizations and projects.
+
+The app is PHP 8.2 and Laravel 10 on the backend, with Vue 3, Inertia.js, and Tailwind CSS on the frontend. Filament v2 is the admin panel.
 
 [See the project live][link-production]
 
-Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
-
-[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
+[Contributing](#contributing) | [Built with](#built-with) | [Development](#development) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
 
 ## Contributing
 
@@ -22,86 +22,138 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 
 ## Built With
 
-### Programming languages
-
-### Platforms
-
-### Frontend framework
-
-### Package managers
-
-### Database technology & provider
-
-## Repos and projects
-
-Mention all related repos and projects.
+- **Languages:** PHP 8.2, JavaScript
+- **Backend:** Laravel 10, Filament v2
+- **Frontend:** Vue 3, Inertia.js, Tailwind CSS
+- **Package managers:** Composer, npm
+- **Database:** MySQL or MariaDB
 
 ## Development
 
-### Running the app
-- After initial setup (below), run `npm run dev`
-- If using Laravel Herd/Valet, access your app in the browser at `https://bursabinelui.test`
-- If using the built-in PHP server:
-	- run `php artisan:serve`
-	- access your app in the browser at `http://127.0.0.1:8000`
+### Prerequisites
 
-### Initial setup
-<details>
-<summary>See initial setup</strong></summary>
+- PHP 8.2 or newer, with the `pdo_mysql`, `mbstring`, `gd`, `intl`, `zip`, and `exif` extensions
+- [Composer](https://getcomposer.org/)
+- Node.js 20 and npm. The repo pins the version in `.nvmrc`, so `nvm use` selects it.
+- MySQL or MariaDB
+- [Laravel Herd](https://herd.laravel.com) is optional. The built-in PHP server works too.
 
-#### 1. Create local database `bursa_binelui`
+### Install
 
-#### 2. Copy `.env.example`, rename it to `.env` and fill in your database information
+1. Copy the environment file:
 
-#### 3. Install composer dependencies
+```bash
+cp .env.example .env
+```
+
+2. Create a database named `bursa_binelui`.
+
+3. Point `.env` at your local MySQL server. `.env.example` uses the hostname `mariadb`, which is only reachable from a container. On the host machine, set:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bursa_binelui
+DB_USERNAME=your_user
+DB_PASSWORD=your_password
+```
+
+Cache and queues already use `CACHE_DRIVER=file` and `QUEUE_CONNECTION=sync`, so a local Redis server is not required.
+
+4. Install PHP dependencies:
+
 ```bash
 composer install
 ```
 
-#### 4. Install npm dependencies
+5. Install JavaScript dependencies:
+
 ```bash
 npm install
 ```
 
-#### 5. Generate the app secret key
+6. Generate the application key:
+
 ```bash
 php artisan key:generate
 ```
 
-#### 6. Migrate and seed the database
+7. Migrate and seed:
+
 ```bash
 php artisan migrate:fresh --seed
 ```
-> **Note:** Seeding may fail due to underlying issues with Faker date generation. If that happens, just rerun `php artisan migrate:fresh --seed`. Also, seeding can take a while, so be patient.
 
-#### 7. Add the following line to your `.env` file to disable CSP locally
+Seeding creates a large set of organizations and articles, so it can take a while. If it fails on a Faker date, run the same command again.
+
+8. Link the public storage disk:
+
 ```bash
+php artisan storage:link
+```
+
+9. Turn off Content Security Policy for local development by adding this to `.env`:
+
+```dotenv
 CSP_ENABLED=false
 ```
 
-> **Note:** Only for local development!
+CSP is enabled by default. Keep that setting for local development only.
 
-#### 8. Configure local development URL
-#### 8.1. If using Laravel Herd (macOS, Windows)
-- **Install Laravel Herd**  
-   Visit [https://herd.laravel.com](https://herd.laravel.com) and download the installer for macOS or Windows
-- **Open your project with Herd**  
-  - Launch Herd. Go to `Sites`. Go to `Add Sites`. Go to `Link existing project`. Select the project. Select the `PHP version` and `enable HTTPS`. Click `Next`
-  - ![](https://i.imgur.com/YYhxeVK.png)
+10. Set `APP_URL` to the URL you will open in the browser:
 
-#### 8.2. If using the built-in PHP server
-- In your `.env` file, update `APP_URL` to `APP_URL=http://127.0.0.1:8000`
-</details>
+- Laravel Herd: `APP_URL=https://bursabinelui.test`
+- Built-in PHP server: `APP_URL=http://127.0.0.1:8000`
+
+### Run
+
+Start the Vite dev server:
+
+```bash
+npm run dev
+```
+
+Then serve PHP with one of these options.
+
+**Laravel Herd.** Link this project in Herd, select PHP 8.2, and enable HTTPS. Open [https://bursabinelui.test](https://bursabinelui.test).
+
+**Built-in PHP server.** In a second terminal:
+
+```bash
+php artisan serve
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+### Seeded accounts
+
+`php artisan migrate:fresh --seed` creates these users. The password for both is `password`.
+
+| Email | Role |
+| --- | --- |
+| `superadmin@example.com` | Super admin. Signs in at `/admin`. |
+| `supermanager@example.com` | Super manager |
+
+### Optional services
+
+`GOOGLE_MAPS_API_KEY` enables the county map. Mail, S3, EuPlatesc, Mailchimp, and Sentry can stay empty while you work locally.
+
+`npm run dev` is enough for day-to-day work. `npm run build` compiles the client and SSR assets used by the production image. That image starts server rendering with `php artisan inertia:start-ssr`.
+
+### Tests
+
+```bash
+php artisan test
+```
+
+Feature tests use `RefreshDatabase` and run against the database configured in `.env`. `phpunit.xml` keeps the MySQL connection. Point `DB_*` at a separate database before you run the suite, so the refresh does not wipe your development data.
 
 ## Deployment
 
-Guide users through getting your code up and running on their own system. In this section you can talk about:
-1. Installation process
-2. Software dependencies
-3. Latest releases
-4. API references
+Production runs from the [Dockerfile](Dockerfile). The image installs PHP dependencies, builds the Vite client and SSR bundles, and serves the app with nginx and PHP-FPM, plus a queue worker, cron, and the Inertia SSR process. Process configuration lives in [`docker/`](docker/).
 
-Describe and show how to build your code and run the tests.
+Local installation is described in [Development](#development).
 
 ## Feedback
 
